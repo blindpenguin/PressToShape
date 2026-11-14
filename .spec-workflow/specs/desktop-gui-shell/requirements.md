@@ -79,7 +79,7 @@ Build the desktop GUI shell of PressToShape from the mockup in `docs/mockup/` (l
 
 1. WHEN the canvas area is shown THEN it SHALL contain a horizontal ruler, a vertical ruler, and a canvas background with one empty artboard.
 2. WHEN the zoom value changes THEN the ruler tick spacing and labels SHALL change to match, in pixel units.
-3. WHEN the app starts THEN the artboard SHALL be centered, at 100% zoom, with a default size of 1200 × 800 px.
+3. WHEN the app starts THEN the artboard SHALL be centered with a default size of 1200 × 800 px, and the zoom SHALL be set to fit the artboard in the canvas area as soon as the canvas area has a size (changed from 100% by the owner after the first run). Later window resizes SHALL NOT change the zoom.
 4. WHEN the canvas area is resized THEN the artboard SHALL stay centered.
 5. WHEN the pointer moves over the canvas THEN nothing SHALL be drawn or changed. Drawing, selection handles and panning are out of scope.
 

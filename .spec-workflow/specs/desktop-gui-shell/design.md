@@ -232,4 +232,4 @@ Differences between this design and what was built, found while implementing and
 - **Artboard placement:** the artboard is positioned with `Canvas.Left` and `Canvas.Top` from `OriginX` and `OriginY`, because view models must not use Avalonia types such as `Thickness`.
 - **Spiral icon:** the Material icon package has no spiral, so the tool uses `Cyclone`.
 - **Naming:** `Kind` is avoided in our own names (`TickType`, `Icon`), per the project rule. `MaterialIconKind` is an external name and stays.
-- **Startup view:** at 100% zoom the default 1200 x 800 artboard is larger than the canvas viewport on a 1440 x 900 window, so no canvas margin is visible at startup.
+- **Startup view:** the default 1200 x 800 artboard is larger than the canvas viewport on a 1440 x 900 window, so the app fits it to the window once, when the canvas first reports a size (`DesktopShellViewModel`). Resizing the window later does not change the zoom. This replaces the original "start at 100%" behavior at the owner's request.

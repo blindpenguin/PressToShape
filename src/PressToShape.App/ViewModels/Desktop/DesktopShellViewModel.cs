@@ -13,6 +13,7 @@ namespace PressToShape.App.ViewModels.Desktop;
 internal sealed partial class DesktopShellViewModel : ViewModelBase
 {
     private readonly IAppShutdown _shutdown;
+    private bool _initialFitDone;
 
     public DesktopShellViewModel(IAppShutdown shutdown)
     {
@@ -25,6 +26,8 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
         Toolbar = new ToolbarViewModel(State);
         StatusBar = new StatusBarViewModel(State, FitToWindow);
         MenuBar = new MenuBarViewModel(State, shutdown, Inspector.ShowTab, FitToWindow);
+
+        Canvas.PropertyChanged += OnCanvasPropertyChanged;
     }
 
     public EditorState State { get; }
@@ -43,6 +46,21 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
 
     /// <summary>Zooms so the artboard fits the canvas area. Does nothing until the canvas has a size.</summary>
     public void FitToWindow() => State.ZoomToFit(Canvas.ViewportWidth, Canvas.ViewportHeight);
+
+    /// <summary>Fits the artboard once, as soon as the canvas area reports a real size, so the app opens at fit-to-window.</summary>
+    private void OnCanvasPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (_initialFitDone
+            || (e.PropertyName != nameof(CanvasAreaViewModel.ViewportWidth) && e.PropertyName != nameof(CanvasAreaViewModel.ViewportHeight))
+            || Canvas.ViewportWidth <= 0
+            || Canvas.ViewportHeight <= 0)
+        {
+            return;
+        }
+
+        _initialFitDone = true;
+        FitToWindow();
+    }
 
     // Commands for window-level keyboard shortcuts. They do the same as the matching menu items.
     [RelayCommand]

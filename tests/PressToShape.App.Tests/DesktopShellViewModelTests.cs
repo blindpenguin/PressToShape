@@ -148,6 +148,7 @@ public class DesktopShellViewModelTests
         var shell = new DesktopShellViewModel(shutdown);
         shell.Canvas.ViewportWidth = 648;
         shell.Canvas.ViewportHeight = 448;
+        shell.State.ZoomToActualSize(); // the first viewport size fitted the artboard already
 
         shell.ZoomInCommand.Execute(null);
         Assert.Equal(150, shell.State.ZoomPercent);
@@ -163,5 +164,23 @@ public class DesktopShellViewModelTests
 
         shell.QuitCommand.Execute(null);
         Assert.Equal(1, shutdown.Calls);
+    }
+
+    [Fact]
+    public void FirstViewportSize_FitsTheArtboardOnce()
+    {
+        var shell = new DesktopShellViewModel(new FakeShutdown());
+        Assert.Equal(100, shell.State.ZoomPercent);
+
+        shell.Canvas.ViewportWidth = 648;
+        Assert.Equal(100, shell.State.ZoomPercent); // height still unknown, nothing to fit yet
+
+        shell.Canvas.ViewportHeight = 448;
+        Assert.Equal(50, shell.State.ZoomPercent, precision: 6);
+
+        // later size changes (for example resizing the window) do not change the zoom
+        shell.State.SetZoom(200);
+        shell.Canvas.ViewportWidth = 1000;
+        Assert.Equal(200, shell.State.ZoomPercent);
     }
 }
