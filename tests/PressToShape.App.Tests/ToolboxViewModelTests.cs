@@ -16,17 +16,6 @@ public class ToolboxViewModelTests
     }
 
     [Fact]
-    public void Tools_AreSplitIntoPairedGridAndSingleColumn()
-    {
-        var toolbox = new ToolboxViewModel(new EditorState());
-
-        Assert.Equal(8, toolbox.PairedTools.Count);
-        Assert.Equal(4, toolbox.SingleTools.Count);
-        Assert.Equal(toolbox.Tools, toolbox.PairedTools.Concat(toolbox.SingleTools));
-        Assert.Equal(Tool.Spiral, toolbox.SingleTools[0].Definition.Tool);
-    }
-
-    [Fact]
     public void Select_IsActiveByDefault_AndOnlyOneToolIsActive()
     {
         var toolbox = new ToolboxViewModel(new EditorState());

@@ -90,22 +90,26 @@
             <Border Classes="group-separator" />
 
             <TextBlock Classes="field-label" Text="X" />
-            <TextBox Classes="field" Text="{Binding X, Mode=OneWay}" IsEnabled="{Binding HasSelection}"
-                     InnerRightContent="px" AutomationProperties.Name="X position" />
+            <TextBox Classes="field" Text="{Binding X, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="X position">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+</TextBox>
             <TextBlock Classes="field-label" Text="Y" />
-            <TextBox Classes="field" Text="{Binding Y, Mode=OneWay}" IsEnabled="{Binding HasSelection}"
-                     InnerRightContent="px" AutomationProperties.Name="Y position" />
+            <TextBox Classes="field" Text="{Binding Y, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="Y position">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+</TextBox>
             <TextBlock Classes="field-label" Text="W" />
-            <TextBox Classes="field" Text="{Binding Width, Mode=OneWay}" IsEnabled="{Binding HasSelection}"
-                     InnerRightContent="px" AutomationProperties.Name="Width" />
+            <TextBox Classes="field" Text="{Binding Width, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="Width">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+</TextBox>
             <ToggleButton Classes="tool" IsEnabled="False"
                           ToolTip.Tip="Keep proportions"
                           AutomationProperties.Name="Keep proportions">
                 <materialIcons:MaterialIcon Kind="LinkVariant" Width="18" Height="18" />
             </ToggleButton>
             <TextBlock Classes="field-label" Text="H" />
-            <TextBox Classes="field" Text="{Binding Height, Mode=OneWay}" IsEnabled="{Binding HasSelection}"
-                     InnerRightContent="px" AutomationProperties.Name="Height" />
+            <TextBox Classes="field" Text="{Binding Height, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="Height">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+</TextBox>
 
             <Border Classes="group-separator" />
 

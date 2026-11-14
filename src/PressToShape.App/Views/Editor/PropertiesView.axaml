@@ -38,21 +38,31 @@
                     <Grid Margin="12,4,12,12" ColumnDefinitions="Auto,*,Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6"
                           IsEnabled="{Binding HasSelection}">
                         <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="X" Margin="0,0,6,0" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Classes="field" InnerRightContent="px" AutomationProperties.Name="X position" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Classes="field" AutomationProperties.Name="X position">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+</TextBox>
                         <TextBlock Grid.Row="0" Grid.Column="2" Classes="label" Text="Y" Margin="8,0,6,0" />
-                        <TextBox Grid.Row="0" Grid.Column="3" Classes="field" InnerRightContent="px" AutomationProperties.Name="Y position" />
+                        <TextBox Grid.Row="0" Grid.Column="3" Classes="field" AutomationProperties.Name="Y position">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+</TextBox>
                         <ToggleButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="4" Classes="tool" Margin="8,0,0,0"
                                       ToolTip.Tip="Keep proportions" AutomationProperties.Name="Keep proportions">
                             <materialIcons:MaterialIcon Kind="LinkVariant" Width="18" Height="18" />
                         </ToggleButton>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Classes="label" Text="W" Margin="0,0,6,0" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Classes="field" InnerRightContent="px" AutomationProperties.Name="Width" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Classes="field" AutomationProperties.Name="Width">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+</TextBox>
                         <TextBlock Grid.Row="1" Grid.Column="2" Classes="label" Text="H" Margin="8,0,6,0" />
-                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" InnerRightContent="px" AutomationProperties.Name="Height" />
+                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" AutomationProperties.Name="Height">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+</TextBox>
 
                         <materialIcons:MaterialIcon Grid.Row="2" Grid.Column="0" Kind="RotateRight" Width="16" Height="16" Margin="0,0,6,0" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Classes="field" InnerRightContent="°" AutomationProperties.Name="Rotation" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Classes="field" AutomationProperties.Name="Rotation">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="°" /></TextBox.InnerRightContent>
+</TextBox>
                         <Button Grid.Row="2" Grid.Column="4" Classes="icon" Margin="8,0,0,0"
                                 ToolTip.Tip="Reset transform" AutomationProperties.Name="Reset transform">
                             <materialIcons:MaterialIcon Kind="Restore" Width="18" Height="18" />
@@ -74,8 +84,9 @@
                         <Button Grid.Row="1" Grid.Column="2" Classes="icon" ToolTip.Tip="Stroke options" AutomationProperties.Name="Stroke options">
                             <materialIcons:MaterialIcon Kind="ChevronDown" Width="16" Height="16" />
                         </Button>
-                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" InnerRightContent="px" Margin="8,0,0,0"
-                                 AutomationProperties.Name="Stroke width" />
+                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" Margin="8,0,0,0" AutomationProperties.Name="Stroke width">
+<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+</TextBox>
 
                         <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" Spacing="2">
                             <Button Classes="icon" ToolTip.Tip="Stroke cap" AutomationProperties.Name="Stroke cap">

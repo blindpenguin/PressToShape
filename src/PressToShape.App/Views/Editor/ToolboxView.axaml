@@ -15,7 +15,7 @@
                           Command="{Binding SelectCommand}"
                           ToolTip.Tip="{Binding ToolTip}"
                           AutomationProperties.Name="{Binding Name}"
-                          Margin="2">
+                          Margin="2,2">
                 <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="20" Height="20" />
             </ToggleButton>
         </DataTemplate>
@@ -24,16 +24,16 @@
     <Border Background="{DynamicResource ToolColumnBackgroundBrush}"
             BorderBrush="{DynamicResource BorderSubtleBrush}"
             BorderThickness="0,0,1,0"
-            Padding="6">
+            Padding="4,6">
         <DockPanel>
 
             <!-- Fill and stroke swatches with swap and reset (disabled until colors exist) -->
-            <Grid DockPanel.Dock="Bottom" Width="64" Height="64" Margin="0,8,0,4" HorizontalAlignment="Left">
-                <Border Width="30" Height="30" Margin="0,24,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+            <Grid DockPanel.Dock="Bottom" Width="44" Height="56" Margin="0,8,0,4" HorizontalAlignment="Center">
+                <Border Width="26" Height="26" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                         Background="{DynamicResource ControlBackgroundBrush}"
                         BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="2"
                         CornerRadius="3" ToolTip.Tip="Stroke color" />
-                <Border Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top"
+                <Border Width="26" Height="26" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,4,0,0"
                         Background="{DynamicResource AppAccentBrush}"
                         BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1"
                         CornerRadius="3" ToolTip.Tip="Fill color" />
@@ -51,17 +51,7 @@
                 </Button>
             </Grid>
 
-            <!-- The mockup shows the first eight tools as a two-column grid and the rest in one column. -->
-            <StackPanel>
-                <ItemsControl ItemsSource="{Binding PairedTools}" ItemTemplate="{StaticResource ToolButtonTemplate}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" Width="84" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-                <ItemsControl ItemsSource="{Binding SingleTools}" ItemTemplate="{StaticResource ToolButtonTemplate}" />
-            </StackPanel>
+            <ItemsControl ItemsSource="{Binding Tools}" ItemTemplate="{StaticResource ToolButtonTemplate}" />
 
         </DockPanel>
     </Border>

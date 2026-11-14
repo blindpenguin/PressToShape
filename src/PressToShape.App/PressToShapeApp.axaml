@@ -3,8 +3,8 @@
              x:Class="PressToShape.App.PressToShapeApp"
              xmlns:local="using:PressToShape.App"
              xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+             RequestedThemeVariant="Dark">
+             <!-- Dark is the default theme. "Default" would follow the system theme, "Light" forces the light theme. Both variants are defined in Styles/Theme.axaml. -->
 
     <Application.DataTemplates>
         <local:ViewLocator />

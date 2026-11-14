@@ -5,6 +5,49 @@
     <!-- Control styles for the editor shell. Colors and sizes come from Theme.axaml only. -->
 
     <Styles.Resources>
+        <!-- Flat inspector tab: label, a 2 px accent line when selected, hairline under the strip -->
+        <ControlTheme x:Key="InspectorTabItemTheme" TargetType="TabItem">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Name="PART_LayoutRoot"
+                            Background="Transparent"
+                            BorderBrush="{DynamicResource BorderSubtleBrush}"
+                            BorderThickness="0,0,0,1">
+                        <Grid RowDefinitions="*,2">
+                            <ContentPresenter Name="PART_ContentPresenter"
+                                              Grid.Row="0"
+                                              Padding="4,10"
+                                              Content="{TemplateBinding Header}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              FontSize="{TemplateBinding FontSize}"
+                                              HorizontalContentAlignment="Center"
+                                              VerticalContentAlignment="Center" />
+                            <Border Name="PART_SelectedPipe"
+                                    Grid.Row="1"
+                                    Background="{DynamicResource AppAccentBrush}"
+                                    IsVisible="False" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:pointerover /template/ Border#PART_LayoutRoot">
+                <Setter Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+            </Style>
+            <Style Selector="^:pointerover">
+                <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            </Style>
+            <Style Selector="^:selected">
+                <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            </Style>
+            <Style Selector="^:selected /template/ Border#PART_SelectedPipe">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+        </ControlTheme>
+
         <ControlTheme x:Key="{x:Type controls:CollapsibleSection}" TargetType="controls:CollapsibleSection">
             <Setter Property="Template">
                 <ControlTemplate>
@@ -131,7 +174,12 @@
         <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
     </Style>
 
-    <!-- Numeric/text field with an optional suffix such as "px" (set InnerRightContent) -->
+    <!-- Numeric/text field with an optional suffix such as "px" (set InnerRightContent). The suffix gets space to the border. -->
+    <Style Selector="TextBlock.unit">
+        <Setter Property="Margin" Value="0,0,8,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+    </Style>
     <Style Selector="TextBox.field">
         <Setter Property="MinHeight" Value="{StaticResource FieldHeight}" />
         <Setter Property="Height" Value="{StaticResource FieldHeight}" />

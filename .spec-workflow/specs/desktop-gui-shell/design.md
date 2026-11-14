@@ -21,7 +21,7 @@ The desktop shell is a composition of reusable Avalonia views, each driven by it
 - **`ViewLocator`**: unchanged. It maps `...ViewModels.<Folder>.FooViewModel` to `...Views.<Folder>.FooView` by name, so each child view model needs a view with the matching name in the matching folder.
 - **`ViewModelBase`** (`ObservableObject`): base class for all new view models.
 - **`PressToShapeApp`**: the desktop branch now creates `MainWindow` with a `DesktopShellViewModel`. Android branches are unchanged.
-- **Fluent theme and `RequestedThemeVariant="Default"`**: already follows the system theme. The new theme dictionaries add our own named resources on top.
+- **Fluent theme and `RequestedThemeVariant`**: set to `Dark` (owner decision, replacing "Default", which follows the system theme). The new theme dictionaries add our own named resources on top.
 - **Architecture tests** (`HeadProjectReferenceTests`): keep protecting the project reference direction.
 
 ### Integration Points
@@ -128,7 +128,7 @@ V Select, A Direct select, P Pen, N Node/curve, T Text, M Rectangle, L Ellipse, 
 The groups 6 and 8 are my interpretation of small icons. The tooltips will make the intent visible so you can correct them in review.
 
 ### ToolboxViewModel / ToolboxView
-- Shows `ToolDefinitions.All` in a two-column wrap grid for the first eight tools (select pair, pen pair, text and rectangle, ellipse and star) and a single column for the rest, then the fill and stroke swatches with swap and reset buttons (disabled).
+- Shows `ToolDefinitions.All` as a single narrow column, then the fill and stroke swatches with swap and reset buttons (disabled).
 - `SelectToolCommand(Tool)` sets `EditorState.ActiveTool`. Each button shows the accent background when active.
 - Tooltip: "Name (Key)".
 
@@ -227,9 +227,12 @@ Differences between this design and what was built, found while implementing and
 - **Submenus are always enabled:** a menu or submenu can always be opened. Only leaf items without a command are disabled. Top-level entries use the Fluent top-level menu theme, so they show no submenu arrow.
 - **Zoom drop-down entries:** each preset is a `ZoomPresetViewModel` that carries its own command, because a flyout has no parent lookup.
 - **Toolbar buttons:** the toolbar is data-driven from `ToolbarButtonViewModel` groups. A button without a command is disabled.
-- **Tool column grouping:** `ToolboxViewModel` exposes `PairedTools` (first eight, two-column grid) and `SingleTools` (the rest).
+- **Tool column:** a single column of tools, as requested by the owner after the first run (the mockup shows two columns). `ToolboxViewModel` exposes only `Tools`.
 - **Window shortcuts:** `DesktopShellViewModel` has `ZoomIn`, `ZoomOut`, `ActualSize`, `FitArtboard` and `Quit` commands for the key bindings. The menu items use the same state and callbacks.
 - **Artboard placement:** the artboard is positioned with `Canvas.Left` and `Canvas.Top` from `OriginX` and `OriginY`, because view models must not use Avalonia types such as `Thickness`.
 - **Spiral icon:** the Material icon package has no spiral, so the tool uses `Cyclone`.
 - **Naming:** `Kind` is avoided in our own names (`TickType`, `Icon`), per the project rule. `MaterialIconKind` is an external name and stays.
 - **Startup view:** the default 1200 x 800 artboard is larger than the canvas viewport on a 1440 x 900 window, so the app fits it to the window once, when the canvas first reports a size (`DesktopShellViewModel`). Resizing the window later does not change the zoom. This replaces the original "start at 100%" behavior at the owner's request.
+- **Dark theme is the default:** `RequestedThemeVariant="Dark"` in `PressToShapeApp.axaml`. The light variant is still defined, but nothing switches to it yet, and the system theme is ignored.
+- **Inspector tabs:** a custom `InspectorTabItemTheme` (in `Styles/Controls.axaml`) gives flat tabs with a hairline under the strip and a 2 px accent line under the selected tab, instead of a filled background.
+- **Unit suffixes:** the "px", "°" and similar suffixes in input fields are `TextBlock` elements with the `unit` style, which adds space to the right border.

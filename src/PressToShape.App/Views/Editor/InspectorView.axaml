@@ -9,14 +9,7 @@
 
     <UserControl.Styles>
         <Style Selector="TabItem">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Padding" Value="2,8" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
-        </Style>
-        <Style Selector="TabItem:selected">
-            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
-            <Setter Property="Background" Value="{DynamicResource SelectedItemBrush}" />
+            <Setter Property="Theme" Value="{StaticResource InspectorTabItemTheme}" />
         </Style>
     </UserControl.Styles>
 

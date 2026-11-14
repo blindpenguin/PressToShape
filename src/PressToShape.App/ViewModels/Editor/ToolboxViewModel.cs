@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using CommunityToolkit.Mvvm.Input;
 using PressToShape.App.Workspace;
 
@@ -23,19 +22,8 @@ internal sealed partial class ToolboxViewModel : ViewModelBase
         }
 
         Tools = items;
-        PairedTools = items.Take(PairedToolCount).ToList();
-        SingleTools = items.Skip(PairedToolCount).ToList();
         _state.PropertyChanged += OnStateChanged;
     }
-
-    // The mockup shows the first eight tools as a two-column grid and the remaining tools in one column.
-    private const int PairedToolCount = 8;
-
-    /// <summary>The tools shown in the two-column grid at the top of the tool column.</summary>
-    public IReadOnlyList<ToolItemViewModel> PairedTools { get; }
-
-    /// <summary>The tools shown below the grid, one per row.</summary>
-    public IReadOnlyList<ToolItemViewModel> SingleTools { get; }
 
     /// <summary>All tools in display order.</summary>
     public IReadOnlyList<ToolItemViewModel> Tools { get; }

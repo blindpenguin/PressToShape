@@ -10,7 +10,7 @@ Build the desktop GUI shell of PressToShape from the mockup in `docs/mockup/` (l
 - **Scope:** shell plus view-model state. No document model, drawing, editing or file I/O.
 - **Layout home:** the desktop layout views live in `PressToShape.App` under `Views/Desktop`. Shared controls are reusable by the tablet layout. This needs a small update to `structure.md` (Requirement 12).
 - **Icons:** the Material.Icons.Avalonia package, version 3.0.2 (built for Avalonia 12). This is a new dependency, approved by the owner for this spec.
-- **Themes:** dark and light, following the system theme, with a purple accent as in the mockup.
+- **Themes:** dark and light variants with a purple accent as in the mockup. Dark is the default (changed by the owner after the first run, see Requirement 9).
 - **Window chrome:** the native OS title bar, with the menu bar under it. The mockup's custom title bar is out of scope.
 - **Inspector:** Properties and Layers are fully built. Assets and History exist as tabs with an empty state.
 - **Canvas:** rulers that follow the zoom value, plus an empty placeholder artboard.
@@ -124,12 +124,12 @@ Build the desktop GUI shell of PressToShape from the mockup in `docs/mockup/` (l
 
 ### Requirement 9: Theming
 
-**User Story:** As a user, I want the app to match my system theme, so that it is comfortable to look at.
+**User Story:** As a user, I want a comfortable dark theme by default, with a light variant available, so that the app is easy on the eyes.
 
 #### Acceptance Criteria
 
-1. WHEN the app starts THEN it SHALL use the dark or light theme according to the system setting.
-2. WHEN the system theme changes while the app runs THEN the app SHALL switch without restarting.
+1. WHEN the app starts THEN it SHALL use the dark theme (changed by the owner from "follow the system setting"). The light variant stays defined in the theme resources.
+2. WHEN the theme variant is changed (a later spec may add a setting or a "follow system" option) THEN the app SHALL switch without restarting. The system theme is ignored for now.
 3. WHEN colors, sizes and spacing are defined THEN they SHALL be named theme resources (accent, panel, canvas, border, text and so on) with a dark and a light value, and no color SHALL be hardcoded in a view.
 4. WHEN the dark theme is shown THEN it SHALL resemble the mockup: dark gray panels, a darker canvas, and a purple accent.
 5. WHEN either theme is shown THEN text and icons SHALL stay legible against their backgrounds.
