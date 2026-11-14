@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using PressToShape.App.ViewModels.Desktop;
 using PressToShape.App.Workspace;
@@ -10,7 +11,7 @@ public class ToolbarViewModelTests
     [Fact]
     public void Groups_ContainTheMockupButtons_InOrder()
     {
-        var toolbar = new ToolbarViewModel(new EditorState());
+        var toolbar = new ToolbarViewModel(new EditorState(), FakeLocalizer.Create());
 
         Assert.Equal(new[] { "New", "Open", "Save" }, toolbar.FileActions.Select(b => b.Name));
         Assert.Equal(new[] { "Undo", "Redo" }, toolbar.HistoryActions.Select(b => b.Name));
@@ -23,7 +24,7 @@ public class ToolbarViewModelTests
     [Fact]
     public void AllButtons_AreDisabledForNow()
     {
-        var toolbar = new ToolbarViewModel(new EditorState());
+        var toolbar = new ToolbarViewModel(new EditorState(), FakeLocalizer.Create());
 
         var all = toolbar.FileActions
             .Concat(toolbar.HistoryActions)
@@ -39,7 +40,7 @@ public class ToolbarViewModelTests
     public void ToolToggles_FollowTheActiveTool()
     {
         var state = new EditorState();
-        var toolbar = new ToolbarViewModel(state);
+        var toolbar = new ToolbarViewModel(state, FakeLocalizer.Create());
 
         Assert.True(toolbar.IsSelectToolActive);
         Assert.False(toolbar.IsNodeToolActive);
@@ -54,7 +55,7 @@ public class ToolbarViewModelTests
     public void CheckingAToggle_ChangesTheActiveTool()
     {
         var state = new EditorState();
-        var toolbar = new ToolbarViewModel(state);
+        var toolbar = new ToolbarViewModel(state, FakeLocalizer.Create());
 
         toolbar.IsNodeToolActive = true;
 
@@ -65,7 +66,7 @@ public class ToolbarViewModelTests
     public void UncheckingTheActiveToggle_KeepsItChecked()
     {
         var state = new EditorState();
-        var toolbar = new ToolbarViewModel(state);
+        var toolbar = new ToolbarViewModel(state, FakeLocalizer.Create());
         var raised = false;
         toolbar.PropertyChanged += (_, e) => raised |= e.PropertyName == nameof(ToolbarViewModel.IsSelectToolActive);
 
@@ -80,7 +81,7 @@ public class ToolbarViewModelTests
     public void ToolToggleChange_RaisesNotifications()
     {
         var state = new EditorState();
-        var toolbar = new ToolbarViewModel(state);
+        var toolbar = new ToolbarViewModel(state, FakeLocalizer.Create());
         var raised = new System.Collections.Generic.List<string?>();
         toolbar.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
 
@@ -94,7 +95,7 @@ public class ToolbarViewModelTests
     public void TransformFields_AreEmpty_AndDisabledWithoutSelection()
     {
         var state = new EditorState();
-        var toolbar = new ToolbarViewModel(state);
+        var toolbar = new ToolbarViewModel(state, FakeLocalizer.Create());
 
         Assert.False(toolbar.HasSelection);
         Assert.Equal(string.Empty, toolbar.X);
@@ -105,5 +106,27 @@ public class ToolbarViewModelTests
         state.HasSelection = true;
 
         Assert.True(toolbar.HasSelection);
+    }
+
+    [Fact]
+    public void ToolbarButtonNames_AreTranslated_AndRefreshOnLanguageChange()
+    {
+        var localizer = FakeLocalizer.Create("en", new Dictionary<string, string>
+        {
+            ["Undo"] = "Rückgängig",
+            ["Align Left"] = "Links ausrichten",
+        });
+        var toolbar = new ToolbarViewModel(new EditorState(), localizer);
+        var undo = toolbar.HistoryActions[0];
+        var raised = new List<string?>();
+        undo.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+        Assert.Equal("Undo", undo.Name);
+
+        localizer.SetLanguage("de");
+
+        Assert.Equal("Rückgängig", undo.Name);
+        Assert.Equal("Links ausrichten", toolbar.HorizontalAlignActions[0].Name);
+        Assert.Equal("Redo", toolbar.HistoryActions[1].Name); // not translated: English fallback
+        Assert.Contains(string.Empty, raised);
     }
 }

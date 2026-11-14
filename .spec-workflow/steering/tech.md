@@ -14,6 +14,7 @@ Cross-platform vector drawing application (desktop and tablet GUI) targeting Lin
 - **Avalonia 12.1.6**: cross-platform UI framework (`Avalonia`, `Avalonia.Desktop`, `Avalonia.Themes.Fluent`, `Avalonia.Fonts.Inter`)
 - **CommunityToolkit.Mvvm 8.4.2**: MVVM source generators (`[ObservableProperty]`, `[RelayCommand]`)
 - **AvaloniaUI.DiagnosticsSupport 2.2.3**: developer diagnostics, Debug builds only
+- **GetText.NET 10.0.1**: reads compiled gettext `.mo` catalogs for translations (MIT), referenced from `PressToShape.App` only. Building needs the GNU gettext tools (`msgfmt`) on the machine.
 - **Material.Icons.Avalonia 3.0.2**: icon set for tool, toolbar and panel icons (built for Avalonia 12), referenced from `PressToShape.App` only
 - No other dependencies are decided. New packages require approval (see `project-overview.md`).
 
@@ -27,6 +28,8 @@ Cross-platform vector drawing application (desktop and tablet GUI) targeting Lin
 - **Primary storage**: local files. No database, no cloud.
 - **Native project format**: PressToShape's own format, separate from SVG. The concrete format (for example JSON-based) is decided in a spec.
 - **Export**: SVG only, for now. SVG import is planned after the MVP.
+- **User settings**: a small JSON file `settings.json` in the user's application-data folder (`PressToShape/settings.json`, found through the .NET special-folder API). It currently holds the chosen language. It is read as untrusted input, written atomically, and unknown entries are preserved.
+- **Translations**: `.po` files in `PressToShape.App/Translations/` are the committed sources. The build compiles them to `.mo` with `msgfmt` and embeds them in the app, so no file access is needed at runtime.
 - **Caching**: in-memory only unless a spec shows a need.
 
 ### External Integrations
@@ -100,6 +103,7 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 5. **Rendering approach deferred**: it depends on performance and touch needs, so it is decided by comparing options in a spec.
 6. **Material.Icons.Avalonia for icons**: chosen over Lucide.Avalonia and Projektanker.Icons.Avalonia because it targets Avalonia 12 (the others are built against Avalonia 11). Icons are strongly typed (`MaterialIconKind`).
 7. **Theme resources**: all colors and sizes live in `Styles/Theme.axaml` with light and dark variants. Views use named resources and never hardcode colors (checked by a test).
+8. **Gettext for translations**: `.po`/`.mo` with GetText.NET, English text as the message id, German as the second language, language switchable at runtime from View > Language and remembered in the settings file. Chosen by the owner over `.resx` resources and JSON files. The build compiles `.po` with `msgfmt`, so the gettext tools are a build prerequisite.
 
 ## Known Limitations
 - `ViewLocator` uses reflection and is not trimming- or AOT-safe. This is acceptable for now. Replace it if trimming or AOT is adopted.

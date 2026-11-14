@@ -14,7 +14,8 @@ internal sealed partial class EditorState : ObservableObject
 
     [ObservableProperty] public partial bool HasSelection { get; set; }
 
-    [ObservableProperty] public partial string SelectionSummary { get; set; } = "Nothing selected";
+    /// <summary>A description of the selection, such as "1 selected (Group)". Empty without a selection: the status bar shows its own translated text then.</summary>
+    [ObservableProperty] public partial string SelectionSummary { get; set; } = string.Empty;
 
     [ObservableProperty] public partial double ArtboardWidth { get; set; } = 1200;
 

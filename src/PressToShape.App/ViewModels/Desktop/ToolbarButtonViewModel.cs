@@ -1,20 +1,25 @@
 using System.Windows.Input;
 using Material.Icons;
+using PressToShape.App.Localization;
 
 namespace PressToShape.App.ViewModels.Desktop;
 
 /// <summary>A toolbar button. Without a command it is disabled until its feature exists.</summary>
-internal sealed class ToolbarButtonViewModel
+internal sealed class ToolbarButtonViewModel : LocalizedViewModel
 {
-    public ToolbarButtonViewModel(string name, MaterialIconKind icon, ICommand? command = null)
+    private readonly string _name;
+
+    /// <param name="name">The message id (English text) of the button name.</param>
+    public ToolbarButtonViewModel(ILocalizer localizer, string name, MaterialIconKind icon, ICommand? command = null)
+        : base(localizer)
     {
-        Name = name;
+        _name = name;
         Icon = icon;
         Command = command;
     }
 
-    /// <summary>Used as the tooltip and as the accessible name.</summary>
-    public string Name { get; }
+    /// <summary>The translated name, used as the tooltip and as the accessible name.</summary>
+    public string Name => Localizer.T(_name);
 
     public MaterialIconKind Icon { get; }
 

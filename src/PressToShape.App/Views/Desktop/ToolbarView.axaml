@@ -1,4 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -66,14 +67,14 @@
 
             <ToggleButton Classes="tool"
                           IsChecked="{Binding IsSelectToolActive}"
-                          ToolTip.Tip="Select (V)"
-                          AutomationProperties.Name="Select">
+                          ToolTip.Tip="{loc:T 'Select (V)'}"
+                          AutomationProperties.Name="{loc:T 'Select'}">
                 <materialIcons:MaterialIcon Kind="CursorDefault" Width="18" Height="18" />
             </ToggleButton>
             <ToggleButton Classes="tool"
                           IsChecked="{Binding IsNodeToolActive}"
-                          ToolTip.Tip="Node / Curve (N)"
-                          AutomationProperties.Name="Node / Curve">
+                          ToolTip.Tip="{loc:T 'Node / Curve (N)'}"
+                          AutomationProperties.Name="{loc:T 'Node / Curve'}">
                 <materialIcons:MaterialIcon Kind="VectorBezier" Width="18" Height="18" />
             </ToggleButton>
 
@@ -90,24 +91,24 @@
             <Border Classes="group-separator" />
 
             <TextBlock Classes="field-label" Text="X" />
-            <TextBox Classes="field" Text="{Binding X, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="X position">
+            <TextBox Classes="field" Text="{Binding X, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="{loc:T 'X position'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
             <TextBlock Classes="field-label" Text="Y" />
-            <TextBox Classes="field" Text="{Binding Y, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="Y position">
+            <TextBox Classes="field" Text="{Binding Y, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="{loc:T 'Y position'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
             <TextBlock Classes="field-label" Text="W" />
-            <TextBox Classes="field" Text="{Binding Width, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="Width">
+            <TextBox Classes="field" Text="{Binding Width, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="{loc:T 'Width'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
             <ToggleButton Classes="tool" IsEnabled="False"
-                          ToolTip.Tip="Keep proportions"
-                          AutomationProperties.Name="Keep proportions">
+                          ToolTip.Tip="{loc:T 'Keep proportions'}"
+                          AutomationProperties.Name="{loc:T 'Keep proportions'}">
                 <materialIcons:MaterialIcon Kind="LinkVariant" Width="18" Height="18" />
             </ToggleButton>
             <TextBlock Classes="field-label" Text="H" />
-            <TextBox Classes="field" Text="{Binding Height, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="Height">
+            <TextBox Classes="field" Text="{Binding Height, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="{loc:T 'Height'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
 

@@ -1,4 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -33,11 +34,11 @@
 
             <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
                 <Button Classes="icon small" Command="{Binding ActivateHandToolCommand}"
-                        ToolTip.Tip="Pan (Hand tool)" AutomationProperties.Name="Pan (Hand tool)">
+                        ToolTip.Tip="{loc:T 'Pan (Hand tool)'}" AutomationProperties.Name="{loc:T 'Pan (Hand tool)'}">
                     <materialIcons:MaterialIcon Kind="HandBackLeftOutline" Width="16" Height="16" />
                 </Button>
                 <Button Classes="icon small" Command="{Binding ZoomOutCommand}"
-                        ToolTip.Tip="Zoom out" AutomationProperties.Name="Zoom out">
+                        ToolTip.Tip="{loc:T 'Zoom out'}" AutomationProperties.Name="{loc:T 'Zoom out'}">
                     <materialIcons:MaterialIcon Kind="MinusThick" Width="14" Height="14" />
                 </Button>
 
@@ -46,8 +47,8 @@
                                 Padding="8,0"
                                 Height="24"
                                 FontSize="12"
-                                ToolTip.Tip="Zoom"
-                                AutomationProperties.Name="Zoom level">
+                                ToolTip.Tip="{loc:T 'Zoom'}"
+                                AutomationProperties.Name="{loc:T 'Zoom level'}">
                     <DropDownButton.Flyout>
                         <MenuFlyout ItemsSource="{Binding ZoomPresets}">
                             <MenuFlyout.ItemContainerTheme>
@@ -63,11 +64,11 @@
                 </DropDownButton>
 
                 <Button Classes="icon small" Command="{Binding ZoomInCommand}"
-                        ToolTip.Tip="Zoom in" AutomationProperties.Name="Zoom in">
+                        ToolTip.Tip="{loc:T 'Zoom in'}" AutomationProperties.Name="{loc:T 'Zoom in'}">
                     <materialIcons:MaterialIcon Kind="Plus" Width="14" Height="14" />
                 </Button>
                 <Button Classes="icon small" Command="{Binding FitToWindowCommand}"
-                        ToolTip.Tip="Fit artboard in window" AutomationProperties.Name="Fit artboard in window">
+                        ToolTip.Tip="{loc:T 'Fit artboard in window'}" AutomationProperties.Name="{loc:T 'Fit artboard in window'}">
                     <materialIcons:MaterialIcon Kind="FitToScreen" Width="16" Height="16" />
                 </Button>
             </StackPanel>

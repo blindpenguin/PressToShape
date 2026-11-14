@@ -25,6 +25,14 @@ internal sealed class GestureTextConverter : IValueConverter
             text = text[..^1] + "OemMinus";
         }
 
+        // A single digit as the final key would be read as a number (0 is None, 1 is Cancel), so name it: 0 becomes D0.
+        var lastPlus = text.LastIndexOf('+');
+        var finalKey = text[(lastPlus + 1)..];
+        if (finalKey.Length == 1 && char.IsDigit(finalKey[0]))
+        {
+            text = text[..(lastPlus + 1)] + "D" + finalKey;
+        }
+
         try
         {
             return KeyGesture.Parse(text);

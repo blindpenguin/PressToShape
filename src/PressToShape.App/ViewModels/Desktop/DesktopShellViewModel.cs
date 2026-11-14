@@ -1,5 +1,6 @@
 using System;
 using CommunityToolkit.Mvvm.Input;
+using PressToShape.App.Localization;
 using PressToShape.App.Services;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
@@ -15,17 +16,18 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
     private readonly IAppShutdown _shutdown;
     private bool _initialFitDone;
 
-    public DesktopShellViewModel(IAppShutdown shutdown)
+    public DesktopShellViewModel(IAppShutdown shutdown, ILocalizer localizer)
     {
+        ArgumentNullException.ThrowIfNull(localizer);
         _shutdown = shutdown ?? throw new ArgumentNullException(nameof(shutdown));
 
         State = new EditorState();
-        Toolbox = new ToolboxViewModel(State);
+        Toolbox = new ToolboxViewModel(State, localizer);
         Canvas = new CanvasAreaViewModel(State);
-        Inspector = new InspectorViewModel(State);
-        Toolbar = new ToolbarViewModel(State);
-        StatusBar = new StatusBarViewModel(State, FitToWindow);
-        MenuBar = new MenuBarViewModel(State, shutdown, Inspector.ShowTab, FitToWindow);
+        Inspector = new InspectorViewModel(State, localizer);
+        Toolbar = new ToolbarViewModel(State, localizer);
+        StatusBar = new StatusBarViewModel(State, localizer, FitToWindow);
+        MenuBar = new MenuBarViewModel(State, shutdown, localizer, Inspector.ShowTab, FitToWindow);
 
         Canvas.PropertyChanged += OnCanvasPropertyChanged;
     }

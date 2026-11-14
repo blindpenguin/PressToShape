@@ -10,7 +10,8 @@ internal sealed class ZoomPresetViewModel
     public ZoomPresetViewModel(double percent, Action apply)
     {
         Percent = percent;
-        Text = StatusBarViewModel.FormatZoom(percent);
+        // Presets are whole numbers, so the text is the same in every language.
+        Text = StatusBarViewModel.FormatZoom(percent, System.Globalization.CultureInfo.InvariantCulture);
         SelectCommand = new RelayCommand(apply);
     }
 

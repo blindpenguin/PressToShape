@@ -1,4 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -20,19 +21,19 @@
 
         <!-- Header: title, add layer, more options -->
         <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto,Auto" Margin="0,0,0,6">
-            <TextBlock Grid.Column="0" Classes="section-header" Text="Layers" />
+            <TextBlock Grid.Column="0" Classes="section-header" Text="{loc:T 'Layers'}" />
             <Button Grid.Column="1" Classes="icon" Command="{Binding AddLayerCommand}"
-                    ToolTip.Tip="Add layer" AutomationProperties.Name="Add layer">
+                    ToolTip.Tip="{loc:T 'Add layer'}" AutomationProperties.Name="{loc:T 'Add layer'}">
                 <materialIcons:MaterialIcon Kind="Plus" Width="18" Height="18" />
             </Button>
             <Button Grid.Column="2" Classes="icon" IsEnabled="False"
-                    ToolTip.Tip="More options" AutomationProperties.Name="More layer options">
+                    ToolTip.Tip="{loc:T 'More options'}" AutomationProperties.Name="{loc:T 'More layer options'}">
                 <materialIcons:MaterialIcon Kind="DotsHorizontal" Width="18" Height="18" />
             </Button>
         </Grid>
 
         <!-- Empty state -->
-        <TextBlock Classes="secondary" Text="No layers yet"
+        <TextBlock Classes="secondary" Text="{loc:T 'No layers yet'}"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    IsVisible="{Binding !HasLayers}" />
 
@@ -45,7 +46,7 @@
                         <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" />
                         <Button Grid.Column="2" Classes="icon" Command="{Binding ToggleVisibilityCommand}"
                                 MinWidth="28" MinHeight="28"
-                                ToolTip.Tip="Toggle visibility" AutomationProperties.Name="Toggle visibility">
+                                ToolTip.Tip="{loc:T 'Toggle visibility'}" AutomationProperties.Name="{loc:T 'Toggle visibility'}">
                             <Panel>
                                 <materialIcons:MaterialIcon Kind="EyeOutline" Width="16" Height="16" IsVisible="{Binding IsVisible}" />
                                 <materialIcons:MaterialIcon Kind="EyeOffOutline" Width="16" Height="16" IsVisible="{Binding !IsVisible}" />

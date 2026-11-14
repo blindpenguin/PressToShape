@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Material.Icons;
+using PressToShape.App.Localization;
 using PressToShape.App.Workspace;
+using static PressToShape.App.Localization.Localizer;
 
 namespace PressToShape.App.ViewModels.Desktop;
 
@@ -15,50 +17,59 @@ internal sealed class ToolbarViewModel : ViewModelBase
 {
     private readonly EditorState _state;
 
-    public ToolbarViewModel(EditorState state)
+    public ToolbarViewModel(EditorState state, ILocalizer localizer)
     {
+        ArgumentNullException.ThrowIfNull(localizer);
         _state = state ?? throw new ArgumentNullException(nameof(state));
+
+        FileActions =
+        [
+            Button(localizer, N("New"), MaterialIconKind.FileOutline),
+            Button(localizer, N("Open"), MaterialIconKind.FolderOpenOutline),
+            Button(localizer, N("Save"), MaterialIconKind.ContentSaveOutline),
+        ];
+        HistoryActions =
+        [
+            Button(localizer, N("Undo"), MaterialIconKind.Undo),
+            Button(localizer, N("Redo"), MaterialIconKind.Redo),
+        ];
+        HorizontalAlignActions =
+        [
+            Button(localizer, N("Align Left"), MaterialIconKind.AlignHorizontalLeft),
+            Button(localizer, N("Align Center"), MaterialIconKind.AlignHorizontalCenter),
+            Button(localizer, N("Align Right"), MaterialIconKind.AlignHorizontalRight),
+        ];
+        TransformActions =
+        [
+            Button(localizer, N("Rotate 90°"), MaterialIconKind.RotateRight),
+            Button(localizer, N("Flip Horizontal"), MaterialIconKind.FlipHorizontal),
+        ];
+        VerticalAlignActions =
+        [
+            Button(localizer, N("Align Top"), MaterialIconKind.AlignVerticalTop),
+            Button(localizer, N("Align Middle"), MaterialIconKind.AlignVerticalCenter),
+            Button(localizer, N("Align Bottom"), MaterialIconKind.AlignVerticalBottom),
+        ];
+        OtherActions =
+        [
+            Button(localizer, N("Distribute"), MaterialIconKind.DistributeHorizontalCenter),
+            Button(localizer, N("Export"), MaterialIconKind.ExportVariant),
+        ];
+
         _state.PropertyChanged += OnStateChanged;
     }
 
-    public IReadOnlyList<ToolbarButtonViewModel> FileActions { get; } =
-    [
-        new("New", MaterialIconKind.FileOutline),
-        new("Open", MaterialIconKind.FolderOpenOutline),
-        new("Save", MaterialIconKind.ContentSaveOutline),
-    ];
+    public IReadOnlyList<ToolbarButtonViewModel> FileActions { get; }
 
-    public IReadOnlyList<ToolbarButtonViewModel> HistoryActions { get; } =
-    [
-        new("Undo", MaterialIconKind.Undo),
-        new("Redo", MaterialIconKind.Redo),
-    ];
+    public IReadOnlyList<ToolbarButtonViewModel> HistoryActions { get; }
 
-    public IReadOnlyList<ToolbarButtonViewModel> HorizontalAlignActions { get; } =
-    [
-        new("Align Left", MaterialIconKind.AlignHorizontalLeft),
-        new("Align Center", MaterialIconKind.AlignHorizontalCenter),
-        new("Align Right", MaterialIconKind.AlignHorizontalRight),
-    ];
+    public IReadOnlyList<ToolbarButtonViewModel> HorizontalAlignActions { get; }
 
-    public IReadOnlyList<ToolbarButtonViewModel> TransformActions { get; } =
-    [
-        new("Rotate 90°", MaterialIconKind.RotateRight),
-        new("Flip Horizontal", MaterialIconKind.FlipHorizontal),
-    ];
+    public IReadOnlyList<ToolbarButtonViewModel> TransformActions { get; }
 
-    public IReadOnlyList<ToolbarButtonViewModel> VerticalAlignActions { get; } =
-    [
-        new("Align Top", MaterialIconKind.AlignVerticalTop),
-        new("Align Middle", MaterialIconKind.AlignVerticalCenter),
-        new("Align Bottom", MaterialIconKind.AlignVerticalBottom),
-    ];
+    public IReadOnlyList<ToolbarButtonViewModel> VerticalAlignActions { get; }
 
-    public IReadOnlyList<ToolbarButtonViewModel> OtherActions { get; } =
-    [
-        new("Distribute", MaterialIconKind.DistributeHorizontalCenter),
-        new("Export", MaterialIconKind.ExportVariant),
-    ];
+    public IReadOnlyList<ToolbarButtonViewModel> OtherActions { get; }
 
     /// <summary>Two-way for the Select toggle. Unchecking has no effect, because one tool is always active.</summary>
     public bool IsSelectToolActive
@@ -84,6 +95,9 @@ internal sealed class ToolbarViewModel : ViewModelBase
     public string Width => string.Empty;
 
     public string Height => string.Empty;
+
+    private static ToolbarButtonViewModel Button(ILocalizer localizer, string name, MaterialIconKind icon) =>
+        new(localizer, name, icon);
 
     private void SetTool(Tool tool, bool isChecked, string propertyName)
     {

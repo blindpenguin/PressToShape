@@ -19,7 +19,7 @@
                         <Grid RowDefinitions="*,2">
                             <ContentPresenter Name="PART_ContentPresenter"
                                               Grid.Row="0"
-                                              Padding="4,10"
+                                              Padding="2,10"
                                               Content="{TemplateBinding Header}"
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                                               Foreground="{TemplateBinding Foreground}"

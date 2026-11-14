@@ -10,6 +10,7 @@
 
     <UserControl.Resources>
         <views:GestureTextConverter x:Key="GestureTextConverter" />
+        <views:CheckableToggleTypeConverter x:Key="CheckableToggleTypeConverter" />
 
         <!-- Top-level menu entries (File, Edit, ...). Same bindings, but based on the Fluent top-level look without the submenu arrow. -->
         <ControlTheme x:Key="AppTopLevelMenuItemTheme"
@@ -33,6 +34,8 @@
             <Setter Property="Command" Value="{Binding Command}" />
             <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
             <Setter Property="InputGesture" Value="{Binding Gesture, Converter={StaticResource GestureTextConverter}}" />
+            <Setter Property="ToggleType" Value="{Binding IsCheckable, Converter={StaticResource CheckableToggleTypeConverter}}" />
+            <Setter Property="IsChecked" Value="{Binding IsChecked, Mode=TwoWay}" />
             <Setter Property="ItemContainerTheme" Value="{DynamicResource AppMenuItemTheme}" />
         </ControlTheme>
     </UserControl.Resources>

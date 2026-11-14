@@ -1,4 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -32,21 +33,21 @@
                 <Border Width="26" Height="26" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                         Background="{DynamicResource ControlBackgroundBrush}"
                         BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="2"
-                        CornerRadius="3" ToolTip.Tip="Stroke color" />
+                        CornerRadius="3" ToolTip.Tip="{loc:T 'Stroke color'}" />
                 <Border Width="26" Height="26" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,4,0,0"
                         Background="{DynamicResource AppAccentBrush}"
                         BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1"
-                        CornerRadius="3" ToolTip.Tip="Fill color" />
+                        CornerRadius="3" ToolTip.Tip="{loc:T 'Fill color'}" />
                 <Button Classes="icon" MinWidth="20" MinHeight="20" Width="20" Height="20"
                         HorizontalAlignment="Right" VerticalAlignment="Top"
                         Command="{Binding SwapColorsCommand}"
-                        ToolTip.Tip="Swap fill and stroke" AutomationProperties.Name="Swap fill and stroke">
+                        ToolTip.Tip="{loc:T 'Swap fill and stroke'}" AutomationProperties.Name="{loc:T 'Swap fill and stroke'}">
                     <materialIcons:MaterialIcon Kind="SwapHorizontal" Width="12" Height="12" />
                 </Button>
                 <Button Classes="icon" MinWidth="20" MinHeight="20" Width="20" Height="20"
                         HorizontalAlignment="Left" VerticalAlignment="Bottom"
                         Command="{Binding ResetColorsCommand}"
-                        ToolTip.Tip="Reset colors" AutomationProperties.Name="Reset colors">
+                        ToolTip.Tip="{loc:T 'Reset colors'}" AutomationProperties.Name="{loc:T 'Reset colors'}">
                     <materialIcons:MaterialIcon Kind="Restore" Width="12" Height="12" />
                 </Button>
             </Grid>

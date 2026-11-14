@@ -1,20 +1,23 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
+using PressToShape.App.Localization;
 using PressToShape.App.Workspace;
+using static PressToShape.App.Localization.Localizer;
 
 namespace PressToShape.App.ViewModels.Editor;
 
 /// <summary>State of the inspector: the selected tab and the view models of its tabs.</summary>
 internal sealed partial class InspectorViewModel : ViewModelBase
 {
-    public InspectorViewModel(EditorState state)
+    public InspectorViewModel(EditorState state, ILocalizer localizer)
     {
         ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(localizer);
 
         Properties = new PropertiesViewModel(state);
         Layers = new LayersViewModel();
-        Assets = new PlaceholderPanelViewModel("Assets", "No assets yet");
-        History = new PlaceholderPanelViewModel("History", "No history yet");
+        Assets = new PlaceholderPanelViewModel(localizer, N("Assets"), N("No assets yet"));
+        History = new PlaceholderPanelViewModel(localizer, N("History"), N("No history yet"));
     }
 
     public PropertiesViewModel Properties { get; }

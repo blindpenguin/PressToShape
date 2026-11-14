@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Material.Icons;
+using static PressToShape.App.Localization.Localizer;
 
 namespace PressToShape.App.Workspace;
 
@@ -9,18 +10,18 @@ internal static class ToolDefinitions
 {
     public static IReadOnlyList<ToolDefinition> All { get; } =
     [
-        new(Tool.Select, "Select", 'V', MaterialIconKind.CursorDefault),
-        new(Tool.DirectSelect, "Direct Select", 'A', MaterialIconKind.CursorDefaultOutline),
-        new(Tool.Pen, "Pen", 'P', MaterialIconKind.Pen),
-        new(Tool.Node, "Node / Curve", 'N', MaterialIconKind.VectorBezier),
-        new(Tool.Text, "Text", 'T', MaterialIconKind.FormatText),
-        new(Tool.Rectangle, "Rectangle", 'M', MaterialIconKind.SquareRoundedOutline),
-        new(Tool.Ellipse, "Ellipse", 'L', MaterialIconKind.EllipseOutline),
-        new(Tool.Star, "Star", null, MaterialIconKind.StarOutline),
-        new(Tool.Spiral, "Spiral", null, MaterialIconKind.Cyclone),
-        new(Tool.Eyedropper, "Eyedropper", 'I', MaterialIconKind.Eyedropper),
-        new(Tool.Hand, "Hand", 'H', MaterialIconKind.HandBackLeftOutline),
-        new(Tool.Zoom, "Zoom", 'Z', MaterialIconKind.Magnify),
+        new(Tool.Select, N("Select"), 'V', MaterialIconKind.CursorDefault),
+        new(Tool.DirectSelect, N("Direct Select"), 'A', MaterialIconKind.CursorDefaultOutline),
+        new(Tool.Pen, N("Pen"), 'P', MaterialIconKind.Pen),
+        new(Tool.Node, N("Node / Curve"), 'N', MaterialIconKind.VectorBezier),
+        new(Tool.Text, N("Text"), 'T', MaterialIconKind.FormatText),
+        new(Tool.Rectangle, N("Rectangle"), 'M', MaterialIconKind.SquareRoundedOutline),
+        new(Tool.Ellipse, N("Ellipse"), 'L', MaterialIconKind.EllipseOutline),
+        new(Tool.Star, N("Star"), null, MaterialIconKind.StarOutline),
+        new(Tool.Spiral, N("Spiral"), null, MaterialIconKind.Cyclone),
+        new(Tool.Eyedropper, N("Eyedropper"), 'I', MaterialIconKind.Eyedropper),
+        new(Tool.Hand, N("Hand"), 'H', MaterialIconKind.HandBackLeftOutline),
+        new(Tool.Zoom, N("Zoom"), 'Z', MaterialIconKind.Magnify),
     ];
 
     public static ToolDefinition Get(Tool tool) => All.First(d => d.Tool == tool);

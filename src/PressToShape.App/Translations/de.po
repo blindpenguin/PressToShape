@@ -1,0 +1,487 @@
+# German translation for PressToShape.
+# Message ids are the English texts. An underscore marks the Alt-key mnemonic of a menu entry.
+msgid ""
+msgstr ""
+"Project-Id-Version: PressToShape\n"
+"Language: de\n"
+"Language-Team: German\n"
+"Last-Translator: PressToShape contributors\n"
+"PO-Revision-Date: 2026-11-14 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "_File"
+msgstr "_Datei"
+
+msgid "_New"
+msgstr "_Neu"
+
+msgid "_Open…"
+msgstr "_Öffnen…"
+
+msgid "Open _Recent"
+msgstr "Zuletzt _geöffnet"
+
+msgid "(No recent files)"
+msgstr "(Keine zuletzt geöffneten Dateien)"
+
+msgid "_Save"
+msgstr "_Speichern"
+
+msgid "Save _As…"
+msgstr "Speichern _unter…"
+
+msgid "_Export as SVG…"
+msgstr "_Exportieren als SVG…"
+
+msgid "_Document Settings…"
+msgstr "_Dokumenteinstellungen…"
+
+msgid "_Quit"
+msgstr "_Beenden"
+
+msgid "_Edit"
+msgstr "_Bearbeiten"
+
+msgid "_Undo"
+msgstr "_Rückgängig"
+
+msgid "_Redo"
+msgstr "_Wiederholen"
+
+msgid "Cu_t"
+msgstr "Aus_schneiden"
+
+msgid "_Copy"
+msgstr "_Kopieren"
+
+msgid "_Paste"
+msgstr "_Einfügen"
+
+msgid "Paste in Plac_e"
+msgstr "An _Originalposition einfügen"
+
+msgid "_Duplicate"
+msgstr "_Duplizieren"
+
+msgid "De_lete"
+msgstr "_Löschen"
+
+msgid "Select _All"
+msgstr "_Alles auswählen"
+
+msgid "De_select"
+msgstr "Auswahl auf_heben"
+
+msgid "Pre_ferences…"
+msgstr "_Voreinstellungen…"
+
+msgid "_Object"
+msgstr "_Objekt"
+
+msgid "_Transform"
+msgstr "_Transformieren"
+
+msgid "Rotate 90° _Clockwise"
+msgstr "Um 90° im _Uhrzeigersinn drehen"
+
+msgid "Rotate 90° C_ounterclockwise"
+msgstr "Um 90° _gegen den Uhrzeigersinn drehen"
+
+msgid "Flip _Horizontal"
+msgstr "_Horizontal spiegeln"
+
+msgid "Flip _Vertical"
+msgstr "_Vertikal spiegeln"
+
+msgid "_Arrange"
+msgstr "_Anordnen"
+
+msgid "Bring to _Front"
+msgstr "In den _Vordergrund"
+
+msgid "Bring F_orward"
+msgstr "Eine Stufe nach v_orn"
+
+msgid "Send _Backward"
+msgstr "Eine Stufe nach _hinten"
+
+msgid "Send to Bac_k"
+msgstr "In den Hinter_grund"
+
+msgid "_Group"
+msgstr "_Gruppieren"
+
+msgid "_Ungroup"
+msgstr "Gruppierung a_ufheben"
+
+msgid "_Lock"
+msgstr "_Sperren"
+
+msgid "Unloc_k All"
+msgstr "Alle e_ntsperren"
+
+msgid "_Hide"
+msgstr "_Verbergen"
+
+msgid "_Show All"
+msgstr "Alle e_inblenden"
+
+msgid "Clipping _Mask"
+msgstr "Schnitt_maske"
+
+msgid "_Make"
+msgstr "_Erstellen"
+
+msgid "_Release"
+msgstr "_Auflösen"
+
+msgid "_Path"
+msgstr "_Pfad"
+
+msgid "_Convert Object to Path"
+msgstr "Objekt in _Pfad umwandeln"
+
+msgid "_Stroke to Path"
+msgstr "_Kontur in Pfad umwandeln"
+
+msgid "Com_bine"
+msgstr "Ko_mbinieren"
+
+msgid "Break _Apart"
+msgstr "_Aufteilen"
+
+msgid "_Union"
+msgstr "_Vereinigung"
+
+msgid "_Difference"
+msgstr "_Differenz"
+
+msgid "_Intersection"
+msgstr "_Schnittmenge"
+
+msgid "E_xclusion"
+msgstr "_Exklusion"
+
+msgid "_Reverse Direction"
+msgstr "_Richtung umkehren"
+
+msgid "Si_mplify"
+msgstr "Verein_fachen"
+
+msgid "_Text"
+msgstr "_Text"
+
+msgid "Convert Text to _Path"
+msgstr "Text in _Pfad umwandeln"
+
+msgid "_Font…"
+msgstr "_Schriftart…"
+
+msgid "_Character Panel"
+msgstr "_Zeichenpanel"
+
+msgid "_View"
+msgstr "_Ansicht"
+
+msgid "Zoom _In"
+msgstr "_Vergrößern"
+
+msgid "Zoom _Out"
+msgstr "Ver_kleinern"
+
+msgid "_Fit Artboard in Window"
+msgstr "_Zeichenfläche einpassen"
+
+msgid "_Actual Size (100%)"
+msgstr "_Originalgröße (100%)"
+
+msgid "Show _Rulers"
+msgstr "_Lineale anzeigen"
+
+msgid "Show _Grid"
+msgstr "_Raster anzeigen"
+
+msgid "_Snap to Grid"
+msgstr "Am Raster _ausrichten"
+
+msgid "Snap to Ob_jects"
+msgstr "An O_bjekten ausrichten"
+
+msgid "_Language"
+msgstr "_Sprache"
+
+msgid "_Window"
+msgstr "_Fenster"
+
+msgid "_Properties"
+msgstr "_Eigenschaften"
+
+msgid "_Layers"
+msgstr "E_benen"
+
+msgid "_Assets"
+msgstr "_Assets"
+
+msgid "_History"
+msgstr "_Verlauf"
+
+msgid "_Help"
+msgstr "_Hilfe"
+
+msgid "_Keyboard Shortcuts"
+msgstr "_Tastenkürzel"
+
+msgid "_About PressToShape"
+msgstr "_Über PressToShape"
+
+msgid "Nothing selected"
+msgstr "Nichts ausgewählt"
+
+msgid "New"
+msgstr "Neu"
+
+msgid "Open"
+msgstr "Öffnen"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Undo"
+msgstr "Rückgängig"
+
+msgid "Redo"
+msgstr "Wiederholen"
+
+msgid "Align Left"
+msgstr "Links ausrichten"
+
+msgid "Align Center"
+msgstr "Zentriert ausrichten"
+
+msgid "Align Right"
+msgstr "Rechts ausrichten"
+
+msgid "Rotate 90°"
+msgstr "Um 90° drehen"
+
+msgid "Flip Horizontal"
+msgstr "Horizontal spiegeln"
+
+msgid "Align Top"
+msgstr "Oben ausrichten"
+
+msgid "Align Middle"
+msgstr "Mittig ausrichten"
+
+msgid "Align Bottom"
+msgstr "Unten ausrichten"
+
+msgid "Distribute"
+msgstr "Verteilen"
+
+msgid "Export"
+msgstr "Exportieren"
+
+msgid "Assets"
+msgstr "Assets"
+
+msgid "No assets yet"
+msgstr "Noch keine Assets"
+
+msgid "History"
+msgstr "Verlauf"
+
+msgid "No history yet"
+msgstr "Noch kein Verlauf"
+
+msgid "Select"
+msgstr "Auswählen"
+
+msgid "Direct Select"
+msgstr "Direktauswahl"
+
+msgid "Pen"
+msgstr "Zeichenstift"
+
+msgid "Node / Curve"
+msgstr "Knoten / Kurve"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Rectangle"
+msgstr "Rechteck"
+
+msgid "Ellipse"
+msgstr "Ellipse"
+
+msgid "Star"
+msgstr "Stern"
+
+msgid "Spiral"
+msgstr "Spirale"
+
+msgid "Eyedropper"
+msgstr "Pipette"
+
+msgid "Hand"
+msgstr "Hand"
+
+msgid "Zoom"
+msgstr "Zoom"
+
+msgid "Resize inspector"
+msgstr "Größe des Inspektors ändern"
+
+msgid "Pan (Hand tool)"
+msgstr "Verschieben (Handwerkzeug)"
+
+msgid "Zoom out"
+msgstr "Verkleinern"
+
+msgid "Zoom level"
+msgstr "Zoomstufe"
+
+msgid "Zoom in"
+msgstr "Vergrößern"
+
+msgid "Fit artboard in window"
+msgstr "Zeichenfläche ins Fenster einpassen"
+
+msgid "Select (V)"
+msgstr "Auswählen (V)"
+
+msgid "Node / Curve (N)"
+msgstr "Knoten / Kurve (N)"
+
+msgid "X position"
+msgstr "X-Position"
+
+msgid "Y position"
+msgstr "Y-Position"
+
+msgid "Width"
+msgstr "Breite"
+
+msgid "Keep proportions"
+msgstr "Proportionen beibehalten"
+
+msgid "Height"
+msgstr "Höhe"
+
+msgid "Properties"
+msgstr "Eigenschaften"
+
+msgid "Properties tab"
+msgstr "Reiter Eigenschaften"
+
+msgid "Layers"
+msgstr "Ebenen"
+
+msgid "Layers tab"
+msgstr "Reiter Ebenen"
+
+msgid "Assets tab"
+msgstr "Reiter Assets"
+
+msgid "History tab"
+msgstr "Reiter Verlauf"
+
+msgid "Add layer"
+msgstr "Ebene hinzufügen"
+
+msgid "More options"
+msgstr "Weitere Optionen"
+
+msgid "More layer options"
+msgstr "Weitere Ebenenoptionen"
+
+msgid "No layers yet"
+msgstr "Noch keine Ebenen"
+
+msgid "Toggle visibility"
+msgstr "Sichtbarkeit umschalten"
+
+msgid "Transform"
+msgstr "Transformieren"
+
+msgid "Rotation"
+msgstr "Drehung"
+
+msgid "Reset transform"
+msgstr "Transformation zurücksetzen"
+
+msgid "Appearance"
+msgstr "Aussehen"
+
+msgid "Fill"
+msgstr "Füllung"
+
+msgid "Fill options"
+msgstr "Fülloptionen"
+
+msgid "Stroke"
+msgstr "Kontur"
+
+msgid "Stroke options"
+msgstr "Konturoptionen"
+
+msgid "Stroke width"
+msgstr "Konturbreite"
+
+msgid "Stroke cap"
+msgstr "Linienenden"
+
+msgid "Stroke join"
+msgstr "Linienecken"
+
+msgid "Stroke alignment"
+msgstr "Konturausrichtung"
+
+msgid "Dashes"
+msgstr "Strichmuster"
+
+msgid "Opacity"
+msgstr "Deckkraft"
+
+msgid "Opacity percent"
+msgstr "Deckkraft in Prozent"
+
+msgid "Path"
+msgstr "Pfad"
+
+msgid "Path options appear when a path is selected."
+msgstr "Pfadoptionen erscheinen, wenn ein Pfad ausgewählt ist."
+
+msgid "Align & Distribute"
+msgstr "Ausrichten & Verteilen"
+
+msgid "Distribute horizontally"
+msgstr "Horizontal verteilen"
+
+msgid "Quick Actions"
+msgstr "Schnellaktionen"
+
+msgid "Group"
+msgstr "Gruppieren"
+
+msgid "Ungroup"
+msgstr "Gruppierung aufheben"
+
+msgid "Mask"
+msgstr "Maske"
+
+msgid "Stroke color"
+msgstr "Konturfarbe"
+
+msgid "Fill color"
+msgstr "Füllfarbe"
+
+msgid "Swap fill and stroke"
+msgstr "Füllung und Kontur vertauschen"
+
+msgid "Reset colors"
+msgstr "Farben zurücksetzen"

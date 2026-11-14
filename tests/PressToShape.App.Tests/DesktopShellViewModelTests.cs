@@ -26,7 +26,7 @@ public class DesktopShellViewModelTests
     [Fact]
     public void Shell_CreatesAllRegions()
     {
-        var shell = new DesktopShellViewModel(new FakeShutdown());
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
 
         Assert.NotNull(shell.MenuBar);
         Assert.NotNull(shell.Toolbar);
@@ -39,7 +39,7 @@ public class DesktopShellViewModelTests
     [Fact]
     public void ToolSelectedInToolbox_IsReflectedInToolbar()
     {
-        var shell = new DesktopShellViewModel(new FakeShutdown());
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
 
         shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Node).SelectCommand.Execute(null);
 
@@ -50,7 +50,7 @@ public class DesktopShellViewModelTests
     [Fact]
     public void ToolToggledInToolbar_IsReflectedInToolbox()
     {
-        var shell = new DesktopShellViewModel(new FakeShutdown());
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
 
         shell.Toolbar.IsNodeToolActive = true;
 
@@ -61,7 +61,7 @@ public class DesktopShellViewModelTests
     [Fact]
     public void ZoomFromEveryRoute_ShowsTheSameValue()
     {
-        var shell = new DesktopShellViewModel(new FakeShutdown());
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
 
         // menu route
         FindItem(shell, "Zoom In").Command!.Execute(null);
@@ -84,7 +84,7 @@ public class DesktopShellViewModelTests
     [Fact]
     public void FitToWindow_UsesTheCanvasViewport_FromMenuAndStatusBar()
     {
-        var shell = new DesktopShellViewModel(new FakeShutdown());
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
         shell.Canvas.ViewportWidth = 648;  // available 600 x 400 with the default 24 px margin
         shell.Canvas.ViewportHeight = 448;
 
@@ -99,7 +99,7 @@ public class DesktopShellViewModelTests
     [Fact]
     public void FitToWindow_WithoutViewport_LeavesZoomUnchanged()
     {
-        var shell = new DesktopShellViewModel(new FakeShutdown());
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
         shell.State.SetZoom(200);
 
         shell.FitToWindow();
@@ -110,7 +110,7 @@ public class DesktopShellViewModelTests
     [Fact]
     public void WindowMenu_SwitchesTheInspectorTab()
     {
-        var shell = new DesktopShellViewModel(new FakeShutdown());
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
 
         FindItem(shell, "Layers").Command!.Execute(null);
 
@@ -121,7 +121,7 @@ public class DesktopShellViewModelTests
     public void Quit_CallsTheInjectedShutdown()
     {
         var shutdown = new FakeShutdown();
-        var shell = new DesktopShellViewModel(shutdown);
+        var shell = new DesktopShellViewModel(shutdown, FakeLocalizer.Create());
 
         FindItem(shell, "Quit").Command!.Execute(null);
 
@@ -131,7 +131,7 @@ public class DesktopShellViewModelTests
     [Fact]
     public void SelectionState_FlowsToAllRegions()
     {
-        var shell = new DesktopShellViewModel(new FakeShutdown());
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
 
         shell.State.HasSelection = true;
         shell.State.SelectionSummary = "1 selected";
@@ -145,7 +145,7 @@ public class DesktopShellViewModelTests
     public void ShortcutCommands_DoWhatTheMenuItemsDo()
     {
         var shutdown = new FakeShutdown();
-        var shell = new DesktopShellViewModel(shutdown);
+        var shell = new DesktopShellViewModel(shutdown, FakeLocalizer.Create());
         shell.Canvas.ViewportWidth = 648;
         shell.Canvas.ViewportHeight = 448;
         shell.State.ZoomToActualSize(); // the first viewport size fitted the artboard already
@@ -169,7 +169,7 @@ public class DesktopShellViewModelTests
     [Fact]
     public void FirstViewportSize_FitsTheArtboardOnce()
     {
-        var shell = new DesktopShellViewModel(new FakeShutdown());
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
         Assert.Equal(100, shell.State.ZoomPercent);
 
         shell.Canvas.ViewportWidth = 648;
@@ -182,5 +182,27 @@ public class DesktopShellViewModelTests
         shell.State.SetZoom(200);
         shell.Canvas.ViewportWidth = 1000;
         Assert.Equal(200, shell.State.ZoomPercent);
+    }
+
+    [Fact]
+    public void LanguageSwitch_ChangesTextInEveryRegion()
+    {
+        var localizer = FakeLocalizer.Create("en", new System.Collections.Generic.Dictionary<string, string>
+        {
+            ["_File"] = "_Datei",
+            ["Select"] = "Auswählen",
+            ["Undo"] = "Rückgängig",
+            ["Nothing selected"] = "Nichts ausgewählt",
+            ["No assets yet"] = "Noch keine Assets",
+        });
+        var shell = new DesktopShellViewModel(new FakeShutdown(), localizer);
+
+        localizer.SetLanguage("de");
+
+        Assert.Equal("_Datei", shell.MenuBar.Menus[0].Header);
+        Assert.Equal("Auswählen", shell.Toolbox.Tools[0].Name);
+        Assert.Equal("Rückgängig", shell.Toolbar.HistoryActions[0].Name);
+        Assert.Equal("Nichts ausgewählt", shell.StatusBar.SelectionSummary);
+        Assert.Equal("Noch keine Assets", shell.Inspector.Assets.Message);
     }
 }

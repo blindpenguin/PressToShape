@@ -34,6 +34,9 @@ Views/Editor/         reusable panels: tool column, canvas area, inspector panel
 Controls/             custom controls such as the ruler
 Styles/               Theme.axaml (all colors and sizes, light and dark) and control styles
 Services/             small interfaces and implementations such as IAppShutdown
+Localization/         translation: ILocalizer, Localizer, language selection, gettext catalog, XAML extension
+Settings/             the settings file: AppSettings, ISettingsStore, JsonFileSettingsStore
+Translations/         gettext .po files (de.po); compiled to .mo and embedded at build time
 ```
 A future tablet layout adds `Views/Tablet` and `ViewModels/Tablet` and reuses `Views/Editor`, `ViewModels/Editor` and `Workspace`.
 

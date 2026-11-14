@@ -16,6 +16,7 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm"/>
+        <PackageReference Include="GetText.NET"/>
         <PackageReference Include="Material.Icons.Avalonia"/>
     </ItemGroup>
 
@@ -26,4 +27,38 @@
     <ItemGroup>
         <InternalsVisibleTo Include="PressToShape.App.Tests"/>
     </ItemGroup>
+
+    <!-- Translations: the .po files are the only committed sources. They are compiled to .mo with msgfmt
+         (GNU gettext tools) at build time and embedded as PressToShape.App.Translations.<code>.mo. -->
+    <ItemGroup>
+        <TranslationSource Include="Translations\*.po"/>
+    </ItemGroup>
+
+    <Target Name="CompileTranslations"
+            BeforeTargets="AssignTargetPaths"
+            Inputs="@(TranslationSource)"
+            Outputs="@(TranslationSource->'$(IntermediateOutputPath)translations/%(Filename).mo')">
+        <Exec Command="msgfmt --version"
+              IgnoreExitCode="true"
+              ContinueOnError="true"
+              StandardOutputImportance="low"
+              StandardErrorImportance="low">
+            <Output TaskParameter="ExitCode" PropertyName="_MsgfmtExitCode"/>
+        </Exec>
+        <Error Condition="'$(_MsgfmtExitCode)' != '0'"
+               Text="msgfmt was not found. Install the gettext tools: 'sudo apt install gettext' (Debian, Ubuntu), or install gettext for Windows and add it to PATH. See README.md."/>
+        <MakeDir Directories="$(IntermediateOutputPath)translations"/>
+        <Exec Command="msgfmt --check -o &quot;$(IntermediateOutputPath)translations/%(TranslationSource.Filename).mo&quot; &quot;%(TranslationSource.FullPath)&quot;"/>
+    </Target>
+
+    <Target Name="EmbedTranslations"
+            BeforeTargets="AssignTargetPaths"
+            DependsOnTargets="CompileTranslations">
+        <ItemGroup>
+            <_TranslationMo Include="$(IntermediateOutputPath)translations/*.mo"/>
+            <EmbeddedResource Include="@(_TranslationMo)"
+                              LogicalName="PressToShape.App.Translations.%(_TranslationMo.Filename).mo"
+                              WithCulture="false"/>
+        </ItemGroup>
+    </Target>
 </Project>

@@ -1,4 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,129 +28,129 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
 
-            <TextBlock Classes="secondary" Text="Nothing selected" Margin="12,10,12,6"
+            <TextBlock Classes="secondary" Text="{loc:T 'Nothing selected'}" Margin="12,10,12,6"
                        IsVisible="{Binding ShowNothingSelectedHint}" />
 
             <!-- The controls inside each section are disabled while nothing is selected.
                  The section headers stay enabled so sections can always be collapsed and expanded. -->
             <StackPanel>
 
-                <controls:CollapsibleSection Header="Transform" IsExpanded="{Binding IsTransformExpanded}">
+                <controls:CollapsibleSection Header="{loc:T 'Transform'}" IsExpanded="{Binding IsTransformExpanded}">
                     <Grid Margin="12,4,12,12" ColumnDefinitions="Auto,*,Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6"
                           IsEnabled="{Binding HasSelection}">
                         <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="X" Margin="0,0,6,0" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Classes="field" AutomationProperties.Name="X position">
+                        <TextBox Grid.Row="0" Grid.Column="1" Classes="field" AutomationProperties.Name="{loc:T 'X position'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
                         <TextBlock Grid.Row="0" Grid.Column="2" Classes="label" Text="Y" Margin="8,0,6,0" />
-                        <TextBox Grid.Row="0" Grid.Column="3" Classes="field" AutomationProperties.Name="Y position">
+                        <TextBox Grid.Row="0" Grid.Column="3" Classes="field" AutomationProperties.Name="{loc:T 'Y position'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
                         <ToggleButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="4" Classes="tool" Margin="8,0,0,0"
-                                      ToolTip.Tip="Keep proportions" AutomationProperties.Name="Keep proportions">
+                                      ToolTip.Tip="{loc:T 'Keep proportions'}" AutomationProperties.Name="{loc:T 'Keep proportions'}">
                             <materialIcons:MaterialIcon Kind="LinkVariant" Width="18" Height="18" />
                         </ToggleButton>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Classes="label" Text="W" Margin="0,0,6,0" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Classes="field" AutomationProperties.Name="Width">
+                        <TextBox Grid.Row="1" Grid.Column="1" Classes="field" AutomationProperties.Name="{loc:T 'Width'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
                         <TextBlock Grid.Row="1" Grid.Column="2" Classes="label" Text="H" Margin="8,0,6,0" />
-                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" AutomationProperties.Name="Height">
+                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" AutomationProperties.Name="{loc:T 'Height'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
 
                         <materialIcons:MaterialIcon Grid.Row="2" Grid.Column="0" Kind="RotateRight" Width="16" Height="16" Margin="0,0,6,0" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Classes="field" AutomationProperties.Name="Rotation">
+                        <TextBox Grid.Row="2" Grid.Column="1" Classes="field" AutomationProperties.Name="{loc:T 'Rotation'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="°" /></TextBox.InnerRightContent>
 </TextBox>
                         <Button Grid.Row="2" Grid.Column="4" Classes="icon" Margin="8,0,0,0"
-                                ToolTip.Tip="Reset transform" AutomationProperties.Name="Reset transform">
+                                ToolTip.Tip="{loc:T 'Reset transform'}" AutomationProperties.Name="{loc:T 'Reset transform'}">
                             <materialIcons:MaterialIcon Kind="Restore" Width="18" Height="18" />
                         </Button>
                     </Grid>
                 </controls:CollapsibleSection>
 
-                <controls:CollapsibleSection Header="Appearance" IsExpanded="{Binding IsAppearanceExpanded}">
+                <controls:CollapsibleSection Header="{loc:T 'Appearance'}" IsExpanded="{Binding IsAppearanceExpanded}">
                     <Grid Margin="12,4,12,12" ColumnDefinitions="64,Auto,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8"
                           IsEnabled="{Binding HasSelection}">
-                        <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="Fill" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="{loc:T 'Fill'}" />
                         <Border Grid.Row="0" Grid.Column="1" Classes="swatch" Background="{DynamicResource AppAccentBrush}" />
-                        <Button Grid.Row="0" Grid.Column="2" Classes="icon" ToolTip.Tip="Fill options" AutomationProperties.Name="Fill options">
+                        <Button Grid.Row="0" Grid.Column="2" Classes="icon" ToolTip.Tip="{loc:T 'Fill options'}" AutomationProperties.Name="{loc:T 'Fill options'}">
                             <materialIcons:MaterialIcon Kind="ChevronDown" Width="16" Height="16" />
                         </Button>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Classes="label" Text="Stroke" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Classes="label" Text="{loc:T 'Stroke'}" />
                         <Border Grid.Row="1" Grid.Column="1" Classes="swatch" Background="{DynamicResource ControlBackgroundBrush}" />
-                        <Button Grid.Row="1" Grid.Column="2" Classes="icon" ToolTip.Tip="Stroke options" AutomationProperties.Name="Stroke options">
+                        <Button Grid.Row="1" Grid.Column="2" Classes="icon" ToolTip.Tip="{loc:T 'Stroke options'}" AutomationProperties.Name="{loc:T 'Stroke options'}">
                             <materialIcons:MaterialIcon Kind="ChevronDown" Width="16" Height="16" />
                         </Button>
-                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" Margin="8,0,0,0" AutomationProperties.Name="Stroke width">
+                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" Margin="8,0,0,0" AutomationProperties.Name="{loc:T 'Stroke width'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
 
                         <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" Spacing="2">
-                            <Button Classes="icon" ToolTip.Tip="Stroke cap" AutomationProperties.Name="Stroke cap">
+                            <Button Classes="icon" ToolTip.Tip="{loc:T 'Stroke cap'}" AutomationProperties.Name="{loc:T 'Stroke cap'}">
                                 <materialIcons:MaterialIcon Kind="VectorLine" Width="18" Height="18" />
                             </Button>
-                            <Button Classes="icon" ToolTip.Tip="Stroke join" AutomationProperties.Name="Stroke join">
+                            <Button Classes="icon" ToolTip.Tip="{loc:T 'Stroke join'}" AutomationProperties.Name="{loc:T 'Stroke join'}">
                                 <materialIcons:MaterialIcon Kind="VectorPolyline" Width="18" Height="18" />
                             </Button>
-                            <Button Classes="icon" ToolTip.Tip="Stroke alignment" AutomationProperties.Name="Stroke alignment">
+                            <Button Classes="icon" ToolTip.Tip="{loc:T 'Stroke alignment'}" AutomationProperties.Name="{loc:T 'Stroke alignment'}">
                                 <materialIcons:MaterialIcon Kind="FormatLineStyle" Width="18" Height="18" />
                             </Button>
-                            <Button Classes="icon" ToolTip.Tip="Dashes" AutomationProperties.Name="Dashes">
+                            <Button Classes="icon" ToolTip.Tip="{loc:T 'Dashes'}" AutomationProperties.Name="{loc:T 'Dashes'}">
                                 <materialIcons:MaterialIcon Kind="Equal" Width="18" Height="18" />
                             </Button>
                         </StackPanel>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Classes="label" Text="Opacity" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Classes="label" Text="{loc:T 'Opacity'}" />
                         <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" ColumnDefinitions="*,Auto">
-                            <Slider Grid.Column="0" Minimum="0" Maximum="100" Value="100" AutomationProperties.Name="Opacity" />
+                            <Slider Grid.Column="0" Minimum="0" Maximum="100" Value="100" AutomationProperties.Name="{loc:T 'Opacity'}" />
                             <TextBox Grid.Column="1" Classes="field" Width="64" Text="100%" Margin="8,0,0,0"
-                                     AutomationProperties.Name="Opacity percent" />
+                                     AutomationProperties.Name="{loc:T 'Opacity percent'}" />
                         </Grid>
                     </Grid>
                 </controls:CollapsibleSection>
 
-                <controls:CollapsibleSection Header="Path" IsExpanded="{Binding IsPathExpanded}">
-                    <TextBlock Classes="secondary" Text="Path options appear when a path is selected."
+                <controls:CollapsibleSection Header="{loc:T 'Path'}" IsExpanded="{Binding IsPathExpanded}">
+                    <TextBlock Classes="secondary" Text="{loc:T 'Path options appear when a path is selected.'}"
                                Margin="12,4,12,12" TextWrapping="Wrap" />
                 </controls:CollapsibleSection>
 
-                <controls:CollapsibleSection Header="Align &amp; Distribute" IsExpanded="{Binding IsAlignExpanded}">
+                <controls:CollapsibleSection Header="{loc:T 'Align &amp; Distribute'}" IsExpanded="{Binding IsAlignExpanded}">
                     <StackPanel Orientation="Horizontal" Spacing="2" Margin="12,4,12,12" IsEnabled="{Binding HasSelection}">
-                        <Button Classes="icon" ToolTip.Tip="Align left" AutomationProperties.Name="Align left">
+                        <Button Classes="icon" ToolTip.Tip="{loc:T 'Align Left'}" AutomationProperties.Name="{loc:T 'Align Left'}">
                             <materialIcons:MaterialIcon Kind="AlignHorizontalLeft" Width="18" Height="18" />
                         </Button>
-                        <Button Classes="icon" ToolTip.Tip="Align center" AutomationProperties.Name="Align center">
+                        <Button Classes="icon" ToolTip.Tip="{loc:T 'Align Center'}" AutomationProperties.Name="{loc:T 'Align Center'}">
                             <materialIcons:MaterialIcon Kind="AlignHorizontalCenter" Width="18" Height="18" />
                         </Button>
-                        <Button Classes="icon" ToolTip.Tip="Align right" AutomationProperties.Name="Align right">
+                        <Button Classes="icon" ToolTip.Tip="{loc:T 'Align Right'}" AutomationProperties.Name="{loc:T 'Align Right'}">
                             <materialIcons:MaterialIcon Kind="AlignHorizontalRight" Width="18" Height="18" />
                         </Button>
-                        <Button Classes="icon" ToolTip.Tip="Distribute horizontally" AutomationProperties.Name="Distribute horizontally">
+                        <Button Classes="icon" ToolTip.Tip="{loc:T 'Distribute horizontally'}" AutomationProperties.Name="{loc:T 'Distribute horizontally'}">
                             <materialIcons:MaterialIcon Kind="DistributeHorizontalCenter" Width="18" Height="18" />
                         </Button>
                         <Border Width="1" Margin="6,6" Background="{DynamicResource BorderSubtleBrush}" />
-                        <Button Classes="icon" ToolTip.Tip="Align top" AutomationProperties.Name="Align top">
+                        <Button Classes="icon" ToolTip.Tip="{loc:T 'Align Top'}" AutomationProperties.Name="{loc:T 'Align Top'}">
                             <materialIcons:MaterialIcon Kind="AlignVerticalTop" Width="18" Height="18" />
                         </Button>
-                        <Button Classes="icon" ToolTip.Tip="Align middle" AutomationProperties.Name="Align middle">
+                        <Button Classes="icon" ToolTip.Tip="{loc:T 'Align Middle'}" AutomationProperties.Name="{loc:T 'Align Middle'}">
                             <materialIcons:MaterialIcon Kind="AlignVerticalCenter" Width="18" Height="18" />
                         </Button>
-                        <Button Classes="icon" ToolTip.Tip="Align bottom" AutomationProperties.Name="Align bottom">
+                        <Button Classes="icon" ToolTip.Tip="{loc:T 'Align Bottom'}" AutomationProperties.Name="{loc:T 'Align Bottom'}">
                             <materialIcons:MaterialIcon Kind="AlignVerticalBottom" Width="18" Height="18" />
                         </Button>
                     </StackPanel>
                 </controls:CollapsibleSection>
 
-                <controls:CollapsibleSection Header="Quick Actions" IsExpanded="{Binding IsQuickActionsExpanded}">
-                    <UniformGrid Columns="3" Margin="12,4,12,12" IsEnabled="{Binding HasSelection}">
-                        <Button Content="Group" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,4,0" />
-                        <Button Content="Ungroup" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="2,0" />
-                        <Button Content="Mask" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="4,0,0,0" />
-                    </UniformGrid>
+                <controls:CollapsibleSection Header="{loc:T 'Quick Actions'}" IsExpanded="{Binding IsQuickActionsExpanded}">
+                    <WrapPanel Margin="12,4,12,12" ItemSpacing="6" LineSpacing="6" IsEnabled="{Binding HasSelection}">
+                        <Button Content="{loc:T 'Group'}" MinWidth="80" HorizontalContentAlignment="Center" />
+                        <Button Content="{loc:T 'Ungroup'}" MinWidth="80" HorizontalContentAlignment="Center" />
+                        <Button Content="{loc:T 'Mask'}" MinWidth="80" HorizontalContentAlignment="Center" />
+                    </WrapPanel>
                 </controls:CollapsibleSection>
 
             </StackPanel>

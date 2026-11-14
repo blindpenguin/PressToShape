@@ -1,4 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -31,13 +32,13 @@
 
         <desktop:ToolbarView Grid.Row="1" DataContext="{Binding Toolbar}" />
 
-        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto,300">
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto,330">
             <editor:ToolboxView Grid.Column="0" DataContext="{Binding Toolbox}" />
             <editor:CanvasAreaView Grid.Column="1" DataContext="{Binding Canvas}" />
             <GridSplitter Grid.Column="2" Width="4" ResizeDirection="Columns"
                           Background="{DynamicResource BorderSubtleBrush}"
-                          AutomationProperties.Name="Resize inspector" />
-            <editor:InspectorView Grid.Column="3" MinWidth="240" MaxWidth="480" DataContext="{Binding Inspector}" />
+                          AutomationProperties.Name="{loc:T 'Resize inspector'}" />
+            <editor:InspectorView Grid.Column="3" MinWidth="280" MaxWidth="520" DataContext="{Binding Inspector}" />
         </Grid>
 
         <desktop:StatusBarView Grid.Row="3" DataContext="{Binding StatusBar}" />

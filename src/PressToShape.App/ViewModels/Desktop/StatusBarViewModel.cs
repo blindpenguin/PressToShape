@@ -4,17 +4,20 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using CommunityToolkit.Mvvm.Input;
+using PressToShape.App.Localization;
 using PressToShape.App.Workspace;
+using static PressToShape.App.Localization.Localizer;
 
 namespace PressToShape.App.ViewModels.Desktop;
 
 /// <summary>Status bar: selection summary on the left, zoom controls on the right.</summary>
-internal sealed partial class StatusBarViewModel : ViewModelBase
+internal sealed partial class StatusBarViewModel : LocalizedViewModel
 {
     private readonly EditorState _state;
     private readonly Action _fitToWindow;
 
-    public StatusBarViewModel(EditorState state, Action fitToWindow)
+    public StatusBarViewModel(EditorState state, ILocalizer localizer, Action fitToWindow)
+        : base(localizer)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _fitToWindow = fitToWindow ?? throw new ArgumentNullException(nameof(fitToWindow));
@@ -22,7 +25,8 @@ internal sealed partial class StatusBarViewModel : ViewModelBase
         _state.PropertyChanged += OnStateChanged;
     }
 
-    public string SelectionSummary => _state.SelectionSummary;
+    /// <summary>The selection description, or the translated "Nothing selected" without a selection.</summary>
+    public string SelectionSummary => _state.HasSelection ? _state.SelectionSummary : Localizer.T(N("Nothing selected"));
 
     /// <summary>Path length of the selection, for example "Path length: 2,480.6 px". Empty until selections exist.</summary>
     public string PathLengthText => string.Empty;
@@ -32,13 +36,14 @@ internal sealed partial class StatusBarViewModel : ViewModelBase
     public double ZoomPercent => _state.ZoomPercent;
 
     /// <summary>The zoom as shown in the status bar, for example "100%" or "133.33%".</summary>
-    public string ZoomText => FormatZoom(_state.ZoomPercent);
+    public string ZoomText => FormatZoom(_state.ZoomPercent, Localizer.Culture);
 
     /// <summary>The zoom values offered in the drop-down. Each entry carries its own command.</summary>
     public IReadOnlyList<ZoomPresetViewModel> ZoomPresets { get; }
 
-    public static string FormatZoom(double percent) =>
-        percent.ToString("0.##", CultureInfo.InvariantCulture) + "%";
+    /// <summary>Formats a zoom value with the decimal separator of the given culture, for example "80.75%" or "80,75%".</summary>
+    public static string FormatZoom(double percent, CultureInfo culture) =>
+        percent.ToString("0.##", culture) + "%";
 
     [RelayCommand]
     private void ZoomIn() => _state.ZoomIn();
@@ -68,6 +73,7 @@ internal sealed partial class StatusBarViewModel : ViewModelBase
                 OnPropertyChanged(nameof(SelectionSummary));
                 break;
             case nameof(EditorState.HasSelection):
+                OnPropertyChanged(nameof(SelectionSummary));
                 OnPropertyChanged(nameof(ShowPathLength));
                 break;
         }

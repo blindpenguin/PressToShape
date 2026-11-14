@@ -1,4 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -21,16 +22,16 @@
                 </ItemsPanelTemplate>
             </TabControl.ItemsPanel>
 
-            <TabItem Header="Properties" AutomationProperties.Name="Properties tab">
+            <TabItem Header="{loc:T 'Properties'}" AutomationProperties.Name="{loc:T 'Properties tab'}">
                 <ContentControl Content="{Binding Properties}" />
             </TabItem>
-            <TabItem Header="Layers" AutomationProperties.Name="Layers tab">
+            <TabItem Header="{loc:T 'Layers'}" AutomationProperties.Name="{loc:T 'Layers tab'}">
                 <ContentControl Content="{Binding Layers}" />
             </TabItem>
-            <TabItem Header="Assets" AutomationProperties.Name="Assets tab">
+            <TabItem Header="{loc:T 'Assets'}" AutomationProperties.Name="{loc:T 'Assets tab'}">
                 <ContentControl Content="{Binding Assets}" />
             </TabItem>
-            <TabItem Header="History" AutomationProperties.Name="History tab">
+            <TabItem Header="{loc:T 'History'}" AutomationProperties.Name="{loc:T 'History tab'}">
                 <ContentControl Content="{Binding History}" />
             </TabItem>
         </TabControl>

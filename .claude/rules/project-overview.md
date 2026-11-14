@@ -5,7 +5,7 @@ PressToShape is a cross-platform desktop app built with Avalonia UI 12 (Fluent t
 ## Layout
 Solution `PressToShape.sln`. Dependencies point one way: `Desktop/Android -> App -> Core`. Details are in `.spec-workflow/steering/structure.md`.
 - `src/PressToShape.Core/`: UI-independent document model, geometry, commands, file I/O. No Avalonia.
-- `src/PressToShape.App/`: all Avalonia UI. `Workspace/` (pure logic), `ViewModels/` and `Views/` each split into `Desktop/` (desktop layout) and `Editor/` (reusable panels), `Controls/`, `Styles/` (theme), `Services/`. `ViewLocator` maps `FooViewModel` to `FooView` by name and folder.
+- `src/PressToShape.App/`: all Avalonia UI. `Workspace/` (pure logic), `ViewModels/` and `Views/` each split into `Desktop/` (desktop layout) and `Editor/` (reusable panels), `Controls/`, `Styles/` (theme), `Services/`, `Localization/` (translation), `Settings/` (settings file), `Translations/` (`.po` files). `ViewLocator` maps `FooViewModel` to `FooView` by name and folder.
 - `src/PressToShape.Desktop/`: Linux and Windows startup only.
 - `src/PressToShape.Android/`: Android startup only. Build-only, not run on an emulator.
 - `tests/PressToShape.Core.Tests/`, `tests/PressToShape.App.Tests/`: xUnit tests, warnings are errors.
@@ -14,7 +14,7 @@ Solution `PressToShape.sln`. Dependencies point one way: `Desktop/Android -> App
 
 ## Commands
 - Build desktop and tests: `dotnet build src/PressToShape.Desktop` and `dotnet build tests/PressToShape.App.Tests`
-- Build everything: `dotnet build` (needs the Android workload and JDK 21, see `README.md`)
+- Build everything: `dotnet build` (needs the gettext tools, the Android workload and JDK 21, see `README.md`)
 - Run: `dotnet run --project src/PressToShape.Desktop`
 - Test: `dotnet test`
 - Format check: `dotnet format --verify-no-changes`
@@ -26,6 +26,7 @@ Solution `PressToShape.sln`. Dependencies point one way: `Desktop/Android -> App
 - Do not assume. If a request, requirement, or design decision is unclear, ask the user before proceeding.
 - Do not add NuGet packages without asking the user.
 - Do not hardcode absolute paths, usernames, or machine-specific values in code or config. Use relative paths, `AppContext.BaseDirectory`, or `Environment.GetFolderPath`.
+- All user-visible text is translated, see `localization.md`.
 - Colors and sizes live only in `Styles/Theme.axaml` (light and dark). Never hardcode a color in a view.
 - Never commit secrets. Do not edit `bin/`, `obj/`, or `.idea/`.
 - Features that span several files go through the spec workflow (see `spec-workflow.md`).

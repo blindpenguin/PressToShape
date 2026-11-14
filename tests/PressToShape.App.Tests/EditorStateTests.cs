@@ -14,7 +14,7 @@ public class EditorStateTests
         Assert.Equal(Tool.Select, state.ActiveTool);
         Assert.Equal(100, state.ZoomPercent);
         Assert.False(state.HasSelection);
-        Assert.Equal("Nothing selected", state.SelectionSummary);
+        Assert.Equal(string.Empty, state.SelectionSummary);
         Assert.Equal(1200, state.ArtboardWidth);
         Assert.Equal(800, state.ArtboardHeight);
     }

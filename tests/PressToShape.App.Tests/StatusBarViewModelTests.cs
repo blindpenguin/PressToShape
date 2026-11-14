@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using PressToShape.App.Localization;
 using PressToShape.App.ViewModels.Desktop;
 using PressToShape.App.Workspace;
 using Xunit;
@@ -12,7 +13,7 @@ public class StatusBarViewModelTests
     {
         var state = new EditorState();
         var fitCalls = new List<int>();
-        var bar = new StatusBarViewModel(state, () => fitCalls.Add(1));
+        var bar = new StatusBarViewModel(state, FakeLocalizer.Create(), () => fitCalls.Add(1));
         return (state, bar, fitCalls);
     }
 
@@ -34,7 +35,7 @@ public class StatusBarViewModelTests
     [InlineData(12.5, "12.5%")]
     public void FormatZoom_UsesInvariantCulture(double percent, string expected)
     {
-        Assert.Equal(expected, StatusBarViewModel.FormatZoom(percent));
+        Assert.Equal(expected, StatusBarViewModel.FormatZoom(percent, System.Globalization.CultureInfo.InvariantCulture));
     }
 
     [Fact]
@@ -121,9 +122,81 @@ public class StatusBarViewModelTests
         var raised = false;
         bar.PropertyChanged += (_, e) => raised |= e.PropertyName == nameof(StatusBarViewModel.SelectionSummary);
 
+        state.HasSelection = true;
         state.SelectionSummary = "1 selected (Group)";
 
         Assert.True(raised);
         Assert.Equal("1 selected (Group)", bar.SelectionSummary);
+    }
+
+    private static (EditorState State, Localizer Localizer, StatusBarViewModel Bar) CreateWithGerman()
+    {
+        var state = new EditorState();
+        var localizer = FakeLocalizer.Create("en", new Dictionary<string, string> { ["Nothing selected"] = "Nichts ausgewählt" });
+        var bar = new StatusBarViewModel(state, localizer, () => { });
+        return (state, localizer, bar);
+    }
+
+    [Fact]
+    public void NothingSelected_IsTranslated_AndRefreshesOnLanguageChange()
+    {
+        var (_, localizer, bar) = CreateWithGerman();
+        var raised = new List<string?>();
+        bar.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+        Assert.Equal("Nothing selected", bar.SelectionSummary);
+
+        localizer.SetLanguage("de");
+
+        Assert.Equal("Nichts ausgewählt", bar.SelectionSummary);
+        Assert.Contains(string.Empty, raised);
+    }
+
+    [Fact]
+    public void WithASelection_TheSummaryIsTheStateText()
+    {
+        var (state, localizer, bar) = CreateWithGerman();
+        localizer.SetLanguage("de");
+
+        state.SelectionSummary = "1 ausgewählt (Gruppe)";
+        state.HasSelection = true;
+
+        Assert.Equal("1 ausgewählt (Gruppe)", bar.SelectionSummary);
+
+        state.HasSelection = false;
+
+        Assert.Equal("Nichts ausgewählt", bar.SelectionSummary);
+    }
+
+    [Fact]
+    public void ZoomText_UsesTheDecimalSeparatorOfTheLanguage()
+    {
+        var (state, localizer, bar) = CreateWithGerman();
+        state.SetZoom(80.75);
+        Assert.Equal("80.75%", bar.ZoomText);
+
+        localizer.SetLanguage("de");
+
+        Assert.Equal("80,75%", bar.ZoomText);
+
+        localizer.SetLanguage("en");
+
+        Assert.Equal("80.75%", bar.ZoomText);
+    }
+
+    [Fact]
+    public void WholeNumberZoom_LooksTheSameInBothLanguages()
+    {
+        var (_, localizer, bar) = CreateWithGerman();
+
+        localizer.SetLanguage("de");
+
+        Assert.Equal("100%", bar.ZoomText);
+        Assert.Equal("100%", bar.ZoomPresets.Single(p => p.Percent == 100).Text);
+    }
+
+    [Fact]
+    public void FormatZoom_GermanCulture_UsesAComma()
+    {
+        Assert.Equal("133,33%", StatusBarViewModel.FormatZoom(133.333, new System.Globalization.CultureInfo("de-DE")));
     }
 }

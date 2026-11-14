@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using PressToShape.App.Localization;
 using PressToShape.App.Workspace;
 
 namespace PressToShape.App.ViewModels.Editor;
@@ -11,14 +12,15 @@ internal sealed partial class ToolboxViewModel : ViewModelBase
 {
     private readonly EditorState _state;
 
-    public ToolboxViewModel(EditorState state)
+    public ToolboxViewModel(EditorState state, ILocalizer localizer)
     {
+        ArgumentNullException.ThrowIfNull(localizer);
         _state = state ?? throw new ArgumentNullException(nameof(state));
 
         var items = new List<ToolItemViewModel>();
         foreach (var definition in ToolDefinitions.All)
         {
-            items.Add(new ToolItemViewModel(definition, SelectToolCommand, _state.ActiveTool == definition.Tool));
+            items.Add(new ToolItemViewModel(localizer, definition, SelectToolCommand, _state.ActiveTool == definition.Tool));
         }
 
         Tools = items;

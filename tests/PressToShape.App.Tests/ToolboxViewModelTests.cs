@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
@@ -10,7 +11,7 @@ public class ToolboxViewModelTests
     [Fact]
     public void Tools_AreListedInMockupOrder()
     {
-        var toolbox = new ToolboxViewModel(new EditorState());
+        var toolbox = new ToolboxViewModel(new EditorState(), FakeLocalizer.Create());
 
         Assert.Equal(ToolDefinitions.All.Select(d => d.Tool), toolbox.Tools.Select(t => t.Definition.Tool));
     }
@@ -18,7 +19,7 @@ public class ToolboxViewModelTests
     [Fact]
     public void Select_IsActiveByDefault_AndOnlyOneToolIsActive()
     {
-        var toolbox = new ToolboxViewModel(new EditorState());
+        var toolbox = new ToolboxViewModel(new EditorState(), FakeLocalizer.Create());
 
         var active = toolbox.Tools.Where(t => t.IsActive).ToList();
 
@@ -30,7 +31,7 @@ public class ToolboxViewModelTests
     public void SelectToolCommand_ChangesActiveTool_AndHighlight()
     {
         var state = new EditorState();
-        var toolbox = new ToolboxViewModel(state);
+        var toolbox = new ToolboxViewModel(state, FakeLocalizer.Create());
 
         toolbox.Tools.Single(t => t.Definition.Tool == Tool.Pen).SelectCommand.Execute(null);
 
@@ -44,7 +45,7 @@ public class ToolboxViewModelTests
     public void ToolChangedElsewhere_IsReflected()
     {
         var state = new EditorState();
-        var toolbox = new ToolboxViewModel(state);
+        var toolbox = new ToolboxViewModel(state, FakeLocalizer.Create());
 
         state.ActiveTool = Tool.Ellipse;
 
@@ -59,7 +60,7 @@ public class ToolboxViewModelTests
     public void TrySelectByKey_KnownKey_SelectsTool(char key, string expectedTool)
     {
         var state = new EditorState();
-        var toolbox = new ToolboxViewModel(state);
+        var toolbox = new ToolboxViewModel(state, FakeLocalizer.Create());
 
         var handled = toolbox.TrySelectByKey(key);
 
@@ -74,7 +75,7 @@ public class ToolboxViewModelTests
     public void TrySelectByKey_UnknownKey_ReturnsFalse_AndKeepsTool(char key)
     {
         var state = new EditorState { ActiveTool = Tool.Hand };
-        var toolbox = new ToolboxViewModel(state);
+        var toolbox = new ToolboxViewModel(state, FakeLocalizer.Create());
 
         var handled = toolbox.TrySelectByKey(key);
 
@@ -85,7 +86,7 @@ public class ToolboxViewModelTests
     [Fact]
     public void ToolbarItem_ToolTip_ContainsNameAndShortcut()
     {
-        var toolbox = new ToolboxViewModel(new EditorState());
+        var toolbox = new ToolboxViewModel(new EditorState(), FakeLocalizer.Create());
 
         Assert.Equal("Select (V)", toolbox.Tools[0].ToolTip);
     }
@@ -93,9 +94,33 @@ public class ToolboxViewModelTests
     [Fact]
     public void SwatchCommands_ExistButCannotExecute()
     {
-        var toolbox = new ToolboxViewModel(new EditorState());
+        var toolbox = new ToolboxViewModel(new EditorState(), FakeLocalizer.Create());
 
         Assert.False(toolbox.SwapColorsCommand.CanExecute(null));
         Assert.False(toolbox.ResetColorsCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void ToolNamesAndTooltips_AreTranslated_AndRefreshOnLanguageChange()
+    {
+        var localizer = FakeLocalizer.Create("en", new Dictionary<string, string>
+        {
+            ["Select"] = "Auswählen",
+            ["Star"] = "Stern",
+        });
+        var toolbox = new ToolboxViewModel(new EditorState(), localizer);
+        var select = toolbox.Tools.Single(t => t.Definition.Tool == Tool.Select);
+        var star = toolbox.Tools.Single(t => t.Definition.Tool == Tool.Star);
+        var raised = new List<string?>();
+        select.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+        Assert.Equal("Select", select.Name);
+        Assert.Equal("Select (V)", select.ToolTip);
+
+        localizer.SetLanguage("de");
+
+        Assert.Equal("Auswählen", select.Name);
+        Assert.Equal("Auswählen (V)", select.ToolTip);
+        Assert.Equal("Stern", star.ToolTip); // no shortcut key
+        Assert.Contains(string.Empty, raised);
     }
 }
