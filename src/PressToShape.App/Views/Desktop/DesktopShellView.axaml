@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Desktop"
+             xmlns:desktop="using:PressToShape.App.Views.Desktop"
+             xmlns:editor="using:PressToShape.App.Views.Editor"
+             mc:Ignorable="d" d:DesignWidth="1440" d:DesignHeight="900"
+             x:Class="PressToShape.App.Views.Desktop.DesktopShellView"
+             x:DataType="vm:DesktopShellViewModel"
+             Focusable="True">
+
+    <UserControl.KeyBindings>
+        <KeyBinding Gesture="Ctrl+OemPlus" Command="{Binding ZoomInCommand}" />
+        <KeyBinding Gesture="Ctrl+Add" Command="{Binding ZoomInCommand}" />
+        <KeyBinding Gesture="Ctrl+OemMinus" Command="{Binding ZoomOutCommand}" />
+        <KeyBinding Gesture="Ctrl+Subtract" Command="{Binding ZoomOutCommand}" />
+        <KeyBinding Gesture="Ctrl+D0" Command="{Binding FitArtboardCommand}" />
+        <KeyBinding Gesture="Ctrl+NumPad0" Command="{Binding FitArtboardCommand}" />
+        <KeyBinding Gesture="Ctrl+D1" Command="{Binding ActualSizeCommand}" />
+        <KeyBinding Gesture="Ctrl+NumPad1" Command="{Binding ActualSizeCommand}" />
+        <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuitCommand}" />
+    </UserControl.KeyBindings>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Background="{DynamicResource WindowBackgroundBrush}">
+
+        <Border Grid.Row="0" Background="{DynamicResource ToolbarBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,0,1">
+            <desktop:MenuBarView DataContext="{Binding MenuBar}" />
+        </Border>
+
+        <desktop:ToolbarView Grid.Row="1" DataContext="{Binding Toolbar}" />
+
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto,300">
+            <editor:ToolboxView Grid.Column="0" DataContext="{Binding Toolbox}" />
+            <editor:CanvasAreaView Grid.Column="1" DataContext="{Binding Canvas}" />
+            <GridSplitter Grid.Column="2" Width="4" ResizeDirection="Columns"
+                          Background="{DynamicResource BorderSubtleBrush}"
+                          AutomationProperties.Name="Resize inspector" />
+            <editor:InspectorView Grid.Column="3" MinWidth="240" MaxWidth="480" DataContext="{Binding Inspector}" />
+        </Grid>
+
+        <desktop:StatusBarView Grid.Row="3" DataContext="{Binding StatusBar}" />
+
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Desktop"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="28"
+             x:Class="PressToShape.App.Views.Desktop.StatusBarView"
+             x:DataType="vm:StatusBarViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock.status">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.icon.small">
+            <Setter Property="MinWidth" Value="24" />
+            <Setter Property="MinHeight" Value="24" />
+        </Style>
+    </UserControl.Styles>
+
+    <Border Background="{DynamicResource ToolbarBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderSubtleBrush}"
+            BorderThickness="0,1,0,0"
+            Height="{StaticResource StatusBarHeight}"
+            Padding="12,0,8,0">
+        <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+
+            <TextBlock Grid.Column="0" Classes="status" Text="{Binding SelectionSummary}" />
+            <TextBlock Grid.Column="1" Classes="status" Margin="16,0,0,0"
+                       Text="{Binding PathLengthText}" IsVisible="{Binding ShowPathLength}" />
+
+            <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+                <Button Classes="icon small" Command="{Binding ActivateHandToolCommand}"
+                        ToolTip.Tip="Pan (Hand tool)" AutomationProperties.Name="Pan (Hand tool)">
+                    <materialIcons:MaterialIcon Kind="HandBackLeftOutline" Width="16" Height="16" />
+                </Button>
+                <Button Classes="icon small" Command="{Binding ZoomOutCommand}"
+                        ToolTip.Tip="Zoom out" AutomationProperties.Name="Zoom out">
+                    <materialIcons:MaterialIcon Kind="MinusThick" Width="14" Height="14" />
+                </Button>
+
+                <DropDownButton Content="{Binding ZoomText}"
+                                MinWidth="72"
+                                Padding="8,0"
+                                Height="24"
+                                FontSize="12"
+                                ToolTip.Tip="Zoom"
+                                AutomationProperties.Name="Zoom level">
+                    <DropDownButton.Flyout>
+                        <MenuFlyout ItemsSource="{Binding ZoomPresets}">
+                            <MenuFlyout.ItemContainerTheme>
+                                <ControlTheme TargetType="MenuItem"
+                                              BasedOn="{StaticResource {x:Type MenuItem}}"
+                                              x:DataType="vm:ZoomPresetViewModel">
+                                    <Setter Property="Header" Value="{Binding Text}" />
+                                    <Setter Property="Command" Value="{Binding SelectCommand}" />
+                                </ControlTheme>
+                            </MenuFlyout.ItemContainerTheme>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+
+                <Button Classes="icon small" Command="{Binding ZoomInCommand}"
+                        ToolTip.Tip="Zoom in" AutomationProperties.Name="Zoom in">
+                    <materialIcons:MaterialIcon Kind="Plus" Width="14" Height="14" />
+                </Button>
+                <Button Classes="icon small" Command="{Binding FitToWindowCommand}"
+                        ToolTip.Tip="Fit artboard in window" AutomationProperties.Name="Fit artboard in window">
+                    <materialIcons:MaterialIcon Kind="FitToScreen" Width="16" Height="16" />
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+
+</UserControl>

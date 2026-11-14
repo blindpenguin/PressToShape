@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:controls="using:PressToShape.App.Controls"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="PressToShape.App.Views.Editor.CanvasAreaView"
+             x:DataType="vm:CanvasAreaViewModel">
+
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
+
+        <!-- Corner between the rulers -->
+        <Border Grid.Row="0" Grid.Column="0"
+                Width="{StaticResource RulerSize}" Height="{StaticResource RulerSize}"
+                Background="{DynamicResource RulerBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,1,1" />
+
+        <controls:RulerControl Grid.Row="0" Grid.Column="1"
+                               Orientation="Horizontal"
+                               Height="{StaticResource RulerSize}"
+                               ZoomPercent="{Binding ZoomPercent}"
+                               OriginPx="{Binding OriginX}" />
+
+        <controls:RulerControl Grid.Row="1" Grid.Column="0"
+                               Orientation="Vertical"
+                               Width="{StaticResource RulerSize}"
+                               ZoomPercent="{Binding ZoomPercent}"
+                               OriginPx="{Binding OriginY}" />
+
+        <!-- Viewport: canvas background with the centered artboard. No drawing or pointer handling yet. -->
+        <Canvas Grid.Row="1" Grid.Column="1"
+                x:Name="Viewport"
+                Background="{DynamicResource CanvasBackgroundBrush}"
+                ClipToBounds="True">
+            <Border Canvas.Left="{Binding OriginX}"
+                    Canvas.Top="{Binding OriginY}"
+                    Width="{Binding ArtboardScreenWidth}"
+                    Height="{Binding ArtboardScreenHeight}"
+                    Background="{DynamicResource ArtboardFillBrush}"
+                    BorderBrush="{DynamicResource ArtboardBorderBrush}"
+                    BorderThickness="1" />
+        </Canvas>
+
+    </Grid>
+
+</UserControl>

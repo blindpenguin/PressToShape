@@ -1,17 +1,17 @@
 # Project Structure
 
 ## Current State
-The repository is still the Avalonia template: one desktop project at the repository root (`PressToShape.csproj`) with `Models/`, `ViewModels/`, `Views/`, `Assets/`, `App.axaml`, `Program.cs` and `ViewLocator.cs`. The target structure below is the direction. Moving to it is done through a spec, not ad hoc.
+The solution is split into `PressToShape.Core`, `PressToShape.App`, `PressToShape.Desktop` and `PressToShape.Android`, plus two test projects, as described below. The names and the split are confirmed.
 
-## Target Directory Organization
+## Directory Organization
 
 ```
 PressToShape/
 ├── src/
 │   ├── PressToShape.Core/         # UI-independent: document model, geometry, commands, history, file I/O, SVG export
-│   ├── PressToShape.App/          # Shared Avalonia code: view models, shared views, styles, tools, canvas control
-│   ├── PressToShape.Desktop/      # Linux and Windows head: entry point, desktop layout shell
-│   └── PressToShape.Android/      # Android head: entry point, tablet layout shell
+│   ├── PressToShape.App/          # All Avalonia UI code: layout shells, panels, view models, styles, controls
+│   ├── PressToShape.Desktop/      # Linux and Windows head: platform startup only
+│   └── PressToShape.Android/      # Android head: platform startup only
 ├── tests/
 │   ├── PressToShape.Core.Tests/   # Unit tests for the core
 │   └── PressToShape.App.Tests/    # View model tests, plus headless UI tests where needed
@@ -24,7 +24,18 @@ PressToShape/
 └── PressToShape.sln
 ```
 
-Project names and the exact split between `App` and the heads are proposals. They get confirmed in the first structural spec.
+### Inside `PressToShape.App`
+```
+Workspace/            pure logic without Avalonia types: tools, zoom, ruler ticks, shared EditorState
+ViewModels/Desktop/   view models that exist only for the desktop layout (shell, menu bar, toolbar, status bar)
+ViewModels/Editor/    view models reusable by every layout (tool column, canvas area, inspector, layers)
+Views/Desktop/        the desktop layout shell and its layout-specific views
+Views/Editor/         reusable panels: tool column, canvas area, inspector panels
+Controls/             custom controls such as the ruler
+Styles/               Theme.axaml (all colors and sizes, light and dark) and control styles
+Services/             small interfaces and implementations such as IAppShutdown
+```
+A future tablet layout adds `Views/Tablet` and `ViewModels/Tablet` and reuses `Views/Editor`, `ViewModels/Editor` and `Workspace`.
 
 ## Module Boundaries and Dependency Direction
 
@@ -36,15 +47,15 @@ Android ─┘
 
 - **Core** depends on no UI framework (no Avalonia). It holds everything that is true regardless of how it is displayed.
 - **App** depends on Core and Avalonia. It contains view models and the UI parts that both layouts share.
-- **Heads** (Desktop, Android) depend on App. They contain only platform startup code and the layout shell for that platform.
+- **Heads** (Desktop, Android) depend on App. They contain only platform startup code. Layout shells live in App, so that `ViewLocator` and the shared panels can reach them.
 - **Tests** reference the project they test. Nothing references tests.
 - Dependencies point one way only. Core never references App or a head. App never references a head.
 - Platform-specific code is isolated in the heads or behind interfaces defined in Core or App.
 
 ### Two layouts, one core
 - The desktop layout (menu, toolbar, tool column, canvas, tabbed inspector, status bar) and the tablet landscape layout (compact toolbar, tool column, canvas, tabbed panel, contextual controls) are different view compositions over the same view models and core.
-- Layout-specific views live with the layout. Shared building blocks (canvas control, property editors, layer list) are written once and reused by both.
-- Per-platform behavior is selected by the head, not by runtime `if` checks scattered through shared code.
+- Layout-specific views live in App under `Views/Desktop` (later `Views/Tablet`). Shared building blocks (canvas area, inspector panels, tool column) live in `Views/Editor` and are written once.
+- The application class chooses the layout from the application lifetime (window on desktop, single view on Android). Platform behavior is not selected by runtime `if` checks scattered through shared code.
 
 ## Naming Conventions
 

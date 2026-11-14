@@ -13,7 +13,8 @@ paths:
 - Views contain no business logic. Code-behind is limited to view-only concerns (focus, animations, platform dialogs) that cannot be expressed in bindings.
 - View models never reference `Avalonia.Controls` types or views. Reach UI services (dialogs, file pickers) through an interface injected into the view model.
 - Models must not depend on Avalonia or on view models.
-- One view per view model, named by convention: `FooViewModel` and `FooView`, in `src/PressToShape.App/ViewModels/` and `Views/`. `ViewLocator` depends on this naming.
+- One view per view model, named by convention: `FooViewModel` and `FooView`, in matching folders (for example `ViewModels/Editor/` and `Views/Editor/`) under `src/PressToShape.App/`. `ViewLocator` depends on this naming and only finds views in the App assembly.
+- Layout shells go in `Views/Desktop` (later `Views/Tablet`). Panels that several layouts share go in `Views/Editor`.
 
 ## CommunityToolkit.Mvvm
 - View models are `partial` classes deriving from `ViewModelBase`.

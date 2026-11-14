@@ -1,0 +1,109 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--
+        The single place for colors, sizes and spacing. Views must use these resources
+        (DynamicResource for brushes) and never hardcode colors.
+        Values are approximated from docs/mockup and are meant to be adjusted here.
+    -->
+
+    <ResourceDictionary.ThemeDictionaries>
+
+        <ResourceDictionary x:Key="Dark">
+            <!-- Accent (also drives the Fluent accent colors of built-in controls) -->
+            <Color x:Key="SystemAccentColor">#6E4FD6</Color>
+            <Color x:Key="SystemAccentColorLight1">#8264E6</Color>
+            <Color x:Key="SystemAccentColorLight2">#967BF0</Color>
+            <Color x:Key="SystemAccentColorLight3">#AB93F7</Color>
+            <Color x:Key="SystemAccentColorDark1">#5C3FC0</Color>
+            <Color x:Key="SystemAccentColorDark2">#4C31A8</Color>
+            <Color x:Key="SystemAccentColorDark3">#3D2790</Color>
+            <SolidColorBrush x:Key="AppAccentBrush">#6E4FD6</SolidColorBrush>
+            <SolidColorBrush x:Key="AppAccentForegroundBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="SelectedItemBrush">#4D6E4FD6</SolidColorBrush>
+
+            <!-- Surfaces -->
+            <SolidColorBrush x:Key="WindowBackgroundBrush">#1B1B20</SolidColorBrush>
+            <SolidColorBrush x:Key="PanelBackgroundBrush">#25252C</SolidColorBrush>
+            <SolidColorBrush x:Key="ToolbarBackgroundBrush">#202026</SolidColorBrush>
+            <SolidColorBrush x:Key="ToolColumnBackgroundBrush">#202026</SolidColorBrush>
+            <SolidColorBrush x:Key="CanvasBackgroundBrush">#17171C</SolidColorBrush>
+            <SolidColorBrush x:Key="ArtboardFillBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="ArtboardBorderBrush">#3A3A45</SolidColorBrush>
+
+            <!-- Borders -->
+            <SolidColorBrush x:Key="BorderSubtleBrush">#35353F</SolidColorBrush>
+            <SolidColorBrush x:Key="BorderStrongBrush">#4A4A57</SolidColorBrush>
+
+            <!-- Text -->
+            <SolidColorBrush x:Key="TextPrimaryBrush">#E8E8EE</SolidColorBrush>
+            <SolidColorBrush x:Key="TextSecondaryBrush">#9A9AA8</SolidColorBrush>
+            <SolidColorBrush x:Key="TextDisabledBrush">#5E5E6B</SolidColorBrush>
+
+            <!-- Controls -->
+            <SolidColorBrush x:Key="ControlBackgroundBrush">#2D2D36</SolidColorBrush>
+            <SolidColorBrush x:Key="ControlHoverBrush">#363642</SolidColorBrush>
+            <SolidColorBrush x:Key="ControlPressedBrush">#41414F</SolidColorBrush>
+
+            <!-- Rulers -->
+            <SolidColorBrush x:Key="RulerBackgroundBrush">#25252C</SolidColorBrush>
+            <SolidColorBrush x:Key="RulerTickBrush">#7A7A88</SolidColorBrush>
+            <SolidColorBrush x:Key="RulerTextBrush">#A0A0AE</SolidColorBrush>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Light">
+            <!-- Accent (also drives the Fluent accent colors of built-in controls) -->
+            <Color x:Key="SystemAccentColor">#5B3FC2</Color>
+            <Color x:Key="SystemAccentColorLight1">#6E4FD6</Color>
+            <Color x:Key="SystemAccentColorLight2">#8264E6</Color>
+            <Color x:Key="SystemAccentColorLight3">#967BF0</Color>
+            <Color x:Key="SystemAccentColorDark1">#4C31A8</Color>
+            <Color x:Key="SystemAccentColorDark2">#3D2790</Color>
+            <Color x:Key="SystemAccentColorDark3">#2F1D78</Color>
+            <SolidColorBrush x:Key="AppAccentBrush">#5B3FC2</SolidColorBrush>
+            <SolidColorBrush x:Key="AppAccentForegroundBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="SelectedItemBrush">#335B3FC2</SolidColorBrush>
+
+            <!-- Surfaces -->
+            <SolidColorBrush x:Key="WindowBackgroundBrush">#F3F3F6</SolidColorBrush>
+            <SolidColorBrush x:Key="PanelBackgroundBrush">#F7F7FA</SolidColorBrush>
+            <SolidColorBrush x:Key="ToolbarBackgroundBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="ToolColumnBackgroundBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="CanvasBackgroundBrush">#D9D9E0</SolidColorBrush>
+            <SolidColorBrush x:Key="ArtboardFillBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="ArtboardBorderBrush">#B8B8C4</SolidColorBrush>
+
+            <!-- Borders -->
+            <SolidColorBrush x:Key="BorderSubtleBrush">#D5D5DE</SolidColorBrush>
+            <SolidColorBrush x:Key="BorderStrongBrush">#B4B4C2</SolidColorBrush>
+
+            <!-- Text -->
+            <SolidColorBrush x:Key="TextPrimaryBrush">#1E1E26</SolidColorBrush>
+            <SolidColorBrush x:Key="TextSecondaryBrush">#5E5E6E</SolidColorBrush>
+            <SolidColorBrush x:Key="TextDisabledBrush">#A8A8B5</SolidColorBrush>
+
+            <!-- Controls -->
+            <SolidColorBrush x:Key="ControlBackgroundBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="ControlHoverBrush">#ECECF2</SolidColorBrush>
+            <SolidColorBrush x:Key="ControlPressedBrush">#E0E0E8</SolidColorBrush>
+
+            <!-- Rulers -->
+            <SolidColorBrush x:Key="RulerBackgroundBrush">#F7F7FA</SolidColorBrush>
+            <SolidColorBrush x:Key="RulerTickBrush">#7A7A88</SolidColorBrush>
+            <SolidColorBrush x:Key="RulerTextBrush">#4F4F5E</SolidColorBrush>
+        </ResourceDictionary>
+
+    </ResourceDictionary.ThemeDictionaries>
+
+    <!-- Sizes and spacing (same in both themes) -->
+    <x:Double x:Key="ToolButtonSize">36</x:Double>
+    <x:Double x:Key="ToolbarButtonSize">32</x:Double>
+    <x:Double x:Key="ToolbarHeight">48</x:Double>
+    <x:Double x:Key="StatusBarHeight">28</x:Double>
+    <x:Double x:Key="RulerSize">20</x:Double>
+    <x:Double x:Key="FieldHeight">28</x:Double>
+    <x:Double x:Key="PanelSpacing">8</x:Double>
+    <x:Double x:Key="UiFontSize">13</x:Double>
+    <x:Double x:Key="SectionHeaderFontSize">14</x:Double>
+    <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+    <Thickness x:Key="PanelPadding">8</Thickness>
+</ResourceDictionary>

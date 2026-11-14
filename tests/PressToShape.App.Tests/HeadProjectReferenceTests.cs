@@ -36,7 +36,7 @@ public class HeadProjectReferenceTests
 
     private static string[] ReadProjectReferences(string relativeCsprojPath)
     {
-        var path = Path.Combine(FindSolutionRoot(), relativeCsprojPath);
+        var path = RepoPaths.Combine(relativeCsprojPath);
         Assert.True(File.Exists(path), "Project file not found: " + path);
 
         return XDocument.Load(path)
@@ -45,21 +45,5 @@ public class HeadProjectReferenceTests
             .Select(include => Path.GetFileNameWithoutExtension(include.Replace('\\', '/')))
             .OrderBy(name => name, StringComparer.Ordinal)
             .ToArray();
-    }
-
-    private static string FindSolutionRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, "PressToShape.sln")))
-            {
-                return directory.FullName;
-            }
-
-            directory = directory.Parent;
-        }
-
-        throw new InvalidOperationException("PressToShape.sln not found above " + AppContext.BaseDirectory);
     }
 }

@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Desktop"
+             xmlns:views="using:PressToShape.App.Views.Desktop"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="30"
+             x:Class="PressToShape.App.Views.Desktop.MenuBarView"
+             x:DataType="vm:MenuBarViewModel">
+
+    <UserControl.Resources>
+        <views:GestureTextConverter x:Key="GestureTextConverter" />
+
+        <!-- Top-level menu entries (File, Edit, ...). Same bindings, but based on the Fluent top-level look without the submenu arrow. -->
+        <ControlTheme x:Key="AppTopLevelMenuItemTheme"
+                      TargetType="MenuItem"
+                      BasedOn="{StaticResource FluentTopLevelMenuItem}"
+                      x:DataType="vm:MenuItemViewModel">
+            <Setter Property="Header" Value="{Binding Header}" />
+            <Setter Property="ItemsSource" Value="{Binding Children}" />
+            <Setter Property="Command" Value="{Binding Command}" />
+            <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+            <Setter Property="ItemContainerTheme" Value="{DynamicResource AppMenuItemTheme}" />
+        </ControlTheme>
+
+        <!-- Binds every nested menu item (including submenus) to a MenuItemViewModel. -->
+        <ControlTheme x:Key="AppMenuItemTheme"
+                      TargetType="MenuItem"
+                      BasedOn="{StaticResource {x:Type MenuItem}}"
+                      x:DataType="vm:MenuItemViewModel">
+            <Setter Property="Header" Value="{Binding Header}" />
+            <Setter Property="ItemsSource" Value="{Binding Children}" />
+            <Setter Property="Command" Value="{Binding Command}" />
+            <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+            <Setter Property="InputGesture" Value="{Binding Gesture, Converter={StaticResource GestureTextConverter}}" />
+            <Setter Property="ItemContainerTheme" Value="{DynamicResource AppMenuItemTheme}" />
+        </ControlTheme>
+    </UserControl.Resources>
+
+    <Menu ItemsSource="{Binding Menus}"
+          ItemContainerTheme="{StaticResource AppTopLevelMenuItemTheme}"
+          Background="Transparent" />
+
+</UserControl>

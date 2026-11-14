@@ -1,0 +1,69 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="96" d:DesignHeight="600"
+             x:Class="PressToShape.App.Views.Editor.ToolboxView"
+             x:DataType="vm:ToolboxViewModel">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ToolButtonTemplate" DataType="vm:ToolItemViewModel">
+            <ToggleButton Classes="tool"
+                          IsChecked="{Binding IsActive, Mode=OneWay}"
+                          Command="{Binding SelectCommand}"
+                          ToolTip.Tip="{Binding ToolTip}"
+                          AutomationProperties.Name="{Binding Name}"
+                          Margin="2">
+                <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="20" Height="20" />
+            </ToggleButton>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border Background="{DynamicResource ToolColumnBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderSubtleBrush}"
+            BorderThickness="0,0,1,0"
+            Padding="6">
+        <DockPanel>
+
+            <!-- Fill and stroke swatches with swap and reset (disabled until colors exist) -->
+            <Grid DockPanel.Dock="Bottom" Width="64" Height="64" Margin="0,8,0,4" HorizontalAlignment="Left">
+                <Border Width="30" Height="30" Margin="0,24,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Background="{DynamicResource ControlBackgroundBrush}"
+                        BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="2"
+                        CornerRadius="3" ToolTip.Tip="Stroke color" />
+                <Border Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Background="{DynamicResource AppAccentBrush}"
+                        BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1"
+                        CornerRadius="3" ToolTip.Tip="Fill color" />
+                <Button Classes="icon" MinWidth="20" MinHeight="20" Width="20" Height="20"
+                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Command="{Binding SwapColorsCommand}"
+                        ToolTip.Tip="Swap fill and stroke" AutomationProperties.Name="Swap fill and stroke">
+                    <materialIcons:MaterialIcon Kind="SwapHorizontal" Width="12" Height="12" />
+                </Button>
+                <Button Classes="icon" MinWidth="20" MinHeight="20" Width="20" Height="20"
+                        HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                        Command="{Binding ResetColorsCommand}"
+                        ToolTip.Tip="Reset colors" AutomationProperties.Name="Reset colors">
+                    <materialIcons:MaterialIcon Kind="Restore" Width="12" Height="12" />
+                </Button>
+            </Grid>
+
+            <!-- The mockup shows the first eight tools as a two-column grid and the rest in one column. -->
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding PairedTools}" ItemTemplate="{StaticResource ToolButtonTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" Width="84" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding SingleTools}" ItemTemplate="{StaticResource ToolButtonTemplate}" />
+            </StackPanel>
+
+        </DockPanel>
+    </Border>
+
+</UserControl>

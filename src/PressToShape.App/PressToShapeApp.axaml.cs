@@ -1,7 +1,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using PressToShape.App.Services;
 using PressToShape.App.ViewModels;
+using PressToShape.App.ViewModels.Desktop;
 using PressToShape.App.Views;
 
 namespace PressToShape.App;
@@ -19,7 +21,7 @@ public partial class PressToShapeApp : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainViewModel(),
+                DataContext = new DesktopShellViewModel(new DesktopAppShutdown()),
             };
         }
         else if (ApplicationLifetime is IActivityApplicationLifetime activityLifetime)

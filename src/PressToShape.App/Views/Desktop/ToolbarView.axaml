@@ -1,0 +1,143 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Desktop"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="48"
+             x:Class="PressToShape.App.Views.Desktop.ToolbarView"
+             x:DataType="vm:ToolbarViewModel">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ToolbarButtonTemplate" DataType="vm:ToolbarButtonViewModel">
+            <Button Classes="icon"
+                    Command="{Binding Command}"
+                    IsEnabled="{Binding IsEnabled}"
+                    ToolTip.Tip="{Binding Name}"
+                    AutomationProperties.Name="{Binding Name}">
+                <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="18" Height="18" />
+            </Button>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="Border.group-separator">
+            <Setter Property="Width" Value="1" />
+            <Setter Property="Margin" Value="8,10" />
+            <Setter Property="Background" Value="{DynamicResource BorderSubtleBrush}" />
+        </Style>
+        <Style Selector="TextBlock.field-label">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="FontSize" Value="{StaticResource UiFontSize}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="8,0,4,0" />
+        </Style>
+        <Style Selector="TextBox.field">
+            <Setter Property="Width" Value="84" />
+        </Style>
+    </UserControl.Styles>
+
+    <Border Background="{DynamicResource ToolbarBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderSubtleBrush}"
+            BorderThickness="0,0,0,1"
+            Height="{StaticResource ToolbarHeight}"
+            Padding="8,0">
+        <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+
+            <ItemsControl ItemsSource="{Binding FileActions}" ItemTemplate="{StaticResource ToolbarButtonTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Border Classes="group-separator" />
+
+            <ItemsControl ItemsSource="{Binding HistoryActions}" ItemTemplate="{StaticResource ToolbarButtonTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Border Classes="group-separator" />
+
+            <ToggleButton Classes="tool"
+                          IsChecked="{Binding IsSelectToolActive}"
+                          ToolTip.Tip="Select (V)"
+                          AutomationProperties.Name="Select">
+                <materialIcons:MaterialIcon Kind="CursorDefault" Width="18" Height="18" />
+            </ToggleButton>
+            <ToggleButton Classes="tool"
+                          IsChecked="{Binding IsNodeToolActive}"
+                          ToolTip.Tip="Node / Curve (N)"
+                          AutomationProperties.Name="Node / Curve">
+                <materialIcons:MaterialIcon Kind="VectorBezier" Width="18" Height="18" />
+            </ToggleButton>
+
+            <Border Classes="group-separator" />
+
+            <ItemsControl ItemsSource="{Binding HorizontalAlignActions}" ItemTemplate="{StaticResource ToolbarButtonTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Border Classes="group-separator" />
+
+            <TextBlock Classes="field-label" Text="X" />
+            <TextBox Classes="field" Text="{Binding X, Mode=OneWay}" IsEnabled="{Binding HasSelection}"
+                     InnerRightContent="px" AutomationProperties.Name="X position" />
+            <TextBlock Classes="field-label" Text="Y" />
+            <TextBox Classes="field" Text="{Binding Y, Mode=OneWay}" IsEnabled="{Binding HasSelection}"
+                     InnerRightContent="px" AutomationProperties.Name="Y position" />
+            <TextBlock Classes="field-label" Text="W" />
+            <TextBox Classes="field" Text="{Binding Width, Mode=OneWay}" IsEnabled="{Binding HasSelection}"
+                     InnerRightContent="px" AutomationProperties.Name="Width" />
+            <ToggleButton Classes="tool" IsEnabled="False"
+                          ToolTip.Tip="Keep proportions"
+                          AutomationProperties.Name="Keep proportions">
+                <materialIcons:MaterialIcon Kind="LinkVariant" Width="18" Height="18" />
+            </ToggleButton>
+            <TextBlock Classes="field-label" Text="H" />
+            <TextBox Classes="field" Text="{Binding Height, Mode=OneWay}" IsEnabled="{Binding HasSelection}"
+                     InnerRightContent="px" AutomationProperties.Name="Height" />
+
+            <Border Classes="group-separator" />
+
+            <ItemsControl ItemsSource="{Binding TransformActions}" ItemTemplate="{StaticResource ToolbarButtonTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Border Classes="group-separator" />
+
+            <ItemsControl ItemsSource="{Binding VerticalAlignActions}" ItemTemplate="{StaticResource ToolbarButtonTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Border Classes="group-separator" />
+
+            <ItemsControl ItemsSource="{Binding OtherActions}" ItemTemplate="{StaticResource ToolbarButtonTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+        </StackPanel>
+    </Border>
+
+</UserControl>

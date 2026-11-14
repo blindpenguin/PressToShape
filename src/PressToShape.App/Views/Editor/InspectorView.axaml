@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="800"
+             x:Class="PressToShape.App.Views.Editor.InspectorView"
+             x:DataType="vm:InspectorViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="TabItem">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Padding" Value="2,8" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
+        <Style Selector="TabItem:selected">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Background" Value="{DynamicResource SelectedItemBrush}" />
+        </Style>
+    </UserControl.Styles>
+
+    <Border Classes="panel" BorderThickness="1,0,0,0">
+        <TabControl SelectedIndex="{Binding SelectedTabIndex}" Padding="0">
+            <TabControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" />
+                </ItemsPanelTemplate>
+            </TabControl.ItemsPanel>
+
+            <TabItem Header="Properties" AutomationProperties.Name="Properties tab">
+                <ContentControl Content="{Binding Properties}" />
+            </TabItem>
+            <TabItem Header="Layers" AutomationProperties.Name="Layers tab">
+                <ContentControl Content="{Binding Layers}" />
+            </TabItem>
+            <TabItem Header="Assets" AutomationProperties.Name="Assets tab">
+                <ContentControl Content="{Binding Assets}" />
+            </TabItem>
+            <TabItem Header="History" AutomationProperties.Name="History tab">
+                <ContentControl Content="{Binding History}" />
+            </TabItem>
+        </TabControl>
+    </Border>
+
+</UserControl>

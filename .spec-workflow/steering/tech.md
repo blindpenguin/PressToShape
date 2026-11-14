@@ -14,6 +14,7 @@ Cross-platform vector drawing application (desktop and tablet GUI) targeting Lin
 - **Avalonia 12.1.6**: cross-platform UI framework (`Avalonia`, `Avalonia.Desktop`, `Avalonia.Themes.Fluent`, `Avalonia.Fonts.Inter`)
 - **CommunityToolkit.Mvvm 8.4.2**: MVVM source generators (`[ObservableProperty]`, `[RelayCommand]`)
 - **AvaloniaUI.DiagnosticsSupport 2.2.3**: developer diagnostics, Debug builds only
+- **Material.Icons.Avalonia 3.0.2**: icon set for tool, toolbar and panel icons (built for Avalonia 12), referenced from `PressToShape.App` only
 - No other dependencies are decided. New packages require approval (see `project-overview.md`).
 
 ### Application Architecture
@@ -55,7 +56,7 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 ### Code Quality Tools
 - **Static Analysis**: .NET compiler analyzers. Nullable warnings are fixed, not suppressed. Keep the build warning-free.
 - **Formatting**: `dotnet format`, checked with `--verify-no-changes`
-- **Testing Framework**: xUnit for the core library and view models. Avalonia.Headless for UI behavior that bindings cannot cover. This is not set up yet.
+- **Testing Framework**: xUnit for the core library and view models. Avalonia.Headless for UI behavior that bindings cannot cover (not set up yet). Visual checks are done by running the app.
 - **Documentation**: XML doc comments on public APIs of the core library.
 
 ### Version Control & Collaboration
@@ -97,8 +98,10 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 3. **UI-independent core library**: needed because the two GUI layouts must share the document model and logic, and so logic can be tested without a UI.
 4. **Native project format separate from SVG**: SVG cannot hold all editor state faithfully. SVG stays an export target.
 5. **Rendering approach deferred**: it depends on performance and touch needs, so it is decided by comparing options in a spec.
+6. **Material.Icons.Avalonia for icons**: chosen over Lucide.Avalonia and Projektanker.Icons.Avalonia because it targets Avalonia 12 (the others are built against Avalonia 11). Icons are strongly typed (`MaterialIconKind`).
+7. **Theme resources**: all colors and sizes live in `Styles/Theme.axaml` with light and dark variants. Views use named resources and never hardcode colors (checked by a test).
 
 ## Known Limitations
-- The project is still the Avalonia template: a single desktop project, with no core library, tests, or Android head yet.
 - `ViewLocator` uses reflection and is not trimming- or AOT-safe. This is acceptable for now. Replace it if trimming or AOT is adopted.
-- Android support with Avalonia 12 has not been verified in this project yet.
+- The Android project builds but has not been run on an emulator or device (the development machine cannot run an emulator). Its behavior is unverified.
+- The Android build needs JDK 21. JDK 25 is rejected by the Android tooling.

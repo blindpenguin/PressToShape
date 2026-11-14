@@ -1,0 +1,145 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:PressToShape.App.Controls"
+        xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
+    <!-- Control styles for the editor shell. Colors and sizes come from Theme.axaml only. -->
+
+    <Styles.Resources>
+        <ControlTheme x:Key="{x:Type controls:CollapsibleSection}" TargetType="controls:CollapsibleSection">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <ToggleButton Classes="section-toggle"
+                                          IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <ContentPresenter Grid.Column="0"
+                                                      Content="{TemplateBinding Header}"
+                                                      FontSize="{StaticResource SectionHeaderFontSize}"
+                                                      FontWeight="SemiBold"
+                                                      VerticalAlignment="Center" />
+                                    <Panel Grid.Column="1" VerticalAlignment="Center">
+                                        <materialIcons:MaterialIcon Classes="expanded" Kind="ChevronUp" Width="18" Height="18" />
+                                        <materialIcons:MaterialIcon Classes="collapsed" Kind="ChevronDown" Width="18" Height="18" />
+                                    </Panel>
+                                </Grid>
+                            </ToggleButton>
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              IsVisible="{TemplateBinding IsExpanded}" />
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+    </Styles.Resources>
+
+    <!-- Plain icon button (toolbar, panels) -->
+    <Style Selector="Button.icon">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MinWidth" Value="{StaticResource ToolbarButtonSize}" />
+        <Setter Property="MinHeight" Value="{StaticResource ToolbarButtonSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.icon:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+    </Style>
+    <Style Selector="Button.icon:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ControlPressedBrush}" />
+    </Style>
+    <Style Selector="Button.icon:disabled /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}" />
+    </Style>
+
+    <!-- Tool toggle (tool column and toolbar tool toggles): accent background when active -->
+    <Style Selector="ToggleButton.tool">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="{StaticResource ToolButtonSize}" />
+        <Setter Property="Height" Value="{StaticResource ToolButtonSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="ToggleButton.tool:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.tool:checked /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppAccentForegroundBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.tool:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.tool:disabled /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}" />
+    </Style>
+
+    <!-- Collapsible section: the whole header row is a toggle button -->
+    <Style Selector="ToggleButton.section-toggle">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="Padding" Value="12,10" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.section-toggle /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.section-toggle:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.section-toggle:checked /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.section-toggle:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.section-toggle:checked materialIcons|MaterialIcon.collapsed">
+        <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="ToggleButton.section-toggle:not(:checked) materialIcons|MaterialIcon.expanded">
+        <Setter Property="IsVisible" Value="False" />
+    </Style>
+
+
+
+    <!-- Panel surfaces and section headers -->
+    <Style Selector="Border.panel">
+        <Setter Property="Background" Value="{DynamicResource PanelBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderSubtleBrush}" />
+    </Style>
+    <Style Selector="TextBlock.section-header">
+        <Setter Property="FontSize" Value="{StaticResource SectionHeaderFontSize}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="TextBlock.secondary">
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+    </Style>
+
+    <!-- Numeric/text field with an optional suffix such as "px" (set InnerRightContent) -->
+    <Style Selector="TextBox.field">
+        <Setter Property="MinHeight" Value="{StaticResource FieldHeight}" />
+        <Setter Property="Height" Value="{StaticResource FieldHeight}" />
+        <Setter Property="Padding" Value="6,0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderSubtleBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+        <Setter Property="FontSize" Value="{StaticResource UiFontSize}" />
+    </Style>
+</Styles>

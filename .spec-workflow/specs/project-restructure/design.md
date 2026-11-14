@@ -140,6 +140,7 @@ None. No domain or persistence types are introduced.
 6. Rewrite `PressToShape.sln`, delete the old root project and files.
 7. Update `.claude/rules/` paths and add a README.
 
-## Open Questions
-- **Checking head-to-head references:** to cover Requirement 2.3 fully, we could add a small test that reads the `ProjectReference` entries of the Desktop and Android `.csproj` files. You chose reflection, so I have not added it. Should I add that extra check, or accept the gap?
-- **Android `ApplicationId`:** the template uses `com.CompanyName.<Name>`. What identifier do you want (for example `com.<yourname>.presstoshape`)? I will use a clearly marked placeholder until you say.
+## Resolved Questions
+- **Head-to-head reference check:** added as a `.csproj`-based test (`HeadProjectReferenceTests`), which also checks that App references only Core.
+- **Android `ApplicationId`:** `de.limeonfire.presstoshape`.
+- **Android build needs JDK 21.** JDK 25 is rejected by the Android tooling.
