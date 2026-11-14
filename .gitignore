@@ -3,3 +3,16 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+# IDE
+.idea/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# spec-workflow generated state
+.spec-workflow/approvals/
+.spec-workflow/templates/
+.spec-workflow/user-templates/
+
+# spec-workflow dashboard audit log (written to the working directory)
+audit.log
