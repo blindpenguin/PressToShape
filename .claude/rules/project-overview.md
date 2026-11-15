@@ -5,9 +5,9 @@ PressToShape is a cross-platform desktop app built with Avalonia UI 12 (Fluent t
 ## Layout
 Solution `PressToShape.sln`. Dependencies point one way: `Desktop/Android -> App -> Core`. Details are in `.spec-workflow/steering/structure.md`.
 - `src/PressToShape.Core/`: UI-independent document model, geometry, commands, file I/O. No Avalonia.
-- `src/PressToShape.App/`: all Avalonia UI. `Workspace/` (pure logic), `ViewModels/` and `Views/` each split into `Desktop/` (desktop layout) and `Editor/` (reusable panels), `Controls/`, `Styles/` (theme), `Services/`, `Localization/` (translation), `Settings/` (settings file), `Translations/` (`.po` files). `ViewLocator` maps `FooViewModel` to `FooView` by name and folder.
+- `src/PressToShape.App/`: all Avalonia UI. `Workspace/` (pure logic), `ViewModels/` and `Views/` each split into `Desktop/` (desktop layout), `Tablet/` (tablet layout) and `Editor/` (reusable panels), `Controls/`, `Styles/` (theme), `Services/`, `Localization/` (translation), `Settings/` (settings file), `Translations/` (`.po` files). `ViewLocator` maps `FooViewModel` to `FooView` by name and folder.
 - `src/PressToShape.Desktop/`: Linux and Windows startup only.
-- `src/PressToShape.Android/`: Android startup only. Build-only, not run on an emulator.
+- `src/PressToShape.Android/`: Android startup only. It is run on a real tablet over `adb` (the machine cannot run an emulator); the last device check is in `.spec-workflow/specs/tablet-gui-shell/device-report.md`.
 - `tests/PressToShape.Core.Tests/`, `tests/PressToShape.App.Tests/`: xUnit tests, warnings are errors.
 - `docs/mockup/`: GUI mockup (design reference). `scripts/`: helper scripts.
 - Build settings live in `Directory.Build.props`, package versions in `Directory.Packages.props`. Never put a `Version` on a `PackageReference`.

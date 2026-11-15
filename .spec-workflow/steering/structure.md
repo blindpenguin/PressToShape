@@ -37,18 +37,20 @@ PressToShape/
 ```
 Workspace/            pure logic without Avalonia types: tools, zoom, ruler ticks, shared EditorState
 ViewModels/Desktop/   view models that exist only for the desktop layout (shell, menu bar, toolbar, status bar)
-ViewModels/Editor/    view models reusable by every layout (tool column, canvas area, inspector, layers)
+ViewModels/Tablet/    view models that exist only for the tablet layout (shell, toolbar, overflow menu, tool column and tool groups, floating panel, in-layout dialog host)
+ViewModels/Editor/    view models reusable by every layout (the shell base class EditorShellViewModel, tool column, canvas area, inspector, layers, zoom)
 Views/Desktop/        the desktop layout shell and its layout-specific views
+Views/Tablet/         the tablet layout shell and its layout-specific views
 Views/Editor/         reusable panels: tool column, canvas area, inspector panels
-Controls/             custom controls such as the ruler
+Controls/             custom controls and view-only helpers such as the ruler, the number field behavior and the touch size dictionary (TouchSizes)
 Styles/               Theme.axaml (all colors and sizes, light and dark) and control styles
-Services/             small interfaces and implementations such as IAppShutdown
+Services/             small interfaces and implementations such as IAppShutdown, the file store (local files, or the files of the Android picker through StorageFileRegistry/StorageFileStore) and the message dialogs (windows, or inside the layout)
 Localization/         translation: ILocalizer, Localizer, language selection, gettext catalog, XAML extension
 Settings/             the settings file: AppSettings, ISettingsStore, JsonFileSettingsStore
 Translations/         gettext .po files (de.po); compiled to .mo and embedded at build time
 Assets/Cursors/       generated cursor PNGs (32 and 64 px), embedded as resources, never edited by hand
 ```
-A future tablet layout adds `Views/Tablet` and `ViewModels/Tablet` and reuses `Views/Editor`, `ViewModels/Editor` and `Workspace`.
+The tablet layout lives in `Views/Tablet` and `ViewModels/Tablet` and reuses `Views/Editor`, `ViewModels/Editor` and `Workspace`. `DesktopShellViewModel` and `TabletShellViewModel` both derive from `EditorShellViewModel`, which owns the editor state, the shared regions and the file, edit, undo and redo commands.
 
 ## Module Boundaries and Dependency Direction
 
@@ -67,9 +69,11 @@ Android ─┘
 - Platform-specific code is isolated in the heads or behind interfaces defined in Core or App.
 
 ### Two layouts, one core
-- The desktop layout (menu, toolbar, tool column, canvas, tabbed inspector, status bar) and the tablet landscape layout (compact toolbar, tool column, canvas, tabbed panel, contextual controls) are different view compositions over the same view models and core.
-- Layout-specific views live in App under `Views/Desktop` (later `Views/Tablet`). Shared building blocks (canvas area, inspector panels, tool column) live in `Views/Editor` and are written once.
-- The application class chooses the layout from the application lifetime (window on desktop, single view on Android). Platform behavior is not selected by runtime `if` checks scattered through shared code.
+- The desktop layout (menu, toolbar, tool column, canvas, tabbed inspector, status bar) and the tablet landscape layout (compact toolbar, one tool column with grouped tools, canvas, floating panel opened from toolbar icons) are different view compositions over the same view models and core.
+- Layout-specific views live in App under `Views/Desktop` and `Views/Tablet`. Shared building blocks (canvas area, inspector panels, tool column) live in `Views/Editor` and are written once.
+- The layout is chosen in one place, `AppLayout`, from the application lifetime (window on desktop, activity on Android). Platform behavior is not selected by runtime `if` checks scattered through shared code.
+- Sizes for touch are a dictionary `TouchSizes` in `Styles/Theme.axaml`. The tablet shell copies it into its own resources (`TouchSizes.ApplyTo`) and has the style class `touch`, so the shared views, which read their sizes with `DynamicResource`, become touch-sized there and stay unchanged on the desktop.
+- The Android head only starts the app and gives it one call (`PressToShapeApp.ExitRequested`, set to the activity's `Finish`).
 
 ## Naming Conventions
 

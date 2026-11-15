@@ -23,7 +23,7 @@ Cross-platform vector drawing application (desktop and tablet GUI) targeting Lin
 ### Application Architecture
 - **Pattern**: MVVM. Views contain no business logic. View models never reference views or Avalonia controls.
 - **Layering**: a UI-independent core library holds the document model, geometry, editing commands, history and file I/O. UI projects depend on the core, never the reverse.
-- **Two GUI layouts**: the desktop layout and the tablet (landscape) layout share the core and the view models where possible. The platform decides which layout shell is shown. Details of the split are in `structure.md` and will be refined in specs.
+- **Two GUI layouts**: the desktop layout and the tablet (landscape) layout share the core and the view models where possible. The platform decides which layout shell is shown (`AppLayout`). Details of the split are in `structure.md`.
 - **Editing model**: all document changes go through commands, so undo/redo works uniformly. The exact mechanism is decided in a spec.
 
 ### Data Storage
@@ -47,9 +47,8 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 - **Document and geometry model** (path representation, bezier math, transforms, boolean operations).
 - **Undo/redo mechanism** (command pattern versus snapshots).
 - **Native file format** and its versioning.
-- **Input handling** for mouse, touch and stylus, including pressure, palm rejection and gestures.
+- **Input handling**: stylus pressure, tilt and palm rejection beyond the two-finger rule. (Mouse, touch and stylus as pointers are decided, see decision 13.)
 - **Dependency injection** approach, and whether to add a library for it.
-- **Android project setup** with Avalonia 12, including target framework, minimum API level and packaging.
 
 ## Development Environment
 
@@ -84,7 +83,7 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 - Concrete targets (frame rate, document size, object counts) are set in the rendering spec.
 
 ### Compatibility Requirements
-- **Platform Support**: Linux, Windows 10 or later, Android. Minimum versions are decided in the Android spec.
+- **Platform Support**: Linux, Windows 10 or later, Android (`net10.0-android`, minimum API level 23). The tablet layout was verified on an Android 16 tablet.
 - **Standards Compliance**: exported SVG must be valid SVG that opens in common viewers and editors (such as Inkscape and web browsers).
 - **Dependency Versions**: stay on Avalonia 12.x and .NET 10.
 
@@ -110,7 +109,16 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 9. **Roslyn code index as a separate developer tool**: agents need facts about the code (who implements, who calls, what is injected) without reading whole files. Roslyn with the MSBuild loader resolves references and source-generator output like the IDE does. The tool lives in `tools/`, so the app dependencies and the shipped output are unchanged. The index is committed and checked with `check`, so it cannot silently go stale. Chosen by the owner (spec `agent-code-index-symbols`).
 10. **Lucide cursor artwork, bundled as SVG and shipped as PNG**: Avalonia has no standard rotate, hand or magnifier cursor, and cursors drawn at runtime from Material icons looked jagged and did not match the OS resize cursors. The canvas cursors (all except the plain arrow) are now pre-drawn PNGs at 32 and 64 px, made from ten Lucide icons (ISC licence, `lucide-static` 0.468.0). The SVG sources and the licence are in `assets-src/cursors/`, and `tools/PressToShape.CursorImages` renders them (`generate`, and `check` for a stale image). Only the SVG files are bundled, not the `Lucide.Avalonia` package, so decision 6 still stands: Material.Icons stays the set for tool, toolbar and panel icons. Chosen by the owner (spec `lucide-canvas-cursors`).
 
+11. **Asynchronous file store, files of the Android picker through references** (spec `tablet-gui-shell`): `IFileStore` is asynchronous. Android's file picker returns no path, so a picked file gets a text reference (`storage:<id>/<name>`) in a `StorageFileRegistry`, read and written through `StorageFileStore`, with the rest of the file code unchanged. `IPickedFile` wraps Avalonia's `IStorageFile` because that interface cannot be implemented in tests. References do not survive a restart, so Android keeps no recent files.
+12. **Dialogs inside the layout on platforms without windows**: `MessageDialogHost` and `OverlayMessageDialogs` show the message dialogs over the tablet layout. The desktop keeps its dialog windows. Both use the same `MessageDialogView`.
+13. **Own touch gesture logic instead of Avalonia's gesture recognizers**: one finger acts with the active tool like the mouse, a second finger undoes that action (`CanvasInteraction.Abort`) and two fingers pan and pinch-zoom (`TouchGestureTracker`, pure logic). Avalonia's scroll recognizer would take over drags that must reach the tools.
+14. **Touch sizes as a dictionary applied to a layout root**: shared views read sizes with `DynamicResource`, the tablet layout copies `TouchSizes` into its resources and sets the class `touch`. A `DynamicResource` written on a control loses against a style that sets the same property (for example `Button.icon`), so such sizes are set in a style of the view.
+15. **Keyboard and safe area on Android**: Avalonia already keeps the content out from under the system bars, and the on-screen keyboard does not resize the view but reports the area it covers through `InputPane`, so the layout leaves that gap itself.
+16. **Tool groups, a floating panel and a long press that is pure logic** (spec `tablet-layout-refinement`): the tablet shows six tool icons; similar tools share one (`ToolGroups` data in `Workspace`, `ToolGroupViewModel`), a tap uses the group's last tool and a long press (`LongPressTracker`, pure, fed with timestamps; `ToolGroupButton` control) opens a flyout. The properties, layers and history panels open from toolbar icons and float over the canvas (`TabletPanelViewModel`), so the canvas never changes its size; a touch on the canvas closes the panel and still reaches the canvas. The active tool of `EditorState` stays the only truth.
+17. **Back on Android arrives twice**: as the Escape key and as the back request. Dialogs inside the layout therefore do not cancel on Escape, and `BackRequestGuard` ignores a back request right after a menu or flyout was closed by the Escape half. The order of one Back press is: toolbar menu, dialog, tool flyout, panel, then the unsaved-changes flow or leaving.
+
 ## Known Limitations
 - `ViewLocator` uses reflection and is not trimming- or AOT-safe. This is acceptable for now. Replace it if trimming or AOT is adopted.
-- The Android project builds but has not been run on an emulator or device (the development machine cannot run an emulator). Its behavior is unverified.
+- The Android app is run on a real tablet over `adb`, not on an emulator (the development machine cannot run one). `adb` can inject only one finger, so two-finger gestures, stylus use and the feel of touch sizes are checked by the owner. Portrait orientation is not a goal: the layout is made and checked for landscape.
+- On Android a picked file has no path and cannot be replaced atomically. A save reads the old content first and writes it back if the write fails, so a process that is killed in the middle of a save can leave the file cut short.
 - The Android build needs JDK 21. JDK 25 is rejected by the Android tooling.
