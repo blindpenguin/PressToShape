@@ -329,8 +329,9 @@ public class CanvasInteractionTests
     [Fact]
     public void Select_ClickInTheCornerOfAnEllipse_Misses()
     {
-        var (state, interaction) = Create(Tool.Select, WithShapes(out _, out _, out var ellipse));
-        state.Select(ellipse);
+        // Another shape is selected: the ellipse's own corner handle would otherwise be under the pointer.
+        var (state, interaction) = Create(Tool.Select, WithShapes(out var back, out _, out _));
+        state.Select(back);
 
         interaction.PointerPressed(301, 1);
         interaction.PointerReleased(301, 1);
@@ -705,7 +706,10 @@ public class CanvasInteractionTests
         interaction.PointerReleased(80, 80);
         Assert.False(state.IsDragInProgress);
 
+        // Empty space starts a selection box, which is a drag as well.
         interaction.PointerPressed(700, 700);
+        Assert.True(state.IsDragInProgress);
+        interaction.PointerReleased(700, 700);
         Assert.False(state.IsDragInProgress);
     }
 
@@ -724,4 +728,606 @@ public class CanvasInteractionTests
         interaction.PointerReleased(100, 100);
         Assert.True(state.CanUndo);
     }
+
+    // ---- multi-selection, selection box, moving several shapes ----
+
+    private static void Click(CanvasInteraction interaction, double x, double y, bool shift = false)
+    {
+        interaction.PointerPressed(x, y, shift);
+        interaction.PointerReleased(x, y, shift);
+    }
+
+    private static void Box(CanvasInteraction interaction, double x1, double y1, double x2, double y2, bool shift = false)
+    {
+        interaction.PointerPressed(x1, y1, shift);
+        interaction.PointerMoved((x1 + x2) / 2, (y1 + y2) / 2, shift);
+        interaction.PointerReleased(x2, y2, shift);
+    }
+
+    private static (EditorState State, CanvasInteraction Interaction, Guid Back, Guid Front, Guid Ellipse) SelectFixture(double zoom = 100)
+    {
+        var (state, interaction) = Create(Tool.Select, WithShapes(out var back, out var front, out var ellipse));
+        state.SetZoom(zoom);
+        return (state, interaction, back, front, ellipse);
+    }
+
+    [Fact]
+    public void ShiftClick_AddsAndRemovesShapes_AndMovesNothing()
+    {
+        var (state, interaction, back, _, ellipse) = SelectFixture();
+        var steps = state.History.Steps.Count;
+
+        Click(interaction, 10, 10);
+        Click(interaction, 350, 50, shift: true);
+        Assert.Equal(new[] { back, ellipse }, state.SelectedShapeIds);
+
+        Click(interaction, 10, 10, shift: true);
+        Assert.Equal(new[] { ellipse }, state.SelectedShapeIds);
+        Assert.Equal(steps, state.History.Steps.Count);
+        Assert.False(state.IsDragInProgress);
+    }
+
+    [Fact]
+    public void ShiftPress_OnASelectedShape_RemovesItAndADragAfterwardsMovesNothing()
+    {
+        var (state, interaction, back, front, _) = SelectFixture();
+        state.SetSelection([back, front]);
+        var document = state.Document;
+
+        interaction.PointerPressed(10, 10, shift: true);
+        interaction.PointerMoved(60, 60, shift: true);
+        interaction.PointerReleased(60, 60, shift: true);
+
+        Assert.Equal(new[] { front }, state.SelectedShapeIds);
+        Assert.Same(document, state.Document);
+    }
+
+    [Fact]
+    public void ClickOnEmptySpace_ClearsTheSelection_ButShiftClickKeepsIt()
+    {
+        var (state, interaction, back, _, _) = SelectFixture();
+        Click(interaction, 10, 10);
+
+        Click(interaction, 700, 700, shift: true);
+        Assert.Equal(new[] { back }, state.SelectedShapeIds);
+
+        Click(interaction, 700, 700);
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void ClickOnAnUnselectedShape_SelectsOnlyIt()
+    {
+        var (state, interaction, back, _, ellipse) = SelectFixture();
+        state.SetSelection([back, ellipse]);
+
+        Click(interaction, 140, 140); // only the front shape is there
+
+        Assert.Single(state.SelectedShapeIds);
+        Assert.NotEqual(back, state.SelectedShapeId);
+    }
+
+    [Fact]
+    public void PressOnASelectedShape_KeepsTheSelection_AndMovesAllOfThemAsOneStep()
+    {
+        var (state, interaction, back, front, ellipse) = SelectFixture();
+        state.SetSelection([back, front, ellipse]);
+        var steps = state.History.Steps.Count;
+
+        interaction.PointerPressed(10, 10);
+        Assert.Equal(3, state.SelectedCount);
+        interaction.PointerMoved(20, 15);
+        interaction.PointerMoved(40, 30);
+        Assert.True(state.IsDragInProgress);
+        Assert.Equal(steps, state.History.Steps.Count);
+        interaction.PointerReleased(40, 30);
+
+        var shapes = state.Document.Layers.SelectMany(l => l.Shapes).ToList();
+        Assert.Equal(new[] { 30.0, 80, 330 }, shapes.Select(sh => sh.X));
+        Assert.Equal(new[] { 20.0, 70, 20 }, shapes.Select(sh => sh.Y));
+        Assert.Equal(steps + 1, state.History.Steps.Count);
+        Assert.Equal(HistoryStepType.MoveShape, state.History.Steps[^1]);
+        Assert.Equal(3, state.SelectedCount);
+
+        state.Undo();
+        Assert.Equal(new[] { 0.0, 50, 300 }, state.Document.Layers.SelectMany(l => l.Shapes).Select(sh => sh.X));
+    }
+
+    [Fact]
+    public void ClickOnASelectedShape_WithoutMovement_MakesNoStep_AndKeepsTheOthers()
+    {
+        var (state, interaction, back, front, _) = SelectFixture();
+        state.SetSelection([back, front]);
+        var steps = state.History.Steps.Count;
+        var document = state.Document;
+
+        Click(interaction, 10, 10);
+
+        Assert.Equal(new[] { back, front }, state.SelectedShapeIds);
+        Assert.Same(document, state.Document);
+        Assert.Equal(steps, state.History.Steps.Count);
+    }
+
+    [Fact]
+    public void MovingBackToTheStart_RestoresThePositionsWithoutAStep()
+    {
+        var (state, interaction, back, front, _) = SelectFixture();
+        state.SetSelection([back, front]);
+        var steps = state.History.Steps.Count;
+
+        interaction.PointerPressed(10, 10);
+        interaction.PointerMoved(60, 60);
+        interaction.PointerMoved(10, 10);
+        interaction.PointerReleased(10, 10);
+
+        Assert.Equal(new[] { 0.0, 50 }, state.Document.Layers.SelectMany(l => l.Shapes).Take(2).Select(sh => sh.X));
+        Assert.Equal(steps, state.History.Steps.Count);
+    }
+
+    [Theory]
+    [InlineData(50)]
+    [InlineData(200)]
+    public void MovingSeveralShapes_UsesDocumentUnits_AtAnyZoom(double zoom)
+    {
+        var (state, interaction, back, front, _) = SelectFixture(zoom);
+        state.SetSelection([back, front]);
+
+        // Away from the handles of the selection.
+        interaction.PointerPressed(40, 40);
+        interaction.PointerReleased(60, 40);
+
+        Assert.Equal(new[] { 20.0, 70 }, state.Document.Layers.SelectMany(l => l.Shapes).Take(2).Select(sh => sh.X));
+    }
+
+    [Fact]
+    public void SelectionBox_SelectsTouchedShapes_AndShowsTheBoxWhileDragging()
+    {
+        var (state, interaction, back, front, ellipse) = SelectFixture();
+
+        interaction.PointerPressed(-10, -10);
+        interaction.PointerMoved(60, 60);
+        Assert.Equal(new SelectionBox(-10, -10, 70, 70), state.SelectionBox);
+        Assert.True(state.IsDragInProgress);
+        interaction.PointerReleased(60, 60);
+
+        Assert.Equal(new[] { back, front }, state.SelectedShapeIds);
+        Assert.Null(state.SelectionBox);
+        Assert.False(state.IsDragInProgress);
+        Assert.DoesNotContain(ellipse, state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void SelectionBox_DraggedBackwards_Works()
+    {
+        var (state, interaction, _, _, ellipse) = SelectFixture();
+
+        Box(interaction, 450, 150, 350, 50);
+
+        Assert.Equal(new[] { ellipse }, state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void SelectionBox_WithShift_AddsToTheSelection()
+    {
+        var (state, interaction, back, front, ellipse) = SelectFixture();
+        Click(interaction, 10, 10);
+
+        Box(interaction, 340, -10, 450, 150, shift: true);
+
+        Assert.Equal(new[] { back, ellipse }, state.SelectedShapeIds);
+        Assert.DoesNotContain(front, state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void SelectionBox_WithoutShift_ReplacesTheSelection()
+    {
+        var (state, interaction, back, _, ellipse) = SelectFixture();
+        Click(interaction, 10, 10);
+
+        Box(interaction, 340, 200, 450, 300);
+        Assert.Empty(state.SelectedShapeIds);
+
+        Click(interaction, 10, 10);
+        Box(interaction, 340, -10, 450, 150);
+        Assert.Equal(new[] { ellipse }, state.SelectedShapeIds);
+        Assert.DoesNotContain(back, state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void TinyBox_IsAClick_ThatClearsTheSelection()
+    {
+        var (state, interaction, _, _, _) = SelectFixture();
+        Click(interaction, 10, 10);
+
+        interaction.PointerPressed(700, 700);
+        interaction.PointerMoved(701, 701);
+        interaction.PointerReleased(702, 702);
+
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void TinyBox_IsMeasuredInScreenPixels()
+    {
+        var (state, interaction, back, _, _) = SelectFixture(zoom: 25);
+        Click(interaction, 10, 10);
+        Assert.Equal(new[] { back }, state.SelectedShapeIds);
+
+        // 8 units at 25% are 2 screen pixels: a click, even though the box touches nothing special.
+        interaction.PointerPressed(700, 700);
+        interaction.PointerReleased(708, 708);
+
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void SelectionBox_SkipsHiddenAndLockedLayers()
+    {
+        var (state, interaction, _, _, _) = SelectFixture();
+        state.Document = state.Document.UpdateLayer(Bottom, l => l with { IsLocked = true }).UpdateLayer(Top, l => l with { IsVisible = false });
+
+        Box(interaction, -10, -10, 450, 450);
+
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void ClickOnAShapeOfALockedLayer_ActsLikeEmptySpace()
+    {
+        var (state, interaction, back, front, _) = SelectFixture();
+        Click(interaction, 140, 140);
+        Assert.Equal(front, state.SelectedShapeId);
+        state.Document = state.Document.UpdateLayer(Top, l => l with { IsLocked = true });
+        Click(interaction, 10, 10);
+        Assert.Equal(new[] { back }, state.SelectedShapeIds);
+
+        Click(interaction, 140, 140);
+
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void CancelAndToolChange_DuringABox_DropTheBoxAndKeepTheSelection()
+    {
+        var (state, interaction, back, _, _) = SelectFixture();
+        Click(interaction, 10, 10);
+
+        interaction.PointerPressed(300, 300);
+        interaction.PointerMoved(500, 500);
+        interaction.Cancel();
+        Assert.Null(state.SelectionBox);
+        Assert.False(state.IsDragInProgress);
+        Assert.Equal(new[] { back }, state.SelectedShapeIds);
+
+        interaction.PointerPressed(300, 300);
+        interaction.PointerMoved(500, 500);
+        state.ActiveTool = Tool.Rectangle;
+        interaction.PointerMoved(510, 510);
+        Assert.Null(state.SelectionBox);
+        Assert.False(state.IsDragInProgress);
+        Assert.Equal(new[] { back }, state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void CancelDuringAMoveOfSeveralShapes_KeepsTheReachedPositionAsOneStep()
+    {
+        var (state, interaction, back, front, _) = SelectFixture();
+        state.SetSelection([back, front]);
+        var steps = state.History.Steps.Count;
+
+        interaction.PointerPressed(10, 10);
+        interaction.PointerMoved(30, 10);
+        interaction.Cancel();
+
+        Assert.Equal(new[] { 20.0, 70 }, state.Document.Layers.SelectMany(l => l.Shapes).Take(2).Select(sh => sh.X));
+        Assert.Equal(steps + 1, state.History.Steps.Count);
+        Assert.False(state.IsDragInProgress);
+    }
+
+    [Fact]
+    public void SelectionChanges_CreateNoHistorySteps()
+    {
+        var (state, interaction, _, _, _) = SelectFixture();
+
+        Click(interaction, 10, 10);
+        Click(interaction, 350, 50, shift: true);
+        Box(interaction, -10, -10, 450, 450);
+        Click(interaction, 700, 700);
+
+        Assert.Empty(state.History.Steps);
+    }
+
+    // ---- handles: resize, rotate, hover, delete all ----
+
+    private static (EditorState State, CanvasInteraction Interaction, Guid Id) HandleFixture(double zoom = 100, double rotation = 0)
+    {
+        var shape = new RectangleShape { X = 100, Y = 100, Width = 200, Height = 100, Rotation = rotation };
+        var document = Document.Create("x");
+        document = document.AddShape(document.Layers[0].Id, shape);
+        var state = new EditorState(document) { ActiveTool = Tool.Select };
+        state.SetZoom(zoom);
+        state.SelectOnly(shape.Id);
+        return (state, new CanvasInteraction(state), shape.Id);
+    }
+
+    private static (double X, double Y) HandleAt(EditorState state, HandleType handle) =>
+        SelectionGeometry.HandlePosition(SelectionGeometry.FrameOf(SelectionQueries.SelectedShapes(state.Document, state.SelectedShapeIds))!, handle, state.ZoomPercent);
+
+    private static Shape Only(EditorState state) => Assert.Single(state.Document.Layers.SelectMany(l => l.Shapes));
+
+    [Fact]
+    public void ResizeDrag_BottomRight_ChangesTheSizeAsOneStep_AndUndoRestores()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        interaction.PointerPressed(hx, hy);
+        Assert.True(state.IsDragInProgress);
+        interaction.PointerMoved(hx + 20, hy + 10);
+        interaction.PointerMoved(hx + 50, hy + 30);
+        interaction.PointerReleased(hx + 50, hy + 30);
+
+        var shape = Only(state);
+        Assert.Equal((100, 100, 250, 130), (shape.X, shape.Y, shape.Width, shape.Height));
+        Assert.Equal(new[] { HistoryStepType.ResizeShapes }, state.History.Steps);
+        Assert.False(state.IsDragInProgress);
+        Assert.Equal(new[] { state.SelectedShapeIds[0] }, state.SelectedShapeIds);
+
+        state.Undo();
+        Assert.Equal((200, 100), (Only(state).Width, Only(state).Height));
+    }
+
+    [Fact]
+    public void ResizeDrag_AnEdgeHandle_ChangesOnlyOneSide()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.Left);
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerReleased(hx - 40, hy + 500);
+
+        var shape = Only(state);
+        Assert.Equal((60, 100, 240, 100), (shape.X, shape.Y, shape.Width, shape.Height));
+    }
+
+    [Fact]
+    public void ResizeDrag_PressedAFewPixelsOffTheHandle_DoesNotJump()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        interaction.PointerPressed(hx + 3, hy - 2);
+        interaction.PointerMoved(hx + 3, hy - 2);
+        interaction.PointerReleased(hx + 3, hy - 2);
+
+        Assert.Equal((200, 100), (Only(state).Width, Only(state).Height));
+        Assert.Empty(state.History.Steps);
+    }
+
+    [Fact]
+    public void ResizeDrag_ShiftKeepsTheRatio_AltResizesAroundTheCenter()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerMoved(hx + 100, hy + 10, shift: true);
+        interaction.PointerReleased(hx + 100, hy + 10, shift: true);
+        Assert.Equal(2, Only(state).Width / Only(state).Height, 6);
+        Assert.Equal(300, Only(state).Width, 6);
+
+        state.Undo();
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerMoved(hx + 40, hy + 20, alt: true);
+        interaction.PointerReleased(hx + 40, hy + 20, alt: true);
+        var shape = Only(state);
+        Assert.Equal(200, shape.CenterX, 6);
+        Assert.Equal(150, shape.CenterY, 6);
+        Assert.Equal(280, shape.Width, 6);
+    }
+
+    [Fact]
+    public void ResizeDrag_PastTheOppositeEdge_Flips()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.Right);
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerReleased(50, hy);
+
+        var shape = Only(state);
+        Assert.Equal((50, 50), (shape.X, shape.Width));
+    }
+
+    [Fact]
+    public void ResizeDrag_OfARotatedShape_FollowsTheTurnedFrame()
+    {
+        var (state, interaction, _) = HandleFixture(rotation: 90);
+        var (hx, hy) = HandleAt(state, HandleType.Right); // turned 90 degrees: the Right handle is below the center
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerReleased(hx, hy + 30);
+
+        var shape = Only(state);
+        Assert.Equal(230, shape.Width, 6);
+        Assert.Equal(100, shape.Height, 6);
+        Assert.Equal(90, shape.Rotation, 6);
+    }
+
+    [Fact]
+    public void ResizeDrag_OfSeveralShapes_ScalesThemTogether()
+    {
+        var (state, interaction, back, front, _) = SelectFixture();
+        state.SetSelection([back, front]); // box 0..150 x 0..150
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerReleased(hx + 150, hy + 150);
+
+        var shapes = state.Document.Layers.SelectMany(l => l.Shapes).Take(2).ToList();
+        Assert.Equal((0, 0, 200, 200), (shapes[0].X, shapes[0].Y, shapes[0].Width, shapes[0].Height));
+        Assert.Equal((100, 100, 200, 200), (shapes[1].X, shapes[1].Y, shapes[1].Width, shapes[1].Height));
+        Assert.Equal(new[] { HistoryStepType.ResizeShapes }, state.History.Steps);
+    }
+
+    [Fact]
+    public void RotateDrag_TheHandleFollowsThePointer_AsOneStep()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.Rotate);
+
+        interaction.PointerPressed(hx, hy);
+        Assert.True(state.IsDragInProgress);
+        interaction.PointerMoved(500, 150);
+        interaction.PointerReleased(500, 150);
+
+        Assert.Equal(90, Only(state).Rotation, 6);
+        Assert.Equal(new[] { HistoryStepType.RotateShapes }, state.History.Steps);
+        state.Undo();
+        Assert.Equal(0, Only(state).Rotation);
+    }
+
+    [Fact]
+    public void RotateDrag_ShiftSnapsToFifteenDegrees_AndAStartAngleIsRespected()
+    {
+        var (state, interaction, _) = HandleFixture(rotation: 40);
+        var (hx, hy) = HandleAt(state, HandleType.Rotate);
+        var radians = (40 + 22) * Math.PI / 180;
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerMoved(200 + 300 * Math.Sin(radians), 150 - 300 * Math.Cos(radians), shift: true);
+        interaction.PointerReleased(200 + 300 * Math.Sin(radians), 150 - 300 * Math.Cos(radians), shift: true);
+
+        Assert.Equal(60, Only(state).Rotation, 6);
+    }
+
+    [Fact]
+    public void RotateDrag_OfSeveralShapes_TurnsThemAroundTheFrameCenter()
+    {
+        var (state, interaction, back, _, ellipse) = SelectFixture();
+        state.SetSelection([back, ellipse]);
+        var frame = SelectionGeometry.FrameOf(SelectionQueries.SelectedShapes(state.Document, state.SelectedShapeIds))!;
+        var (hx, hy) = HandleAt(state, HandleType.Rotate);
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerReleased(frame.CenterX + 400, frame.CenterY);
+
+        var shapes = state.Document.Layers.SelectMany(l => l.Shapes).Where(sh => sh.Id == back || sh.Id == ellipse).ToList();
+        Assert.All(shapes, sh => Assert.Equal(90, sh.Rotation, 6));
+        Assert.Equal(new[] { HistoryStepType.RotateShapes }, state.History.Steps);
+    }
+
+    [Fact]
+    public void ClickOnAHandle_WithoutMovement_MakesNoStep()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.Top);
+        var document = state.Document;
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerReleased(hx, hy);
+
+        Assert.Same(document, state.Document);
+        Assert.Empty(state.History.Steps);
+    }
+
+    [Fact]
+    public void HandleHit_WinsOverAShapeBelow()
+    {
+        var (state, interaction, id) = HandleFixture();
+        var other = new RectangleShape { X = 280, Y = 180, Width = 100, Height = 100 };
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, other));
+        state.SelectOnly(id);
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight); // (300, 200) is inside the other shape as well
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerMoved(hx + 10, hy);
+        interaction.PointerReleased(hx + 10, hy);
+
+        Assert.Equal(new[] { id }, state.SelectedShapeIds);
+        Assert.Equal(210, state.Document.FindShape(id)!.Shape.Width, 6);
+        Assert.Equal(280, state.Document.FindShape(other.Id)!.Shape.X);
+    }
+
+    [Fact]
+    public void HandleSize_IsConstantOnTheScreen_SoItIsGrabbableAtLowZoom()
+    {
+        var (state, interaction, _) = HandleFixture(zoom: 25);
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        // 4 screen pixels away at 25% is 16 document units.
+        interaction.PointerPressed(hx + 16, hy + 16);
+        interaction.PointerReleased(hx + 16 + 40, hy + 16);
+
+        Assert.Equal(240, Only(state).Width, 6);
+    }
+
+    [Fact]
+    public void CancelOrToolChange_DuringAResize_KeepTheReachedStateAsOneStep()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerMoved(hx + 50, hy);
+        interaction.Cancel();
+        Assert.Equal(250, Only(state).Width, 6);
+        Assert.Equal(new[] { HistoryStepType.ResizeShapes }, state.History.Steps);
+
+        var (hx2, hy2) = HandleAt(state, HandleType.BottomRight);
+        interaction.PointerPressed(hx2, hy2);
+        interaction.PointerMoved(hx2 + 10, hy2);
+        state.ActiveTool = Tool.Rectangle;
+        interaction.PointerMoved(hx2 + 20, hy2);
+        Assert.False(state.IsDragInProgress);
+        Assert.Equal(2, state.History.Steps.Count);
+    }
+
+    [Fact]
+    public void HoverHandle_OnlyWithoutADragAndWithTheSelectTool()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.Top);
+
+        Assert.Equal(HandleType.Top, interaction.HoverHandle(hx, hy));
+        Assert.Null(interaction.HoverHandle(0, 0));
+
+        interaction.PointerPressed(hx, hy);
+        Assert.Null(interaction.HoverHandle(hx, hy));
+        interaction.Cancel();
+
+        state.ActiveTool = Tool.Rectangle;
+        Assert.Null(interaction.HoverHandle(hx, hy));
+
+        state.ActiveTool = Tool.Select;
+        state.ClearSelection();
+        Assert.Null(interaction.HoverHandle(hx, hy));
+    }
+
+    [Fact]
+    public void DeleteSelection_OfSeveralShapes_IsOneStep_AndClearsTheSelection()
+    {
+        var (state, interaction, back, front, ellipse) = SelectFixture();
+        state.SetSelection([back, ellipse]);
+
+        interaction.DeleteSelection();
+
+        Assert.Equal(new[] { front }, state.Document.Layers.SelectMany(l => l.Shapes).Select(sh => sh.Id));
+        Assert.Equal(new[] { HistoryStepType.DeleteShape }, state.History.Steps);
+        Assert.False(state.HasSelection);
+
+        state.Undo();
+        Assert.Equal(3, state.Document.Layers.SelectMany(l => l.Shapes).Count());
+    }
+
+    [Fact]
+    public void DeleteSelection_WithoutSelection_DoesNothing()
+    {
+        var (state, interaction, _, _, _) = SelectFixture();
+
+        interaction.DeleteSelection();
+
+        Assert.Empty(state.History.Steps);
+    }
 }
+

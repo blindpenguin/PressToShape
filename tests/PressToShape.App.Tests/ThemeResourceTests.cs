@@ -31,6 +31,16 @@ public class ThemeResourceTests
     }
 
     [Fact]
+    public void SelectionBrushes_ExistInLightAndDark()
+    {
+        foreach (var variant in new[] { "Light", "Dark" })
+        {
+            Assert.Contains("SelectionOutlineBrush", ThemeKeys(variant));
+            Assert.Contains("SelectionHandleFillBrush", ThemeKeys(variant));
+        }
+    }
+
+    [Fact]
     public void NoHexColors_OutsideThemeFile()
     {
         var root = RepoPaths.Combine(AppFolder);

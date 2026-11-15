@@ -11,7 +11,7 @@ namespace PressToShape.App.ViewModels.Desktop;
 
 /// <summary>
 /// The toolbar groups from the mockup, left to right: file actions, history, tool toggles,
-/// horizontal alignment, transform fields, transform buttons, vertical alignment, other actions.
+/// horizontal alignment, transform buttons, vertical alignment, other actions. Position and size are edited in the Properties tab.
 /// Undo and Redo work, the other buttons are disabled for now. The Select and Node toggles are wired to the active tool.
 /// </summary>
 internal sealed class ToolbarViewModel : ViewModelBase
@@ -88,17 +88,6 @@ internal sealed class ToolbarViewModel : ViewModelBase
         set => SetTool(Tool.Node, value, nameof(IsNodeToolActive));
     }
 
-    public bool HasSelection => _state.HasSelection;
-
-    // Transform fields: empty and disabled without a selection. Values arrive with the document spec.
-    public string X => string.Empty;
-
-    public string Y => string.Empty;
-
-    public string Width => string.Empty;
-
-    public string Height => string.Empty;
-
     private static ToolbarButtonViewModel Button(ILocalizer localizer, string name, MaterialIconKind icon, ICommand? command = null) =>
         new(localizer, name, icon, command);
 
@@ -122,9 +111,6 @@ internal sealed class ToolbarViewModel : ViewModelBase
             case nameof(EditorState.ActiveTool):
                 OnPropertyChanged(nameof(IsSelectToolActive));
                 OnPropertyChanged(nameof(IsNodeToolActive));
-                break;
-            case nameof(EditorState.HasSelection):
-                OnPropertyChanged(nameof(HasSelection));
                 break;
         }
     }

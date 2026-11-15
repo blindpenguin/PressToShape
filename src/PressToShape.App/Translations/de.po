@@ -420,14 +420,8 @@ msgstr "Aussehen"
 msgid "Fill"
 msgstr "Füllung"
 
-msgid "Fill options"
-msgstr "Fülloptionen"
-
 msgid "Stroke"
 msgstr "Kontur"
-
-msgid "Stroke options"
-msgstr "Konturoptionen"
 
 msgid "Stroke width"
 msgstr "Konturbreite"
@@ -596,3 +590,57 @@ msgstr "Horizontale Bildlaufleiste"
 
 msgid "Vertical scroll bar"
 msgstr "Vertikale Bildlaufleiste"
+
+msgid "Resize shapes"
+msgstr "Formen skalieren"
+
+msgid "Rotate shapes"
+msgstr "Formen drehen"
+
+msgid "Nudge shapes"
+msgstr "Formen verschieben (Pfeiltasten)"
+
+msgid "Paste shapes"
+msgstr "Formen einfügen"
+
+msgid "Cut shapes"
+msgstr "Formen ausschneiden"
+
+msgid "Duplicate shapes"
+msgstr "Formen duplizieren"
+
+msgid "Change position"
+msgstr "Position ändern"
+
+msgid "Change size"
+msgstr "Größe ändern"
+
+msgid "Change rotation"
+msgstr "Drehung ändern"
+
+msgid "Change fill"
+msgstr "Füllung ändern"
+
+msgid "Change stroke"
+msgstr "Kontur ändern"
+
+msgid "Change stroke width"
+msgstr "Konturbreite ändern"
+
+msgid "Change opacity"
+msgstr "Deckkraft ändern"
+
+msgid "{0} selected"
+msgstr "{0} ausgewählt"
+
+msgid "Mixed"
+msgstr "Gemischt"
+
+msgid "None"
+msgstr "Keine"
+
+msgid "No fill"
+msgstr "Keine Füllung"
+
+msgid "No stroke"
+msgstr "Keine Kontur"

@@ -122,11 +122,10 @@ public class StatusBarViewModelTests
         var raised = false;
         bar.PropertyChanged += (_, e) => raised |= e.PropertyName == nameof(StatusBarViewModel.SelectionSummary);
 
-        state.HasSelection = true;
-        state.SelectionSummary = "1 selected (Group)";
+        TestSelection.AddAndSelect(state);
 
         Assert.True(raised);
-        Assert.Equal("1 selected (Group)", bar.SelectionSummary);
+        Assert.Equal("1 selected", bar.SelectionSummary);
     }
 
     private static (EditorState State, Localizer Localizer, StatusBarViewModel Bar) CreateWithGerman()
@@ -152,19 +151,48 @@ public class StatusBarViewModelTests
     }
 
     [Fact]
-    public void WithASelection_TheSummaryIsTheStateText()
+    public void WithASelection_TheSummaryShowsTheCount_AndGoesBackWhenCleared()
     {
         var (state, localizer, bar) = CreateWithGerman();
         localizer.SetLanguage("de");
 
-        state.SelectionSummary = "1 ausgewählt (Gruppe)";
-        state.HasSelection = true;
+        TestSelection.AddAndSelect(state, 3);
+        Assert.Equal("3 selected", bar.SelectionSummary);
 
-        Assert.Equal("1 ausgewählt (Gruppe)", bar.SelectionSummary);
-
-        state.HasSelection = false;
+        state.ClearSelection();
 
         Assert.Equal("Nichts ausgewählt", bar.SelectionSummary);
+    }
+
+    [Theory]
+    [InlineData(2, "2 ausgewählt")]
+    [InlineData(12, "12 ausgewählt")]
+    public void SeveralShapes_ShowTheTranslatedCount(int count, string expected)
+    {
+        var state = new EditorState();
+        var localizer = FakeLocalizer.Create("de", new Dictionary<string, string> { ["{0} selected"] = "{0} ausgewählt" });
+        var bar = new StatusBarViewModel(state, localizer, () => { });
+
+        TestSelection.AddAndSelect(state, count);
+
+        Assert.Equal(expected, bar.SelectionSummary);
+    }
+
+    [Fact]
+    public void SelectionTextFollowsTheSelectedCountOneByOne()
+    {
+        var state = new EditorState();
+        var bar = new StatusBarViewModel(state, FakeLocalizer.Create(), () => { });
+        var ids = TestSelection.AddAndSelect(state, 3);
+
+        state.SetSelection(ids.Take(2));
+        Assert.Equal("2 selected", bar.SelectionSummary);
+
+        state.SetSelection(ids.Take(1));
+        Assert.Equal("1 selected", bar.SelectionSummary);
+
+        state.ClearSelection();
+        Assert.Equal("Nothing selected", bar.SelectionSummary);
     }
 
     [Fact]
@@ -209,7 +237,7 @@ public class StatusBarViewModelTests
         var raised = new List<string?>();
         bar.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
 
-        state.Select(System.Guid.NewGuid());
+        TestSelection.AddAndSelect(state);
 
         Assert.Equal("1 selected", bar.SelectionSummary);
         Assert.Contains(nameof(StatusBarViewModel.SelectionSummary), raised);

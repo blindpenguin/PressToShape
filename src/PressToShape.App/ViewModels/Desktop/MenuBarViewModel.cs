@@ -13,7 +13,7 @@ using static PressToShape.App.Localization.Localizer;
 namespace PressToShape.App.ViewModels.Desktop;
 
 /// <summary>
-/// The complete menu structure. The File actions, Undo and Redo, Quit, the zoom items, the Window items and the languages have behavior.
+/// The complete menu structure. The File actions, the Edit actions, Quit, the zoom items, the Window items and the languages have behavior.
 /// Everything else has no command and is therefore disabled until its feature exists.
 /// </summary>
 internal sealed class MenuBarViewModel : ViewModelBase
@@ -25,6 +25,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
         Action<InspectorTab> showTab,
         Action fitToWindow,
         FileMenuCommands files,
+        EditMenuCommands edit,
         RecentFiles recent,
         ICommand undo,
         ICommand redo)
@@ -35,6 +36,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(showTab);
         ArgumentNullException.ThrowIfNull(fitToWindow);
         ArgumentNullException.ThrowIfNull(files);
+        ArgumentNullException.ThrowIfNull(edit);
         ArgumentNullException.ThrowIfNull(recent);
         ArgumentNullException.ThrowIfNull(undo);
         ArgumentNullException.ThrowIfNull(redo);
@@ -96,15 +98,15 @@ internal sealed class MenuBarViewModel : ViewModelBase
                 Item(N("_Undo"), "Ctrl+Z", undo),
                 Item(N("_Redo"), "Ctrl+Shift+Z", redo),
                 Separator(),
-                Item(N("Cu_t"), "Ctrl+X"),
-                Item(N("_Copy"), "Ctrl+C"),
-                Item(N("_Paste"), "Ctrl+V"),
-                Item(N("Paste in Plac_e"), "Ctrl+Shift+V"),
-                Item(N("_Duplicate"), "Ctrl+D"),
-                Item(N("De_lete"), "Delete"),
+                Item(N("Cu_t"), "Ctrl+X", edit.Cut),
+                Item(N("_Copy"), "Ctrl+C", edit.Copy),
+                Item(N("_Paste"), "Ctrl+V", edit.Paste),
+                Item(N("Paste in Plac_e"), "Ctrl+Shift+V", edit.PasteInPlace),
+                Item(N("_Duplicate"), "Ctrl+D", edit.Duplicate),
+                Item(N("De_lete"), "Delete", edit.Delete),
                 Separator(),
-                Item(N("Select _All"), "Ctrl+A"),
-                Item(N("De_select"), "Ctrl+Shift+A"),
+                Item(N("Select _All"), "Ctrl+A", edit.SelectAll),
+                Item(N("De_select"), "Ctrl+Shift+A", edit.Deselect),
                 Separator(),
                 Item(N("Pre_ferences…"))),
             Submenu(N("_Object"),

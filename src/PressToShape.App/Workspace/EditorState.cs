@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PressToShape.Core.Documents;
@@ -46,18 +48,31 @@ internal sealed partial class EditorState : ObservableObject
     /// <summary>The layer new shapes go into. Always the id of a layer of the current document.</summary>
     [ObservableProperty] public partial Guid ActiveLayerId { get; set; }
 
-    /// <summary>The selected shape, or <c>null</c>. Always the id of a shape of the current document.</summary>
-    [ObservableProperty] public partial Guid? SelectedShapeId { get; private set; }
+    /// <summary>
+    /// The ids of the selected shapes, in the order they were selected. Every id belongs to a shape of the current document whose
+    /// layer is visible and not locked: the state removes ids that stop fulfilling that when the document changes.
+    /// </summary>
+    [ObservableProperty] public partial ImmutableArray<Guid> SelectedShapeIds { get; private set; } = ImmutableArray<Guid>.Empty;
+
+    /// <summary>The id of the selected shape if exactly one shape is selected, otherwise <c>null</c>.</summary>
+    public Guid? SelectedShapeId => SelectedShapeIds.Length == 1 ? SelectedShapeIds[0] : null;
+
+    /// <summary>How many shapes are selected.</summary>
+    public int SelectedCount => SelectedShapeIds.Length;
+
+    /// <summary>Whether at least one shape is selected.</summary>
+    public bool HasSelection => !SelectedShapeIds.IsEmpty;
 
     /// <summary>The shape that is being drawn right now. It is not part of the document until the drawing ends.</summary>
     [ObservableProperty] public partial Shape? Draft { get; set; }
 
     [ObservableProperty] public partial Tool ActiveTool { get; set; } = Tool.Select;
 
-    [ObservableProperty] public partial bool HasSelection { get; set; }
+    /// <summary>The shapes that were copied or cut. Kept by the app, nothing goes to the system clipboard.</summary>
+    public ShapeClipboard Clipboard { get; } = new();
 
-    /// <summary>A description of the selection, such as "1 selected (Group)". Empty without a selection: the status bar shows its own translated text then.</summary>
-    [ObservableProperty] public partial string SelectionSummary { get; set; } = string.Empty;
+    /// <summary>The selection box that is being dragged, in document units, or <c>null</c>. Not part of the document.</summary>
+    [ObservableProperty] public partial SelectionBox? SelectionBox { get; set; }
 
     /// <summary>Artboard width of the current document.</summary>
     public double ArtboardWidth => Document.ArtboardWidth;
@@ -69,7 +84,12 @@ internal sealed partial class EditorState : ObservableObject
     /// Changes the document and records the change as one history step. If <paramref name="change"/> returns the
     /// same document instance, nothing changed and no step is recorded.
     /// </summary>
-    public void Edit(HistoryStepType type, Func<Document, Document> change)
+    /// <param name="type">What kind of step this is.</param>
+    /// <param name="change">The change to the document.</param>
+    /// <param name="extend">
+    /// If true and the last step has the same type (nothing to redo), that step is extended instead of adding a new one.
+    /// </param>
+    public void Edit(HistoryStepType type, Func<Document, Document> change, bool extend = false)
     {
         ArgumentNullException.ThrowIfNull(change);
 
@@ -80,7 +100,7 @@ internal sealed partial class EditorState : ObservableObject
         }
 
         Document = after;
-        if (History.Record(type, after))
+        if (extend ? History.RecordOrExtend(type, after) : History.Record(type, after))
         {
             RaiseHistoryChanged();
         }
@@ -248,15 +268,97 @@ internal sealed partial class EditorState : ObservableObject
     /// <summary>Selects a shape, or clears the selection with <c>null</c>.</summary>
     public void Select(Guid? shapeId)
     {
-        SelectedShapeId = shapeId;
-        HasSelection = shapeId is not null;
+        if (shapeId is { } id)
+        {
+            SelectOnly(id);
+        }
+        else
+        {
+            ClearSelection();
+        }
+    }
+
+    /// <summary>Makes this shape the only selected shape. Does nothing useful for an id that cannot be selected: the selection is then cleared.</summary>
+    public void SelectOnly(Guid shapeId) => SetSelection([shapeId]);
+
+    /// <summary>
+    /// Replaces the selection by these shapes, keeping their order. Ids that are unknown, repeated, or in a hidden or locked layer
+    /// are left out.
+    /// </summary>
+    public void SetSelection(IEnumerable<Guid> shapeIds)
+    {
+        ArgumentNullException.ThrowIfNull(shapeIds);
+
+        var wanted = shapeIds.ToHashSet();
+        var selectable = SelectableIds(Document, wanted);
+        var seen = new HashSet<Guid>();
+        SetSelectionCore(shapeIds.Where(id => selectable.Contains(id) && seen.Add(id)).ToImmutableArray());
+    }
+
+    /// <summary>Adds the shape to the selection, or removes it if it is selected. A shape that cannot be selected is ignored.</summary>
+    public void ToggleSelected(Guid shapeId)
+    {
+        if (SelectedShapeIds.Contains(shapeId))
+        {
+            SetSelectionCore(SelectedShapeIds.Remove(shapeId));
+        }
+        else
+        {
+            SetSelection(SelectedShapeIds.Add(shapeId));
+        }
+    }
+
+    /// <summary>Clears the selection.</summary>
+    public void ClearSelection() => SetSelectionCore(ImmutableArray<Guid>.Empty);
+
+    private void SetSelectionCore(ImmutableArray<Guid> ids)
+    {
+        if (ids.SequenceEqual(SelectedShapeIds))
+        {
+            return;
+        }
+
+        SelectedShapeIds = ids;
+        OnPropertyChanged(nameof(SelectedShapeId));
+        OnPropertyChanged(nameof(SelectedCount));
+        OnPropertyChanged(nameof(HasSelection));
+    }
+
+    // The ids from the wanted set that belong to shapes of visible, unlocked layers. One pass over the document.
+    private static HashSet<Guid> SelectableIds(Document document, HashSet<Guid> wanted)
+    {
+        var found = new HashSet<Guid>();
+        if (wanted.Count == 0)
+        {
+            return found;
+        }
+
+        foreach (var layer in document.Layers)
+        {
+            if (!layer.IsVisible || layer.IsLocked)
+            {
+                continue;
+            }
+
+            foreach (var shape in layer.Shapes)
+            {
+                if (wanted.Contains(shape.Id))
+                {
+                    found.Add(shape.Id);
+                }
+            }
+        }
+
+        return found;
     }
 
     partial void OnDocumentChanged(Document value)
     {
-        if (SelectedShapeId is { } selected && value.FindShape(selected) is null)
+        if (!SelectedShapeIds.IsEmpty)
         {
-            Select(null);
+            // Shapes that are gone, or whose layer is now hidden or locked, leave the selection.
+            var selectable = SelectableIds(value, SelectedShapeIds.ToHashSet());
+            SetSelectionCore(SelectedShapeIds.Where(selectable.Contains).ToImmutableArray());
         }
 
         if (value.Layers.All(l => l.Id != ActiveLayerId))

@@ -219,4 +219,90 @@ public class ProjectFileTests
         Assert.Null(result.Error);
         Assert.Null(result.Detail);
     }
+
+    private static Document WithRotatedShapes()
+    {
+        var empty = Document.Create("L");
+        return empty
+            .AddShape(empty.Layers[0].Id, new RectangleShape { Id = Shape1, X = 10, Y = 20, Width = 100, Height = 50, Rotation = 33.25 })
+            .AddShape(empty.Layers[0].Id, new EllipseShape { Id = Shape2, X = 5, Y = 6, Width = 7, Height = 8, Rotation = 359.999 })
+            .AddShape(empty.Layers[0].Id, new RectangleShape { Id = Shape3, X = 1, Y = 2, Width = 3, Height = 4 });
+    }
+
+    [Fact]
+    public void WriteThenRead_RotatedShapes_KeepTheirRotationExactly()
+    {
+        var original = WithRotatedShapes();
+
+        var back = ReadOk(ProjectFile.Write(original));
+
+        Assert.Equal(new[] { 33.25, 359.999, 0 }, back.Layers[0].Shapes.Select(s => s.Rotation));
+        AssertSameContent(original, back);
+    }
+
+    [Fact]
+    public void Write_RotationEntry_IsOnlyWrittenForRotatedShapes_AndTheVersionStaysOne()
+    {
+        using var json = JsonDocument.Parse(ProjectFile.Write(WithRotatedShapes()));
+        var shapes = json.RootElement.GetProperty("layers")[0].GetProperty("shapes");
+
+        Assert.Equal(33.25, shapes[0].GetProperty("rotation").GetDouble());
+        Assert.Equal(359.999, shapes[1].GetProperty("rotation").GetDouble());
+        Assert.False(shapes[2].TryGetProperty("rotation", out _));
+        Assert.Equal(1, json.RootElement.GetProperty("version").GetInt32());
+    }
+
+    [Fact]
+    public void Read_FileWithoutRotationEntries_ReadsAsZero()
+    {
+        var original = Sample();
+
+        var back = ReadOk(ProjectFile.Write(original));
+
+        Assert.All(back.Layers.SelectMany(l => l.Shapes), s => Assert.Equal(0, s.Rotation));
+    }
+
+    [Theory]
+    [InlineData("725", 5)]
+    [InlineData("-90", 270)]
+    [InlineData("360", 0)]
+    [InlineData("null", 0)]
+    public void Read_RotationOutsideTheRange_IsNormalized_AndNullMeansNone(string value, double expected)
+    {
+        var doc = Document.Create("L");
+        var json = Encoding.UTF8.GetString(ProjectFile.Write(doc.AddShape(doc.Layers[0].Id, new RectangleShape { Width = 1, Height = 1, Rotation = 10 })));
+        var edited = json.Replace("\"rotation\": 10", "\"rotation\": " + value, StringComparison.Ordinal);
+
+        var result = ProjectFile.Read(Encoding.UTF8.GetBytes(edited));
+
+        Assert.True(result.Succeeded, result.Detail);
+        Assert.Equal(expected, result.Document!.Layers[0].Shapes[0].Rotation, precision: 9);
+    }
+
+    [Theory]
+    [InlineData("\"ninety\"")]
+    [InlineData("true")]
+    [InlineData("[1]")]
+    [InlineData("{}")]
+    public void Read_RotationOfTheWrongType_IsRejectedLikeOtherBadValues(string value)
+    {
+        var doc = Document.Create("L");
+        var json = Encoding.UTF8.GetString(ProjectFile.Write(doc.AddShape(doc.Layers[0].Id, new RectangleShape { Width = 1, Height = 1, Rotation = 10 })));
+        var edited = json.Replace("\"rotation\": 10", "\"rotation\": " + value, StringComparison.Ordinal);
+
+        var result = ProjectFile.Read(Encoding.UTF8.GetBytes(edited));
+
+        Assert.False(result.Succeeded);
+        Assert.NotNull(result.Error);
+    }
+
+    [Fact]
+    public void Read_RotationThatOverflowsADouble_IsRejected()
+    {
+        var doc = Document.Create("L");
+        var json = Encoding.UTF8.GetString(ProjectFile.Write(doc.AddShape(doc.Layers[0].Id, new RectangleShape { Width = 1, Height = 1, Rotation = 10 })));
+        var edited = json.Replace("\"rotation\": 10", "\"rotation\": 1e999", StringComparison.Ordinal);
+
+        Assert.False(ProjectFile.Read(Encoding.UTF8.GetBytes(edited)).Succeeded);
+    }
 }

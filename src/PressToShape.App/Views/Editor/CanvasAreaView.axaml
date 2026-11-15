@@ -50,8 +50,9 @@
                                             OriginX="{Binding OriginX}"
                                             OriginY="{Binding OriginY}"
                                             Draft="{Binding Draft}"
-                                            SelectionOutline="{Binding SelectionOutline}"
-                                            SelectionBrush="{DynamicResource SelectionOutlineBrush}" />
+                                            Overlay="{Binding Overlay}"
+                                            SelectionBrush="{DynamicResource SelectionOutlineBrush}"
+                                            SelectionHandleFillBrush="{DynamicResource SelectionHandleFillBrush}" />
         </Panel>
 
         <!-- Scroll bars. They sit outside the viewport, so the ruler zero stays aligned with the canvas.

@@ -15,6 +15,7 @@ public abstract record Shape
     private readonly double _width;
     private readonly double _height;
     private readonly Appearance _appearance = Appearance.Default;
+    private readonly double _rotation;
 
     // Private protected, so only shape types inside Core exist.
     private protected Shape()
@@ -58,6 +59,16 @@ public abstract record Shape
         init => _height = Guard.FiniteNonNegative(value, nameof(Height));
     }
 
+    /// <summary>
+    /// Rotation in degrees around the center of the box. Positive angles turn clockwise on the screen (y grows downward).
+    /// Finite. Stored normalized to at least 0 and less than 360. The default is 0.
+    /// </summary>
+    public double Rotation
+    {
+        get => _rotation;
+        init => _rotation = Normalize(Guard.Finite(value, nameof(Rotation)));
+    }
+
     /// <summary>Fill, stroke and opacity.</summary>
     public Appearance Appearance
     {
@@ -65,9 +76,83 @@ public abstract record Shape
         init => _appearance = value ?? throw new ArgumentNullException(nameof(Appearance));
     }
 
-    /// <summary>The geometry bounds. The stroke width is not included.</summary>
+    /// <summary>The unturned box of the shape. The stroke width and the rotation are not included.</summary>
     public Bounds Bounds => new(X, Y, Width, Height);
 
-    /// <summary>Whether the point lies inside the shape's geometry or on its edge. The stroke is ignored.</summary>
-    public abstract bool Contains(double x, double y);
+    /// <summary>Horizontal center of the box. The shape turns around it.</summary>
+    public double CenterX => X + Width / 2;
+
+    /// <summary>Vertical center of the box. The shape turns around it.</summary>
+    public double CenterY => Y + Height / 2;
+
+    /// <summary>The axis-aligned bounds of the turned box. Equal to <see cref="Bounds"/> without a rotation.</summary>
+    public Bounds RotatedBounds
+    {
+        get
+        {
+            if (_rotation == 0)
+            {
+                return Bounds;
+            }
+
+            var (sin, cos) = SinCos(_rotation);
+            var halfWidth = Width / 2;
+            var halfHeight = Height / 2;
+
+            // The turned box is symmetric around the center, so its half extents come from the absolute matrix entries.
+            var extentX = Math.Abs(halfWidth * cos) + Math.Abs(halfHeight * sin);
+            var extentY = Math.Abs(halfWidth * sin) + Math.Abs(halfHeight * cos);
+            return new Bounds(CenterX - extentX, CenterY - extentY, extentX * 2, extentY * 2);
+        }
+    }
+
+    /// <summary>Whether the point lies inside the turned shape's geometry or on its edge. The stroke is ignored.</summary>
+    public bool Contains(double x, double y)
+    {
+        if (_rotation != 0)
+        {
+            // Turn the point the opposite way around the center, then test against the unturned shape.
+            var (sin, cos) = SinCos(-_rotation);
+            var dx = x - CenterX;
+            var dy = y - CenterY;
+            x = CenterX + dx * cos - dy * sin;
+            y = CenterY + dx * sin + dy * cos;
+        }
+
+        return ContainsLocal(x, y);
+    }
+
+    /// <summary>Whether the point lies inside the shape's geometry before any rotation is applied.</summary>
+    protected abstract bool ContainsLocal(double x, double y);
+
+    // Sine and cosine of an angle in degrees, exact for multiples of 90 so quarter turns have no rounding noise.
+    private static (double Sin, double Cos) SinCos(double degrees)
+    {
+        var quarter = degrees / 90;
+        if (quarter == Math.Floor(quarter))
+        {
+            return (((long)quarter % 4 + 4) % 4) switch
+            {
+                0 => (0, 1),
+                1 => (1, 0),
+                2 => (0, -1),
+                _ => (-1, 0),
+            };
+        }
+
+        var radians = degrees * Math.PI / 180;
+        return (Math.Sin(radians), Math.Cos(radians));
+    }
+
+    private static double Normalize(double degrees)
+    {
+        var result = degrees % 360;
+        if (result < 0)
+        {
+            result += 360;
+        }
+
+        // A tiny negative angle can round up to exactly 360.
+        return result >= 360 ? 0 : result;
+    }
 }

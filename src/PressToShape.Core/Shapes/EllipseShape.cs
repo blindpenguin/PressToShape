@@ -4,7 +4,7 @@ namespace PressToShape.Core.Shapes;
 public sealed record EllipseShape : Shape
 {
     /// <inheritdoc />
-    public override bool Contains(double x, double y)
+    protected override bool ContainsLocal(double x, double y)
     {
         var radiusX = Width / 2;
         var radiusY = Height / 2;

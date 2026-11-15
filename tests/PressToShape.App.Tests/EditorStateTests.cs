@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
@@ -18,7 +19,7 @@ public class EditorStateTests
         Assert.Equal(Tool.Select, state.ActiveTool);
         Assert.Equal(100, state.ZoomPercent);
         Assert.False(state.HasSelection);
-        Assert.Equal(string.Empty, state.SelectionSummary);
+        Assert.Empty(state.SelectedShapeIds);
         Assert.Equal(1200, state.ArtboardWidth);
         Assert.Equal(800, state.ArtboardHeight);
     }
@@ -100,13 +101,13 @@ public class EditorStateTests
 
         state.ActiveTool = Tool.Pen;
         state.SetZoom(200);
-        state.HasSelection = true;
-        state.SelectionSummary = "1 selected";
+        TestSelection.AddAndSelect(state);
 
         Assert.Contains(nameof(EditorState.ActiveTool), changed);
         Assert.Contains(nameof(EditorState.ZoomPercent), changed);
         Assert.Contains(nameof(EditorState.HasSelection), changed);
-        Assert.Contains(nameof(EditorState.SelectionSummary), changed);
+        Assert.Contains(nameof(EditorState.SelectedCount), changed);
+        Assert.Contains(nameof(EditorState.SelectedShapeId), changed);
     }
 
     [Fact]
@@ -277,7 +278,7 @@ public class EditorStateTests
 
         Assert.Equal(shapeId, state.SelectedShapeId);
         Assert.True(state.HasSelection);
-        Assert.Equal(string.Empty, state.SelectionSummary);
+        Assert.Equal(1, state.SelectedCount);
     }
 
     [Fact]
@@ -852,5 +853,194 @@ public class EditorStateTests
         state.Document = state.Document.WithArtboardSize(200, 800);
 
         Assert.True(state.PanX <= ViewGeometry.PanLimit(1000, 200) + 1e-9);
+    }
+
+    // ---- selection set ----
+
+    private static (EditorState State, Guid[] Ids, Guid Bottom, Guid Top) StateWithThreeShapes()
+    {
+        var document = Document.Create("Bottom");
+        var bottom = document.Layers[0].Id;
+        document = document.AddLayer(new Layer { Name = "Top" });
+        var top = document.Layers[1].Id;
+        var shapes = new Shape[]
+        {
+            new RectangleShape { X = 0, Width = 10, Height = 10 },
+            new RectangleShape { X = 20, Width = 10, Height = 10 },
+            new EllipseShape { X = 40, Width = 10, Height = 10 },
+        };
+        document = document.AddShape(bottom, shapes[0]).AddShape(top, shapes[1]).AddShape(top, shapes[2]);
+        return (new EditorState(document), shapes.Select(x => x.Id).ToArray(), bottom, top);
+    }
+
+    [Fact]
+    public void SetSelection_KeepsTheGivenOrder_AndLeavesOutRepeatsAndUnknownIds()
+    {
+        var (state, ids, _, _) = StateWithThreeShapes();
+
+        state.SetSelection([ids[2], ids[0], ids[2], Guid.NewGuid()]);
+
+        Assert.Equal(new[] { ids[2], ids[0] }, state.SelectedShapeIds);
+        Assert.Equal(2, state.SelectedCount);
+        Assert.Null(state.SelectedShapeId);
+        Assert.True(state.HasSelection);
+    }
+
+    [Fact]
+    public void SelectOnly_ReplacesTheSelection_AndSelectedShapeIdIsTheSingleId()
+    {
+        var (state, ids, _, _) = StateWithThreeShapes();
+        state.SetSelection(ids);
+
+        state.SelectOnly(ids[1]);
+
+        Assert.Equal(new[] { ids[1] }, state.SelectedShapeIds);
+        Assert.Equal(ids[1], state.SelectedShapeId);
+    }
+
+    [Fact]
+    public void ToggleSelected_AddsAndRemoves()
+    {
+        var (state, ids, _, _) = StateWithThreeShapes();
+
+        state.ToggleSelected(ids[0]);
+        state.ToggleSelected(ids[2]);
+        Assert.Equal(new[] { ids[0], ids[2] }, state.SelectedShapeIds);
+
+        state.ToggleSelected(ids[0]);
+        Assert.Equal(new[] { ids[2] }, state.SelectedShapeIds);
+
+        state.ToggleSelected(Guid.NewGuid());
+        Assert.Equal(new[] { ids[2] }, state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void Selection_IgnoresShapesOfHiddenAndLockedLayers()
+    {
+        var (state, ids, bottom, top) = StateWithThreeShapes();
+        state.Document = state.Document.UpdateLayer(bottom, l => l with { IsLocked = true }).UpdateLayer(top, l => l with { IsVisible = false });
+
+        state.SetSelection(ids);
+        state.SelectOnly(ids[0]);
+        state.ToggleSelected(ids[1]);
+
+        Assert.Empty(state.SelectedShapeIds);
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void LockingOrHidingALayer_RemovesItsShapesFromTheSelection()
+    {
+        var (state, ids, bottom, top) = StateWithThreeShapes();
+        state.SetSelection(ids);
+
+        state.UpdateLayer(top, l => l with { IsLocked = true }, HistoryStepType.LockLayer);
+        Assert.Equal(new[] { ids[0] }, state.SelectedShapeIds);
+
+        state.SetSelection(ids.Take(1));
+        state.UpdateLayer(bottom, l => l with { IsVisible = false }, HistoryStepType.HideLayer);
+        Assert.Empty(state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void Selection_AfterEditingASelectedShapeOrAnotherLayer_Stays()
+    {
+        var (state, ids, bottom, _) = StateWithThreeShapes();
+        state.SetSelection(ids);
+        var raised = new List<string?>();
+        state.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.Edit(HistoryStepType.MoveShape, d => d.UpdateShape(ids[1], s => s is RectangleShape r ? r with { X = 99 } : s));
+        state.Preview(state.Document.UpdateLayer(bottom, l => l with { Name = "Renamed" }));
+
+        Assert.Equal(ids, state.SelectedShapeIds);
+        Assert.DoesNotContain(nameof(EditorState.SelectedShapeIds), raised);
+    }
+
+    [Fact]
+    public void Selection_AfterDeleteUndoAndRedo_FollowsWhatExists()
+    {
+        var (state, ids, _, _) = StateWithThreeShapes();
+        state.SetSelection(ids);
+
+        state.Edit(HistoryStepType.DeleteShape, d => d.RemoveShape(ids[1]));
+        Assert.Equal(new[] { ids[0], ids[2] }, state.SelectedShapeIds);
+
+        state.Undo();
+        Assert.Equal(new[] { ids[0], ids[2] }, state.SelectedShapeIds); // the shape is back, but it is not selected again
+
+        state.Redo();
+        Assert.Equal(new[] { ids[0], ids[2] }, state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void ReplaceDocument_ClearsTheSelection()
+    {
+        var (state, ids, _, _) = StateWithThreeShapes();
+        state.SetSelection(ids);
+
+        state.ReplaceDocument(Document.Create("Other"));
+
+        Assert.Empty(state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void ClearSelection_WhenAlreadyEmpty_RaisesNothing()
+    {
+        var (state, _, _, _) = StateWithThreeShapes();
+        var raised = new List<string?>();
+        state.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.ClearSelection();
+        state.SetSelection([]);
+
+        Assert.Empty(raised);
+    }
+
+    [Fact]
+    public void SelectionChanges_RaiseTheDerivedNotifications_AndCreateNoHistory()
+    {
+        var (state, ids, _, _) = StateWithThreeShapes();
+        var raised = new List<string?>();
+        state.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+        var document = state.Document;
+
+        state.SelectOnly(ids[0]);
+        state.ToggleSelected(ids[1]);
+        state.ClearSelection();
+
+        Assert.Contains(nameof(EditorState.SelectedShapeIds), raised);
+        Assert.Contains(nameof(EditorState.SelectedShapeId), raised);
+        Assert.Contains(nameof(EditorState.SelectedCount), raised);
+        Assert.Contains(nameof(EditorState.HasSelection), raised);
+        Assert.Same(document, state.Document);
+        Assert.Empty(state.History.Steps);
+    }
+
+    [Fact]
+    public void Edit_WithExtend_MergesIntoTheLastStepOfTheSameType()
+    {
+        var (state, ids, _, _) = StateWithThreeShapes();
+
+        state.Edit(HistoryStepType.NudgeShapes, d => d.UpdateShape(ids[0], s => s is RectangleShape r ? r with { X = 1 } : s), extend: true);
+        state.Edit(HistoryStepType.NudgeShapes, d => d.UpdateShape(ids[0], s => s is RectangleShape r ? r with { X = 2 } : s), extend: true);
+        state.Edit(HistoryStepType.NudgeShapes, d => d.UpdateShape(ids[0], s => s is RectangleShape r ? r with { X = 3 } : s));
+
+        Assert.Equal(new[] { HistoryStepType.NudgeShapes, HistoryStepType.NudgeShapes }, state.History.Steps);
+    }
+
+    [Fact]
+    public void SelectionRepair_OnALargeDocument_KeepsAllSelectedShapes()
+    {
+        var document = Document.Create("L");
+        var layer = document.Layers[0].Id;
+        var shapes = Enumerable.Range(0, 1000).Select(i => (Shape)new RectangleShape { X = i, Width = 1, Height = 1 }).ToArray();
+        document = document with { Layers = [document.Layers[0] with { Shapes = [.. shapes] }] };
+        var state = new EditorState(document);
+        state.SetSelection(shapes.Select(x => x.Id));
+
+        state.Preview(state.Document.UpdateLayer(layer, l => l with { Name = "x" }));
+
+        Assert.Equal(1000, state.SelectedCount);
     }
 }

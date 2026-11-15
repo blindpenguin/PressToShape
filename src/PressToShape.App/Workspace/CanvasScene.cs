@@ -64,28 +64,7 @@ internal static class CanvasScene
             appearance.Fill,
             hasStroke ? appearance.Stroke : null,
             hasStroke ? appearance.StrokeWidth * scale : 0,
-            appearance.Opacity);
-    }
-
-    /// <summary>
-    /// The screen rectangle of the selected shape's bounds (the stroke width is not included).
-    /// Returns <c>null</c> without an id, if no shape has the id, or if its layer is hidden.
-    /// </summary>
-    public static ScreenRect? SelectionOutline(Document document, Guid? shapeId, double zoomPercent, double originX, double originY)
-    {
-        ArgumentNullException.ThrowIfNull(document);
-
-        if (shapeId is not { } id || document.FindShape(id) is not { } location || !location.Layer.IsVisible)
-        {
-            return null;
-        }
-
-        var shape = location.Shape;
-        var scale = zoomPercent / 100;
-        return new ScreenRect(
-            CanvasMapping.ToScreen(shape.X, originX, zoomPercent),
-            CanvasMapping.ToScreen(shape.Y, originY, zoomPercent),
-            shape.Width * scale,
-            shape.Height * scale);
+            appearance.Opacity,
+            shape.Rotation);
     }
 }

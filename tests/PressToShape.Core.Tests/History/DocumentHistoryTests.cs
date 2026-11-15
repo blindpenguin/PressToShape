@@ -324,4 +324,105 @@ public class DocumentHistoryTests
         Assert.Equal(2000, history.Current.Layers[0].Shapes.Length);
         Assert.Equal(2000, history.Undo()!.Layers[0].Shapes.Length);
     }
+
+    [Fact]
+    public void RecordOrExtend_FirstStep_IsRecorded()
+    {
+        var history = new DocumentHistory(Start());
+        var after = Next(history.Current);
+
+        Assert.True(history.RecordOrExtend(HistoryStepType.NudgeShapes, after));
+
+        Assert.Equal(new[] { HistoryStepType.NudgeShapes }, history.Steps);
+        Assert.Same(after, history.Current);
+    }
+
+    [Fact]
+    public void RecordOrExtend_SameTypeAgain_ExtendsTheLastStep()
+    {
+        var d0 = Start();
+        var history = new DocumentHistory(d0);
+        var d1 = Next(d0, 1);
+        var d2 = Next(d1, 2);
+        var d3 = Next(d2, 3);
+        history.RecordOrExtend(HistoryStepType.NudgeShapes, d1);
+
+        Assert.True(history.RecordOrExtend(HistoryStepType.NudgeShapes, d2));
+        Assert.True(history.RecordOrExtend(HistoryStepType.NudgeShapes, d3));
+
+        Assert.Single(history.Steps);
+        Assert.Equal(1, history.CurrentIndex);
+        Assert.Same(d3, history.Current);
+        Assert.Same(d0, history.Undo());
+        Assert.Same(d3, history.Redo());
+    }
+
+    [Fact]
+    public void RecordOrExtend_DifferentType_RecordsANewStep()
+    {
+        var history = new DocumentHistory(Start());
+        history.RecordOrExtend(HistoryStepType.NudgeShapes, Next(history.Current, 1));
+
+        history.RecordOrExtend(HistoryStepType.MoveShape, Next(history.Current, 2));
+        history.RecordOrExtend(HistoryStepType.NudgeShapes, Next(history.Current, 3));
+
+        Assert.Equal(new[] { HistoryStepType.NudgeShapes, HistoryStepType.MoveShape, HistoryStepType.NudgeShapes }, history.Steps);
+    }
+
+    [Fact]
+    public void RecordOrExtend_AfterUndo_RecordsANewStepAndDropsTheRedoSteps()
+    {
+        var history = new DocumentHistory(Start());
+        history.RecordOrExtend(HistoryStepType.NudgeShapes, Next(history.Current, 1));
+        history.RecordOrExtend(HistoryStepType.MoveShape, Next(history.Current, 2));
+        history.Undo();
+
+        history.RecordOrExtend(HistoryStepType.NudgeShapes, Next(history.Current, 3));
+
+        Assert.Equal(new[] { HistoryStepType.NudgeShapes, HistoryStepType.NudgeShapes }, history.Steps);
+        Assert.False(history.CanRedo);
+    }
+
+    [Fact]
+    public void RecordOrExtend_AfterUndoOfTheOnlyStepOfThatType_DoesNotExtendTheEarlierStep()
+    {
+        var history = new DocumentHistory(Start());
+        history.RecordOrExtend(HistoryStepType.NudgeShapes, Next(history.Current, 1));
+        history.Undo();
+
+        history.RecordOrExtend(HistoryStepType.NudgeShapes, Next(history.Current, 2));
+
+        Assert.Single(history.Steps);
+        Assert.Equal(1, history.CurrentIndex);
+        Assert.False(history.CanRedo);
+    }
+
+    [Fact]
+    public void RecordOrExtend_TheCurrentInstance_DoesNothing()
+    {
+        var history = new DocumentHistory(Start());
+        history.RecordOrExtend(HistoryStepType.NudgeShapes, Next(history.Current, 1));
+
+        Assert.False(history.RecordOrExtend(HistoryStepType.NudgeShapes, history.Current));
+        Assert.Single(history.Steps);
+    }
+
+    [Fact]
+    public void RecordOrExtend_KeepsTheLimit()
+    {
+        var history = new DocumentHistory(Start(), maxSteps: 3);
+        for (var i = 0; i < 6; i++)
+        {
+            history.RecordOrExtend(i % 2 == 0 ? HistoryStepType.NudgeShapes : HistoryStepType.MoveShape, Next(history.Current, i));
+        }
+
+        Assert.Equal(3, history.Steps.Count);
+        Assert.Equal(3, history.CurrentIndex);
+    }
+
+    [Fact]
+    public void RecordOrExtend_NullDocument_Throws()
+    {
+        Assert.Throws<ArgumentNullException>(() => new DocumentHistory(Start()).RecordOrExtend(HistoryStepType.NudgeShapes, null!));
+    }
 }

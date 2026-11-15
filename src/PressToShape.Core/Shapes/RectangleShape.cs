@@ -4,6 +4,6 @@ namespace PressToShape.Core.Shapes;
 public sealed record RectangleShape : Shape
 {
     /// <inheritdoc />
-    public override bool Contains(double x, double y) =>
+    protected override bool ContainsLocal(double x, double y) =>
         x >= X && x <= X + Width && y >= Y && y <= Y + Height;
 }

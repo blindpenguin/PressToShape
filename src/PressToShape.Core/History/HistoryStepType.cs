@@ -26,4 +26,46 @@ public enum HistoryStepType
 
     /// <summary>A layer was unlocked.</summary>
     UnlockLayer,
+
+    /// <summary>Shapes were resized.</summary>
+    ResizeShapes,
+
+    /// <summary>Shapes were rotated.</summary>
+    RotateShapes,
+
+    /// <summary>Shapes were moved with the arrow keys.</summary>
+    NudgeShapes,
+
+    /// <summary>Shapes were pasted.</summary>
+    PasteShapes,
+
+    /// <summary>Shapes were cut.</summary>
+    CutShapes,
+
+    /// <summary>Shapes were duplicated.</summary>
+    DuplicateShapes,
+
+    /// <summary>The rotation of shapes was reset.</summary>
+    ResetTransform,
+
+    /// <summary>The position of shapes was typed in.</summary>
+    ChangePosition,
+
+    /// <summary>The size of shapes was typed in.</summary>
+    ChangeSize,
+
+    /// <summary>The rotation of shapes was typed in.</summary>
+    ChangeRotation,
+
+    /// <summary>The fill of shapes was changed.</summary>
+    ChangeFill,
+
+    /// <summary>The stroke of shapes was changed.</summary>
+    ChangeStroke,
+
+    /// <summary>The stroke width of shapes was changed.</summary>
+    ChangeStrokeWidth,
+
+    /// <summary>The opacity of shapes was changed.</summary>
+    ChangeOpacity,
 }

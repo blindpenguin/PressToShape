@@ -5,6 +5,7 @@ using PressToShape.App.Localization;
 using PressToShape.App.Services;
 using PressToShape.App.ViewModels.Desktop;
 using PressToShape.App.Workspace;
+using PressToShape.Core.History;
 using Xunit;
 
 namespace PressToShape.App.Tests;
@@ -136,10 +137,8 @@ public class DesktopShellViewModelTests
     {
         var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create(), TestFileServices.Create());
 
-        shell.State.HasSelection = true;
-        shell.State.SelectionSummary = "1 selected";
+        TestSelection.AddAndSelect(shell.State);
 
-        Assert.True(shell.Toolbar.HasSelection);
         Assert.True(shell.Inspector.Properties.HasSelection);
         Assert.Equal("1 selected", shell.StatusBar.SelectionSummary);
     }
@@ -262,9 +261,8 @@ public class DesktopShellViewModelTests
         Assert.Equal((100, 100, 400, 200), (shape.X, shape.Y, shape.Width, shape.Height));
         Assert.Same(shell.State.Document, shell.Canvas.Document);
         Assert.Equal(shape.Id, shell.State.SelectedShapeId);
-        Assert.True(shell.Toolbar.HasSelection);
         Assert.True(shell.Inspector.Properties.HasSelection);
-        Assert.NotNull(shell.Canvas.SelectionOutline);
+        Assert.NotEmpty(shell.Canvas.Overlay.Outlines);
         Assert.Equal(Tool.Rectangle, shell.Toolbox.ActiveTool);
         Assert.Equal(shell.State.Document.Layers[0].Id, shell.Inspector.Layers.SelectedItem!.LayerId);
     }
@@ -842,4 +840,126 @@ public class DesktopShellViewModelTests
         shell.Canvas.Wheel(0, 1, control: false, shift: true, 300, 200);
         Assert.Equal(-ViewGeometry.WheelStep, shell.Canvas.HorizontalScrollValue, precision: 9);
     }
+
+    [Fact]
+    public void TheShell_SharesOneSelectionEditor_WithTheCanvasAndTheInspector()
+    {
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create(), TestFileServices.Create());
+        var ids = TestSelection.AddAndSelect(shell.State);
+
+        // An arrow key on the canvas and a typed value in the Properties tab are both edits of the same editor: they are separate steps.
+        shell.Canvas.KeyPressed(CanvasKey.Right, shift: false);
+        shell.Inspector.Properties.Y.Text = "40";
+        shell.Inspector.Properties.Y.Commit();
+
+        var shape = shell.State.Document.FindShape(ids[0])!.Shape;
+        Assert.Equal((1, 40), (shape.X, shape.Y));
+        Assert.Equal(HistoryStepType.ChangePosition, shell.State.History.Steps[^1]);
+        Assert.Equal(HistoryStepType.NudgeShapes, shell.State.History.Steps[^2]);
+        Assert.NotNull(shell.Editor);
+    }
+
+    // ---- Edit commands ----
+
+    private static DesktopShellViewModel NewShell() => new(new FakeShutdown(), FakeLocalizer.Create(), TestFileServices.Create());
+
+    private static IReadOnlyList<System.Windows.Input.ICommand> SelectionCommands(DesktopShellViewModel shell) =>
+        [shell.CutCommand, shell.CopyCommand, shell.DuplicateCommand, shell.DeleteCommand, shell.DeselectCommand];
+
+    [Fact]
+    public void EditCommands_AreDisabledWithoutSelectionOrClipboard()
+    {
+        var shell = NewShell();
+
+        Assert.All(SelectionCommands(shell), c => Assert.False(c.CanExecute(null)));
+        Assert.False(shell.PasteCommand.CanExecute(null));
+        Assert.False(shell.PasteInPlaceCommand.CanExecute(null));
+        Assert.False(shell.SelectAllCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void EditCommands_FollowTheSelection_AndNotify()
+    {
+        var shell = NewShell();
+        var changed = new List<string>();
+        shell.CopyCommand.CanExecuteChanged += (_, _) => changed.Add("copy");
+        shell.DeselectCommand.CanExecuteChanged += (_, _) => changed.Add("deselect");
+
+        TestSelection.AddAndSelect(shell.State);
+
+        Assert.All(SelectionCommands(shell), c => Assert.True(c.CanExecute(null)));
+        Assert.Contains("copy", changed);
+        Assert.Contains("deselect", changed);
+        Assert.True(shell.SelectAllCommand.CanExecute(null));
+
+        shell.State.ClearSelection();
+        Assert.All(SelectionCommands(shell), c => Assert.False(c.CanExecute(null)));
+    }
+
+    [Fact]
+    public void CopyAndPaste_CommandsWork_AndPasteFollowsTheClipboardAndTheActiveLayer()
+    {
+        var shell = NewShell();
+        TestSelection.AddAndSelect(shell.State);
+        var pasteChanged = 0;
+        shell.PasteCommand.CanExecuteChanged += (_, _) => pasteChanged++;
+
+        shell.CopyCommand.Execute(null);
+
+        Assert.True(shell.PasteCommand.CanExecute(null));
+        Assert.True(shell.PasteInPlaceCommand.CanExecute(null));
+        Assert.True(pasteChanged > 0);
+
+        shell.PasteCommand.Execute(null);
+        Assert.Equal(2, shell.State.Document.Layers.SelectMany(l => l.Shapes).Count());
+
+        var layer = shell.State.ActiveLayerId;
+        shell.State.Document = shell.State.Document.UpdateLayer(layer, l => l with { IsLocked = true });
+        Assert.False(shell.PasteCommand.CanExecute(null));
+        Assert.False(shell.PasteInPlaceCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void CutDuplicateDeleteAndSelectCommands_DoTheirWork()
+    {
+        var shell = NewShell();
+        TestSelection.AddAndSelect(shell.State, 2);
+
+        shell.DuplicateCommand.Execute(null);
+        Assert.Equal(4, shell.State.Document.Layers.SelectMany(l => l.Shapes).Count());
+
+        shell.DeselectCommand.Execute(null);
+        Assert.False(shell.State.HasSelection);
+
+        shell.SelectAllCommand.Execute(null);
+        Assert.Equal(4, shell.State.SelectedCount);
+
+        shell.CutCommand.Execute(null);
+        Assert.Empty(shell.State.Document.Layers.SelectMany(l => l.Shapes));
+        Assert.True(shell.PasteCommand.CanExecute(null));
+
+        shell.PasteInPlaceCommand.Execute(null);
+        Assert.Equal(4, shell.State.Document.Layers.SelectMany(l => l.Shapes).Count());
+
+        shell.DeleteCommand.Execute(null);
+        Assert.Empty(shell.State.Document.Layers.SelectMany(l => l.Shapes));
+    }
+
+    [Fact]
+    public void TheEditMenuItems_UseTheShellCommands()
+    {
+        var shell = NewShell();
+        TestSelection.AddAndSelect(shell.State);
+        var edit = shell.MenuBar.Menus.Single(m => m.Header.Replace("_", string.Empty) == "Edit");
+
+        MenuItemViewModel Item(string header) => edit.Children.Single(c => c.Header.Replace("_", string.Empty) == header);
+
+        Assert.True(Item("Copy").IsEnabled);
+        Assert.True(Item("Select All").IsEnabled);
+        Assert.False(Item("Paste").IsEnabled);
+
+        Item("Copy").Command!.Execute(null);
+        Assert.True(Item("Paste").IsEnabled);
+    }
 }
+

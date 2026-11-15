@@ -9,12 +9,15 @@ namespace PressToShape.App.ViewModels.Editor;
 /// <summary>State of the inspector: the selected tab and the view models of its tabs.</summary>
 internal sealed partial class InspectorViewModel : ViewModelBase
 {
-    public InspectorViewModel(EditorState state, ILocalizer localizer)
+    /// <param name="state">The editor state.</param>
+    /// <param name="localizer">The translator.</param>
+    /// <param name="editor">The editor for the Properties tab. The shell passes the one it shares with the menus and the canvas.</param>
+    public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null)
     {
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(localizer);
 
-        Properties = new PropertiesViewModel(state);
+        Properties = new PropertiesViewModel(state, editor ?? new SelectionEditor(state), localizer);
         Layers = new LayersViewModel(state);
         Assets = new PlaceholderPanelViewModel(localizer, N("Assets"), N("No assets yet"));
         History = new HistoryViewModel(state, localizer);

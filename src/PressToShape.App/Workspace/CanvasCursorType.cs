@@ -17,4 +17,19 @@ internal enum CanvasCursorType
 
     /// <summary>A magnifier, for the Zoom tool.</summary>
     Magnifier,
+
+    /// <summary>A double arrow pointing up and down, for the top and bottom handles.</summary>
+    ResizeNorthSouth,
+
+    /// <summary>A double arrow pointing left and right, for the left and right handles.</summary>
+    ResizeWestEast,
+
+    /// <summary>A diagonal double arrow from top left to bottom right.</summary>
+    ResizeNorthWestSouthEast,
+
+    /// <summary>A diagonal double arrow from top right to bottom left.</summary>
+    ResizeNorthEastSouthWest,
+
+    /// <summary>A turning arrow, for the rotate handle.</summary>
+    Rotate,
 }

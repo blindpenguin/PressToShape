@@ -25,13 +25,13 @@ internal sealed partial class StatusBarViewModel : LocalizedViewModel
         _state.PropertyChanged += OnStateChanged;
     }
 
-    /// <summary>
-    /// The selection description, the translated "1 selected" when the state has a selection but no description,
-    /// or the translated "Nothing selected" without a selection.
-    /// </summary>
-    public string SelectionSummary => !_state.HasSelection
-        ? Localizer.T(N("Nothing selected"))
-        : _state.SelectionSummary.Length > 0 ? _state.SelectionSummary : Localizer.T(N("1 selected"));
+    /// <summary>The translated selection text: "Nothing selected", "1 selected" or "N selected".</summary>
+    public string SelectionSummary => _state.SelectedCount switch
+    {
+        0 => Localizer.T(N("Nothing selected")),
+        1 => Localizer.T(N("1 selected")),
+        var count => string.Format(Localizer.Culture, Localizer.T("{0} selected"), count),
+    };
 
     /// <summary>Path length of the selection, for example "Path length: 2,480.6 px". Empty until selections exist.</summary>
     public string PathLengthText => string.Empty;
@@ -74,7 +74,7 @@ internal sealed partial class StatusBarViewModel : LocalizedViewModel
                 OnPropertyChanged(nameof(ZoomPercent));
                 OnPropertyChanged(nameof(ZoomText));
                 break;
-            case nameof(EditorState.SelectionSummary):
+            case nameof(EditorState.SelectedCount):
                 OnPropertyChanged(nameof(SelectionSummary));
                 break;
             case nameof(EditorState.HasSelection):

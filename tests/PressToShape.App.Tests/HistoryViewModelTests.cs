@@ -61,9 +61,14 @@ public class HistoryViewModelTests
             Draw(state, type);
         }
 
-        Assert.Equal(
-            new[] { "Start", "Draw rectangle", "Draw ellipse", "Move shape", "Delete shape", "Hide layer", "Show layer", "Lock layer", "Unlock layer" },
-            Names(history));
+        var expected = new[]
+        {
+            "Start", "Draw rectangle", "Draw ellipse", "Move shape", "Delete shape", "Hide layer", "Show layer", "Lock layer", "Unlock layer",
+            "Resize shapes", "Rotate shapes", "Nudge shapes", "Paste shapes", "Cut shapes", "Duplicate shapes", "Reset transform",
+            "Change position", "Change size", "Change rotation", "Change fill", "Change stroke", "Change stroke width", "Change opacity",
+        };
+        Assert.Equal(expected, Names(history));
+        Assert.Equal(Enum.GetValues<HistoryStepType>().Length + 1, expected.Length);
     }
 
     [Fact]

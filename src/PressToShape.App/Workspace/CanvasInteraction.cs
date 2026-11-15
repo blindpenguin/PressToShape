@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using PressToShape.Core.Documents;
 using PressToShape.Core.History;
 using PressToShape.Core.Shapes;
 
@@ -15,15 +17,22 @@ internal sealed class CanvasInteraction
     /// <summary>A new shape needs at least this many screen pixels in x and in y.</summary>
     private const double MinimumDragPixels = 2;
 
+    /// <summary>A selection box smaller than this in both directions is a click on empty space.</summary>
+    private const double ClickPixels = 3;
+
     private readonly EditorState _state;
 
     private DragType _drag = DragType.None;
     private Tool _dragTool;
     private double _startX;
     private double _startY;
-    private Guid _movedShapeId;
-    private double _movedShapeStartX;
-    private double _movedShapeStartY;
+    private bool _startShift;
+    private IReadOnlyList<Shape> _startShapes = [];
+    private Document? _startDocument;
+    private SelectionFrame? _startFrame;
+    private HandleType _handle;
+    private double _grabOffsetX;
+    private double _grabOffsetY;
 
     public CanvasInteraction(EditorState state)
     {
@@ -35,13 +44,19 @@ internal sealed class CanvasInteraction
         None,
         Drawing,
         Moving,
+        Marquee,
+        Resizing,
+        Rotating,
     }
 
     /// <summary>Whether a drag is in progress.</summary>
     public bool IsDragging => _drag != DragType.None;
 
-    /// <summary>The primary button went down at this document position.</summary>
-    public void PointerPressed(double x, double y)
+    /// <summary>The handle that is being dragged, or <c>null</c> if no resize or rotate drag is in progress.</summary>
+    public HandleType? DraggedHandle => _drag is DragType.Resizing or DragType.Rotating ? _handle : null;
+
+    /// <summary>The primary button went down at this document position. <paramref name="shift"/> adds to or removes from the selection.</summary>
+    public void PointerPressed(double x, double y, bool shift = false)
     {
         Cancel();
 
@@ -56,31 +71,35 @@ internal sealed class CanvasInteraction
 
                 break;
             case Tool.Select:
-                PressWithSelectTool(x, y);
+                PressWithSelectTool(x, y, shift);
                 break;
         }
     }
 
     /// <summary>The pointer moved to this document position. Does nothing without a drag.</summary>
-    public void PointerMoved(double x, double y)
+    public void PointerMoved(double x, double y, bool shift = false, bool alt = false)
     {
         if (!ContinueDrag())
         {
             return;
         }
 
-        if (_drag == DragType.Drawing)
+        switch (_drag)
         {
-            _state.Draft = CreateShape(x, y);
-        }
-        else
-        {
-            MoveShape(x, y);
+            case DragType.Drawing:
+                _state.Draft = CreateShape(x, y);
+                break;
+            case DragType.Marquee:
+                _state.SelectionBox = BoxTo(x, y);
+                break;
+            default:
+                Show(TransformedShapes(x, y, shift, alt));
+                break;
         }
     }
 
     /// <summary>The button went up at this document position. Ends the drag in every case.</summary>
-    public void PointerReleased(double x, double y)
+    public void PointerReleased(double x, double y, bool shift = false, bool alt = false)
     {
         if (!ContinueDrag())
         {
@@ -90,8 +109,23 @@ internal sealed class CanvasInteraction
         if (_drag == DragType.Moving)
         {
             // The final position counts, then the whole drag is recorded as one step.
-            MoveShape(x, y);
+            Show(TransformedShapes(x, y, shift, alt));
             EndDrag();
+            return;
+        }
+
+        if (_drag is DragType.Resizing or DragType.Rotating)
+        {
+            Show(TransformedShapes(x, y, shift, alt));
+            EndDrag();
+            return;
+        }
+
+        if (_drag == DragType.Marquee)
+        {
+            var box = BoxTo(x, y);
+            EndDrag();
+            SelectInBox(box);
             return;
         }
 
@@ -113,38 +147,108 @@ internal sealed class CanvasInteraction
         EndDrag();
     }
 
-    /// <summary>Removes the selected shape from the document. Does nothing without a selection.</summary>
+    /// <summary>Removes all selected shapes from the document as one step. Does nothing without a selection.</summary>
     public void DeleteSelection()
     {
-        if (_state.SelectedShapeId is not { } id || _state.Document.FindShape(id) is null)
+        var shapes = SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds);
+        if (shapes.Count == 0)
         {
             return;
         }
 
         Cancel();
-        _state.Edit(HistoryStepType.DeleteShape, document => document.RemoveShape(id));
-        _state.Select(null);
+        _state.Edit(HistoryStepType.DeleteShape, document => shapes.Aggregate(document, (d, shape) => d.RemoveShape(shape.Id)));
+        _state.ClearSelection();
     }
 
-    private void PressWithSelectTool(double x, double y)
+    /// <summary>
+    /// The handle under this document position, for the cursor. <c>null</c> during a drag, for other tools than Select, without a
+    /// selection, or away from the handles.
+    /// </summary>
+    public HandleType? HoverHandle(double x, double y)
+    {
+        if (IsDragging || _state.ActiveTool != Tool.Select || CurrentFrame() is not { } frame)
+        {
+            return null;
+        }
+
+        return SelectionGeometry.HitHandle(frame, x, y, _state.ZoomPercent);
+    }
+
+    private SelectionFrame? CurrentFrame() =>
+        SelectionGeometry.FrameOf(SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds));
+
+    private void PressWithSelectTool(double x, double y, bool shift)
     {
         var document = _state.Document;
+        if (CurrentFrame() is { } frame && SelectionGeometry.HitHandle(frame, x, y, _state.ZoomPercent) is { } handle)
+        {
+            BeginHandleDrag(frame, handle, x, y);
+            return;
+        }
+
         foreach (var hit in document.HitTest(x, y))
         {
-            if (document.FindShape(hit.Id) is not { } location || location.Layer.IsLocked)
+            if (!SelectionQueries.IsSelectable(document, hit.Id))
             {
                 continue;
             }
 
-            _state.Select(hit.Id);
-            _movedShapeId = hit.Id;
-            _movedShapeStartX = hit.X;
-            _movedShapeStartY = hit.Y;
+            if (shift)
+            {
+                // Shift only changes the selection: nothing moves.
+                _state.ToggleSelected(hit.Id);
+                return;
+            }
+
+            if (!_state.SelectedShapeIds.Contains(hit.Id))
+            {
+                _state.SelectOnly(hit.Id);
+            }
+
+            _startShapes = SelectionQueries.SelectedShapes(document, _state.SelectedShapeIds);
+            _startDocument = document;
             BeginDrag(DragType.Moving, x, y);
             return;
         }
 
-        _state.Select(null);
+        // Empty space: a box starts. If it stays tiny it counts as a click that clears the selection.
+        _startShift = shift;
+        BeginDrag(DragType.Marquee, x, y);
+    }
+
+    private void BeginHandleDrag(SelectionFrame frame, HandleType handle, double x, double y)
+    {
+        _startShapes = SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds);
+        _startDocument = _state.Document;
+        _startFrame = frame;
+        _handle = handle;
+
+        // The pointer may be a few pixels off the handle's center: keep that distance so the handle does not jump.
+        var (hx, hy) = SelectionGeometry.HandlePosition(frame, handle, _state.ZoomPercent);
+        _grabOffsetX = hx - x;
+        _grabOffsetY = hy - y;
+        BeginDrag(handle == HandleType.Rotate ? DragType.Rotating : DragType.Resizing, x, y);
+    }
+
+    private SelectionBox BoxTo(double x, double y) =>
+        new(Math.Min(_startX, x), Math.Min(_startY, y), Math.Abs(x - _startX), Math.Abs(y - _startY));
+
+    private void SelectInBox(SelectionBox box)
+    {
+        var scale = _state.ZoomPercent / 100;
+        if (box.Width * scale < ClickPixels && box.Height * scale < ClickPixels)
+        {
+            if (!_startShift)
+            {
+                _state.ClearSelection();
+            }
+
+            return;
+        }
+
+        var touched = SelectionQueries.ShapesTouching(_state.Document, box.X, box.Y, box.Width, box.Height).Select(s => s.Id);
+        _state.SetSelection(_startShift ? _state.SelectedShapeIds.Concat(touched) : touched);
     }
 
     private bool CanDrawInActiveLayer() =>
@@ -178,41 +282,65 @@ internal sealed class CanvasInteraction
 
     private void EndDrag()
     {
-        var wasMoving = _drag == DragType.Moving;
+        var stepType = _drag switch
+        {
+            DragType.Moving => HistoryStepType.MoveShape,
+            DragType.Resizing => HistoryStepType.ResizeShapes,
+            DragType.Rotating => HistoryStepType.RotateShapes,
+            _ => (HistoryStepType?)null,
+        };
         _drag = DragType.None;
         _state.Draft = null;
+        _state.SelectionBox = null;
+        _startShapes = [];
+        _startDocument = null;
+        _startFrame = null;
         _state.IsDragInProgress = false;
 
-        if (wasMoving)
+        if (stepType is { } type)
         {
-            // The pointer moves only previewed the document. If the shape moved, the whole drag is one step.
-            _state.Commit(HistoryStepType.MoveShape);
+            // The pointer moves only previewed the document. If the shapes changed, the whole drag is one step.
+            _state.Commit(type);
         }
     }
 
-    // Absolute from the press point, so many small moves never add up to a drift.
-    private void MoveShape(double x, double y)
+    // Always computed from the shapes at the press, so many small moves never add up to a drift.
+    private IReadOnlyList<Shape> TransformedShapes(double x, double y, bool shift, bool alt)
     {
-        var shapeId = _movedShapeId;
-        if (_state.Document.FindShape(shapeId) is not { } location)
+        switch (_drag)
+        {
+            case DragType.Resizing when _startFrame is { } frame:
+                return SelectionTransforms.Resize(_startShapes, frame, _handle, x + _grabOffsetX, y + _grabOffsetY, shift, alt);
+            case DragType.Rotating when _startFrame is { } frame:
+                return SelectionTransforms.Rotate(_startShapes, frame, _startX, _startY, x, y, shift);
+            default:
+                return SelectionTransforms.Move(_startShapes, x - _startX, y - _startY);
+        }
+    }
+
+    // Shows the shapes on top of the document from the press. Equal shapes are left alone, and if nothing differs from the
+    // start the very same document comes back, so a click or a drag back to the start makes no step.
+    private void Show(IReadOnlyList<Shape> shapes)
+    {
+        if (_startDocument is not { } original)
         {
             return;
         }
 
-        var newX = _movedShapeStartX + (x - _startX);
-        var newY = _movedShapeStartY + (y - _startY);
-        if (location.Shape.X == newX && location.Shape.Y == newY)
+        var document = original;
+        for (var i = 0; i < shapes.Count; i++)
         {
-            // Nothing to change: a click without movement must not create a new document or a step.
-            return;
+            if (!Equals(shapes[i], _startShapes[i]))
+            {
+                var shape = shapes[i];
+                document = document.UpdateShape(shape.Id, _ => shape);
+            }
         }
 
-        _state.Preview(_state.Document.UpdateShape(shapeId, s => s switch
+        if (!ReferenceEquals(document, _state.Document))
         {
-            RectangleShape r => r with { X = newX, Y = newY },
-            EllipseShape e => e with { X = newX, Y = newY },
-            _ => s,
-        }));
+            _state.Preview(document);
+        }
     }
 
     private Shape? CreateShape(double x, double y)

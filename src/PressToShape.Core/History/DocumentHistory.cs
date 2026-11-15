@@ -78,6 +78,29 @@ public sealed class DocumentHistory
         return true;
     }
 
+    /// <summary>
+    /// Like <see cref="Record"/>, but if the last step has the same type and nothing can be redone, that step is extended:
+    /// its result becomes <paramref name="after"/> and no new step is added. For changes that repeat, such as a held arrow key.
+    /// </summary>
+    /// <returns><c>false</c> and no change if <paramref name="after"/> is the current document instance.</returns>
+    public bool RecordOrExtend(HistoryStepType type, Document after)
+    {
+        ArgumentNullException.ThrowIfNull(after);
+
+        if (ReferenceEquals(after, Current))
+        {
+            return false;
+        }
+
+        if (CurrentIndex > 0 && !CanRedo && _steps[CurrentIndex - 1] == type)
+        {
+            _snapshots[CurrentIndex] = after;
+            return true;
+        }
+
+        return Record(type, after);
+    }
+
     /// <summary>Goes one step back.</summary>
     /// <returns>The new current document, or <c>null</c> if there is nothing to undo.</returns>
     public Document? Undo() => CanUndo ? MoveTo(CurrentIndex - 1) : null;

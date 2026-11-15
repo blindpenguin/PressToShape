@@ -119,6 +119,12 @@ public static class SvgExport
             writer.WriteAttributeString("opacity", Number(appearance.Opacity));
         }
 
+        if (shape.Rotation != 0)
+        {
+            // The box center is the turning point, like in the editor.
+            writer.WriteAttributeString("transform", $"rotate({Number(shape.Rotation)} {Number(shape.CenterX)} {Number(shape.CenterY)})");
+        }
+
         writer.WriteEndElement();
     }
 

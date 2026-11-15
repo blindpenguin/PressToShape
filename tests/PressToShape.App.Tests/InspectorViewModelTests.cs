@@ -117,7 +117,7 @@ public class InspectorViewModelTests
         Assert.False(properties.HasSelection);
         Assert.True(properties.ShowNothingSelectedHint);
 
-        state.HasSelection = true;
+        TestSelection.AddAndSelect(state);
 
         Assert.True(properties.HasSelection);
         Assert.False(properties.ShowNothingSelectedHint);

@@ -40,6 +40,19 @@ public class MenuBarViewModelTests
 
         public Localizer Localizer { get; }
 
+        public Dictionary<string, SwitchableCommand> EditCommandsByName { get; } = new[] { "cut", "copy", "paste", "paste in place", "duplicate", "delete", "select all", "deselect" }
+            .ToDictionary(name => name, _ => new SwitchableCommand(false));
+
+        private EditMenuCommands EditCommands() => new(
+            EditCommandsByName["cut"],
+            EditCommandsByName["copy"],
+            EditCommandsByName["paste"],
+            EditCommandsByName["paste in place"],
+            EditCommandsByName["duplicate"],
+            EditCommandsByName["delete"],
+            EditCommandsByName["select all"],
+            EditCommandsByName["deselect"]);
+
         public Fixture()
         {
             Localizer = FakeLocalizer.Create("en", new Dictionary<string, string>
@@ -56,7 +69,7 @@ public class MenuBarViewModelTests
                 new RelayCommand(() => FileCalls.Add("save as")),
                 new RelayCommand(() => FileCalls.Add("export")),
                 path => new RelayCommand(() => FileCalls.Add("recent " + path)));
-            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, Recent, Undo, Redo);
+            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, EditCommands(), Recent, Undo, Redo);
         }
     }
 
@@ -511,4 +524,43 @@ public class MenuBarViewModelTests
         Assert.Equal(1, f.Undo.Executions);
         Assert.Equal(1, f.Redo.Executions);
     }
+
+    [Fact]
+    public void EditItems_AreDisabledUntilTheirCommandCanRun_AndRunTheirCommand()
+    {
+        var f = new Fixture();
+        var items = new (string Header, string Command)[]
+        {
+            ("Cut", "cut"), ("Copy", "copy"), ("Paste", "paste"), ("Paste in Place", "paste in place"),
+            ("Duplicate", "duplicate"), ("Delete", "delete"), ("Select All", "select all"), ("Deselect", "deselect"),
+        };
+
+        foreach (var (header, command) in items)
+        {
+            var item = Find(f, header);
+            Assert.False(item.IsEnabled, header);
+
+            f.EditCommandsByName[command].Set(true);
+            Assert.True(item.IsEnabled, header);
+            item.Command!.Execute(null);
+
+            Assert.Equal(1, f.EditCommandsByName[command].Executions);
+        }
+    }
+
+    [Fact]
+    public void EditItems_KeepTheirGestureHints()
+    {
+        var f = new Fixture();
+
+        Assert.Equal("Ctrl+X", Find(f, "Cut").Gesture);
+        Assert.Equal("Ctrl+C", Find(f, "Copy").Gesture);
+        Assert.Equal("Ctrl+V", Find(f, "Paste").Gesture);
+        Assert.Equal("Ctrl+Shift+V", Find(f, "Paste in Place").Gesture);
+        Assert.Equal("Ctrl+D", Find(f, "Duplicate").Gesture);
+        Assert.Equal("Delete", Find(f, "Delete").Gesture);
+        Assert.Equal("Ctrl+A", Find(f, "Select All").Gesture);
+        Assert.Equal("Ctrl+Shift+A", Find(f, "Deselect").Gesture);
+    }
 }
+

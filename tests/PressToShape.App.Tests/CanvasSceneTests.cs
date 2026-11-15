@@ -221,50 +221,26 @@ public class CanvasSceneTests
         Assert.Throws<ArgumentNullException>(() => CanvasScene.BuildShape(null!, 100, 0, 0));
     }
 
-    [Theory]
-    [InlineData(50, 10, 20, 15, 30, 5, 5)]
-    [InlineData(100, 10, 20, 20, 40, 10, 10)]
-    [InlineData(200, 10, 20, 30, 60, 20, 20)]
-    public void SelectionOutline_SelectedShape_ReturnsScreenBounds(double zoom, double originX, double originY, double x, double y, double width, double height)
+    [Fact]
+    public void BuildShape_PassesTheRotationThrough_AndUprightShapesHaveNone()
     {
-        var document = TwoLayers().AddShape(LayerA, Rect(Shape1, x: 10, y: 20));
+        var turned = new RectangleShape { Width = 10, Height = 10, Rotation = 30 };
+        var upright = new EllipseShape { Width = 10, Height = 10 };
 
-        var outline = CanvasScene.SelectionOutline(document, Shape1, zoom, originX, originY);
-
-        Assert.Equal(new ScreenRect(originX + 10 * zoom / 100, originY + 20 * zoom / 100, width, height), outline);
-        Assert.Equal(x, outline!.Value.X, precision: 9);
-        Assert.Equal(y, outline.Value.Y, precision: 9);
+        Assert.Equal(30, CanvasScene.BuildShape(turned, 200, 5, 5).RotationDegrees);
+        Assert.Equal(0, CanvasScene.BuildShape(upright, 200, 5, 5).RotationDegrees);
     }
 
     [Fact]
-    public void SelectionOutline_ShapeInLockedLayer_IsReturned()
+    public void Build_PassesTheRotationOfEveryShape_AndKeepsTheBoxUnturned()
     {
-        var document = TwoLayers().AddShape(LayerA, Rect(Shape1)).UpdateLayer(LayerA, l => l with { IsLocked = true });
+        var shape = new RectangleShape { X = 10, Y = 20, Width = 40, Height = 10, Rotation = 90 };
+        var document = Document.Create("x");
+        document = document.AddShape(document.Layers[0].Id, shape);
 
-        Assert.NotNull(CanvasScene.SelectionOutline(document, Shape1, 100, 0, 0));
-    }
+        var screen = Assert.Single(CanvasScene.Build(document, 200, 100, 100));
 
-    [Fact]
-    public void SelectionOutline_NoId_ReturnsNull()
-    {
-        var document = TwoLayers().AddShape(LayerA, Rect(Shape1));
-
-        Assert.Null(CanvasScene.SelectionOutline(document, null, 100, 0, 0));
-    }
-
-    [Fact]
-    public void SelectionOutline_UnknownId_ReturnsNull()
-    {
-        var document = TwoLayers().AddShape(LayerA, Rect(Shape1));
-
-        Assert.Null(CanvasScene.SelectionOutline(document, Shape2, 100, 0, 0));
-    }
-
-    [Fact]
-    public void SelectionOutline_ShapeInHiddenLayer_ReturnsNull()
-    {
-        var document = TwoLayers().AddShape(LayerA, Rect(Shape1)).UpdateLayer(LayerA, l => l with { IsVisible = false });
-
-        Assert.Null(CanvasScene.SelectionOutline(document, Shape1, 100, 0, 0));
+        Assert.Equal(90, screen.RotationDegrees);
+        Assert.Equal((120, 140, 80, 20), (screen.X, screen.Y, screen.Width, screen.Height));
     }
 }

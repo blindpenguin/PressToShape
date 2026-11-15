@@ -27,15 +27,6 @@
             <Setter Property="Margin" Value="8,10" />
             <Setter Property="Background" Value="{DynamicResource BorderSubtleBrush}" />
         </Style>
-        <Style Selector="TextBlock.field-label">
-            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
-            <Setter Property="FontSize" Value="{StaticResource UiFontSize}" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="8,0,4,0" />
-        </Style>
-        <Style Selector="TextBox.field">
-            <Setter Property="Width" Value="84" />
-        </Style>
     </UserControl.Styles>
 
     <Border Background="{DynamicResource ToolbarBackgroundBrush}"
@@ -87,30 +78,6 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-
-            <Border Classes="group-separator" />
-
-            <TextBlock Classes="field-label" Text="X" />
-            <TextBox Classes="field" Text="{Binding X, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="{loc:T 'X position'}">
-<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
-</TextBox>
-            <TextBlock Classes="field-label" Text="Y" />
-            <TextBox Classes="field" Text="{Binding Y, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="{loc:T 'Y position'}">
-<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
-</TextBox>
-            <TextBlock Classes="field-label" Text="W" />
-            <TextBox Classes="field" Text="{Binding Width, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="{loc:T 'Width'}">
-<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
-</TextBox>
-            <ToggleButton Classes="tool" IsEnabled="False"
-                          ToolTip.Tip="{loc:T 'Keep proportions'}"
-                          AutomationProperties.Name="{loc:T 'Keep proportions'}">
-                <materialIcons:MaterialIcon Kind="LinkVariant" Width="18" Height="18" />
-            </ToggleButton>
-            <TextBlock Classes="field-label" Text="H" />
-            <TextBox Classes="field" Text="{Binding Height, Mode=OneWay}" IsEnabled="{Binding HasSelection}" AutomationProperties.Name="{loc:T 'Height'}">
-<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
-</TextBox>
 
             <Border Classes="group-separator" />
 

@@ -1,3 +1,4 @@
+using System.Windows.Input;
 using Avalonia.Controls;
 using Avalonia.Input;
 using PressToShape.App.ViewModels.Desktop;
@@ -24,12 +25,24 @@ public partial class DesktopShellView : UserControl
             return;
         }
 
-        if (e.KeyModifiers != KeyModifiers.None && e.KeyModifiers != KeyModifiers.Shift)
+        // A text box keeps its own keys (select all, copy, paste, undo ...), so none of the shortcuts below run while one has focus.
+        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox)
         {
             return;
         }
 
-        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox)
+        if (EditShortcut(shell, e.Key, e.KeyModifiers) is { } command)
+        {
+            if (command.CanExecute(null))
+            {
+                command.Execute(null);
+            }
+
+            e.Handled = true;
+            return;
+        }
+
+        if (e.KeyModifiers != KeyModifiers.None && e.KeyModifiers != KeyModifiers.Shift)
         {
             return;
         }
@@ -39,4 +52,21 @@ public partial class DesktopShellView : UserControl
             e.Handled = true;
         }
     }
+
+    // Undo, redo, clipboard and selection shortcuts. They are handled here and not as key bindings, because a key binding would
+    // also run while a text box has focus and take the key from it.
+    private static ICommand? EditShortcut(DesktopShellViewModel shell, Key key, KeyModifiers modifiers) => (modifiers, key) switch
+    {
+        (KeyModifiers.Control, Key.Z) => shell.UndoCommand,
+        (KeyModifiers.Control | KeyModifiers.Shift, Key.Z) => shell.RedoCommand,
+        (KeyModifiers.Control, Key.Y) => shell.RedoCommand,
+        (KeyModifiers.Control, Key.X) => shell.CutCommand,
+        (KeyModifiers.Control, Key.C) => shell.CopyCommand,
+        (KeyModifiers.Control, Key.V) => shell.PasteCommand,
+        (KeyModifiers.Control | KeyModifiers.Shift, Key.V) => shell.PasteInPlaceCommand,
+        (KeyModifiers.Control, Key.D) => shell.DuplicateCommand,
+        (KeyModifiers.Control, Key.A) => shell.SelectAllCommand,
+        (KeyModifiers.Control | KeyModifiers.Shift, Key.A) => shell.DeselectCommand,
+        _ => null,
+    };
 }

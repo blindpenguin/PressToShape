@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using PressToShape.App.ViewModels.Editor;
+using PressToShape.App.Workspace;
 
 namespace PressToShape.App.Views.Editor;
 
@@ -23,6 +24,7 @@ public partial class CanvasAreaView : UserControl
         Viewport.PointerMoved += OnViewportPointerMoved;
         Viewport.PointerReleased += OnViewportPointerReleased;
         Viewport.PointerCaptureLost += OnViewportPointerCaptureLost;
+        Viewport.PointerExited += OnViewportPointerExited;
         Viewport.PointerWheelChanged += OnViewportPointerWheelChanged;
         Viewport.KeyDown += OnViewportKeyDown;
 
@@ -78,7 +80,7 @@ public partial class CanvasAreaView : UserControl
         else
         {
             _activeButton = MouseButton.Left;
-            viewModel.PointerPressed(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Alt));
+            viewModel.PointerPressed(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
         }
 
         e.Handled = true;
@@ -86,10 +88,27 @@ public partial class CanvasAreaView : UserControl
 
     private void OnViewportPointerMoved(object? sender, PointerEventArgs e)
     {
-        if (DataContext is CanvasAreaViewModel viewModel && e.Pointer.Captured == Viewport)
+        if (DataContext is not CanvasAreaViewModel viewModel)
         {
-            var position = e.GetPosition(Viewport);
-            viewModel.PointerMoved(position.X, position.Y);
+            return;
+        }
+
+        var position = e.GetPosition(Viewport);
+        if (e.Pointer.Captured == Viewport)
+        {
+            viewModel.PointerMoved(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Shift), e.KeyModifiers.HasFlag(KeyModifiers.Alt));
+        }
+        else
+        {
+            viewModel.PointerHover(position.X, position.Y);
+        }
+    }
+
+    private void OnViewportPointerExited(object? sender, PointerEventArgs e)
+    {
+        if (DataContext is CanvasAreaViewModel viewModel && e.Pointer.Captured != Viewport)
+        {
+            viewModel.PointerLeft();
         }
     }
 
@@ -102,7 +121,7 @@ public partial class CanvasAreaView : UserControl
 
         var position = e.GetPosition(Viewport);
         _activeButton = null;
-        viewModel.PointerReleased(position.X, position.Y);
+        viewModel.PointerReleased(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Shift), e.KeyModifiers.HasFlag(KeyModifiers.Alt));
         e.Pointer.Capture(null);
         e.Handled = true;
     }
@@ -118,9 +137,31 @@ public partial class CanvasAreaView : UserControl
 
     private void OnViewportKeyDown(object? sender, KeyEventArgs e)
     {
-        if (e.Key == Key.Delete && DataContext is CanvasAreaViewModel viewModel)
+        if (DataContext is not CanvasAreaViewModel viewModel)
+        {
+            return;
+        }
+
+        if (e.Key == Key.Delete)
         {
             viewModel.DeleteSelection();
+            e.Handled = true;
+            return;
+        }
+
+        var key = e.Key switch
+        {
+            Key.Left => CanvasKey.Left,
+            Key.Right => CanvasKey.Right,
+            Key.Up => CanvasKey.Up,
+            Key.Down => CanvasKey.Down,
+            Key.Escape => CanvasKey.Escape,
+            _ => (CanvasKey?)null,
+        };
+
+        // Only keys that changed something are handled, so other controls and shortcuts keep theirs.
+        if (key is { } canvasKey && viewModel.KeyPressed(canvasKey, e.KeyModifiers.HasFlag(KeyModifiers.Shift)))
+        {
             e.Handled = true;
         }
     }

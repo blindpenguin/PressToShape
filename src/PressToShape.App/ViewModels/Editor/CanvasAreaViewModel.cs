@@ -14,6 +14,8 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 {
     private readonly EditorState _state;
     private readonly CanvasInteraction _interaction;
+    private readonly SelectionEditor _editor;
+    private HandleType? _hoverHandle;
 
     private bool _panning;
     private double _panStartScreenX;
@@ -21,9 +23,12 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     private double _panStartX;
     private double _panStartY;
 
-    public CanvasAreaViewModel(EditorState state)
+    /// <param name="state">The editor state.</param>
+    /// <param name="editor">The editor for keyboard edits. The shell passes the one it shares with the menus. Without one the view model makes its own.</param>
+    public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
+        _editor = editor ?? new SelectionEditor(_state);
         _interaction = new CanvasInteraction(_state);
         _state.PropertyChanged += OnStateChanged;
     }
@@ -40,20 +45,37 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <summary>The shape that is being drawn, in screen space, or <c>null</c>.</summary>
     public ScreenShape? Draft => _state.Draft is { } draft ? CanvasScene.BuildShape(draft, ZoomPercent, OriginX, OriginY) : null;
 
-    /// <summary>The outline of the selected shape in screen space, or <c>null</c>.</summary>
-    public ScreenRect? SelectionOutline =>
-        CanvasScene.SelectionOutline(_state.Document, _state.SelectedShapeId, ZoomPercent, OriginX, OriginY);
+    /// <summary>Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.</summary>
+    public SelectionOverlay Overlay =>
+        SelectionOverlay.Build(_state.Document, _state.SelectedShapeIds, _state.ActiveTool, ZoomPercent, OriginX, OriginY, _state.SelectionBox);
 
-    /// <summary>The pointer shape for the active tool. A closed hand while the view is being dragged.</summary>
-    public CanvasCursorType CursorType => _panning
-        ? CanvasCursorType.ClosedHand
-        : _state.ActiveTool switch
+    /// <summary>
+    /// The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle,
+    /// otherwise the shape of the active tool.
+    /// </summary>
+    public CanvasCursorType CursorType
+    {
+        get
         {
-            Tool.Rectangle or Tool.Ellipse => CanvasCursorType.Crosshair,
-            Tool.Hand => CanvasCursorType.OpenHand,
-            Tool.Zoom => CanvasCursorType.Magnifier,
-            _ => CanvasCursorType.Arrow,
-        };
+            if (_panning)
+            {
+                return CanvasCursorType.ClosedHand;
+            }
+
+            if ((_interaction.DraggedHandle ?? _hoverHandle) is { } handle)
+            {
+                return CursorForHandle(handle);
+            }
+
+            return _state.ActiveTool switch
+            {
+                Tool.Rectangle or Tool.Ellipse => CanvasCursorType.Crosshair,
+                Tool.Hand => CanvasCursorType.OpenHand,
+                Tool.Zoom => CanvasCursorType.Magnifier,
+                _ => CanvasCursorType.Arrow,
+            };
+        }
+    }
 
     /// <summary>Smallest value of the horizontal scroll bar: minus the furthest the view offset may go.</summary>
     public double HorizontalScrollMinimum => -HorizontalScrollMaximum;
@@ -120,7 +142,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// dragging the view, with the Zoom tool it zooms one step in (with <paramref name="alt"/>: out) around the position,
     /// with the other tools it is handled by the tool.
     /// </summary>
-    public void PointerPressed(double screenX, double screenY, bool alt = false)
+    public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false)
     {
         switch (_state.ActiveTool)
         {
@@ -134,7 +156,8 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 _state.ZoomAround(zoom, screenX, screenY);
                 break;
             default:
-                _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY));
+                _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift);
+                SetHover(null);
                 break;
         }
     }
@@ -149,7 +172,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     }
 
     /// <summary>The pointer moved. The position is in screen pixels of the canvas area.</summary>
-    public void PointerMoved(double screenX, double screenY)
+    public void PointerMoved(double screenX, double screenY, bool shift = false, bool alt = false)
     {
         if (_panning)
         {
@@ -158,11 +181,11 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             return;
         }
 
-        _interaction.PointerMoved(ToDocumentX(screenX), ToDocumentY(screenY));
+        _interaction.PointerMoved(ToDocumentX(screenX), ToDocumentY(screenY), shift, alt);
     }
 
     /// <summary>The button went up. The position is in screen pixels of the canvas area.</summary>
-    public void PointerReleased(double screenX, double screenY)
+    public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)
     {
         if (_panning)
         {
@@ -171,7 +194,52 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             return;
         }
 
-        _interaction.PointerReleased(ToDocumentX(screenX), ToDocumentY(screenY));
+        _interaction.PointerReleased(ToDocumentX(screenX), ToDocumentY(screenY), shift, alt);
+        PointerHover(screenX, screenY);
+    }
+
+    /// <summary>The pointer moved over the canvas without a drag: the handle under it decides the cursor.</summary>
+    public void PointerHover(double screenX, double screenY)
+    {
+        SetHover(_panning ? null : _interaction.HoverHandle(ToDocumentX(screenX), ToDocumentY(screenY)));
+    }
+
+    /// <summary>The pointer left the canvas: no handle is hovered any more.</summary>
+    public void PointerLeft() => SetHover(null);
+
+    /// <summary>
+    /// A key went down on the canvas. The arrow keys move the selection by 1 unit, with <paramref name="shift"/> by 10. Escape clears
+    /// the selection. Nothing happens during a drag.
+    /// </summary>
+    /// <returns>Whether the key did something, so the caller marks it as handled.</returns>
+    public bool KeyPressed(CanvasKey key, bool shift)
+    {
+        if (_state.IsDragInProgress || !_state.HasSelection)
+        {
+            return false;
+        }
+
+        var step = shift ? 10 : 1;
+        switch (key)
+        {
+            case CanvasKey.Left:
+                _editor.Nudge(-step, 0);
+                break;
+            case CanvasKey.Right:
+                _editor.Nudge(step, 0);
+                break;
+            case CanvasKey.Up:
+                _editor.Nudge(0, -step);
+                break;
+            case CanvasKey.Down:
+                _editor.Nudge(0, step);
+                break;
+            default:
+                _editor.Deselect();
+                break;
+        }
+
+        return true;
     }
 
     /// <summary>Ends a drag without a result, for example when the pointer capture is lost.</summary>
@@ -237,7 +305,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         OnPropertyChanged(nameof(CursorType));
     }
 
-    /// <summary>Removes the selected shape. Does nothing without a selection.</summary>
+    /// <summary>Removes the selected shapes. Does nothing without a selection.</summary>
     public void DeleteSelection() => _interaction.DeleteSelection();
 
     partial void OnViewportWidthChanged(double value)
@@ -254,6 +322,35 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         OnPropertyChanged(nameof(OriginY));
         NotifyOverlayChanged();
         NotifyScrollChanged();
+    }
+
+    private void SetHover(HandleType? handle)
+    {
+        if (_hoverHandle != handle)
+        {
+            _hoverHandle = handle;
+            OnPropertyChanged(nameof(CursorType));
+        }
+    }
+
+    // The arrow points along the handle's direction on the screen, which turns with the selection. Only the four standard
+    // resize cursors exist, so the direction is rounded to the nearest of them.
+    private CanvasCursorType CursorForHandle(HandleType handle)
+    {
+        if (handle == HandleType.Rotate)
+        {
+            return CanvasCursorType.Rotate;
+        }
+
+        var frame = SelectionGeometry.FrameOf(SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds));
+        var degrees = SelectionGeometry.HandleDirectionDegrees(handle, frame?.Rotation ?? 0) % 180;
+        return ((int)Math.Round(degrees / 45) % 4) switch
+        {
+            0 => CanvasCursorType.ResizeWestEast,
+            1 => CanvasCursorType.ResizeNorthWestSouthEast,
+            2 => CanvasCursorType.ResizeNorthSouth,
+            _ => CanvasCursorType.ResizeNorthEastSouthWest,
+        };
     }
 
     private double ToDocumentX(double screenX) => CanvasMapping.ToDocument(screenX, OriginX, ZoomPercent);
@@ -280,7 +377,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     private void NotifyOverlayChanged()
     {
         OnPropertyChanged(nameof(Draft));
-        OnPropertyChanged(nameof(SelectionOutline));
+        OnPropertyChanged(nameof(Overlay));
     }
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
@@ -292,8 +389,11 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 NotifyOverlayChanged();
                 break;
             case nameof(EditorState.Draft):
-            case nameof(EditorState.SelectedShapeId):
+            case nameof(EditorState.SelectedShapeIds):
+            case nameof(EditorState.SelectionBox):
                 NotifyOverlayChanged();
+                SetHover(null);
+                OnPropertyChanged(nameof(CursorType));
                 break;
             case nameof(EditorState.ActiveTool):
                 if (_panning)
@@ -302,7 +402,9 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                     EndPan();
                 }
 
+                SetHover(null);
                 OnPropertyChanged(nameof(CursorType));
+                NotifyOverlayChanged();
                 break;
             case nameof(EditorState.ZoomPercent):
                 OnPropertyChanged(nameof(ZoomPercent));

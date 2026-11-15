@@ -42,6 +42,11 @@ internal static class CanvasCursors
         CanvasCursorType.OpenHand => FromIcon(MaterialIconKind.HandBackLeftOutline, new PixelPoint(16, 16), StandardCursorType.Hand),
         CanvasCursorType.ClosedHand => FromIcon(MaterialIconKind.HandBackLeft, new PixelPoint(16, 16), StandardCursorType.SizeAll),
         CanvasCursorType.Magnifier => FromIcon(MaterialIconKind.MagnifyPlusOutline, new PixelPoint(13, 13), StandardCursorType.Cross),
+        CanvasCursorType.ResizeNorthSouth => new Cursor(StandardCursorType.SizeNorthSouth),
+        CanvasCursorType.ResizeWestEast => new Cursor(StandardCursorType.SizeWestEast),
+        CanvasCursorType.ResizeNorthWestSouthEast => new Cursor(StandardCursorType.BottomRightCorner),
+        CanvasCursorType.ResizeNorthEastSouthWest => new Cursor(StandardCursorType.BottomLeftCorner),
+        CanvasCursorType.Rotate => FromIcon(MaterialIconKind.RotateRight, new PixelPoint(16, 16), StandardCursorType.Hand),
         _ => new Cursor(StandardCursorType.Arrow),
     };
 

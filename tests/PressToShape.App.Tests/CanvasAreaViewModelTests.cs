@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using PressToShape.App.ViewModels.Editor;
 using System.Linq;
 using PressToShape.App.Workspace;
+using PressToShape.Core.History;
 using PressToShape.Core.Shapes;
 using Xunit;
 
@@ -214,39 +216,6 @@ public class CanvasAreaViewModelTests
     }
 
     [Fact]
-    public void SelectionOutline_FollowsSelectionZoomAndOrigin()
-    {
-        var (state, canvas) = Create(2000, 1200);
-        var shape = new RectangleShape { X = 10, Y = 20, Width = 30, Height = 40 };
-        state.Document = state.Document.AddShape(state.ActiveLayerId, shape);
-        var raised = Record(canvas);
-
-        Assert.Null(canvas.SelectionOutline);
-
-        state.Select(shape.Id);
-
-        Assert.Contains(nameof(CanvasAreaViewModel.SelectionOutline), raised);
-        Assert.Equal(new ScreenRect(canvas.OriginX + 10, canvas.OriginY + 20, 30, 40), canvas.SelectionOutline);
-
-        raised.Clear();
-        state.SetZoom(50);
-
-        Assert.Contains(nameof(CanvasAreaViewModel.SelectionOutline), raised);
-        Assert.Equal(new ScreenRect(canvas.OriginX + 5, canvas.OriginY + 10, 15, 20), canvas.SelectionOutline);
-    }
-
-    [Fact]
-    public void SelectionOutline_ViewportResize_Notifies()
-    {
-        var (_, canvas) = Create(2000, 1200);
-        var raised = Record(canvas);
-
-        canvas.ViewportWidth = 1500;
-
-        Assert.Contains(nameof(CanvasAreaViewModel.SelectionOutline), raised);
-    }
-
-    [Fact]
     public void DeleteSelection_SelectedShape_RemovesIt()
     {
         var (state, canvas) = Create(2000, 1200);
@@ -257,7 +226,7 @@ public class CanvasAreaViewModelTests
         canvas.DeleteSelection();
 
         Assert.Empty(state.Document.Layers.SelectMany(l => l.Shapes));
-        Assert.Null(canvas.SelectionOutline);
+        Assert.Empty(canvas.Overlay.Outlines);
     }
 
     [Fact]
@@ -286,7 +255,7 @@ public class CanvasAreaViewModelTests
         Assert.Equal(200 - 70, canvas.OriginY);
         Assert.Contains(nameof(CanvasAreaViewModel.OriginX), raised);
         Assert.Contains(nameof(CanvasAreaViewModel.OriginY), raised);
-        Assert.Contains(nameof(CanvasAreaViewModel.SelectionOutline), raised);
+        Assert.Contains(nameof(CanvasAreaViewModel.Overlay), raised);
     }
 
     [Fact]
@@ -857,4 +826,251 @@ public class CanvasAreaViewModelTests
         Assert.Same(document, state.Document);
         AssertNoEditing(state);
     }
+
+    // ---- selection overlay, modifiers, hover, cursors, keys ----
+
+    private static (EditorState State, CanvasAreaViewModel Canvas, Guid[] Ids) WithShapes(int count = 1, bool rotated = false)
+    {
+        var (state, canvas) = Create(2000, 1200);
+        var shapes = Enumerable.Range(0, count)
+            .Select(i => (Shape)new RectangleShape { X = 100 + i * 300, Y = 100, Width = 200, Height = 100, Rotation = rotated ? 90 : 0 })
+            .ToArray();
+        state.Edit(HistoryStepType.DrawRectangle, d => shapes.Aggregate(d, (doc, sh) => doc.AddShape(state.ActiveLayerId, sh)));
+        state.SetSelection(shapes.Select(sh => sh.Id));
+        return (state, canvas, shapes.Select(sh => sh.Id).ToArray());
+    }
+
+    private static (double X, double Y) ScreenOf(CanvasAreaViewModel canvas, HandleType handle) =>
+        (canvas.Overlay.Handles.Single(h => h.Type == handle).Center.X, canvas.Overlay.Handles.Single(h => h.Type == handle).Center.Y);
+
+    [Fact]
+    public void Overlay_OneShape_HasOutlineFrameAndHandles_AndFollowsZoomAndOrigin()
+    {
+        var (state, canvas, _) = WithShapes();
+
+        Assert.Single(canvas.Overlay.Outlines);
+        Assert.Equal(9, canvas.Overlay.Handles.Count);
+        Assert.Equal(canvas.OriginX + 100, canvas.Overlay.Outlines[0].Points[0].X, 6);
+
+        state.SetZoom(50);
+
+        Assert.Equal(canvas.OriginX + 50, canvas.Overlay.Outlines[0].Points[0].X, 6);
+    }
+
+    [Fact]
+    public void Overlay_SeveralOrNoShapesOrOtherTools()
+    {
+        var (state, canvas, _) = WithShapes(3);
+
+        Assert.Equal(3, canvas.Overlay.Outlines.Count);
+        Assert.Equal(9, canvas.Overlay.Handles.Count);
+
+        state.ActiveTool = Tool.Rectangle;
+        Assert.Equal(3, canvas.Overlay.Outlines.Count);
+        Assert.Empty(canvas.Overlay.Handles);
+
+        state.ActiveTool = Tool.Select;
+        state.ClearSelection();
+        Assert.Empty(canvas.Overlay.Outlines);
+    }
+
+    [Fact]
+    public void Overlay_Notifies_OnSelectionToolSelectionBoxViewportAndDocumentChange()
+    {
+        var (state, canvas, ids) = WithShapes(2);
+        var raised = Record(canvas);
+
+        state.SetSelection(ids.Take(1));
+        Assert.Contains(nameof(CanvasAreaViewModel.Overlay), raised);
+
+        raised.Clear();
+        state.ActiveTool = Tool.Hand;
+        Assert.Contains(nameof(CanvasAreaViewModel.Overlay), raised);
+
+        raised.Clear();
+        state.ActiveTool = Tool.Select;
+        state.SelectionBox = new SelectionBox(0, 0, 10, 10);
+        Assert.Contains(nameof(CanvasAreaViewModel.Overlay), raised);
+        Assert.NotNull(canvas.Overlay.SelectionBox);
+
+        raised.Clear();
+        canvas.ViewportWidth = 1500;
+        Assert.Contains(nameof(CanvasAreaViewModel.Overlay), raised);
+
+        raised.Clear();
+        state.Edit(HistoryStepType.MoveShape, d => d.UpdateShape(ids[0], sh => sh with { X = 5 }));
+        Assert.Contains(nameof(CanvasAreaViewModel.Overlay), raised);
+    }
+
+    [Fact]
+    public void Modifiers_ReachTheInteraction_ShiftAddsToTheSelection_AndShiftKeepsTheRatio()
+    {
+        var (state, canvas, ids) = WithShapes(2);
+        state.SetSelection(ids.Take(1));
+
+        // Shift+click on the second shape adds it.
+        canvas.PointerPressed(canvas.OriginX + 450, canvas.OriginY + 150, shift: true);
+        canvas.PointerReleased(canvas.OriginX + 450, canvas.OriginY + 150, shift: true);
+        Assert.Equal(ids, state.SelectedShapeIds);
+
+        // Alt on a handle drag resizes around the center.
+        state.SetSelection(ids.Take(1));
+        var (hx, hy) = ScreenOf(canvas, HandleType.BottomRight);
+        canvas.PointerPressed(hx, hy);
+        canvas.PointerMoved(hx + 40, hy + 20, alt: true);
+        canvas.PointerReleased(hx + 40, hy + 20, alt: true);
+        var shape = state.Document.FindShape(ids[0])!.Shape;
+        Assert.Equal(200, shape.CenterX, 6);
+        Assert.Equal(280, shape.Width, 6);
+    }
+
+    [Fact]
+    public void Hover_OverEachHandle_SetsTheMatchingCursor_AndAwayResetsIt()
+    {
+        var (_, canvas, _) = WithShapes();
+        var expected = new (HandleType Handle, CanvasCursorType Cursor)[]
+        {
+            (HandleType.Top, CanvasCursorType.ResizeNorthSouth),
+            (HandleType.Bottom, CanvasCursorType.ResizeNorthSouth),
+            (HandleType.Left, CanvasCursorType.ResizeWestEast),
+            (HandleType.Right, CanvasCursorType.ResizeWestEast),
+            (HandleType.TopLeft, CanvasCursorType.ResizeNorthWestSouthEast),
+            (HandleType.BottomRight, CanvasCursorType.ResizeNorthWestSouthEast),
+            (HandleType.TopRight, CanvasCursorType.ResizeNorthEastSouthWest),
+            (HandleType.BottomLeft, CanvasCursorType.ResizeNorthEastSouthWest),
+            (HandleType.Rotate, CanvasCursorType.Rotate),
+        };
+        var raised = Record(canvas);
+
+        foreach (var (handle, cursor) in expected)
+        {
+            var (x, y) = ScreenOf(canvas, handle);
+            canvas.PointerHover(x, y);
+            Assert.Equal(cursor, canvas.CursorType);
+        }
+
+        Assert.Contains(nameof(CanvasAreaViewModel.CursorType), raised);
+        canvas.PointerHover(5, 5);
+        Assert.Equal(CanvasCursorType.Arrow, canvas.CursorType);
+    }
+
+    [Fact]
+    public void Hover_OverARotatedShapesHandle_TurnsTheResizeCursor()
+    {
+        var (_, canvas, _) = WithShapes(rotated: true);
+
+        // Turned by 90 degrees the Right handle points down.
+        var (x, y) = ScreenOf(canvas, HandleType.Right);
+        canvas.PointerHover(x, y);
+        Assert.Equal(CanvasCursorType.ResizeNorthSouth, canvas.CursorType);
+
+        var (cx, cy) = ScreenOf(canvas, HandleType.TopRight);
+        canvas.PointerHover(cx, cy);
+        Assert.Equal(CanvasCursorType.ResizeNorthWestSouthEast, canvas.CursorType); // the corner that pointed up-right now points down-right
+    }
+
+    [Fact]
+    public void Cursor_DuringAHandleDrag_StaysTheHandlesCursor_EvenAwayFromIt()
+    {
+        var (_, canvas, _) = WithShapes();
+        var (hx, hy) = ScreenOf(canvas, HandleType.Right);
+
+        canvas.PointerPressed(hx, hy);
+        canvas.PointerMoved(hx + 200, hy + 200);
+
+        Assert.Equal(CanvasCursorType.ResizeWestEast, canvas.CursorType);
+        canvas.PointerReleased(hx + 200, hy + 200);
+        Assert.Equal(CanvasCursorType.Arrow, canvas.CursorType);
+    }
+
+    [Fact]
+    public void Cursor_OtherToolsNeverShowHandleCursors()
+    {
+        var (state, canvas, _) = WithShapes();
+        var (x, y) = ScreenOf(canvas, HandleType.Right);
+        state.ActiveTool = Tool.Rectangle;
+
+        canvas.PointerHover(x, y);
+
+        Assert.Equal(CanvasCursorType.Crosshair, canvas.CursorType);
+    }
+
+    [Fact]
+    public void PointerLeft_ClearsTheHover()
+    {
+        var (_, canvas, _) = WithShapes();
+        var (x, y) = ScreenOf(canvas, HandleType.Right);
+        canvas.PointerHover(x, y);
+
+        canvas.PointerLeft();
+
+        Assert.Equal(CanvasCursorType.Arrow, canvas.CursorType);
+    }
+
+    [Fact]
+    public void ArrowKeys_NudgeByOne_ShiftByTen_AndRepeatedKeysMergeIntoOneStep()
+    {
+        var (state, canvas, ids) = WithShapes();
+        var steps = state.History.Steps.Count;
+
+        Assert.True(canvas.KeyPressed(CanvasKey.Right, shift: false));
+        Assert.True(canvas.KeyPressed(CanvasKey.Right, shift: false));
+        Assert.True(canvas.KeyPressed(CanvasKey.Down, shift: true));
+        Assert.True(canvas.KeyPressed(CanvasKey.Left, shift: false));
+        Assert.True(canvas.KeyPressed(CanvasKey.Up, shift: true));
+
+        var shape = state.Document.FindShape(ids[0])!.Shape;
+        Assert.Equal((101, 100), (shape.X, shape.Y));
+        Assert.Equal(steps + 1, state.History.Steps.Count);
+        Assert.Equal(HistoryStepType.NudgeShapes, state.History.Steps[^1]);
+    }
+
+    [Fact]
+    public void Escape_ClearsTheSelection()
+    {
+        var (state, canvas, _) = WithShapes();
+
+        Assert.True(canvas.KeyPressed(CanvasKey.Escape, shift: false));
+
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void Keys_DoNothingWithoutASelectionOrDuringADrag()
+    {
+        var (state, canvas, ids) = WithShapes();
+        var (hx, hy) = ScreenOf(canvas, HandleType.Right);
+        canvas.PointerPressed(hx, hy);
+
+        Assert.False(canvas.KeyPressed(CanvasKey.Right, shift: false));
+        canvas.Cancel();
+        state.ClearSelection();
+        Assert.False(canvas.KeyPressed(CanvasKey.Right, shift: false));
+        Assert.False(canvas.KeyPressed(CanvasKey.Escape, shift: false));
+        Assert.Equal(100, state.Document.FindShape(ids[0])!.Shape.X);
+    }
+
+    [Fact]
+    public void DeleteSelection_OfSeveralShapes_RemovesAllOfThem()
+    {
+        var (state, canvas, _) = WithShapes(3);
+
+        canvas.DeleteSelection();
+
+        Assert.Empty(state.Document.Layers.SelectMany(l => l.Shapes));
+        Assert.Empty(canvas.Overlay.Outlines);
+    }
+
+    [Fact]
+    public void SharedEditor_IsUsedForKeys()
+    {
+        var state = new EditorState();
+        var editor = new SelectionEditor(state);
+        var canvas = new CanvasAreaViewModel(state, editor) { ViewportWidth = 1000, ViewportHeight = 800 };
+        var ids = TestSelection.AddAndSelect(state);
+
+        canvas.KeyPressed(CanvasKey.Right, shift: false);
+        Assert.Equal(1, state.Document.FindShape(ids[0])!.Shape.X);
+    }
 }
+

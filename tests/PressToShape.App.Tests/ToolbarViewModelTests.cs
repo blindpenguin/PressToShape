@@ -92,20 +92,15 @@ public class ToolbarViewModelTests
     }
 
     [Fact]
-    public void TransformFields_AreEmpty_AndDisabledWithoutSelection()
+    public void Toolbar_HasNoPositionOrSizeFields_TheyLiveInTheProperties()
     {
-        var state = new EditorState();
-        var toolbar = new ToolbarViewModel(state, FakeLocalizer.Create(), new SwitchableCommand(false), new SwitchableCommand(false));
+        var names = typeof(ToolbarViewModel).GetProperties().Select(p => p.Name).ToList();
 
-        Assert.False(toolbar.HasSelection);
-        Assert.Equal(string.Empty, toolbar.X);
-        Assert.Equal(string.Empty, toolbar.Y);
-        Assert.Equal(string.Empty, toolbar.Width);
-        Assert.Equal(string.Empty, toolbar.Height);
-
-        state.HasSelection = true;
-
-        Assert.True(toolbar.HasSelection);
+        Assert.DoesNotContain("X", names);
+        Assert.DoesNotContain("Y", names);
+        Assert.DoesNotContain("Width", names);
+        Assert.DoesNotContain("Height", names);
+        Assert.DoesNotContain("HasSelection", names);
     }
 
     [Fact]

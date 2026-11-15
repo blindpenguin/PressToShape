@@ -166,9 +166,9 @@ public static class ProjectFile
         switch (dto.Type)
         {
             case RectangleType:
-                return new RectangleShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance };
+                return new RectangleShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0 };
             case EllipseType:
-                return new EllipseShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance };
+                return new EllipseShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0 };
             default:
                 failure = ProjectFileResult.Failure(ProjectFileError.UnknownShapeType, "Unknown shape type: " + dto.Type);
                 return null;
@@ -201,6 +201,7 @@ public static class ProjectFile
         Stroke = ToText(shape.Appearance.Stroke),
         StrokeWidth = shape.Appearance.StrokeWidth,
         Opacity = shape.Appearance.Opacity,
+        Rotation = shape.Rotation == 0 ? null : shape.Rotation,
     };
 
     // A lone surrogate cannot be written as UTF-8 JSON. It is replaced, like text encoders do.
@@ -302,5 +303,10 @@ public static class ProjectFile
         [JsonPropertyName("strokeWidth")] public double? StrokeWidth { get; set; }
 
         [JsonPropertyName("opacity")] public double? Opacity { get; set; }
+
+        // Optional: written only for a rotated shape, and missing means no rotation.
+        [JsonPropertyName("rotation")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public double? Rotation { get; set; }
     }
 }

@@ -32,8 +32,9 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
         var recent = new RecentFiles(services.Settings);
         _files = new DocumentFileService(State, _session, recent, services.Files, services.Dialogs, services.Messages, localizer, FitToWindow);
         Toolbox = new ToolboxViewModel(State, localizer);
-        Canvas = new CanvasAreaViewModel(State);
-        Inspector = new InspectorViewModel(State, localizer);
+        Editor = new SelectionEditor(State);
+        Canvas = new CanvasAreaViewModel(State, Editor);
+        Inspector = new InspectorViewModel(State, localizer, Editor);
         Toolbar = new ToolbarViewModel(State, localizer, UndoCommand, RedoCommand);
         StatusBar = new StatusBarViewModel(State, localizer, FitToWindow);
         var fileCommands = new FileMenuCommands(
@@ -43,11 +44,21 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
             SaveAsCommand,
             ExportSvgCommand,
             path => new AsyncRelayCommand(() => _files.OpenRecentAsync(path)));
-        MenuBar = new MenuBarViewModel(State, shutdown, localizer, Inspector.ShowTab, FitToWindow, fileCommands, recent, UndoCommand, RedoCommand);
+        var editCommands = new EditMenuCommands(
+            CutCommand,
+            CopyCommand,
+            PasteCommand,
+            PasteInPlaceCommand,
+            DuplicateCommand,
+            DeleteCommand,
+            SelectAllCommand,
+            DeselectCommand);
+        MenuBar = new MenuBarViewModel(State, shutdown, localizer, Inspector.ShowTab, FitToWindow, fileCommands, editCommands, recent, UndoCommand, RedoCommand);
 
         Canvas.PropertyChanged += OnCanvasPropertyChanged;
         _session.PropertyChanged += (_, _) => OnPropertyChanged(nameof(WindowTitle));
         State.PropertyChanged += OnStateHistoryAvailabilityChanged;
+        State.Clipboard.Changed += (_, _) => NotifyPasteCommands();
         localizer.LanguageChanged += (_, _) => OnPropertyChanged(nameof(WindowTitle));
     }
 
@@ -58,6 +69,9 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
     public ToolbarViewModel Toolbar { get; }
 
     public ToolboxViewModel Toolbox { get; }
+
+    /// <summary>The selection edits (copy, paste, nudge, property changes). One instance, shared by the canvas, the inspector and the menus.</summary>
+    public SelectionEditor Editor { get; }
 
     public CanvasAreaViewModel Canvas { get; }
 
@@ -127,8 +141,66 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
             case nameof(EditorState.CanRedo):
                 RedoCommand.NotifyCanExecuteChanged();
                 break;
+            case nameof(EditorState.HasSelection):
+                CutCommand.NotifyCanExecuteChanged();
+                CopyCommand.NotifyCanExecuteChanged();
+                DuplicateCommand.NotifyCanExecuteChanged();
+                DeleteCommand.NotifyCanExecuteChanged();
+                DeselectCommand.NotifyCanExecuteChanged();
+                break;
+            case nameof(EditorState.Document):
+                // A layer may have been locked or hidden, and shapes may have come or gone.
+                NotifyPasteCommands();
+                SelectAllCommand.NotifyCanExecuteChanged();
+                break;
+            case nameof(EditorState.ActiveLayerId):
+                NotifyPasteCommands();
+                break;
         }
     }
+
+    private void NotifyPasteCommands()
+    {
+        PasteCommand.NotifyCanExecuteChanged();
+        PasteInPlaceCommand.NotifyCanExecuteChanged();
+    }
+
+    // Selection and clipboard actions. The Edit menu items and the keyboard shortcuts use these commands.
+    [RelayCommand(CanExecute = nameof(CanCut))]
+    private void Cut() => Editor.Cut();
+
+    [RelayCommand(CanExecute = nameof(CanCopy))]
+    private void Copy() => Editor.Copy();
+
+    [RelayCommand(CanExecute = nameof(CanPaste))]
+    private void Paste() => Editor.Paste(inPlace: false);
+
+    [RelayCommand(CanExecute = nameof(CanPaste))]
+    private void PasteInPlace() => Editor.Paste(inPlace: true);
+
+    [RelayCommand(CanExecute = nameof(CanDuplicate))]
+    private void Duplicate() => Editor.Duplicate();
+
+    [RelayCommand(CanExecute = nameof(HasSelection))]
+    private void Delete() => Canvas.DeleteSelection();
+
+    [RelayCommand(CanExecute = nameof(HasSelectableShapes))]
+    private void SelectAll() => Editor.SelectAll();
+
+    [RelayCommand(CanExecute = nameof(HasSelection))]
+    private void Deselect() => Editor.Deselect();
+
+    private bool CanCut() => Editor.CanCut;
+
+    private bool CanCopy() => Editor.CanCopy;
+
+    private bool CanPaste() => Editor.CanPaste;
+
+    private bool CanDuplicate() => Editor.CanDuplicate;
+
+    private bool HasSelection() => State.HasSelection;
+
+    private bool HasSelectableShapes() => SelectionQueries.Selectable(State.Document).Count > 0;
 
     // Commands for window-level keyboard shortcuts. They do the same as the matching menu items.
     [RelayCommand]

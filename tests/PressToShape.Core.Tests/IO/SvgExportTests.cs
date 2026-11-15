@@ -294,4 +294,66 @@ public class SvgExportTests
 
         Assert.Equal(2000, svg.Root!.Element(Svg + "g")!.Elements().Count());
     }
+
+    [Fact]
+    public void ToUtf8_RotatedRectangle_HasATransformAroundItsCenter()
+    {
+        var rect = OnlyShape(Export(OneLayer(new RectangleShape { X = 10, Y = 20, Width = 100, Height = 50, Rotation = 30 })));
+
+        Assert.Equal("rotate(30 60 45)", (string?)rect.Attribute("transform"));
+        Assert.Equal("10", (string?)rect.Attribute("x"));
+        Assert.Equal("100", (string?)rect.Attribute("width"));
+    }
+
+    [Fact]
+    public void ToUtf8_RotatedEllipse_HasATransformAroundItsCenter()
+    {
+        var ellipse = OnlyShape(Export(OneLayer(new EllipseShape { X = 0, Y = 0, Width = 80, Height = 40, Rotation = 359.5 })));
+
+        Assert.Equal("rotate(359.5 40 20)", (string?)ellipse.Attribute("transform"));
+        Assert.Equal("40", (string?)ellipse.Attribute("cx"));
+    }
+
+    [Fact]
+    public void ToUtf8_UnrotatedShapes_HaveNoTransform()
+    {
+        var svg = Export(OneLayer(new RectangleShape { Width = 1, Height = 1 }, new EllipseShape { Width = 1, Height = 1 }));
+
+        Assert.DoesNotContain(svg.Descendants().Attributes(), a => a.Name.LocalName == "transform");
+    }
+
+    [Fact]
+    public void ToUtf8_RotationNumbers_UseADotUnderAGermanCulture()
+    {
+        var previous = CultureInfo.CurrentCulture;
+        CultureInfo.CurrentCulture = new CultureInfo("de-DE");
+        try
+        {
+            var rect = OnlyShape(Export(OneLayer(new RectangleShape { X = 1.5, Y = 0, Width = 3, Height = 3, Rotation = 12.5 })));
+
+            Assert.Equal("rotate(12.5 3 1.5)", (string?)rect.Attribute("transform"));
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = previous;
+        }
+    }
+
+    [Fact]
+    public void ToUtf8_RotatedShapeWithOpacityAndStroke_KeepsAllAttributes()
+    {
+        var shape = new RectangleShape
+        {
+            Width = 10,
+            Height = 10,
+            Rotation = 45,
+            Appearance = new Appearance { Fill = new Color(1, 2, 3, 255), Stroke = new Color(4, 5, 6, 255), StrokeWidth = 2, Opacity = 0.5 },
+        };
+
+        var rect = OnlyShape(Export(OneLayer(shape)));
+
+        Assert.Equal("0.5", (string?)rect.Attribute("opacity"));
+        Assert.Equal("#040506", (string?)rect.Attribute("stroke"));
+        Assert.Equal("rotate(45 5 5)", (string?)rect.Attribute("transform"));
+    }
 }

@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PressToShape.App.ViewModels.Editor"
              xmlns:controls="using:PressToShape.App.Controls"
+             xmlns:local="using:PressToShape.App.Views.Editor"
              xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="800"
              x:Class="PressToShape.App.Views.Editor.PropertiesView"
@@ -15,6 +16,12 @@
             <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
             <Setter Property="FontSize" Value="{StaticResource UiFontSize}" />
             <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.swatchButton">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
         </Style>
         <Style Selector="Border.swatch">
             <Setter Property="Width" Value="52" />
@@ -28,8 +35,7 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
 
-            <TextBlock Classes="secondary" Text="{loc:T 'Nothing selected'}" Margin="12,10,12,6"
-                       IsVisible="{Binding ShowNothingSelectedHint}" />
+            <TextBlock Classes="secondary" Text="{Binding Header}" Margin="12,10,12,6" />
 
             <!-- The controls inside each section are disabled while nothing is selected.
                  The section headers stay enabled so sections can always be collapsed and expanded. -->
@@ -39,32 +45,34 @@
                     <Grid Margin="12,4,12,12" ColumnDefinitions="Auto,*,Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6"
                           IsEnabled="{Binding HasSelection}">
                         <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="X" Margin="0,0,6,0" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Classes="field" AutomationProperties.Name="{loc:T 'X position'}">
+                        <TextBox Grid.Row="0" Grid.Column="1" Classes="field" Text="{Binding X.Text}" IsEnabled="{Binding X.IsEnabled}" Tag="{Binding X}" AutomationProperties.Name="{loc:T 'X position'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
                         <TextBlock Grid.Row="0" Grid.Column="2" Classes="label" Text="Y" Margin="8,0,6,0" />
-                        <TextBox Grid.Row="0" Grid.Column="3" Classes="field" AutomationProperties.Name="{loc:T 'Y position'}">
+                        <TextBox Grid.Row="0" Grid.Column="3" Classes="field" Text="{Binding Y.Text}" IsEnabled="{Binding Y.IsEnabled}" Tag="{Binding Y}" AutomationProperties.Name="{loc:T 'Y position'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
                         <ToggleButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="4" Classes="tool" Margin="8,0,0,0"
+                                      IsChecked="{Binding KeepProportions}"
                                       ToolTip.Tip="{loc:T 'Keep proportions'}" AutomationProperties.Name="{loc:T 'Keep proportions'}">
                             <materialIcons:MaterialIcon Kind="LinkVariant" Width="18" Height="18" />
                         </ToggleButton>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Classes="label" Text="W" Margin="0,0,6,0" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Classes="field" AutomationProperties.Name="{loc:T 'Width'}">
+                        <TextBox Grid.Row="1" Grid.Column="1" Classes="field" Text="{Binding Width.Text}" IsEnabled="{Binding Width.IsEnabled}" Tag="{Binding Width}" AutomationProperties.Name="{loc:T 'Width'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
                         <TextBlock Grid.Row="1" Grid.Column="2" Classes="label" Text="H" Margin="8,0,6,0" />
-                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" AutomationProperties.Name="{loc:T 'Height'}">
+                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" Text="{Binding Height.Text}" IsEnabled="{Binding Height.IsEnabled}" Tag="{Binding Height}" AutomationProperties.Name="{loc:T 'Height'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
 </TextBox>
 
                         <materialIcons:MaterialIcon Grid.Row="2" Grid.Column="0" Kind="RotateRight" Width="16" Height="16" Margin="0,0,6,0" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Classes="field" AutomationProperties.Name="{loc:T 'Rotation'}">
+                        <TextBox Grid.Row="2" Grid.Column="1" Classes="field" Text="{Binding Rotation.Text}" IsEnabled="{Binding Rotation.IsEnabled}" Tag="{Binding Rotation}" AutomationProperties.Name="{loc:T 'Rotation'}">
 <TextBox.InnerRightContent><TextBlock Classes="unit" Text="°" /></TextBox.InnerRightContent>
 </TextBox>
                         <Button Grid.Row="2" Grid.Column="4" Classes="icon" Margin="8,0,0,0"
+                                Command="{Binding ResetTransformCommand}"
                                 ToolTip.Tip="{loc:T 'Reset transform'}" AutomationProperties.Name="{loc:T 'Reset transform'}">
                             <materialIcons:MaterialIcon Kind="Restore" Width="18" Height="18" />
                         </Button>
@@ -72,43 +80,82 @@
                 </controls:CollapsibleSection>
 
                 <controls:CollapsibleSection Header="{loc:T 'Appearance'}" IsExpanded="{Binding IsAppearanceExpanded}">
-                    <Grid Margin="12,4,12,12" ColumnDefinitions="64,Auto,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8"
+                    <Grid Margin="12,4,12,12" ColumnDefinitions="100,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="8"
                           IsEnabled="{Binding HasSelection}">
                         <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="{loc:T 'Fill'}" />
-                        <Border Grid.Row="0" Grid.Column="1" Classes="swatch" Background="{DynamicResource AppAccentBrush}" />
-                        <Button Grid.Row="0" Grid.Column="2" Classes="icon" ToolTip.Tip="{loc:T 'Fill options'}" AutomationProperties.Name="{loc:T 'Fill options'}">
-                            <materialIcons:MaterialIcon Kind="ChevronDown" Width="16" Height="16" />
+                        <Button Grid.Row="0" Grid.Column="1" Classes="swatchButton" IsEnabled="{Binding Fill.IsEnabled}"
+                                ToolTip.Tip="{loc:T 'Fill color'}" AutomationProperties.Name="{loc:T 'Fill color'}">
+                            <Button.Flyout>
+                                <Flyout Placement="LeftEdgeAlignedTop" Opened="OnFillFlyoutOpened" Closed="OnFillFlyoutClosed">
+                                    <ColorView x:Name="FillColorView" IsAlphaVisible="True" IsAlphaEnabled="True"
+                                               ColorChanged="OnFillColorChanged" AutomationProperties.Name="{loc:T 'Fill color'}" />
+                                </Flyout>
+                            </Button.Flyout>
+                            <Panel>
+                                <Border Classes="swatch" Background="{Binding Fill.Color, Converter={x:Static local:CoreColorBrushConverter.Instance}}"
+                                        IsVisible="{Binding Fill.HasColor}" />
+                                <Border Classes="swatch" Background="{DynamicResource ControlBackgroundBrush}" IsVisible="{Binding !Fill.HasColor}">
+                                    <TextBlock Classes="unit" Margin="0" HorizontalAlignment="Center" Text="{loc:T 'Mixed'}" IsVisible="{Binding Fill.IsMixed}" />
+                                </Border>
+                            </Panel>
                         </Button>
+                        <CheckBox Grid.Row="0" Grid.Column="2" Margin="8,0,0,0" Content="{loc:T 'None'}"
+                                  IsChecked="{Binding Fill.IsNone, Mode=OneWay}" IsEnabled="{Binding Fill.IsEnabled}"
+                                  Click="OnFillNoneClick" AutomationProperties.Name="{loc:T 'No fill'}" />
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Classes="label" Text="{loc:T 'Stroke'}" />
-                        <Border Grid.Row="1" Grid.Column="1" Classes="swatch" Background="{DynamicResource ControlBackgroundBrush}" />
-                        <Button Grid.Row="1" Grid.Column="2" Classes="icon" ToolTip.Tip="{loc:T 'Stroke options'}" AutomationProperties.Name="{loc:T 'Stroke options'}">
-                            <materialIcons:MaterialIcon Kind="ChevronDown" Width="16" Height="16" />
+                        <Button Grid.Row="1" Grid.Column="1" Classes="swatchButton" IsEnabled="{Binding Stroke.IsEnabled}"
+                                ToolTip.Tip="{loc:T 'Stroke color'}" AutomationProperties.Name="{loc:T 'Stroke color'}">
+                            <Button.Flyout>
+                                <Flyout Placement="LeftEdgeAlignedTop" Opened="OnStrokeFlyoutOpened" Closed="OnStrokeFlyoutClosed">
+                                    <ColorView x:Name="StrokeColorView" IsAlphaVisible="True" IsAlphaEnabled="True"
+                                               ColorChanged="OnStrokeColorChanged" AutomationProperties.Name="{loc:T 'Stroke color'}" />
+                                </Flyout>
+                            </Button.Flyout>
+                            <Panel>
+                                <Border Classes="swatch" Background="{Binding Stroke.Color, Converter={x:Static local:CoreColorBrushConverter.Instance}}"
+                                        IsVisible="{Binding Stroke.HasColor}" />
+                                <Border Classes="swatch" Background="{DynamicResource ControlBackgroundBrush}" IsVisible="{Binding !Stroke.HasColor}">
+                                    <TextBlock Classes="unit" Margin="0" HorizontalAlignment="Center" Text="{loc:T 'Mixed'}" IsVisible="{Binding Stroke.IsMixed}" />
+                                </Border>
+                            </Panel>
                         </Button>
-                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" Margin="8,0,0,0" AutomationProperties.Name="{loc:T 'Stroke width'}">
-<TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
-</TextBox>
+                        <CheckBox Grid.Row="1" Grid.Column="2" Margin="8,0,0,0" Content="{loc:T 'None'}"
+                                  IsChecked="{Binding Stroke.IsNone, Mode=OneWay}" IsEnabled="{Binding Stroke.IsEnabled}"
+                                  Click="OnStrokeNoneClick" AutomationProperties.Name="{loc:T 'No stroke'}" />
 
-                        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" Spacing="2">
-                            <Button Classes="icon" ToolTip.Tip="{loc:T 'Stroke cap'}" AutomationProperties.Name="{loc:T 'Stroke cap'}">
+                        <TextBlock Grid.Row="2" Grid.Column="0" Classes="label" Text="{loc:T 'Stroke width'}" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Classes="field" Width="96" HorizontalAlignment="Left"
+                                 Text="{Binding StrokeWidth.Text}" IsEnabled="{Binding StrokeWidth.IsEnabled}" Tag="{Binding StrokeWidth}"
+                                 AutomationProperties.Name="{loc:T 'Stroke width'}">
+                            <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                        </TextBox>
+
+                        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="2">
+                            <Button Classes="icon" IsEnabled="False" ToolTip.Tip="{loc:T 'Stroke cap'}" AutomationProperties.Name="{loc:T 'Stroke cap'}">
                                 <materialIcons:MaterialIcon Kind="VectorLine" Width="18" Height="18" />
                             </Button>
-                            <Button Classes="icon" ToolTip.Tip="{loc:T 'Stroke join'}" AutomationProperties.Name="{loc:T 'Stroke join'}">
+                            <Button Classes="icon" IsEnabled="False" ToolTip.Tip="{loc:T 'Stroke join'}" AutomationProperties.Name="{loc:T 'Stroke join'}">
                                 <materialIcons:MaterialIcon Kind="VectorPolyline" Width="18" Height="18" />
                             </Button>
-                            <Button Classes="icon" ToolTip.Tip="{loc:T 'Stroke alignment'}" AutomationProperties.Name="{loc:T 'Stroke alignment'}">
+                            <Button Classes="icon" IsEnabled="False" ToolTip.Tip="{loc:T 'Stroke alignment'}" AutomationProperties.Name="{loc:T 'Stroke alignment'}">
                                 <materialIcons:MaterialIcon Kind="FormatLineStyle" Width="18" Height="18" />
                             </Button>
-                            <Button Classes="icon" ToolTip.Tip="{loc:T 'Dashes'}" AutomationProperties.Name="{loc:T 'Dashes'}">
+                            <Button Classes="icon" IsEnabled="False" ToolTip.Tip="{loc:T 'Dashes'}" AutomationProperties.Name="{loc:T 'Dashes'}">
                                 <materialIcons:MaterialIcon Kind="Equal" Width="18" Height="18" />
                             </Button>
                         </StackPanel>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Classes="label" Text="{loc:T 'Opacity'}" />
-                        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" ColumnDefinitions="*,Auto">
-                            <Slider Grid.Column="0" Minimum="0" Maximum="100" Value="100" AutomationProperties.Name="{loc:T 'Opacity'}" />
-                            <TextBox Grid.Column="1" Classes="field" Width="64" Text="100%" Margin="8,0,0,0"
-                                     AutomationProperties.Name="{loc:T 'Opacity percent'}" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Classes="label" Text="{loc:T 'Opacity'}" />
+                        <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto">
+                            <Slider x:Name="OpacitySlider" Grid.Column="0" Minimum="0" Maximum="100"
+                                    Value="{Binding OpacitySliderValue, Mode=OneWay}" IsEnabled="{Binding OpacityPercent.IsEnabled}"
+                                    AutomationProperties.Name="{loc:T 'Opacity'}" />
+                            <TextBox Grid.Column="1" Classes="field" Width="72" Margin="8,0,0,0"
+                                     Text="{Binding OpacityPercent.Text}" IsEnabled="{Binding OpacityPercent.IsEnabled}" Tag="{Binding OpacityPercent}"
+                                     AutomationProperties.Name="{loc:T 'Opacity percent'}">
+                                <TextBox.InnerRightContent><TextBlock Classes="unit" Text="%" /></TextBox.InnerRightContent>
+                            </TextBox>
                         </Grid>
                     </Grid>
                 </controls:CollapsibleSection>
