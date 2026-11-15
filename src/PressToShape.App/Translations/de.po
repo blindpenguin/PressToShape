@@ -399,11 +399,11 @@ msgstr "Weitere Optionen"
 msgid "More layer options"
 msgstr "Weitere Ebenenoptionen"
 
-msgid "No layers yet"
-msgstr "Noch keine Ebenen"
-
 msgid "Toggle visibility"
 msgstr "Sichtbarkeit umschalten"
+
+msgid "Toggle lock"
+msgstr "Sperre umschalten"
 
 msgid "Transform"
 msgstr "Transformieren"
@@ -485,3 +485,9 @@ msgstr "Füllung und Kontur vertauschen"
 
 msgid "Reset colors"
 msgstr "Farben zurücksetzen"
+
+msgid "Background"
+msgstr "Hintergrund"
+
+msgid "Shapes"
+msgstr "Formen"

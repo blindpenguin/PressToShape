@@ -1,34 +1,50 @@
-using System.Collections.ObjectModel;
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Material.Icons;
+using PressToShape.App.Workspace;
+using PressToShape.Core.Documents;
 
 namespace PressToShape.App.ViewModels.Editor;
 
-/// <summary>One row of the layer list. Groups can contain child items.</summary>
+/// <summary>
+/// One row of the layer list. Name, visibility and lock are display values copied from the document by
+/// <see cref="Update"/>. The toggle commands edit the document through the editor state, they never change these values directly.
+/// </summary>
 internal sealed partial class LayerItemViewModel : ViewModelBase
 {
-    public LayerItemViewModel(string name, MaterialIconKind icon, bool isGroup = false)
+    private readonly EditorState _state;
+
+    public LayerItemViewModel(EditorState state, Layer layer)
     {
-        Name = name;
-        Icon = icon;
-        IsGroup = isGroup;
+        _state = state ?? throw new ArgumentNullException(nameof(state));
+        ArgumentNullException.ThrowIfNull(layer);
+
+        LayerId = layer.Id;
+        Update(layer);
     }
 
-    [ObservableProperty] public partial string Name { get; set; }
+    public Guid LayerId { get; }
 
-    public MaterialIconKind Icon { get; }
+    /// <summary>The layer's name. User data, so it is not translated.</summary>
+    [ObservableProperty] public partial string Name { get; private set; } = string.Empty;
 
-    public bool IsGroup { get; }
+    [ObservableProperty] public partial bool IsVisible { get; private set; }
 
-    [ObservableProperty] public partial bool IsExpanded { get; set; }
+    [ObservableProperty] public partial bool IsLocked { get; private set; }
 
-    [ObservableProperty] public partial bool IsVisible { get; set; } = true;
+    /// <summary>Copies the display values from the layer. Called when the document changed.</summary>
+    public void Update(Layer layer)
+    {
+        ArgumentNullException.ThrowIfNull(layer);
 
-    [ObservableProperty] public partial bool IsSelected { get; set; }
-
-    public ObservableCollection<LayerItemViewModel> Children { get; } = [];
+        Name = layer.Name;
+        IsVisible = layer.IsVisible;
+        IsLocked = layer.IsLocked;
+    }
 
     [RelayCommand]
-    private void ToggleVisibility() => IsVisible = !IsVisible;
+    private void ToggleVisibility() => _state.UpdateLayer(LayerId, l => l with { IsVisible = !l.IsVisible });
+
+    [RelayCommand]
+    private void ToggleLock() => _state.UpdateLayer(LayerId, l => l with { IsLocked = !l.IsLocked });
 }

@@ -15,7 +15,7 @@ internal sealed partial class InspectorViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(localizer);
 
         Properties = new PropertiesViewModel(state);
-        Layers = new LayersViewModel();
+        Layers = new LayersViewModel(state);
         Assets = new PlaceholderPanelViewModel(localizer, N("Assets"), N("No assets yet"));
         History = new PlaceholderPanelViewModel(localizer, N("History"), N("No history yet"));
     }

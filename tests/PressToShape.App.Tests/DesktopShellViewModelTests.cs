@@ -205,4 +205,38 @@ public class DesktopShellViewModelTests
         Assert.Equal("Nichts ausgewählt", shell.StatusBar.SelectionSummary);
         Assert.Equal("Noch keine Assets", shell.Inspector.Assets.Message);
     }
+
+    [Fact]
+    public void Shell_Starts_WithTheSampleDocumentNamedInTheCurrentLanguage()
+    {
+        var german = new System.Collections.Generic.Dictionary<string, string> { ["Background"] = "Hintergrund", ["Shapes"] = "Formen" };
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create("de", german));
+
+        Assert.Equal(2, shell.State.Document.Layers.Length);
+        Assert.Equal(new[] { "Hintergrund", "Formen" }, shell.State.Document.Layers.Select(l => l.Name));
+        Assert.Equal(1200, shell.State.ArtboardWidth);
+    }
+
+    [Fact]
+    public void Shell_Starts_WithTheSameDocumentInCanvasAndLayersPanel()
+    {
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
+
+        Assert.Same(shell.State.Document, shell.Canvas.Document);
+        Assert.Equal(new[] { "Shapes", "Background" }, shell.Inspector.Layers.Items.Select(i => i.Name));
+    }
+
+    [Fact]
+    public void HidingALayerInThePanel_ChangesTheCanvasDocument()
+    {
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
+        var before = shell.Canvas.Document;
+
+        shell.Inspector.Layers.Items[0].ToggleVisibilityCommand.Execute(null);
+
+        Assert.NotSame(before, shell.Canvas.Document);
+        Assert.False(shell.Canvas.Document.Layers[1].IsVisible);
+        Assert.True(before.Layers[1].IsVisible);
+        Assert.Equal(CanvasScene.Build(before, 100, 0, 0).Count - 3, CanvasScene.Build(shell.Canvas.Document, 100, 0, 0).Count);
+    }
 }

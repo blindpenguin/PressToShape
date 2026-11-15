@@ -28,19 +28,26 @@
                                ZoomPercent="{Binding ZoomPercent}"
                                OriginPx="{Binding OriginY}" />
 
-        <!-- Viewport: canvas background with the centered artboard. No drawing or pointer handling yet. -->
-        <Canvas Grid.Row="1" Grid.Column="1"
-                x:Name="Viewport"
-                Background="{DynamicResource CanvasBackgroundBrush}"
-                ClipToBounds="True">
-            <Border Canvas.Left="{Binding OriginX}"
-                    Canvas.Top="{Binding OriginY}"
-                    Width="{Binding ArtboardScreenWidth}"
-                    Height="{Binding ArtboardScreenHeight}"
-                    Background="{DynamicResource ArtboardFillBrush}"
-                    BorderBrush="{DynamicResource ArtboardBorderBrush}"
-                    BorderThickness="1" />
-        </Canvas>
+        <!-- Viewport: canvas background, the centered artboard, and the drawn document on top. No pointer handling yet. -->
+        <Panel Grid.Row="1" Grid.Column="1"
+               x:Name="Viewport"
+               Background="{DynamicResource CanvasBackgroundBrush}"
+               ClipToBounds="True">
+            <Canvas>
+                <Border Canvas.Left="{Binding OriginX}"
+                        Canvas.Top="{Binding OriginY}"
+                        Width="{Binding ArtboardScreenWidth}"
+                        Height="{Binding ArtboardScreenHeight}"
+                        Background="{DynamicResource ArtboardFillBrush}"
+                        BorderBrush="{DynamicResource ArtboardBorderBrush}"
+                        BorderThickness="1" />
+            </Canvas>
+            <controls:DocumentCanvasControl IsHitTestVisible="False"
+                                            Document="{Binding Document}"
+                                            ZoomPercent="{Binding ZoomPercent}"
+                                            OriginX="{Binding OriginX}"
+                                            OriginY="{Binding OriginY}" />
+        </Panel>
 
     </Grid>
 

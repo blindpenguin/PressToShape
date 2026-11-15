@@ -1,14 +1,25 @@
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
+using PressToShape.Core.Documents;
 
 namespace PressToShape.App.Workspace;
 
 /// <summary>
-/// State shared by all regions of the editor shell: active tool, zoom, selection summary and artboard size.
+/// State shared by all regions of the editor shell: the document, active tool, zoom and selection summary.
 /// View models observe it through PropertyChanged, so every route that changes a value stays in sync.
 /// </summary>
 internal sealed partial class EditorState : ObservableObject
 {
     private double _zoomPercent = ZoomLevels.Default;
+
+    /// <summary>Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.</summary>
+    public EditorState(Document? document = null)
+    {
+        Document = document ?? Document.Create(string.Empty);
+    }
+
+    /// <summary>The current document. It is immutable: an edit replaces it by a new version, which notifies observers.</summary>
+    [ObservableProperty] public partial Document Document { get; set; }
 
     [ObservableProperty] public partial Tool ActiveTool { get; set; } = Tool.Select;
 
@@ -17,15 +28,27 @@ internal sealed partial class EditorState : ObservableObject
     /// <summary>A description of the selection, such as "1 selected (Group)". Empty without a selection: the status bar shows its own translated text then.</summary>
     [ObservableProperty] public partial string SelectionSummary { get; set; } = string.Empty;
 
-    [ObservableProperty] public partial double ArtboardWidth { get; set; } = 1200;
+    /// <summary>Artboard width of the current document.</summary>
+    public double ArtboardWidth => Document.ArtboardWidth;
 
-    [ObservableProperty] public partial double ArtboardHeight { get; set; } = 800;
+    /// <summary>Artboard height of the current document.</summary>
+    public double ArtboardHeight => Document.ArtboardHeight;
+
+    /// <summary>Replaces one layer of the document by the result of <paramref name="change"/>.</summary>
+    public void UpdateLayer(Guid layerId, Func<Layer, Layer> change) =>
+        Document = Document.UpdateLayer(layerId, change);
 
     /// <summary>Zoom in percent. Values outside the allowed range are clamped.</summary>
     public double ZoomPercent
     {
         get => _zoomPercent;
         set => SetProperty(ref _zoomPercent, ZoomLevels.Clamp(value));
+    }
+
+    partial void OnDocumentChanged(Document value)
+    {
+        OnPropertyChanged(nameof(ArtboardWidth));
+        OnPropertyChanged(nameof(ArtboardHeight));
     }
 
     public void SetZoom(double percent) => ZoomPercent = percent;

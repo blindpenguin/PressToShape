@@ -10,10 +10,9 @@
              x:DataType="vm:LayersViewModel">
 
     <UserControl.Styles>
-        <Style Selector="TreeViewItem" x:DataType="vm:LayerItemViewModel">
-            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+        <Style Selector="ListBoxItem">
             <Setter Property="MinHeight" Value="30" />
+            <Setter Property="Padding" Value="4,0" />
         </Style>
     </UserControl.Styles>
 
@@ -32,19 +31,22 @@
             </Button>
         </Grid>
 
-        <!-- Empty state -->
-        <TextBlock Classes="secondary" Text="{loc:T 'No layers yet'}"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"
-                   IsVisible="{Binding !HasLayers}" />
-
-        <!-- Layer tree: expand arrow (groups), icon, name, visibility toggle -->
-        <TreeView ItemsSource="{Binding Items}" IsVisible="{Binding HasLayers}" Background="Transparent">
-            <TreeView.ItemTemplate>
-                <TreeDataTemplate DataType="vm:LayerItemViewModel" ItemsSource="{Binding Children}">
-                    <Grid ColumnDefinitions="Auto,*,Auto" MinHeight="28">
-                        <materialIcons:MaterialIcon Grid.Column="0" Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,8,0" />
-                        <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" />
-                        <Button Grid.Column="2" Classes="icon" Command="{Binding ToggleVisibilityCommand}"
+        <!-- Layer list, topmost layer first: layers icon, name, lock toggle, visibility toggle -->
+        <ListBox ItemsSource="{Binding Items}" Background="Transparent">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="vm:LayerItemViewModel">
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" MinHeight="28">
+                        <materialIcons:MaterialIcon Grid.Column="0" Kind="LayersOutline" Width="16" Height="16" Margin="0,0,8,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                        <Button Grid.Column="2" Classes="icon" Command="{Binding ToggleLockCommand}"
+                                MinWidth="28" MinHeight="28"
+                                ToolTip.Tip="{loc:T 'Toggle lock'}" AutomationProperties.Name="{loc:T 'Toggle lock'}">
+                            <Panel>
+                                <materialIcons:MaterialIcon Kind="LockOutline" Width="16" Height="16" IsVisible="{Binding IsLocked}" />
+                                <materialIcons:MaterialIcon Kind="LockOpenVariantOutline" Width="16" Height="16" IsVisible="{Binding !IsLocked}" />
+                            </Panel>
+                        </Button>
+                        <Button Grid.Column="3" Classes="icon" Command="{Binding ToggleVisibilityCommand}"
                                 MinWidth="28" MinHeight="28"
                                 ToolTip.Tip="{loc:T 'Toggle visibility'}" AutomationProperties.Name="{loc:T 'Toggle visibility'}">
                             <Panel>
@@ -53,9 +55,9 @@
                             </Panel>
                         </Button>
                     </Grid>
-                </TreeDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </DockPanel>
 

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PressToShape.App.Workspace;
+using PressToShape.Core.Documents;
 
 namespace PressToShape.App.ViewModels.Editor;
 
@@ -24,6 +25,9 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
     /// <summary>Height of the area that shows the artboard, in screen pixels. Set by the view.</summary>
     [ObservableProperty] public partial double ViewportHeight { get; set; }
+
+    /// <summary>The document the canvas draws.</summary>
+    public Document Document => _state.Document;
 
     public double ZoomPercent => _state.ZoomPercent;
 
@@ -49,6 +53,9 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
+            case nameof(EditorState.Document):
+                OnPropertyChanged(nameof(Document));
+                break;
             case nameof(EditorState.ZoomPercent):
                 OnPropertyChanged(nameof(ZoomPercent));
                 NotifyArtboardGeometryChanged();

@@ -106,10 +106,61 @@ public class CanvasAreaViewModelTests
     {
         var (state, canvas) = Create(2000, 1200);
 
-        state.ArtboardWidth = 1920;
-        state.ArtboardHeight = 1080;
+        state.Document = state.Document.WithArtboardSize(1920, 1080);
 
         Assert.Equal(1920, canvas.ArtboardScreenWidth);
         Assert.Equal(1080, canvas.ArtboardScreenHeight);
+    }
+
+    [Fact]
+    public void Document_IsTheDocumentOfTheState()
+    {
+        var (state, canvas) = Create(2000, 1200);
+
+        Assert.Same(state.Document, canvas.Document);
+    }
+
+    [Fact]
+    public void DocumentChange_RaisesDocumentNotification()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        var changed = new List<string?>();
+        canvas.PropertyChanged += (_, e) => changed.Add(e.PropertyName);
+        var newDocument = state.Document.UpdateLayer(state.Document.Layers[0].Id, l => l with { IsVisible = false });
+
+        state.Document = newDocument;
+
+        Assert.Contains(nameof(CanvasAreaViewModel.Document), changed);
+        Assert.Same(newDocument, canvas.Document);
+    }
+
+    [Fact]
+    public void NewArtboardSize_ChangesArtboardPropertiesAndOrigins()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        var changed = new List<string?>();
+        canvas.PropertyChanged += (_, e) => changed.Add(e.PropertyName);
+
+        state.Document = state.Document.WithArtboardSize(1000, 600);
+
+        Assert.Equal(1000, canvas.ArtboardWidth);
+        Assert.Equal(600, canvas.ArtboardHeight);
+        Assert.Equal(500, canvas.OriginX);
+        Assert.Equal(300, canvas.OriginY);
+        Assert.Contains(nameof(CanvasAreaViewModel.ArtboardWidth), changed);
+        Assert.Contains(nameof(CanvasAreaViewModel.OriginX), changed);
+        Assert.Contains(nameof(CanvasAreaViewModel.OriginY), changed);
+    }
+
+    [Fact]
+    public void ZoomChange_DoesNotRaiseDocumentNotification()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        var changed = new List<string?>();
+        canvas.PropertyChanged += (_, e) => changed.Add(e.PropertyName);
+
+        state.SetZoom(200);
+
+        Assert.DoesNotContain(nameof(CanvasAreaViewModel.Document), changed);
     }
 }

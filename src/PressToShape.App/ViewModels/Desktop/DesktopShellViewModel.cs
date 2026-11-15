@@ -21,7 +21,7 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(localizer);
         _shutdown = shutdown ?? throw new ArgumentNullException(nameof(shutdown));
 
-        State = new EditorState();
+        State = new EditorState(SampleDocument.Create(localizer));
         Toolbox = new ToolboxViewModel(State, localizer);
         Canvas = new CanvasAreaViewModel(State);
         Inspector = new InspectorViewModel(State, localizer);
