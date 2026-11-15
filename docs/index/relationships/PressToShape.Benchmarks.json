@@ -1,4 +1,4 @@
-{"SchemaVersion":1,"Project":"PressToShape.Benchmarks","Relationships":[
+{"SchemaVersion":2,"Project":"PressToShape.Benchmarks","Relationships":[
 {"Type":"References","FromId":"F:PressToShape.Benchmarks.ShapeOperationBenchmarks._canvas","ToId":"T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel","File":"tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs","Line":25,"Confidence":"Verified"},
 {"Type":"References","FromId":"F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor","ToId":"T:PressToShape.App.Workspace.SelectionEditor","File":"tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs","Line":23,"Confidence":"Verified"},
 {"Type":"References","FromId":"F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction","ToId":"T:PressToShape.App.Workspace.CanvasInteraction","File":"tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs","Line":24,"Confidence":"Verified"},

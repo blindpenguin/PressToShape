@@ -1,3 +1,3 @@
-{"SchemaVersion":1,"Project":"PressToShape.App","Namespace":"CommunityToolkit","Symbols":[
+{"SchemaVersion":2,"Project":"PressToShape.App","Namespace":"CommunityToolkit","Symbols":[
 {"Id":"N:CommunityToolkit","Name":"CommunityToolkit","QualifiedName":"CommunityToolkit","SymbolType":"Namespace","Accessibility":"public","Modifiers":["static"],"Namespace":"CommunityToolkit","Project":"PressToShape.App","File":"generated/__KnownINotifyPropertyChangedArgs.g.cs","StartLine":4,"EndLine":4,"Parameters":[],"Attributes":[],"Interfaces":[],"IsGenerated":true,"Doc":{"HasDocumentation":false,"Params":{},"Exceptions":[]}}
 ]}

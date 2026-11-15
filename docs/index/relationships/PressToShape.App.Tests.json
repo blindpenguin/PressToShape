@@ -1,4 +1,4 @@
-{"SchemaVersion":1,"Project":"PressToShape.App.Tests","Relationships":[
+{"SchemaVersion":2,"Project":"PressToShape.App.Tests","Relationships":[
 {"Type":"Implements","FromId":"T:PressToShape.App.Tests.DesktopShellViewModelTests.FakeShutdown","ToId":"T:PressToShape.App.Services.IAppShutdown","File":"tests/PressToShape.App.Tests/DesktopShellViewModelTests.cs","Line":15,"Confidence":"Verified"},
 {"Type":"Implements","FromId":"T:PressToShape.App.Tests.FakeCatalog","ToId":"T:PressToShape.App.Localization.ITranslationCatalog","File":"tests/PressToShape.App.Tests/FakeLocalizer.cs","Line":7,"Confidence":"Verified"},
 {"Type":"Implements","FromId":"T:PressToShape.App.Tests.FakeCatalogSource","ToId":"T:PressToShape.App.Localization.ICatalogSource","File":"tests/PressToShape.App.Tests/FakeLocalizer.cs","Line":20,"Confidence":"Verified"},

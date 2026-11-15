@@ -1,0 +1,78 @@
+# Theme.axaml (XAML)
+
+Project: PressToShape.App. File: `src/PressToShape.App/Styles/Theme.axaml`. Root: `ResourceDictionary`.
+No `x:Class`.
+
+## Resources defined
+
+- line 13: `SystemAccentColor` (Color), theme Dark
+- line 14: `SystemAccentColorLight1` (Color), theme Dark
+- line 15: `SystemAccentColorLight2` (Color), theme Dark
+- line 16: `SystemAccentColorLight3` (Color), theme Dark
+- line 17: `SystemAccentColorDark1` (Color), theme Dark
+- line 18: `SystemAccentColorDark2` (Color), theme Dark
+- line 19: `SystemAccentColorDark3` (Color), theme Dark
+- line 20: `AppAccentBrush` (SolidColorBrush), theme Dark
+- line 21: `AppAccentForegroundBrush` (SolidColorBrush), theme Dark
+- line 22: `SelectedItemBrush` (SolidColorBrush), theme Dark
+- line 25: `WindowBackgroundBrush` (SolidColorBrush), theme Dark
+- line 26: `PanelBackgroundBrush` (SolidColorBrush), theme Dark
+- line 27: `ToolbarBackgroundBrush` (SolidColorBrush), theme Dark
+- line 28: `ToolColumnBackgroundBrush` (SolidColorBrush), theme Dark
+- line 29: `CanvasBackgroundBrush` (SolidColorBrush), theme Dark
+- line 30: `ArtboardFillBrush` (SolidColorBrush), theme Dark
+- line 31: `ArtboardBorderBrush` (SolidColorBrush), theme Dark
+- line 32: `SelectionOutlineBrush` (SolidColorBrush), theme Dark
+- line 33: `SelectionHandleFillBrush` (SolidColorBrush), theme Dark
+- line 36: `BorderSubtleBrush` (SolidColorBrush), theme Dark
+- line 37: `BorderStrongBrush` (SolidColorBrush), theme Dark
+- line 40: `TextPrimaryBrush` (SolidColorBrush), theme Dark
+- line 41: `TextSecondaryBrush` (SolidColorBrush), theme Dark
+- line 42: `TextDisabledBrush` (SolidColorBrush), theme Dark
+- line 45: `ControlBackgroundBrush` (SolidColorBrush), theme Dark
+- line 46: `ControlHoverBrush` (SolidColorBrush), theme Dark
+- line 47: `ControlPressedBrush` (SolidColorBrush), theme Dark
+- line 50: `RulerBackgroundBrush` (SolidColorBrush), theme Dark
+- line 51: `RulerTickBrush` (SolidColorBrush), theme Dark
+- line 52: `RulerTextBrush` (SolidColorBrush), theme Dark
+- line 57: `SystemAccentColor` (Color), theme Light
+- line 58: `SystemAccentColorLight1` (Color), theme Light
+- line 59: `SystemAccentColorLight2` (Color), theme Light
+- line 60: `SystemAccentColorLight3` (Color), theme Light
+- line 61: `SystemAccentColorDark1` (Color), theme Light
+- line 62: `SystemAccentColorDark2` (Color), theme Light
+- line 63: `SystemAccentColorDark3` (Color), theme Light
+- line 64: `AppAccentBrush` (SolidColorBrush), theme Light
+- line 65: `AppAccentForegroundBrush` (SolidColorBrush), theme Light
+- line 66: `SelectedItemBrush` (SolidColorBrush), theme Light
+- line 69: `WindowBackgroundBrush` (SolidColorBrush), theme Light
+- line 70: `PanelBackgroundBrush` (SolidColorBrush), theme Light
+- line 71: `ToolbarBackgroundBrush` (SolidColorBrush), theme Light
+- line 72: `ToolColumnBackgroundBrush` (SolidColorBrush), theme Light
+- line 73: `CanvasBackgroundBrush` (SolidColorBrush), theme Light
+- line 74: `ArtboardFillBrush` (SolidColorBrush), theme Light
+- line 75: `ArtboardBorderBrush` (SolidColorBrush), theme Light
+- line 76: `SelectionOutlineBrush` (SolidColorBrush), theme Light
+- line 77: `SelectionHandleFillBrush` (SolidColorBrush), theme Light
+- line 80: `BorderSubtleBrush` (SolidColorBrush), theme Light
+- line 81: `BorderStrongBrush` (SolidColorBrush), theme Light
+- line 84: `TextPrimaryBrush` (SolidColorBrush), theme Light
+- line 85: `TextSecondaryBrush` (SolidColorBrush), theme Light
+- line 86: `TextDisabledBrush` (SolidColorBrush), theme Light
+- line 89: `ControlBackgroundBrush` (SolidColorBrush), theme Light
+- line 90: `ControlHoverBrush` (SolidColorBrush), theme Light
+- line 91: `ControlPressedBrush` (SolidColorBrush), theme Light
+- line 94: `RulerBackgroundBrush` (SolidColorBrush), theme Light
+- line 95: `RulerTickBrush` (SolidColorBrush), theme Light
+- line 96: `RulerTextBrush` (SolidColorBrush), theme Light
+- line 102: `ToolButtonSize` (x:Double)
+- line 103: `ToolbarButtonSize` (x:Double)
+- line 104: `ToolbarHeight` (x:Double)
+- line 105: `StatusBarHeight` (x:Double)
+- line 106: `RulerSize` (x:Double)
+- line 107: `FieldHeight` (x:Double)
+- line 108: `PanelSpacing` (x:Double)
+- line 109: `UiFontSize` (x:Double)
+- line 110: `SectionHeaderFontSize` (x:Double)
+- line 111: `ControlCornerRadius` (CornerRadius)
+- line 112: `PanelPadding` (Thickness)

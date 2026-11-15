@@ -1,3 +1,3 @@
-{"SchemaVersion":1,"Project":"PressToShape.CodeIndex.Tests","Namespace":"PressToShape","Symbols":[
+{"SchemaVersion":2,"Project":"PressToShape.CodeIndex.Tests","Namespace":"PressToShape","Symbols":[
 {"Id":"N:PressToShape","Name":"PressToShape","QualifiedName":"PressToShape","SymbolType":"Namespace","Accessibility":"public","Modifiers":["static"],"Namespace":"PressToShape","Project":"PressToShape.CodeIndex.Tests","File":"tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs","StartLine":8,"EndLine":8,"Parameters":[],"Attributes":[],"Interfaces":[],"IsGenerated":false,"Doc":{"HasDocumentation":false,"Params":{},"Exceptions":[]}}
 ]}

@@ -22,6 +22,39 @@ The only tests that touch the file system, each in its own unique temporary fold
 - `public void RemoveStale_RootDoesNotExist_ReturnsNothing()` - _(no documentation)_
 - `public void InMemoryFileSink_Write_KeepsFilesSortedAndRejectsBadPaths()` - _(no documentation)_
 
+## BindingResolverTests (class)
+
+`public class BindingResolverTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/BindingResolverTests.cs:10-281`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Resolve_SimpleProperty_IsVerifiedWithThePropertyId()` - _(no documentation)_
+- `public void Resolve_NestedPath_FollowsMemberTypesAndReportsTheSolutionTypeId()` - _(no documentation)_
+- `public void Resolve_NullableReferenceAndNullableValueTypes_ContinueWithTheUnderlyingType()` - _(no documentation)_
+- `public void Resolve_InheritedMember_IsFoundOnTheBaseType()` - _(no documentation)_
+- `public void Resolve_InterfaceMember_IsFoundThroughBaseInterfaces()` - _(no documentation)_
+- `public void Resolve_Field_IsAllowed()` - _(no documentation)_
+- `public void Resolve_CollectionProperty_ContinuesWithTheCollectionMembers()` - _(no documentation)_
+- `public void Resolve_CommandProperty_IsMarkedAsCommand()` - _(no documentation)_
+- `public void Resolve_GeneratedCommandProperty_IsFound()` - _(no documentation)_
+- `public void Resolve_Negation_IsIgnoredForTheTarget(string path)` - _(no documentation)_
+- `public void Resolve_DataContextItself_IsVerifiedWithoutAProperty(string? path)` - _(no documentation)_
+- `public void Resolve_UnmodelledForms_AreUnresolvedWithAReasonAndNeverVerified(string path, string expectedPart)` - _(no documentation)_
+- `public void Resolve_UnmodelledFormAfterResolvedSegments_SaysHowFarItGot()` - _(no documentation)_
+- `public void Resolve_MissingSegment_NamesTheSegmentAndTheType()` - _(no documentation)_
+- `public void Resolve_PrivateMemberAndIndexerAndMethod_AreNotBindable()` - _(no documentation)_
+- `public void Resolve_NoDataType_IsUnresolvedWithTheReason()` - _(no documentation)_
+- `public void Resolve_OtherSources_AreUnresolvedWithoutAKnownType(string path)` - _(no documentation)_
+- `public void ResolveSegments_FromAKnownStartType_IsVerified()` - _(no documentation)_
+- `public void ResolveSegments_NoSegmentsAndNoUnsupported_IsTheStartTypeItself()` - _(no documentation)_
+- `public void Parse_Sources_AreRecognized(string path, string source, string? sourceText, string segments)` - _(no documentation)_
+- `public void Parse_LeadingBangs_AreCounted()` - _(no documentation)_
+- `public void Parse_BadInput_NeverThrowsAndReportsUnsupported(string path)` - _(no documentation)_
+
 ## CliAppTests (class)
 
 `public class CliAppTests`
@@ -52,6 +85,54 @@ _(no documentation)_
 - `public Task Json_ShowRefsAndAmbiguous_AreValidJson()` - _(no documentation)_
 - `public Task Query_WithoutIndex_SaysHowToCreateItAndFails()` - _(no documentation)_
 - `public Task Query_DoesNotCompileTheSolution()` - _(no documentation)_
+
+## CliXamlTests (class)
+
+`public class CliXamlTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/CliXamlTests.cs:16-266`
+
+_(no documentation)_
+
+**Members**
+
+- `public Task Show_ViewClass_PrintsItsXamlFileBindingsAndHandlers()` - _(no documentation)_
+- `public Task Show_ViewClass_PrintsTheEvidenceOfItsViewModelLinks()` - _(no documentation)_
+- `public Task Show_Element_PrintsItsOwnRecordsOnly()` - _(no documentation)_
+- `public Task Show_ResourceAndStyleAndTemplate_PrintTheirRecords()` - _(no documentation)_
+- `public Task Show_Json_ContainsTheXamlFileAndIsValid()` - _(no documentation)_
+- `public Task Find_PrintsXamlEntriesWithTheirTypes()` - _(no documentation)_
+- `public Task Refs_ViewModelProperty_PrintsTheBindingWithFileLineAndConfidence()` - _(no documentation)_
+- `public Task Refs_ViewModelOfAnInferredLink_PrintsTheReasonAndTheInferredMark()` - _(no documentation)_
+- `public Task Refs_Json_IsAValidArrayWithConfidence()` - _(no documentation)_
+- `public Task Generate_PrintsXamlFileCountAndFindingsAsWarnings()` - _(no documentation)_
+- `public Task Generate_MalformedXaml_FailsAndWritesNothing()` - _(no documentation)_
+- `public Task Check_AfterGenerate_IncludesXamlFilesAndReportsUpToDate()` - _(no documentation)_
+- `public Task Check_ChangedXamlSource_IsReportedAsChanged()` - _(no documentation)_
+- `public Task Help_ListsTheXamlSymbolTypes()` - _(no documentation)_
+
+## DataContextAssignmentTests (class)
+
+`public class DataContextAssignmentTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/DataContextAssignmentTests.cs:9-138`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Build_ObjectInitializer_GivesAVerifiedLinkWithFileAndLine()` - _(no documentation)_
+- `public void Build_PlainAssignment_GivesALink()` - _(no documentation)_
+- `public void Build_ValueThroughAVariable_UsesItsStaticType()` - _(no documentation)_
+- `public void Build_ValueOfASolutionInterfaceType_LinksToTheInterface()` - _(no documentation)_
+- `public void Build_ValueOfTypeObject_GivesNoLink()` - _(no documentation)_
+- `public void Build_FrameworkValueType_GivesNoLink()` - _(no documentation)_
+- `public void Build_TargetThatIsNotAControl_GivesNoLink()` - _(no documentation)_
+- `public void Build_OtherPropertyNamedLikeADataContext_GivesNoLink()` - _(no documentation)_
+- `public void Build_AssignmentInsideTheViewClass_UsesTheViewClass()` - _(no documentation)_
+- `public void Build_AssignmentInALambda_IsFound()` - _(no documentation)_
+- `public void Build_SeveralAssignments_AllAppearOnceAndInOrder()` - _(no documentation)_
+- `public void Build_NullValue_GivesNoLink()` - _(no documentation)_
 
 ## DocCommentReaderTests (class)
 
@@ -109,6 +190,20 @@ _(no documentation)_
 - `public void Extract_PartialTypeWithGeneratedPart_PointsAtHandWrittenFile()` - _(no documentation)_
 - `public void Extract_GeneratedMembers_NeverContainMachinePaths()` - _(no documentation)_
 
+## InMemoryXamlFileSource (class)
+
+`internal sealed class InMemoryXamlFileSource : IXamlFileSource`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/InMemoryXamlFileSource.cs:9-24`
+
+A XAML file source over a dictionary of repo-relative paths. Used by the XAML tests, so no disk is involved.
+
+**Members**
+
+- `public InMemoryXamlFileSource Add(string path, string text)` - _(no documentation)_
+- `public IReadOnlyList<string> List(string projectDirectory)` - _(no documentation)_
+- `public string Read(string repoRelativePath)` - _(no documentation)_
+
 ## IndexGeneratorTests (class)
 
 `public class IndexGeneratorTests`
@@ -126,6 +221,29 @@ _(no documentation)_
 - `public Task Write_TwoRuns_ProduceIdenticalFilesIncludingTheProblemsInTheManifest()` - _(no documentation)_
 - `public Task Write_NoProjects_StillWritesAManifestAndEmptyNames()` - _(no documentation)_
 - `public Task GenerateAsync_Cancelled_Throws()` - _(no documentation)_
+
+## IndexGeneratorXamlTests (class)
+
+`public class IndexGeneratorXamlTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/IndexGeneratorXamlTests.cs:16-222`
+
+_(no documentation)_
+
+**Members**
+
+- `public Task GenerateAsync_WithXaml_PutsFilesAndEdgesIntoTheOwningProject()` - _(no documentation)_
+- `public Task GenerateAsync_IncludeAndResourceAcrossProjects_AreResolved()` - _(no documentation)_
+- `public Task GenerateAsync_CSharpDataContextAssignmentAndStructuralEdges_StillAppear()` - _(no documentation)_
+- `public Task GenerateAsync_BindingToAMissingProperty_IsUnresolvedAndMakesNoInferredLink()` - _(no documentation)_
+- `public Task GenerateAsync_MalformedXaml_IsAProjectErrorAndOtherFilesAreKept()` - _(no documentation)_
+- `public Task GenerateAsync_WithoutAXamlSource_BehavesLikeBefore()` - _(no documentation)_
+- `public Task GenerateAsync_ProjectWithoutXamlFiles_IsUnchanged()` - _(no documentation)_
+- `public Task GenerateAsync_NoXamlAtAll_GivesEmptyListsAndNoProblems()` - _(no documentation)_
+- `public Task GenerateAsync_RegisteredLocatorWithAnUnrecognizedConvention_AddsOneFindingToTheApplicationFile()` - _(no documentation)_
+- `public Task GenerateAsync_ApplicationWithoutALocator_HasNoConventionFinding()` - _(no documentation)_
+- `public Task GenerateAsync_Twice_GivesIdenticalXamlData()` - _(no documentation)_
+- `public Task GenerateAsync_Output_HasNoAbsolutePaths()` - _(no documentation)_
 
 ## IndexModelTests (class)
 
@@ -199,6 +317,37 @@ _(no documentation)_
 - `public void Write_ChangedSummaryInTheModel_ChangesThePage()` - _(no documentation)_
 - `public void Write_AnyPage_HasNoAbsolutePathsNoCarriageReturnsNoBomAndAnotherWordForKind()` - _(no documentation)_
 - `public void Write_GeneratedMember_ShowsItsOrigin()` - _(no documentation)_
+
+## MarkupExtensionParserTests (class)
+
+`public class MarkupExtensionParserTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/MarkupExtensionParserTests.cs:8-226`
+
+_(no documentation)_
+
+**Members**
+
+- `public void TryParse_BindingWithPositionalPath_ReadsNameAndPath()` - _(no documentation)_
+- `public void TryParse_BindingWithoutArguments_HasNone()` - _(no documentation)_
+- `public void TryParse_PositionalAndNamedArguments_AreSeparated()` - _(no documentation)_
+- `public void TryParse_NamedPathOnly_ReadsIt()` - _(no documentation)_
+- `public void TryParse_NestedExtension_IsKept()` - _(no documentation)_
+- `public void TryParse_TwoLevelsOfNesting_Works()` - _(no documentation)_
+- `public void TryParse_StaticWithPrefixedMember_ReadsTheMemberText()` - _(no documentation)_
+- `public void TryParse_QuotedText_KeepsCommasAndEscapes(string text, string expected)` - _(no documentation)_
+- `public void TryParse_OtherExtensions_ReadNameAndKey(string text, string name)` - _(no documentation)_
+- `public void TryParse_ParentPathWithCommaInBrackets_DoesNotSplit()` - _(no documentation)_
+- `public void TryParse_SpecialPathForms_AreKeptAsText(string text, string path)` - _(no documentation)_
+- `public void TryParse_ElementNameAndWhitespaceVariations_Work()` - _(no documentation)_
+- `public void TryParse_TrailingComma_IsTolerated()` - _(no documentation)_
+- `public void TryParse_BadOrNonExtensionInput_ReturnsFalseWithoutThrowing(string text)` - _(no documentation)_
+- `public void TryParse_Null_ReturnsFalse()` - _(no documentation)_
+- `public void TryParse_UnknownName_StillParses()` - _(no documentation)_
+- `public void TryParse_NestingAtTheLimit_WorksAndBeyondTheLimit_Fails()` - _(no documentation)_
+- `public void TryParse_VeryLongInput_ReturnsFalse()` - _(no documentation)_
+- `public void TryParse_ManyArguments_AreAllKept()` - _(no documentation)_
+- `public void TryParse_Garbage_NeverThrows()` - _(no documentation)_
 
 ## OperationRelationshipTests (class)
 
@@ -320,6 +469,39 @@ Finds files in the repository, relative to the solution root, without hardcoded 
 - `public string Root { get; }` - _(no documentation)_
 - `public string Combine(string relativePath)` - _(no documentation)_
 
+## ResourceResolverTests (class)
+
+`public class ResourceResolverTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/ResourceResolverTests.cs:8-339`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Resolve_ElementScope_FindsTheDefinitionOnTheElement()` - _(no documentation)_
+- `public void Resolve_AncestorScope_FindsTheNearestAncestorDefinition()` - _(no documentation)_
+- `public void Resolve_ViewRootWithResourceDictionaryChild_IsFound()` - _(no documentation)_
+- `public void Resolve_ApplicationResources_AreUsedWhenNoElementDefinesTheKey()` - _(no documentation)_
+- `public void Resolve_MergedDictionary_IsFoundThroughTheInclude()` - _(no documentation)_
+- `public void Resolve_KeyInBothThemeVariants_GivesOneHitPerVariant()` - _(no documentation)_
+- `public void Resolve_KeyInOneVariantOnly_GivesOneHit()` - _(no documentation)_
+- `public void Resolve_MergedDictionaries_LaterOnesWin()` - _(no documentation)_
+- `public void Resolve_OwnEntryBeatsMergedEntryInTheSameDictionary()` - _(no documentation)_
+- `public void Resolve_StyleIncludeResources_AreSearchedAfterTheApplicationResources()` - _(no documentation)_
+- `public void Resolve_ReferenceInsideAStyleFile_FindsASiblingDefinition()` - _(no documentation)_
+- `public void Resolve_IncludeAcrossProjects_UsesTheAssemblyMap()` - _(no documentation)_
+- `public void ResolveInclude_RelativeAndAbsoluteInAssemblyPaths_AreResolved()` - _(no documentation)_
+- `public void ResolveInclude_OutsideTheSolution_IsNull(string source)` - _(no documentation)_
+- `public void Resolve_NearestWins_ElementBeforeApplication()` - _(no documentation)_
+- `public void Resolve_UnknownKey_IsNotFoundWithTheThemeReason()` - _(no documentation)_
+- `public void Resolve_NoApplicationDocument_StillSearchesTheViewScopes()` - _(no documentation)_
+- `public void Resolve_IncludeCycle_TerminatesWithoutAHit()` - _(no documentation)_
+- `public void Resolve_IncludeOutsideTheSolution_IsIgnored()` - _(no documentation)_
+- `public void Definitions_ListsEveryEntryWithIdsAndVariants()` - _(no documentation)_
+- `public void IncludesOf_ListsStyleAndResourceIncludesWithTargets()` - _(no documentation)_
+- `public void ApplicationFor_PrefersTheApplicationOfTheSameProject()` - _(no documentation)_
+
 ## SymbolExtractorTests (class)
 
 `public class SymbolExtractorTests`
@@ -361,3 +543,325 @@ Builds small compilations in memory, so tests need no solution and no MSBuild.
 - `public ProjectCompilation Project(string name, params string[] sources)` - _(no documentation)_
 - `public ProjectCompilation WithGenerator(ProjectCompilation project, IIncrementalGenerator generator)` - Runs a generator over the project and returns the project with the generated trees marked.
 - `public ProjectCompilation Project(params string[] sources)` - _(no documentation)_
+
+## ViewLocatorConventionTests (class)
+
+`public class ViewLocatorConventionTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/ViewLocatorConventionTests.cs:9-250`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Detect_TheRealViewLocatorPattern_IsRecognized()` - _(no documentation)_
+- `public void Detect_AnotherReplacePair_IsReadFromTheCodeNotAssumed()` - _(no documentation)_
+- `public void Detect_ReplaceResultPassedDirectlyToGetType_IsRecognized()` - _(no documentation)_
+- `public void Detect_LocatorWithoutReplace_GivesAReason()` - _(no documentation)_
+- `public void Detect_ReplaceWithoutGetType_GivesAReason()` - _(no documentation)_
+- `public void Detect_ReplaceOnSomethingElse_IsNotRecognized()` - _(no documentation)_
+- `public void Detect_GetTypeOfAnotherString_IsNotRecognized()` - _(no documentation)_
+- `public void Detect_NoRegistration_GivesAReason()` - _(no documentation)_
+- `public void Detect_RegistrationOfATypeThatIsNotALocator_GivesAReason()` - _(no documentation)_
+- `public void Detect_LocatorNotImplementingTheInterface_IsSkipped()` - _(no documentation)_
+- `public void Detect_SecondRegistrationIsTheLocator_IsFound()` - _(no documentation)_
+- `public void ViewFor_ExistingCandidate_IsReturned()` - _(no documentation)_
+- `public void ViewFor_NoSuchView_IsNull()` - _(no documentation)_
+- `public void ViewFor_NestedViewModel_UsesThePlusSeparatedRuntimeName()` - _(no documentation)_
+- `public void ViewFor_NameWithoutTheFindText_IsNull()` - _(no documentation)_
+- `public void ViewFor_CandidateInAnotherAssembly_IsNullBecauseTypeGetTypeOnlySearchesTheCallingAssembly()` - _(no documentation)_
+- `public void Describe_NamesTheRegistrationTheConventionAndTheEvidence()` - _(no documentation)_
+
+## ViewModelLinkTests (class)
+
+`public class ViewModelLinkTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/ViewModelLinkTests.cs:7-288`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Resolve_XClass_GivesACodeBehindLinkFromTheFileToTheClass()` - _(no documentation)_
+- `public void Resolve_FileRecord_HasClassDataTypeAndIds()` - _(no documentation)_
+- `public void Resolve_Elements_HaveIdsParentsTypesAndNames()` - _(no documentation)_
+- `public void Resolve_XDataType_IsAVerifiedViewModelLink()` - _(no documentation)_
+- `public void Resolve_DataContextBindingOnAChildView_IsAVerifiedLink()` - _(no documentation)_
+- `public void Resolve_DataContextBindingThatDoesNotResolve_GivesNoLink()` - _(no documentation)_
+- `public void Resolve_DataContextBindingWithoutADataType_GivesNoLink()` - _(no documentation)_
+- `public void Resolve_DataContextBindingOnANonViewElement_GivesNoLink()` - _(no documentation)_
+- `public void Resolve_DesignTimeDataContext_IsInferredAndSaysSo()` - _(no documentation)_
+- `public void Resolve_DesignInstanceAttribute_IsAlsoDesignTimeOnly()` - _(no documentation)_
+- `public void Resolve_DataTemplateDataType_IsAVerifiedUsesTypeLink()` - _(no documentation)_
+- `public void Resolve_ContentControlContentBinding_GivesAnInferredViewLocatorLink()` - _(no documentation)_
+- `public void Resolve_ItemsControlWithoutATemplate_LinksTheElementTypeThroughTheLocator()` - _(no documentation)_
+- `public void Resolve_ItemsControlWithAnItemTemplate_GetsNoInferredLink()` - _(no documentation)_
+- `public void Resolve_ContentControlWithAContentTemplate_GetsNoInferredLink()` - _(no documentation)_
+- `public void Resolve_ViewModelWithoutAViewByTheConvention_GetsNoLink()` - _(no documentation)_
+- `public void Resolve_NoRecognizedConvention_GivesNoInferredLinksAndNoError()` - _(no documentation)_
+- `public void Resolve_MatchingNamesWithoutEvidence_GiveNoLink()` - _(no documentation)_
+- `public void Resolve_MissingXClassClass_GivesAFindingAndNoCodeBehindLink()` - _(no documentation)_
+- `public void Resolve_DuplicateNames_AreCopiedAsFindings()` - _(no documentation)_
+- `public void Resolve_SameInputTwice_GivesTheSameEdgesInTheSameOrder()` - _(no documentation)_
+
+## XamlBindingTests (class)
+
+`public class XamlBindingTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlBindingTests.cs:10-416`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Collect_SimpleBinding_IsVerifiedWithAnEdgeToTheProperty()` - _(no documentation)_
+- `public void Collect_NestedPath_ResolvesAndReportsTheTypeId()` - _(no documentation)_
+- `public void Collect_PathToASolutionClass_RecordsTheTargetTypeId()` - _(no documentation)_
+- `public void Collect_CommandBinding_IsMarkedAsCommandAndKeyBindingsCountToo()` - _(no documentation)_
+- `public void Collect_DataTemplateDataType_ScopesTheBindingsInside()` - _(no documentation)_
+- `public void Collect_XDataTypeOnATemplate_ScopesTheBindingsInside()` - _(no documentation)_
+- `public void Collect_NoDataType_IsUnresolvedWithTheReasonAndNoEdge()` - _(no documentation)_
+- `public void Collect_UnresolvableDataType_SaysSo()` - _(no documentation)_
+- `public void Collect_MissingSegmentWithADataType_IsUnresolvedAndAFinding()` - _(no documentation)_
+- `public void Collect_UnmodelledPathForm_IsUnresolvedButNotAFinding()` - _(no documentation)_
+- `public void Collect_ElementName_ResolvesAgainstTheNamedElementType()` - _(no documentation)_
+- `public void Collect_ElementNameThatDoesNotExist_IsUnresolved()` - _(no documentation)_
+- `public void Collect_RelativeSourceAncestorType_ResolvesAgainstThatType()` - _(no documentation)_
+- `public void Collect_ParentSourceWithAType_ResolvesAndWithoutOneDoesNot()` - _(no documentation)_
+- `public void Collect_ReflectionBinding_IsOnlyInferredEvenWhenThePathMatches()` - _(no documentation)_
+- `public void Collect_TemplateBinding_IsUnresolvedWithAReason()` - _(no documentation)_
+- `public void Collect_SourceBinding_IsUnresolved()` - _(no documentation)_
+- `public void Collect_SetterValueBinding_IsAttributedToTheSetterProperty()` - _(no documentation)_
+- `public void Collect_DataContextBinding_IsRecordedLikeAnyBinding()` - _(no documentation)_
+- `public void Collect_ModeAndPathNamedArguments_AreRecorded()` - _(no documentation)_
+- `public void Collect_DotPath_ResolvesToTheDataContextWithoutAProperty()` - _(no documentation)_
+- `public void Collect_LocalizedTextMarkup_IsNotABinding()` - _(no documentation)_
+- `public void Collect_MarkupThatCannotBeRead_IsAFinding()` - _(no documentation)_
+- `public void Collect_ConverterByStaticResource_LinksTheConverterClass()` - _(no documentation)_
+- `public void Collect_ConverterByXStatic_LinksTheClassWhenTheMemberExists()` - _(no documentation)_
+- `public void Collect_ConverterResourceThatIsNotASolutionClass_IsAFinding()` - _(no documentation)_
+- `public void Collect_ResourceReferenceFound_IsVerifiedWithAnEdge()` - _(no documentation)_
+- `public void Collect_ResourceReferenceNotFound_IsRecordedWithTheThemeReasonAndNoEdge()` - _(no documentation)_
+- `public void Collect_ResourceReferenceKeyedByAType_IsRecordedWithTheTypeKeyAndNoFinding()` - _(no documentation)_
+- `public void Collect_ResourceReferenceKeyedByATypeThatIsDefinedLocally_IsFound()` - _(no documentation)_
+- `public void Collect_ResourceReferenceInASetter_IsAttributedToTheSetterProperty()` - _(no documentation)_
+- `public void Collect_ResourceInBothThemeVariants_GivesOneEdgePerVariant()` - _(no documentation)_
+- `public void Collect_Output_IsDeterministic()` - _(no documentation)_
+
+## XamlJsonWriterTests (class)
+
+`public class XamlJsonWriterTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlJsonWriterTests.cs:12-159`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Write_OneJsonFilePerXamlFileUnderTheProjectFolder()` - _(no documentation)_
+- `public void Write_TwoRunsAndShuffledProjects_GiveIdenticalBytes()` - _(no documentation)_
+- `public void Write_FileReadsBackAsTheRecordAndHasTheSchemaVersion()` - _(no documentation)_
+- `public void Write_EveryListItemIsOnItsOwnValidJsonLine()` - _(no documentation)_
+- `public void Write_ListsAreSortedByLineAndEmptyListsAreWrittenAsEmptyArrays()` - _(no documentation)_
+- `public void Write_AnyXamlFile_HasNoAbsolutePathsNoCarriageReturnsAndNoBom()` - _(no documentation)_
+- `public void Write_NamesTable_HasEntriesForViewsElementsResourcesStylesAndTemplates()` - _(no documentation)_
+- `public void Write_NamesTable_StaysSortedAndKeepsCSharpEntries()` - _(no documentation)_
+- `public void Write_Manifest_CountsXamlFilesPerProject()` - _(no documentation)_
+- `public void XamlPath_IsRelativeToTheProjectFolderAndSafe(string project, string directory, string file, string expected)` - _(no documentation)_
+- `public void Write_ProjectWithoutXaml_WritesNoXamlFiles()` - _(no documentation)_
+
+## XamlMarkdownWriterTests (class)
+
+`public class XamlMarkdownWriterTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlMarkdownWriterTests.cs:11-172`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Write_OnePagePerXamlFileUnderTheXamlFolder()` - _(no documentation)_
+- `public void Write_Header_NamesFileRootAndClass()` - _(no documentation)_
+- `public void Write_ViewModelLinks_ShowEvidenceAndConfidence()` - _(no documentation)_
+- `public void Write_InferredViewLink_IsMarkedInferredWithTheViewLocatorReason()` - _(no documentation)_
+- `public void Write_Bindings_ShowTargetsConvertersCommandsAndUnresolvedReasons()` - _(no documentation)_
+- `public void Write_UnresolvedBinding_SaysWhy()` - _(no documentation)_
+- `public void Write_ResourceReferences_ShowTargetsAndTheNotFoundReason()` - _(no documentation)_
+- `public void Write_Definitions_ListResourcesStylesTemplatesAndHandlers()` - _(no documentation)_
+- `public void Write_ThemeVariantResources_AreMarked()` - _(no documentation)_
+- `public void Write_ReadmeLinksTheXamlPages()` - _(no documentation)_
+- `public void Write_Pages_AreDeterministicAndHaveNoAbsolutePathsOrCarriageReturns()` - _(no documentation)_
+- `public void Write_Findings_AreListedWhenPresent()` - _(no documentation)_
+- `public void XamlMarkdownPath_FollowsTheJsonName()` - _(no documentation)_
+
+## XamlModelTests (class)
+
+`public class XamlModelTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlModelTests.cs:12-111`
+
+_(no documentation)_
+
+**Members**
+
+- `public void XamlFileRecord_RoundTrip_KeepsEveryList()` - _(no documentation)_
+- `public void RelationshipType_XamlValues_AreAppendedAfterTheEarlierOnes()` - _(no documentation)_
+- `public void IndexSchema_Version_IsTwo()` - _(no documentation)_
+- `public void ManifestProject_WithoutXamlCount_DefaultsToZero()` - _(no documentation)_
+- `public void ProjectIndex_WithoutXaml_HasAnEmptyList()` - _(no documentation)_
+- `public void Ids_AreBuiltFromRepoRelativePathsOnly()` - _(no documentation)_
+- `public void IsXaml_SeparatesXamlIdsFromRoslynIds(string id, bool expected)` - _(no documentation)_
+- `public void Describe_GivesShortReadableText(string id, string expected)` - _(no documentation)_
+
+## XamlQueryTests (class)
+
+`public class XamlQueryTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlQueryTests.cs:12-235`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Search_FindsXamlEntriesTogetherWithCSharpSymbols()` - _(no documentation)_
+- `public void Search_FindsNamedElementsResourcesStylesAndTemplates(string term, string symbolType)` - _(no documentation)_
+- `public void Show_ViewClass_IncludesItsXamlFileAndTheViewModelLinks()` - _(no documentation)_
+- `public void Show_ViewById_ReturnsTheXamlFileAndTheViewClass()` - _(no documentation)_
+- `public void Show_XamlWithoutAClass_HasNoSymbol()` - _(no documentation)_
+- `public void Show_NamedElement_ListsItsBindingsAndHandlersAsOutgoing()` - _(no documentation)_
+- `public void Show_Resource_ListsTheReferencesToItAsIncoming()` - _(no documentation)_
+- `public void Show_ResourceInBothThemeVariants_IsAmbiguousWithOneCandidatePerVariant()` - _(no documentation)_
+- `public void References_ViewModelProperty_IncludesTheBindingWithFileAndLine()` - _(no documentation)_
+- `public void References_Command_IncludesTheBinding()` - _(no documentation)_
+- `public void References_ConverterClass_IncludesTheBindingAndTheResourceElement()` - _(no documentation)_
+- `public void References_EventHandlerMethod_IncludesTheXamlEvent()` - _(no documentation)_
+- `public void References_ViewModelClass_IncludesTheViewsThatUseIt()` - _(no documentation)_
+- `public void References_ViewModelClassOfAnInferredLink_IsMarkedInferredWithTheReason()` - _(no documentation)_
+- `public void References_ViewClass_IncludesItsXamlFileThroughCodeBehind()` - _(no documentation)_
+- `public void References_ResourceKey_IncludesTheXamlPlacesThatUseIt()` - _(no documentation)_
+- `public void Queries_ForXamlEntries_DoNotReadSymbolFiles()` - _(no documentation)_
+- `public void Show_OldXamlFileSchema_SaysHowToRegenerate()` - _(no documentation)_
+- `public void Show_DamagedXamlFile_IsReportedNotCrashed()` - _(no documentation)_
+- `public void Show_CSharpOnlyIndex_StillWorksWithoutXaml()` - _(no documentation)_
+
+## XamlReaderTests (class)
+
+`public sealed class XamlReaderTests : IDisposable`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlReaderTests.cs:9-321`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Dispose()` - _(no documentation)_
+- `public void Read_Sample_BuildsHierarchyWithParentsAndPaths()` - _(no documentation)_
+- `public void Read_PropertyElement_HasOwnerAndProperty()` - _(no documentation)_
+- `public void Read_Names_AreTakenFromXNameAndName()` - _(no documentation)_
+- `public void Read_Lines_AreOneBased()` - _(no documentation)_
+- `public void Read_Attributes_KeepMarkupMetadataAndHandlerCandidatesOnly()` - _(no documentation)_
+- `public void Read_RootLiterals_AreDroppedExceptMetadata()` - _(no documentation)_
+- `public void Read_IdentifierLiteralWithoutPrefixIsACandidateAndNumbersAreNot()` - _(no documentation)_
+- `public void Read_AttachedPropertyAttributes_AreNotHandlerCandidates()` - _(no documentation)_
+- `public void Read_NamespaceDeclarations_AreOnTheNodeAndResolveThroughAncestors()` - _(no documentation)_
+- `public void Read_PrefixedElements_KeepTheirPrefix()` - _(no documentation)_
+- `public void Read_MarkupThatCannotBeParsed_IsKeptWithoutParsedValue()` - _(no documentation)_
+- `public void Read_EscapedBraces_AreALiteralNotMarkup()` - _(no documentation)_
+- `public void Read_DuplicateNames_GiveAFinding()` - _(no documentation)_
+- `public void Read_CommentsAndWhitespace_AreIgnored()` - _(no documentation)_
+- `public void Read_ByteOrderMark_IsAccepted()` - _(no documentation)_
+- `public void Read_MalformedXml_GivesAProblemWithFileAndNoDocument(string text)` - _(no documentation)_
+- `public void Read_MalformedXml_ReportsTheLine()` - _(no documentation)_
+- `public void Read_DtdWithExternalEntity_IsRejectedAndNothingIsRead()` - _(no documentation)_
+- `public void Read_EntityExpansionBomb_IsRejected()` - _(no documentation)_
+- `public void Read_DeepNesting_WorksUpToTheLimitAndFailsBeyond()` - _(no documentation)_
+- `public void Read_SameInput_GivesSameDocument()` - _(no documentation)_
+- `public void InMemoryFileSource_List_ReturnsSortedPathsUnderTheProject()` - _(no documentation)_
+- `public void DiskFileSource_List_IsSortedRelativeAndSkipsBinAndObj()` - _(no documentation)_
+- `public void DiskFileSource_PathsOutsideTheRepo_AreRejected(string path)` - _(no documentation)_
+
+## XamlSampleData (class)
+
+`internal static class XamlSampleData`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlSampleData.cs:12-96`
+
+A small solution with XAML, generated through the real generator, for the writer, reader and query tests.
+
+**Members**
+
+- `public string AppSource` - _(no documentation)_
+- `public string Application` - _(no documentation)_
+- `public string Shell` - _(no documentation)_
+- `public InMemoryXamlFileSource Files()` - _(no documentation)_
+- `public IndexData Data(bool reverse = false)` - _(no documentation)_
+- `public InMemoryFileSink Index(bool reverse = false)` - _(no documentation)_
+
+## XamlStructureTests (class)
+
+`public class XamlStructureTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlStructureTests.cs:9-218`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Collect_ResourceDefinitions_HaveIdsKeysTypesAndLines()` - _(no documentation)_
+- `public void Collect_ThemeVariantResources_KeepTheirVariant()` - _(no documentation)_
+- `public void Collect_Style_RecordsSelectorKeySettersAndReferencedResourceKeys()` - _(no documentation)_
+- `public void Collect_NestedStyleAndStyleWithoutSelector_GetTheirOwnRecords()` - _(no documentation)_
+- `public void Collect_Templates_RecordTypeTargetAndKey()` - _(no documentation)_
+- `public void Collect_HandlerWithOneMatchingMethod_IsVerified()` - _(no documentation)_
+- `public void Collect_EventFromABaseClassAndACustomControl_IsRecognized()` - _(no documentation)_
+- `public void Collect_HandlerWithoutAMethod_IsUnresolvedWithAReason()` - _(no documentation)_
+- `public void Collect_HandlerWithTwoOverloads_IsAmbiguousAndUnresolved()` - _(no documentation)_
+- `public void Collect_HandlerWithoutACodeBehindClass_IsUnresolved()` - _(no documentation)_
+- `public void Collect_IdentifierAttributesThatAreNotEvents_AreNotHandlers()` - _(no documentation)_
+- `public void Collect_SolutionClassesAsElements_GetUsesTypeEdgesAndAvaloniaTypesDoNot()` - _(no documentation)_
+- `public void Collect_Includes_LinkToFilesOfTheSolutionOnly()` - _(no documentation)_
+- `public void Collect_Output_IsDeterministicAndFindingsAreEmptyForCleanFiles()` - _(no documentation)_
+
+## XamlTestHost (class)
+
+`internal sealed class XamlTestHost`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlTestHost.cs:12-106`
+
+Builds a small solution in memory: stub Avalonia types, application C# source, XAML files, and the resolver over them.
+
+**Members**
+
+- `public string Header` - _(no documentation)_
+- `public string Avalonia` - _(no documentation)_
+- `public Dictionary<string, XamlDocument> Documents { get; }` - _(no documentation)_
+- `public XamlWorld World { get; }` - _(no documentation)_
+- `public XamlResolver Resolver { get; }` - _(no documentation)_
+- `public ProjectCompilation Project { get; }` - _(no documentation)_
+- `public ViewLocatorConvention? Convention { get; }` - _(no documentation)_
+- `public XamlTestHost Create(string appSource, params (string Path, string Xml)[] files)` - Creates the host. XAML files are given as (path, text). A file with a root Application is the application document.
+- `public XamlResolution Resolve(string path)` - _(no documentation)_
+- `public string Edge(RelationshipRecord edge)` - _(no documentation)_
+
+## XamlTypeResolverTests (class)
+
+`public class XamlTypeResolverTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlTypeResolverTests.cs:9-179`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Resolve_UsingNamespace_FindsTheSolutionType()` - _(no documentation)_
+- `public void Resolve_ClrNamespaceWithAssembly_IgnoresTheAssemblyPart()` - _(no documentation)_
+- `public void Resolve_DefaultNamespace_UsesXmlnsDefinitionAttributesOfTheReferencedAssembly()` - _(no documentation)_
+- `public void Resolve_PackageType_HasNoSolutionIdAndKeepsItsName()` - _(no documentation)_
+- `public void Resolve_UnknownPrefix_IsNotResolvedAndKeepsTheText()` - _(no documentation)_
+- `public void Resolve_UnknownTypeOrNamespace_IsNotResolved(string text)` - _(no documentation)_
+- `public void Resolve_GenericTypeNameWithoutArity_IsNotResolved()` - _(no documentation)_
+- `public void Resolve_XamlLanguageNamespaceType_IsNotResolved()` - _(no documentation)_
+- `public void Resolve_XmlnsDefinitionInTheSolutionItself_IsUsed()` - _(no documentation)_
+- `public void ResolveMember_AttachedPropertyAndStaticMember_SplitOwnerAndMember()` - _(no documentation)_
+- `public void ResolveMember_UnknownOwner_IsNotResolvedButKeepsTheMember()` - _(no documentation)_
+- `public void Resolve_NodeWithItsOwnNamespaceDeclaration_UsesIt()` - _(no documentation)_

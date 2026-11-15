@@ -1,4 +1,4 @@
-{"SchemaVersion":1,"Project":"PressToShape.Core.Tests","Relationships":[
+{"SchemaVersion":2,"Project":"PressToShape.Core.Tests","Relationships":[
 {"Type":"References","FromId":"F:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.S1","ToId":"P:PressToShape.Core.Shapes.Shape.Id","File":"tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs","Line":14,"Confidence":"Verified"},
 {"Type":"References","FromId":"F:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.S1","ToId":"P:PressToShape.Core.Shapes.Shape.X","File":"tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs","Line":14,"Confidence":"Verified"},
 {"Type":"References","FromId":"F:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.S1","ToId":"T:PressToShape.Core.Shapes.RectangleShape","File":"tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs","Line":14,"Confidence":"Verified"},

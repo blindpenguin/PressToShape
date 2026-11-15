@@ -1,4 +1,4 @@
-{"SchemaVersion":1,"Project":"PressToShape.Core","Relationships":[
+{"SchemaVersion":2,"Project":"PressToShape.Core","Relationships":[
 {"Type":"Inherits","FromId":"T:PressToShape.Core.Shapes.EllipseShape","ToId":"T:PressToShape.Core.Shapes.Shape","File":"src/PressToShape.Core/Shapes/EllipseShape.cs","Line":4,"Confidence":"Verified"},
 {"Type":"Inherits","FromId":"T:PressToShape.Core.Shapes.RectangleShape","ToId":"T:PressToShape.Core.Shapes.Shape","File":"src/PressToShape.Core/Shapes/RectangleShape.cs","Line":4,"Confidence":"Verified"},
 {"Type":"InjectedDependency","FromId":"T:PressToShape.Core.Documents.ShapeLocation","ToId":"T:PressToShape.Core.Documents.Layer","File":"src/PressToShape.Core/Documents/ShapeLocation.cs","Line":8,"Confidence":"Verified"},
