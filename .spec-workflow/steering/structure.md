@@ -12,11 +12,16 @@ PressToShape/
 │   ├── PressToShape.App/          # All Avalonia UI code: layout shells, panels, view models, styles, controls
 │   ├── PressToShape.Desktop/      # Linux and Windows head: platform startup only
 │   └── PressToShape.Android/      # Android head: platform startup only
+├── tools/
+│   └── PressToShape.CodeIndex/    # Developer tool: Roslyn code index and query commands (not shipped)
 ├── tests/
 │   ├── PressToShape.Core.Tests/   # Unit tests for the core
-│   └── PressToShape.App.Tests/    # View model tests, plus headless UI tests where needed
+│   ├── PressToShape.App.Tests/    # View model tests, plus headless UI tests where needed
+│   ├── PressToShape.CodeIndex.Tests/  # Tests for the code index tool
+│   └── PressToShape.Benchmarks/   # BenchmarkDotNet performance benchmarks
 ├── docs/
-│   └── mockup/                    # GUI mockup images (design reference)
+│   ├── mockup/                    # GUI mockup images (design reference)
+│   └── index/                     # Generated code index (JSON and Markdown), committed, never edited by hand
 ├── scripts/                       # Utility scripts (e.g. spec-dashboard.sh)
 ├── .spec-workflow/                # Specs, steering docs, templates
 ├── .claude/rules/                 # Rule files for Claude Code
@@ -52,6 +57,7 @@ Android ─┘
 - **App** depends on Core and Avalonia. It contains view models and the UI parts that both layouts share.
 - **Heads** (Desktop, Android) depend on App. They contain only platform startup code. Layout shells live in App, so that `ViewLocator` and the shared panels can reach them.
 - **Tests** reference the project they test. Nothing references tests.
+- **Tools** (`tools/`) are developer tools. They are not part of the app: nothing in `src/` references them or their packages.
 - Dependencies point one way only. Core never references App or a head. App never references a head.
 - Platform-specific code is isolated in the heads or behind interfaces defined in Core or App.
 

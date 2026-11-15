@@ -16,6 +16,7 @@ Cross-platform vector drawing application (desktop and tablet GUI) targeting Lin
 - **AvaloniaUI.DiagnosticsSupport 2.2.3**: developer diagnostics, Debug builds only
 - **GetText.NET 10.0.1**: reads compiled gettext `.mo` catalogs for translations (MIT), referenced from `PressToShape.App` only. Building needs the GNU gettext tools (`msgfmt`) on the machine.
 - **Material.Icons.Avalonia 3.0.2**: icon set for tool, toolbar and panel icons (built for Avalonia 12), referenced from `PressToShape.App` only
+- **Roslyn tooling (developer tool only)**: `Microsoft.CodeAnalysis.CSharp`, `Microsoft.CodeAnalysis.CSharp.Workspaces`, `Microsoft.CodeAnalysis.Workspaces.MSBuild` (5.12.0) and `Microsoft.Build.Locator` (1.11.2), referenced only by `tools/PressToShape.CodeIndex`. `Microsoft.Build.Framework` and `Microsoft.NET.StringTools` (18.7.1) are pinned there with `ExcludeAssets="runtime"`, because Microsoft.Build.Locator requires it. None of them is referenced by `src/` (checked by a test) or shipped with the app.
 - No other dependencies are decided. New packages require approval (see `project-overview.md`).
 
 ### Application Architecture
@@ -61,6 +62,7 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 - **Formatting**: `dotnet format`, checked with `--verify-no-changes`
 - **Testing Framework**: xUnit for the core library and view models. Avalonia.Headless for UI behavior that bindings cannot cover (not set up yet). Visual checks are done by running the app.
 - **Documentation**: XML doc comments on public APIs of the core library.
+- **Code index**: `tools/PressToShape.CodeIndex` writes a searchable index of the C# source (symbols, doc comments, relationships with a verified or inferred mark) to `docs/index/`, which is committed. `check` tells whether it is out of date. DocFX is not used, because it cannot give per-symbol relationships or the small files that agents need.
 
 ### Version Control & Collaboration
 - **VCS**: Git
@@ -104,6 +106,7 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 6. **Material.Icons.Avalonia for icons**: chosen over Lucide.Avalonia and Projektanker.Icons.Avalonia because it targets Avalonia 12 (the others are built against Avalonia 11). Icons are strongly typed (`MaterialIconKind`).
 7. **Theme resources**: all colors and sizes live in `Styles/Theme.axaml` with light and dark variants. Views use named resources and never hardcode colors (checked by a test).
 8. **Gettext for translations**: `.po`/`.mo` with GetText.NET, English text as the message id, German as the second language, language switchable at runtime from View > Language and remembered in the settings file. Chosen by the owner over `.resx` resources and JSON files. The build compiles `.po` with `msgfmt`, so the gettext tools are a build prerequisite.
+9. **Roslyn code index as a separate developer tool**: agents need facts about the code (who implements, who calls, what is injected) without reading whole files. Roslyn with the MSBuild loader resolves references and source-generator output like the IDE does. The tool lives in `tools/`, so the app dependencies and the shipped output are unchanged. The index is committed and checked with `check`, so it cannot silently go stale. Chosen by the owner (spec `agent-code-index-symbols`).
 
 ## Known Limitations
 - `ViewLocator` uses reflection and is not trimming- or AOT-safe. This is acceptable for now. Replace it if trimming or AOT is adopted.

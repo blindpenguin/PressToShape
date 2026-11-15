@@ -12,6 +12,7 @@ A vector drawing program for hobbyists, in the spirit of Inkscape and Illustrato
 | `src/PressToShape.Android` | Android head |
 | `tests/PressToShape.*.Tests` | xUnit tests |
 | `tests/PressToShape.Benchmarks` | BenchmarkDotNet performance benchmarks (not run by `dotnet test`) |
+| `tools/PressToShape.CodeIndex` | Developer tool: builds the searchable code index in `docs/index/` (not part of the app) |
 
 Dependencies point one way: `Desktop/Android -> App -> Core`. A GUI mockup is in `docs/mockup/`.
 
@@ -58,6 +59,20 @@ The app is available in English (default) and German. Texts in the code are writ
 - **Language choice:** the saved choice, otherwise German on a German system, otherwise English. Change it in the app with View > Language. The choice is saved in `settings.json` in the application-data folder (`~/.config/PressToShape/` on Linux, `%APPDATA%\PressToShape\` on Windows), for example `{ "Language": "de" }`.
 - **Add or change a text:** write `T("English")` or, in data tables, `N("English")` in C#, or `{loc:T 'English'}` in XAML. Add `msgid` and `msgstr` to `de.po`. `dotnet test` fails until every text has a German translation and until `de.po` has no unused entries. Keep Alt-key mnemonics (an underscore before a letter in menu texts) unique within a menu.
 - **Add a language:** copy `de.po` to `<code>.po` (for example `fr.po`) and set `Language:` in its header, translate the entries, add one `LanguageInfo` entry for it in `SupportedLanguages.cs`, and add its test case to the consistency tests. Rebuild.
+
+## Code index for coding agents
+
+`tools/PressToShape.CodeIndex` analyses the solution with Roslyn and writes a searchable index of the C# source (types, members, signatures, doc comments, inheritance, constructor injection, references and calls) to `docs/index/`. The index is committed. Relationships the compiler cannot prove are marked `inferred`. It uses its own packages and is not referenced by the app. Run `dotnet restore` first.
+
+```bash
+dotnet run --project tools/PressToShape.CodeIndex -- generate          # write docs/index/
+dotnet run --project tools/PressToShape.CodeIndex -- check             # exit 1 if docs/index/ is out of date
+dotnet run --project tools/PressToShape.CodeIndex -- find Localizer    # search by name
+dotnet run --project tools/PressToShape.CodeIndex -- show ILocalizer   # signature, docs, relationships
+dotnet run --project tools/PressToShape.CodeIndex -- --help            # impls, derived, refs, deps, --json
+```
+
+Regenerate and commit the index after changing code. `docs/index/markdown/README.md` is the human-readable entry point, `names.tsv` is a flat list for `grep`. The query commands read only the index files and do not compile anything.
 
 ## Spec workflow
 
