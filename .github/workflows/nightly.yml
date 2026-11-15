@@ -75,9 +75,25 @@ jobs:
             dotnet publish src/PressToShape.Desktop -c Release -r "$rid" --self-contained \
               -p:DebugType=None -p:DebugSymbols=false -o "publish/$rid"
           done
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Install Android workload
+        run: dotnet workload install android
+      - name: Publish Android
+        run: |
+          tag='${{ needs.check.outputs.tag }}'
+          # Signed with the generated debug key, so the APK installs by sideloading. A new build has another key: uninstall the old one first.
+          dotnet publish src/PressToShape.Android -c Release \
+            -p:JavaSdkDirectory="$JAVA_HOME" \
+            -p:InstallAndroidDependencies=true -p:AcceptAndroidSDKLicenses=True \
+            -p:ApplicationVersion="$(date -u +%Y%m%d)" -p:ApplicationDisplayVersion="$tag" \
+            -o publish/android
       - name: Package
         run: |
           mkdir dist
+          cp publish/android/de.limeonfire.presstoshape-Signed.apk "dist/PressToShape-${{ needs.check.outputs.tag }}-android.apk"
           tag='${{ needs.check.outputs.tag }}'
           tar -C publish/linux-x64 -czf "dist/PressToShape-$tag-linux-x64.tar.gz" .
           (cd publish/win-x64 && zip -qr "../../dist/PressToShape-$tag-win-x64.zip" .)
