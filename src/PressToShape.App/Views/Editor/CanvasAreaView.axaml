@@ -1,4 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,14 +9,7 @@
              x:Class="PressToShape.App.Views.Editor.CanvasAreaView"
              x:DataType="vm:CanvasAreaViewModel">
 
-    <UserControl.Styles>
-        <!-- The shape tools draw by dragging, so they get a crosshair. -->
-        <Style Selector="Panel.crosshair">
-            <Setter Property="Cursor" Value="Cross" />
-        </Style>
-    </UserControl.Styles>
-
-    <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="Auto,*,Auto">
 
         <!-- Corner between the rulers -->
         <Border Grid.Row="0" Grid.Column="0"
@@ -39,7 +33,6 @@
         <Panel Grid.Row="1" Grid.Column="1"
                x:Name="Viewport"
                Focusable="True"
-               Classes.crosshair="{Binding UseCrosshair}"
                Background="{DynamicResource CanvasBackgroundBrush}"
                ClipToBounds="True">
             <Canvas>
@@ -60,6 +53,34 @@
                                             SelectionOutline="{Binding SelectionOutline}"
                                             SelectionBrush="{DynamicResource SelectionOutlineBrush}" />
         </Panel>
+
+        <!-- Scroll bars. They sit outside the viewport, so the ruler zero stays aligned with the canvas.
+             The value is one-way: the user's scrolling is forwarded in code-behind, so the bar can never write a coerced value back. -->
+        <ScrollBar x:Name="VerticalBar"
+                   Grid.Row="1" Grid.Column="2"
+                   Orientation="Vertical"
+                   Visibility="Visible" AllowAutoHide="False"
+                   SmallChange="48"
+                   Minimum="{Binding VerticalScrollMinimum}"
+                   Maximum="{Binding VerticalScrollMaximum}"
+                   ViewportSize="{Binding VerticalScrollViewportSize}"
+                   LargeChange="{Binding VerticalScrollViewportSize}"
+                   Value="{Binding VerticalScrollValue, Mode=OneWay}"
+                   IsEnabled="{Binding CanScrollVertically}"
+                   AutomationProperties.Name="{loc:T 'Vertical scroll bar'}" />
+
+        <ScrollBar x:Name="HorizontalBar"
+                   Grid.Row="2" Grid.Column="1"
+                   Orientation="Horizontal"
+                   Visibility="Visible" AllowAutoHide="False"
+                   SmallChange="48"
+                   Minimum="{Binding HorizontalScrollMinimum}"
+                   Maximum="{Binding HorizontalScrollMaximum}"
+                   ViewportSize="{Binding HorizontalScrollViewportSize}"
+                   LargeChange="{Binding HorizontalScrollViewportSize}"
+                   Value="{Binding HorizontalScrollValue, Mode=OneWay}"
+                   IsEnabled="{Binding CanScrollHorizontally}"
+                   AutomationProperties.Name="{loc:T 'Horizontal scroll bar'}" />
 
     </Grid>
 

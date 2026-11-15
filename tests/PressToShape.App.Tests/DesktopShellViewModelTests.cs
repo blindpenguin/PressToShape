@@ -644,4 +644,202 @@ public class DesktopShellViewModelTests
         shell.RedoCommand.Execute(null);
         Assert.Single(shell.State.Document.Layers[0].Shapes);
     }
+
+    [Fact]
+    public async Task NewAndOpen_CenterTheArtboardAgain()
+    {
+        var files = new FakeFileStore();
+        var dialogs = new FakeFileDialogs();
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create(), TestFileServices.Create(files, dialogs));
+        shell.Canvas.ViewportWidth = 648;
+        shell.Canvas.ViewportHeight = 448;
+        files.Files["/work/a.p2s"] = PressToShape.Core.IO.ProjectFile.Write(PressToShape.Core.Documents.Document.Create("L"));
+
+        shell.State.SetZoom(200);
+        shell.State.SetPan(150, 90);
+        await shell.NewCommand.ExecuteAsync(null);
+        Assert.Equal((0, 0), (shell.State.PanX, shell.State.PanY));
+        Assert.Equal(50, shell.State.ZoomPercent, precision: 6);
+
+        shell.State.SetZoom(200);
+        shell.State.SetPan(-150, -90);
+        dialogs.OpenAnswers.Enqueue("/work/a.p2s");
+        await shell.OpenCommand.ExecuteAsync(null);
+        Assert.Equal((0, 0), (shell.State.PanX, shell.State.PanY));
+    }
+
+    [Fact]
+    public void FitArtboardMenuItem_ResetsTheOffset()
+    {
+        var shell = NewFittedShell();
+        shell.State.SetZoom(300);
+        shell.State.SetPan(200, 100);
+
+        FindItem(shell, "Fit Artboard in Window").Command!.Execute(null);
+
+        Assert.Equal((0, 0), (shell.State.PanX, shell.State.PanY));
+        Assert.Equal(50, shell.State.ZoomPercent, precision: 6);
+    }
+
+    // ---- view: zoom routes, pan and wheel together ----
+
+    // The middle of the canvas area of NewFittedShell is (324, 224).
+    private static double DocumentXAt(DesktopShellViewModel shell, double screenX) =>
+        CanvasMapping.ToDocument(screenX, shell.Canvas.OriginX, shell.Canvas.ZoomPercent);
+
+    private static double DocumentYAt(DesktopShellViewModel shell, double screenY) =>
+        CanvasMapping.ToDocument(screenY, shell.Canvas.OriginY, shell.Canvas.ZoomPercent);
+
+    private static void PanAwayFromTheCenter(DesktopShellViewModel shell)
+    {
+        shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Hand).SelectCommand.Execute(null);
+        shell.Canvas.PointerPressed(200, 200);
+        shell.Canvas.PointerMoved(260, 170);
+        shell.Canvas.PointerReleased(260, 170);
+    }
+
+    [Fact]
+    public void EveryZoomRoute_KeepsTheCenterOfTheCanvasFixed()
+    {
+        var routes = new (string Name, System.Action<DesktopShellViewModel> Run)[]
+        {
+            ("menu zoom in", s => FindItem(s, "Zoom In").Command!.Execute(null)),
+            ("menu zoom out", s => FindItem(s, "Zoom Out").Command!.Execute(null)),
+            ("menu actual size", s => FindItem(s, "Actual Size (100%)").Command!.Execute(null)),
+            ("status bar zoom in", s => s.StatusBar.ZoomInCommand.Execute(null)),
+            ("status bar zoom out", s => s.StatusBar.ZoomOutCommand.Execute(null)),
+            ("status bar preset 400", s => s.StatusBar.ZoomPresets.Single(p => p.Percent == 400).SelectCommand.Execute(null)),
+            ("status bar preset 25", s => s.StatusBar.ZoomPresets.Single(p => p.Percent == 25).SelectCommand.Execute(null)),
+            ("shortcut zoom in", s => s.ZoomInCommand.Execute(null)),
+            ("shortcut zoom out", s => s.ZoomOutCommand.Execute(null)),
+            ("shortcut actual size", s => s.ActualSizeCommand.Execute(null)),
+        };
+
+        foreach (var (name, run) in routes)
+        {
+            var shell = NewFittedShell();
+            PanAwayFromTheCenter(shell);
+            var (beforeX, beforeY) = (DocumentXAt(shell, 324), DocumentYAt(shell, 224));
+            var zoomBefore = shell.State.ZoomPercent;
+
+            run(shell);
+
+            Assert.True(shell.State.ZoomPercent != zoomBefore, name);
+            Assert.True(System.Math.Abs(beforeX - DocumentXAt(shell, 324)) < 1e-6, name);
+            Assert.True(System.Math.Abs(beforeY - DocumentYAt(shell, 224)) < 1e-6, name);
+        }
+    }
+
+    [Fact]
+    public void FitRoutes_ResetTheOffset_ActualSizeDoesNot()
+    {
+        var shell = NewFittedShell();
+        PanAwayFromTheCenter(shell);
+        Assert.NotEqual(0, shell.State.PanX);
+
+        FindItem(shell, "Actual Size (100%)").Command!.Execute(null);
+        Assert.True(shell.State.PanX != 0 || shell.State.PanY != 0);
+
+        shell.StatusBar.FitToWindowCommand.Execute(null);
+        Assert.Equal((0, 0), (shell.State.PanX, shell.State.PanY));
+
+        PanAwayFromTheCenter(shell);
+        shell.FitArtboardCommand.Execute(null);
+        Assert.Equal((0, 0), (shell.State.PanX, shell.State.PanY));
+    }
+
+    [Fact]
+    public void WheelZoomAndPan_ThenDrawing_LandsUnderThePointerInDocumentCoordinates()
+    {
+        var shell = NewFittedShell();
+        shell.Canvas.Wheel(0, 3, control: true, shift: false, 200, 150);
+        shell.Canvas.Wheel(0, -1, control: false, shift: false, 200, 150);
+        shell.Canvas.Wheel(1, 0, control: false, shift: false, 200, 150);
+        var zoom = shell.Canvas.ZoomPercent;
+        Assert.True(zoom > 50);
+        shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Rectangle).SelectCommand.Execute(null);
+        var (ox, oy) = (shell.Canvas.OriginX, shell.Canvas.OriginY);
+
+        shell.Canvas.PointerPressed(ox + 100, oy + 50);
+        shell.Canvas.PointerMoved(ox + 200, oy + 100);
+        shell.Canvas.PointerReleased(ox + 300, oy + 150);
+
+        var shape = Assert.Single(shell.State.Document.Layers[0].Shapes);
+        Assert.Equal(100 / (zoom / 100), shape.X, precision: 6);
+        Assert.Equal(50 / (zoom / 100), shape.Y, precision: 6);
+        Assert.Equal(200 / (zoom / 100), shape.Width, precision: 6);
+    }
+
+    [Fact]
+    public void PanAndZoom_DoNotCreateHistoryOrDirtyState_AndUndoIsBlockedDuringAPan()
+    {
+        var shell = NewFittedShell();
+        DrawRectangle(shell, 100, 100, 300, 200);
+        var rows = shell.Inspector.History.Items.Count;
+        var title = shell.WindowTitle;
+
+        shell.Canvas.Wheel(0, 2, control: true, shift: false, 300, 200);
+        shell.Canvas.Wheel(0, 1, control: false, shift: false, 300, 200);
+        shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Hand).SelectCommand.Execute(null);
+        shell.Canvas.PointerPressed(100, 100);
+        shell.Canvas.PointerMoved(140, 130);
+
+        Assert.False(shell.UndoCommand.CanExecute(null));
+        Assert.False(FindItem(shell, "Undo").IsEnabled);
+        Assert.False(shell.Toolbar.HistoryActions[0].IsEnabled);
+
+        shell.Canvas.PointerReleased(140, 130);
+
+        Assert.True(shell.UndoCommand.CanExecute(null));
+        Assert.Equal(rows, shell.Inspector.History.Items.Count);
+        Assert.Equal(title, shell.WindowTitle);
+    }
+
+    [Fact]
+    public void HandAndZoomTools_DoNotEditTheDocument()
+    {
+        var shell = NewFittedShell();
+        DrawRectangle(shell, 100, 100, 300, 200);
+        shell.State.Select(null);
+        var document = shell.State.Document;
+
+        shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Hand).SelectCommand.Execute(null);
+        shell.Canvas.PointerPressed(24 + 150, 24 + 150);
+        shell.Canvas.PointerMoved(24 + 200, 24 + 150);
+        shell.Canvas.PointerReleased(24 + 200, 24 + 150);
+        shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Zoom).SelectCommand.Execute(null);
+        shell.Canvas.PointerPressed(24 + 150, 24 + 150);
+        shell.Canvas.PointerPressed(24 + 150, 24 + 150, alt: true);
+
+        Assert.Same(document, shell.State.Document);
+        Assert.False(shell.State.HasSelection);
+        Assert.Single(shell.State.History.Steps);
+    }
+
+    [Fact]
+    public void ResizingTheCanvas_LimitsTheOffsetAgain()
+    {
+        var shell = NewFittedShell();
+        shell.State.SetZoom(400);
+        shell.State.SetPan(100000, 0);
+        var wide = shell.State.PanX;
+
+        shell.Canvas.ViewportWidth = 300;
+
+        Assert.True(shell.State.PanX < wide);
+        Assert.Equal(ViewGeometry.PanLimit(300, 4800), shell.State.PanX);
+    }
+
+    [Fact]
+    public void ScrollBarValues_FollowTheStatusBarZoomAndTheWheel()
+    {
+        var shell = NewFittedShell();
+        var before = shell.Canvas.HorizontalScrollMaximum;
+
+        shell.StatusBar.ZoomPresets.Single(p => p.Percent == 400).SelectCommand.Execute(null);
+        Assert.True(shell.Canvas.HorizontalScrollMaximum > before);
+
+        shell.Canvas.Wheel(0, 1, control: false, shift: true, 300, 200);
+        Assert.Equal(-ViewGeometry.WheelStep, shell.Canvas.HorizontalScrollValue, precision: 9);
+    }
 }

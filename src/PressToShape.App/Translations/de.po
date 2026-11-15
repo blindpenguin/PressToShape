@@ -590,3 +590,9 @@ msgstr "Ebene sperren"
 
 msgid "Unlock layer"
 msgstr "Ebene entsperren"
+
+msgid "Horizontal scroll bar"
+msgstr "Horizontale Bildlaufleiste"
+
+msgid "Vertical scroll bar"
+msgstr "Vertikale Bildlaufleiste"

@@ -165,11 +165,84 @@ internal sealed partial class EditorState : ObservableObject
         OnPropertyChanged(nameof(CanRedo));
     }
 
-    /// <summary>Zoom in percent. Values outside the allowed range are clamped.</summary>
+    /// <summary>
+    /// How far the view is moved from its centered position, in screen pixels. Part of the view, not of the document:
+    /// it never changes the document, the history or the unsaved state.
+    /// </summary>
+    [ObservableProperty] public partial double PanX { get; private set; }
+
+    /// <summary>The vertical view offset, see <see cref="PanX"/>.</summary>
+    [ObservableProperty] public partial double PanY { get; private set; }
+
+    /// <summary>Width of the canvas area in screen pixels, or 0 while it is not known. Set through <see cref="SetViewport"/>.</summary>
+    [ObservableProperty] public partial double ViewportWidth { get; private set; }
+
+    /// <summary>Height of the canvas area in screen pixels, or 0 while it is not known. Set through <see cref="SetViewport"/>.</summary>
+    [ObservableProperty] public partial double ViewportHeight { get; private set; }
+
+    /// <summary>
+    /// Zoom in percent. Values outside the allowed range are clamped. Setting it keeps the middle of the canvas area where it is.
+    /// </summary>
     public double ZoomPercent
     {
         get => _zoomPercent;
-        set => SetProperty(ref _zoomPercent, ZoomLevels.Clamp(value));
+        set => ZoomAround(value, ViewportWidth / 2, ViewportHeight / 2);
+    }
+
+    /// <summary>Tells the state how large the canvas area is. The view offset is limited again for the new size.</summary>
+    public void SetViewport(double width, double height)
+    {
+        ViewportWidth = double.IsFinite(width) ? Math.Max(0, width) : 0;
+        ViewportHeight = double.IsFinite(height) ? Math.Max(0, height) : 0;
+        SetPan(PanX, PanY);
+    }
+
+    /// <summary>Moves the view to this offset, limited so that the artboard stays visible. A non-finite value leaves that axis unchanged.</summary>
+    public void SetPan(double x, double y)
+    {
+        var scale = _zoomPercent / 100;
+        if (double.IsFinite(x))
+        {
+            PanX = ViewGeometry.ClampPan(x, ViewportWidth, ArtboardWidth * scale);
+        }
+        else
+        {
+            PanX = ViewGeometry.ClampPan(PanX, ViewportWidth, ArtboardWidth * scale);
+        }
+
+        if (double.IsFinite(y))
+        {
+            PanY = ViewGeometry.ClampPan(y, ViewportHeight, ArtboardHeight * scale);
+        }
+        else
+        {
+            PanY = ViewGeometry.ClampPan(PanY, ViewportHeight, ArtboardHeight * scale);
+        }
+    }
+
+    /// <summary>Moves the view by this distance, see <see cref="SetPan"/>.</summary>
+    public void PanBy(double dx, double dy) => SetPan(PanX + (double.IsFinite(dx) ? dx : 0), PanY + (double.IsFinite(dy) ? dy : 0));
+
+    /// <summary>
+    /// Changes the zoom so that the point of the drawing under the screen position (<paramref name="anchorX"/>, <paramref name="anchorY"/>)
+    /// of the canvas area stays under it. The zoom stays in its range, and the view offset stays limited.
+    /// </summary>
+    public void ZoomAround(double percent, double anchorX, double anchorY)
+    {
+        var newZoom = ZoomLevels.Clamp(percent);
+        var oldZoom = _zoomPercent;
+        if (newZoom == oldZoom)
+        {
+            return;
+        }
+
+        var newPanX = ViewGeometry.PanAfterZoom(PanX, ViewportWidth, oldZoom, newZoom, ArtboardWidth, anchorX);
+        var newPanY = ViewGeometry.PanAfterZoom(PanY, ViewportHeight, oldZoom, newZoom, ArtboardHeight, anchorY);
+
+        // The new zoom is in place before the offset changes, so observers of the offset already see the final zoom.
+        _zoomPercent = newZoom;
+        SetPan(newPanX, newPanY);
+        OnPropertyChanged(nameof(ZoomPercent));
     }
 
     /// <summary>Selects a shape, or clears the selection with <c>null</c>.</summary>
@@ -193,6 +266,9 @@ internal sealed partial class EditorState : ObservableObject
 
         OnPropertyChanged(nameof(ArtboardWidth));
         OnPropertyChanged(nameof(ArtboardHeight));
+
+        // A different artboard size changes how far the view may move.
+        SetPan(PanX, PanY);
     }
 
     public void SetZoom(double percent) => ZoomPercent = percent;
@@ -203,13 +279,20 @@ internal sealed partial class EditorState : ObservableObject
 
     public void ZoomToActualSize() => ZoomPercent = ZoomLevels.Default;
 
-    /// <summary>Sets the zoom so the artboard fits the viewport. Does nothing if the viewport has no size yet.</summary>
+    /// <summary>
+    /// Sets the zoom so the artboard fits the viewport and centers the artboard (the view offset becomes zero).
+    /// The zoom stays unchanged if the viewport has no size yet.
+    /// </summary>
     public void ZoomToFit(double viewportWidth, double viewportHeight)
     {
+        PanX = 0;
+        PanY = 0;
+
         var fit = ZoomLevels.FitToViewport(viewportWidth, viewportHeight, ArtboardWidth, ArtboardHeight);
-        if (fit is { } zoom)
+        if (fit is { } zoom && zoom != _zoomPercent)
         {
-            ZoomPercent = zoom;
+            _zoomPercent = zoom;
+            OnPropertyChanged(nameof(ZoomPercent));
         }
     }
 }

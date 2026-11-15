@@ -7,6 +7,10 @@ namespace PressToShape.App.Views.Editor;
 
 public partial class CanvasAreaView : UserControl
 {
+    // The button that started the current pointer interaction. Further presses while it lasts are ignored.
+    private MouseButton? _activeButton;
+    private CanvasAreaViewModel? _observed;
+
     public CanvasAreaView()
     {
         InitializeComponent();
@@ -19,13 +23,45 @@ public partial class CanvasAreaView : UserControl
         Viewport.PointerMoved += OnViewportPointerMoved;
         Viewport.PointerReleased += OnViewportPointerReleased;
         Viewport.PointerCaptureLost += OnViewportPointerCaptureLost;
+        Viewport.PointerWheelChanged += OnViewportPointerWheelChanged;
         Viewport.KeyDown += OnViewportKeyDown;
+
+        // The bars only report what the user did. The view model decides what that means.
+        HorizontalBar.Scroll += (_, e) =>
+        {
+            if (DataContext is CanvasAreaViewModel viewModel)
+            {
+                viewModel.HorizontalScrollValue = e.NewValue;
+            }
+        };
+        VerticalBar.Scroll += (_, e) =>
+        {
+            if (DataContext is CanvasAreaViewModel viewModel)
+            {
+                viewModel.VerticalScrollValue = e.NewValue;
+            }
+        };
+    }
+
+    private void OnViewportPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (DataContext is not CanvasAreaViewModel viewModel)
+        {
+            return;
+        }
+
+        var position = e.GetPosition(Viewport);
+        var control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
+        var shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
+        e.Handled = viewModel.Wheel(e.Delta.X, e.Delta.Y, control, shift, position.X, position.Y);
     }
 
     private void OnViewportPointerPressed(object? sender, PointerPressedEventArgs e)
     {
+        var properties = e.GetCurrentPoint(Viewport).Properties;
         if (DataContext is not CanvasAreaViewModel viewModel
-            || !e.GetCurrentPoint(Viewport).Properties.IsLeftButtonPressed)
+            || e.Pointer.Captured == Viewport
+            || (!properties.IsLeftButtonPressed && !properties.IsMiddleButtonPressed))
         {
             return;
         }
@@ -34,7 +70,17 @@ public partial class CanvasAreaView : UserControl
         Viewport.Focus();
         e.Pointer.Capture(Viewport);
         var position = e.GetPosition(Viewport);
-        viewModel.PointerPressed(position.X, position.Y);
+        if (properties.IsMiddleButtonPressed)
+        {
+            _activeButton = MouseButton.Middle;
+            viewModel.MiddlePressed(position.X, position.Y);
+        }
+        else
+        {
+            _activeButton = MouseButton.Left;
+            viewModel.PointerPressed(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Alt));
+        }
+
         e.Handled = true;
     }
 
@@ -49,12 +95,13 @@ public partial class CanvasAreaView : UserControl
 
     private void OnViewportPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
-        if (DataContext is not CanvasAreaViewModel viewModel || e.Pointer.Captured != Viewport || e.InitialPressMouseButton != MouseButton.Left)
+        if (DataContext is not CanvasAreaViewModel viewModel || e.Pointer.Captured != Viewport || e.InitialPressMouseButton != _activeButton)
         {
             return;
         }
 
         var position = e.GetPosition(Viewport);
+        _activeButton = null;
         viewModel.PointerReleased(position.X, position.Y);
         e.Pointer.Capture(null);
         e.Handled = true;
@@ -91,10 +138,27 @@ public partial class CanvasAreaView : UserControl
     {
         base.OnDataContextChanged(e);
 
-        if (DataContext is CanvasAreaViewModel viewModel)
+        if (_observed is not null)
+        {
+            _observed.PropertyChanged -= OnViewModelPropertyChanged;
+        }
+
+        _observed = DataContext as CanvasAreaViewModel;
+        if (_observed is { } viewModel)
         {
             viewModel.ViewportWidth = Viewport.Bounds.Width;
             viewModel.ViewportHeight = Viewport.Bounds.Height;
+            viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            Viewport.Cursor = CanvasCursors.For(viewModel.CursorType);
+        }
+    }
+
+    // View-only concern: the pointer shape follows the view model's cursor type.
+    private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(CanvasAreaViewModel.CursorType) && _observed is { } viewModel)
+        {
+            Viewport.Cursor = CanvasCursors.For(viewModel.CursorType);
         }
     }
 }

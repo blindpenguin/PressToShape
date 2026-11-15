@@ -588,4 +588,269 @@ public class EditorStateTests
         Assert.Throws<ArgumentNullException>(() => state.Preview(null!));
         Assert.Throws<ArgumentNullException>(() => state.ReplaceDocument(null!));
     }
+
+    // ---- view: pan, viewport and zoom around a point ----
+
+    private static EditorState WithViewport(double width = 1000, double height = 700)
+    {
+        var state = new EditorState(Document.Create("L"));
+        state.SetViewport(width, height);
+        return state;
+    }
+
+    private static double DocumentPointUnder(EditorState state, double screenX)
+    {
+        var origin = ViewGeometry.Origin(state.ViewportWidth, state.ArtboardWidth * state.ZoomPercent / 100, state.PanX);
+        return CanvasMapping.ToDocument(screenX, origin, state.ZoomPercent);
+    }
+
+    [Fact]
+    public void NewState_HasNoOffsetAndNoViewport()
+    {
+        var state = new EditorState();
+
+        Assert.Equal(0, state.PanX);
+        Assert.Equal(0, state.PanY);
+        Assert.Equal(0, state.ViewportWidth);
+        Assert.Equal(0, state.ViewportHeight);
+    }
+
+    [Fact]
+    public void SetPan_StoresTheOffset_AndNotifies()
+    {
+        var state = WithViewport();
+        var raised = new List<string?>();
+        state.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.SetPan(120, -80);
+
+        Assert.Equal((120, -80), (state.PanX, state.PanY));
+        Assert.Contains(nameof(EditorState.PanX), raised);
+        Assert.Contains(nameof(EditorState.PanY), raised);
+    }
+
+    [Fact]
+    public void SetPan_BeyondTheLimit_IsLimited()
+    {
+        var state = WithViewport(1000, 700);
+
+        state.SetPan(100000, -100000);
+
+        Assert.Equal(ViewGeometry.PanLimit(1000, 1200), state.PanX);
+        Assert.Equal(-ViewGeometry.PanLimit(700, 800), state.PanY);
+    }
+
+    [Fact]
+    public void SetPan_NonFiniteValues_LeaveThatAxisUnchanged()
+    {
+        var state = WithViewport();
+        state.SetPan(50, 60);
+
+        state.SetPan(double.NaN, 70);
+        Assert.Equal((50, 70), (state.PanX, state.PanY));
+
+        state.SetPan(double.PositiveInfinity, double.NegativeInfinity);
+        Assert.Equal((50, 70), (state.PanX, state.PanY));
+    }
+
+    [Fact]
+    public void PanBy_AddsTheDistance_AndIgnoresNonFiniteDistances()
+    {
+        var state = WithViewport();
+
+        state.PanBy(30, 40);
+        state.PanBy(-10, double.NaN);
+
+        Assert.Equal((20, 40), (state.PanX, state.PanY));
+    }
+
+    [Fact]
+    public void SetViewport_SmallerThanTheOffsetAllows_LimitsTheOffsetAgain()
+    {
+        var state = WithViewport(2000, 1500);
+        state.SetPan(1400, 0);
+        Assert.Equal(1400, state.PanX);
+
+        state.SetViewport(400, 1500);
+
+        Assert.Equal(ViewGeometry.PanLimit(400, 1200), state.PanX);
+    }
+
+    [Fact]
+    public void SetViewport_NonFiniteOrNegative_BecomesUnknown()
+    {
+        var state = WithViewport();
+
+        state.SetViewport(double.NaN, -5);
+
+        Assert.Equal((0, 0), (state.ViewportWidth, state.ViewportHeight));
+    }
+
+    [Fact]
+    public void ZoomAround_KeepsTheDocumentPointUnderTheAnchor()
+    {
+        var state = WithViewport();
+        state.SetPan(90, 0);
+        var before = DocumentPointUnder(state, 300);
+
+        state.ZoomAround(250, 300, 200);
+
+        Assert.Equal(250, state.ZoomPercent);
+        Assert.Equal(before, DocumentPointUnder(state, 300), precision: 6);
+    }
+
+    [Theory]
+    [InlineData(150)]
+    [InlineData(50)]
+    [InlineData(800)]
+    public void CenterAnchoredRoutes_KeepTheCenterOfTheCanvasFixed(double target)
+    {
+        var routes = new Action<EditorState>[]
+        {
+            s => s.SetZoom(target),
+            s => s.ZoomPercent = target,
+            s => s.ZoomAround(target, s.ViewportWidth / 2, s.ViewportHeight / 2),
+        };
+
+        foreach (var route in routes)
+        {
+            var state = WithViewport();
+            state.SetPan(110, -40);
+            var before = DocumentPointUnder(state, 500);
+
+            route(state);
+
+            Assert.Equal(target, state.ZoomPercent);
+            Assert.Equal(before, DocumentPointUnder(state, 500), precision: 6);
+        }
+    }
+
+    [Fact]
+    public void ZoomInZoomOutAndActualSize_KeepTheCenter()
+    {
+        var state = WithViewport();
+        state.SetPan(75, 0);
+        var before = DocumentPointUnder(state, 500);
+
+        state.ZoomIn();
+        Assert.Equal(before, DocumentPointUnder(state, 500), precision: 6);
+
+        state.ZoomOut();
+        state.ZoomOut();
+        Assert.Equal(before, DocumentPointUnder(state, 500), precision: 6);
+
+        state.ZoomToActualSize();
+        Assert.Equal(100, state.ZoomPercent);
+        Assert.Equal(before, DocumentPointUnder(state, 500), precision: 6);
+    }
+
+    [Theory]
+    [InlineData(1, ZoomLevels.Min)]
+    [InlineData(100000, ZoomLevels.Max)]
+    public void ZoomAround_OutsideTheRange_StopsAtTheLimit(double target, double expected)
+    {
+        var state = WithViewport();
+
+        state.ZoomAround(target, 10, 10);
+
+        Assert.Equal(expected, state.ZoomPercent);
+        Assert.True(double.IsFinite(state.PanX) && double.IsFinite(state.PanY));
+    }
+
+    [Fact]
+    public void ZoomAround_AtTheLimitAlready_ChangesNothingAndRaisesNothing()
+    {
+        var state = WithViewport();
+        state.SetZoom(ZoomLevels.Max);
+        state.SetPan(33, 44);
+        var raised = new List<string?>();
+        state.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.ZoomAround(ZoomLevels.Max * 2, 100, 100);
+
+        Assert.Empty(raised);
+        Assert.Equal((33, 44), (state.PanX, state.PanY));
+    }
+
+    [Fact]
+    public void ZoomAround_NaN_IsTreatedAsTheDefaultZoomByTheClamp_AndStaysFinite()
+    {
+        var state = WithViewport();
+
+        state.ZoomAround(double.NaN, 10, 10);
+
+        Assert.True(double.IsFinite(state.ZoomPercent));
+        Assert.True(double.IsFinite(state.PanX));
+    }
+
+    [Fact]
+    public void ZoomAround_AnchorAtTheCanvasEdge_StillLimitsTheOffset()
+    {
+        var state = WithViewport();
+
+        state.ZoomAround(6400, 1000, 700);
+
+        var limitX = ViewGeometry.PanLimit(1000, 1200 * 64);
+        Assert.InRange(state.PanX, -limitX, limitX);
+    }
+
+    [Fact]
+    public void ZoomToFit_ResetsTheOffset_AndFits()
+    {
+        var state = WithViewport(648, 448);
+        state.SetZoom(300);
+        state.SetPan(200, 100);
+
+        state.ZoomToFit(648, 448);
+
+        Assert.Equal(50, state.ZoomPercent, precision: 6);
+        Assert.Equal((0, 0), (state.PanX, state.PanY));
+    }
+
+    [Fact]
+    public void ZoomToFit_WithoutAViewport_KeepsTheZoomButResetsTheOffset()
+    {
+        var state = new EditorState(Document.Create("L"));
+        state.SetZoom(200);
+        state.SetPan(30, 40);
+
+        state.ZoomToFit(0, 0);
+
+        Assert.Equal(200, state.ZoomPercent);
+        Assert.Equal((0, 0), (state.PanX, state.PanY));
+    }
+
+    [Fact]
+    public void ViewChanges_NeverTouchTheDocumentTheHistoryOrTheDragFlag()
+    {
+        var state = WithViewport();
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, Rect()));
+        var document = state.Document;
+        var steps = state.History.Steps.Count;
+        var historyEvents = 0;
+        state.HistoryChanged += (_, _) => historyEvents++;
+
+        state.SetPan(100, 50);
+        state.PanBy(-20, 5);
+        state.ZoomAround(300, 100, 100);
+        state.SetViewport(500, 400);
+        state.ZoomToFit(500, 400);
+
+        Assert.Same(document, state.Document);
+        Assert.Equal(steps, state.History.Steps.Count);
+        Assert.Equal(0, historyEvents);
+        Assert.False(state.IsDragInProgress);
+        Assert.True(state.CanUndo);
+    }
+
+    [Fact]
+    public void ArtboardSizeChange_LimitsTheOffsetAgain()
+    {
+        var state = WithViewport(1000, 700);
+        state.SetPan(ViewGeometry.PanLimit(1000, 1200), 0);
+
+        state.Document = state.Document.WithArtboardSize(200, 800);
+
+        Assert.True(state.PanX <= ViewGeometry.PanLimit(1000, 200) + 1e-9);
+    }
 }
