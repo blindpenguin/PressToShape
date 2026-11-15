@@ -87,6 +87,7 @@ jobs:
           cp packaging/presstoshape.png AppDir/presstoshape.png
           printf '#!/bin/sh\nexec "$(dirname "$(readlink -f "$0")")/usr/bin/PressToShape.Desktop" "$@"\n' > AppDir/AppRun
           chmod +x AppDir/AppRun
+          chmod -R a+rX AppDir
           curl -fsSL -o appimagetool \
             https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool
