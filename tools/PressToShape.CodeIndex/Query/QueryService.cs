@@ -1,0 +1,154 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using PressToShape.CodeIndex.Model;
+
+namespace PressToShape.CodeIndex.Query;
+
+/// <summary>Answers questions about the index. Every result carries its confidence, and anything that is not proven by the compiler is marked inferred.</summary>
+internal sealed class QueryService
+{
+    private readonly IndexReader _reader;
+    private readonly MemberMatcher _matcher;
+
+    public QueryService(IndexReader reader)
+    {
+        ArgumentNullException.ThrowIfNull(reader);
+        _reader = reader;
+        _matcher = new MemberMatcher(reader);
+    }
+
+    /// <summary>Finds symbols by name. Exact matches come first, then prefix, then substring. A term with a dot or colon also matches ids.</summary>
+    public IReadOnlyList<SearchHit> Search(string term, int limit = 50)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(term);
+
+        var idSearch = term.Contains('.', StringComparison.Ordinal) || term.Contains(':', StringComparison.Ordinal);
+        return _reader.Names
+            .Select(n => (Entry: n, Rank: Rank(n, term, idSearch)))
+            .Where(x => x.Rank >= 0)
+            .OrderBy(x => x.Rank)
+            .ThenBy(x => x.Entry.Name, StringComparer.Ordinal)
+            .ThenBy(x => x.Entry.Id, StringComparer.Ordinal)
+            .Take(limit)
+            .Select(x => new SearchHit(x.Entry.Name, x.Entry.Id, x.Entry.SymbolType, x.Entry.Source))
+            .ToList();
+    }
+
+    public QueryResult<ShowResult> Show(string query) => Resolve(query, entry =>
+    {
+        var symbol = _reader.SymbolOf(entry.Id) ?? throw new IndexToolException($"The symbol {entry.Id} is listed in names.tsv but missing in {entry.IndexFile}. Regenerate the index with: {IndexHints.Regenerate}");
+        var edges = _reader.Relationships;
+        return new ShowResult(
+            symbol,
+            edges.Where(e => e.FromId == entry.Id).Select(e => ToHit(e, e.ToId)).OrderBy(h => h.RelationType, StringComparer.Ordinal).ThenBy(h => h.Id, StringComparer.Ordinal).ToList(),
+            edges.Where(e => e.ToId == entry.Id).Select(e => ToHit(e, e.FromId)).OrderBy(h => h.RelationType, StringComparer.Ordinal).ThenBy(h => h.Id, StringComparer.Ordinal).ToList());
+    });
+
+    /// <summary>Types that implement an interface (verified). For an interface member, members with the same name and parameters in implementing types (inferred).</summary>
+    public QueryResult<IReadOnlyList<QueryHit>> Implementations(string query) => Resolve(query, entry =>
+    {
+        var hits = new List<QueryHit>();
+        hits.AddRange(_reader.Relationships
+            .Where(e => e.ToId == entry.Id && (e.Type == RelationshipType.Implements || (e.Type == RelationshipType.Inherits && entry.SymbolType == "Interface")))
+            .Select(e => ToHit(e, e.FromId)));
+        if (_reader.SymbolOf(entry.Id) is { } symbol)
+        {
+            hits.AddRange(_matcher.Implementers(symbol).Select(m => SymbolHit(m.Member, "Implements", m.Reason)));
+        }
+
+        return Sort(hits);
+    });
+
+    /// <summary>Types that derive directly from a type.</summary>
+    public QueryResult<IReadOnlyList<QueryHit>> Derived(string query) => Resolve(query, entry =>
+        Sort(_reader.Relationships.Where(e => e.ToId == entry.Id && e.Type == RelationshipType.Inherits).Select(e => ToHit(e, e.FromId))));
+
+    /// <summary>Places that reference, call or register a symbol. Calls to the interface or base member that the symbol implements or overrides are added as inferred.</summary>
+    public QueryResult<IReadOnlyList<QueryHit>> References(string query) => Resolve(query, entry =>
+    {
+        var usageTypes = new[] { RelationshipType.References, RelationshipType.Calls, RelationshipType.Registers };
+        var hits = _reader.Relationships.Where(e => e.ToId == entry.Id && usageTypes.Contains(e.Type)).Select(e => ToHit(e, e.FromId)).ToList();
+        if (_reader.SymbolOf(entry.Id) is { } symbol)
+        {
+            foreach (var (member, reason) in _matcher.ImplementedBy(symbol))
+            {
+                hits.AddRange(_reader.Relationships
+                    .Where(e => e.ToId == member.Id && usageTypes.Contains(e.Type))
+                    .Select(e => ToHit(e, e.FromId) with { Confidence = Confidence.Inferred, Reason = $"{reason}. The call goes through {member.Id}." }));
+            }
+        }
+
+        return Sort(hits);
+    });
+
+    /// <summary>The types and services a type takes in its constructors.</summary>
+    public QueryResult<IReadOnlyList<QueryHit>> Dependencies(string query) => Resolve(query, entry =>
+        Sort(_reader.Relationships.Where(e => e.FromId == entry.Id && e.Type == RelationshipType.InjectedDependency).Select(e => ToHit(e, e.ToId))));
+
+    private QueryResult<T> Resolve<T>(string query, Func<NameEntry, T> answer)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(query);
+
+        var names = _reader.Names;
+        var matches = names.Where(n => n.Id == query || (!query.Contains(':', StringComparison.Ordinal) && n.Id == "T:" + query)).ToList();
+        if (matches.Count == 0)
+        {
+            matches = names.Where(n => n.Name == query).ToList();
+        }
+
+        if (matches.Count > 1 && matches.Count(IsTypeEntry) == 1)
+        {
+            matches = matches.Where(IsTypeEntry).ToList();
+        }
+
+        return matches.Count switch
+        {
+            0 => new QueryResult<T>(QueryStatus.NotFound, default, []),
+            1 => new QueryResult<T>(QueryStatus.Found, answer(matches[0]), matches),
+            _ => new QueryResult<T>(QueryStatus.Ambiguous, default, matches.OrderBy(m => m.Id, StringComparer.Ordinal).ToList()),
+        };
+    }
+
+    private static IReadOnlyList<QueryHit> Sort(IEnumerable<QueryHit> hits) => hits
+        .DistinctBy(h => (h.Id, h.Location, h.RelationType, h.Confidence))
+        .OrderBy(h => h.Confidence)
+        .ThenBy(h => h.Id, StringComparer.Ordinal)
+        .ThenBy(h => h.Location, StringComparer.Ordinal)
+        .ToList();
+
+    private QueryHit ToHit(RelationshipRecord edge, string otherId) =>
+        new(otherId, NameOf(otherId), edge.File is null ? string.Empty : edge.Line is { } line ? $"{edge.File}:{line}" : edge.File, edge.Type.ToString(), edge.Confidence, edge.Reason);
+
+    private QueryHit SymbolHit(SymbolRecord symbol, string relationType, string reason) =>
+        new(symbol.Id, symbol.Name, $"{symbol.File}:{symbol.StartLine}", relationType, Confidence.Inferred, reason);
+
+    private string NameOf(string id) => _reader.EntryOf(id)?.Name ?? id;
+
+    private static bool IsTypeEntry(NameEntry n) => n.SymbolType is "Class" or "Interface" or "Record" or "Struct" or "Enum" or "Delegate";
+
+    private static int Rank(NameEntry n, string term, bool idSearch)
+    {
+        if (string.Equals(n.Name, term, StringComparison.Ordinal))
+        {
+            return 0;
+        }
+
+        if (string.Equals(n.Name, term, StringComparison.OrdinalIgnoreCase))
+        {
+            return 1;
+        }
+
+        if (n.Name.StartsWith(term, StringComparison.OrdinalIgnoreCase))
+        {
+            return 2;
+        }
+
+        if (n.Name.Contains(term, StringComparison.OrdinalIgnoreCase))
+        {
+            return 3;
+        }
+
+        return idSearch && n.Id.Contains(term, StringComparison.OrdinalIgnoreCase) ? 4 : -1;
+    }
+}

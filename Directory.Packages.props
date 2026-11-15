@@ -22,6 +22,14 @@
 
         <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.15" />
 
+        <!-- Developer tooling (tools/PressToShape.CodeIndex only) -->
+        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.12.0" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.12.0" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="5.12.0" />
+        <PackageVersion Include="Microsoft.Build.Locator" Version="1.11.2" />
+        <PackageVersion Include="Microsoft.Build.Framework" Version="18.7.1" />
+        <PackageVersion Include="Microsoft.NET.StringTools" Version="18.7.1" />
+
         <!-- Testing -->
         <PackageVersion Include="xunit" Version="2.9.3" />
         <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <AssemblyName>PressToShape.CodeIndex</AssemblyName>
+        <RootNamespace>PressToShape.CodeIndex</RootNamespace>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="PressToShape.CodeIndex.Tests"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild"/>
+        <PackageReference Include="Microsoft.Build.Locator"/>
+        <!-- Already pulled in by Workspaces.MSBuild. Pinned here with runtime assets excluded, as Microsoft.Build.Locator requires. -->
+        <PackageReference Include="Microsoft.Build.Framework" ExcludeAssets="runtime" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.NET.StringTools" ExcludeAssets="runtime" PrivateAssets="all"/>
+    </ItemGroup>
+</Project>
