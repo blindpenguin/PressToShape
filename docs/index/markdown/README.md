@@ -42,7 +42,7 @@ Project file: `tests/PressToShape.Benchmarks/PressToShape.Benchmarks.csproj`. 29
 
 ## PressToShape.CodeIndex.Tests
 
-Project file: `tests/PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.csproj`. 248 symbols, 490 relationships.
+Project file: `tests/PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.csproj`. 250 symbols, 493 relationships.
 
 - [<global namespace>](PressToShape.CodeIndex.Tests/_global_namespace_.md) (1 types)
 - [PressToShape.CodeIndex.Tests](PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.md) (18 types)

@@ -148,7 +148,7 @@ _(no documentation)_
 
 `public class JsonIndexWriterTests`
 
-Source: `tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs:14-176`
+Source: `tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs:14-203`
 
 _(no documentation)_
 
@@ -163,6 +163,8 @@ _(no documentation)_
 - `public void Write_AnyFile_HasNoAbsolutePathsNoMachineNamesNoTimestampsNoBom()` - _(no documentation)_
 - `public void Write_Enums_AreNamesAndHtmlCharactersStayReadable()` - _(no documentation)_
 - `public void Write_NamesTable_HasOneLinePerTypeAndMemberWithoutNamespacesAndConstructors()` - _(no documentation)_
+- `public void Write_LargeFiles_HaveOneRecordPerLineAndStayValidJson()` - _(no documentation)_
+- `public void Write_EmptyList_StillWritesValidJson()` - _(no documentation)_
 - `public void IndexLayout_SymbolsPath_KeepsNamesInsideTheirFolder(string project, string ns, string expected)` - _(no documentation)_
 
 ## LoadPolicyTests (class)

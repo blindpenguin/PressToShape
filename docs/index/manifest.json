@@ -29,8 +29,8 @@
     {
       "Name": "PressToShape.CodeIndex.Tests",
       "Path": "tests/PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.csproj",
-      "SymbolCount": 248,
-      "RelationshipCount": 490
+      "SymbolCount": 250,
+      "RelationshipCount": 493
     },
     {
       "Name": "PressToShape.Core",
@@ -51,7 +51,7 @@
       "RelationshipCount": 1
     }
   ],
-  "SymbolCount": 3341,
-  "RelationshipCount": 17313,
+  "SymbolCount": 3343,
+  "RelationshipCount": 17316,
   "Warnings": []
 }

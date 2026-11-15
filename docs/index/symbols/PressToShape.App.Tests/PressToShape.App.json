@@ -1,32 +1,3 @@
-{
-  "SchemaVersion": 1,
-  "Project": "PressToShape.App.Tests",
-  "Namespace": "PressToShape.App",
-  "Symbols": [
-    {
-      "Id": "N:PressToShape.App",
-      "Name": "App",
-      "QualifiedName": "PressToShape.App",
-      "SymbolType": "Namespace",
-      "Accessibility": "public",
-      "Modifiers": [
-        "static"
-      ],
-      "ContainingId": "N:PressToShape",
-      "Namespace": "PressToShape.App",
-      "Project": "PressToShape.App.Tests",
-      "File": "tests/PressToShape.App.Tests/AppArchitectureTests.cs",
-      "StartLine": 9,
-      "EndLine": 9,
-      "Parameters": [],
-      "Attributes": [],
-      "Interfaces": [],
-      "IsGenerated": false,
-      "Doc": {
-        "HasDocumentation": false,
-        "Params": {},
-        "Exceptions": []
-      }
-    }
-  ]
-}
+{"SchemaVersion":1,"Project":"PressToShape.App.Tests","Namespace":"PressToShape.App","Symbols":[
+{"Id":"N:PressToShape.App","Name":"App","QualifiedName":"PressToShape.App","SymbolType":"Namespace","Accessibility":"public","Modifiers":["static"],"ContainingId":"N:PressToShape","Namespace":"PressToShape.App","Project":"PressToShape.App.Tests","File":"tests/PressToShape.App.Tests/AppArchitectureTests.cs","StartLine":9,"EndLine":9,"Parameters":[],"Attributes":[],"Interfaces":[],"IsGenerated":false,"Doc":{"HasDocumentation":false,"Params":{},"Exceptions":[]}}
+]}
