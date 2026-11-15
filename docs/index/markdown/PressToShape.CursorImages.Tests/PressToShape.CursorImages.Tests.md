@@ -14,7 +14,7 @@ _(no documentation)_
 
 - `public CommandTests()` - _(no documentation)_
 - `public void Dispose()` - _(no documentation)_
-- `public void Generate_WritesTwentyImagesOfTheRightSize()` - _(no documentation)_
+- `public void Generate_WritesTwentyTwoImagesOfTheRightSize()` - _(no documentation)_
 - `public void Generate_Twice_GivesIdenticalFiles()` - _(no documentation)_
 - `public void Check_AfterGenerate_Passes()` - _(no documentation)_
 - `public void Check_ImageMissing_FailsAndNamesTheFile()` - _(no documentation)_

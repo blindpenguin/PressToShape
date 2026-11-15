@@ -69,6 +69,26 @@ _(no documentation)_
 - `public void UpdateLayer_ChangeReturnsNull_Throws()` - _(no documentation)_
 - `public void UpdateLayer_NullChange_Throws()` - _(no documentation)_
 
+## DocumentPaletteTests (class)
+
+`public class DocumentPaletteTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/DocumentPaletteTests.cs:9-90`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Create_NewDocument_HasEmptyPalette()` - _(no documentation)_
+- `public void AddSwatch_NewColors_AppendsInOrder()` - _(no documentation)_
+- `public void AddSwatch_ColorAlreadyInPalette_ReturnsSameInstance()` - _(no documentation)_
+- `public void AddSwatch_SameRgbWithOtherAlpha_IsAnotherSwatch()` - _(no documentation)_
+- `public void RemoveSwatchAt_ValidIndex_RemovesOnlyThatSwatch()` - _(no documentation)_
+- `public void RemoveSwatchAt_BadIndex_Throws(int index)` - _(no documentation)_
+- `public void AddSwatch_Document_KeepsLayersAndShapes()` - _(no documentation)_
+- `public void Palette_DefaultArray_BecomesEmpty()` - _(no documentation)_
+- `public void Palette_DuplicateColorsInInit_AreRemoved()` - _(no documentation)_
+
 ## DocumentShapeTests (class)
 
 `public class DocumentShapeTests`

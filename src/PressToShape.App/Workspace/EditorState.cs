@@ -27,6 +27,9 @@ internal sealed partial class EditorState : ObservableObject
         History = new DocumentHistory(Document);
     }
 
+    /// <summary>Raised when a pick from the canvas ended on a shape: the target that asked for it and the color that was taken.</summary>
+    public event Action<ColorPickTarget, Color>? ColorPicked;
+
     /// <summary>Raised after the undo history changed: a step was recorded, undone or redone, or the history was reset.</summary>
     public event EventHandler? HistoryChanged;
 
@@ -67,6 +70,32 @@ internal sealed partial class EditorState : ObservableObject
     [ObservableProperty] public partial Shape? Draft { get; set; }
 
     [ObservableProperty] public partial Tool ActiveTool { get; set; } = Tool.Select;
+
+    /// <summary>Whether the next click on the canvas takes a color from a shape (the eyedropper), and for which color. Not part of the document.</summary>
+    [ObservableProperty] public partial ColorPickTarget ColorPick { get; private set; }
+
+    /// <summary>Starts a pick from the canvas for the fill or the stroke. A new pick replaces the one before.</summary>
+    public void BeginColorPick(ColorPickTarget target) => ColorPick = target;
+
+    /// <summary>Ends the pick without a color (Escape, or a click away from every shape).</summary>
+    public void CancelColorPick() => ColorPick = ColorPickTarget.None;
+
+    /// <summary>Ends the pick. A color is reported to <see cref="ColorPicked"/>, <c>null</c> ends the pick without a change.</summary>
+    public void CompleteColorPick(Color? color)
+    {
+        var target = ColorPick;
+        ColorPick = ColorPickTarget.None;
+        if (target != ColorPickTarget.None && color is { } picked)
+        {
+            ColorPicked?.Invoke(target, picked);
+        }
+    }
+
+    /// <summary>
+    /// The appearance of the next shape that is drawn. It is editor state, not part of the document: it is not saved, not undone,
+    /// and a new or opened document keeps it.
+    /// </summary>
+    [ObservableProperty] public partial Appearance DefaultAppearance { get; set; } = Appearance.Default;
 
     /// <summary>The shapes that were copied or cut. Kept by the app, nothing goes to the system clipboard.</summary>
     public ShapeClipboard Clipboard { get; } = new();

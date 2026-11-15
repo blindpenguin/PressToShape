@@ -35,6 +35,8 @@ internal static class HistoryStepNames
         HistoryStepType.ChangeStroke => N("Change stroke"),
         HistoryStepType.ChangeStrokeWidth => N("Change stroke width"),
         HistoryStepType.ChangeOpacity => N("Change opacity"),
+        HistoryStepType.AddSwatch => N("Add swatch"),
+        HistoryStepType.RemoveSwatch => N("Remove swatch"),
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown history step type."),
     };
 }

@@ -25,6 +25,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
 
     private readonly EditorState _state;
     private readonly SelectionEditor _editor;
+    private readonly RecentColors _recentColors = new();
 
     // While a color or the opacity slider is previewed, the preview is built on this document so every update starts from the same shapes.
     private Document? _previewBase;
@@ -45,15 +46,18 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
         OpacityPercent = new NumberFieldViewModel(localizer, 0, 100, value => _editor.Apply(HistoryStepType.ChangeOpacity, shape => shape with { Appearance = shape.Appearance with { Opacity = value / 100 } }));
 
         Fill = new ColorFieldViewModel(
-            color => Preview(shape => shape with { Appearance = shape.Appearance with { Fill = color } }),
-            () => CommitPreview(HistoryStepType.ChangeFill),
-            color => _editor.Apply(HistoryStepType.ChangeFill, shape => shape with { Appearance = shape.Appearance with { Fill = color } }));
+            color => PreviewColor(appearance => appearance with { Fill = color }),
+            () => CommitColor(HistoryStepType.ChangeFill, ColorPickTarget.Fill),
+            color => SetColorNow(HistoryStepType.ChangeFill, color, appearance => appearance with { Fill = color }));
         Stroke = new ColorFieldViewModel(
-            color => Preview(shape => shape with { Appearance = shape.Appearance with { Stroke = color } }),
-            () => CommitPreview(HistoryStepType.ChangeStroke),
-            color => _editor.Apply(HistoryStepType.ChangeStroke, shape => shape with { Appearance = shape.Appearance with { Stroke = color } }));
+            color => PreviewColor(appearance => appearance with { Stroke = color }),
+            () => CommitColor(HistoryStepType.ChangeStroke, ColorPickTarget.Stroke),
+            color => SetColorNow(HistoryStepType.ChangeStroke, color, appearance => appearance with { Stroke = color }));
+
+        Palette = new PaletteViewModel(_state, Fill, Stroke);
 
         _state.PropertyChanged += OnStateChanged;
+        _state.ColorPicked += OnColorPicked;
         RefreshValues();
     }
 
@@ -77,9 +81,33 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
 
     public ColorFieldViewModel Stroke { get; }
 
+    /// <summary>The swatches saved with the document.</summary>
+    public PaletteViewModel Palette { get; }
+
+    /// <summary>The colors picked lately, most recent first.</summary>
+    public IReadOnlyList<Color> RecentColors => _recentColors.Items;
+
     public bool HasSelection => _state.HasSelection;
 
     public bool ShowNothingSelectedHint => !_state.HasSelection;
+
+    public bool ShowTransform => Sections.HasFlag(PropertiesSection.Transform);
+
+    public bool ShowAppearance => Sections.HasFlag(PropertiesSection.Appearance);
+
+    public bool ShowPath => Sections.HasFlag(PropertiesSection.Path);
+
+    public bool ShowAlign => Sections.HasFlag(PropertiesSection.Align);
+
+    public bool ShowQuickActions => Sections.HasFlag(PropertiesSection.QuickActions);
+
+    /// <summary>Whether the selection header is shown: any tool that has at least one section.</summary>
+    public bool ShowHeader => Sections != PropertiesSection.None;
+
+    /// <summary>Whether the active tool has no properties, so a hint replaces the sections.</summary>
+    public bool ShowNoPropertiesHint => Sections == PropertiesSection.None;
+
+    private PropertiesSection Sections => PropertiesSections.For(_state.ActiveTool);
 
     /// <summary>"Nothing selected", "1 selected" or "N selected".</summary>
     public string Header => _state.SelectedCount switch
@@ -108,6 +136,9 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     /// <summary>Sets the rotation of every selected shape to 0 as one step.</summary>
     [RelayCommand(CanExecute = nameof(CanResetTransform))]
     private void ResetTransform() => _editor.ApplyTransform(HistoryStepType.ResetTransform, SelectionTransforms.ResetRotation);
+
+    /// <summary>Starts a pick from the canvas for the fill or the stroke. The next click on a shape sets that color.</summary>
+    public void StartPick(ColorPickTarget target) => _state.BeginColorPick(target);
 
     /// <summary>The user started to move the opacity slider. The changes until <see cref="EndOpacityDrag"/> are one step.</summary>
     public void BeginOpacityDrag()
@@ -141,12 +172,68 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
         }
     }
 
+    // A picked color is applied like one chosen in the picker: one step for a selection, the defaults without one.
+    private void OnColorPicked(ColorPickTarget target, Color color)
+    {
+        var field = target == ColorPickTarget.Stroke ? Stroke : Fill;
+        field.BeginEdit();
+        field.Update(color);
+        field.EndEdit();
+    }
+
     private bool CanResetTransform() => SelectedShapes().Any(shape => shape.Rotation != 0);
 
     private IReadOnlyList<Shape> SelectedShapes() => SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds);
 
     private void Transform(HistoryStepType type, Func<IReadOnlyList<Shape>, SelectionFrame, IReadOnlyList<Shape>> change) =>
         _editor.ApplyTransform(type, shapes => SelectionGeometry.FrameOf(shapes) is { } frame ? change(shapes, frame) : shapes);
+
+    // With nothing selected, the color is the default for the next shapes: it changes no document and makes no history step.
+    private void PreviewColor(Func<Appearance, Appearance> change)
+    {
+        if (_state.HasSelection)
+        {
+            Preview(shape => shape with { Appearance = change(shape.Appearance) });
+        }
+        else
+        {
+            _state.DefaultAppearance = change(_state.DefaultAppearance);
+        }
+    }
+
+    // A preview of shapes (it has a base document) becomes one step. A preview of the defaults is already in effect.
+    private void CommitColor(HistoryStepType type, ColorPickTarget target)
+    {
+        if (_previewBase is not null)
+        {
+            CommitPreview(type);
+        }
+
+        AddRecent((target == ColorPickTarget.Stroke ? Stroke : Fill).Color);
+    }
+
+    private void SetColorNow(HistoryStepType type, Color? color, Func<Appearance, Appearance> change)
+    {
+        if (_state.HasSelection)
+        {
+            _editor.Apply(type, shape => shape with { Appearance = change(shape.Appearance) });
+        }
+        else
+        {
+            _state.DefaultAppearance = change(_state.DefaultAppearance);
+        }
+
+        if (color is { } value)
+        {
+            AddRecent(value);
+        }
+    }
+
+    private void AddRecent(Color color)
+    {
+        _recentColors.Add(color);
+        OnPropertyChanged(nameof(RecentColors));
+    }
 
     // Shows a color on the canvas while the picker is open. Not a step yet: the picker closing records it.
     private void Preview(Func<Shape, Shape> change)
@@ -162,7 +249,8 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
             }
         }
 
-        var document = _previewBase.UpdateShapes(changed);
+        // A swatch added while the picker is open stays: the preview is built on the shapes of the base, not on its palette.
+        var document = _previewBase.UpdateShapes(changed) with { Palette = _state.Document.Palette };
         _state.Preview(document);
     }
 
@@ -183,8 +271,12 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
                 field.SetValue(null);
             }
 
-            Fill.SetEnabled(false);
-            Stroke.SetEnabled(false);
+            // Without a selection the color fields edit the defaults for the next shapes.
+            var defaults = _state.DefaultAppearance;
+            Fill.SetEnabled(true);
+            Stroke.SetEnabled(true);
+            Fill.SetValue(defaults.Fill, false);
+            Stroke.SetValue(defaults.Stroke, false);
             ResetTransformCommand.NotifyCanExecuteChanged();
             return;
         }
@@ -221,6 +313,22 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
             case nameof(EditorState.HasSelection):
                 OnPropertyChanged(nameof(HasSelection));
                 OnPropertyChanged(nameof(ShowNothingSelectedHint));
+                break;
+            case nameof(EditorState.ActiveTool):
+                OnPropertyChanged(nameof(ShowTransform));
+                OnPropertyChanged(nameof(ShowAppearance));
+                OnPropertyChanged(nameof(ShowPath));
+                OnPropertyChanged(nameof(ShowAlign));
+                OnPropertyChanged(nameof(ShowQuickActions));
+                OnPropertyChanged(nameof(ShowHeader));
+                OnPropertyChanged(nameof(ShowNoPropertiesHint));
+                break;
+            case nameof(EditorState.DefaultAppearance):
+                if (!_state.HasSelection)
+                {
+                    RefreshValues();
+                }
+
                 break;
             case nameof(EditorState.SelectedCount):
                 OnPropertyChanged(nameof(Header));

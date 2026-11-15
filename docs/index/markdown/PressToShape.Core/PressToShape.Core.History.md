@@ -35,7 +35,7 @@ The undo and redo history of a document, kept as snapshots. Documents are immuta
 
 `public enum HistoryStepType`
 
-Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-71`
+Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-76`
 
 What a step of the history did. The app turns each value into a translated name.
 
@@ -63,3 +63,5 @@ What a step of the history did. The app turns each value into a translated name.
 - `public ChangeStroke` - The stroke of shapes was changed.
 - `public ChangeStrokeWidth` - The stroke width of shapes was changed.
 - `public ChangeOpacity` - The opacity of shapes was changed.
+- `public AddSwatch` - A colour was added to the palette.
+- `public RemoveSwatch` - A colour was removed from the palette.

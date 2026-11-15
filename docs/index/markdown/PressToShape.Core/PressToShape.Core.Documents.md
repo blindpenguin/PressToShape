@@ -6,7 +6,7 @@ Project: PressToShape.Core
 
 `public sealed record Document : IEquatable<Document>`
 
-Source: `src/PressToShape.Core/Documents/Document.cs:13-348`
+Source: `src/PressToShape.Core/Documents/Document.cs:13-370`
 
 A drawing: an artboard and a stack of layers. Immutable: every edit method returns a new document and leaves this one unchanged. Unchanged layers are shared between the two. A document always has at least one layer.
 
@@ -15,8 +15,11 @@ A drawing: an artboard and a stack of layers. Immutable: every edit method retur
 - `public double ArtboardWidth { get; init; }` - Artboard width in document units. Finite and greater than zero.
 - `public double ArtboardHeight { get; init; }` - Artboard height in document units. Finite and greater than zero.
 - `public ImmutableArray<Layer> Layers { get; init; }` - The layers in stacking order, bottom first. At least one layer, and layer and shape ids are unique in the document.
+- `public ImmutableArray<Color> Palette { get; init; }` - The swatches saved with the document, in the order the user added them. No colour appears twice.
 - `public Document Create(string firstLayerName)` - Creates a 1200 x 800 document with one visible, unlocked layer.
 - `public Document WithArtboardSize(double width, double height)` - Returns a document with a new artboard size.
+- `public Document AddSwatch(Color color)` - Returns a document with the colour added at the end of the palette. Returns this document if the palette has the colour.
+- `public Document RemoveSwatchAt(int index)` - Returns a document without the swatch at this index.
 - `public Document AddLayer(Layer layer)` - Returns a document with the layer added above all existing layers.
 - `public Document RemoveLayer(Guid layerId)` - Returns a document without the layer and its shapes.
 - `public Document UpdateLayer(Guid layerId, Func<Layer, Layer> change)` - Returns a document in which the layer is replaced by the result of change.

@@ -63,7 +63,7 @@ public class CursorImagesTests
     {
         var names = ImageTypes().SelectMany(t => CursorImages.Sizes.Select(s => CursorImages.FileName(t, s))).ToList();
 
-        Assert.Equal(20, names.Count);
+        Assert.Equal(22, names.Count);
         Assert.Equal(names.Count, names.Distinct().Count());
     }
 
@@ -79,6 +79,8 @@ public class CursorImagesTests
     [InlineData("ResizeNorthWestSouthEast", 64, "resize-north-west-south-east-64.png")]
     [InlineData("ResizeNorthEastSouthWest", 64, "resize-north-east-south-west-64.png")]
     [InlineData("Rotate", 32, "rotate-32.png")]
+    [InlineData("Eyedropper", 32, "eyedropper-32.png")]
+    [InlineData("Eyedropper", 64, "eyedropper-64.png")]
     public void FileName_Type_MatchesTheToolOutput(string typeName, int size, string expected)
     {
         Assert.Equal(expected, CursorImages.FileName(Enum.Parse<CanvasCursorType>(typeName), size));
@@ -106,9 +108,16 @@ public class CursorImagesTests
     }
 
     [Fact]
+    public void Hotspot_Eyedropper_IsTheTipOfThePipette()
+    {
+        Assert.Equal((6, 26), CursorImages.Hotspot(CanvasCursorType.Eyedropper, 32));
+        Assert.Equal((12, 52), CursorImages.Hotspot(CanvasCursorType.Eyedropper, 64));
+    }
+
+    [Fact]
     public void Hotspot_OtherTypes_AreTheImageCenter()
     {
-        foreach (var type in ImageTypes().Where(t => t is not (CanvasCursorType.Magnifier or CanvasCursorType.MagnifierMinus)))
+        foreach (var type in ImageTypes().Where(t => t is not (CanvasCursorType.Magnifier or CanvasCursorType.MagnifierMinus or CanvasCursorType.Eyedropper)))
         {
             Assert.Equal((16, 16), CursorImages.Hotspot(type, 32));
             Assert.Equal((32, 32), CursorImages.Hotspot(type, 64));

@@ -25,7 +25,7 @@ _(no documentation)_
 
 `internal static class CanvasCursors`
 
-Source: `src/PressToShape.App/Views/Editor/CanvasCursors.cs:17-77`
+Source: `src/PressToShape.App/Views/Editor/CanvasCursors.cs:17-78`
 
 The pointer shapes of the canvas. Avalonia has no standard rotate, open hand, closed hand or magnifier, so the cursors come from pre-drawn images (Assets/Cursors, made from Lucide icons by tools/PressToShape.CursorImages) in the size that fits the screen scale. The plain arrow stays the system cursor. If an image cannot be loaded or the platform rejects it, a standard cursor is used instead.
 
@@ -120,15 +120,18 @@ _(no documentation)_
 
 `public partial class PropertiesView : UserControl`
 
-Source: `src/PressToShape.App/Views/Editor/PropertiesView.axaml.cs:12-119`
+Source: `src/PressToShape.App/Views/Editor/PropertiesView.axaml.cs:14-183`
 
-The Properties tab. The code-behind only forwards: focus, Enter and Escape of the number fields, the pickers' open and close, and the opacity slider's drag. Every decision is in PressToShape.App.ViewModels.Editor.PropertiesViewModel.
+The Properties tab. The code-behind only forwards: focus, Enter and Escape of the number fields, the pickers' open and close, the pick, add-to-palette and recent-color buttons of the pickers, the palette swatches (with the Shift state), and the opacity slider's drag. Every decision is in PressToShape.App.ViewModels.Editor.PropertiesViewModel.
 
 **Members**
 
+- `internal Button FillSwatchButton` _(generated)_ - _(no documentation)_
 - `internal ColorView FillColorView` _(generated)_ - _(no documentation)_
+- `internal Button StrokeSwatchButton` _(generated)_ - _(no documentation)_
 - `internal ColorView StrokeColorView` _(generated)_ - _(no documentation)_
 - `public PropertiesView()` - _(no documentation)_
+- `internal ItemsControl PaletteStrip` _(generated)_ - _(no documentation)_
 - `internal Slider OpacitySlider` _(generated)_ - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
 

@@ -447,6 +447,9 @@ msgstr "Deckkraft in Prozent"
 msgid "Path"
 msgstr "Pfad"
 
+msgid "This tool has no properties."
+msgstr "Dieses Werkzeug hat keine Eigenschaften."
+
 msgid "Path options appear when a path is selected."
 msgstr "Pfadoptionen erscheinen, wenn ein Pfad ausgewählt ist."
 
@@ -630,6 +633,12 @@ msgstr "Konturbreite ändern"
 msgid "Change opacity"
 msgstr "Deckkraft ändern"
 
+msgid "Add swatch"
+msgstr "Farbfeld hinzufügen"
+
+msgid "Remove swatch"
+msgstr "Farbfeld entfernen"
+
 msgid "{0} selected"
 msgstr "{0} ausgewählt"
 
@@ -644,3 +653,21 @@ msgstr "Keine Füllung"
 
 msgid "No stroke"
 msgstr "Keine Kontur"
+
+msgid "Add to palette"
+msgstr "Zur Palette hinzufügen"
+
+msgid "Pick from canvas"
+msgstr "Von der Arbeitsfläche aufnehmen"
+
+msgid "Recent colors"
+msgstr "Zuletzt verwendet"
+
+msgid "Palette"
+msgstr "Palette"
+
+msgid "No swatches yet."
+msgstr "Noch keine Farbfelder."
+
+msgid "Swatch"
+msgstr "Farbfeld"

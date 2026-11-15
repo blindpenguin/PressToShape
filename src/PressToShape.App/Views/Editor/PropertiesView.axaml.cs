@@ -2,18 +2,25 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using PressToShape.App.ViewModels.Editor;
+using PressToShape.App.Workspace;
+using CoreColor = PressToShape.Core.Shapes.Color;
 
 namespace PressToShape.App.Views.Editor;
 
 /// <summary>
 /// The Properties tab. The code-behind only forwards: focus, Enter and Escape of the number fields, the pickers' open and close,
-/// and the opacity slider's drag. Every decision is in <see cref="PropertiesViewModel"/>.
+/// the pick, add-to-palette and recent-color buttons of the pickers, the palette swatches (with the Shift state), and the opacity slider's drag. Every decision is in <see cref="PropertiesViewModel"/>.
 /// </summary>
 public partial class PropertiesView : UserControl
 {
+    // Button.Click has no key state: the strip remembers whether Shift was down when the pointer went down on a swatch.
+    private bool _shiftOnSwatch;
+
     public PropertiesView()
     {
         InitializeComponent();
+
+        PaletteStrip.AddHandler(PointerPressedEvent, OnSwatchPointerPressed, RoutingStrategies.Tunnel, handledEventsToo: true);
 
         // A number field commits when it is left or Enter is pressed, and goes back to the shown value on Escape. Each text box
         // carries its field view model in Tag. The handlers sit on the view, so keys in other text boxes keep their meaning.
@@ -116,4 +123,61 @@ public partial class PropertiesView : UserControl
             Properties?.PreviewOpacity(value);
         }
     }
+
+    private void OnFillAddToPaletteClick(object? sender, RoutedEventArgs e) => Properties?.Palette.AddSwatch(CoreColorConverter.ToCore(FillColorView.Color));
+
+    private void OnStrokeAddToPaletteClick(object? sender, RoutedEventArgs e) => Properties?.Palette.AddSwatch(CoreColorConverter.ToCore(StrokeColorView.Color));
+
+    // The flyout closes first, which ends the picker edit, then the canvas waits for the click.
+    private void OnFillPickClick(object? sender, RoutedEventArgs e)
+    {
+        FillSwatchButton.Flyout?.Hide();
+        Properties?.StartPick(ColorPickTarget.Fill);
+    }
+
+    private void OnStrokePickClick(object? sender, RoutedEventArgs e)
+    {
+        StrokeSwatchButton.Flyout?.Hide();
+        Properties?.StartPick(ColorPickTarget.Stroke);
+    }
+
+    // A recent color is chosen in the open picker, so it is previewed and recorded like any other pick of the picker.
+    private void OnFillRecentClick(object? sender, RoutedEventArgs e)
+    {
+        if (ColorOf(sender) is { } color)
+        {
+            FillColorView.Color = CoreColorConverter.ToAvalonia(color);
+        }
+    }
+
+    private void OnStrokeRecentClick(object? sender, RoutedEventArgs e)
+    {
+        if (ColorOf(sender) is { } color)
+        {
+            StrokeColorView.Color = CoreColorConverter.ToAvalonia(color);
+        }
+    }
+
+    private void OnSwatchPointerPressed(object? sender, PointerPressedEventArgs e) =>
+        _shiftOnSwatch = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
+
+    private void OnSwatchClick(object? sender, RoutedEventArgs e)
+    {
+        var toStroke = _shiftOnSwatch;
+        _shiftOnSwatch = false;
+        if (ColorOf(sender) is { } color)
+        {
+            Properties?.Palette.Apply(color, toStroke);
+        }
+    }
+
+    private void OnRemoveSwatchClick(object? sender, RoutedEventArgs e)
+    {
+        if (ColorOf(sender) is { } color)
+        {
+            Properties?.Palette.RemoveSwatch(color);
+        }
+    }
+
+    private static CoreColor? ColorOf(object? sender) => (sender as Control)?.DataContext is CoreColor color ? color : null;
 }

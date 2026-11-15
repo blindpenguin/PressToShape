@@ -60,6 +60,20 @@ internal sealed class CanvasInteraction
     {
         Cancel();
 
+        if (_state.ColorPick != ColorPickTarget.None)
+        {
+            PickColorAt(x, y);
+            return;
+        }
+
+        if (_state.ActiveTool == Tool.Eyedropper)
+        {
+            // The tool is a pick that starts with the click: the fill, or the stroke with Shift.
+            _state.BeginColorPick(shift ? ColorPickTarget.Stroke : ColorPickTarget.Fill);
+            PickColorAt(x, y);
+            return;
+        }
+
         switch (_state.ActiveTool)
         {
             case Tool.Rectangle:
@@ -174,6 +188,13 @@ internal sealed class CanvasInteraction
         }
 
         return SelectionGeometry.HitHandle(frame, x, y, _state.ZoomPercent);
+    }
+
+    // The topmost visible shape gives its fill, or its stroke if it has no fill. The shape's own opacity does not count.
+    private void PickColorAt(double x, double y)
+    {
+        var appearance = _state.Document.HitTest(x, y).FirstOrDefault()?.Appearance;
+        _state.CompleteColorPick(appearance?.Fill ?? appearance?.Stroke);
     }
 
     private SelectionFrame? CurrentFrame() =>
@@ -364,8 +385,8 @@ internal sealed class CanvasInteraction
 
         return _dragTool switch
         {
-            Tool.Rectangle => new RectangleShape { X = left, Y = top, Width = width, Height = height },
-            Tool.Ellipse => new EllipseShape { X = left, Y = top, Width = width, Height = height },
+            Tool.Rectangle => new RectangleShape { X = left, Y = top, Width = width, Height = height, Appearance = _state.DefaultAppearance },
+            Tool.Ellipse => new EllipseShape { X = left, Y = top, Width = width, Height = height, Appearance = _state.DefaultAppearance },
             _ => null,
         };
     }

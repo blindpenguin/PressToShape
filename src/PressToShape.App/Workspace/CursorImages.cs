@@ -50,6 +50,7 @@ internal static class CursorImages
             CanvasCursorType.ResizeNorthWestSouthEast => "resize-north-west-south-east",
             CanvasCursorType.ResizeNorthEastSouthWest => "resize-north-east-south-west",
             CanvasCursorType.Rotate => "rotate",
+            CanvasCursorType.Eyedropper => "eyedropper",
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown cursor type."),
         };
 
@@ -66,6 +67,13 @@ internal static class CursorImages
         if (type == CanvasCursorType.Arrow)
         {
             throw new ArgumentOutOfRangeException(nameof(type), type, "The arrow has no image.");
+        }
+
+        // The pipette icon ends in a tip at (2, 22) of 24 units, so with the 4 unit margin the tip is at (6, 26) of 32.
+        if (type == CanvasCursorType.Eyedropper)
+        {
+            var scale = size / SmallSize;
+            return (6 * scale, 26 * scale);
         }
 
         // At 32 px. The lens of the zoom icon is centered at 11 of 24 units, and the image shows 32 units with a 4 unit margin, so the lens center is at 15.

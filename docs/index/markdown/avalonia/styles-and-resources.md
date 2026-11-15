@@ -76,10 +76,11 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 
 ### src/PressToShape.App/Views/Editor/PropertiesView.axaml
 
-- 0 resources, 3 styles
-- style `TextBlock.label` at line 15, 3 setters
-- style `Button.swatchButton` at line 20, 4 setters
-- style `Border.swatch` at line 26, 5 setters
+- 0 resources, 4 styles
+- style `TextBlock.label` at line 16, 3 setters
+- style `Button.swatchButton` at line 21, 4 setters
+- style `Border.smallSwatch` at line 27, 5 setters
+- style `Border.swatch` at line 34, 5 setters
 
 ### src/PressToShape.App/Views/Editor/ToolboxView.axaml
 

@@ -74,9 +74,120 @@ public class PropertiesViewModelTests
             Assert.Equal(string.Empty, field.Text);
         }
 
-        Assert.False(f.Properties.Fill.IsEnabled);
-        Assert.False(f.Properties.Stroke.IsEnabled);
         Assert.False(f.Properties.ResetTransformCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void NothingSelected_ColorFieldsStayEnabled_AndShowTheDefaults()
+    {
+        var f = new Fixture();
+
+        Assert.True(f.Properties.Fill.IsEnabled);
+        Assert.True(f.Properties.Stroke.IsEnabled);
+        Assert.Equal(Appearance.Default.Fill, f.Properties.Fill.Color);
+        Assert.True(f.Properties.Fill.HasColor);
+        Assert.Equal(Appearance.Default.Stroke, f.Properties.Stroke.Color);
+    }
+
+    [Fact]
+    public void NothingSelected_ColorEdit_ChangesTheDefaultsAndNotTheDocumentOrHistory()
+    {
+        var f = new Fixture();
+        var document = f.State.Document;
+        var steps = f.Steps;
+
+        f.Properties.Fill.BeginEdit();
+        f.Properties.Fill.Update(Red);
+        Assert.Equal(Red, f.State.DefaultAppearance.Fill);
+        f.Properties.Fill.Update(Green);
+        f.Properties.Fill.EndEdit();
+
+        Assert.Equal(Green, f.State.DefaultAppearance.Fill);
+        Assert.Equal(Appearance.Default.Stroke, f.State.DefaultAppearance.Stroke);
+        Assert.Same(document, f.State.Document);
+        Assert.Equal(steps, f.Steps);
+    }
+
+    [Fact]
+    public void NothingSelected_NoneAndSetColor_ChangeTheDefaults()
+    {
+        var f = new Fixture();
+
+        f.Properties.Stroke.SetNone();
+        Assert.Null(f.State.DefaultAppearance.Stroke);
+        Assert.True(f.Properties.Stroke.IsNone);
+
+        f.Properties.Stroke.SetColor(Red);
+        Assert.Equal(Red, f.State.DefaultAppearance.Stroke);
+        Assert.False(f.Properties.Stroke.IsNone);
+    }
+
+    [Fact]
+    public void SelectedShapes_ColorEdit_LeavesTheDefaultsAlone()
+    {
+        var f = new Fixture();
+        f.Add(Rect());
+
+        f.Properties.Fill.BeginEdit();
+        f.Properties.Fill.Update(Red);
+        f.Properties.Fill.EndEdit();
+        f.Properties.Stroke.SetColor(Green);
+
+        Assert.Same(Appearance.Default, f.State.DefaultAppearance);
+    }
+
+    [Fact]
+    public void ClearingTheSelection_ColorFieldsShowTheDefaultsAgain()
+    {
+        var f = new Fixture();
+        f.Add(Rect(appearance: Appearance.Default with { Fill = Red }));
+        Assert.Equal(Red, f.Properties.Fill.Color);
+
+        f.State.SetSelection([]);
+
+        Assert.True(f.Properties.Fill.IsEnabled);
+        Assert.Equal(Appearance.Default.Fill, f.Properties.Fill.Color);
+    }
+
+    [Fact]
+    public void ColorEdit_ThatChangedTheColor_AddsItToTheRecentColorsOnce()
+    {
+        var f = new Fixture();
+        f.Add(Rect());
+
+        f.Properties.Fill.BeginEdit();
+        f.Properties.Fill.Update(Red);
+        f.Properties.Fill.Update(Green);
+        Assert.Empty(f.Properties.RecentColors);
+        f.Properties.Fill.EndEdit();
+
+        Assert.Equal([Green], f.Properties.RecentColors.ToArray());
+    }
+
+    [Fact]
+    public void ColorEdit_WithoutChange_AndNone_AddNoRecentColor()
+    {
+        var f = new Fixture();
+        f.Add(Rect());
+
+        f.Properties.Fill.BeginEdit();
+        f.Properties.Fill.EndEdit();
+        f.Properties.Fill.SetNone();
+
+        Assert.Empty(f.Properties.RecentColors);
+    }
+
+    [Fact]
+    public void SetColor_AddsItToTheRecentColors_AndRaisesPropertyChanged()
+    {
+        var f = new Fixture();
+        var raised = new List<string?>();
+        f.Properties.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        f.Properties.Stroke.SetColor(Red);
+
+        Assert.Equal([Red], f.Properties.RecentColors.ToArray());
+        Assert.Contains(nameof(PropertiesViewModel.RecentColors), raised);
     }
 
     [Fact]
@@ -357,6 +468,134 @@ public class PropertiesViewModelTests
     }
 
     [Fact]
+    public void Pick_WithASelection_SetsTheFieldAsOneStep_AndAddsARecentColor()
+    {
+        var f = new Fixture();
+        var id = f.Add(Rect())[0];
+        var steps = f.Steps;
+
+        f.Properties.StartPick(ColorPickTarget.Stroke);
+        Assert.Equal(ColorPickTarget.Stroke, f.State.ColorPick);
+        f.State.CompleteColorPick(Red);
+
+        Assert.Equal(steps + 1, f.Steps);
+        Assert.Equal(HistoryStepType.ChangeStroke, f.LastStep);
+        Assert.Equal(Red, f.Shape(id).Appearance.Stroke);
+        Assert.Equal([Red], f.Properties.RecentColors.ToArray());
+        Assert.Same(Appearance.Default, f.State.DefaultAppearance);
+    }
+
+    [Fact]
+    public void Pick_WithoutASelection_ChangesTheDefaultsOnly()
+    {
+        var f = new Fixture();
+        var steps = f.Steps;
+
+        f.Properties.StartPick(ColorPickTarget.Fill);
+        f.State.CompleteColorPick(Green);
+
+        Assert.Equal(Green, f.State.DefaultAppearance.Fill);
+        Assert.Equal(steps, f.Steps);
+    }
+
+    [Fact]
+    public void Pick_WithoutAColorOrCancelled_ChangesNothing()
+    {
+        var f = new Fixture();
+        var id = f.Add(Rect())[0];
+        var steps = f.Steps;
+
+        f.Properties.StartPick(ColorPickTarget.Fill);
+        f.State.CompleteColorPick(null);
+        f.Properties.StartPick(ColorPickTarget.Fill);
+        f.State.CancelColorPick();
+
+        Assert.Equal(steps, f.Steps);
+        Assert.Equal(Appearance.Default.Fill, f.Shape(id).Appearance.Fill);
+        Assert.Empty(f.Properties.RecentColors);
+    }
+
+    [Fact]
+    public void Pick_OfTheColorAlreadySet_RecordsNoStep()
+    {
+        var f = new Fixture();
+        f.Add(Rect());
+        var steps = f.Steps;
+
+        f.Properties.StartPick(ColorPickTarget.Fill);
+        f.State.CompleteColorPick(Appearance.Default.Fill);
+
+        Assert.Equal(steps, f.Steps);
+    }
+
+    [Fact]
+    public void ColorPicker_ClosedWithoutAChange_RecordsNoStep()
+    {
+        var f = new Fixture();
+        var id = f.Add(Rect())[0];
+        var steps = f.Steps;
+        var before = f.Shape(id);
+
+        f.Properties.Fill.BeginEdit();
+        f.Properties.Fill.EndEdit();
+
+        Assert.Equal(steps, f.Steps);
+        Assert.Equal(before, f.Shape(id));
+    }
+
+    [Fact]
+    public void MixedFill_OpeningAndClosingThePickerWithoutAPick_LeavesTheShapesAlone()
+    {
+        var f = new Fixture();
+        var ids = f.Add(Rect(appearance: Appearance.Default with { Fill = Red }), Rect(appearance: Appearance.Default with { Fill = Green }));
+        var steps = f.Steps;
+
+        f.Properties.Fill.BeginEdit();
+        f.Properties.Fill.EndEdit();
+
+        Assert.True(f.Properties.Fill.IsMixed);
+        Assert.Equal(steps, f.Steps);
+        Assert.Equal(Red, f.Shape(ids[0]).Appearance.Fill);
+        Assert.Equal(Green, f.Shape(ids[1]).Appearance.Fill);
+    }
+
+    [Fact]
+    public void MixedFill_PickingAColor_SetsAllShapesAsOneStep()
+    {
+        var f = new Fixture();
+        var ids = f.Add(Rect(appearance: Appearance.Default with { Fill = Red }), Rect(appearance: Appearance.Default with { Fill = Green }));
+        var steps = f.Steps;
+        var blue = Color.FromRgb(0, 0, 255);
+
+        f.Properties.Fill.BeginEdit();
+        f.Properties.Fill.Update(blue);
+        f.Properties.Fill.EndEdit();
+
+        Assert.Equal(steps + 1, f.Steps);
+        Assert.All(ids, id => Assert.Equal(blue, f.Shape(id).Appearance.Fill));
+        Assert.False(f.Properties.Fill.IsMixed);
+    }
+
+    [Fact]
+    public void MixedStroke_None_RemovesTheStrokeOfAllShapesAsOneStep()
+    {
+        var f = new Fixture();
+        var ids = f.Add(Rect(appearance: Appearance.Default with { Stroke = Red }), Rect(appearance: Appearance.Default with { Stroke = Green }));
+        var steps = f.Steps;
+
+        f.Properties.Stroke.ToggleNone();
+
+        Assert.Equal(steps + 1, f.Steps);
+        Assert.Equal(HistoryStepType.ChangeStroke, f.LastStep);
+        Assert.All(ids, id => Assert.Null(f.Shape(id).Appearance.Stroke));
+        Assert.True(f.Properties.Stroke.IsNone);
+
+        f.State.Undo();
+        Assert.Equal(Red, f.Shape(ids[0]).Appearance.Stroke);
+        Assert.Equal(Green, f.Shape(ids[1]).Appearance.Stroke);
+    }
+
+    [Fact]
     public void StrokeColorEdit_IsAChangeStrokeStep_ForAllSelectedShapes()
     {
         var f = new Fixture();
@@ -457,5 +696,94 @@ public class PropertiesViewModelTests
         Assert.Throws<ArgumentNullException>(() => new PropertiesViewModel(null!, new SelectionEditor(state), localizer));
         Assert.Throws<ArgumentNullException>(() => new PropertiesViewModel(state, null!, localizer));
         Assert.Throws<ArgumentNullException>(() => new PropertiesViewModel(state, new SelectionEditor(state), null!));
+    }
+
+    // ---- sections per tool ----
+
+    [Fact]
+    public void ActiveTool_Changes_RaisesPropertyChangedForEverySectionFlag()
+    {
+        var f = new Fixture();
+        var raised = new List<string?>();
+        f.Properties.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        f.State.ActiveTool = Tool.Pen;
+
+        foreach (var name in new[]
+                 {
+                     nameof(PropertiesViewModel.ShowTransform), nameof(PropertiesViewModel.ShowAppearance), nameof(PropertiesViewModel.ShowPath),
+                     nameof(PropertiesViewModel.ShowAlign), nameof(PropertiesViewModel.ShowQuickActions), nameof(PropertiesViewModel.ShowHeader),
+                     nameof(PropertiesViewModel.ShowNoPropertiesHint),
+                 })
+        {
+            Assert.Contains(name, raised);
+        }
+    }
+
+    [Fact]
+    public void Sections_SelectTool_ShowsAllButPath()
+    {
+        var f = new Fixture();
+
+        Assert.True(f.Properties.ShowTransform);
+        Assert.True(f.Properties.ShowAppearance);
+        Assert.False(f.Properties.ShowPath);
+        Assert.True(f.Properties.ShowAlign);
+        Assert.True(f.Properties.ShowQuickActions);
+        Assert.True(f.Properties.ShowHeader);
+        Assert.False(f.Properties.ShowNoPropertiesHint);
+    }
+
+    [Fact]
+    public void Sections_PenTool_ShowsAppearanceAndPathOnly()
+    {
+        var f = new Fixture();
+
+        f.State.ActiveTool = Tool.Pen;
+
+        Assert.False(f.Properties.ShowTransform);
+        Assert.True(f.Properties.ShowAppearance);
+        Assert.True(f.Properties.ShowPath);
+        Assert.False(f.Properties.ShowAlign);
+        Assert.False(f.Properties.ShowQuickActions);
+        Assert.True(f.Properties.ShowHeader);
+        Assert.False(f.Properties.ShowNoPropertiesHint);
+    }
+
+    [Fact]
+    public void Sections_ToolWithoutProperties_HidesEverythingAndShowsTheHint()
+    {
+        var f = new Fixture();
+
+        foreach (var tool in new[] { Tool.Hand, Tool.Zoom, Tool.Eyedropper })
+        {
+            f.State.ActiveTool = tool;
+
+            Assert.False(f.Properties.ShowTransform);
+            Assert.False(f.Properties.ShowAppearance);
+            Assert.False(f.Properties.ShowPath);
+            Assert.False(f.Properties.ShowAlign);
+            Assert.False(f.Properties.ShowQuickActions);
+            Assert.False(f.Properties.ShowHeader);
+            Assert.True(f.Properties.ShowNoPropertiesHint);
+        }
+    }
+
+    [Fact]
+    public void ActiveTool_Switched_KeepsExpansionAndFieldValues()
+    {
+        var f = new Fixture();
+        f.Add(Rect(x: 10, y: 20));
+        f.Properties.IsTransformExpanded = false;
+        f.Properties.IsPathExpanded = true;
+
+        f.State.ActiveTool = Tool.Hand;
+        f.State.ActiveTool = Tool.Select;
+
+        Assert.False(f.Properties.IsTransformExpanded);
+        Assert.True(f.Properties.IsPathExpanded);
+        Assert.Equal("10", f.Properties.X.Text);
+        Assert.True(f.Properties.X.IsEnabled);
+        Assert.Equal("20", f.Properties.Y.Text);
     }
 }

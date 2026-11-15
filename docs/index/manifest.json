@@ -12,15 +12,15 @@
     {
       "Name": "PressToShape.App",
       "Path": "src/PressToShape.App/PressToShape.App.csproj",
-      "SymbolCount": 1407,
-      "RelationshipCount": 4321,
+      "SymbolCount": 1489,
+      "RelationshipCount": 4669,
       "XamlFileCount": 17
     },
     {
       "Name": "PressToShape.App.Tests",
       "Path": "tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj",
-      "SymbolCount": 1202,
-      "RelationshipCount": 10648,
+      "SymbolCount": 1327,
+      "RelationshipCount": 11902,
       "XamlFileCount": 0
     },
     {
@@ -40,15 +40,15 @@
     {
       "Name": "PressToShape.Core",
       "Path": "src/PressToShape.Core/PressToShape.Core.csproj",
-      "SymbolCount": 208,
-      "RelationshipCount": 553,
+      "SymbolCount": 215,
+      "RelationshipCount": 573,
       "XamlFileCount": 0
     },
     {
       "Name": "PressToShape.Core.Tests",
       "Path": "tests/PressToShape.Core.Tests/PressToShape.Core.Tests.csproj",
-      "SymbolCount": 286,
-      "RelationshipCount": 2066,
+      "SymbolCount": 308,
+      "RelationshipCount": 2190,
       "XamlFileCount": 0
     },
     {
@@ -66,7 +66,7 @@
       "XamlFileCount": 0
     }
   ],
-  "SymbolCount": 4089,
-  "RelationshipCount": 19485,
+  "SymbolCount": 4325,
+  "RelationshipCount": 21231,
   "Warnings": []
 }

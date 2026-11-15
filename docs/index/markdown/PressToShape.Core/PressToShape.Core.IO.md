@@ -6,7 +6,7 @@ Project: PressToShape.Core
 
 `public static class ProjectFile`
 
-Source: `src/PressToShape.Core/IO/ProjectFile.cs:19-312`
+Source: `src/PressToShape.Core/IO/ProjectFile.cs:19-336`
 
 PressToShape's own project format: UTF-8 JSON with a format name and a version number. Reading treats the content as untrusted: it is size-checked, parsed with a depth limit and validated by the document model itself. PressToShape.Core.IO.ProjectFile.Read never throws for bad content, it returns an error.
 

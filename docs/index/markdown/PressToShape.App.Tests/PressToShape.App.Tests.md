@@ -20,7 +20,7 @@ _(no documentation)_
 
 `public class CanvasAreaViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelTests.cs:12-1185`
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelTests.cs:12-1209`
 
 _(no documentation)_
 
@@ -69,6 +69,7 @@ _(no documentation)_
 - `public void ZoomTool_AtTheLimits_ChangesNothing()` - _(no documentation)_
 - `public void ZoomTool_Click_DoesNotSelectOrDrawAnything()` - _(no documentation)_
 - `public void CursorType_FollowsTheActiveTool()` - _(no documentation)_
+- `public void CursorType_EyedropperToolOrAPick_IsTheEyedropper_AndRaisesPropertyChanged()` - _(no documentation)_
 - `public void CursorType_ZoomToolWithAlt_IsTheZoomOutMagnifier_AndBackWhenAltIsReleased()` - _(no documentation)_
 - `public void IsAltHeld_SetToTheSameValue_RaisesNothing()` - _(no documentation)_
 - `public void CursorType_OtherToolsWithAlt_IgnoreAlt(string tool, string expected)` - _(no documentation)_
@@ -277,6 +278,21 @@ _(no documentation)_
 - `public void NotifiesPropertyChanges()` - _(no documentation)_
 - `public void Constructor_NullDelegates_Throw()` - _(no documentation)_
 
+## ColorHexInputTests (class)
+
+`public class ColorHexInputTests`
+
+Source: `tests/PressToShape.App.Tests/ColorHexInputTests.cs:11-41`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Convert_ColorWithAlpha_WritesRrggbbaaWithoutTheHash()` - _(no documentation)_
+- `public void ConvertBack_EightDigits_ReadsTheAlphaLast()` - _(no documentation)_
+- `public void ConvertBack_SixDigits_IsOpaque()` - _(no documentation)_
+- `public void ConvertBack_InvalidText_IsNotAColor(string text)` - _(no documentation)_
+
 ## CoreColorConverterTests (class)
 
 `public class CoreColorConverterTests`
@@ -311,7 +327,7 @@ _(no documentation)_
 
 `public class CursorImagesTests`
 
-Source: `tests/PressToShape.App.Tests/CursorImagesTests.cs:9-133`
+Source: `tests/PressToShape.App.Tests/CursorImagesTests.cs:9-142`
 
 _(no documentation)_
 
@@ -326,9 +342,25 @@ _(no documentation)_
 - `public void FileName_Type_MatchesTheToolOutput(string typeName, int size, string expected)` - _(no documentation)_
 - `public void Hotspot_At64_IsDoubleTheHotspotAt32()` - _(no documentation)_
 - `public void Hotspot_Magnifier_IsTheLensCenter()` - _(no documentation)_
+- `public void Hotspot_Eyedropper_IsTheTipOfThePipette()` - _(no documentation)_
 - `public void Hotspot_OtherTypes_AreTheImageCenter()` - _(no documentation)_
 - `public void SizeDependentMembers_UnknownSize_Throw(int size)` - _(no documentation)_
 - `public void Hotspot_Arrow_Throws()` - _(no documentation)_
+
+## DefaultAppearanceTests (class)
+
+`public class DefaultAppearanceTests`
+
+Source: `tests/PressToShape.App.Tests/DefaultAppearanceTests.cs:9-54`
+
+_(no documentation)_
+
+**Members**
+
+- `public void DefaultAppearance_NewState_IsTheModelDefault()` - _(no documentation)_
+- `public void Draw_ChangedDefault_ShapeUsesIt(bool ellipse)` - _(no documentation)_
+- `public void Draw_UnchangedDefault_ShapeUsesModelDefault()` - _(no documentation)_
+- `public void UndoRedoAndReplaceDocument_DoNotChangeTheDefault()` - _(no documentation)_
 
 ## DesktopShellViewModelTests (class)
 
@@ -558,6 +590,43 @@ _(no documentation)_
 - `public void Edit_WithExtend_MergesIntoTheLastStepOfTheSameType()` - _(no documentation)_
 - `public void SelectionRepair_OnALargeDocument_KeepsAllSelectedShapes()` - _(no documentation)_
 
+## EyedropperTests (class)
+
+`public class EyedropperTests`
+
+Source: `tests/PressToShape.App.Tests/EyedropperTests.cs:11-155`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Click_OnAShapeWithFill_ReportsTheFillWithAlphaAndEndsThePick()` - _(no documentation)_
+- `public void Click_OnAShapeWithoutFill_ReportsTheStroke()` - _(no documentation)_
+- `public void Click_OnAShapeWithNoFillAndNoStroke_ReportsNothingAndEndsThePick()` - _(no documentation)_
+- `public void Click_OverlappingShapes_TakesTheTopmost()` - _(no documentation)_
+- `public void Click_OnEmptyCanvas_ChangesNothingAndEndsThePick()` - _(no documentation)_
+- `public void Click_DuringAPickWithTheSelectTool_DoesNotSelectOrDrag()` - _(no documentation)_
+- `public void Click_AfterThePickEnded_WorksAsBefore()` - _(no documentation)_
+- `public void Escape_DuringAPick_EndsItWithoutAColorAndWithoutClearingTheSelection()` - _(no documentation)_
+- `public void CanvasClick_DuringAPick_IsTakenByThePickWithAnyTool(string toolName)` - _(no documentation)_
+
+## EyedropperToolTests (class)
+
+`public class EyedropperToolTests`
+
+Source: `tests/PressToShape.App.Tests/EyedropperToolTests.cs:11-126`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Click_OnAShape_SetsTheFillOfTheSelectionAsOneStep()` - _(no documentation)_
+- `public void ShiftClick_OnAShape_SetsTheStrokeToTheShapesFillColor()` - _(no documentation)_
+- `public void Click_WithNothingSelected_ChangesTheDefaultsAndNoStep()` - _(no documentation)_
+- `public void Click_OnEmptyCanvas_ChangesNothing()` - _(no documentation)_
+- `public void Click_StaysOnTheEyedropperToolAndKeepsTheSelection()` - _(no documentation)_
+- `public void FlyoutPick_StillWorksWithAnotherToolActive()` - _(no documentation)_
+
 ## FakeCatalog (class)
 
 `internal sealed class FakeCatalog : ITranslationCatalog`
@@ -705,6 +774,31 @@ _(no documentation)_
 - `public void App_ProjectReferences_OnlyCore()` - _(no documentation)_
 - `public void Head_ProjectReferences_OnlyApp(string csprojPath)` - _(no documentation)_
 - `public void Core_ProjectReferences_Nothing()` - _(no documentation)_
+
+## HeadlessUi (class)
+
+`internal static class HeadlessUi`
+
+Source: `tests/PressToShape.App.Tests/HeadlessUi.cs:33-68`
+
+Runs code on the one thread that owns the headless Avalonia platform. Avalonia must be used from a single thread, xUnit v2 uses many.
+
+**Members**
+
+- `public T Run<T>(Func<T> action)` - _(no documentation)_
+- `public void Run(Action action)` - _(no documentation)_
+
+## HeadlessUiApp (class)
+
+`internal sealed class HeadlessUiApp : Application`
+
+Source: `tests/PressToShape.App.Tests/HeadlessUi.cs:19-30`
+
+The application of the headless UI tests: the real theme and control styles, but not the real startup, which would read and write the user's settings file. Avalonia's xUnit integration needs xunit v3, so the tests use PressToShape.App.Tests.HeadlessUi.Run``1 instead.
+
+**Members**
+
+- `public void Initialize()` - _(no documentation)_
 
 ## HistoryViewModelTests (class)
 
@@ -996,6 +1090,31 @@ _(no documentation)_
 - `public void WhileEditing_NewValuesDoNotReplaceTheTypedText_UntilRevertedOrCommitted()` - _(no documentation)_
 - `public void Constructor_RejectsBadArguments()` - _(no documentation)_
 
+## PaletteViewModelTests (class)
+
+`public class PaletteViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/PaletteViewModelTests.cs:12-222`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Swatches_NewDocument_IsEmpty()` - _(no documentation)_
+- `public void AddSwatch_NewColor_AddsItAsOneAddSwatchStep()` - _(no documentation)_
+- `public void AddSwatch_ColorAlreadyThere_RecordsNoStep()` - _(no documentation)_
+- `public void RemoveSwatch_ValidIndex_RemovesItAsOneRemoveSwatchStep()` - _(no documentation)_
+- `public void RemoveSwatch_IndexOutsideThePalette_DoesNothing(int index)` - _(no documentation)_
+- `public void RemoveSwatch_ByColor_RemovesThatSwatchAndIgnoresUnknownColors()` - _(no documentation)_
+- `public void AddSwatch_WhilePickerIsOpen_StaysWhenTheColorChangesAgain()` - _(no documentation)_
+- `public void IsEmpty_FollowsThePalette()` - _(no documentation)_
+- `public void Swatches_FollowUndoRedoAndANewDocument()` - _(no documentation)_
+- `public void Swatches_RaisePropertyChangedOnlyWhenThePaletteChanges()` - _(no documentation)_
+- `public void Apply_ToFill_ChangesTheFillOfTheSelectionAsOneStep()` - _(no documentation)_
+- `public void Apply_ToStroke_ChangesTheStrokeOfTheSelection()` - _(no documentation)_
+- `public void Apply_WithNothingSelected_ChangesTheDefaultsOnly()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+
 ## PoEntry (record)
 
 `internal sealed record PoEntry : IEquatable<PoEntry>`
@@ -1057,17 +1176,57 @@ _(no documentation)_
 - `public void ValuesAreClamped_AndNonFiniteValuesIgnored()` - _(no documentation)_
 - `public void NothingSelected_NoDragStarts()` - _(no documentation)_
 
+## PropertiesSectionsTests (class)
+
+`public class PropertiesSectionsTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesSectionsTests.cs:8-64`
+
+_(no documentation)_
+
+**Members**
+
+- `public void For_SelectionTool_ShowsTransformAppearanceAlignAndQuickActions()` - _(no documentation)_
+- `public void For_ShapeOrTextTool_ShowsAppearanceOnly()` - _(no documentation)_
+- `public void For_PathTool_ShowsAppearanceAndPath()` - _(no documentation)_
+- `public void For_ToolWithoutProperties_ShowsNothing()` - _(no documentation)_
+- `public void For_EveryTool_IsDefinedAndShowsPathOnlyForPenAndNode()` - _(no documentation)_
+- `public void For_UndefinedTool_Throws()` - _(no documentation)_
+
+## PropertiesViewColorTests (class)
+
+`public class PropertiesViewColorTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewColorTests.cs:20-100`
+
+_(no documentation)_
+
+**Members**
+
+- `public void NothingSelected_ColorControlsAreEnabled_StrokeWidthAndOpacityAreNot()` - _(no documentation)_
+- `public void ShiftClickOnASwatch_AppliesItToTheStroke_AndAPlainClickToTheFill()` - _(no documentation)_
+- `public void TheApp_IncludesTheColorPickerTheme()` - _(no documentation)_
+- `public void TheColorPicker_WithTheAppsStyles_HasASize()` - _(no documentation)_
+
 ## PropertiesViewModelTests (class)
 
 `public class PropertiesViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/PropertiesViewModelTests.cs:14-461`
+Source: `tests/PressToShape.App.Tests/PropertiesViewModelTests.cs:14-789`
 
 _(no documentation)_
 
 **Members**
 
 - `public void NothingSelected_DisablesEverything_AndShowsTheHeader()` - _(no documentation)_
+- `public void NothingSelected_ColorFieldsStayEnabled_AndShowTheDefaults()` - _(no documentation)_
+- `public void NothingSelected_ColorEdit_ChangesTheDefaultsAndNotTheDocumentOrHistory()` - _(no documentation)_
+- `public void NothingSelected_NoneAndSetColor_ChangeTheDefaults()` - _(no documentation)_
+- `public void SelectedShapes_ColorEdit_LeavesTheDefaultsAlone()` - _(no documentation)_
+- `public void ClearingTheSelection_ColorFieldsShowTheDefaultsAgain()` - _(no documentation)_
+- `public void ColorEdit_ThatChangedTheColor_AddsItToTheRecentColorsOnce()` - _(no documentation)_
+- `public void ColorEdit_WithoutChange_AndNone_AddNoRecentColor()` - _(no documentation)_
+- `public void SetColor_AddsItToTheRecentColors_AndRaisesPropertyChanged()` - _(no documentation)_
 - `public void OneShape_ShowsItsValues()` - _(no documentation)_
 - `public void SeveralShapes_ShowTheirBox_RotationIsDisabled_AndDifferentValuesAreMixed()` - _(no documentation)_
 - `public void MixedStrokeWidth_ShowsAnEmptyText()` - _(no documentation)_
@@ -1086,6 +1245,14 @@ _(no documentation)_
 - `public void ADragPreview_RefreshesTheFields_InPlace()` - _(no documentation)_
 - `public void AFieldBeingEdited_IsNotOverwrittenByARefresh()` - _(no documentation)_
 - `public void ColorEdit_PreviewsLive_AndIsOneChangeFillStepWhenThePickerCloses()` - _(no documentation)_
+- `public void Pick_WithASelection_SetsTheFieldAsOneStep_AndAddsARecentColor()` - _(no documentation)_
+- `public void Pick_WithoutASelection_ChangesTheDefaultsOnly()` - _(no documentation)_
+- `public void Pick_WithoutAColorOrCancelled_ChangesNothing()` - _(no documentation)_
+- `public void Pick_OfTheColorAlreadySet_RecordsNoStep()` - _(no documentation)_
+- `public void ColorPicker_ClosedWithoutAChange_RecordsNoStep()` - _(no documentation)_
+- `public void MixedFill_OpeningAndClosingThePickerWithoutAPick_LeavesTheShapesAlone()` - _(no documentation)_
+- `public void MixedFill_PickingAColor_SetsAllShapesAsOneStep()` - _(no documentation)_
+- `public void MixedStroke_None_RemovesTheStrokeOfAllShapesAsOneStep()` - _(no documentation)_
 - `public void StrokeColorEdit_IsAChangeStrokeStep_ForAllSelectedShapes()` - _(no documentation)_
 - `public void ClosingThePickerWithoutAChange_MakesNoStep()` - _(no documentation)_
 - `public void NoneAndColorOutsideThePicker_AreImmediateSteps()` - _(no documentation)_
@@ -1093,6 +1260,27 @@ _(no documentation)_
 - `public void ResetTransform_IsOneStep_ClearsTheRotation_AndDisablesItself()` - _(no documentation)_
 - `public void SelectionChanges_CreateNoSteps_AndSectionFlagsKeepWorking()` - _(no documentation)_
 - `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+- `public void ActiveTool_Changes_RaisesPropertyChangedForEverySectionFlag()` - _(no documentation)_
+- `public void Sections_SelectTool_ShowsAllButPath()` - _(no documentation)_
+- `public void Sections_PenTool_ShowsAppearanceAndPathOnly()` - _(no documentation)_
+- `public void Sections_ToolWithoutProperties_HidesEverythingAndShowsTheHint()` - _(no documentation)_
+- `public void ActiveTool_Switched_KeepsExpansionAndFieldValues()` - _(no documentation)_
+
+## RecentColorsTests (class)
+
+`public class RecentColorsTests`
+
+Source: `tests/PressToShape.App.Tests/RecentColorsTests.cs:9-66`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Add_NewColors_PutsMostRecentFirst()` - _(no documentation)_
+- `public void Add_ColorAlreadyListed_MovesItToFrontWithoutDuplicate()` - _(no documentation)_
+- `public void Add_MoreThanMaxCount_DropsTheOldest()` - _(no documentation)_
+- `public void Add_SameRgbWithOtherAlpha_IsAnotherColor()` - _(no documentation)_
+- `public void MessageId_SwatchSteps_HaveNames(HistoryStepType type, string expected)` - _(no documentation)_
 
 ## RecentFilesTests (class)
 

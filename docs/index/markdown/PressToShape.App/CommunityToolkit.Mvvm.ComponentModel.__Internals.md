@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class __KnownINotifyPropertyChangedArgs`
 
-Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-161` (generated)
+Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-169` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangedEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -45,6 +45,8 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 - `public PropertyChangedEventArgs SelectedShapeIds` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "SelectedShapeIds" generated properties.
 - `public PropertyChangedEventArgs Draft` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Draft" generated properties.
 - `public PropertyChangedEventArgs ActiveTool` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "ActiveTool" generated properties.
+- `public PropertyChangedEventArgs ColorPick` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "ColorPick" generated properties.
+- `public PropertyChangedEventArgs DefaultAppearance` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "DefaultAppearance" generated properties.
 - `public PropertyChangedEventArgs SelectionBox` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "SelectionBox" generated properties.
 - `public PropertyChangedEventArgs PanX` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PanX" generated properties.
 - `public PropertyChangedEventArgs PanY` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PanY" generated properties.
@@ -53,7 +55,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 
 `internal static class __KnownINotifyPropertyChangingArgs`
 
-Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-161` (generated)
+Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-169` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangingEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -92,6 +94,8 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 - `public PropertyChangingEventArgs SelectedShapeIds` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "SelectedShapeIds" generated properties.
 - `public PropertyChangingEventArgs Draft` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Draft" generated properties.
 - `public PropertyChangingEventArgs ActiveTool` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "ActiveTool" generated properties.
+- `public PropertyChangingEventArgs ColorPick` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "ColorPick" generated properties.
+- `public PropertyChangingEventArgs DefaultAppearance` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "DefaultAppearance" generated properties.
 - `public PropertyChangingEventArgs SelectionBox` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "SelectionBox" generated properties.
 - `public PropertyChangingEventArgs PanX` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PanX" generated properties.
 - `public PropertyChangingEventArgs PanY` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PanY" generated properties.

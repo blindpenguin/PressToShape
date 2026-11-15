@@ -99,6 +99,7 @@ _(no documentation)_
 - Inherited by `PressToShape.App.ViewModels.Editor.InspectorViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.LayerItemViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.LayersViewModel`
+- Inherited by `PressToShape.App.ViewModels.Editor.PaletteViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
 - Inherited by `PressToShape.App.ViewModels.LocalizedViewModel`
 - Inherited by `PressToShape.App.ViewModels.MainViewModel`

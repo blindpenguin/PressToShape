@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal partial sealed class CanvasAreaViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:13-449`
+Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:13-471`
 
 Geometry of the canvas area: where the artboard is drawn and where the ruler zero points are. The view only reports the viewport size, everything else is derived here.
 
@@ -19,7 +19,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public Document Document { get; }` - The document the canvas draws.
 - `public ScreenShape? Draft { get; }` - The shape that is being drawn, in screen space, or null.
 - `public SelectionOverlay Overlay { get; }` - Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.
-- `public CanvasCursorType CursorType { get; }` - The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle, otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
+- `public CanvasCursorType CursorType { get; }` - The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle, otherwise the eyedropper while a pick is active, otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
 - `public double HorizontalScrollMinimum { get; }` - Smallest value of the horizontal scroll bar: minus the furthest the view offset may go.
 - `public double HorizontalScrollMaximum { get; }` - Largest value of the horizontal scroll bar: the furthest the view offset may go.
 - `public double HorizontalScrollValue { get; set; }` - The horizontal scroll bar's value: the view offset, negated, because the bar's value grows when the view moves right. Setting it moves the view.
@@ -44,7 +44,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)` - The button went up. The position is in screen pixels of the canvas area.
 - `public void PointerHover(double screenX, double screenY)` - The pointer moved over the canvas without a drag: the handle under it decides the cursor.
 - `public void PointerLeft()` - The pointer left the canvas: no handle is hovered any more.
-- `public bool KeyPressed(CanvasKey key, bool shift)` - A key went down on the canvas. The arrow keys move the selection by 1 unit, with shift by 10. Escape clears the selection. Nothing happens during a drag.
+- `public bool KeyPressed(CanvasKey key, bool shift)` - A key went down on the canvas. The arrow keys move the selection by 1 unit, with shift by 10. Escape clears the selection, or ends a pick from the canvas. Nothing else happens during a drag.
 - `public void Cancel()` - Ends a drag without a result, for example when the pointer capture is lost.
 - `public bool Wheel(double deltaX, double deltaY, bool control, bool shift, double screenX, double screenY)` - The wheel (or a touchpad scroll) turned over the canvas. With Ctrl it zooms around the pointer, otherwise it moves the view, Shift moving it horizontally. A positive delta moves the view toward the top or the left.
 - `public void DeleteSelection()` - Removes the selected shapes. Does nothing without a selection.
@@ -84,6 +84,7 @@ A color of the Properties tab (fill or stroke). While the color picker is open t
 **Relationships**
 
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
+- Injected into `PressToShape.App.ViewModels.Editor.PaletteViewModel`
 
 ## HistoryItemViewModel (class)
 
@@ -226,6 +227,30 @@ A number text box of the Properties tab. The text is typed by the user and appli
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
 
+## PaletteViewModel (class)
+
+`internal sealed class PaletteViewModel : ViewModelBase`
+
+Source: `src/PressToShape.App/ViewModels/Editor/PaletteViewModel.cs:15-76`
+
+The swatches saved with the document, shown in the Appearance section. Adding and removing a swatch is one undo step. Applying a swatch sets the fill or the stroke like a color chosen in the picker.
+
+**Members**
+
+- `public PaletteViewModel(EditorState state, ColorFieldViewModel fill, ColorFieldViewModel stroke)` - _(no documentation)_
+- `public IReadOnlyList<Color> Swatches { get; }` - The swatches of the current document, in order.
+- `public bool IsEmpty { get; }` - Whether the palette has no swatches, for the hint that replaces the list.
+- `public void AddSwatch(Color color)` - Adds the color at the end of the palette. Does nothing if the palette has it.
+- `public void RemoveSwatch(int index)` - Removes the swatch at this index. Does nothing for an index outside the palette.
+- `public void RemoveSwatch(Color color)` - Removes the swatch with this color. Does nothing if the palette does not have it.
+- `public void Apply(Color color, bool toStroke)` - Sets the fill (or the stroke) of the selection to the color. Without a selection it sets the default for new shapes.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.ColorFieldViewModel`
+- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Inherits `PressToShape.App.ViewModels.ViewModelBase`
+
 ## PlaceholderPanelViewModel (class)
 
 `internal sealed class PlaceholderPanelViewModel : LocalizedViewModel`
@@ -249,7 +274,7 @@ An inspector tab that only shows an empty-state message (Assets). Title and mess
 
 `internal partial sealed class PropertiesViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:21-230`
+Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:21-338`
 
 The Properties tab: the position, size, rotation and appearance of the selected shapes, and the section expansion. The fields show the current values (updated in place while shapes are dragged or edited elsewhere) and every committed edit is one undo step.
 
@@ -266,8 +291,17 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public NumberFieldViewModel OpacityPercent { get; }` - The opacity from 0 to 100.
 - `public ColorFieldViewModel Fill { get; }` - _(no documentation)_
 - `public ColorFieldViewModel Stroke { get; }` - _(no documentation)_
+- `public PaletteViewModel Palette { get; }` - The swatches saved with the document.
+- `public IReadOnlyList<Color> RecentColors { get; }` - The colors picked lately, most recent first.
 - `public bool HasSelection { get; }` - _(no documentation)_
 - `public bool ShowNothingSelectedHint { get; }` - _(no documentation)_
+- `public bool ShowTransform { get; }` - _(no documentation)_
+- `public bool ShowAppearance { get; }` - _(no documentation)_
+- `public bool ShowPath { get; }` - _(no documentation)_
+- `public bool ShowAlign { get; }` - _(no documentation)_
+- `public bool ShowQuickActions { get; }` - _(no documentation)_
+- `public bool ShowHeader { get; }` - Whether the selection header is shown: any tool that has at least one section.
+- `public bool ShowNoPropertiesHint { get; }` - Whether the active tool has no properties, so a hint replaces the sections.
 - `public string Header { get; }` - "Nothing selected", "1 selected" or "N selected".
 - `public double OpacitySliderValue { get; private set; }` - _(no documentation)_
 - `public bool KeepProportions { get; set; }` - _(no documentation)_
@@ -276,6 +310,7 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public bool IsPathExpanded { get; set; }` - _(no documentation)_
 - `public bool IsAlignExpanded { get; set; }` - _(no documentation)_
 - `public bool IsQuickActionsExpanded { get; set; }` - _(no documentation)_
+- `public void StartPick(ColorPickTarget target)` - Starts a pick from the canvas for the fill or the stroke. The next click on a shape sets that color.
 - `public void BeginOpacityDrag()` - The user started to move the opacity slider. The changes until PressToShape.App.ViewModels.Editor.PropertiesViewModel.EndOpacityDrag are one step.
 - `public void PreviewOpacity(double percent)` - Shows the slider's opacity on the canvas. Ignored unless a drag began.
 - `public void EndOpacityDrag()` - The slider was let go. Records what was shown as one step, if the opacity changed.

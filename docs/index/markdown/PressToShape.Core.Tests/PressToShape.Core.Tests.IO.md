@@ -2,6 +2,22 @@
 
 Project: PressToShape.Core.Tests
 
+## ProjectFilePaletteTests (class)
+
+`public class ProjectFilePaletteTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/ProjectFilePaletteTests.cs:11-83`
+
+_(no documentation)_
+
+**Members**
+
+- `public void WriteThenRead_Palette_KeepsOrderAndAlpha()` - _(no documentation)_
+- `public void Write_EmptyPalette_WritesNoPaletteField()` - _(no documentation)_
+- `public void Read_FileWithoutPalette_LoadsWithEmptyPalette()` - _(no documentation)_
+- `public void Read_InvalidPaletteEntry_FailsWithInvalidValue(string palette)` - _(no documentation)_
+- `public void WriteThenRead_StrokeWithAlpha_IsKept()` - _(no documentation)_
+
 ## ProjectFileTests (class)
 
 `public class ProjectFileTests`

@@ -1,0 +1,15 @@
+using System;
+
+namespace PressToShape.App.Workspace;
+
+/// <summary>The sections of the Properties tab. Combined as flags to say which ones a tool shows.</summary>
+[Flags]
+internal enum PropertiesSection
+{
+    None = 0,
+    Transform = 1,
+    Appearance = 2,
+    Path = 4,
+    Align = 8,
+    QuickActions = 16,
+}

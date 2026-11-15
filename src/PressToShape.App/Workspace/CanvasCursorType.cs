@@ -35,4 +35,7 @@ internal enum CanvasCursorType
 
     /// <summary>A turning arrow, for the rotate handle.</summary>
     Rotate,
+
+    /// <summary>A pipette, while a color is picked from the canvas and for the Eyedropper tool. Its active point is the tip.</summary>
+    Eyedropper,
 }

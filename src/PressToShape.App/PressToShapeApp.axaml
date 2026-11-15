@@ -20,6 +20,8 @@
 
     <Application.Styles>
         <FluentTheme />
+        <!-- FluentTheme does not style the ColorView of Avalonia.Controls.ColorPicker. Without this, the picker has no template and shows nothing. -->
+        <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
         <materialIcons:MaterialIconStyles />
         <StyleInclude Source="avares://PressToShape.App/Styles/Controls.axaml" />
     </Application.Styles>

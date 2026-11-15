@@ -4,12 +4,19 @@ Types that other types take as constructor parameters, and where they are provid
 
 ## Injected types
 
+### ColorFieldViewModel (class)
+
+`T:PressToShape.App.ViewModels.Editor.ColorFieldViewModel`. A color of the Properties tab (fill or stroke). While the color picker is open the user's changes are previewed on the canvas (PressToShape.App.ViewModels.Editor.ColorFieldViewModel.Update) and the whole edit becomes one undo step when the picker closes (PressToShape.App.ViewModels.Editor.ColorFieldViewModel.EndEdit). "None" and a color chosen elsewhere take effect at once as one step.
+
+- used by: `PaletteViewModel`
+- created at `PropertiesViewModel.PropertiesViewModel` (src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:48), `PropertiesViewModel.PropertiesViewModel` (src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:52)
+
 ### Document (class)
 
 `T:PressToShape.Core.Documents.Document`. A drawing: an artboard and a stack of layers. Immutable: every edit method returns a new document and leaves this one unchanged. Unchanged layers are shared between the two. A document always has at least one layer.
 
 - used by: `DocumentHistory`, `EditorState`, `ProjectFileResult`
-- created at `Document.Create` (src/PressToShape.Core/Documents/Document.cs:53)
+- created at `Document.Create` (src/PressToShape.Core/Documents/Document.cs:61)
 
 ### DocumentSession (class)
 
@@ -29,7 +36,7 @@ Types that other types take as constructor parameters, and where they are provid
 
 `T:PressToShape.App.Workspace.EditorState`. State shared by all regions of the editor shell: the document, its undo history, active tool, zoom and selection summary. View models observe it through PropertyChanged, so every route that changes a value stays in sync. This class is the only place that changes the document: edits go through PressToShape.App.Workspace.EditorState.Edit, a drag through PressToShape.App.Workspace.EditorState.Preview and PressToShape.App.Workspace.EditorState.Commit, and a new or opened document through PressToShape.App.Workspace.EditorState.ReplaceDocument.
 
-- used by: `CanvasAreaViewModel`, `CanvasInteraction`, `DocumentFileService`, `DocumentSession`, `HistoryViewModel`, `InspectorViewModel`, `LayerItemViewModel`, `LayersViewModel`, `MenuBarViewModel`, `PropertiesViewModel`, `SelectionEditor`, `StatusBarViewModel`, `ToolbarViewModel`, `ToolboxViewModel`
+- used by: `CanvasAreaViewModel`, `CanvasInteraction`, `DocumentFileService`, `DocumentSession`, `HistoryViewModel`, `InspectorViewModel`, `LayerItemViewModel`, `LayersViewModel`, `MenuBarViewModel`, `PaletteViewModel`, `PropertiesViewModel`, `SelectionEditor`, `StatusBarViewModel`, `ToolbarViewModel`, `ToolboxViewModel`
 - created at `DesktopShellViewModel.DesktopShellViewModel` (src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:30), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:44)
 
 ### FileMenuCommands (class)
@@ -101,7 +108,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.Core.Documents.Layer`. A named group of shapes that can be hidden or locked. Immutable: change it with with. Records compare PressToShape.Core.Documents.Layer.Shapes by reference, not by content.
 
 - used by: `LayerItemViewModel`, `ShapeLocation`
-- created at `Document.Create` (src/PressToShape.Core/Documents/Document.cs:53), `ProjectFile.Build` (src/PressToShape.Core/IO/ProjectFile.cs:129)
+- created at `Document.Create` (src/PressToShape.Core/Documents/Document.cs:61), `ProjectFile.Build` (src/PressToShape.Core/IO/ProjectFile.cs:130)
 
 ### Mixed (class)
 
@@ -154,4 +161,4 @@ Types that other types take as constructor parameters, and where they are provid
 
 ## Container registrations
 
-no container registrations found; services are created by hand in `CanvasAreaViewModel.CanvasAreaViewModel`, `DesktopShellViewModel.DesktopShellViewModel`, `Document.Create`, `EmbeddedCatalogSource.EmbeddedCatalogSource`, `InspectorViewModel.InspectorViewModel`, `LocalizationHost.Localizer`, `Mixed.Of`, `PressToShapeApp.Initialize`, `PressToShapeApp.OnFrameworkInitializationCompleted`, `ProjectFile.Build`, `ScreenPolygon.FromBox`, `SelectionOverlay.Build`, `ShapeOperationBenchmarks.Setup`, `ToolDefinitions.All`.
+no container registrations found; services are created by hand in `CanvasAreaViewModel.CanvasAreaViewModel`, `DesktopShellViewModel.DesktopShellViewModel`, `Document.Create`, `EmbeddedCatalogSource.EmbeddedCatalogSource`, `InspectorViewModel.InspectorViewModel`, `LocalizationHost.Localizer`, `Mixed.Of`, `PressToShapeApp.Initialize`, `PressToShapeApp.OnFrameworkInitializationCompleted`, `ProjectFile.Build`, `PropertiesViewModel.PropertiesViewModel`, `ScreenPolygon.FromBox`, `SelectionOverlay.Build`, `ShapeOperationBenchmarks.Setup`, `ToolDefinitions.All`.

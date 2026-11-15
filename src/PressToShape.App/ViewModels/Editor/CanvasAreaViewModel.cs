@@ -59,7 +59,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
     /// <summary>
     /// The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle,
-    /// otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
+    /// otherwise the eyedropper while a pick is active, otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
     /// </summary>
     public CanvasCursorType CursorType
     {
@@ -75,9 +75,15 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 return CursorForHandle(handle);
             }
 
+            if (_state.ColorPick != ColorPickTarget.None)
+            {
+                return CanvasCursorType.Eyedropper;
+            }
+
             return _state.ActiveTool switch
             {
                 Tool.Rectangle or Tool.Ellipse => CanvasCursorType.Crosshair,
+                Tool.Eyedropper => CanvasCursorType.Eyedropper,
                 Tool.Hand => CanvasCursorType.OpenHand,
                 Tool.Zoom => IsAltHeld ? CanvasCursorType.MagnifierMinus : CanvasCursorType.Magnifier,
                 _ => CanvasCursorType.Arrow,
@@ -153,6 +159,13 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false)
     {
         IsAltHeld = alt;
+        if (_state.ColorPick != ColorPickTarget.None)
+        {
+            // A pick from the canvas takes the click, whatever the active tool is.
+            _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift);
+            return;
+        }
+
         switch (_state.ActiveTool)
         {
             case Tool.Hand:
@@ -220,11 +233,17 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
     /// <summary>
     /// A key went down on the canvas. The arrow keys move the selection by 1 unit, with <paramref name="shift"/> by 10. Escape clears
-    /// the selection. Nothing happens during a drag.
+    /// the selection, or ends a pick from the canvas. Nothing else happens during a drag.
     /// </summary>
     /// <returns>Whether the key did something, so the caller marks it as handled.</returns>
     public bool KeyPressed(CanvasKey key, bool shift)
     {
+        if (key == CanvasKey.Escape && _state.ColorPick != ColorPickTarget.None)
+        {
+            _state.CancelColorPick();
+            return true;
+        }
+
         if (_state.IsDragInProgress || !_state.HasSelection)
         {
             return false;
@@ -416,6 +435,9 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 SetHover(null);
                 OnPropertyChanged(nameof(CursorType));
                 NotifyOverlayChanged();
+                break;
+            case nameof(EditorState.ColorPick):
+                OnPropertyChanged(nameof(CursorType));
                 break;
             case nameof(EditorState.ZoomPercent):
                 OnPropertyChanged(nameof(ZoomPercent));

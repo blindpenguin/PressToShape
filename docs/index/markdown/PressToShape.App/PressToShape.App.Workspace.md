@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal enum CanvasCursorType`
 
-Source: `src/PressToShape.App/Workspace/CanvasCursorType.cs:4-38`
+Source: `src/PressToShape.App/Workspace/CanvasCursorType.cs:4-41`
 
 The pointer shape the canvas should show. The view turns it into a real cursor.
 
@@ -23,12 +23,13 @@ The pointer shape the canvas should show. The view turns it into a real cursor.
 - `public ResizeNorthWestSouthEast` - A diagonal double arrow from top left to bottom right.
 - `public ResizeNorthEastSouthWest` - A diagonal double arrow from top right to bottom left.
 - `public Rotate` - A turning arrow, for the rotate handle.
+- `public Eyedropper` - A pipette, while a color is picked from the canvas and for the Eyedropper tool. Its active point is the tip.
 
 ## CanvasInteraction (class)
 
 `internal sealed class CanvasInteraction`
 
-Source: `src/PressToShape.App/Workspace/CanvasInteraction.cs:15-378`
+Source: `src/PressToShape.App/Workspace/CanvasInteraction.cs:15-399`
 
 What the mouse does on the canvas: draw rectangles and ellipses, select, move and delete shapes. Works on document positions and edits the document through PressToShape.App.Workspace.EditorState. It has no UI types. A drag that is in progress ends with PressToShape.App.Workspace.CanvasInteraction.PointerReleased or PressToShape.App.Workspace.CanvasInteraction.Cancel.
 
@@ -90,11 +91,25 @@ Turns a document into the shapes to draw on the canvas, so the drawing control n
 - `public IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY)` - Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones. Hidden layers are left out. Locked layers are drawn like any other.
 - `public ScreenShape BuildShape(Shape shape, double zoomPercent, double originX, double originY)` - Converts one shape, for example a shape that is still being drawn and is not in a document.
 
+## ColorPickTarget (enum)
+
+`internal enum ColorPickTarget`
+
+Source: `src/PressToShape.App/Workspace/ColorPickTarget.cs:4-14`
+
+Which color a pick from the canvas (the eyedropper) will set.
+
+**Members**
+
+- `public None` - No pick is going on.
+- `public Fill` - The fill.
+- `public Stroke` - The stroke.
+
 ## CursorImages (class)
 
 `internal static class CursorImages`
 
-Source: `src/PressToShape.App/Workspace/CursorImages.cs:11-84`
+Source: `src/PressToShape.App/Workspace/CursorImages.cs:11-92`
 
 The facts about the cursor images of the canvas: which size fits a screen scale, the file name of each image and its active point. Pure logic. The images are made by tools/PressToShape.CursorImages and committed under Assets/Cursors.
 
@@ -160,13 +175,14 @@ Which file the open document belongs to and whether it has unsaved changes. Docu
 
 `internal partial sealed class EditorState : ObservableObject`
 
-Source: `src/PressToShape.App/Workspace/EditorState.cs:18-400`
+Source: `src/PressToShape.App/Workspace/EditorState.cs:18-429`
 
 State shared by all regions of the editor shell: the document, its undo history, active tool, zoom and selection summary. View models observe it through PropertyChanged, so every route that changes a value stays in sync. This class is the only place that changes the document: edits go through PressToShape.App.Workspace.EditorState.Edit, a drag through PressToShape.App.Workspace.EditorState.Preview and PressToShape.App.Workspace.EditorState.Commit, and a new or opened document through PressToShape.App.Workspace.EditorState.ReplaceDocument.
 
 **Members**
 
 - `public EditorState(Document? document = null)` - Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.
+- `public Action<ColorPickTarget, Color>? ColorPicked` - Raised when a pick from the canvas ended on a shape: the target that asked for it and the color that was taken.
 - `public EventHandler? HistoryChanged` - Raised after the undo history changed: a step was recorded, undone or redone, or the history was reset.
 - `public DocumentHistory History { get; }` - The undo history of the current document.
 - `public bool IsDragInProgress { get; set; }` - _(no documentation)_
@@ -180,6 +196,11 @@ State shared by all regions of the editor shell: the document, its undo history,
 - `public bool HasSelection { get; }` - Whether at least one shape is selected.
 - `public Shape? Draft { get; set; }` - _(no documentation)_
 - `public Tool ActiveTool { get; set; }` - _(no documentation)_
+- `public ColorPickTarget ColorPick { get; private set; }` - _(no documentation)_
+- `public void BeginColorPick(ColorPickTarget target)` - Starts a pick from the canvas for the fill or the stroke. A new pick replaces the one before.
+- `public void CancelColorPick()` - Ends the pick without a color (Escape, or a click away from every shape).
+- `public void CompleteColorPick(Color? color)` - Ends the pick. A color is reported to PressToShape.App.Workspace.EditorState.ColorPicked, null ends the pick without a change.
+- `public Appearance DefaultAppearance { get; set; }` - _(no documentation)_
 - `public ShapeClipboard Clipboard { get; }` - The shapes that were copied or cut. Kept by the app, nothing goes to the system clipboard.
 - `public SelectionBox? SelectionBox { get; set; }` - _(no documentation)_
 - `public double ArtboardWidth { get; }` - Artboard width of the current document.
@@ -223,6 +244,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.LayerItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.LayersViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.PaletteViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
 - Injected into `PressToShape.App.Workspace.CanvasInteraction`
@@ -254,7 +276,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-40`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-42`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -296,6 +318,49 @@ A value that is the same for every selected shape, or marked as mixed when the s
 **Relationships**
 
 - Injected into `PressToShape.App.Workspace.SelectionValues`
+
+## PropertiesSection (enum)
+
+`internal enum PropertiesSection`
+
+Source: `src/PressToShape.App/Workspace/PropertiesSection.cs:6-15`
+
+The sections of the Properties tab. Combined as flags to say which ones a tool shows.
+
+**Members**
+
+- `public None` - _(no documentation)_
+- `public Transform` - _(no documentation)_
+- `public Appearance` - _(no documentation)_
+- `public Path` - _(no documentation)_
+- `public Align` - _(no documentation)_
+- `public QuickActions` - _(no documentation)_
+
+## PropertiesSections (class)
+
+`internal static class PropertiesSections`
+
+Source: `src/PressToShape.App/Workspace/PropertiesSections.cs:6-21`
+
+Which sections of the Properties tab are relevant for a tool.
+
+**Members**
+
+- `public PropertiesSection For(Tool tool)` - The sections to show for tool. A rule and not a table. The throwing arm only covers values outside the enum (the compiler asks for it). A test covers every PressToShape.App.Workspace.Tool value, so a new tool fails there until it is placed here.
+
+## RecentColors (class)
+
+`internal sealed class RecentColors`
+
+Source: `src/PressToShape.App/Workspace/RecentColors.cs:11-31`
+
+The colors the user picked lately, most recent first. Each color appears once and the list keeps at most PressToShape.App.Workspace.RecentColors.MaxCount colors. It lives as long as the app runs and is not saved.
+
+**Members**
+
+- `public int MaxCount` - The most colors the list keeps.
+- `public IReadOnlyList<Color> Items { get; }` - The colors, most recent first.
+- `public void Add(Color color)` - Puts the color first. If the list already has it, it moves to the front. The oldest color drops out when the list is full.
 
 ## RecentFiles (class)
 

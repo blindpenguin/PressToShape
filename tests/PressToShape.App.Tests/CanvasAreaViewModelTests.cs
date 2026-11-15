@@ -657,6 +657,30 @@ public class CanvasAreaViewModelTests
     }
 
     [Fact]
+    public void CursorType_EyedropperToolOrAPick_IsTheEyedropper_AndRaisesPropertyChanged()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        var raised = new List<string?>();
+        canvas.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.ActiveTool = Tool.Eyedropper;
+        Assert.Equal(CanvasCursorType.Eyedropper, canvas.CursorType);
+
+        state.ActiveTool = Tool.Select;
+        Assert.Equal(CanvasCursorType.Arrow, canvas.CursorType);
+
+        raised.Clear();
+        state.BeginColorPick(ColorPickTarget.Fill);
+        Assert.Equal(CanvasCursorType.Eyedropper, canvas.CursorType);
+        Assert.Contains(nameof(CanvasAreaViewModel.CursorType), raised);
+
+        raised.Clear();
+        state.CancelColorPick();
+        Assert.Equal(CanvasCursorType.Arrow, canvas.CursorType);
+        Assert.Contains(nameof(CanvasAreaViewModel.CursorType), raised);
+    }
+
+    [Fact]
     public void CursorType_ZoomToolWithAlt_IsTheZoomOutMagnifier_AndBackWhenAltIsReleased()
     {
         var (state, canvas) = Create(2000, 1200);

@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PressToShape.App.ViewModels.Editor"
              xmlns:controls="using:PressToShape.App.Controls"
+             xmlns:coreShapes="using:PressToShape.Core.Shapes"
              xmlns:local="using:PressToShape.App.Views.Editor"
              xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="800"
@@ -23,6 +24,13 @@
             <Setter Property="MinWidth" Value="0" />
             <Setter Property="Background" Value="Transparent" />
         </Style>
+        <Style Selector="Border.smallSwatch">
+            <Setter Property="Width" Value="20" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
+        </Style>
         <Style Selector="Border.swatch">
             <Setter Property="Width" Value="52" />
             <Setter Property="Height" Value="24" />
@@ -35,13 +43,16 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
 
-            <TextBlock Classes="secondary" Text="{Binding Header}" Margin="12,10,12,6" />
+            <TextBlock Classes="secondary" Text="{Binding Header}" Margin="12,10,12,6" IsVisible="{Binding ShowHeader}" />
+
+            <TextBlock Classes="secondary" Text="{loc:T 'This tool has no properties.'}" Margin="12,10,12,12" TextWrapping="Wrap"
+                       IsVisible="{Binding ShowNoPropertiesHint}" />
 
             <!-- The controls inside each section are disabled while nothing is selected.
                  The section headers stay enabled so sections can always be collapsed and expanded. -->
             <StackPanel>
 
-                <controls:CollapsibleSection Header="{loc:T 'Transform'}" IsExpanded="{Binding IsTransformExpanded}">
+                <controls:CollapsibleSection Header="{loc:T 'Transform'}" IsExpanded="{Binding IsTransformExpanded}" IsVisible="{Binding ShowTransform}">
                     <Grid Margin="12,4,12,12" ColumnDefinitions="Auto,*,Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6"
                           IsEnabled="{Binding HasSelection}">
                         <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="X" Margin="0,0,6,0" />
@@ -79,16 +90,34 @@
                     </Grid>
                 </controls:CollapsibleSection>
 
-                <controls:CollapsibleSection Header="{loc:T 'Appearance'}" IsExpanded="{Binding IsAppearanceExpanded}">
-                    <Grid Margin="12,4,12,12" ColumnDefinitions="100,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="8"
-                          IsEnabled="{Binding HasSelection}">
+                <controls:CollapsibleSection Header="{loc:T 'Appearance'}" IsExpanded="{Binding IsAppearanceExpanded}" IsVisible="{Binding ShowAppearance}">
+                    <Grid Margin="12,4,12,12" ColumnDefinitions="100,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="8">
                         <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="{loc:T 'Fill'}" />
-                        <Button Grid.Row="0" Grid.Column="1" Classes="swatchButton" IsEnabled="{Binding Fill.IsEnabled}"
+                        <Button x:Name="FillSwatchButton" Grid.Row="0" Grid.Column="1" Classes="swatchButton" IsEnabled="{Binding Fill.IsEnabled}"
                                 ToolTip.Tip="{loc:T 'Fill color'}" AutomationProperties.Name="{loc:T 'Fill color'}">
                             <Button.Flyout>
                                 <Flyout Placement="LeftEdgeAlignedTop" Opened="OnFillFlyoutOpened" Closed="OnFillFlyoutClosed">
-                                    <ColorView x:Name="FillColorView" IsAlphaVisible="True" IsAlphaEnabled="True"
-                                               ColorChanged="OnFillColorChanged" AutomationProperties.Name="{loc:T 'Fill color'}" />
+                                    <StackPanel Spacing="8">
+                                        <ColorView x:Name="FillColorView" IsAlphaVisible="True" IsAlphaEnabled="True" IsHexInputVisible="True" HexInputAlphaPosition="Trailing"
+                                                   ColorChanged="OnFillColorChanged" AutomationProperties.Name="{loc:T 'Fill color'}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Button Content="{loc:T 'Add to palette'}" Click="OnFillAddToPaletteClick" />
+                                            <Button Content="{loc:T 'Pick from canvas'}" Click="OnFillPickClick" />
+                                        </StackPanel>
+                                        <TextBlock Classes="label" Text="{loc:T 'Recent colors'}" />
+                                        <ItemsControl ItemsSource="{Binding RecentColors}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate><WrapPanel ItemSpacing="4" LineSpacing="4" MaxWidth="260" /></ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="coreShapes:Color">
+                                                    <Button Classes="swatchButton" Click="OnFillRecentClick" ToolTip.Tip="{loc:T 'Recent colors'}" AutomationProperties.Name="{loc:T 'Recent colors'}">
+                                                        <Border Classes="smallSwatch" Background="{Binding ., Converter={x:Static local:CoreColorBrushConverter.Instance}}" />
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                 </Flyout>
                             </Button.Flyout>
                             <Panel>
@@ -104,12 +133,31 @@
                                   Click="OnFillNoneClick" AutomationProperties.Name="{loc:T 'No fill'}" />
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Classes="label" Text="{loc:T 'Stroke'}" />
-                        <Button Grid.Row="1" Grid.Column="1" Classes="swatchButton" IsEnabled="{Binding Stroke.IsEnabled}"
+                        <Button x:Name="StrokeSwatchButton" Grid.Row="1" Grid.Column="1" Classes="swatchButton" IsEnabled="{Binding Stroke.IsEnabled}"
                                 ToolTip.Tip="{loc:T 'Stroke color'}" AutomationProperties.Name="{loc:T 'Stroke color'}">
                             <Button.Flyout>
                                 <Flyout Placement="LeftEdgeAlignedTop" Opened="OnStrokeFlyoutOpened" Closed="OnStrokeFlyoutClosed">
-                                    <ColorView x:Name="StrokeColorView" IsAlphaVisible="True" IsAlphaEnabled="True"
-                                               ColorChanged="OnStrokeColorChanged" AutomationProperties.Name="{loc:T 'Stroke color'}" />
+                                    <StackPanel Spacing="8">
+                                        <ColorView x:Name="StrokeColorView" IsAlphaVisible="True" IsAlphaEnabled="True" IsHexInputVisible="True" HexInputAlphaPosition="Trailing"
+                                                   ColorChanged="OnStrokeColorChanged" AutomationProperties.Name="{loc:T 'Stroke color'}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Button Content="{loc:T 'Add to palette'}" Click="OnStrokeAddToPaletteClick" />
+                                            <Button Content="{loc:T 'Pick from canvas'}" Click="OnStrokePickClick" />
+                                        </StackPanel>
+                                        <TextBlock Classes="label" Text="{loc:T 'Recent colors'}" />
+                                        <ItemsControl ItemsSource="{Binding RecentColors}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate><WrapPanel ItemSpacing="4" LineSpacing="4" MaxWidth="260" /></ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="coreShapes:Color">
+                                                    <Button Classes="swatchButton" Click="OnStrokeRecentClick" ToolTip.Tip="{loc:T 'Recent colors'}" AutomationProperties.Name="{loc:T 'Recent colors'}">
+                                                        <Border Classes="smallSwatch" Background="{Binding ., Converter={x:Static local:CoreColorBrushConverter.Instance}}" />
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                 </Flyout>
                             </Button.Flyout>
                             <Panel>
@@ -146,8 +194,30 @@
                             </Button>
                         </StackPanel>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Classes="label" Text="{loc:T 'Opacity'}" />
-                        <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Row="4" Grid.Column="0" Classes="label" Text="{loc:T 'Palette'}" VerticalAlignment="Top" Margin="0,2,0,0" />
+                        <Panel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
+                            <ItemsControl x:Name="PaletteStrip" ItemsSource="{Binding Palette.Swatches}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel ItemSpacing="4" LineSpacing="4" /></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="coreShapes:Color">
+                                        <Button Classes="swatchButton" Click="OnSwatchClick" ToolTip.Tip="{loc:T 'Swatch'}" AutomationProperties.Name="{loc:T 'Swatch'}">
+                                            <Button.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="{loc:T 'Remove swatch'}" Click="OnRemoveSwatchClick" />
+                                                </ContextMenu>
+                                            </Button.ContextMenu>
+                                            <Border Classes="smallSwatch" Background="{Binding ., Converter={x:Static local:CoreColorBrushConverter.Instance}}" />
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <TextBlock Classes="secondary" Text="{loc:T 'No swatches yet.'}" IsVisible="{Binding Palette.IsEmpty}" />
+                        </Panel>
+
+                        <TextBlock Grid.Row="5" Grid.Column="0" Classes="label" Text="{loc:T 'Opacity'}" />
+                        <Grid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto">
                             <Slider x:Name="OpacitySlider" Grid.Column="0" Minimum="0" Maximum="100"
                                     Value="{Binding OpacitySliderValue, Mode=OneWay}" IsEnabled="{Binding OpacityPercent.IsEnabled}"
                                     AutomationProperties.Name="{loc:T 'Opacity'}" />
@@ -160,12 +230,12 @@
                     </Grid>
                 </controls:CollapsibleSection>
 
-                <controls:CollapsibleSection Header="{loc:T 'Path'}" IsExpanded="{Binding IsPathExpanded}">
+                <controls:CollapsibleSection Header="{loc:T 'Path'}" IsExpanded="{Binding IsPathExpanded}" IsVisible="{Binding ShowPath}">
                     <TextBlock Classes="secondary" Text="{loc:T 'Path options appear when a path is selected.'}"
                                Margin="12,4,12,12" TextWrapping="Wrap" />
                 </controls:CollapsibleSection>
 
-                <controls:CollapsibleSection Header="{loc:T 'Align &amp; Distribute'}" IsExpanded="{Binding IsAlignExpanded}">
+                <controls:CollapsibleSection Header="{loc:T 'Align &amp; Distribute'}" IsExpanded="{Binding IsAlignExpanded}" IsVisible="{Binding ShowAlign}">
                     <StackPanel Orientation="Horizontal" Spacing="2" Margin="12,4,12,12" IsEnabled="{Binding HasSelection}">
                         <Button Classes="icon" ToolTip.Tip="{loc:T 'Align Left'}" AutomationProperties.Name="{loc:T 'Align Left'}">
                             <materialIcons:MaterialIcon Kind="AlignHorizontalLeft" Width="18" Height="18" />
@@ -192,7 +262,7 @@
                     </StackPanel>
                 </controls:CollapsibleSection>
 
-                <controls:CollapsibleSection Header="{loc:T 'Quick Actions'}" IsExpanded="{Binding IsQuickActionsExpanded}">
+                <controls:CollapsibleSection Header="{loc:T 'Quick Actions'}" IsExpanded="{Binding IsQuickActionsExpanded}" IsVisible="{Binding ShowQuickActions}">
                     <WrapPanel Margin="12,4,12,12" ItemSpacing="6" LineSpacing="6" IsEnabled="{Binding HasSelection}">
                         <Button Content="{loc:T 'Group'}" MinWidth="80" HorizontalContentAlignment="Center" />
                         <Button Content="{loc:T 'Ungroup'}" MinWidth="80" HorizontalContentAlignment="Center" />

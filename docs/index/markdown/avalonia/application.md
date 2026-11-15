@@ -12,6 +12,12 @@
   - when the lifetime is `IActivityApplicationLifetime` (line 49): creates `MainViewModel` (line 51), `MainView` (line 51)
   - when the lifetime is `ISingleViewApplicationLifetime` (line 53): creates `MainView` (line 55), `MainViewModel` (line 57)
 
+### HeadlessUiApp
+
+`T:PressToShape.App.Tests.HeadlessUiApp` in tests/PressToShape.App.Tests/HeadlessUi.cs.
+
+- `Initialize` at line 21: creates nothing from this solution
+
 ## View locator convention
 
 - ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name
@@ -21,6 +27,9 @@
 - `vm:ToolbarButtonViewModel` at src/PressToShape.App/Views/Desktop/ToolbarView.axaml:13
 - `vm:HistoryItemViewModel` at src/PressToShape.App/Views/Editor/HistoryView.axaml:33
 - `vm:LayerItemViewModel` at src/PressToShape.App/Views/Editor/LayersView.axaml:37
+- `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:113
+- `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:153
+- `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:204
 - `vm:ToolItemViewModel` at src/PressToShape.App/Views/Editor/ToolboxView.axaml:13
 - `vm:MessageDialogButtonViewModel` at src/PressToShape.App/Views/MessageDialogWindow.axaml:29
 

@@ -72,6 +72,7 @@ internal static class CanvasCursors
         CanvasCursorType.ResizeNorthWestSouthEast => StandardCursorType.BottomRightCorner,
         CanvasCursorType.ResizeNorthEastSouthWest => StandardCursorType.BottomLeftCorner,
         CanvasCursorType.Rotate => StandardCursorType.Hand,
+        CanvasCursorType.Eyedropper => StandardCursorType.Cross,
         _ => StandardCursorType.Arrow,
     };
 }
