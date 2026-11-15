@@ -27,6 +27,33 @@ internal sealed class XamlTestHost
             public interface IDataTemplate { object? Build(object? param); bool Match(object? data); }
             public class DataTemplate { }
         }
+        namespace Avalonia.Data.Converters
+        {
+            public interface IValueConverter { object? Convert(object? value, System.Type targetType, object? parameter, System.Globalization.CultureInfo culture); }
+            public interface IMultiValueConverter { object? Convert(System.Collections.Generic.IList<object?> values, System.Type targetType, object? parameter, System.Globalization.CultureInfo culture); }
+        }
+        namespace Avalonia.Controls.ApplicationLifetimes
+        {
+            public interface IApplicationLifetime { }
+            public interface IClassicDesktopStyleApplicationLifetime : IApplicationLifetime { }
+            public interface ISingleViewApplicationLifetime : IApplicationLifetime { }
+            public interface IActivityApplicationLifetime : IApplicationLifetime { }
+        }
+        namespace Avalonia
+        {
+            public class Application { public Avalonia.Controls.ApplicationLifetimes.IApplicationLifetime? ApplicationLifetime { get; } public virtual void Initialize() { } public virtual void OnFrameworkInitializationCompleted() { } }
+            public abstract class AvaloniaProperty { public static StyledProperty<TValue> Register<TOwner, TValue>(string name, TValue defaultValue = default!) => new(); public static AttachedProperty<TValue> RegisterAttached<TOwner, THost, TValue>(string name, TValue defaultValue = default!) => new(); public static DirectProperty<TOwner, TValue> RegisterDirect<TOwner, TValue>(string name, System.Func<TOwner, TValue> getter) => new(); }
+            public class StyledProperty<TValue> : AvaloniaProperty { }
+            public class AttachedProperty<TValue> : AvaloniaProperty { }
+            public class DirectProperty<TOwner, TValue> : AvaloniaProperty { }
+        }
+        namespace Avalonia.Interactivity
+        {
+            [System.Flags] public enum RoutingStrategies { Direct = 1, Tunnel = 2, Bubble = 4 }
+            public class RoutedEventArgs : System.EventArgs { }
+            public class RoutedEvent { public static RoutedEvent<TArgs> Register<TOwner, TArgs>(string name, RoutingStrategies routingStrategies) where TArgs : RoutedEventArgs => new(); }
+            public class RoutedEvent<TArgs> : RoutedEvent where TArgs : RoutedEventArgs { }
+        }
         namespace Avalonia.Controls.Presenters { public class ContentPresenter : Avalonia.Controls.Control { public object? Content { get; set; } } }
         namespace Avalonia.Controls
         {
@@ -98,6 +125,14 @@ internal sealed class XamlTestHost
         }
 
         return new XamlTestHost(documents, world, new XamlResolver(world, project.Compilation, known, convention), project, convention);
+    }
+
+    /// <summary>An application project that references the stub Avalonia types as metadata, so that they are not indexed as part of the solution.</summary>
+    public static ProjectCompilation AppProject(string name, params string[] sources)
+    {
+        var fake = TestCompilation.Project("Fake.Avalonia", Avalonia);
+        var project = TestCompilation.Project(name, sources);
+        return project with { Compilation = project.Compilation.AddReferences(fake.Compilation.ToMetadataReference()) };
     }
 
     public XamlResolution Resolve(string path) => Resolver.Resolve(Documents[path]);

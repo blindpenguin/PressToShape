@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using PressToShape.CodeIndex.Avalonia;
+using PressToShape.CodeIndex.Avalonia.Model;
 using PressToShape.CodeIndex.Extraction;
 using PressToShape.CodeIndex.Loading;
 using PressToShape.CodeIndex.Model;
@@ -50,18 +52,31 @@ internal sealed class IndexGenerator
             ? XamlIndexResult.Empty
             : new XamlIndexer(_xamlSource).Index(loaded.Projects.ToList(), knownIds, cancellationToken);
 
+        var xamlClassIds = xaml.Projects.Values.SelectMany(p => p.Files).Select(f => f.ClassId).OfType<string>().ToHashSet(StringComparer.Ordinal);
+        var factsExtractor = new AvaloniaFactsExtractor(_repoRoot);
+        var facts = new List<AvaloniaFacts>();
+
         var projects = extracted
             .Select(e =>
             {
                 var xamlData = xaml.For(e.Project.Name);
-                var edges = builder.Build(e.Project, cancellationToken).Concat(xamlData.Relationships).ToList();
+                var edges = builder.Build(e.Project, cancellationToken)
+                    .Concat(xamlData.Relationships)
+                    .Concat(CommandHandlerLinker.FromGenerated(e.Symbols))
+                    .ToList();
+                facts.Add(factsExtractor.Extract(e.Project, knownIds, xamlClassIds, cancellationToken));
                 return new ProjectIndex(e.Project.Name, e.Project.ProjectPath, e.Symbols, edges, xamlData.Files);
             })
             .ToList();
 
         var problems = loaded.Problems.Concat(xaml.Problems).ToList();
-        return new GenerateResult(new IndexData(projects, problems), problems.Any(p => !p.IsWarning));
+        return new GenerateResult(new IndexData(projects, problems, Merge(facts)), problems.Any(p => !p.IsWarning));
     }
+
+    private static AvaloniaFacts Merge(IReadOnlyList<AvaloniaFacts> parts) => new(
+        parts.SelectMany(p => p.Controls).OrderBy(c => c.Id, StringComparer.Ordinal).ToList(),
+        parts.SelectMany(p => p.Converters).OrderBy(c => c.Id, StringComparer.Ordinal).ToList(),
+        parts.SelectMany(p => p.Applications).OrderBy(a => a.Id, StringComparer.Ordinal).ToList());
 
     /// <summary>Writes the JSON and Markdown files of the data to the sink.</summary>
     public static void Write(IndexData data, IIndexFileSink sink)

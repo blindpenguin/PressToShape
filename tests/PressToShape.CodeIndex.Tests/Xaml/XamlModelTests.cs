@@ -53,13 +53,13 @@ public class XamlModelTests
         var names = System.Enum.GetNames<RelationshipType>();
 
         Assert.Equal(["Inherits", "Implements", "InjectedDependency", "References", "Calls", "Registers"], names.Take(6));
-        Assert.Equal(["UsesViewModel", "CodeBehind", "BindsTo", "ReferencesResource", "UsesConverter", "HandledBy", "UsesType", "Includes"], names.Skip(6));
+        Assert.Equal(["UsesViewModel", "CodeBehind", "BindsTo", "ReferencesResource", "UsesConverter", "HandledBy", "UsesType", "Includes", "ExecutesMethod"], names.Skip(6));
         var edge = new RelationshipRecord(RelationshipType.BindsTo, "X:a", "P:b", "a.axaml", 3, Confidence.Verified, "x:DataType");
         Assert.Contains("\"Type\":\"BindsTo\"", JsonSerializer.Serialize(edge, JsonIndexWriter.Options).Replace(" ", string.Empty), System.StringComparison.Ordinal);
     }
 
     [Fact]
-    public void IndexSchema_Version_IsTwo() => Assert.Equal(2, IndexSchema.Version);
+    public void IndexSchema_Version_IsThree() => Assert.Equal(3, IndexSchema.Version);
 
     [Fact]
     public void ManifestProject_WithoutXamlCount_DefaultsToZero()
