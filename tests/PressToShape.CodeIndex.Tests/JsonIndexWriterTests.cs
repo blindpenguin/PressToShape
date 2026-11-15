@@ -143,7 +143,7 @@ public class JsonIndexWriterTests
     {
         var core = Encoding.UTF8.GetString(Write(BuildData()).Files["symbols/Core/A.B.json"]);
 
-        Assert.Contains("\"SymbolType\": \"Interface\"", core, StringComparison.Ordinal);
+        Assert.Contains("\"SymbolType\":\"Interface\"", core, StringComparison.Ordinal);
         Assert.DoesNotContain("\\u003C", core, StringComparison.Ordinal);
     }
 
@@ -161,6 +161,33 @@ public class JsonIndexWriterTests
         Assert.DoesNotContain(lines, l => l.Split('\t')[3] is "Namespace" or "Constructor");
         Assert.Equal(lines.OrderBy(l => l.Split('\t')[0], StringComparer.Ordinal).ThenBy(l => l.Split('\t')[1], StringComparer.Ordinal), lines);
         Assert.All(lines, l => Assert.Equal(5, l.Split('\t').Length));
+    }
+
+    [Fact]
+    public void Write_LargeFiles_HaveOneRecordPerLineAndStayValidJson()
+    {
+        var files = Write(BuildData()).Files;
+
+        var symbolText = Encoding.UTF8.GetString(files["symbols/Core/A.B.json"]);
+        var relationshipText = Encoding.UTF8.GetString(files["relationships/Core.json"]);
+        var symbols = JsonSerializer.Deserialize<SymbolsFile>(symbolText, JsonIndexWriter.Options)!;
+        var relationships = JsonSerializer.Deserialize<RelationshipsFile>(relationshipText, JsonIndexWriter.Options)!;
+
+        Assert.Equal(symbols.Symbols.Count + 2, symbolText.TrimEnd('\n').Split('\n').Length);
+        Assert.Equal(relationships.Relationships.Count + 2, relationshipText.TrimEnd('\n').Split('\n').Length);
+        Assert.StartsWith("{\"SchemaVersion\":1,\"Project\":\"Core\",\"Namespace\":\"A.B\",\"Symbols\":[\n{", symbolText, StringComparison.Ordinal);
+        Assert.EndsWith("\n]}\n", symbolText, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Write_EmptyList_StillWritesValidJson()
+    {
+        var data = new IndexData([new ProjectIndex("Empty", "src/Empty/Empty.csproj", [], [])], []);
+
+        var text = Encoding.UTF8.GetString(Write(data).Files["relationships/Empty.json"]);
+
+        Assert.Equal("{\"SchemaVersion\":1,\"Project\":\"Empty\",\"Relationships\":[]}\n", text);
+        Assert.Empty(JsonSerializer.Deserialize<RelationshipsFile>(text, JsonIndexWriter.Options)!.Relationships);
     }
 
     [Theory]
