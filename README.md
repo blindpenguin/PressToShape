@@ -10,7 +10,8 @@ A vector drawing program for hobbyists, in the spirit of Inkscape and Illustrato
 | `src/PressToShape.App` | Shared Avalonia UI (view models, views) |
 | `src/PressToShape.Desktop` | Linux and Windows head |
 | `src/PressToShape.Android` | Android head |
-| `tests/` | xUnit tests |
+| `tests/PressToShape.*.Tests` | xUnit tests |
+| `tests/PressToShape.Benchmarks` | BenchmarkDotNet performance benchmarks (not run by `dotnet test`) |
 
 Dependencies point one way: `Desktop/Android -> App -> Core`. A GUI mockup is in `docs/mockup/`.
 
@@ -33,6 +34,22 @@ dotnet format --verify-no-changes              # formatting check
 ```
 
 The Android app is only built, not run on an emulator or device, during development so far.
+
+## Performance benchmarks
+
+`tests/PressToShape.Benchmarks` measures the shape operations on a drawing with 1,000 and 10,000 shapes (add 50,000 with `PTS_BENCH_LARGE=1`), all selected:
+select all, marquee, overlay, handle drag, group move, nudge, duplicate, cut, paste, and saving and exporting. Run it in Release mode:
+
+```bash
+dotnet run -c Release --project tests/PressToShape.Benchmarks -- --filter "*"                      # full run (several minutes)
+dotnet run -c Release --project tests/PressToShape.Benchmarks -- --filter "*" --job short          # quick pass
+dotnet run -c Release --project tests/PressToShape.Benchmarks -- --filter "*Handle*" --job short   # one benchmark
+```
+
+The benchmark processes are limited to 1.5 GB of heap (`DOTNET_GCHeapHardLimit`, set in `Program.cs`), so a runaway benchmark fails instead of filling the computer's memory; set the variable yourself to change it.
+
+Results are written to `BenchmarkDotNet.Artifacts/` (not committed). The times should grow roughly in proportion to the shape
+count: if 10,000 shapes take far more than 10 times as long as 1,000, a step has become quadratic. Compare runs on the same machine.
 
 ## Translations
 

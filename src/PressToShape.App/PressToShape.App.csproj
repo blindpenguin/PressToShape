@@ -27,6 +27,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="PressToShape.App.Tests"/>
+        <InternalsVisibleTo Include="PressToShape.Benchmarks"/>
     </ItemGroup>
 
     <!-- Translations: the .po files are the only committed sources. They are compiled to .mo with msgfmt

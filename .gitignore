@@ -16,3 +16,4 @@ riderModule.iml
 
 # spec-workflow dashboard audit log (written to the working directory)
 audit.log
+BenchmarkDotNet.Artifacts/
