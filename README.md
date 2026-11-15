@@ -62,7 +62,7 @@ The app is available in English (default) and German. Texts in the code are writ
 
 ## Code index for coding agents
 
-`tools/PressToShape.CodeIndex` analyses the solution with Roslyn and writes a searchable index of the C# source (types, members, signatures, doc comments, inheritance, constructor injection, references and calls) to `docs/index/`. The index is committed. Relationships the compiler cannot prove are marked `inferred`. It uses its own packages and is not referenced by the app. Run `dotnet restore` first.
+`tools/PressToShape.CodeIndex` analyses the solution with Roslyn and writes a searchable index of the C# source (types, members, signatures, doc comments, inheritance, constructor injection, references and calls) and of the Avalonia XAML (views, bindings resolved to view model properties and commands, resources, styles, templates, converters, event handlers, and the View to ViewModel links) to `docs/index/`. The index is committed. Relationships the compiler cannot prove are marked `inferred`. It uses its own packages and is not referenced by the app. Run `dotnet restore` first.
 
 ```bash
 dotnet run --project tools/PressToShape.CodeIndex -- generate          # write docs/index/
@@ -72,7 +72,7 @@ dotnet run --project tools/PressToShape.CodeIndex -- show ILocalizer   # signatu
 dotnet run --project tools/PressToShape.CodeIndex -- --help            # impls, derived, refs, deps, --json
 ```
 
-Regenerate and commit the index after changing code. `docs/index/markdown/README.md` is the human-readable entry point, `names.tsv` is a flat list for `grep`. The query commands read only the index files and do not compile anything.
+A view class shows its XAML file with `show`, and `refs` of a view model property, command, converter or resource key lists the XAML places that use it. A View to ViewModel link made by the `ViewLocator` name convention is marked `inferred` with the reason. Regenerate and commit the index after changing code or XAML. `docs/index/markdown/README.md` is the human-readable entry point, `names.tsv` is a flat list for `grep`. The query commands read only the index files and do not compile anything.
 
 ## Spec workflow
 

@@ -21,7 +21,7 @@ PressToShape/
 │   └── PressToShape.Benchmarks/   # BenchmarkDotNet performance benchmarks
 ├── docs/
 │   ├── mockup/                    # GUI mockup images (design reference)
-│   └── index/                     # Generated code index (JSON and Markdown), committed, never edited by hand
+│   └── index/                     # Generated code index of the C# source and the XAML (JSON and Markdown, with xaml/ per XAML file), committed, never edited by hand
 ├── scripts/                       # Utility scripts (e.g. spec-dashboard.sh)
 ├── .spec-workflow/                # Specs, steering docs, templates
 ├── .claude/rules/                 # Rule files for Claude Code
