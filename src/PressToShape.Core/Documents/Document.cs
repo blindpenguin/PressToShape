@@ -15,6 +15,7 @@ public sealed record Document
     private readonly double _artboardWidth = 1200;
     private readonly double _artboardHeight = 800;
     private readonly ImmutableArray<Layer> _layers;
+    private readonly ImmutableArray<Color> _palette = [];
 
     // Private: a document needs a first layer, so it is created through Create.
     private Document()
@@ -44,6 +45,13 @@ public sealed record Document
         init => _layers = Validated(value);
     }
 
+    /// <summary>The swatches saved with the document, in the order the user added them. No colour appears twice.</summary>
+    public ImmutableArray<Color> Palette
+    {
+        get => _palette;
+        init => _palette = value.IsDefault ? [] : value.Distinct().ToImmutableArray();
+    }
+
     /// <summary>Creates a 1200 x 800 document with one visible, unlocked layer.</summary>
     /// <param name="firstLayerName">The name of the first layer. Core has no default text, so the caller provides it.</param>
     public static Document Create(string firstLayerName)
@@ -56,6 +64,20 @@ public sealed record Document
     /// <summary>Returns a document with a new artboard size.</summary>
     public Document WithArtboardSize(double width, double height) =>
         this with { ArtboardWidth = width, ArtboardHeight = height };
+
+    /// <summary>Returns a document with the colour added at the end of the palette. Returns this document if the palette has the colour.</summary>
+    public Document AddSwatch(Color color) =>
+        _palette.Contains(color) ? this : this with { Palette = _palette.Add(color) };
+
+    /// <summary>Returns a document without the swatch at this index.</summary>
+    /// <exception cref="ArgumentOutOfRangeException">The index is not a swatch of the palette.</exception>
+    public Document RemoveSwatchAt(int index)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(index);
+        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _palette.Length);
+
+        return this with { Palette = _palette.RemoveAt(index) };
+    }
 
     /// <summary>Returns a document with the layer added above all existing layers.</summary>
     /// <exception cref="ArgumentException">A layer or shape in <paramref name="layer"/> has an id that already exists.</exception>

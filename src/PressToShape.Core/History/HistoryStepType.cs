@@ -68,4 +68,9 @@ public enum HistoryStepType
 
     /// <summary>The opacity of shapes was changed.</summary>
     ChangeOpacity,
+    /// <summary>A colour was added to the palette.</summary>
+    AddSwatch,
+
+    /// <summary>A colour was removed from the palette.</summary>
+    RemoveSwatch,
 }

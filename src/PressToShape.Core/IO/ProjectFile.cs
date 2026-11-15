@@ -48,6 +48,7 @@ public static class ProjectFile
             Version = FormatVersion,
             Artboard = new ArtboardDto { Width = document.ArtboardWidth, Height = document.ArtboardHeight },
             Layers = new List<LayerDto?>(document.Layers.Select(ToDto)),
+            Palette = document.Palette.IsEmpty ? null : new List<string?>(document.Palette.Select(color => ToText(color))),
         };
 
         return JsonSerializer.SerializeToUtf8Bytes(file, Options);
@@ -136,7 +137,25 @@ public static class ProjectFile
             });
         }
 
-        var document = Document.Create(string.Empty) with { ArtboardWidth = width, ArtboardHeight = height, Layers = layers.ToImmutable() };
+        var palette = ImmutableArray.CreateBuilder<Color>();
+        foreach (var text in file.Palette ?? [])
+        {
+            // A swatch is always a color: null ("no color") is not allowed here.
+            if (text is null || !TryParseColor(text, out var swatch) || swatch is not { } color)
+            {
+                return ProjectFileResult.Failure(ProjectFileError.InvalidValue, "A palette entry is not a color.");
+            }
+
+            palette.Add(color);
+        }
+
+        var document = Document.Create(string.Empty) with
+        {
+            ArtboardWidth = width,
+            ArtboardHeight = height,
+            Layers = layers.ToImmutable(),
+            Palette = palette.ToImmutable(),
+        };
         return ProjectFileResult.Success(document);
     }
 
@@ -260,6 +279,11 @@ public static class ProjectFile
         [JsonPropertyName("artboard")] public ArtboardDto? Artboard { get; set; }
 
         [JsonPropertyName("layers")] public List<LayerDto?>? Layers { get; set; }
+
+        // Optional: written only for a document with swatches, and missing means an empty palette.
+        [JsonPropertyName("palette")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<string?>? Palette { get; set; }
     }
 
     private sealed class ArtboardDto
