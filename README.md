@@ -90,3 +90,4 @@ Rules for working with Claude Code are in `.claude/rules/`.
 ## License
 
 PressToShape is free software, licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE).
+Third-party components and their licenses are listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
