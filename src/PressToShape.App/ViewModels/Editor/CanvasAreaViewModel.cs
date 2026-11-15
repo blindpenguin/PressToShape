@@ -13,10 +13,12 @@ namespace PressToShape.App.ViewModels.Editor;
 internal sealed partial class CanvasAreaViewModel : ViewModelBase
 {
     private readonly EditorState _state;
+    private readonly CanvasInteraction _interaction;
 
     public CanvasAreaViewModel(EditorState state)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
+        _interaction = new CanvasInteraction(_state);
         _state.PropertyChanged += OnStateChanged;
     }
 
@@ -28,6 +30,16 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
     /// <summary>The document the canvas draws.</summary>
     public Document Document => _state.Document;
+
+    /// <summary>The shape that is being drawn, in screen space, or <c>null</c>.</summary>
+    public ScreenShape? Draft => _state.Draft is { } draft ? CanvasScene.BuildShape(draft, ZoomPercent, OriginX, OriginY) : null;
+
+    /// <summary>The outline of the selected shape in screen space, or <c>null</c>.</summary>
+    public ScreenRect? SelectionOutline =>
+        CanvasScene.SelectionOutline(_state.Document, _state.SelectedShapeId, ZoomPercent, OriginX, OriginY);
+
+    /// <summary>Whether the pointer should be a crosshair: the shape tools draw by dragging.</summary>
+    public bool UseCrosshair => _state.ActiveTool is Tool.Rectangle or Tool.Ellipse;
 
     public double ZoomPercent => _state.ZoomPercent;
 
@@ -45,9 +57,45 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <summary>Vertical screen position of the artboard's top edge. The vertical ruler's zero is here.</summary>
     public double OriginY => Math.Max(0, (ViewportHeight - ArtboardScreenHeight) / 2);
 
-    partial void OnViewportWidthChanged(double value) => OnPropertyChanged(nameof(OriginX));
+    /// <summary>The primary button went down. The position is in screen pixels of the canvas area.</summary>
+    public void PointerPressed(double screenX, double screenY) =>
+        _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY));
 
-    partial void OnViewportHeightChanged(double value) => OnPropertyChanged(nameof(OriginY));
+    /// <summary>The pointer moved. The position is in screen pixels of the canvas area.</summary>
+    public void PointerMoved(double screenX, double screenY) =>
+        _interaction.PointerMoved(ToDocumentX(screenX), ToDocumentY(screenY));
+
+    /// <summary>The button went up. The position is in screen pixels of the canvas area.</summary>
+    public void PointerReleased(double screenX, double screenY) =>
+        _interaction.PointerReleased(ToDocumentX(screenX), ToDocumentY(screenY));
+
+    /// <summary>Ends a drag without a result, for example when the pointer capture is lost.</summary>
+    public void Cancel() => _interaction.Cancel();
+
+    /// <summary>Removes the selected shape. Does nothing without a selection.</summary>
+    public void DeleteSelection() => _interaction.DeleteSelection();
+
+    partial void OnViewportWidthChanged(double value)
+    {
+        OnPropertyChanged(nameof(OriginX));
+        NotifyOverlayChanged();
+    }
+
+    partial void OnViewportHeightChanged(double value)
+    {
+        OnPropertyChanged(nameof(OriginY));
+        NotifyOverlayChanged();
+    }
+
+    private double ToDocumentX(double screenX) => CanvasMapping.ToDocument(screenX, OriginX, ZoomPercent);
+
+    private double ToDocumentY(double screenY) => CanvasMapping.ToDocument(screenY, OriginY, ZoomPercent);
+
+    private void NotifyOverlayChanged()
+    {
+        OnPropertyChanged(nameof(Draft));
+        OnPropertyChanged(nameof(SelectionOutline));
+    }
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
     {
@@ -55,6 +103,14 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         {
             case nameof(EditorState.Document):
                 OnPropertyChanged(nameof(Document));
+                NotifyOverlayChanged();
+                break;
+            case nameof(EditorState.Draft):
+            case nameof(EditorState.SelectedShapeId):
+                NotifyOverlayChanged();
+                break;
+            case nameof(EditorState.ActiveTool):
+                OnPropertyChanged(nameof(UseCrosshair));
                 break;
             case nameof(EditorState.ZoomPercent):
                 OnPropertyChanged(nameof(ZoomPercent));
@@ -75,5 +131,6 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         OnPropertyChanged(nameof(ArtboardScreenHeight));
         OnPropertyChanged(nameof(OriginX));
         OnPropertyChanged(nameof(OriginY));
+        NotifyOverlayChanged();
     }
 }

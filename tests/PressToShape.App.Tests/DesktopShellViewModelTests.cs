@@ -207,14 +207,17 @@ public class DesktopShellViewModelTests
     }
 
     [Fact]
-    public void Shell_Starts_WithTheSampleDocumentNamedInTheCurrentLanguage()
+    public void Shell_Starts_WithOneEmptyLayerNamedInTheCurrentLanguage()
     {
-        var german = new System.Collections.Generic.Dictionary<string, string> { ["Background"] = "Hintergrund", ["Shapes"] = "Formen" };
+        var german = new System.Collections.Generic.Dictionary<string, string> { ["Layer 1"] = "Ebene 1" };
         var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create("de", german));
 
-        Assert.Equal(2, shell.State.Document.Layers.Length);
-        Assert.Equal(new[] { "Hintergrund", "Formen" }, shell.State.Document.Layers.Select(l => l.Name));
+        var layer = Assert.Single(shell.State.Document.Layers);
+        Assert.Equal("Ebene 1", layer.Name);
+        Assert.Empty(layer.Shapes);
         Assert.Equal(1200, shell.State.ArtboardWidth);
+        Assert.Equal(800, shell.State.ArtboardHeight);
+        Assert.Equal(layer.Id, shell.State.ActiveLayerId);
     }
 
     [Fact]
@@ -223,7 +226,8 @@ public class DesktopShellViewModelTests
         var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
 
         Assert.Same(shell.State.Document, shell.Canvas.Document);
-        Assert.Equal(new[] { "Shapes", "Background" }, shell.Inspector.Layers.Items.Select(i => i.Name));
+        Assert.Equal(new[] { "Layer 1" }, shell.Inspector.Layers.Items.Select(i => i.Name));
+        Assert.Equal(shell.State.ActiveLayerId, shell.Inspector.Layers.SelectedItem!.LayerId);
     }
 
     [Fact]
@@ -235,8 +239,30 @@ public class DesktopShellViewModelTests
         shell.Inspector.Layers.Items[0].ToggleVisibilityCommand.Execute(null);
 
         Assert.NotSame(before, shell.Canvas.Document);
-        Assert.False(shell.Canvas.Document.Layers[1].IsVisible);
-        Assert.True(before.Layers[1].IsVisible);
-        Assert.Equal(CanvasScene.Build(before, 100, 0, 0).Count - 3, CanvasScene.Build(shell.Canvas.Document, 100, 0, 0).Count);
+        Assert.False(shell.Canvas.Document.Layers[0].IsVisible);
+        Assert.True(before.Layers[0].IsVisible);
+    }
+
+    [Fact]
+    public void DrawingARectangle_ShowsInDocumentLayersPanelAndSelection()
+    {
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create());
+        shell.Canvas.ViewportWidth = 648;  // fits the 1200 x 800 artboard at 50%, origin (24, 24)
+        shell.Canvas.ViewportHeight = 448;
+        shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Rectangle).SelectCommand.Execute(null);
+
+        shell.Canvas.PointerPressed(24 + 50, 24 + 50);
+        shell.Canvas.PointerMoved(24 + 150, 24 + 100);
+        shell.Canvas.PointerReleased(24 + 250, 24 + 150);
+
+        var shape = Assert.Single(shell.State.Document.Layers[0].Shapes);
+        Assert.Equal((100, 100, 400, 200), (shape.X, shape.Y, shape.Width, shape.Height));
+        Assert.Same(shell.State.Document, shell.Canvas.Document);
+        Assert.Equal(shape.Id, shell.State.SelectedShapeId);
+        Assert.True(shell.Toolbar.HasSelection);
+        Assert.True(shell.Inspector.Properties.HasSelection);
+        Assert.NotNull(shell.Canvas.SelectionOutline);
+        Assert.Equal(Tool.Rectangle, shell.Toolbox.ActiveTool);
+        Assert.Equal(shell.State.Document.Layers[0].Id, shell.Inspector.Layers.SelectedItem!.LayerId);
     }
 }

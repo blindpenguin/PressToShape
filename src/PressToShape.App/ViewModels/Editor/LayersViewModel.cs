@@ -14,6 +14,8 @@ namespace PressToShape.App.ViewModels.Editor;
 internal sealed partial class LayersViewModel : ViewModelBase
 {
     private readonly EditorState _state;
+    private LayerItemViewModel? _selectedItem;
+    private bool _updatingSelection;
 
     public LayersViewModel(EditorState state)
     {
@@ -23,6 +25,24 @@ internal sealed partial class LayersViewModel : ViewModelBase
     }
 
     public ObservableCollection<LayerItemViewModel> Items { get; } = [];
+
+    /// <summary>
+    /// The row of the active layer, the layer new shapes go into. Setting it changes the active layer.
+    /// <c>null</c> is ignored: there is always an active layer, and the list control sends <c>null</c> while it is rebuilt.
+    /// </summary>
+    public LayerItemViewModel? SelectedItem
+    {
+        get => _selectedItem;
+        set
+        {
+            if (value is null || _updatingSelection || !SetProperty(ref _selectedItem, value))
+            {
+                return;
+            }
+
+            _state.ActiveLayerId = value.LayerId;
+        }
+    }
 
     /// <summary>Adding layers is not part of this slice, so this cannot execute yet.</summary>
     [RelayCommand(CanExecute = nameof(CanAddLayer))]
@@ -34,9 +54,40 @@ internal sealed partial class LayersViewModel : ViewModelBase
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(EditorState.Document))
+        switch (e.PropertyName)
         {
-            Sync();
+            case nameof(EditorState.Document):
+                Sync();
+                break;
+            case nameof(EditorState.ActiveLayerId):
+                ShowActiveLayer();
+                break;
+        }
+    }
+
+    // Makes the selected row the one of the active layer. The flag keeps this from writing back to the state.
+    private void ShowActiveLayer()
+    {
+        var item = Items.FirstOrDefault(i => i.LayerId == _state.ActiveLayerId);
+        if (item is null || ReferenceEquals(item, _selectedItem))
+        {
+            return;
+        }
+
+        SetSelection(item);
+    }
+
+    private void SetSelection(LayerItemViewModel? item)
+    {
+        _updatingSelection = true;
+        try
+        {
+            _selectedItem = item;
+            OnPropertyChanged(nameof(SelectedItem));
+        }
+        finally
+        {
+            _updatingSelection = false;
         }
     }
 
@@ -52,13 +103,25 @@ internal sealed partial class LayersViewModel : ViewModelBase
                 Items[i].Update(layers[i]);
             }
 
+            ShowActiveLayer();
             return;
         }
 
-        Items.Clear();
-        foreach (var layer in layers)
+        _updatingSelection = true;
+        try
         {
-            Items.Add(new LayerItemViewModel(_state, layer));
+            Items.Clear();
+            foreach (var layer in layers)
+            {
+                Items.Add(new LayerItemViewModel(_state, layer));
+            }
         }
+        finally
+        {
+            _updatingSelection = false;
+        }
+
+        // New row objects: the selected one must be found again, and the list control told.
+        SetSelection(Items.FirstOrDefault(i => i.LayerId == _state.ActiveLayerId));
     }
 }

@@ -203,4 +203,68 @@ public class CanvasSceneTests
         Assert.Equal(0, document.Layers[0].Shapes[0].X);
         Assert.Equal(10, document.Layers[0].Shapes[0].Width);
     }
+
+    [Fact]
+    public void BuildShape_ShapeInDocument_EqualsTheMatchingBuildEntry()
+    {
+        var shape = Rect(Shape1, x: 7, y: 9) with { Appearance = Appearance.Default with { StrokeWidth = 3, Opacity = 0.5 } };
+        var document = TwoLayers().AddShape(LayerA, shape);
+
+        var viaBuild = Assert.Single(CanvasScene.Build(document, 200, 30, 40));
+
+        Assert.Equal(viaBuild, CanvasScene.BuildShape(shape, 200, 30, 40));
+    }
+
+    [Fact]
+    public void BuildShape_NullShape_Throws()
+    {
+        Assert.Throws<ArgumentNullException>(() => CanvasScene.BuildShape(null!, 100, 0, 0));
+    }
+
+    [Theory]
+    [InlineData(50, 10, 20, 15, 30, 5, 5)]
+    [InlineData(100, 10, 20, 20, 40, 10, 10)]
+    [InlineData(200, 10, 20, 30, 60, 20, 20)]
+    public void SelectionOutline_SelectedShape_ReturnsScreenBounds(double zoom, double originX, double originY, double x, double y, double width, double height)
+    {
+        var document = TwoLayers().AddShape(LayerA, Rect(Shape1, x: 10, y: 20));
+
+        var outline = CanvasScene.SelectionOutline(document, Shape1, zoom, originX, originY);
+
+        Assert.Equal(new ScreenRect(originX + 10 * zoom / 100, originY + 20 * zoom / 100, width, height), outline);
+        Assert.Equal(x, outline!.Value.X, precision: 9);
+        Assert.Equal(y, outline.Value.Y, precision: 9);
+    }
+
+    [Fact]
+    public void SelectionOutline_ShapeInLockedLayer_IsReturned()
+    {
+        var document = TwoLayers().AddShape(LayerA, Rect(Shape1)).UpdateLayer(LayerA, l => l with { IsLocked = true });
+
+        Assert.NotNull(CanvasScene.SelectionOutline(document, Shape1, 100, 0, 0));
+    }
+
+    [Fact]
+    public void SelectionOutline_NoId_ReturnsNull()
+    {
+        var document = TwoLayers().AddShape(LayerA, Rect(Shape1));
+
+        Assert.Null(CanvasScene.SelectionOutline(document, null, 100, 0, 0));
+    }
+
+    [Fact]
+    public void SelectionOutline_UnknownId_ReturnsNull()
+    {
+        var document = TwoLayers().AddShape(LayerA, Rect(Shape1));
+
+        Assert.Null(CanvasScene.SelectionOutline(document, Shape2, 100, 0, 0));
+    }
+
+    [Fact]
+    public void SelectionOutline_ShapeInHiddenLayer_ReturnsNull()
+    {
+        var document = TwoLayers().AddShape(LayerA, Rect(Shape1)).UpdateLayer(LayerA, l => l with { IsVisible = false });
+
+        Assert.Null(CanvasScene.SelectionOutline(document, Shape1, 100, 0, 0));
+    }
 }

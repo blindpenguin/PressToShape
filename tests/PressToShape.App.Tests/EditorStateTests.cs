@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.Shapes;
 using Xunit;
 
 namespace PressToShape.App.Tests;
@@ -212,5 +213,129 @@ public class EditorStateTests
         state.ZoomToFit(648, 448); // available 600 x 400 -> exactly the artboard size
 
         Assert.Equal(100, state.ZoomPercent, precision: 6);
+    }
+
+    private static (EditorState State, Guid Bottom, Guid Top, Guid ShapeId) TwoLayerState()
+    {
+        var shape = new RectangleShape { Width = 10, Height = 10 };
+        var document = Document.Create("Bottom");
+        var bottom = document.Layers[0].Id;
+        document = document.AddLayer(new Layer { Name = "Top" });
+        var top = document.Layers[1].Id;
+        document = document.AddShape(bottom, shape);
+        return (new EditorState(document), bottom, top, shape.Id);
+    }
+
+    [Fact]
+    public void NewState_ActiveLayerIsTheTopmost()
+    {
+        var (state, _, top, _) = TwoLayerState();
+
+        Assert.Equal(top, state.ActiveLayerId);
+    }
+
+    [Fact]
+    public void NewState_HasNoSelectionAndNoDraft()
+    {
+        var state = new EditorState();
+
+        Assert.Null(state.SelectedShapeId);
+        Assert.Null(state.Draft);
+    }
+
+    [Fact]
+    public void Document_ActiveLayerRemoved_FallsBackToTheTopmostLayer()
+    {
+        var (state, bottom, top, _) = TwoLayerState();
+
+        state.Document = state.Document.RemoveLayer(top);
+
+        Assert.Equal(bottom, state.ActiveLayerId);
+    }
+
+    [Fact]
+    public void Document_OtherLayerRemoved_KeepsTheActiveLayer()
+    {
+        var (state, bottom, top, _) = TwoLayerState();
+        state.ActiveLayerId = bottom;
+
+        state.Document = state.Document.RemoveLayer(top);
+        Assert.Equal(bottom, state.ActiveLayerId);
+
+        var (state2, bottom2, top2, _) = TwoLayerState();
+        state2.Document = state2.Document.RemoveLayer(bottom2);
+        Assert.Equal(top2, state2.ActiveLayerId);
+    }
+
+    [Fact]
+    public void Select_Shape_SetsSelectionAndHasSelection()
+    {
+        var (state, _, _, shapeId) = TwoLayerState();
+
+        state.Select(shapeId);
+
+        Assert.Equal(shapeId, state.SelectedShapeId);
+        Assert.True(state.HasSelection);
+        Assert.Equal(string.Empty, state.SelectionSummary);
+    }
+
+    [Fact]
+    public void Select_Null_ClearsSelection()
+    {
+        var (state, _, _, shapeId) = TwoLayerState();
+        state.Select(shapeId);
+
+        state.Select(null);
+
+        Assert.Null(state.SelectedShapeId);
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void Document_UnrelatedEdit_KeepsTheSelection()
+    {
+        var (state, _, top, shapeId) = TwoLayerState();
+        state.Select(shapeId);
+
+        state.Document = state.Document.UpdateLayer(top, l => l with { IsLocked = true });
+
+        Assert.Equal(shapeId, state.SelectedShapeId);
+        Assert.True(state.HasSelection);
+    }
+
+    [Fact]
+    public void Document_SelectedShapeRemoved_ClearsTheSelection()
+    {
+        var (state, _, _, shapeId) = TwoLayerState();
+        state.Select(shapeId);
+
+        state.Document = state.Document.RemoveShape(shapeId);
+
+        Assert.Null(state.SelectedShapeId);
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void Document_LayerOfSelectedShapeRemoved_ClearsTheSelection()
+    {
+        var (state, bottom, _, shapeId) = TwoLayerState();
+        state.Select(shapeId);
+
+        state.Document = state.Document.RemoveLayer(bottom);
+
+        Assert.Null(state.SelectedShapeId);
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void Draft_Set_RaisesPropertyChanged()
+    {
+        var state = new EditorState();
+        var raised = new List<string?>();
+        state.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.Draft = new RectangleShape { Width = 1, Height = 1 };
+
+        Assert.Contains(nameof(EditorState.Draft), raised);
     }
 }

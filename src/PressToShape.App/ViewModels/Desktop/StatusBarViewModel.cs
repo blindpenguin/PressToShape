@@ -25,8 +25,13 @@ internal sealed partial class StatusBarViewModel : LocalizedViewModel
         _state.PropertyChanged += OnStateChanged;
     }
 
-    /// <summary>The selection description, or the translated "Nothing selected" without a selection.</summary>
-    public string SelectionSummary => _state.HasSelection ? _state.SelectionSummary : Localizer.T(N("Nothing selected"));
+    /// <summary>
+    /// The selection description, the translated "1 selected" when the state has a selection but no description,
+    /// or the translated "Nothing selected" without a selection.
+    /// </summary>
+    public string SelectionSummary => !_state.HasSelection
+        ? Localizer.T(N("Nothing selected"))
+        : _state.SelectionSummary.Length > 0 ? _state.SelectionSummary : Localizer.T(N("1 selected"));
 
     /// <summary>Path length of the selection, for example "Path length: 2,480.6 px". Empty until selections exist.</summary>
     public string PathLengthText => string.Empty;

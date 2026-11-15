@@ -199,4 +199,27 @@ public class StatusBarViewModelTests
     {
         Assert.Equal("133,33%", StatusBarViewModel.FormatZoom(133.333, new System.Globalization.CultureInfo("de-DE")));
     }
+
+    [Fact]
+    public void SelectedShapeWithoutDescription_ShowsOneSelected_AndTranslatesIt()
+    {
+        var state = new EditorState();
+        var localizer = FakeLocalizer.Create("en", new Dictionary<string, string> { ["1 selected"] = "1 ausgewählt" });
+        var bar = new StatusBarViewModel(state, localizer, () => { });
+        var raised = new List<string?>();
+        bar.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.Select(System.Guid.NewGuid());
+
+        Assert.Equal("1 selected", bar.SelectionSummary);
+        Assert.Contains(nameof(StatusBarViewModel.SelectionSummary), raised);
+
+        localizer.SetLanguage("de");
+
+        Assert.Equal("1 ausgewählt", bar.SelectionSummary);
+
+        state.Select(null);
+
+        Assert.NotEqual("1 ausgewählt", bar.SelectionSummary);
+    }
 }

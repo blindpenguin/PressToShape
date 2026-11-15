@@ -29,9 +29,31 @@ internal sealed class DocumentCanvasControl : Control
     public static readonly StyledProperty<double> OriginYProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, double>(nameof(OriginY));
 
+    /// <summary>The shape that is being drawn, in screen space. It is not part of the document.</summary>
+    public static readonly StyledProperty<ScreenShape?> DraftProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, ScreenShape?>(nameof(Draft));
+
+    /// <summary>The outline of the selected shape, in screen space.</summary>
+    public static readonly StyledProperty<ScreenRect?> SelectionOutlineProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, ScreenRect?>(nameof(SelectionOutline));
+
+    /// <summary>The brush of the selection outline. It comes from the theme.</summary>
+    public static readonly StyledProperty<IBrush?> SelectionBrushProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(SelectionBrush));
+
+    // The outline keeps this width at every zoom.
+    private const double OutlineThickness = 1;
+
     static DocumentCanvasControl()
     {
-        AffectsRender<DocumentCanvasControl>(DocumentProperty, ZoomPercentProperty, OriginXProperty, OriginYProperty);
+        AffectsRender<DocumentCanvasControl>(
+            DocumentProperty,
+            ZoomPercentProperty,
+            OriginXProperty,
+            OriginYProperty,
+            DraftProperty,
+            SelectionOutlineProperty,
+            SelectionBrushProperty);
     }
 
     public DocumentCanvasControl()
@@ -63,6 +85,24 @@ internal sealed class DocumentCanvasControl : Control
         set => SetValue(OriginYProperty, value);
     }
 
+    public ScreenShape? Draft
+    {
+        get => GetValue(DraftProperty);
+        set => SetValue(DraftProperty, value);
+    }
+
+    public ScreenRect? SelectionOutline
+    {
+        get => GetValue(SelectionOutlineProperty);
+        set => SetValue(SelectionOutlineProperty, value);
+    }
+
+    public IBrush? SelectionBrush
+    {
+        get => GetValue(SelectionBrushProperty);
+        set => SetValue(SelectionBrushProperty, value);
+    }
+
     public override void Render(DrawingContext context)
     {
         if (Document is not { } document)
@@ -72,18 +112,34 @@ internal sealed class DocumentCanvasControl : Control
 
         foreach (var shape in CanvasScene.Build(document, ZoomPercent, OriginX, OriginY))
         {
-            if (shape.Opacity < 1)
-            {
-                // One opacity for fill and stroke together, like SVG opacity.
-                using (context.PushOpacity(shape.Opacity))
-                {
-                    DrawShape(context, shape);
-                }
-            }
-            else
+            DrawWithOpacity(context, shape);
+        }
+
+        if (Draft is { } draft)
+        {
+            DrawWithOpacity(context, draft);
+        }
+
+        if (SelectionOutline is { } outline && SelectionBrush is { } brush)
+        {
+            // Centered on the shape's bounds, with the same width at every zoom.
+            context.DrawRectangle(null, new Pen(brush, OutlineThickness), new Rect(outline.X, outline.Y, outline.Width, outline.Height));
+        }
+    }
+
+    private static void DrawWithOpacity(DrawingContext context, ScreenShape shape)
+    {
+        if (shape.Opacity < 1)
+        {
+            // One opacity for fill and stroke together, like SVG opacity.
+            using (context.PushOpacity(shape.Opacity))
             {
                 DrawShape(context, shape);
             }
+        }
+        else
+        {
+            DrawShape(context, shape);
         }
     }
 

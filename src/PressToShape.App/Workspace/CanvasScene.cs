@@ -22,7 +22,6 @@ internal static class CanvasScene
     {
         ArgumentNullException.ThrowIfNull(document);
 
-        var scale = zoomPercent / 100;
         var shapes = new List<ScreenShape>();
         foreach (var layer in document.Layers)
         {
@@ -33,15 +32,19 @@ internal static class CanvasScene
 
             foreach (var shape in layer.Shapes)
             {
-                shapes.Add(ToScreen(shape, scale, originX, originY));
+                shapes.Add(BuildShape(shape, zoomPercent, originX, originY));
             }
         }
 
         return shapes;
     }
 
-    private static ScreenShape ToScreen(Shape shape, double scale, double originX, double originY)
+    /// <summary>Converts one shape, for example a shape that is still being drawn and is not in a document.</summary>
+    public static ScreenShape BuildShape(Shape shape, double zoomPercent, double originX, double originY)
     {
+        ArgumentNullException.ThrowIfNull(shape);
+
+        var scale = zoomPercent / 100;
         var type = shape switch
         {
             RectangleShape => ScreenShapeType.Rectangle,
@@ -54,13 +57,35 @@ internal static class CanvasScene
 
         return new ScreenShape(
             type,
-            originX + shape.X * scale,
-            originY + shape.Y * scale,
+            CanvasMapping.ToScreen(shape.X, originX, zoomPercent),
+            CanvasMapping.ToScreen(shape.Y, originY, zoomPercent),
             shape.Width * scale,
             shape.Height * scale,
             appearance.Fill,
             hasStroke ? appearance.Stroke : null,
             hasStroke ? appearance.StrokeWidth * scale : 0,
             appearance.Opacity);
+    }
+
+    /// <summary>
+    /// The screen rectangle of the selected shape's bounds (the stroke width is not included).
+    /// Returns <c>null</c> without an id, if no shape has the id, or if its layer is hidden.
+    /// </summary>
+    public static ScreenRect? SelectionOutline(Document document, Guid? shapeId, double zoomPercent, double originX, double originY)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+
+        if (shapeId is not { } id || document.FindShape(id) is not { } location || !location.Layer.IsVisible)
+        {
+            return null;
+        }
+
+        var shape = location.Shape;
+        var scale = zoomPercent / 100;
+        return new ScreenRect(
+            CanvasMapping.ToScreen(shape.X, originX, zoomPercent),
+            CanvasMapping.ToScreen(shape.Y, originY, zoomPercent),
+            shape.Width * scale,
+            shape.Height * scale);
     }
 }

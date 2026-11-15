@@ -189,4 +189,100 @@ public class LayersViewModelTests
         Assert.Throws<ArgumentNullException>(() => new LayerItemViewModel(null!, state.Document.Layers[0]));
         Assert.Throws<ArgumentNullException>(() => new LayerItemViewModel(state, null!));
     }
+
+    [Fact]
+    public void SelectedItem_Initially_IsTheTopmostLayer()
+    {
+        var (state, layers) = Create();
+
+        Assert.Equal(LayerC, layers.SelectedItem!.LayerId);
+        Assert.Equal(LayerC, state.ActiveLayerId);
+    }
+
+    [Fact]
+    public void SelectedItem_Set_ChangesTheActiveLayer()
+    {
+        var (state, layers) = Create();
+
+        layers.SelectedItem = layers.Items[2];
+
+        Assert.Equal(LayerA, state.ActiveLayerId);
+        Assert.Same(layers.Items[2], layers.SelectedItem);
+    }
+
+    [Fact]
+    public void SelectedItem_ActiveLayerChangedInTheState_FollowsAndNotifies()
+    {
+        var (state, layers) = Create();
+        var raised = new List<string?>();
+        layers.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.ActiveLayerId = LayerB;
+
+        Assert.Equal(LayerB, layers.SelectedItem!.LayerId);
+        Assert.Contains(nameof(LayersViewModel.SelectedItem), raised);
+    }
+
+    [Fact]
+    public void SelectedItem_SetToNull_KeepsTheActiveLayer()
+    {
+        var (state, layers) = Create();
+        layers.SelectedItem = layers.Items[1];
+
+        layers.SelectedItem = null;
+
+        Assert.Equal(LayerB, state.ActiveLayerId);
+        Assert.Equal(LayerB, layers.SelectedItem!.LayerId);
+    }
+
+    [Fact]
+    public void SelectedItem_ShapeEdit_KeepsTheSameRowWithoutRebuilding()
+    {
+        var (state, layers) = Create();
+        layers.SelectedItem = layers.Items[1];
+        var rows = layers.Items.ToList();
+        var raised = new List<string?>();
+        layers.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.Document = state.Document.AddShape(LayerB, new PressToShape.Core.Shapes.RectangleShape { Width = 5, Height = 5 });
+
+        Assert.True(rows.SequenceEqual(layers.Items));
+        Assert.Same(rows[1], layers.SelectedItem);
+        Assert.DoesNotContain(nameof(LayersViewModel.SelectedItem), raised);
+    }
+
+    [Fact]
+    public void SelectedItem_LayerRemoved_SelectsTheNewActiveLayerInTheRebuiltList()
+    {
+        var (state, layers) = Create();
+
+        state.Document = state.Document.RemoveLayer(LayerC);
+
+        Assert.Equal(new[] { LayerB, LayerA }, layers.Items.Select(i => i.LayerId));
+        Assert.Equal(LayerB, state.ActiveLayerId);
+        Assert.Same(layers.Items[0], layers.SelectedItem);
+    }
+
+    [Fact]
+    public void SelectedItem_OtherLayerRemoved_KeepsTheActiveLayerSelected()
+    {
+        var (state, layers) = Create();
+        layers.SelectedItem = layers.Items[1];
+
+        state.Document = state.Document.RemoveLayer(LayerA);
+
+        Assert.Equal(LayerB, state.ActiveLayerId);
+        Assert.Equal(LayerB, layers.SelectedItem!.LayerId);
+    }
+
+    [Fact]
+    public void ToggleVisibility_OnAnotherRow_DoesNotChangeTheActiveLayer()
+    {
+        var (state, layers) = Create();
+
+        layers.Items[2].ToggleVisibilityCommand.Execute(null);
+        layers.Items[1].ToggleLockCommand.Execute(null);
+
+        Assert.Equal(LayerC, state.ActiveLayerId);
+    }
 }

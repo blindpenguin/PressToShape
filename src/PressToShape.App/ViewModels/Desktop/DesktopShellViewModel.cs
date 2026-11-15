@@ -4,6 +4,7 @@ using PressToShape.App.Localization;
 using PressToShape.App.Services;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
+using PressToShape.Core.Documents;
 
 namespace PressToShape.App.ViewModels.Desktop;
 
@@ -21,7 +22,7 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(localizer);
         _shutdown = shutdown ?? throw new ArgumentNullException(nameof(shutdown));
 
-        State = new EditorState(SampleDocument.Create(localizer));
+        State = new EditorState(Document.Create(localizer.T("Layer 1")));
         Toolbox = new ToolboxViewModel(State, localizer);
         Canvas = new CanvasAreaViewModel(State);
         Inspector = new InspectorViewModel(State, localizer);

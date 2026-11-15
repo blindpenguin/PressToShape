@@ -31,8 +31,8 @@
             </Button>
         </Grid>
 
-        <!-- Layer list, topmost layer first: layers icon, name, lock toggle, visibility toggle -->
-        <ListBox ItemsSource="{Binding Items}" Background="Transparent">
+        <!-- Layer list, topmost layer first: layers icon, name, lock toggle, visibility toggle. The selected row is the active layer. -->
+        <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Background="Transparent">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="vm:LayerItemViewModel">
                     <Grid ColumnDefinitions="Auto,*,Auto,Auto" MinHeight="28">

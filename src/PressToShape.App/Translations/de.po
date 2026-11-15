@@ -240,6 +240,9 @@ msgstr "_Über PressToShape"
 msgid "Nothing selected"
 msgstr "Nichts ausgewählt"
 
+msgid "1 selected"
+msgstr "1 ausgewählt"
+
 msgid "New"
 msgstr "Neu"
 
@@ -486,8 +489,5 @@ msgstr "Füllung und Kontur vertauschen"
 msgid "Reset colors"
 msgstr "Farben zurücksetzen"
 
-msgid "Background"
-msgstr "Hintergrund"
-
-msgid "Shapes"
-msgstr "Formen"
+msgid "Layer 1"
+msgstr "Ebene 1"
