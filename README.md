@@ -34,7 +34,7 @@ dotnet build                                   # everything, including Android
 dotnet format --verify-no-changes              # formatting check
 ```
 
-The Android app is only built, not run on an emulator or device, during development so far.
+The Android app is not run on an emulator. The tablet version is tested on a real device over `adb`: a Lenovo Idea Tab (model TB336FU) (Android 16, 2560x1600 px, 320 dpi) with a stylus. Behavior on other tablets has not been checked.
 
 ## Performance benchmarks
 
