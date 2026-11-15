@@ -17,6 +17,7 @@ using AutomationProperties = Avalonia.Automation.AutomationProperties;
 namespace PressToShape.App.Tests;
 
 // Only what bindings and view models cannot show: the real view's enabled states and the Shift state of a swatch click.
+[Collection(HeadlessUi.CollectionName)]
 public class PropertiesViewColorTests
 {
     private static readonly Color Red = Color.FromRgb(255, 0, 0);

@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Tablet"
+             xmlns:editor="using:PressToShape.App.Views.Editor"
+             mc:Ignorable="d" d:DesignWidth="48" d:DesignHeight="48"
+             x:Class="PressToShape.App.Views.Tablet.TabletColorSwatchView"
+             x:DataType="vm:TabletColorSwatchViewModel">
+
+    <!-- The size of the button is set in a style of this view, because a DynamicResource written on the button itself loses against the style of the button. -->
+    <UserControl.Styles>
+        <Style Selector="Button.colorSwatch">
+            <Setter Property="Width" Value="{DynamicResource TouchTargetSize}" />
+            <Setter Property="Height" Value="{DynamicResource TouchTargetSize}" />
+            <Setter Property="MinWidth" Value="{DynamicResource TouchTargetSize}" />
+            <Setter Property="MinHeight" Value="{DynamicResource TouchTargetSize}" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Styles>
+
+    <!-- The fill is the square in the middle, the stroke is the ring around it. A part without a color is shown empty with an outline, so it stays visible. -->
+    <Button Classes="colorSwatch" Command="{Binding OpenCommand}"
+            ToolTip.Tip="{Binding Name}" AutomationProperties.Name="{Binding Name}">
+        <Panel Width="{DynamicResource ColorSwatchRingSize}" Height="{DynamicResource ColorSwatchRingSize}">
+            <Border CornerRadius="6" BorderThickness="1" BorderBrush="{DynamicResource BorderStrongBrush}"
+                    Background="{Binding StrokeColor, Converter={x:Static editor:CoreColorBrushConverter.Instance}}"
+                    IsVisible="{Binding HasStroke}" />
+            <Border CornerRadius="6" BorderThickness="1" BorderBrush="{DynamicResource BorderStrongBrush}"
+                    IsVisible="{Binding !HasStroke}" />
+
+            <Border Width="{DynamicResource ColorSwatchFillSize}" Height="{DynamicResource ColorSwatchFillSize}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    CornerRadius="3" BorderThickness="1" BorderBrush="{DynamicResource BorderStrongBrush}"
+                    Background="{Binding FillColor, Converter={x:Static editor:CoreColorBrushConverter.Instance}}"
+                    IsVisible="{Binding HasFill}" />
+            <Border Width="{DynamicResource ColorSwatchFillSize}" Height="{DynamicResource ColorSwatchFillSize}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    CornerRadius="3" BorderThickness="1" BorderBrush="{DynamicResource BorderStrongBrush}"
+                    Background="{DynamicResource ControlBackgroundBrush}"
+                    IsVisible="{Binding !HasFill}" />
+        </Panel>
+    </Button>
+
+</UserControl>

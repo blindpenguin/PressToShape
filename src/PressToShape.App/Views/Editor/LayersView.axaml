@@ -11,8 +11,13 @@
 
     <UserControl.Styles>
         <Style Selector="ListBoxItem">
-            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="MinHeight" Value="{DynamicResource LayerRowMinHeight}" />
             <Setter Property="Padding" Value="4,0" />
+        </Style>
+        <!-- The size is set in a style of this view, because a DynamicResource written on the button itself loses against the Button.icon style. -->
+        <Style Selector="Button.rowButton">
+            <Setter Property="MinWidth" Value="{DynamicResource RowButtonSize}" />
+            <Setter Property="MinHeight" Value="{DynamicResource RowButtonSize}" />
         </Style>
     </UserControl.Styles>
 
@@ -23,11 +28,11 @@
             <TextBlock Grid.Column="0" Classes="section-header" Text="{loc:T 'Layers'}" />
             <Button Grid.Column="1" Classes="icon" Command="{Binding AddLayerCommand}"
                     ToolTip.Tip="{loc:T 'Add layer'}" AutomationProperties.Name="{loc:T 'Add layer'}">
-                <materialIcons:MaterialIcon Kind="Plus" Width="18" Height="18" />
+                <materialIcons:MaterialIcon Kind="Plus" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
             </Button>
             <Button Grid.Column="2" Classes="icon" IsEnabled="False"
                     ToolTip.Tip="{loc:T 'More options'}" AutomationProperties.Name="{loc:T 'More layer options'}">
-                <materialIcons:MaterialIcon Kind="DotsHorizontal" Width="18" Height="18" />
+                <materialIcons:MaterialIcon Kind="DotsHorizontal" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
             </Button>
         </Grid>
 
@@ -36,22 +41,20 @@
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="vm:LayerItemViewModel">
                     <Grid ColumnDefinitions="Auto,*,Auto,Auto" MinHeight="28">
-                        <materialIcons:MaterialIcon Grid.Column="0" Kind="LayersOutline" Width="16" Height="16" Margin="0,0,8,0" />
+                        <materialIcons:MaterialIcon Grid.Column="0" Kind="LayersOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" Margin="0,0,8,0" />
                         <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
-                        <Button Grid.Column="2" Classes="icon" Command="{Binding ToggleLockCommand}"
-                                MinWidth="28" MinHeight="28"
+                        <Button Grid.Column="2" Classes="icon rowButton" Command="{Binding ToggleLockCommand}"
                                 ToolTip.Tip="{loc:T 'Toggle lock'}" AutomationProperties.Name="{loc:T 'Toggle lock'}">
                             <Panel>
-                                <materialIcons:MaterialIcon Kind="LockOutline" Width="16" Height="16" IsVisible="{Binding IsLocked}" />
-                                <materialIcons:MaterialIcon Kind="LockOpenVariantOutline" Width="16" Height="16" IsVisible="{Binding !IsLocked}" />
+                                <materialIcons:MaterialIcon Kind="LockOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsLocked}" />
+                                <materialIcons:MaterialIcon Kind="LockOpenVariantOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding !IsLocked}" />
                             </Panel>
                         </Button>
-                        <Button Grid.Column="3" Classes="icon" Command="{Binding ToggleVisibilityCommand}"
-                                MinWidth="28" MinHeight="28"
+                        <Button Grid.Column="3" Classes="icon rowButton" Command="{Binding ToggleVisibilityCommand}"
                                 ToolTip.Tip="{loc:T 'Toggle visibility'}" AutomationProperties.Name="{loc:T 'Toggle visibility'}">
                             <Panel>
-                                <materialIcons:MaterialIcon Kind="EyeOutline" Width="16" Height="16" IsVisible="{Binding IsVisible}" />
-                                <materialIcons:MaterialIcon Kind="EyeOffOutline" Width="16" Height="16" IsVisible="{Binding !IsVisible}" />
+                                <materialIcons:MaterialIcon Kind="EyeOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsVisible}" />
+                                <materialIcons:MaterialIcon Kind="EyeOffOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding !IsVisible}" />
                             </Panel>
                         </Button>
                     </Grid>

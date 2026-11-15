@@ -12,7 +12,8 @@ namespace PressToShape.App.Workspace;
 /// <summary>
 /// The file actions of the File menu: New, Open, Open Recent, Save, Save As, Export as SVG, and the question what to do
 /// with unsaved changes. It works through interfaces for files, dialogs and messages, so it is tested without a UI.
-/// Reading, parsing, serializing and writing run off the calling (UI) context. State changes happen on the calling context.
+/// Parsing and serializing run off the calling (UI) context, and the file store does its reading and writing without blocking it.
+/// State changes happen on the calling context.
 /// </summary>
 internal sealed class DocumentFileService
 {
@@ -133,7 +134,8 @@ internal sealed class DocumentFileService
         var document = _state.Document;
         try
         {
-            await Task.Run(() => _files.WriteAllBytesAtomic(path, SvgExport.ToUtf8(document)));
+            var bytes = await Task.Run(() => SvgExport.ToUtf8(document));
+            await _files.WriteAllBytesAtomicAsync(path, bytes);
         }
         catch (Exception ex) when (IsFileFailure(ex))
         {
@@ -147,7 +149,8 @@ internal sealed class DocumentFileService
         ProjectFileResult result;
         try
         {
-            result = await Task.Run(() => ProjectFile.Read(_files.ReadAllBytes(path, ProjectFile.MaxBytes)));
+            var bytes = await _files.ReadAllBytesAsync(path, ProjectFile.MaxBytes);
+            result = await Task.Run(() => ProjectFile.Read(bytes));
         }
         catch (Exception ex) when (ex is FileNotFoundException or DirectoryNotFoundException)
         {
@@ -196,7 +199,8 @@ internal sealed class DocumentFileService
         var document = _state.Document;
         try
         {
-            await Task.Run(() => _files.WriteAllBytesAtomic(path, ProjectFile.Write(document)));
+            var bytes = await Task.Run(() => ProjectFile.Write(document));
+            await _files.WriteAllBytesAtomicAsync(path, bytes);
         }
         catch (Exception ex) when (IsFileFailure(ex))
         {
@@ -233,8 +237,9 @@ internal sealed class DocumentFileService
 
     private string Format(string pattern, params object[] arguments) => string.Format(_localizer.Culture, pattern, arguments);
 
+    // A reference to a file from the system picker keeps the name the user chose. Changing it would also break the lookup of the file.
     private static string WithExtension(string path, string extension) =>
-        path.EndsWith(extension, StringComparison.OrdinalIgnoreCase) ? path : path + extension;
+        StorageFileRegistry.IsReference(path) || path.EndsWith(extension, StringComparison.OrdinalIgnoreCase) ? path : path + extension;
 
     // Both separators, so a path from another platform still gives a readable name in messages.
     private static string FileName(string path) => path[(path.LastIndexOfAny(['/', '\\']) + 1)..];

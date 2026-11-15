@@ -108,6 +108,54 @@ public class SelectionGeometryTests
         Assert.Null(SelectionGeometry.HitHandle(frame, hx, hy + outside, zoom));
     }
 
+    [Theory]
+    [InlineData(25)]
+    [InlineData(100)]
+    [InlineData(400)]
+    public void HitHandle_AFingerSizedGrabArea_ReachesFurtherThanTheDefault_ConstantOnTheScreen(double zoom)
+    {
+        var frame = Frame(width: 1000, height: 600);
+        var (hx, hy) = SelectionGeometry.HandlePosition(frame, HandleType.BottomRight, zoom);
+        var scale = zoom / 100;
+        var fifteenPixels = 15 / scale;
+
+        Assert.Null(SelectionGeometry.HitHandle(frame, hx + fifteenPixels, hy, zoom));
+        Assert.Equal(HandleType.BottomRight, SelectionGeometry.HitHandle(frame, hx + fifteenPixels, hy, zoom, SelectionGeometry.TouchGrabSize));
+        Assert.Null(SelectionGeometry.HitHandle(frame, hx + (SelectionGeometry.TouchGrabSize / 2 + 1) / scale, hy, zoom, SelectionGeometry.TouchGrabSize));
+    }
+
+    [Fact]
+    public void HitHandle_AFingerSizedGrabArea_DoesNotCoverTheMiddleOfASmallShape()
+    {
+        // 40 by 40 on the screen at 100%: the corner handles are 20 pixels from the middle.
+        var frame = new SelectionFrame(200, 100, 40, 40, 0, true);
+
+        Assert.Null(SelectionGeometry.HitHandle(frame, 200, 100, 100, SelectionGeometry.TouchGrabSize));
+        Assert.Equal(HandleType.TopLeft, SelectionGeometry.HitHandle(frame, 180, 80, 100, SelectionGeometry.TouchGrabSize));
+    }
+
+    [Fact]
+    public void HitHandle_AFingerSizedGrabArea_NeverShrinksBelowTheMouseGrabArea()
+    {
+        var frame = new SelectionFrame(200, 100, 4, 4, 0, true);
+        var (hx, hy) = SelectionGeometry.HandlePosition(frame, HandleType.BottomRight, 100);
+
+        Assert.Equal(HandleType.BottomRight, SelectionGeometry.HitHandle(frame, hx + 1, hy + 1, 100, SelectionGeometry.TouchGrabSize));
+    }
+
+    [Theory]
+    [InlineData(double.NaN)]
+    [InlineData(double.PositiveInfinity)]
+    [InlineData(-5)]
+    public void HitHandle_AnUnusableGrabSize_FallsBackToTheMouseSizeOrNothing_WithoutThrowing(double grabSize)
+    {
+        var frame = Frame(width: 1000, height: 600);
+        var (hx, hy) = SelectionGeometry.HandlePosition(frame, HandleType.BottomRight, 100);
+
+        // Not finite means the mouse size, negative means no area: 20 pixels away is a miss either way.
+        Assert.Null(SelectionGeometry.HitHandle(frame, hx + 20, hy, 100, grabSize));
+    }
+
     [Fact]
     public void HitHandle_AwayFromAllHandles_IsNull()
     {

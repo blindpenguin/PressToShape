@@ -1,0 +1,143 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:PressToShape.App.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Tablet"
+             xmlns:desktopVm="using:PressToShape.App.ViewModels.Desktop"
+             xmlns:desktopViews="using:PressToShape.App.Views.Desktop"
+             xmlns:editorVm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="56"
+             x:Class="PressToShape.App.Views.Tablet.TabletToolbarView"
+             x:DataType="vm:TabletToolbarViewModel">
+
+    <UserControl.Styles>
+        <!-- Without a limit the long menus run off the bottom of the screen and the last items cannot be reached. -->
+        <Style Selector="MenuFlyoutPresenter">
+            <Setter Property="MaxHeight" Value="{DynamicResource FlyoutMaxHeight}" />
+        </Style>
+    </UserControl.Styles>
+
+    <UserControl.Resources>
+        <desktopViews:CheckableToggleTypeConverter x:Key="CheckableToggleTypeConverter" />
+
+        <!-- A menu item of the overflow menu: the header without the Alt-key underscore, no shortcut text. Submenus use the same theme. -->
+        <ControlTheme x:Key="TabletMenuItemTheme"
+                      TargetType="MenuItem"
+                      BasedOn="{StaticResource {x:Type MenuItem}}"
+                      x:DataType="desktopVm:MenuItemViewModel">
+            <Setter Property="Header" Value="{Binding PlainHeader}" />
+            <Setter Property="ItemsSource" Value="{Binding Children}" />
+            <Setter Property="Command" Value="{Binding Command}" />
+            <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+            <Setter Property="ToggleType" Value="{Binding IsCheckable, Converter={StaticResource CheckableToggleTypeConverter}}" />
+            <Setter Property="IsChecked" Value="{Binding IsChecked, Mode=TwoWay}" />
+            <Setter Property="ItemContainerTheme" Value="{DynamicResource TabletMenuItemTheme}" />
+        </ControlTheme>
+    </UserControl.Resources>
+
+    <Border Background="{DynamicResource ToolbarBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,0,1"
+            MinHeight="{DynamicResource ToolbarHeight}">
+        <!-- The name takes what the buttons leave and is shortened with an ellipsis first, so no button is ever cut off. -->
+        <Grid ColumnDefinitions="*,Auto" Margin="8,0" VerticalAlignment="Center">
+
+            <!-- The document name, with a star while there are unsaved changes -->
+            <TextBlock Grid.Column="0" Margin="8,0,16,0" VerticalAlignment="Center" HorizontalAlignment="Left" MaxWidth="320"
+                       FontSize="{DynamicResource SectionHeaderFontSize}" FontWeight="SemiBold"
+                       TextTrimming="CharacterEllipsis"
+                       Foreground="{DynamicResource TextPrimaryBrush}"
+                       Text="{Binding DocumentTitle}" />
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+
+                <Button Classes="icon" Command="{Binding UndoButton.Command}" IsEnabled="{Binding UndoButton.IsEnabled}"
+                        ToolTip.Tip="{Binding UndoButton.Name}" AutomationProperties.Name="{Binding UndoButton.Name}">
+                    <materialIcons:MaterialIcon Kind="{Binding UndoButton.Icon}" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+                <Button Classes="icon" Command="{Binding RedoButton.Command}" IsEnabled="{Binding RedoButton.IsEnabled}"
+                        ToolTip.Tip="{Binding RedoButton.Name}" AutomationProperties.Name="{Binding RedoButton.Name}">
+                    <materialIcons:MaterialIcon Kind="{Binding RedoButton.Icon}" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+
+                <!-- Duplicate and Delete act on the selection (a touch screen has no Delete key) -->
+                <Button Classes="icon" Command="{Binding DuplicateButton.Command}" IsEnabled="{Binding DuplicateButton.IsEnabled}"
+                        ToolTip.Tip="{Binding DuplicateButton.Name}" AutomationProperties.Name="{Binding DuplicateButton.Name}">
+                    <materialIcons:MaterialIcon Kind="{Binding DuplicateButton.Icon}" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+                <Button Classes="icon" Command="{Binding DeleteButton.Command}" IsEnabled="{Binding DeleteButton.IsEnabled}"
+                        ToolTip.Tip="{Binding DeleteButton.Name}" AutomationProperties.Name="{Binding DeleteButton.Name}">
+                    <materialIcons:MaterialIcon Kind="{Binding DeleteButton.Icon}" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+
+                <Border Width="1" Height="24" Margin="6,0" Background="{DynamicResource BorderSubtleBrush}" />
+
+                <!-- The icons that open the panel over the canvas. The one whose tab is open is highlighted. -->
+                <ItemsControl ItemsSource="{Binding PanelButtons}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="2" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="vm:PanelButtonViewModel">
+                            <controls:ToolToggleButton Classes="tool" IsChecked="{Binding IsActive, Mode=OneWay}" Command="{Binding ToggleCommand}"
+                                          ToolTip.Tip="{Binding Name}" AutomationProperties.Name="{Binding Name}">
+                                <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                            </controls:ToolToggleButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Border Width="1" Height="24" Margin="6,0" Background="{DynamicResource BorderSubtleBrush}" />
+
+            <!-- Zoom: zoom out, the value with the preset list, zoom in, fit -->
+            <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+                <Button Classes="icon" Command="{Binding Zoom.ZoomOutCommand}"
+                        ToolTip.Tip="{loc:T 'Zoom out'}" AutomationProperties.Name="{loc:T 'Zoom out'}">
+                    <materialIcons:MaterialIcon Kind="MinusThick" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+                <DropDownButton x:Name="ZoomButton" Content="{Binding Zoom.ZoomText}" MinWidth="96" Padding="12,0"
+                                FontSize="{DynamicResource UiFontSize}"
+                                ToolTip.Tip="{loc:T 'Zoom'}" AutomationProperties.Name="{loc:T 'Zoom level'}">
+                    <DropDownButton.Flyout>
+                        <MenuFlyout ItemsSource="{Binding Zoom.ZoomPresets}">
+                            <MenuFlyout.ItemContainerTheme>
+                                <ControlTheme TargetType="MenuItem"
+                                              BasedOn="{StaticResource {x:Type MenuItem}}"
+                                              x:DataType="editorVm:ZoomPresetViewModel">
+                                    <Setter Property="Header" Value="{Binding Text}" />
+                                    <Setter Property="Command" Value="{Binding SelectCommand}" />
+                                </ControlTheme>
+                            </MenuFlyout.ItemContainerTheme>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+                <Button Classes="icon" Command="{Binding Zoom.ZoomInCommand}"
+                        ToolTip.Tip="{loc:T 'Zoom in'}" AutomationProperties.Name="{loc:T 'Zoom in'}">
+                    <materialIcons:MaterialIcon Kind="Plus" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+                <Button Classes="icon" Command="{Binding Zoom.FitToWindowCommand}"
+                        ToolTip.Tip="{loc:T 'Fit artboard in window'}" AutomationProperties.Name="{loc:T 'Fit artboard in window'}">
+                    <materialIcons:MaterialIcon Kind="FitToScreen" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+            </StackPanel>
+
+            <!-- The overflow menu: file and edit actions and the language -->
+            <Button x:Name="OverflowButton" Classes="icon" Margin="8,0,0,0"
+                    ToolTip.Tip="{loc:T 'More options'}" AutomationProperties.Name="{loc:T 'More options'}">
+                <materialIcons:MaterialIcon Kind="DotsVertical" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                <Button.Flyout>
+                    <MenuFlyout Placement="BottomEdgeAlignedRight"
+                                ItemsSource="{Binding OverflowMenu.Items}"
+                                ItemContainerTheme="{StaticResource TabletMenuItemTheme}" />
+                </Button.Flyout>
+            </Button>
+
+            </StackPanel>
+        </Grid>
+    </Border>
+
+</UserControl>

@@ -33,7 +33,11 @@ internal sealed class MessageDialogViewModel
     public int CancelResult { get; private init; }
 
     /// <summary>The question about unsaved changes. The results are the <see cref="UnsavedChoice"/> values.</summary>
-    public static MessageDialogViewModel ForUnsavedChanges(ILocalizer localizer, string documentName)
+    /// <param name="localizer">The translator.</param>
+    /// <param name="documentName">The name of the document.</param>
+    /// <param name="escapeCancels">Whether the Escape key chooses Cancel. The dialogs inside the tablet layout turn it off: on Android the Back key arrives
+    /// as Escape and also as a back request, and the layout handles the back request itself.</param>
+    public static MessageDialogViewModel ForUnsavedChanges(ILocalizer localizer, string documentName, bool escapeCancels = true)
     {
         ArgumentNullException.ThrowIfNull(localizer);
         ArgumentNullException.ThrowIfNull(documentName);
@@ -48,15 +52,15 @@ internal sealed class MessageDialogViewModel
             choose => [
                 Button(save, (int)UnsavedChoice.Save, isDefault: true, isCancel: false, choose),
                 Button(dontSave, (int)UnsavedChoice.DontSave, isDefault: false, isCancel: false, choose),
-                Button(cancel, (int)UnsavedChoice.Cancel, isDefault: false, isCancel: true, choose),
+                Button(cancel, (int)UnsavedChoice.Cancel, isDefault: false, isCancel: escapeCancels, choose),
             ])
         {
             CancelResult = (int)UnsavedChoice.Cancel,
         };
     }
 
-    /// <summary>An error message with a single OK button.</summary>
-    public static MessageDialogViewModel ForError(ILocalizer localizer, string message)
+    /// <summary>An error message with a single OK button. <paramref name="escapeCancels"/> is as for <see cref="ForUnsavedChanges"/>.</summary>
+    public static MessageDialogViewModel ForError(ILocalizer localizer, string message, bool escapeCancels = true)
     {
         ArgumentNullException.ThrowIfNull(localizer);
         ArgumentNullException.ThrowIfNull(message);
@@ -65,7 +69,7 @@ internal sealed class MessageDialogViewModel
         return new MessageDialogViewModel(
             localizer.T("Error"),
             message,
-            choose => [Button(ok, 0, isDefault: true, isCancel: true, choose)])
+            choose => [Button(ok, 0, isDefault: true, isCancel: escapeCancels, choose)])
         {
             CancelResult = 0,
         };

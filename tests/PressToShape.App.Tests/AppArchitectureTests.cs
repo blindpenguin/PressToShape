@@ -10,7 +10,7 @@ namespace PressToShape.App.Tests;
 
 public class AppArchitectureTests
 {
-    private static readonly Assembly AppAssembly = typeof(MainViewModel).Assembly;
+    private static readonly Assembly AppAssembly = typeof(PressToShapeApp).Assembly;
 
     [Theory]
     [InlineData("PressToShape.Desktop")]

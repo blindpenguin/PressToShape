@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using CommunityToolkit.Mvvm.Input;
 using PressToShape.App.Localization;
+using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
-using static PressToShape.App.Localization.Localizer;
 
 namespace PressToShape.App.ViewModels.Desktop;
 
@@ -14,53 +13,42 @@ namespace PressToShape.App.ViewModels.Desktop;
 internal sealed partial class StatusBarViewModel : LocalizedViewModel
 {
     private readonly EditorState _state;
-    private readonly Action _fitToWindow;
+    private readonly ZoomViewModel _zoom;
 
     public StatusBarViewModel(EditorState state, ILocalizer localizer, Action fitToWindow)
         : base(localizer)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
-        _fitToWindow = fitToWindow ?? throw new ArgumentNullException(nameof(fitToWindow));
-        ZoomPresets = ZoomLevels.Presets.Select(p => new ZoomPresetViewModel(p, () => _state.SetZoom(p))).ToList();
+        _zoom = new ZoomViewModel(state, localizer, fitToWindow);
         _state.PropertyChanged += OnStateChanged;
     }
 
     /// <summary>The translated selection text: "Nothing selected", "1 selected" or "N selected".</summary>
-    public string SelectionSummary => _state.SelectedCount switch
-    {
-        0 => Localizer.T(N("Nothing selected")),
-        1 => Localizer.T(N("1 selected")),
-        var count => string.Format(Localizer.Culture, Localizer.T("{0} selected"), count),
-    };
+    public string SelectionSummary => SelectionSummaryText.Format(Localizer, _state.SelectedCount);
 
     /// <summary>Path length of the selection, for example "Path length: 2,480.6 px". Empty until selections exist.</summary>
     public string PathLengthText => string.Empty;
 
     public bool ShowPathLength => _state.HasSelection && PathLengthText.Length > 0;
 
-    public double ZoomPercent => _state.ZoomPercent;
+    public double ZoomPercent => _zoom.ZoomPercent;
 
     /// <summary>The zoom as shown in the status bar, for example "100%" or "133.33%".</summary>
-    public string ZoomText => FormatZoom(_state.ZoomPercent, Localizer.Culture);
+    public string ZoomText => _zoom.ZoomText;
 
     /// <summary>The zoom values offered in the drop-down. Each entry carries its own command.</summary>
-    public IReadOnlyList<ZoomPresetViewModel> ZoomPresets { get; }
+    public IReadOnlyList<ZoomPresetViewModel> ZoomPresets => _zoom.ZoomPresets;
+
+    public IRelayCommand ZoomInCommand => _zoom.ZoomInCommand;
+
+    public IRelayCommand ZoomOutCommand => _zoom.ZoomOutCommand;
+
+    public IRelayCommand FitToWindowCommand => _zoom.FitToWindowCommand;
+
+    public IRelayCommand<double> SetZoomCommand => _zoom.SetZoomCommand;
 
     /// <summary>Formats a zoom value with the decimal separator of the given culture, for example "80.75%" or "80,75%".</summary>
-    public static string FormatZoom(double percent, CultureInfo culture) =>
-        percent.ToString("0.##", culture) + "%";
-
-    [RelayCommand]
-    private void ZoomIn() => _state.ZoomIn();
-
-    [RelayCommand]
-    private void ZoomOut() => _state.ZoomOut();
-
-    [RelayCommand]
-    private void FitToWindow() => _fitToWindow();
-
-    [RelayCommand]
-    private void SetZoom(double percent) => _state.SetZoom(percent);
+    public static string FormatZoom(double percent, CultureInfo culture) => ZoomViewModel.FormatZoom(percent, culture);
 
     /// <summary>The pan button next to the zoom controls activates the Hand tool.</summary>
     [RelayCommand]

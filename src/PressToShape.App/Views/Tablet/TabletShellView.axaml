@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Tablet"
+             xmlns:tablet="using:PressToShape.App.Views.Tablet"
+             xmlns:editor="using:PressToShape.App.Views.Editor"
+             xmlns:views="using:PressToShape.App.Views"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="800"
+             x:Class="PressToShape.App.Views.Tablet.TabletShellView"
+             x:DataType="vm:TabletShellViewModel"
+             Classes="touch"
+             Focusable="True">
+
+    <!-- The root of the tablet layout. The class "touch" and the touch sizes (applied in the code-behind) make every control below it touch-sized. -->
+    <Panel Background="{DynamicResource WindowBackgroundBrush}">
+
+        <!-- The layout. Its bottom margin keeps it above the on-screen keyboard, see the code-behind. -->
+        <Grid x:Name="LayoutRoot" RowDefinitions="Auto,*">
+
+            <tablet:TabletToolbarView x:Name="ToolbarView" Grid.Row="0" DataContext="{Binding Toolbar}" />
+
+            <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
+                <tablet:TabletToolColumnView Grid.Column="0" DataContext="{Binding Column}" />
+
+                <!-- The canvas takes everything that is left. The panel floats over its right edge while it is open, so the canvas never changes its size. -->
+                <Grid Grid.Column="1">
+                    <editor:CanvasAreaView x:Name="CanvasArea" ShowRulers="False" DataContext="{Binding Canvas}" />
+                    <tablet:TabletPanelView HorizontalAlignment="Right" DataContext="{Binding Panel}" />
+                </Grid>
+            </Grid>
+
+        </Grid>
+
+        <!-- A message dialog over everything else. The dimmed background takes the touches, so nothing below can be used while a dialog is open. -->
+        <Border x:Name="DialogScrim" IsVisible="{Binding Dialogs.IsOpen}" Background="{DynamicResource ScrimBrush}">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="360" MaxWidth="560"
+                    Background="{DynamicResource PanelBackgroundBrush}"
+                    BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1"
+                    CornerRadius="{StaticResource ControlCornerRadius}">
+                <StackPanel>
+                    <TextBlock Margin="20,16,20,0" FontWeight="SemiBold" TextWrapping="Wrap"
+                               FontSize="{DynamicResource SectionHeaderFontSize}"
+                               Foreground="{DynamicResource TextPrimaryBrush}"
+                               Text="{Binding Dialogs.Current.Title}" />
+                    <views:MessageDialogView DataContext="{Binding Dialogs.Current}" />
+                </StackPanel>
+            </Border>
+        </Border>
+
+    </Panel>
+
+</UserControl>

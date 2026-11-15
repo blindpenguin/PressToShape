@@ -15,6 +15,8 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     private readonly EditorState _state;
     private readonly CanvasInteraction _interaction;
     private readonly SelectionEditor _editor;
+    private readonly TouchGestureTracker _touch = new();
+    private bool _touchGestureFlagged;
     private HandleType? _hoverHandle;
 
     private bool _panning;
@@ -151,18 +153,25 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <summary>Vertical screen position of the artboard's top edge. The vertical ruler's zero is here.</summary>
     public double OriginY => ViewGeometry.Origin(ViewportHeight, ArtboardScreenHeight, _state.PanY);
 
+    /// <summary>The size of the area that grabs a selection handle for a finger, in screen pixels. The tablet layout sets it from the theme.</summary>
+    public double TouchGrabSize
+    {
+        get => _interaction.TouchGrabSize;
+        set => _interaction.TouchGrabSize = value;
+    }
+
     /// <summary>
     /// The primary button went down. The position is in screen pixels of the canvas area. With the Hand tool this starts
     /// dragging the view, with the Zoom tool it zooms one step in (with <paramref name="alt"/>: out) around the position,
-    /// with the other tools it is handled by the tool.
+    /// with the other tools it is handled by the tool. <paramref name="inputType"/> is the device: a finger grabs handles from a larger area.
     /// </summary>
-    public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false)
+    public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = InputPointerType.Mouse)
     {
         IsAltHeld = alt;
         if (_state.ColorPick != ColorPickTarget.None)
         {
             // A pick from the canvas takes the click, whatever the active tool is.
-            _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift);
+            _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift, inputType);
             return;
         }
 
@@ -178,10 +187,77 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 _state.ZoomAround(zoom, screenX, screenY);
                 break;
             default:
-                _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift);
+                _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift, inputType);
                 SetHover(null);
                 break;
         }
+    }
+
+    /// <summary>
+    /// A finger went down. One finger acts with the active tool like the mouse. A second finger undoes that action (see
+    /// <see cref="CanvasInteraction.Abort"/>) and the two fingers then move and zoom the view. Mouse and pen use <see cref="PointerPressed"/>.
+    /// The id only has to be unique from this press to the release.
+    /// </summary>
+    public void TouchPressed(int id, double screenX, double screenY) =>
+        ApplyTouch(_touch.PointerDown(id, InputPointerType.Touch, screenX, screenY, _state.ZoomPercent));
+
+    /// <summary>A finger moved.</summary>
+    public void TouchMoved(int id, double screenX, double screenY) => ApplyTouch(_touch.PointerMove(id, screenX, screenY));
+
+    /// <summary>A finger went up.</summary>
+    public void TouchReleased(int id, double screenX, double screenY) => ApplyTouch(_touch.PointerUp(id, screenX, screenY));
+
+    /// <summary>
+    /// The system took the fingers away, or the pointer capture was lost. All fingers are forgotten and an action of one finger that was not
+    /// finished is undone. Does nothing if no finger is down, for example after a normal release.
+    /// </summary>
+    public void TouchCancelled() => ApplyTouch(_touch.Cancel());
+
+    private void ApplyTouch(TouchGestureStep step)
+    {
+        switch (step.Type)
+        {
+            case TouchGestureStepType.Press:
+                PointerPressed(step.X, step.Y, inputType: InputPointerType.Touch);
+                break;
+            case TouchGestureStepType.Move:
+                PointerMoved(step.X, step.Y);
+                break;
+            case TouchGestureStepType.Release:
+                PointerReleased(step.X, step.Y);
+                break;
+            case TouchGestureStepType.CancelPress:
+                AbortAction();
+                break;
+            case TouchGestureStepType.Gesture:
+                _state.ZoomAround(step.TargetZoom, step.PreviousMidX, step.PreviousMidY);
+                _state.PanBy(step.X - step.PreviousMidX, step.Y - step.PreviousMidY);
+                break;
+        }
+
+        // While two fingers move the view, undo and redo are blocked, as during any drag.
+        if (_touch.IsGestureActive && !_touchGestureFlagged)
+        {
+            _touchGestureFlagged = true;
+            _state.IsDragInProgress = true;
+        }
+        else if (!_touch.IsGestureActive && _touchGestureFlagged)
+        {
+            _touchGestureFlagged = false;
+            _state.IsDragInProgress = false;
+        }
+    }
+
+    // The action of the first finger was a mistake: a drag of the view just ends, any other action is undone.
+    private void AbortAction()
+    {
+        if (_panning)
+        {
+            EndPan();
+            return;
+        }
+
+        _interaction.Abort();
     }
 
     /// <summary>The middle button went down: drags the view with any tool, unless another drag is in progress.</summary>

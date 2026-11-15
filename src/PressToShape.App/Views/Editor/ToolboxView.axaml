@@ -1,9 +1,11 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:loc="using:PressToShape.App.Localization"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:PressToShape.App.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:editor="using:PressToShape.App.Views.Editor"
              xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="96" d:DesignHeight="600"
              x:Class="PressToShape.App.Views.Editor.ToolboxView"
@@ -11,48 +13,27 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="ToolButtonTemplate" DataType="vm:ToolItemViewModel">
-            <ToggleButton Classes="tool"
+            <controls:ToolToggleButton Classes="tool"
                           IsChecked="{Binding IsActive, Mode=OneWay}"
                           Command="{Binding SelectCommand}"
                           ToolTip.Tip="{Binding ToolTip}"
                           AutomationProperties.Name="{Binding Name}"
-                          Margin="2,2">
-                <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="20" Height="20" />
-            </ToggleButton>
+                          Margin="{DynamicResource ToolButtonMargin}">
+                <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="{DynamicResource ToolIconSize}" Height="{DynamicResource ToolIconSize}" />
+            </controls:ToolToggleButton>
         </DataTemplate>
     </UserControl.Resources>
 
     <Border Background="{DynamicResource ToolColumnBackgroundBrush}"
             BorderBrush="{DynamicResource BorderSubtleBrush}"
             BorderThickness="0,0,1,0"
-            Padding="4,6">
+            Padding="{DynamicResource ToolColumnPadding}">
         <DockPanel>
 
-            <!-- Fill and stroke swatches with swap and reset (disabled until colors exist) -->
-            <Grid DockPanel.Dock="Bottom" Width="44" Height="56" Margin="0,8,0,4" HorizontalAlignment="Center">
-                <Border Width="26" Height="26" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                        Background="{DynamicResource ControlBackgroundBrush}"
-                        BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="2"
-                        CornerRadius="3" ToolTip.Tip="{loc:T 'Stroke color'}" />
-                <Border Width="26" Height="26" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,4,0,0"
-                        Background="{DynamicResource AppAccentBrush}"
-                        BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1"
-                        CornerRadius="3" ToolTip.Tip="{loc:T 'Fill color'}" />
-                <Button Classes="icon" MinWidth="20" MinHeight="20" Width="20" Height="20"
-                        HorizontalAlignment="Right" VerticalAlignment="Top"
-                        Command="{Binding SwapColorsCommand}"
-                        ToolTip.Tip="{loc:T 'Swap fill and stroke'}" AutomationProperties.Name="{loc:T 'Swap fill and stroke'}">
-                    <materialIcons:MaterialIcon Kind="SwapHorizontal" Width="12" Height="12" />
-                </Button>
-                <Button Classes="icon" MinWidth="20" MinHeight="20" Width="20" Height="20"
-                        HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                        Command="{Binding ResetColorsCommand}"
-                        ToolTip.Tip="{loc:T 'Reset colors'}" AutomationProperties.Name="{loc:T 'Reset colors'}">
-                    <materialIcons:MaterialIcon Kind="Restore" Width="12" Height="12" />
-                </Button>
-            </Grid>
+            <editor:SwatchesView DockPanel.Dock="Bottom" />
 
-            <ItemsControl ItemsSource="{Binding Tools}" ItemTemplate="{StaticResource ToolButtonTemplate}" />
+            <!-- One column. Top keeps the rows at the top, not spread over the free height. -->
+            <ItemsControl ItemsSource="{Binding Tools}" ItemTemplate="{StaticResource ToolButtonTemplate}" VerticalAlignment="Top" />
 
         </DockPanel>
     </Border>

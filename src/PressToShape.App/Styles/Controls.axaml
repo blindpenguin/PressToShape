@@ -58,12 +58,12 @@
                                 <Grid ColumnDefinitions="*,Auto">
                                     <ContentPresenter Grid.Column="0"
                                                       Content="{TemplateBinding Header}"
-                                                      FontSize="{StaticResource SectionHeaderFontSize}"
+                                                      FontSize="{DynamicResource SectionHeaderFontSize}"
                                                       FontWeight="SemiBold"
                                                       VerticalAlignment="Center" />
                                     <Panel Grid.Column="1" VerticalAlignment="Center">
-                                        <materialIcons:MaterialIcon Classes="expanded" Kind="ChevronUp" Width="18" Height="18" />
-                                        <materialIcons:MaterialIcon Classes="collapsed" Kind="ChevronDown" Width="18" Height="18" />
+                                        <materialIcons:MaterialIcon Classes="expanded" Kind="ChevronUp" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                                        <materialIcons:MaterialIcon Classes="collapsed" Kind="ChevronDown" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
                                     </Panel>
                                 </Grid>
                             </ToggleButton>
@@ -82,8 +82,8 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="MinWidth" Value="{StaticResource ToolbarButtonSize}" />
-        <Setter Property="MinHeight" Value="{StaticResource ToolbarButtonSize}" />
+        <Setter Property="MinWidth" Value="{DynamicResource ToolbarButtonSize}" />
+        <Setter Property="MinHeight" Value="{DynamicResource ToolbarButtonSize}" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -105,8 +105,8 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="Width" Value="{StaticResource ToolButtonSize}" />
-        <Setter Property="Height" Value="{StaticResource ToolButtonSize}" />
+        <Setter Property="Width" Value="{DynamicResource ToolButtonSize}" />
+        <Setter Property="Height" Value="{DynamicResource ToolButtonSize}" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -165,7 +165,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource BorderSubtleBrush}" />
     </Style>
     <Style Selector="TextBlock.section-header">
-        <Setter Property="FontSize" Value="{StaticResource SectionHeaderFontSize}" />
+        <Setter Property="FontSize" Value="{DynamicResource SectionHeaderFontSize}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -181,13 +181,21 @@
         <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
     </Style>
     <Style Selector="TextBox.field">
-        <Setter Property="MinHeight" Value="{StaticResource FieldHeight}" />
-        <Setter Property="Height" Value="{StaticResource FieldHeight}" />
+        <Setter Property="MinHeight" Value="{DynamicResource FieldHeight}" />
+        <Setter Property="Height" Value="{DynamicResource FieldHeight}" />
         <Setter Property="Padding" Value="6,0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderSubtleBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
-        <Setter Property="FontSize" Value="{StaticResource UiFontSize}" />
+        <Setter Property="FontSize" Value="{DynamicResource UiFontSize}" />
+    </Style>
+
+    <!--
+        Touch: the tablet layout has the class "touch" on its root. Every control of these types below it is at least 48 dp high. Rules like this
+        come last in the file, so they win over the sizes set above. The desktop has no such class and is not affected.
+    -->
+    <Style Selector=".touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider">
+        <Setter Property="MinHeight" Value="{DynamicResource TouchTargetSize}" />
     </Style>
 </Styles>

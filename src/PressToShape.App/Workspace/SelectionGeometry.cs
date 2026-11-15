@@ -10,8 +10,11 @@ internal static class SelectionGeometry
     /// <summary>How far the rotate handle is from the top edge, in screen pixels.</summary>
     public const double RotateHandleDistance = 24;
 
-    /// <summary>The size of the area that grabs a handle, in screen pixels.</summary>
+    /// <summary>The size of the area that grabs a handle with a mouse or a pen, in screen pixels.</summary>
     public const double GrabSize = 10;
+
+    /// <summary>The size of the area that grabs a handle with a finger, in screen pixels. The tablet layout can set its own through the theme.</summary>
+    public const double TouchGrabSize = 44;
 
     // Hit-test order when two handles are equally close: rotate, corners, then edges.
     private static readonly HandleType[] Priority =
@@ -83,12 +86,24 @@ internal static class SelectionGeometry
         return ToDocument(frame, localX, localY);
     }
 
-    /// <summary>The handle whose grab area contains the document point, or <c>null</c>. The closest handle wins, then the priority order.</summary>
-    public static HandleType? HitHandle(SelectionFrame frame, double x, double y, double zoomPercent)
+    /// <summary>
+    /// The handle whose grab area contains the document point, or <c>null</c>. The closest handle wins, then the priority order.
+    /// A grab area larger than <see cref="GrabSize"/> (for a finger) is limited to a quarter of the shorter side of the frame, so that the
+    /// handles of a small shape do not cover its middle and the shape can still be moved by it.
+    /// </summary>
+    /// <param name="grabSize">The size of the grab area in screen pixels.</param>
+    public static HandleType? HitHandle(SelectionFrame frame, double x, double y, double zoomPercent, double grabSize = GrabSize)
     {
         ArgumentNullException.ThrowIfNull(frame);
 
-        var half = GrabSize / 2 / Scale(zoomPercent);
+        var scale = Scale(zoomPercent);
+        var halfOnScreen = (double.IsFinite(grabSize) ? Math.Max(0, grabSize) : GrabSize) / 2;
+        if (halfOnScreen > GrabSize / 2)
+        {
+            halfOnScreen = Math.Max(GrabSize / 2, Math.Min(halfOnScreen, Math.Min(frame.Width, frame.Height) * scale / 4));
+        }
+
+        var half = halfOnScreen / scale;
         HandleType? best = null;
         var bestDistance = double.MaxValue;
         foreach (var handle in Priority)

@@ -1,0 +1,90 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Tablet"
+             xmlns:editorVm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:local="using:PressToShape.App.Views.Tablet"
+             xmlns:controls="using:PressToShape.App.Controls"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="64" d:DesignHeight="640"
+             x:Class="PressToShape.App.Views.Tablet.TabletToolColumnView"
+             x:DataType="vm:TabletToolColumnViewModel">
+
+    <!-- The size of an entry in a group's flyout is set in a style of this view: the flyout is a popup, which is not below the layout root in the visual tree, but its styles and resources are found through the logical tree. -->
+    <UserControl.Styles>
+        <Style Selector="ToggleButton.tool.flyoutTool">
+            <Setter Property="Width" Value="NaN" />
+            <Setter Property="MinWidth" Value="200" />
+            <Setter Property="Height" Value="{DynamicResource ToolFlyoutItemHeight}" />
+            <Setter Property="MinHeight" Value="{DynamicResource ToolFlyoutItemHeight}" />
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+    </UserControl.Styles>
+
+    <UserControl.Resources>
+        <!-- One icon of the column. A group shows a mark in the corner and has a flyout that a long press opens. -->
+        <DataTemplate x:Key="ToolGroupTemplate" DataType="vm:ToolGroupViewModel">
+            <!-- Centered, so the panel is as wide as the button and the mark sits in the corner of the button, not of the column (the swatches make the column wider). -->
+            <Panel HorizontalAlignment="Center">
+                <controls:ToolGroupButton x:Name="GroupButton" Classes="tool"
+                                          IsChecked="{Binding IsActive, Mode=OneWay}"
+                                          Command="{Binding SelectCurrentCommand}"
+                                          LongPressCommand="{Binding OpenFlyoutCommand}"
+                                          ToolTip.Tip="{Binding ToolTip}"
+                                          AutomationProperties.Name="{Binding Name}"
+                                          Margin="{DynamicResource ToolButtonMargin}">
+                    <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="{DynamicResource ToolIconSize}" Height="{DynamicResource ToolIconSize}" />
+                </controls:ToolGroupButton>
+
+                <Path IsVisible="{Binding IsGroup}" IsHitTestVisible="False"
+                      Data="M 0,6 L 6,6 L 6,0 Z" Stretch="Fill"
+                      Width="{DynamicResource ToolGroupMarkSize}" Height="{DynamicResource ToolGroupMarkSize}"
+                      HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,8,8"
+                      Fill="{DynamicResource TextSecondaryBrush}" />
+
+                <Popup x:Name="FlyoutPopup" IsOpen="{Binding IsFlyoutOpen, Mode=TwoWay}"
+                       PlacementTarget="{Binding #GroupButton}" Placement="Right"
+                       IsLightDismissEnabled="True">
+                    <Border Background="{DynamicResource PanelBackgroundBrush}"
+                            BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1"
+                            CornerRadius="{StaticResource ControlCornerRadius}" Padding="4">
+                        <ItemsControl ItemsSource="{Binding Members}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="editorVm:ToolItemViewModel">
+                                    <controls:ToolToggleButton Classes="tool flyoutTool"
+                                                  IsChecked="{Binding IsActive, Mode=OneWay}"
+                                                  Command="{Binding $parent[Popup].((vm:ToolGroupViewModel)DataContext).SelectMemberCommand}"
+                                                  CommandParameter="{Binding}"
+                                                  AutomationProperties.Name="{Binding Name}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="{DynamicResource ToolIconSize}" Height="{DynamicResource ToolIconSize}" />
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}" FontSize="{DynamicResource UiFontSize}" />
+                                        </StackPanel>
+                                    </controls:ToolToggleButton>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </Popup>
+            </Panel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border Background="{DynamicResource ToolColumnBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderSubtleBrush}"
+            BorderThickness="0,0,1,0"
+            Padding="{DynamicResource ToolColumnPadding}">
+        <DockPanel>
+
+            <local:TabletColorSwatchView DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,8,0,4" DataContext="{Binding ColorSwatch}" />
+
+            <!-- One column of icons. Top keeps them at the top, not spread over the free height. -->
+            <ItemsControl ItemsSource="{Binding Groups}" ItemTemplate="{StaticResource ToolGroupTemplate}" VerticalAlignment="Top" HorizontalAlignment="Center" />
+
+        </DockPanel>
+    </Border>
+
+</UserControl>

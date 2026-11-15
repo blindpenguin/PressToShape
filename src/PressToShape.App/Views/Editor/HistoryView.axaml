@@ -11,7 +11,7 @@
 
     <UserControl.Styles>
         <Style Selector="ListBoxItem">
-            <Setter Property="MinHeight" Value="28" />
+            <Setter Property="MinHeight" Value="{DynamicResource HistoryRowMinHeight}" />
             <Setter Property="Padding" Value="4,0" />
         </Style>
         <!-- Steps that redo would bring back are dimmed. -->
@@ -34,8 +34,8 @@
                     <Grid ColumnDefinitions="Auto,*" MinHeight="24"
                           Classes.redoable="{Binding IsRedoable}"
                           AutomationProperties.Name="{Binding Name}">
-                        <Panel Grid.Column="0" Width="16" Height="16" Margin="0,0,8,0">
-                            <materialIcons:MaterialIcon Kind="CircleMedium" Width="16" Height="16" IsVisible="{Binding IsCurrent}" />
+                        <Panel Grid.Column="0" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" Margin="0,0,8,0">
+                            <materialIcons:MaterialIcon Kind="CircleMedium" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsCurrent}" />
                             <materialIcons:MaterialIcon Kind="CircleOutline" Width="12" Height="12" IsVisible="{Binding !IsCurrent}" />
                         </Panel>
                         <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />

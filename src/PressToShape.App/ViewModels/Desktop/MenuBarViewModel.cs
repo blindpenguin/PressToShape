@@ -7,6 +7,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using PressToShape.App.Localization;
 using PressToShape.App.Services;
+using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 using static PressToShape.App.Localization.Localizer;
 
@@ -54,13 +55,6 @@ internal sealed class MenuBarViewModel : ViewModelBase
         MenuItemViewModel Submenu(string header, params MenuItemViewModel[] children) =>
             MenuItemViewModel.Submenu(localizer, header, children);
         MenuItemViewModel Separator() => MenuItemViewModel.Separator(localizer);
-        MenuItemViewModel[] LanguageItems() => localizer.Languages
-            .Select(language => MenuItemViewModel.Checkable(
-                localizer,
-                language.DisplayName,
-                new RelayCommand(() => localizer.SetLanguage(language.Code)),
-                () => localizer.LanguageCode == language.Code))
-            .ToArray();
 
         var recentItems = new ObservableCollection<MenuItemViewModel>();
         void RebuildRecent()
@@ -162,7 +156,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
                 Item(N("_Snap to Grid")),
                 Item(N("Snap to Ob_jects")),
                 Separator(),
-                Submenu(N("_Language"), LanguageItems())),
+                Submenu(N("_Language"), MenuItemViewModel.LanguageItems(localizer))),
             Submenu(N("_Window"),
                 Item(N("_Properties"), command: ShowTab(InspectorTab.Properties)),
                 Item(N("_Layers"), command: ShowTab(InspectorTab.Layers)),

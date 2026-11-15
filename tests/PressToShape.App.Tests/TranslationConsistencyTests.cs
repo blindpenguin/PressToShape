@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using PressToShape.App.Localization;
 using PressToShape.App.Services;
 using PressToShape.App.ViewModels.Desktop;
+using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 using Xunit;
 

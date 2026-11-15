@@ -55,8 +55,14 @@ internal sealed class CanvasInteraction
     /// <summary>The handle that is being dragged, or <c>null</c> if no resize or rotate drag is in progress.</summary>
     public HandleType? DraggedHandle => _drag is DragType.Resizing or DragType.Rotating ? _handle : null;
 
-    /// <summary>The primary button went down at this document position. <paramref name="shift"/> adds to or removes from the selection.</summary>
-    public void PointerPressed(double x, double y, bool shift = false)
+    /// <summary>The size of the area that grabs a selection handle for a finger, in screen pixels. A press by mouse or pen uses <see cref="SelectionGeometry.GrabSize"/>.</summary>
+    public double TouchGrabSize { get; set; } = SelectionGeometry.TouchGrabSize;
+
+    /// <summary>
+    /// The primary button went down at this document position. <paramref name="shift"/> adds to or removes from the selection.
+    /// <paramref name="inputType"/> is the device: a finger grabs a handle from a larger area than a mouse or a pen.
+    /// </summary>
+    public void PointerPressed(double x, double y, bool shift = false, InputPointerType inputType = InputPointerType.Mouse)
     {
         Cancel();
 
@@ -85,7 +91,7 @@ internal sealed class CanvasInteraction
 
                 break;
             case Tool.Select:
-                PressWithSelectTool(x, y, shift);
+                PressWithSelectTool(x, y, shift, inputType == InputPointerType.Touch ? TouchGrabSize : SelectionGeometry.GrabSize);
                 break;
         }
     }
@@ -161,6 +167,23 @@ internal sealed class CanvasInteraction
         EndDrag();
     }
 
+    /// <summary>
+    /// Ends a drag and undoes it: the draft and the selection box are dropped, and a move, resize or rotate puts the document back to the
+    /// one from the press. Nothing is recorded in the history. Used when the drag was a mistake, for example when a second finger arrives.
+    /// Does nothing without a drag. <see cref="Cancel"/> differs: it keeps what the drag reached.
+    /// </summary>
+    public void Abort()
+    {
+        if (_drag is DragType.Moving or DragType.Resizing or DragType.Rotating
+            && _startDocument is { } original
+            && !ReferenceEquals(original, _state.Document))
+        {
+            _state.Preview(original);
+        }
+
+        EndDrag();
+    }
+
     /// <summary>Removes all selected shapes from the document as one step. Does nothing without a selection.</summary>
     public void DeleteSelection()
     {
@@ -200,10 +223,10 @@ internal sealed class CanvasInteraction
     private SelectionFrame? CurrentFrame() =>
         SelectionGeometry.FrameOf(SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds));
 
-    private void PressWithSelectTool(double x, double y, bool shift)
+    private void PressWithSelectTool(double x, double y, bool shift, double grabSize)
     {
         var document = _state.Document;
-        if (CurrentFrame() is { } frame && SelectionGeometry.HitHandle(frame, x, y, _state.ZoomPercent) is { } handle)
+        if (CurrentFrame() is { } frame && SelectionGeometry.HitHandle(frame, x, y, _state.ZoomPercent, grabSize) is { } handle)
         {
             BeginHandleDrag(frame, handle, x, y);
             return;

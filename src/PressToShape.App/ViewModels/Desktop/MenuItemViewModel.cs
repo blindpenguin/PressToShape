@@ -49,6 +49,13 @@ internal sealed class MenuItemViewModel : LocalizedViewModel
     /// <summary>The shown header: the translation of the message id, or a fixed text for language names.</summary>
     public string Header => _translateHeader ? Localizer.T(_header) : _header;
 
+    /// <summary>
+    /// The header without the Alt-key underscore, for a menu that has no Alt keys, such as the overflow menu of the tablet layout.
+    /// A single underscore marks the key and is dropped, a double underscore is one underscore. A fixed text (a file or language name) is
+    /// data and stays as it is.
+    /// </summary>
+    public string PlainHeader => _translateHeader ? RemoveMnemonic(Header) : Header;
+
     /// <summary>Shortcut text shown next to the item. Display only.</summary>
     public string? Gesture { get; }
 
@@ -100,6 +107,42 @@ internal sealed class MenuItemViewModel : LocalizedViewModel
     /// <summary>A checkable item with a fixed, untranslated header, for language names such as "Deutsch".</summary>
     public static MenuItemViewModel Checkable(ILocalizer localizer, string fixedHeader, ICommand command, Func<bool> isChecked) =>
         new(localizer, fixedHeader, false, null, command, [], isChecked ?? throw new ArgumentNullException(nameof(isChecked)));
+
+    /// <summary>Removes the mnemonic marker of a menu text: "_Save" gives "Save", "Save __ As" gives "Save _ As".</summary>
+    internal static string RemoveMnemonic(string text)
+    {
+        ArgumentNullException.ThrowIfNull(text);
+
+        var plain = new System.Text.StringBuilder(text.Length);
+        for (var i = 0; i < text.Length; i++)
+        {
+            if (text[i] != '_')
+            {
+                plain.Append(text[i]);
+            }
+            else if (i + 1 < text.Length && text[i + 1] == '_')
+            {
+                plain.Append('_');
+                i++;
+            }
+        }
+
+        return plain.ToString();
+    }
+
+    /// <summary>One checkable item for every language of the app, named in its own language. Choosing one switches the language.</summary>
+    public static MenuItemViewModel[] LanguageItems(ILocalizer localizer)
+    {
+        ArgumentNullException.ThrowIfNull(localizer);
+
+        return localizer.Languages
+            .Select(language => Checkable(
+                localizer,
+                language.DisplayName,
+                new CommunityToolkit.Mvvm.Input.RelayCommand(() => localizer.SetLanguage(language.Code)),
+                () => localizer.LanguageCode == language.Code))
+            .ToArray();
+    }
 
     /// <summary>All items of this item and its descendants.</summary>
     public IEnumerable<MenuItemViewModel> Descendants() =>

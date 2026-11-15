@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PressToShape.App.ViewModels.Desktop"
+             xmlns:editor="using:PressToShape.App.ViewModels.Editor"
              xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="28"
              x:Class="PressToShape.App.Views.Desktop.StatusBarView"
@@ -54,7 +55,7 @@
                             <MenuFlyout.ItemContainerTheme>
                                 <ControlTheme TargetType="MenuItem"
                                               BasedOn="{StaticResource {x:Type MenuItem}}"
-                                              x:DataType="vm:ZoomPresetViewModel">
+                                              x:DataType="editor:ZoomPresetViewModel">
                                     <Setter Property="Header" Value="{Binding Text}" />
                                     <Setter Property="Command" Value="{Binding SelectCommand}" />
                                 </ControlTheme>

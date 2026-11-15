@@ -1,14 +1,9 @@
 using System;
 using System.Globalization;
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using PressToShape.App.Localization;
-using PressToShape.App.Services;
 using PressToShape.App.Settings;
-using PressToShape.App.ViewModels;
-using PressToShape.App.ViewModels.Desktop;
-using PressToShape.App.Views;
 
 namespace PressToShape.App;
 
@@ -17,6 +12,12 @@ public partial class PressToShapeApp : Application
     // Keeps the language preference (which saves the language on change) alive for the app's lifetime.
     private LanguagePreference? _languagePreference;
     private JsonFileSettingsStore? _settingsStore;
+
+    /// <summary>
+    /// Ends the app. The Android head sets it to the call that finishes the activity. It is read when the user leaves the app, so the head
+    /// can set it after the layout was created. The desktop layout closes its window and does not use it.
+    /// </summary>
+    public Action? ExitRequested { get; set; }
 
     public override void Initialize()
     {
@@ -33,30 +34,11 @@ public partial class PressToShapeApp : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            var localizer = LocalizationHost.Localizer;
-            var services = new FileServices(
-                _settingsStore ?? throw new InvalidOperationException("The settings store is created in Initialize."),
-                new LocalFileStore(),
-                new AvaloniaFileDialogs(() => desktop.MainWindow, localizer),
-                new AvaloniaMessageDialogs(() => desktop.MainWindow, localizer));
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new DesktopShellViewModel(new DesktopAppShutdown(), localizer, services),
-            };
-        }
-        else if (ApplicationLifetime is IActivityApplicationLifetime activityLifetime)
-        {
-            activityLifetime.MainViewFactory = () => new MainView { DataContext = new MainViewModel() };
-        }
-        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewLifetime)
-        {
-            singleViewLifetime.MainView = new MainView
-            {
-                DataContext = new MainViewModel(),
-            };
-        }
+        AppLayout.Choose(
+            ApplicationLifetime,
+            _settingsStore ?? throw new InvalidOperationException("The settings store is created in Initialize."),
+            LocalizationHost.Localizer,
+            () => ExitRequested);
 
         base.OnFrameworkInitializationCompleted();
     }

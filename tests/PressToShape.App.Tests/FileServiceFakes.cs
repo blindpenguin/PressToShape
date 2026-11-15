@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using PressToShape.App.Services;
 using PressToShape.App.Settings;
@@ -18,33 +19,32 @@ internal sealed class FakeFileStore : IFileStore
 
     public int WriteCount { get; private set; }
 
-    public byte[] ReadAllBytes(string path, long maxBytes)
+    public Task<byte[]> ReadAllBytesAsync(string path, long maxBytes, CancellationToken cancellationToken = default)
     {
         if (ReadFailure is not null)
         {
-            throw ReadFailure;
+            return Task.FromException<byte[]>(ReadFailure);
         }
 
         if (!Files.TryGetValue(path, out var bytes))
         {
-            throw new FileNotFoundException("Missing", path);
+            return Task.FromException<byte[]>(new FileNotFoundException("Missing", path));
         }
 
-        return bytes.Length > maxBytes ? throw new InvalidDataException("Too large") : bytes;
+        return bytes.Length > maxBytes ? Task.FromException<byte[]>(new InvalidDataException("Too large")) : Task.FromResult(bytes);
     }
 
-    public void WriteAllBytesAtomic(string path, byte[] bytes)
+    public Task WriteAllBytesAtomicAsync(string path, byte[] bytes, CancellationToken cancellationToken = default)
     {
         WriteCount++;
         if (WriteFailure is not null)
         {
-            throw WriteFailure; // Like the real store: the old file is untouched.
+            return Task.FromException(WriteFailure); // Like the real store: the old file is untouched.
         }
 
         Files[path] = bytes;
+        return Task.CompletedTask;
     }
-
-    public bool Exists(string path) => Files.ContainsKey(path);
 }
 
 /// <summary>Returns queued answers instead of showing pickers, and records what it was asked.</summary>

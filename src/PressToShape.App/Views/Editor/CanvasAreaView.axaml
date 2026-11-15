@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PressToShape.App.ViewModels.Editor"
              xmlns:controls="using:PressToShape.App.Controls"
+             xmlns:local="using:PressToShape.App.Views.Editor"
              mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
              x:Class="PressToShape.App.Views.Editor.CanvasAreaView"
              x:DataType="vm:CanvasAreaViewModel">
@@ -13,17 +14,20 @@
 
         <!-- Corner between the rulers -->
         <Border Grid.Row="0" Grid.Column="0"
+                IsVisible="{Binding ShowRulers, RelativeSource={RelativeSource AncestorType=local:CanvasAreaView}}"
                 Width="{StaticResource RulerSize}" Height="{StaticResource RulerSize}"
                 Background="{DynamicResource RulerBackgroundBrush}"
                 BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,1,1" />
 
         <controls:RulerControl Grid.Row="0" Grid.Column="1"
+                               IsVisible="{Binding ShowRulers, RelativeSource={RelativeSource AncestorType=local:CanvasAreaView}}"
                                Orientation="Horizontal"
                                Height="{StaticResource RulerSize}"
                                ZoomPercent="{Binding ZoomPercent}"
                                OriginPx="{Binding OriginX}" />
 
         <controls:RulerControl Grid.Row="1" Grid.Column="0"
+                               IsVisible="{Binding ShowRulers, RelativeSource={RelativeSource AncestorType=local:CanvasAreaView}}"
                                Orientation="Vertical"
                                Width="{StaticResource RulerSize}"
                                ZoomPercent="{Binding ZoomPercent}"
@@ -51,6 +55,7 @@
                                             OriginY="{Binding OriginY}"
                                             Draft="{Binding Draft}"
                                             Overlay="{Binding Overlay}"
+                                            HandleSize="{DynamicResource SelectionHandleSize}"
                                             SelectionBrush="{DynamicResource SelectionOutlineBrush}"
                                             SelectionHandleFillBrush="{DynamicResource SelectionHandleFillBrush}" />
         </Panel>

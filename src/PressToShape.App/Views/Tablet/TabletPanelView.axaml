@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Tablet"
+             mc:Ignorable="d" d:DesignWidth="340" d:DesignHeight="800"
+             x:Class="PressToShape.App.Views.Tablet.TabletPanelView"
+             x:DataType="vm:TabletPanelViewModel"
+             IsVisible="{Binding IsOpen}"
+             Width="{DynamicResource TabletPanelWidth}">
+
+    <!-- The panel that floats over the canvas. The toolbar icons open and close it. It shows the content of one inspector tab (the view locator finds its view),
+         under a title so it is clear what is open. It scrolls when the content is taller than the panel. -->
+    <Border Classes="panel" BorderThickness="1,0,0,0">
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Margin="16,12,16,4" FontWeight="SemiBold"
+                       FontSize="{DynamicResource SectionHeaderFontSize}"
+                       Foreground="{DynamicResource TextPrimaryBrush}"
+                       Text="{Binding Title}" />
+            <ContentControl Content="{Binding Content}" />
+        </DockPanel>
+    </Border>
+
+</UserControl>

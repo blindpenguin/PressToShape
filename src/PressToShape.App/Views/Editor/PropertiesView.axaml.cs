@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using PressToShape.App.Controls;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 using CoreColor = PressToShape.Core.Shapes.Color;
@@ -8,7 +9,7 @@ using CoreColor = PressToShape.Core.Shapes.Color;
 namespace PressToShape.App.Views.Editor;
 
 /// <summary>
-/// The Properties tab. The code-behind only forwards: focus, Enter and Escape of the number fields, the pickers' open and close,
+/// The Properties tab. The code-behind only forwards: the number fields (shared with the contextual bar of the tablet layout), the pickers' open and close,
 /// the pick, add-to-palette and recent-color buttons of the pickers, the palette swatches (with the Shift state), and the opacity slider's drag. Every decision is in <see cref="PropertiesViewModel"/>.
 /// </summary>
 public partial class PropertiesView : UserControl
@@ -22,11 +23,8 @@ public partial class PropertiesView : UserControl
 
         PaletteStrip.AddHandler(PointerPressedEvent, OnSwatchPointerPressed, RoutingStrategies.Tunnel, handledEventsToo: true);
 
-        // A number field commits when it is left or Enter is pressed, and goes back to the shown value on Escape. Each text box
-        // carries its field view model in Tag. The handlers sit on the view, so keys in other text boxes keep their meaning.
-        AddHandler(GotFocusEvent, OnFieldGotFocus);
-        AddHandler(LostFocusEvent, OnFieldLostFocus);
-        AddHandler(KeyDownEvent, OnFieldKeyDown, RoutingStrategies.Tunnel);
+        // A number field commits when it is left or Enter is pressed, and goes back to the shown value on Escape.
+        NumberFieldBehavior.Attach(this);
 
         OpacitySlider.AddHandler(PointerPressedEvent, OnOpacityPressed, RoutingStrategies.Tunnel, handledEventsToo: true);
         OpacitySlider.AddHandler(PointerReleasedEvent, OnOpacityReleased, RoutingStrategies.Bubble, handledEventsToo: true);
@@ -37,44 +35,6 @@ public partial class PropertiesView : UserControl
     }
 
     private PropertiesViewModel? Properties => DataContext as PropertiesViewModel;
-
-    private static NumberFieldViewModel? FieldOf(RoutedEventArgs e) => (e.Source as TextBox)?.Tag as NumberFieldViewModel;
-
-    private void OnFieldGotFocus(object? sender, FocusChangedEventArgs e)
-    {
-        if (FieldOf(e) is { } field)
-        {
-            field.IsEditing = true;
-        }
-    }
-
-    private void OnFieldLostFocus(object? sender, RoutedEventArgs e)
-    {
-        if (FieldOf(e) is { } field)
-        {
-            field.IsEditing = false;
-            field.Commit();
-        }
-    }
-
-    private void OnFieldKeyDown(object? sender, KeyEventArgs e)
-    {
-        if (FieldOf(e) is not { } field)
-        {
-            return;
-        }
-
-        if (e.Key == Key.Enter)
-        {
-            field.Commit();
-            e.Handled = true;
-        }
-        else if (e.Key == Key.Escape)
-        {
-            field.Revert();
-            e.Handled = true;
-        }
-    }
 
     private void OnFillFlyoutOpened(object? sender, System.EventArgs e)
     {

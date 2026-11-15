@@ -9,6 +9,7 @@ namespace PressToShape.App.Workspace;
 /// <summary>
 /// The list of recently used files, most recent first, kept in the settings file. It holds each path once and at most
 /// <see cref="MaxCount"/> paths. The stored value is untrusted: anything that is not a list of paths is ignored.
+/// A list that does not persist stays empty: the paths of a platform whose file references do not survive a restart are of no use later.
 /// </summary>
 internal sealed class RecentFiles
 {
@@ -16,12 +17,16 @@ internal sealed class RecentFiles
     public const int MaxCount = 10;
 
     private readonly ISettingsStore _store;
+    private readonly bool _persist;
     private readonly List<string> _paths;
 
-    public RecentFiles(ISettingsStore store)
+    /// <param name="store">The settings file.</param>
+    /// <param name="persist">Whether the list is kept in the settings. When false, <see cref="Add"/> and <see cref="Remove"/> do nothing and the list stays empty.</param>
+    public RecentFiles(ISettingsStore store, bool persist = true)
     {
         _store = store ?? throw new ArgumentNullException(nameof(store));
-        _paths = ReadPaths(_store.Load().RecentFiles);
+        _persist = persist;
+        _paths = persist ? ReadPaths(_store.Load().RecentFiles) : [];
     }
 
     /// <summary>Raised after the list changed.</summary>
@@ -33,7 +38,7 @@ internal sealed class RecentFiles
     /// <summary>Puts a path at the top. An existing entry for the same path moves up. Blank paths are ignored.</summary>
     public void Add(string path)
     {
-        if (string.IsNullOrWhiteSpace(path) || (_paths.Count > 0 && _paths[0] == path))
+        if (!_persist || string.IsNullOrWhiteSpace(path) || (_paths.Count > 0 && _paths[0] == path))
         {
             return;
         }

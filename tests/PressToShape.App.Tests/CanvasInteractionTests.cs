@@ -1078,6 +1078,197 @@ public class CanvasInteractionTests
     }
 
     [Fact]
+    public void Press_ByTouch_FifteenPixelsFromAHandle_StartsAResize()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        interaction.PointerPressed(hx + 15, hy + 15, inputType: InputPointerType.Touch);
+        interaction.PointerMoved(hx + 45, hy + 35);
+        interaction.PointerReleased(hx + 45, hy + 35);
+
+        Assert.Equal(new[] { HistoryStepType.ResizeShapes }, state.History.Steps);
+        Assert.True(Only(state).Width > 200);
+    }
+
+    [Theory]
+    [InlineData((int)InputPointerType.Mouse)]
+    [InlineData((int)InputPointerType.Pen)]
+    public void Press_ByMouseOrPen_FifteenPixelsFromAHandle_DoesNotGrabIt(int deviceType)
+    {
+        var (state, interaction, _) = HandleFixture();
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        interaction.PointerPressed(hx + 15, hy + 15, inputType: (InputPointerType)deviceType);
+
+        Assert.Null(interaction.DraggedHandle);
+        interaction.Cancel();
+    }
+
+    [Fact]
+    public void Press_ByTouch_UsesTheConfiguredGrabSize()
+    {
+        var (state, interaction, _) = HandleFixture();
+        interaction.TouchGrabSize = 20;
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        interaction.PointerPressed(hx + 8, hy, inputType: InputPointerType.Touch);
+        var grabbedClose = interaction.DraggedHandle;
+        interaction.Cancel();
+        interaction.PointerPressed(hx + 30, hy, inputType: InputPointerType.Touch);
+        var grabbedFar = interaction.DraggedHandle;
+        interaction.Cancel();
+
+        Assert.Equal(HandleType.BottomRight, grabbedClose);
+        Assert.Null(grabbedFar);
+    }
+
+    [Fact]
+    public void Press_ByTouch_InTheMiddleOfAShape_MovesItInsteadOfResizing()
+    {
+        var (state, interaction, id) = HandleFixture();
+        var shape = Only(state);
+
+        interaction.PointerPressed(shape.CenterX, shape.CenterY, inputType: InputPointerType.Touch);
+        interaction.PointerMoved(shape.CenterX + 30, shape.CenterY + 10);
+        interaction.PointerReleased(shape.CenterX + 30, shape.CenterY + 10);
+
+        Assert.Equal(new[] { HistoryStepType.MoveShape }, state.History.Steps);
+        Assert.Equal(new[] { id }, state.SelectedShapeIds);
+    }
+
+    // ---- abort: the drag was a mistake, nothing stays ----
+
+    [Fact]
+    public void Abort_DuringDrawing_DropsTheDraftAndRecordsNothing()
+    {
+        var (state, interaction) = Create(Tool.Rectangle);
+        interaction.PointerPressed(10, 10);
+        interaction.PointerMoved(110, 80);
+        Assert.NotNull(state.Draft);
+
+        interaction.Abort();
+
+        Assert.Null(state.Draft);
+        Assert.False(state.IsDragInProgress);
+        Assert.False(interaction.IsDragging);
+        Assert.Empty(state.History.Steps);
+        Assert.Empty(state.Document.Layers.SelectMany(l => l.Shapes));
+
+        interaction.PointerReleased(110, 80);
+        Assert.Empty(state.Document.Layers.SelectMany(l => l.Shapes));
+    }
+
+    [Fact]
+    public void Abort_DuringAMove_PutsTheDocumentBackAndRecordsNothing()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var original = state.Document;
+        var shape = Only(state);
+
+        interaction.PointerPressed(shape.CenterX, shape.CenterY);
+        interaction.PointerMoved(shape.CenterX + 40, shape.CenterY + 25);
+        Assert.NotSame(original, state.Document);
+
+        interaction.Abort();
+
+        Assert.Same(original, state.Document);
+        Assert.Empty(state.History.Steps);
+        Assert.False(state.IsDragInProgress);
+        Assert.False(state.CanUndo);
+    }
+
+    [Fact]
+    public void Abort_DuringAResize_PutsTheDocumentBackAndRecordsNothing()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var original = state.Document;
+        var (hx, hy) = HandleAt(state, HandleType.BottomRight);
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerMoved(hx + 50, hy + 30);
+        Assert.NotSame(original, state.Document);
+
+        interaction.Abort();
+
+        Assert.Same(original, state.Document);
+        Assert.Empty(state.History.Steps);
+        Assert.Null(interaction.DraggedHandle);
+    }
+
+    [Fact]
+    public void Abort_DuringARotate_PutsTheDocumentBackAndRecordsNothing()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var original = state.Document;
+        var (hx, hy) = HandleAt(state, HandleType.Rotate);
+
+        interaction.PointerPressed(hx, hy);
+        interaction.PointerMoved(hx + 80, hy + 40);
+        Assert.NotSame(original, state.Document);
+
+        interaction.Abort();
+
+        Assert.Same(original, state.Document);
+        Assert.Empty(state.History.Steps);
+    }
+
+    [Fact]
+    public void Abort_DuringAMarquee_DropsTheBoxAndKeepsTheSelection()
+    {
+        var (state, interaction, id) = HandleFixture();
+        interaction.PointerPressed(600, 600);
+        interaction.PointerMoved(700, 700);
+        Assert.NotNull(state.SelectionBox);
+
+        interaction.Abort();
+
+        Assert.Null(state.SelectionBox);
+        Assert.Equal(new[] { id }, state.SelectedShapeIds);
+        Assert.False(state.IsDragInProgress);
+    }
+
+    [Fact]
+    public void Abort_WithoutADrag_DoesNothing()
+    {
+        var (state, interaction, id) = HandleFixture();
+        var original = state.Document;
+
+        interaction.Abort();
+
+        Assert.Same(original, state.Document);
+        Assert.Equal(new[] { id }, state.SelectedShapeIds);
+    }
+
+    [Fact]
+    public void Abort_ThenANewDrag_WorksAsUsual()
+    {
+        var (state, interaction) = Create(Tool.Rectangle);
+        interaction.PointerPressed(0, 0);
+        interaction.PointerMoved(50, 50);
+        interaction.Abort();
+
+        Drag(interaction, 10, 20, 110, 70);
+
+        Assert.Single(state.Document.Layers.SelectMany(l => l.Shapes));
+        Assert.Equal(new[] { HistoryStepType.DrawRectangle }, state.History.Steps);
+    }
+
+    [Fact]
+    public void Cancel_AfterAMove_StillKeepsTheReachedPosition()
+    {
+        var (state, interaction, _) = HandleFixture();
+        var shape = Only(state);
+
+        interaction.PointerPressed(shape.CenterX, shape.CenterY);
+        interaction.PointerMoved(shape.CenterX + 40, shape.CenterY);
+        interaction.Cancel();
+
+        Assert.Equal(new[] { HistoryStepType.MoveShape }, state.History.Steps);
+        Assert.Equal(140, Only(state).X);
+    }
+
+    [Fact]
     public void ResizeDrag_AnEdgeHandle_ChangesOnlyOneSide()
     {
         var (state, interaction, _) = HandleFixture();

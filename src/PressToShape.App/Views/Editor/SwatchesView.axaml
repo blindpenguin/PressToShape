@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="96" d:DesignHeight="120"
+             x:Class="PressToShape.App.Views.Editor.SwatchesView"
+             x:DataType="vm:ToolboxViewModel">
+
+    <!-- The size of the swap and reset buttons is set in a style of this view, because a DynamicResource written on the button itself loses against the Button.icon style. -->
+    <UserControl.Styles>
+        <Style Selector="Button.swatchAction">
+            <Setter Property="MinWidth" Value="{DynamicResource SwatchButtonSize}" />
+            <Setter Property="MinHeight" Value="{DynamicResource SwatchButtonSize}" />
+            <Setter Property="Width" Value="{DynamicResource SwatchButtonSize}" />
+            <Setter Property="Height" Value="{DynamicResource SwatchButtonSize}" />
+        </Style>
+    </UserControl.Styles>
+
+    <!-- Fill and stroke swatches with swap and reset (disabled until colors exist) -->
+    <Grid Width="{DynamicResource SwatchAreaWidth}" Height="{DynamicResource SwatchAreaHeight}"
+          Margin="{DynamicResource SwatchAreaMargin}" HorizontalAlignment="Center">
+        <Border Width="{DynamicResource SwatchSize}" Height="{DynamicResource SwatchSize}" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Background="{DynamicResource ControlBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="2"
+                CornerRadius="3" ToolTip.Tip="{loc:T 'Stroke color'}" />
+        <Border Width="{DynamicResource SwatchSize}" Height="{DynamicResource SwatchSize}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,4,0,0"
+                Background="{DynamicResource AppAccentBrush}"
+                BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1"
+                CornerRadius="3" ToolTip.Tip="{loc:T 'Fill color'}" />
+        <Button Classes="icon swatchAction"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                Command="{Binding SwapColorsCommand}"
+                ToolTip.Tip="{loc:T 'Swap fill and stroke'}" AutomationProperties.Name="{loc:T 'Swap fill and stroke'}">
+            <materialIcons:MaterialIcon Kind="SwapHorizontal" Width="{DynamicResource SwatchIconSize}" Height="{DynamicResource SwatchIconSize}" />
+        </Button>
+        <Button Classes="icon swatchAction"
+                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                Command="{Binding ResetColorsCommand}"
+                ToolTip.Tip="{loc:T 'Reset colors'}" AutomationProperties.Name="{loc:T 'Reset colors'}">
+            <materialIcons:MaterialIcon Kind="Restore" Width="{DynamicResource SwatchIconSize}" Height="{DynamicResource SwatchIconSize}" />
+        </Button>
+    </Grid>
+
+</UserControl>

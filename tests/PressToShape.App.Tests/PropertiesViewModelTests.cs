@@ -58,6 +58,24 @@ public class PropertiesViewModelTests
         field.Commit();
     }
 
+    [Fact]
+    public void CommitPendingEdits_AppliesOnlyTheFieldsBeingEdited_AsOneStepEach()
+    {
+        var f = new Fixture();
+        var id = f.Add(Rect(x: 10, y: 20))[0];
+        var steps = f.Steps;
+        f.Properties.X.IsEditing = true;
+        f.Properties.X.Text = "40";
+        f.Properties.Y.Text = "99"; // typed text that is not being edited stays unapplied
+
+        f.Properties.CommitPendingEdits();
+
+        Assert.Equal(40, ((RectangleShape)f.Shape(id)).X);
+        Assert.Equal(20, ((RectangleShape)f.Shape(id)).Y);
+        Assert.False(f.Properties.X.IsEditing);
+        Assert.Equal(steps + 1, f.Steps);
+    }
+
     // ---- values ----
 
     [Fact]

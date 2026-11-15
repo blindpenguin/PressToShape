@@ -45,6 +45,10 @@ internal sealed class DocumentCanvasControl : Control
     public static readonly StyledProperty<IBrush?> SelectionHandleFillBrushProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(SelectionHandleFillBrush));
 
+    /// <summary>The side of a selection handle in screen pixels. It comes from the theme, so a layout for touch can draw larger handles.</summary>
+    public static readonly StyledProperty<double> HandleSizeProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, double>(nameof(HandleSize), defaultValue: SelectionOverlay.HandleSize);
+
     // The outlines keep this width at every zoom.
     private const double OutlineThickness = 1;
 
@@ -61,7 +65,8 @@ internal sealed class DocumentCanvasControl : Control
             DraftProperty,
             OverlayProperty,
             SelectionBrushProperty,
-            SelectionHandleFillBrushProperty);
+            SelectionHandleFillBrushProperty,
+            HandleSizeProperty);
     }
 
     public DocumentCanvasControl()
@@ -117,6 +122,12 @@ internal sealed class DocumentCanvasControl : Control
         set => SetValue(SelectionHandleFillBrushProperty, value);
     }
 
+    public double HandleSize
+    {
+        get => GetValue(HandleSizeProperty);
+        set => SetValue(HandleSizeProperty, value);
+    }
+
     public override void Render(DrawingContext context)
     {
         if (Document is not { } document)
@@ -160,12 +171,13 @@ internal sealed class DocumentCanvasControl : Control
             context.DrawLine(pen, new Point(link.From.X, link.From.Y), new Point(link.To.X, link.To.Y));
         }
 
+        var size = double.IsFinite(HandleSize) && HandleSize > 0 ? HandleSize : SelectionOverlay.HandleSize;
         foreach (var handle in overlay.Handles)
         {
-            var area = new Rect(handle.Center.X - handle.Size / 2, handle.Center.Y - handle.Size / 2, handle.Size, handle.Size);
+            var area = new Rect(handle.Center.X - size / 2, handle.Center.Y - size / 2, size, size);
             if (handle.Type == HandleType.Rotate)
             {
-                context.DrawEllipse(SelectionHandleFillBrush, pen, area.Center, handle.Size / 2, handle.Size / 2);
+                context.DrawEllipse(SelectionHandleFillBrush, pen, area.Center, size / 2, size / 2);
             }
             else
             {

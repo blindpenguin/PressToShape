@@ -122,6 +122,33 @@ public sealed class DocumentFileServiceTests : IDisposable
     }
 
     [Theory]
+    [InlineData("storage:0123/plan")]
+    [InlineData("storage:0123/plan.txt")]
+    [InlineData("storage:0123/plan.p2s")]
+    public async Task SaveAs_WithAReferenceFromTheSystemPicker_KeepsTheReferenceAsItIs(string reference)
+    {
+        var s = new Setup();
+        s.Dialogs.SaveAnswers.Enqueue(reference);
+
+        var saved = await s.Service.SaveAsAsync();
+
+        Assert.True(saved);
+        Assert.True(s.Fake.Files.ContainsKey(reference));
+        Assert.Equal(reference, s.Session.Path);
+    }
+
+    [Fact]
+    public async Task Export_WithAReferenceFromTheSystemPicker_KeepsTheReferenceAsItIs()
+    {
+        var s = new Setup();
+        s.Dialogs.ExportAnswers.Enqueue("storage:0123/image");
+
+        await s.Service.ExportSvgAsync();
+
+        Assert.True(s.Fake.Files.ContainsKey("storage:0123/image"));
+    }
+
+    [Theory]
     [InlineData("/work/drawing", "/work/drawing.p2s")]
     [InlineData("/work/drawing.p2s", "/work/drawing.p2s")]
     [InlineData("/work/DRAWING.P2S", "/work/DRAWING.P2S")]

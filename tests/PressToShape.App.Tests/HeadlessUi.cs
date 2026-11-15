@@ -21,6 +21,9 @@ internal sealed class HeadlessUiApp : Application
     public override void Initialize()
     {
         RequestedThemeVariant = ThemeVariant.Dark;
+
+        // Like the real application: a view model shown as content gets its view by name.
+        DataTemplates.Add(new ViewLocator());
         Resources.MergedDictionaries.Add(new ResourceInclude(new Uri("avares://PressToShape.App/")) { Source = new Uri("avares://PressToShape.App/Styles/Theme.axaml") });
         Styles.Add(new FluentTheme());
         Styles.Add(new MaterialIconStyles(null));
@@ -29,9 +32,16 @@ internal sealed class HeadlessUiApp : Application
     }
 }
 
-/// <summary>Runs code on the one thread that owns the headless Avalonia platform. Avalonia must be used from a single thread, xUnit v2 uses many.</summary>
+/// <summary>
+/// Runs code on the one thread that owns the headless Avalonia platform. Avalonia must be used from a single thread, xUnit v2 uses many.
+/// The test classes that use it belong to the collection <see cref="CollectionName"/>, so they run one after the other: a test that lets the
+/// dispatcher run its jobs (to lay out a window) would otherwise also run the jobs of a test of another class, in the middle of its own steps.
+/// </summary>
 internal static class HeadlessUi
 {
+    /// <summary>The name of the xUnit collection of every test class that uses <see cref="Run{T}"/>.</summary>
+    public const string CollectionName = "Headless UI";
+
     private static readonly Lazy<bool> Started = new(Start, LazyThreadSafetyMode.ExecutionAndPublication);
 
     public static T Run<T>(Func<T> action)

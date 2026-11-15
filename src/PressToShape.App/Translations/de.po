@@ -477,6 +477,9 @@ msgstr "Konturfarbe"
 msgid "Fill color"
 msgstr "Füllfarbe"
 
+msgid "Fill and stroke color"
+msgstr "Füll- und Konturfarbe"
+
 msgid "Swap fill and stroke"
 msgstr "Füllung und Kontur vertauschen"
 
@@ -671,3 +674,9 @@ msgstr "Noch keine Farbfelder."
 
 msgid "Swatch"
 msgstr "Farbfeld"
+
+msgid "Duplicate"
+msgstr "Duplizieren"
+
+msgid "Delete"
+msgstr "Löschen"

@@ -1,15 +1,24 @@
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PressToShape.App.Services;
 
 /// <summary>
 /// The real file system. Writing goes to a temporary file in the same folder first and then replaces the target,
 /// so a failed write cannot damage an existing file. Errors are thrown, the caller shows them to the user.
+/// The file work runs on a pool thread, so the calling (UI) thread never waits for the disk.
 /// </summary>
 internal sealed class LocalFileStore : IFileStore
 {
-    public byte[] ReadAllBytes(string path, long maxBytes)
+    public Task<byte[]> ReadAllBytesAsync(string path, long maxBytes, CancellationToken cancellationToken = default) =>
+        Task.Run(() => ReadAllBytes(path, maxBytes), cancellationToken);
+
+    public Task WriteAllBytesAtomicAsync(string path, byte[] bytes, CancellationToken cancellationToken = default) =>
+        Task.Run(() => WriteAllBytesAtomic(path, bytes), cancellationToken);
+
+    private static byte[] ReadAllBytes(string path, long maxBytes)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
 
@@ -24,7 +33,7 @@ internal sealed class LocalFileStore : IFileStore
         return bytes;
     }
 
-    public void WriteAllBytesAtomic(string path, byte[] bytes)
+    private static void WriteAllBytesAtomic(string path, byte[] bytes)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         ArgumentNullException.ThrowIfNull(bytes);
@@ -56,8 +65,6 @@ internal sealed class LocalFileStore : IFileStore
             }
         }
     }
-
-    public bool Exists(string path) => !string.IsNullOrWhiteSpace(path) && File.Exists(path);
 
     private static void TryDelete(string path)
     {

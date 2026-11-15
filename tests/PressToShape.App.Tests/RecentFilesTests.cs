@@ -46,6 +46,48 @@ public sealed class RecentFilesTests : IDisposable
     private static MemoryStore StoreWith(string json) => new() { Current = JsonSerializer.Deserialize<AppSettings>(json)! };
 
     [Fact]
+    public void WithoutPersisting_AddAndRemove_DoNothing()
+    {
+        var store = new MemoryStore();
+        var recent = new RecentFiles(store, persist: false);
+        var raised = 0;
+        recent.Changed += (_, _) => raised++;
+
+        recent.Add("/a.p2s");
+        recent.Remove("/a.p2s");
+
+        Assert.Empty(recent.Paths);
+        Assert.Equal(0, store.SaveCount);
+        Assert.Equal(0, raised);
+        Assert.Null(store.Current.RecentFiles);
+    }
+
+    [Fact]
+    public void WithoutPersisting_AStoredList_IsIgnoredAndKept()
+    {
+        var store = StoreWith("""{"RecentFiles":["/old.p2s"]}""");
+        var recent = new RecentFiles(store, persist: false);
+
+        recent.Add("/new.p2s");
+
+        Assert.Empty(recent.Paths);
+        Assert.Equal(0, store.SaveCount);
+        Assert.Equal("/old.p2s", Assert.Single(store.Current.RecentFiles!.Value.EnumerateArray()).GetString());
+    }
+
+    [Fact]
+    public void WithPersisting_IsTheDefault()
+    {
+        var store = new MemoryStore();
+        var recent = new RecentFiles(store);
+
+        recent.Add("/a.p2s");
+
+        Assert.Equal(new[] { "/a.p2s" }, recent.Paths);
+        Assert.Equal(1, store.SaveCount);
+    }
+
+    [Fact]
     public void New_WithoutStoredList_IsEmpty()
     {
         Assert.Empty(new RecentFiles(new MemoryStore()).Paths);

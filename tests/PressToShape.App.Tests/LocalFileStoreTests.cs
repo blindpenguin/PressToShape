@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using PressToShape.App.Services;
 using Xunit;
 
@@ -36,59 +37,59 @@ public sealed class LocalFileStoreTests : IDisposable
     private string[] FilesIn(string folder) => Directory.GetFiles(folder).Select(Path.GetFileName).Cast<string>().OrderBy(n => n).ToArray();
 
     [Fact]
-    public void Write_NewFileInNewFolder_CreatesBoth()
+    public async Task Write_NewFileInNewFolder_CreatesBoth()
     {
         var path = Path.Combine(_folder, "sub", "a.p2s");
 
-        _store.WriteAllBytesAtomic(path, [1, 2, 3]);
+        await _store.WriteAllBytesAtomicAsync(path, [1, 2, 3]);
 
         Assert.Equal(new byte[] { 1, 2, 3 }, File.ReadAllBytes(path));
     }
 
     [Fact]
-    public void Write_ExistingFile_IsReplaced()
+    public async Task Write_ExistingFile_IsReplaced()
     {
         Directory.CreateDirectory(_folder);
         File.WriteAllBytes(PathOf("a.p2s"), [9, 9, 9, 9, 9]);
 
-        _store.WriteAllBytesAtomic(PathOf("a.p2s"), [1, 2]);
+        await _store.WriteAllBytesAtomicAsync(PathOf("a.p2s"), [1, 2]);
 
         Assert.Equal(new byte[] { 1, 2 }, File.ReadAllBytes(PathOf("a.p2s")));
     }
 
     [Fact]
-    public void Write_Success_LeavesNoTemporaryFile()
+    public async Task Write_Success_LeavesNoTemporaryFile()
     {
-        _store.WriteAllBytesAtomic(PathOf("a.p2s"), [1]);
-        _store.WriteAllBytesAtomic(PathOf("a.p2s"), [2]);
+        await _store.WriteAllBytesAtomicAsync(PathOf("a.p2s"), [1]);
+        await _store.WriteAllBytesAtomicAsync(PathOf("a.p2s"), [2]);
 
         Assert.Equal(new[] { "a.p2s" }, FilesIn(_folder));
     }
 
     [Fact]
-    public void Write_TargetIsAnExistingDirectory_ThrowsAndLeavesNoTemporaryFile()
+    public async Task Write_TargetIsAnExistingDirectory_ThrowsAndLeavesNoTemporaryFile()
     {
         Directory.CreateDirectory(PathOf("target"));
 
-        Assert.ThrowsAny<IOException>(() => _store.WriteAllBytesAtomic(PathOf("target"), [1]));
+        await Assert.ThrowsAnyAsync<IOException>(() => _store.WriteAllBytesAtomicAsync(PathOf("target"), [1]));
 
         Assert.Empty(FilesIn(_folder));
         Assert.True(Directory.Exists(PathOf("target")));
     }
 
     [Fact]
-    public void Write_FolderIsAFile_Throws()
+    public async Task Write_FolderIsAFile_Throws()
     {
         Directory.CreateDirectory(_folder);
         File.WriteAllText(PathOf("notafolder"), "x");
 
-        Assert.ThrowsAny<IOException>(() => _store.WriteAllBytesAtomic(Path.Combine(PathOf("notafolder"), "a.p2s"), [1]));
+        await Assert.ThrowsAnyAsync<IOException>(() => _store.WriteAllBytesAtomicAsync(Path.Combine(PathOf("notafolder"), "a.p2s"), [1]));
 
         Assert.Equal("x", File.ReadAllText(PathOf("notafolder")));
     }
 
     [Fact]
-    public void Write_FolderIsReadOnly_ThrowsAndKeepsTheOldFile()
+    public async Task Write_FolderIsReadOnly_ThrowsAndKeepsTheOldFile()
     {
         if (OperatingSystem.IsWindows())
         {
@@ -105,7 +106,7 @@ public sealed class LocalFileStoreTests : IDisposable
                 return; // Running with rights that ignore the mode (for example root): nothing to check here.
             }
 
-            Assert.ThrowsAny<Exception>(() => _store.WriteAllBytesAtomic(PathOf("a.p2s"), [1, 2]));
+            await Assert.ThrowsAnyAsync<Exception>(() => _store.WriteAllBytesAtomicAsync(PathOf("a.p2s"), [1, 2]));
         }
         finally
         {
@@ -132,72 +133,74 @@ public sealed class LocalFileStoreTests : IDisposable
     }
 
     [Fact]
-    public void Read_ExistingFile_ReturnsTheBytes()
+    public async Task Read_ExistingFile_ReturnsTheBytes()
     {
         Directory.CreateDirectory(_folder);
         File.WriteAllBytes(PathOf("a.p2s"), [4, 5, 6]);
 
-        Assert.Equal(new byte[] { 4, 5, 6 }, _store.ReadAllBytes(PathOf("a.p2s"), 100));
+        Assert.Equal(new byte[] { 4, 5, 6 }, await _store.ReadAllBytesAsync(PathOf("a.p2s"), 100));
     }
 
     [Fact]
-    public void Read_EmptyFile_ReturnsNoBytes()
+    public async Task Read_EmptyFile_ReturnsNoBytes()
     {
         Directory.CreateDirectory(_folder);
         File.WriteAllBytes(PathOf("a.p2s"), []);
 
-        Assert.Empty(_store.ReadAllBytes(PathOf("a.p2s"), 100));
+        Assert.Empty(await _store.ReadAllBytesAsync(PathOf("a.p2s"), 100));
     }
 
     [Fact]
-    public void Read_FileOverTheLimit_ThrowsInvalidDataException()
+    public async Task Read_FileOverTheLimit_ThrowsInvalidDataException()
     {
         Directory.CreateDirectory(_folder);
         File.WriteAllBytes(PathOf("a.p2s"), new byte[11]);
 
-        Assert.Throws<InvalidDataException>(() => _store.ReadAllBytes(PathOf("a.p2s"), 10));
+        await Assert.ThrowsAsync<InvalidDataException>(() => _store.ReadAllBytesAsync(PathOf("a.p2s"), 10));
     }
 
     [Fact]
-    public void Read_FileExactlyAtTheLimit_IsRead()
+    public async Task Read_FileExactlyAtTheLimit_IsRead()
     {
         Directory.CreateDirectory(_folder);
         File.WriteAllBytes(PathOf("a.p2s"), new byte[10]);
 
-        Assert.Equal(10, _store.ReadAllBytes(PathOf("a.p2s"), 10).Length);
+        Assert.Equal(10, (await _store.ReadAllBytesAsync(PathOf("a.p2s"), 10)).Length);
     }
 
     [Fact]
-    public void Read_MissingFile_ThrowsFileNotFoundException()
+    public async Task Read_MissingFile_ThrowsFileNotFoundException()
     {
         Directory.CreateDirectory(_folder);
 
-        Assert.Throws<FileNotFoundException>(() => _store.ReadAllBytes(PathOf("missing.p2s"), 100));
+        await Assert.ThrowsAsync<FileNotFoundException>(() => _store.ReadAllBytesAsync(PathOf("missing.p2s"), 100));
     }
 
     [Fact]
-    public void Read_MissingFolder_ThrowsDirectoryNotFoundException()
+    public async Task Read_MissingFolder_ThrowsDirectoryNotFoundException()
     {
-        Assert.Throws<DirectoryNotFoundException>(() => _store.ReadAllBytes(Path.Combine(_folder, "no", "a.p2s"), 100));
+        await Assert.ThrowsAsync<DirectoryNotFoundException>(() => _store.ReadAllBytesAsync(Path.Combine(_folder, "no", "a.p2s"), 100));
     }
 
     [Fact]
-    public void Exists_ReportsFilesOnly()
+    public async Task CancelledToken_ThrowsBeforeTouchingTheFile()
     {
-        Directory.CreateDirectory(PathOf("dir"));
-        File.WriteAllBytes(PathOf("a.p2s"), [1]);
+        Directory.CreateDirectory(_folder);
+        File.WriteAllBytes(PathOf("a.p2s"), [1, 2, 3]);
+        using var source = new System.Threading.CancellationTokenSource();
+        await source.CancelAsync();
 
-        Assert.True(_store.Exists(PathOf("a.p2s")));
-        Assert.False(_store.Exists(PathOf("missing.p2s")));
-        Assert.False(_store.Exists(PathOf("dir")));
-        Assert.False(_store.Exists(string.Empty));
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => _store.WriteAllBytesAtomicAsync(PathOf("a.p2s"), [9], source.Token));
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => _store.ReadAllBytesAsync(PathOf("a.p2s"), 100, source.Token));
+
+        Assert.Equal(new byte[] { 1, 2, 3 }, File.ReadAllBytes(PathOf("a.p2s")));
     }
 
     [Fact]
-    public void Arguments_EmptyPathOrNullBytes_Throw()
+    public async Task Arguments_EmptyPathOrNullBytes_Throw()
     {
-        Assert.ThrowsAny<ArgumentException>(() => _store.WriteAllBytesAtomic(" ", [1]));
-        Assert.Throws<ArgumentNullException>(() => _store.WriteAllBytesAtomic(PathOf("a.p2s"), null!));
-        Assert.ThrowsAny<ArgumentException>(() => _store.ReadAllBytes(string.Empty, 1));
+        await Assert.ThrowsAnyAsync<ArgumentException>(() => _store.WriteAllBytesAtomicAsync(" ", [1]));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _store.WriteAllBytesAtomicAsync(PathOf("a.p2s"), null!));
+        await Assert.ThrowsAnyAsync<ArgumentException>(() => _store.ReadAllBytesAsync(string.Empty, 1));
     }
 }

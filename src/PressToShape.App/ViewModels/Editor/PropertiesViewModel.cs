@@ -87,6 +87,22 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     /// <summary>The colors picked lately, most recent first.</summary>
     public IReadOnlyList<Color> RecentColors => _recentColors.Items;
 
+    /// <summary>
+    /// Applies every number field that the user is still typing in, as if it had been left. For a layout that hides the fields without
+    /// moving the focus first, so a typed value is not lost.
+    /// </summary>
+    public void CommitPendingEdits()
+    {
+        foreach (var field in new[] { X, Y, Width, Height, Rotation, StrokeWidth, OpacityPercent })
+        {
+            if (field.IsEditing)
+            {
+                field.IsEditing = false;
+                field.Commit();
+            }
+        }
+    }
+
     public bool HasSelection => _state.HasSelection;
 
     public bool ShowNothingSelectedHint => !_state.HasSelection;
