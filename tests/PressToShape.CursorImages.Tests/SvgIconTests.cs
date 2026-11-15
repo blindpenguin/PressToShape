@@ -136,7 +136,7 @@ public sealed class SvgIconTests : IDisposable
     {
         var files = Directory.GetFiles(RepoPaths.Combine("assets-src/cursors/lucide"), "*.svg");
 
-        Assert.Equal(10, files.Length);
+        Assert.Equal(11, files.Length);
         foreach (var file in files.OrderBy(f => f, StringComparer.Ordinal))
         {
             using var path = SvgIcon.Load(file);

@@ -29,13 +29,13 @@ public sealed class CommandTests : IDisposable
         Program.Run([command, "--source", source ?? _source, "--output", Images], _output, _error);
 
     [Fact]
-    public void Generate_WritesTwentyImagesOfTheRightSize()
+    public void Generate_WritesTwentyTwoImagesOfTheRightSize()
     {
         var code = Run("generate");
 
         Assert.Equal(0, code);
         var files = Directory.GetFiles(Images);
-        Assert.Equal(20, files.Length);
+        Assert.Equal(22, files.Length);
         foreach (var entry in CursorSet.Entries)
         {
             foreach (var size in CursorSet.Sizes)

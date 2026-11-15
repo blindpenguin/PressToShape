@@ -12,7 +12,7 @@ public class CursorRendererTests
     private static readonly string[] AppNames =
     [
         "crosshair", "open-hand", "closed-hand", "magnifier", "magnifier-minus", "resize-north-south", "resize-west-east",
-        "resize-north-west-south-east", "resize-north-east-south-west", "rotate",
+        "resize-north-west-south-east", "resize-north-east-south-west", "rotate", "eyedropper",
     ];
 
     private static SKPath Icon(string name) => SvgIcon.Load(RepoPaths.Combine($"assets-src/cursors/lucide/{name}.svg"));
@@ -134,8 +134,8 @@ public class CursorRendererTests
     [Fact]
     public void Entries_UseUniqueNamesAndExistingIcons()
     {
-        Assert.Equal(10, CursorSet.Entries.Count);
-        Assert.Equal(10, CursorSet.Entries.Select(e => e.Name).Distinct().Count());
+        Assert.Equal(11, CursorSet.Entries.Count);
+        Assert.Equal(11, CursorSet.Entries.Select(e => e.Name).Distinct().Count());
         foreach (var entry in CursorSet.Entries)
         {
             Assert.True(File.Exists(RepoPaths.Combine($"assets-src/cursors/lucide/{entry.Icon}.svg")), entry.Icon);

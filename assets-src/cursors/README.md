@@ -24,6 +24,7 @@ Hotspots are in pixels at 32 px. At 64 px they are doubled.
 | `ResizeNorthWestSouthEast` | `resize-north-west-south-east` | `move-diagonal-2` | 16, 16 |
 | `ResizeNorthEastSouthWest` | `resize-north-east-south-west` | `move-diagonal` | 16, 16 |
 | `Rotate` | `rotate` | `rotate-cw` | 16, 16 |
+| `Eyedropper` | `eyedropper` | `pipette` | 6, 26 (the tip) |
 
 The plain arrow has no image and stays the system cursor. Every image exists at 32 px and 64 px as `<name>-<size>.png`. The names and hotspots live in `CursorImages` (`src/PressToShape.App/Workspace/`).
 

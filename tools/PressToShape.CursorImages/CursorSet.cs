@@ -26,5 +26,6 @@ internal static class CursorSet
         new("resize-north-west-south-east", "move-diagonal-2"),
         new("resize-north-east-south-west", "move-diagonal"),
         new("rotate", "rotate-cw"),
+        new("eyedropper", "pipette"),
     ];
 }
