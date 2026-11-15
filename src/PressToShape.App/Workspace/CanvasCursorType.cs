@@ -18,6 +18,9 @@ internal enum CanvasCursorType
     /// <summary>A magnifier, for the Zoom tool.</summary>
     Magnifier,
 
+    /// <summary>A magnifier with a minus, for the Zoom tool while Alt is held, because a click then zooms out.</summary>
+    MagnifierMinus,
+
     /// <summary>A double arrow pointing up and down, for the top and bottom handles.</summary>
     ResizeNorthSouth,
 

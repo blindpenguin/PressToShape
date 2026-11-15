@@ -657,6 +657,116 @@ public class CanvasAreaViewModelTests
     }
 
     [Fact]
+    public void CursorType_ZoomToolWithAlt_IsTheZoomOutMagnifier_AndBackWhenAltIsReleased()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        state.ActiveTool = Tool.Zoom;
+        var raised = Record(canvas);
+
+        canvas.IsAltHeld = true;
+        Assert.Equal(CanvasCursorType.MagnifierMinus, canvas.CursorType);
+        Assert.Contains(nameof(CanvasAreaViewModel.CursorType), raised);
+
+        raised.Clear();
+        canvas.IsAltHeld = false;
+        Assert.Equal(CanvasCursorType.Magnifier, canvas.CursorType);
+        Assert.Contains(nameof(CanvasAreaViewModel.CursorType), raised);
+    }
+
+    [Fact]
+    public void IsAltHeld_SetToTheSameValue_RaisesNothing()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        state.ActiveTool = Tool.Zoom;
+        canvas.IsAltHeld = true;
+        var raised = Record(canvas);
+
+        canvas.IsAltHeld = true;
+
+        Assert.Empty(raised);
+    }
+
+    [Theory]
+    [InlineData("Select", "Arrow")]
+    [InlineData("Rectangle", "Crosshair")]
+    [InlineData("Ellipse", "Crosshair")]
+    [InlineData("Hand", "OpenHand")]
+    public void CursorType_OtherToolsWithAlt_IgnoreAlt(string tool, string expected)
+    {
+        var (state, canvas) = Create(2000, 1200);
+        state.ActiveTool = Enum.Parse<Tool>(tool);
+
+        canvas.IsAltHeld = true;
+
+        Assert.Equal(Enum.Parse<CanvasCursorType>(expected), canvas.CursorType);
+    }
+
+    [Fact]
+    public void CursorType_AHandleUnderThePointerWithAlt_IgnoresAlt()
+    {
+        var (_, canvas, _) = WithShapes();
+        var (x, y) = ScreenOf(canvas, HandleType.Rotate);
+        canvas.PointerHover(x, y);
+
+        canvas.IsAltHeld = true;
+
+        Assert.Equal(CanvasCursorType.Rotate, canvas.CursorType);
+    }
+
+    [Fact]
+    public void CursorType_SelectingTheZoomToolWhileAltIsHeld_ShowsTheMinusAtOnce()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        canvas.IsAltHeld = true;
+
+        state.ActiveTool = Tool.Zoom;
+
+        Assert.Equal(CanvasCursorType.MagnifierMinus, canvas.CursorType);
+    }
+
+    [Fact]
+    public void Pointer_MovePressAndRelease_TakeTheAltStateFromTheirArgument()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        state.ActiveTool = Tool.Zoom;
+
+        canvas.PointerMoved(100, 100, alt: true);
+        Assert.True(canvas.IsAltHeld);
+        canvas.PointerMoved(100, 100, alt: false);
+        Assert.False(canvas.IsAltHeld);
+
+        canvas.PointerPressed(100, 100, alt: true);
+        Assert.True(canvas.IsAltHeld);
+        canvas.PointerReleased(100, 100, alt: false);
+        Assert.False(canvas.IsAltHeld);
+    }
+
+    [Fact]
+    public void Pointer_ReleaseAfterAPanWithAlt_KeepsAltHeld()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        state.ActiveTool = Tool.Hand;
+        canvas.PointerPressed(500, 400, alt: true);
+
+        canvas.PointerReleased(520, 410, alt: true);
+
+        Assert.True(canvas.IsAltHeld);
+    }
+
+    [Fact]
+    public void ZoomTool_AltHeld_StillZoomsOutOnClick()
+    {
+        var (state, canvas) = Create(2000, 1200);
+        state.ActiveTool = Tool.Zoom;
+        canvas.IsAltHeld = true;
+
+        canvas.PointerPressed(800, 300, alt: true);
+
+        Assert.Equal(75, state.ZoomPercent);
+        Assert.Equal(CanvasCursorType.MagnifierMinus, canvas.CursorType);
+    }
+
+    [Fact]
     public void CursorType_DuringAPan_IsAClosedHand_AndBackAfterwards()
     {
         var (state, canvas) = Create(2000, 1200);

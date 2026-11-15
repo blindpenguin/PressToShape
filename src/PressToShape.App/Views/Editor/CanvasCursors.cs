@@ -2,75 +2,76 @@ using System;
 using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Input;
-using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Material.Icons;
+using Avalonia.Platform;
 using PressToShape.App.Workspace;
 
 namespace PressToShape.App.Views.Editor;
 
 /// <summary>
-/// The pointer shapes of the canvas. Avalonia has no standard open hand, closed hand or magnifier, so these are drawn
-/// from the Material icons the tool column already uses, with a light fill and a dark outline that show on both themes.
-/// If a cursor cannot be created, a standard cursor is used instead.
+/// The pointer shapes of the canvas. Avalonia has no standard rotate, open hand, closed hand or magnifier, so the cursors come
+/// from pre-drawn images (<c>Assets/Cursors</c>, made from Lucide icons by <c>tools/PressToShape.CursorImages</c>) in the size that
+/// fits the screen scale. The plain arrow stays the system cursor. If an image cannot be loaded or the platform rejects it, a
+/// standard cursor is used instead.
 /// </summary>
 internal static class CanvasCursors
 {
-    private const int Size = 32;
-    private const double IconSize = 24;
+    private const string AssetFolder = "avares://PressToShape.App/Assets/Cursors/";
 
-    private static readonly Dictionary<CanvasCursorType, Cursor> Cache = [];
+    private static readonly Dictionary<(CanvasCursorType Type, int Size), Cursor> Cache = [];
 
     // The bitmaps behind the cursors stay alive as long as the cursors do.
     private static readonly List<IDisposable> Bitmaps = [];
 
-    /// <summary>The cursor for a type. Created on first use and then reused.</summary>
-    public static Cursor For(CanvasCursorType type)
+    /// <summary>The cursor for a type on a screen with this scale (1.0 is 100%). Created on first use and then reused.</summary>
+    public static Cursor For(CanvasCursorType type, double scale)
     {
-        if (!Cache.TryGetValue(type, out var cursor))
+        if (type == CanvasCursorType.Arrow)
         {
-            cursor = Create(type);
-            Cache[type] = cursor;
+            return new Cursor(StandardCursorType.Arrow);
+        }
+
+        var size = CursorImages.SizeFor(scale);
+        if (!Cache.TryGetValue((type, size), out var cursor))
+        {
+            cursor = FromImage(type, size);
+            Cache[(type, size)] = cursor;
         }
 
         return cursor;
     }
 
-    private static Cursor Create(CanvasCursorType type) => type switch
-    {
-        CanvasCursorType.Crosshair => new Cursor(StandardCursorType.Cross),
-        CanvasCursorType.OpenHand => FromIcon(MaterialIconKind.HandBackLeftOutline, new PixelPoint(16, 16), StandardCursorType.Hand),
-        CanvasCursorType.ClosedHand => FromIcon(MaterialIconKind.HandBackLeft, new PixelPoint(16, 16), StandardCursorType.SizeAll),
-        CanvasCursorType.Magnifier => FromIcon(MaterialIconKind.MagnifyPlusOutline, new PixelPoint(13, 13), StandardCursorType.Cross),
-        CanvasCursorType.ResizeNorthSouth => new Cursor(StandardCursorType.SizeNorthSouth),
-        CanvasCursorType.ResizeWestEast => new Cursor(StandardCursorType.SizeWestEast),
-        CanvasCursorType.ResizeNorthWestSouthEast => new Cursor(StandardCursorType.BottomRightCorner),
-        CanvasCursorType.ResizeNorthEastSouthWest => new Cursor(StandardCursorType.BottomLeftCorner),
-        CanvasCursorType.Rotate => FromIcon(MaterialIconKind.RotateRight, new PixelPoint(16, 16), StandardCursorType.Hand),
-        _ => new Cursor(StandardCursorType.Arrow),
-    };
-
-    private static Cursor FromIcon(MaterialIconKind icon, PixelPoint hotSpot, StandardCursorType fallback)
+    private static Cursor FromImage(CanvasCursorType type, int size)
     {
         try
         {
-            var geometry = Geometry.Parse(MaterialIconDataProvider.GetData(icon));
-            var bitmap = new RenderTargetBitmap(new PixelSize(Size, Size));
-            using (var context = bitmap.CreateDrawingContext())
-            using (context.PushTransform(Matrix.CreateScale(Size / IconSize, Size / IconSize)))
-            {
-                // A thick dark line first, then the light fill on top: a light shape with a dark rim.
-                context.DrawGeometry(null, new Pen(Brushes.Black, 2.6, lineJoin: PenLineJoin.Round), geometry);
-                context.DrawGeometry(Brushes.White, null, geometry);
-            }
+            var fileName = CursorImages.FileName(type, size)
+                ?? throw new InvalidOperationException($"The cursor type {type} has no image.");
+            var (x, y) = CursorImages.Hotspot(type, size);
 
+            using var stream = AssetLoader.Open(new Uri(AssetFolder + fileName));
+            var bitmap = new Bitmap(stream);
             Bitmaps.Add(bitmap);
-            return new Cursor(bitmap, hotSpot);
+            return new Cursor(bitmap, new PixelPoint(x, y));
         }
-        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException or NotSupportedException or FormatException)
+        catch (Exception ex) when (ex is System.IO.IOException or ArgumentException or InvalidOperationException or NotSupportedException or FormatException)
         {
-            // A cursor is only decoration. If the platform cannot draw or accept it, the standard shape does the job.
-            return new Cursor(fallback);
+            // A cursor is only decoration. If the image is missing or the platform cannot accept it, the standard shape does the job.
+            return new Cursor(Fallback(type));
         }
     }
+
+    private static StandardCursorType Fallback(CanvasCursorType type) => type switch
+    {
+        CanvasCursorType.Crosshair => StandardCursorType.Cross,
+        CanvasCursorType.OpenHand => StandardCursorType.Hand,
+        CanvasCursorType.ClosedHand => StandardCursorType.SizeAll,
+        CanvasCursorType.Magnifier or CanvasCursorType.MagnifierMinus => StandardCursorType.Cross,
+        CanvasCursorType.ResizeNorthSouth => StandardCursorType.SizeNorthSouth,
+        CanvasCursorType.ResizeWestEast => StandardCursorType.SizeWestEast,
+        CanvasCursorType.ResizeNorthWestSouthEast => StandardCursorType.BottomRightCorner,
+        CanvasCursorType.ResizeNorthEastSouthWest => StandardCursorType.BottomLeftCorner,
+        CanvasCursorType.Rotate => StandardCursorType.Hand,
+        _ => StandardCursorType.Arrow,
+    };
 }

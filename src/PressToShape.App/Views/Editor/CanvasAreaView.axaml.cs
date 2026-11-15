@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 
@@ -11,6 +12,7 @@ public partial class CanvasAreaView : UserControl
     // The button that started the current pointer interaction. Further presses while it lasts are ignored.
     private MouseButton? _activeButton;
     private CanvasAreaViewModel? _observed;
+    private TopLevel? _window;
 
     public CanvasAreaView()
     {
@@ -175,6 +177,34 @@ public partial class CanvasAreaView : UserControl
         }
     }
 
+    // View-only concern: the Alt key switches the Zoom tool's cursor to zoom out. The window is listened to, so it also works while
+    // the canvas does not have the focus, and handled events are included so that no other control can hide the key.
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+
+        _window = TopLevel.GetTopLevel(this);
+        _window?.AddHandler(KeyDownEvent, OnWindowAltKey, RoutingStrategies.Tunnel, handledEventsToo: true);
+        _window?.AddHandler(KeyUpEvent, OnWindowAltKey, RoutingStrategies.Tunnel, handledEventsToo: true);
+    }
+
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        _window?.RemoveHandler(KeyDownEvent, OnWindowAltKey);
+        _window?.RemoveHandler(KeyUpEvent, OnWindowAltKey);
+        _window = null;
+
+        base.OnDetachedFromVisualTree(e);
+    }
+
+    private void OnWindowAltKey(object? sender, KeyEventArgs e)
+    {
+        if ((e.Key is Key.LeftAlt or Key.RightAlt) && DataContext is CanvasAreaViewModel viewModel)
+        {
+            viewModel.IsAltHeld = e.RoutedEvent == KeyDownEvent;
+        }
+    }
+
     protected override void OnDataContextChanged(System.EventArgs e)
     {
         base.OnDataContextChanged(e);
@@ -190,16 +220,19 @@ public partial class CanvasAreaView : UserControl
             viewModel.ViewportWidth = Viewport.Bounds.Width;
             viewModel.ViewportHeight = Viewport.Bounds.Height;
             viewModel.PropertyChanged += OnViewModelPropertyChanged;
-            Viewport.Cursor = CanvasCursors.For(viewModel.CursorType);
+            Viewport.Cursor = CursorFor(viewModel.CursorType);
         }
     }
+
+    // The cursor image that fits the screen scale of the window. Before the view is in a window the scale counts as 100%.
+    private Cursor CursorFor(CanvasCursorType type) => CanvasCursors.For(type, TopLevel.GetTopLevel(this)?.RenderScaling ?? 1.0);
 
     // View-only concern: the pointer shape follows the view model's cursor type.
     private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(CanvasAreaViewModel.CursorType) && _observed is { } viewModel)
         {
-            Viewport.Cursor = CanvasCursors.For(viewModel.CursorType);
+            Viewport.Cursor = CursorFor(viewModel.CursorType);
         }
     }
 }

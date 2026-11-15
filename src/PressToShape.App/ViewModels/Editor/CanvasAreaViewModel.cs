@@ -39,6 +39,14 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <summary>Height of the area that shows the artboard, in screen pixels. Set by the view.</summary>
     [ObservableProperty] public partial double ViewportHeight { get; set; }
 
+    /// <summary>
+    /// Whether the Alt key is held. Set by the view from key events, and by the pointer methods from their <c>alt</c> argument. With
+    /// the Zoom tool it turns the pointer into the zoom-out magnifier, because a click then zooms out.
+    /// </summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CursorType))]
+    public partial bool IsAltHeld { get; set; }
+
     /// <summary>The document the canvas draws.</summary>
     public Document Document => _state.Document;
 
@@ -51,7 +59,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
     /// <summary>
     /// The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle,
-    /// otherwise the shape of the active tool.
+    /// otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
     /// </summary>
     public CanvasCursorType CursorType
     {
@@ -71,7 +79,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             {
                 Tool.Rectangle or Tool.Ellipse => CanvasCursorType.Crosshair,
                 Tool.Hand => CanvasCursorType.OpenHand,
-                Tool.Zoom => CanvasCursorType.Magnifier,
+                Tool.Zoom => IsAltHeld ? CanvasCursorType.MagnifierMinus : CanvasCursorType.Magnifier,
                 _ => CanvasCursorType.Arrow,
             };
         }
@@ -144,6 +152,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// </summary>
     public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false)
     {
+        IsAltHeld = alt;
         switch (_state.ActiveTool)
         {
             case Tool.Hand:
@@ -174,6 +183,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <summary>The pointer moved. The position is in screen pixels of the canvas area.</summary>
     public void PointerMoved(double screenX, double screenY, bool shift = false, bool alt = false)
     {
+        IsAltHeld = alt;
         if (_panning)
         {
             // Absolute from the press, so the point under the pointer stays under it however often the pointer moved.
@@ -187,9 +197,10 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <summary>The button went up. The position is in screen pixels of the canvas area.</summary>
     public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)
     {
+        IsAltHeld = alt;
         if (_panning)
         {
-            PointerMoved(screenX, screenY);
+            PointerMoved(screenX, screenY, alt: alt);
             EndPan();
             return;
         }
