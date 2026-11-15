@@ -87,7 +87,7 @@ internal sealed class CanvasInteraction
         switch (_drag)
         {
             case DragType.Drawing:
-                _state.Draft = CreateShape(x, y);
+                _state.Draft = CreateShape(x, y, shift, alt);
                 break;
             case DragType.Marquee:
                 _state.SelectionBox = BoxTo(x, y);
@@ -130,7 +130,7 @@ internal sealed class CanvasInteraction
         }
 
         EndDrag();
-        if (CanDrawInActiveLayer() && CreateShape(x, y) is { } shape && IsBigEnough(shape))
+        if (CanDrawInActiveLayer() && CreateShape(x, y, shift, alt) is { } shape && IsBigEnough(shape))
         {
             var type = shape is EllipseShape ? HistoryStepType.DrawEllipse : HistoryStepType.DrawRectangle;
             _state.Edit(type, document => document.AddShape(_state.ActiveLayerId, shape));
@@ -343,12 +343,22 @@ internal sealed class CanvasInteraction
         }
     }
 
-    private Shape? CreateShape(double x, double y)
+    // Shift makes the shape square (a circle for the ellipse), Alt draws it around the press point as its center.
+    private Shape? CreateShape(double x, double y, bool shift, bool alt)
     {
-        var left = Math.Min(_startX, x);
-        var top = Math.Min(_startY, y);
-        var width = Math.Abs(x - _startX);
-        var height = Math.Abs(y - _startY);
+        var dx = x - _startX;
+        var dy = y - _startY;
+        if (shift)
+        {
+            var side = Math.Max(Math.Abs(dx), Math.Abs(dy));
+            dx = (dx < 0 ? -1 : 1) * side;
+            dy = (dy < 0 ? -1 : 1) * side;
+        }
+
+        var width = alt ? Math.Abs(dx) * 2 : Math.Abs(dx);
+        var height = alt ? Math.Abs(dy) * 2 : Math.Abs(dy);
+        var left = alt ? _startX - Math.Abs(dx) : Math.Min(_startX, _startX + dx);
+        var top = alt ? _startY - Math.Abs(dy) : Math.Min(_startY, _startY + dy);
 
         return _dragTool switch
         {

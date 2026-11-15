@@ -1329,5 +1329,68 @@ public class CanvasInteractionTests
 
         Assert.Empty(state.History.Steps);
     }
+
+    // ---- modifier keys while drawing ----
+
+    private static Shape DrawWith(Tool tool, double x1, double y1, double x2, double y2, bool shift, bool alt)
+    {
+        var (state, interaction) = Create(tool);
+        interaction.PointerPressed(x1, y1);
+        interaction.PointerMoved(x2, y2, shift, alt);
+        var draft = state.Draft;
+        interaction.PointerReleased(x2, y2, shift, alt);
+        Assert.NotNull(draft);
+        var shape = OnlyShape(state);
+        Assert.Equal((draft.X, draft.Y, draft.Width, draft.Height), (shape.X, shape.Y, shape.Width, shape.Height));
+        return shape;
+    }
+
+    [Fact]
+    public void Draw_WithShift_MakesASquare_InEveryDragDirection()
+    {
+        var down = DrawWith(Tool.Rectangle, 100, 100, 180, 130, shift: true, alt: false);
+        var up = DrawWith(Tool.Rectangle, 100, 100, 130, 20, shift: true, alt: false);
+
+        Assert.Equal((100, 100, 80, 80), (down.X, down.Y, down.Width, down.Height));
+        Assert.Equal((100, 20, 80, 80), (up.X, up.Y, up.Width, up.Height));
+    }
+
+    [Fact]
+    public void Draw_WithShift_MakesACircle()
+    {
+        var shape = Assert.IsType<EllipseShape>(DrawWith(Tool.Ellipse, 50, 50, 10, 30, shift: true, alt: false));
+
+        Assert.Equal((10, 10, 40, 40), (shape.X, shape.Y, shape.Width, shape.Height));
+    }
+
+    [Fact]
+    public void Draw_WithAlt_UsesThePressPointAsTheCenter()
+    {
+        var shape = DrawWith(Tool.Rectangle, 100, 100, 140, 120, shift: false, alt: true);
+
+        Assert.Equal((60, 80, 80, 40), (shape.X, shape.Y, shape.Width, shape.Height));
+    }
+
+    [Fact]
+    public void Draw_WithShiftAndAlt_MakesASquareAroundTheCenter()
+    {
+        var shape = DrawWith(Tool.Rectangle, 100, 100, 130, 90, shift: true, alt: true);
+
+        Assert.Equal((70, 70, 60, 60), (shape.X, shape.Y, shape.Width, shape.Height));
+    }
+
+    [Fact]
+    public void Draw_ModifiersCanChangeDuringTheDrag_AndTheReleaseDecides()
+    {
+        var (state, interaction) = Create(Tool.Rectangle);
+        interaction.PointerPressed(0, 0);
+        interaction.PointerMoved(60, 20, shift: true);
+        Assert.Equal(60, state.Draft!.Height);
+        interaction.PointerMoved(60, 20);
+        Assert.Equal(20, state.Draft!.Height);
+        interaction.PointerReleased(60, 20);
+
+        Assert.Equal(20, OnlyShape(state).Height);
+    }
 }
 

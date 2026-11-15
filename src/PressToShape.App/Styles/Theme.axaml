@@ -30,7 +30,7 @@
             <SolidColorBrush x:Key="ArtboardFillBrush">#FFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="ArtboardBorderBrush">#3A3A45</SolidColorBrush>
             <SolidColorBrush x:Key="SelectionOutlineBrush">#8264E6</SolidColorBrush>
-            <SolidColorBrush x:Key="SelectionHandleFillBrush">#F3F3F6</SolidColorBrush>
+            <SolidColorBrush x:Key="SelectionHandleFillBrush">#FFFFFF</SolidColorBrush>
 
             <!-- Borders -->
             <SolidColorBrush x:Key="BorderSubtleBrush">#35353F</SolidColorBrush>
