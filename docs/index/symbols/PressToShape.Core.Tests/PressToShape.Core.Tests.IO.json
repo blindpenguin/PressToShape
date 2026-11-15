@@ -1,0 +1,3669 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.Core.Tests",
+  "Namespace": "PressToShape.Core.Tests.IO",
+  "Symbols": [
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.ProjectFileTests.LayerA",
+      "Name": "LayerA",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.LayerA",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 15,
+      "EndLine": 15,
+      "Signature": "Guid LayerA",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.ProjectFileTests.LayerB",
+      "Name": "LayerB",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.LayerB",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 16,
+      "EndLine": 16,
+      "Signature": "Guid LayerB",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.ProjectFileTests.Shape1",
+      "Name": "Shape1",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Shape1",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 17,
+      "EndLine": 17,
+      "Signature": "Guid Shape1",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.ProjectFileTests.Shape2",
+      "Name": "Shape2",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Shape2",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 18,
+      "EndLine": 18,
+      "Signature": "Guid Shape2",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.ProjectFileTests.Shape3",
+      "Name": "Shape3",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Shape3",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 19,
+      "EndLine": 19,
+      "Signature": "Guid Shape3",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.ProjectFileValidationTests.LayerId",
+      "Name": "LayerId",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.LayerId",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 10,
+      "EndLine": 10,
+      "Signature": "string LayerId",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.ProjectFileValidationTests.ShapeId",
+      "Name": "ShapeId",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.ShapeId",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 11,
+      "EndLine": 11,
+      "Signature": "string ShapeId",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Valid",
+      "Name": "Valid",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Valid",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 13,
+      "EndLine": 17,
+      "Signature": "string Valid",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.SvgExportTests.Ink",
+      "Name": "Ink",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.Ink",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 16,
+      "EndLine": 16,
+      "Signature": "XNamespace Ink",
+      "Parameters": [],
+      "TypeName": "XNamespace",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.IO.SvgExportTests.Svg",
+      "Name": "Svg",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.Svg",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 15,
+      "EndLine": 15,
+      "Signature": "XNamespace Svg",
+      "Parameters": [],
+      "TypeName": "XNamespace",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.AssertSameContent(PressToShape.Core.Documents.Document,PressToShape.Core.Documents.Document)",
+      "Name": "AssertSameContent",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.AssertSameContent",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 48,
+      "EndLine": 66,
+      "Signature": "void AssertSameContent(Document expected, Document actual)",
+      "Parameters": [
+        {
+          "Name": "expected",
+          "Type": "Document"
+        },
+        {
+          "Name": "actual",
+          "Type": "Document"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.ReadOk(System.Byte[])",
+      "Name": "ReadOk",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.ReadOk",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 68,
+      "EndLine": 73,
+      "Signature": "Document ReadOk(byte[] bytes)",
+      "Parameters": [
+        {
+          "Name": "bytes",
+          "Type": "byte[]"
+        }
+      ],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Read_FileWithoutRotationEntries_ReadsAsZero",
+      "Name": "Read_FileWithoutRotationEntries_ReadsAsZero",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Read_FileWithoutRotationEntries_ReadsAsZero",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 255,
+      "EndLine": 263,
+      "Signature": "void Read_FileWithoutRotationEntries_ReadsAsZero()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Read_RotationOfTheWrongType_IsRejectedLikeOtherBadValues(System.String)",
+      "Name": "Read_RotationOfTheWrongType_IsRejectedLikeOtherBadValues",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Read_RotationOfTheWrongType_IsRejectedLikeOtherBadValues",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 282,
+      "EndLine": 297,
+      "Signature": "void Read_RotationOfTheWrongType_IsRejectedLikeOtherBadValues(string value)",
+      "Parameters": [
+        {
+          "Name": "value",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"ninety\\\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"true\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"[1]\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"{}\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Read_RotationOutsideTheRange_IsNormalized_AndNullMeansNone(System.String,System.Double)",
+      "Name": "Read_RotationOutsideTheRange_IsNormalized_AndNullMeansNone",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Read_RotationOutsideTheRange_IsNormalized_AndNullMeansNone",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 265,
+      "EndLine": 280,
+      "Signature": "void Read_RotationOutsideTheRange_IsNormalized_AndNullMeansNone(string value, double expected)",
+      "Parameters": [
+        {
+          "Name": "value",
+          "Type": "string"
+        },
+        {
+          "Name": "expected",
+          "Type": "double"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"725\"",
+            "5"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"-90\"",
+            "270"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"360\"",
+            "0"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"null\"",
+            "0"
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Read_RotationThatOverflowsADouble_IsRejected",
+      "Name": "Read_RotationThatOverflowsADouble_IsRejected",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Read_RotationThatOverflowsADouble_IsRejected",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 299,
+      "EndLine": 307,
+      "Signature": "void Read_RotationThatOverflowsADouble_IsRejected()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Read_Success_HasNoErrorAndNoDetail",
+      "Name": "Read_Success_HasNoErrorAndNoDetail",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Read_Success_HasNoErrorAndNoDetail",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 213,
+      "EndLine": 221,
+      "Signature": "void Read_Success_HasNoErrorAndNoDetail()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Read_UnknownExtraEntries_AreIgnored",
+      "Name": "Read_UnknownExtraEntries_AreIgnored",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Read_UnknownExtraEntries_AreIgnored",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 203,
+      "EndLine": 211,
+      "Signature": "void Read_UnknownExtraEntries_AreIgnored()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Sample",
+      "Name": "Sample",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Sample",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 21,
+      "EndLine": 46,
+      "Signature": "Document Sample()",
+      "Parameters": [],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.WithRotatedShapes",
+      "Name": "WithRotatedShapes",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.WithRotatedShapes",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 223,
+      "EndLine": 230,
+      "Signature": "Document WithRotatedShapes()",
+      "Parameters": [],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.WriteAndRead_UnderAGermanCulture_UseInvariantNumbers",
+      "Name": "WriteAndRead_UnderAGermanCulture_UseInvariantNumbers",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.WriteAndRead_UnderAGermanCulture_UseInvariantNumbers",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 168,
+      "EndLine": 185,
+      "Signature": "void WriteAndRead_UnderAGermanCulture_UseInvariantNumbers()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_Alpha_IsKept",
+      "Name": "WriteThenRead_Alpha_IsKept",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_Alpha_IsKept",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 111,
+      "EndLine": 117,
+      "Signature": "void WriteThenRead_Alpha_IsKept()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_ExtremeNumbers_AreExact(System.Double)",
+      "Name": "WriteThenRead_ExtremeNumbers_AreExact",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_ExtremeNumbers_AreExact",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 119,
+      "EndLine": 135,
+      "Signature": "void WriteThenRead_ExtremeNumbers_AreExact(double value)",
+      "Parameters": [
+        {
+          "Name": "value",
+          "Type": "double"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "double.Epsilon"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "1e-300"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "1e300"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "-0.1"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "0.1 + 0.2"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "123456789.123456789"
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_FreshDocument_ReturnsTheSameContent",
+      "Name": "WriteThenRead_FreshDocument_ReturnsTheSameContent",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_FreshDocument_ReturnsTheSameContent",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 85,
+      "EndLine": 91,
+      "Signature": "void WriteThenRead_FreshDocument_ReturnsTheSameContent()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_NullFillAndStroke_StayNull",
+      "Name": "WriteThenRead_NullFillAndStroke_StayNull",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_NullFillAndStroke_StayNull",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 102,
+      "EndLine": 109,
+      "Signature": "void WriteThenRead_NullFillAndStroke_StayNull()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_RotatedShapes_KeepTheirRotationExactly",
+      "Name": "WriteThenRead_RotatedShapes_KeepTheirRotationExactly",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_RotatedShapes_KeepTheirRotationExactly",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 232,
+      "EndLine": 241,
+      "Signature": "void WriteThenRead_RotatedShapes_KeepTheirRotationExactly()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_Sample_ReturnsTheSameContent",
+      "Name": "WriteThenRead_Sample_ReturnsTheSameContent",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_Sample_ReturnsTheSameContent",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 75,
+      "EndLine": 83,
+      "Signature": "void WriteThenRead_Sample_ReturnsTheSameContent()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_ShapeOrderAndLayerOrder_AreKept",
+      "Name": "WriteThenRead_ShapeOrderAndLayerOrder_AreKept",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.WriteThenRead_ShapeOrderAndLayerOrder_AreKept",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 93,
+      "EndLine": 100,
+      "Signature": "void WriteThenRead_ShapeOrderAndLayerOrder_AreKept()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Write_ColorsAreRrggbbaaText_AndNoColorIsNull",
+      "Name": "Write_ColorsAreRrggbbaaText_AndNoColorIsNull",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Write_ColorsAreRrggbbaaText_AndNoColorIsNull",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 157,
+      "EndLine": 166,
+      "Signature": "void Write_ColorsAreRrggbbaaText_AndNoColorIsNull()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Write_ContainsFormatNameAndVersion",
+      "Name": "Write_ContainsFormatNameAndVersion",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Write_ContainsFormatNameAndVersion",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 137,
+      "EndLine": 145,
+      "Signature": "void Write_ContainsFormatNameAndVersion()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Write_LoneSurrogateInName_IsReplacedAndStillReadable",
+      "Name": "Write_LoneSurrogateInName_IsReplacedAndStillReadable",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Write_LoneSurrogateInName_IsReplacedAndStillReadable",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 187,
+      "EndLine": 195,
+      "Signature": "void Write_LoneSurrogateInName_IsReplacedAndStillReadable()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Write_NullDocument_Throws",
+      "Name": "Write_NullDocument_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Write_NullDocument_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 197,
+      "EndLine": 201,
+      "Signature": "void Write_NullDocument_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Write_Output_IsUtf8WithoutByteOrderMark",
+      "Name": "Write_Output_IsUtf8WithoutByteOrderMark",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Write_Output_IsUtf8WithoutByteOrderMark",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 147,
+      "EndLine": 155,
+      "Signature": "void Write_Output_IsUtf8WithoutByteOrderMark()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileTests.Write_RotationEntry_IsOnlyWrittenForRotatedShapes_AndTheVersionStaysOne",
+      "Name": "Write_RotationEntry_IsOnlyWrittenForRotatedShapes_AndTheVersionStaysOne",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests.Write_RotationEntry_IsOnlyWrittenForRotatedShapes_AndTheVersionStaysOne",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 243,
+      "EndLine": 253,
+      "Signature": "void Write_RotationEntry_IsOnlyWrittenForRotatedShapes_AndTheVersionStaysOne()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.AssertFails(PressToShape.Core.IO.ProjectFileResult,PressToShape.Core.IO.ProjectFileError)",
+      "Name": "AssertFails",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.AssertFails",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 27,
+      "EndLine": 33,
+      "Signature": "void AssertFails(ProjectFileResult result, ProjectFileError error)",
+      "Parameters": [
+        {
+          "Name": "result",
+          "Type": "ProjectFileResult"
+        },
+        {
+          "Name": "error",
+          "Type": "ProjectFileError"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Mutate(System.String,System.String)",
+      "Name": "Mutate",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Mutate",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 21,
+      "EndLine": 25,
+      "Signature": "string Mutate(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.ReadText(System.String)",
+      "Name": "ReadText",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.ReadText",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 19,
+      "EndLine": 19,
+      "Signature": "ProjectFileResult ReadText(string json)",
+      "Parameters": [
+        {
+          "Name": "json",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "ProjectFileResult",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_ArtboardSizeNotPositive_ReturnsInvalidValue(System.String,System.String)",
+      "Name": "Read_ArtboardSizeNotPositive_ReturnsInvalidValue",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_ArtboardSizeNotPositive_ReturnsInvalidValue",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 103,
+      "EndLine": 110,
+      "Signature": "void Read_ArtboardSizeNotPositive_ReturnsInvalidValue(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":100,\\\"height\\\":50\"",
+            "\"\\\"width\\\":0,\\\"height\\\":50\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":100,\\\"height\\\":50\"",
+            "\"\\\"width\\\":100,\\\"height\\\":-5\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":100,\\\"height\\\":50\"",
+            "\"\\\"width\\\":-100,\\\"height\\\":50\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadArtboard_ReturnsNotProjectFile(System.String,System.String)",
+      "Name": "Read_BadArtboard_ReturnsNotProjectFile",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadArtboard_ReturnsNotProjectFile",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 90,
+      "EndLine": 101,
+      "Signature": "void Read_BadArtboard_ReturnsNotProjectFile(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"artboard\\\":{\\\"width\\\":100,\\\"height\\\":50},\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"artboard\\\":{\\\"width\\\":100,\\\"height\\\":50}\"",
+            "\"\\\"artboard\\\":null\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"artboard\\\":{\\\"width\\\":100,\\\"height\\\":50}\"",
+            "\"\\\"artboard\\\":[]\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":100,\\\"height\\\":50\"",
+            "\"\\\"width\\\":100\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":100,\\\"height\\\":50\"",
+            "\"\\\"height\\\":50\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":100,\\\"height\\\":50\"",
+            "\"\\\"width\\\":null,\\\"height\\\":50\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":100,\"",
+            "\"\\\"width\\\":\\\"100\\\",\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadColorText_ReturnsInvalidValue(System.String)",
+      "Name": "Read_BadColorText_ReturnsInvalidValue",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadColorText_ReturnsInvalidValue",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 210,
+      "EndLine": 223,
+      "Signature": "void Read_BadColorText_ReturnsInvalidValue(string color)",
+      "Parameters": [
+        {
+          "Name": "color",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"#112233\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"11223344\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"#1122334\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"#112233445\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"#gggggggg\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"#+1223344\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"#1122 344\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"rgba(1,2,3,4)\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadFormatNameOrVersion_ReturnsNotProjectFile(System.String,System.String)",
+      "Name": "Read_BadFormatNameOrVersion_ReturnsNotProjectFile",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadFormatNameOrVersion_ReturnsNotProjectFile",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 66,
+      "EndLine": 80,
+      "Signature": "void Read_BadFormatNameOrVersion_ReturnsNotProjectFile(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"format\\\":\\\"PressToShape\\\",\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"format\\\":\\\"PressToShape\\\"\"",
+            "\"\\\"format\\\":\\\"Other\\\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"format\\\":\\\"PressToShape\\\"\"",
+            "\"\\\"format\\\":\\\"pressToShape\\\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"format\\\":\\\"PressToShape\\\"\"",
+            "\"\\\"format\\\":null\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"version\\\":1,\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"version\\\":1\"",
+            "\"\\\"version\\\":0\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"version\\\":1\"",
+            "\"\\\"version\\\":-1\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"version\\\":1\"",
+            "\"\\\"version\\\":\\\"1\\\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"version\\\":1\"",
+            "\"\\\"version\\\":1.5\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"version\\\":1\"",
+            "\"\\\"version\\\":99999999999999\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadIds_ReturnsInvalidValue(System.String,System.String)",
+      "Name": "Read_BadIds_ReturnsInvalidValue",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadIds_ReturnsInvalidValue",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 131,
+      "EndLine": 142,
+      "Signature": "void Read_BadIds_ReturnsInvalidValue(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"id\\\":\\\"\" + LayerId + \"\\\",\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "LayerId",
+            "\"00000000-0000-0000-0000-000000000000\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "LayerId",
+            "\"not-a-guid\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "LayerId",
+            "\"aaaaaaaa00000000000000000000000z\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "ShapeId",
+            "\"00000000-0000-0000-0000-000000000000\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "ShapeId",
+            "\"{bbbbbbbb-0000-0000-0000-000000000001}\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "ShapeId",
+            "\"\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadLayersOrLayerEntries_ReturnsNotProjectFile(System.String,System.String)",
+      "Name": "Read_BadLayersOrLayerEntries_ReturnsNotProjectFile",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadLayersOrLayerEntries_ReturnsNotProjectFile",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 112,
+      "EndLine": 129,
+      "Signature": "void Read_BadLayersOrLayerEntries_ReturnsNotProjectFile(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\",\\\"layers\\\":[{\\\"id\\\":\\\"\" + LayerId + \"\\\",\\\"name\\\":\\\"L\\\",\\\"visible\\\":true,\\\"locked\\\":false,\\\"shapes\\\":[{\\\"type\\\":\\\"rectangle\\\",\\\"id\\\":\\\"\" + ShapeId + \"\\\",\\\"x\\\":1,\\\"y\\\":2,\\\"width\\\":3,\\\"height\\\":4,\\\"fill\\\":\\\"#11223344\\\",\\\"stroke\\\":null,\\\"strokeWidth\\\":1,\\\"opacity\\\":1}]}]\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"layers\\\":[{\"",
+            "\"\\\"layers\\\":null,\\\"x\\\":[{\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"layers\\\":[{\\\"id\\\":\\\"\" + LayerId + \"\\\",\\\"name\\\":\\\"L\\\",\\\"visible\\\":true,\\\"locked\\\":false,\\\"shapes\\\":[{\\\"type\\\":\\\"rectangle\\\",\\\"id\\\":\\\"\" + ShapeId + \"\\\",\\\"x\\\":1,\\\"y\\\":2,\\\"width\\\":3,\\\"height\\\":4,\\\"fill\\\":\\\"#11223344\\\",\\\"stroke\\\":null,\\\"strokeWidth\\\":1,\\\"opacity\\\":1}]}]\"",
+            "\"\\\"layers\\\":[]\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"layers\\\":[{\\\"id\\\":\\\"\" + LayerId + \"\\\",\\\"name\\\":\\\"L\\\",\\\"visible\\\":true,\\\"locked\\\":false,\\\"shapes\\\":[{\\\"type\\\":\\\"rectangle\\\",\\\"id\\\":\\\"\" + ShapeId + \"\\\",\\\"x\\\":1,\\\"y\\\":2,\\\"width\\\":3,\\\"height\\\":4,\\\"fill\\\":\\\"#11223344\\\",\\\"stroke\\\":null,\\\"strokeWidth\\\":1,\\\"opacity\\\":1}]}]\"",
+            "\"\\\"layers\\\":\\\"none\\\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"layers\\\":[{\\\"id\\\":\\\"\" + LayerId + \"\\\",\\\"name\\\":\\\"L\\\",\\\"visible\\\":true,\\\"locked\\\":false,\\\"shapes\\\":[{\\\"type\\\":\\\"rectangle\\\",\\\"id\\\":\\\"\" + ShapeId + \"\\\",\\\"x\\\":1,\\\"y\\\":2,\\\"width\\\":3,\\\"height\\\":4,\\\"fill\\\":\\\"#11223344\\\",\\\"stroke\\\":null,\\\"strokeWidth\\\":1,\\\"opacity\\\":1}]}]\"",
+            "\"\\\"layers\\\":[null]\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"name\\\":\\\"L\\\",\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"name\\\":\\\"L\\\"\"",
+            "\"\\\"name\\\":null\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"name\\\":\\\"L\\\"\"",
+            "\"\\\"name\\\":5\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"visible\\\":true,\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"visible\\\":true\"",
+            "\"\\\"visible\\\":\\\"yes\\\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"locked\\\":false,\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"locked\\\":false\"",
+            "\"\\\"locked\\\":null\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"shapes\\\":[{\"",
+            "\"\\\"shapes\\\":null,\\\"x\\\":[{\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadShapeEntries_ReturnsNotProjectFile(System.String,System.String)",
+      "Name": "Read_BadShapeEntries_ReturnsNotProjectFile",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_BadShapeEntries_ReturnsNotProjectFile",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 180,
+      "EndLine": 197,
+      "Signature": "void Read_BadShapeEntries_ReturnsNotProjectFile(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"type\\\":\\\"rectangle\\\",\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"type\\\":\\\"rectangle\\\"\"",
+            "\"\\\"type\\\":null\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"type\\\":\\\"rectangle\\\"\"",
+            "\"\\\"type\\\":3\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"x\\\":1,\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"x\\\":1\"",
+            "\"\\\"x\\\":null\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"x\\\":1\"",
+            "\"\\\"x\\\":\\\"1\\\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"y\\\":2,\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":3,\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"height\\\":4,\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"strokeWidth\\\":1,\"",
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"opacity\\\":1\"",
+            "\"\\\"opacity\\\":null\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"opacity\\\":1\"",
+            "\"\\\"opacity\\\":true\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"shapes\\\":[{\"",
+            "\"\\\"shapes\\\":[null,{\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_ByteOrderMark_IsNotAccepted",
+      "Name": "Read_ByteOrderMark_IsNotAccepted",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_ByteOrderMark_IsNotAccepted",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 288,
+      "EndLine": 300,
+      "Signature": "void Read_ByteOrderMark_IsNotAccepted()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_Comments_AreNotAccepted",
+      "Name": "Read_Comments_AreNotAccepted",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_Comments_AreNotAccepted",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 247,
+      "EndLine": 251,
+      "Signature": "void Read_Comments_AreNotAccepted()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_DuplicateLayerIds_ReturnsInvalidValue",
+      "Name": "Read_DuplicateLayerIds_ReturnsInvalidValue",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_DuplicateLayerIds_ReturnsInvalidValue",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 144,
+      "EndLine": 150,
+      "Signature": "void Read_DuplicateLayerIds_ReturnsInvalidValue()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_DuplicateShapeIdsAcrossLayers_ReturnsInvalidValue",
+      "Name": "Read_DuplicateShapeIdsAcrossLayers_ReturnsInvalidValue",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_DuplicateShapeIdsAcrossLayers_ReturnsInvalidValue",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 152,
+      "EndLine": 159,
+      "Signature": "void Read_DuplicateShapeIdsAcrossLayers_ReturnsInvalidValue()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_EmptyInput_ReturnsNotProjectFile",
+      "Name": "Read_EmptyInput_ReturnsNotProjectFile",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_EmptyInput_ReturnsNotProjectFile",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 60,
+      "EndLine": 64,
+      "Signature": "void Read_EmptyInput_ReturnsNotProjectFile()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_EveryTruncationOfAValidFile_NeverThrows",
+      "Name": "Read_EveryTruncationOfAValidFile_NeverThrows",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_EveryTruncationOfAValidFile_NeverThrows",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 302,
+      "EndLine": 313,
+      "Signature": "void Read_EveryTruncationOfAValidFile_NeverThrows()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_InputLargerThanTheLimit_ReturnsTooLargeBeforeParsing",
+      "Name": "Read_InputLargerThanTheLimit_ReturnsTooLargeBeforeParsing",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_InputLargerThanTheLimit_ReturnsTooLargeBeforeParsing",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 267,
+      "EndLine": 273,
+      "Signature": "void Read_InputLargerThanTheLimit_ReturnsTooLargeBeforeParsing()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_InvalidUtf8InAString_ReturnsNotProjectFile",
+      "Name": "Read_InvalidUtf8InAString_ReturnsNotProjectFile",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_InvalidUtf8InAString_ReturnsNotProjectFile",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 275,
+      "EndLine": 286,
+      "Signature": "void Read_InvalidUtf8InAString_ReturnsNotProjectFile()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_NestingDeeperThanTheLimit_ReturnsNotProjectFile",
+      "Name": "Read_NestingDeeperThanTheLimit_ReturnsNotProjectFile",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_NestingDeeperThanTheLimit_ReturnsNotProjectFile",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 259,
+      "EndLine": 265,
+      "Signature": "void Read_NestingDeeperThanTheLimit_ReturnsNotProjectFile()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_NewerVersion_ReturnsNewerVersion(System.String,System.String)",
+      "Name": "Read_NewerVersion_ReturnsNewerVersion",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_NewerVersion_ReturnsNewerVersion",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 82,
+      "EndLine": 88,
+      "Signature": "void Read_NewerVersion_ReturnsNewerVersion(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"version\\\":1\"",
+            "\"\\\"version\\\":2\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"version\\\":1\"",
+            "\"\\\"version\\\":1000\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_NotAProjectFile_ReturnsNotProjectFile(System.String)",
+      "Name": "Read_NotAProjectFile_ReturnsNotProjectFile",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_NotAProjectFile_ReturnsNotProjectFile",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 45,
+      "EndLine": 58,
+      "Signature": "void Read_NotAProjectFile_ReturnsNotProjectFile(string json)",
+      "Parameters": [
+        {
+          "Name": "json",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"   \""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"not json\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"{\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"[]\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"42\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"text\\\"\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"null\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"{}\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_NumbersThatAreNotFinite_Fail(System.String,System.String)",
+      "Name": "Read_NumbersThatAreNotFinite_Fail",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_NumbersThatAreNotFinite_Fail",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 234,
+      "EndLine": 245,
+      "Signature": "void Read_NumbersThatAreNotFinite_Fail(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":3\"",
+            "\"\\\"width\\\":1e999\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"x\\\":1\"",
+            "\"\\\"x\\\":-1e999\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"x\\\":1\"",
+            "\"\\\"x\\\":NaN\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"x\\\":1\"",
+            "\"\\\"x\\\":Infinity\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_ShapeType_OnlyKnownTypesAreAccepted(System.String)",
+      "Name": "Read_ShapeType_OnlyKnownTypesAreAccepted",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_ShapeType_OnlyKnownTypesAreAccepted",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 161,
+      "EndLine": 178,
+      "Signature": "void Read_ShapeType_OnlyKnownTypesAreAccepted(string type)",
+      "Parameters": [
+        {
+          "Name": "type",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"rectangle\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"Rectangle\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"star\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_SingleByteCorruptions_NeverThrow",
+      "Name": "Read_SingleByteCorruptions_NeverThrow",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_SingleByteCorruptions_NeverThrow",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 315,
+      "EndLine": 330,
+      "Signature": "void Read_SingleByteCorruptions_NeverThrow()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_TheValidBaseText_Succeeds",
+      "Name": "Read_TheValidBaseText_Succeeds",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_TheValidBaseText_Succeeds",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 35,
+      "EndLine": 43,
+      "Signature": "void Read_TheValidBaseText_Succeeds()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_TrailingCommas_AreNotAccepted",
+      "Name": "Read_TrailingCommas_AreNotAccepted",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_TrailingCommas_AreNotAccepted",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 253,
+      "EndLine": 257,
+      "Signature": "void Read_TrailingCommas_AreNotAccepted()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_UpperCaseColorText_IsAccepted",
+      "Name": "Read_UpperCaseColorText_IsAccepted",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_UpperCaseColorText_IsAccepted",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 225,
+      "EndLine": 232,
+      "Signature": "void Read_UpperCaseColorText_IsAccepted()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_ValuesTheModelRejects_ReturnsInvalidValue(System.String,System.String)",
+      "Name": "Read_ValuesTheModelRejects_ReturnsInvalidValue",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests.Read_ValuesTheModelRejects_ReturnsInvalidValue",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 199,
+      "EndLine": 208,
+      "Signature": "void Read_ValuesTheModelRejects_ReturnsInvalidValue(string from, string to)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "string"
+        },
+        {
+          "Name": "to",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"width\\\":3\"",
+            "\"\\\"width\\\":-3\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"height\\\":4\"",
+            "\"\\\"height\\\":-0.001\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"strokeWidth\\\":1\"",
+            "\"\\\"strokeWidth\\\":-1\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"opacity\\\":1\"",
+            "\"\\\"opacity\\\":1.5\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"\\\"opacity\\\":1\"",
+            "\"\\\"opacity\\\":-0.1\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.Export(PressToShape.Core.Documents.Document)",
+      "Name": "Export",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.Export",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 18,
+      "EndLine": 22,
+      "Signature": "XDocument Export(Document document)",
+      "Parameters": [
+        {
+          "Name": "document",
+          "Type": "Document"
+        }
+      ],
+      "TypeName": "XDocument",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.OneLayer(PressToShape.Core.Shapes.Shape[])",
+      "Name": "OneLayer",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.OneLayer",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 24,
+      "EndLine": 33,
+      "Signature": "Document OneLayer(params Shape[] shapes)",
+      "Parameters": [
+        {
+          "Name": "shapes",
+          "Type": "Shape[]"
+        }
+      ],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.OnlyShape(System.Xml.Linq.XDocument)",
+      "Name": "OnlyShape",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.OnlyShape",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 35,
+      "EndLine": 35,
+      "Signature": "XElement OnlyShape(XDocument svg)",
+      "Parameters": [
+        {
+          "Name": "svg",
+          "Type": "XDocument"
+        }
+      ],
+      "TypeName": "XElement",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ControlCharactersAndLoneSurrogatesInAName_AreReplaced",
+      "Name": "ToUtf8_ControlCharactersAndLoneSurrogatesInAName_AreReplaced",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ControlCharactersAndLoneSurrogatesInAName_AreReplaced",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 244,
+      "EndLine": 252,
+      "Signature": "void ToUtf8_ControlCharactersAndLoneSurrogatesInAName_AreReplaced()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_DocumentWithOnlyHiddenLayers_IsAnEmptyValidSvg",
+      "Name": "ToUtf8_DocumentWithOnlyHiddenLayers_IsAnEmptyValidSvg",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_DocumentWithOnlyHiddenLayers_IsAnEmptyValidSvg",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 262,
+      "EndLine": 270,
+      "Signature": "void ToUtf8_DocumentWithOnlyHiddenLayers_IsAnEmptyValidSvg()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Ellipse_HasCenterAndRadii",
+      "Name": "ToUtf8_Ellipse_HasCenterAndRadii",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Ellipse_HasCenterAndRadii",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 103,
+      "EndLine": 110,
+      "Signature": "void ToUtf8_Ellipse_HasCenterAndRadii()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_EmptyLayer_GivesAnEmptyGroup",
+      "Name": "ToUtf8_EmptyLayer_GivesAnEmptyGroup",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_EmptyLayer_GivesAnEmptyGroup",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 254,
+      "EndLine": 260,
+      "Signature": "void ToUtf8_EmptyLayer_GivesAnEmptyGroup()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_HiddenLayer_IsLeftOut_AndLockedLayerIsExported",
+      "Name": "ToUtf8_HiddenLayer_IsLeftOut_AndLockedLayerIsExported",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_HiddenLayer_IsLeftOut_AndLockedLayerIsExported",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 75,
+      "EndLine": 92,
+      "Signature": "void ToUtf8_HiddenLayer_IsLeftOut_AndLockedLayerIsExported()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_LayerNameWithSpecialCharacters_RoundTripsThroughTheXmlParser(System.String)",
+      "Name": "ToUtf8_LayerNameWithSpecialCharacters_RoundTripsThroughTheXmlParser",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_LayerNameWithSpecialCharacters_RoundTripsThroughTheXmlParser",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 231,
+      "EndLine": 242,
+      "Signature": "void ToUtf8_LayerNameWithSpecialCharacters_RoundTripsThroughTheXmlParser(string name)",
+      "Parameters": [
+        {
+          "Name": "name",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"a<b&c\\\"d'e>f\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"tab\\there\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "\"unicode äö \\U0001F600\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ManyShapes_ExportsAllOfThem",
+      "Name": "ToUtf8_ManyShapes_ExportsAllOfThem",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ManyShapes_ExportsAllOfThem",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 288,
+      "EndLine": 296,
+      "Signature": "void ToUtf8_ManyShapes_ExportsAllOfThem()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_NoFill_WritesFillNone",
+      "Name": "ToUtf8_NoFill_WritesFillNone",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_NoFill_WritesFillNone",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 161,
+      "EndLine": 170,
+      "Signature": "void ToUtf8_NoFill_WritesFillNone()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_NoStrokeOrZeroStrokeWidth_WriteNoStrokeAttributes",
+      "Name": "ToUtf8_NoStrokeOrZeroStrokeWidth_WriteNoStrokeAttributes",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_NoStrokeOrZeroStrokeWidth_WriteNoStrokeAttributes",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 172,
+      "EndLine": 186,
+      "Signature": "void ToUtf8_NoStrokeOrZeroStrokeWidth_WriteNoStrokeAttributes()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_NullDocument_Throws",
+      "Name": "ToUtf8_NullDocument_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_NullDocument_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 282,
+      "EndLine": 286,
+      "Signature": "void ToUtf8_NullDocument_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_OpaqueFillAndStroke_HaveNoOpacityAttributes",
+      "Name": "ToUtf8_OpaqueFillAndStroke_HaveNoOpacityAttributes",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_OpaqueFillAndStroke_HaveNoOpacityAttributes",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 125,
+      "EndLine": 143,
+      "Signature": "void ToUtf8_OpaqueFillAndStroke_HaveNoOpacityAttributes()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Output_HasNoScriptsLinksOrExternalReferences",
+      "Name": "ToUtf8_Output_HasNoScriptsLinksOrExternalReferences",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Output_HasNoScriptsLinksOrExternalReferences",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 272,
+      "EndLine": 280,
+      "Signature": "void ToUtf8_Output_HasNoScriptsLinksOrExternalReferences()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Output_IsUtf8WithoutByteOrderMarkAndHasADeclaration",
+      "Name": "ToUtf8_Output_IsUtf8WithoutByteOrderMarkAndHasADeclaration",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Output_IsUtf8WithoutByteOrderMarkAndHasADeclaration",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 52,
+      "EndLine": 59,
+      "Signature": "void ToUtf8_Output_IsUtf8WithoutByteOrderMarkAndHasADeclaration()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Rectangle_HasPositionAndSize",
+      "Name": "ToUtf8_Rectangle_HasPositionAndSize",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Rectangle_HasPositionAndSize",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 94,
+      "EndLine": 101,
+      "Signature": "void ToUtf8_Rectangle_HasPositionAndSize()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Root_HasArtboardSizeAndViewBoxAndNoBackground",
+      "Name": "ToUtf8_Root_HasArtboardSizeAndViewBoxAndNoBackground",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_Root_HasArtboardSizeAndViewBoxAndNoBackground",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 37,
+      "EndLine": 50,
+      "Signature": "void ToUtf8_Root_HasArtboardSizeAndViewBoxAndNoBackground()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_RotatedEllipse_HasATransformAroundItsCenter",
+      "Name": "ToUtf8_RotatedEllipse_HasATransformAroundItsCenter",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_RotatedEllipse_HasATransformAroundItsCenter",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 308,
+      "EndLine": 315,
+      "Signature": "void ToUtf8_RotatedEllipse_HasATransformAroundItsCenter()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_RotatedRectangle_HasATransformAroundItsCenter",
+      "Name": "ToUtf8_RotatedRectangle_HasATransformAroundItsCenter",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_RotatedRectangle_HasATransformAroundItsCenter",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 298,
+      "EndLine": 306,
+      "Signature": "void ToUtf8_RotatedRectangle_HasATransformAroundItsCenter()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_RotatedShapeWithOpacityAndStroke_KeepsAllAttributes",
+      "Name": "ToUtf8_RotatedShapeWithOpacityAndStroke_KeepsAllAttributes",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_RotatedShapeWithOpacityAndStroke_KeepsAllAttributes",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 342,
+      "EndLine": 358,
+      "Signature": "void ToUtf8_RotatedShapeWithOpacityAndStroke_KeepsAllAttributes()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_RotationNumbers_UseADotUnderAGermanCulture",
+      "Name": "ToUtf8_RotationNumbers_UseADotUnderAGermanCulture",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_RotationNumbers_UseADotUnderAGermanCulture",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 325,
+      "EndLine": 340,
+      "Signature": "void ToUtf8_RotationNumbers_UseADotUnderAGermanCulture()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ShapeOpacityBelowOne_WritesOpacity(System.Double,System.String)",
+      "Name": "ToUtf8_ShapeOpacityBelowOne_WritesOpacity",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ShapeOpacityBelowOne_WritesOpacity",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 188,
+      "EndLine": 199,
+      "Signature": "void ToUtf8_ShapeOpacityBelowOne_WritesOpacity(double opacity, string expected)",
+      "Parameters": [
+        {
+          "Name": "opacity",
+          "Type": "double"
+        },
+        {
+          "Name": "expected",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "0.5",
+            "\"0.5\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "0.25",
+            "\"0.25\""
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "0",
+            "\"0\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ShapesInStackingOrder_KeepTheOrder",
+      "Name": "ToUtf8_ShapesInStackingOrder_KeepTheOrder",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ShapesInStackingOrder_KeepTheOrder",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 112,
+      "EndLine": 123,
+      "Signature": "void ToUtf8_ShapesInStackingOrder_KeepTheOrder()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_TransparentFillAndStroke_HaveOpacityAttributes",
+      "Name": "ToUtf8_TransparentFillAndStroke_HaveOpacityAttributes",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_TransparentFillAndStroke_HaveOpacityAttributes",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 145,
+      "EndLine": 159,
+      "Signature": "void ToUtf8_TransparentFillAndStroke_HaveOpacityAttributes()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_UnderAGermanCulture_UsesADotAndNoExponent",
+      "Name": "ToUtf8_UnderAGermanCulture_UsesADotAndNoExponent",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_UnderAGermanCulture_UsesADotAndNoExponent",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 209,
+      "EndLine": 229,
+      "Signature": "void ToUtf8_UnderAGermanCulture_UsesADotAndNoExponent()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_UnrotatedShapes_HaveNoTransform",
+      "Name": "ToUtf8_UnrotatedShapes_HaveNoTransform",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_UnrotatedShapes_HaveNoTransform",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 317,
+      "EndLine": 323,
+      "Signature": "void ToUtf8_UnrotatedShapes_HaveNoTransform()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_VisibleLayers_BecomeGroupsInDocumentOrder",
+      "Name": "ToUtf8_VisibleLayers_BecomeGroupsInDocumentOrder",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_VisibleLayers_BecomeGroupsInDocumentOrder",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 61,
+      "EndLine": 73,
+      "Signature": "void ToUtf8_VisibleLayers_BecomeGroupsInDocumentOrder()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ZeroSizeShape_IsExported",
+      "Name": "ToUtf8_ZeroSizeShape_IsExported",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests.ToUtf8_ZeroSizeShape_IsExported",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 201,
+      "EndLine": 207,
+      "Signature": "void ToUtf8_ZeroSizeShape_IsExported()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "N:PressToShape.Core.Tests.IO",
+      "Name": "IO",
+      "QualifiedName": "PressToShape.Core.Tests.IO",
+      "SymbolType": "Namespace",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.Core.Tests",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 11,
+      "EndLine": 308,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.IO.ProjectFileTests",
+      "Name": "ProjectFileTests",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests.IO",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileTests.cs",
+      "StartLine": 13,
+      "EndLine": 308,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "Name": "ProjectFileValidationTests",
+      "QualifiedName": "PressToShape.Core.Tests.IO.ProjectFileValidationTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests.IO",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs",
+      "StartLine": 8,
+      "EndLine": 331,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.IO.SvgExportTests",
+      "Name": "SvgExportTests",
+      "QualifiedName": "PressToShape.Core.Tests.IO.SvgExportTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests.IO",
+      "Namespace": "PressToShape.Core.Tests.IO",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/IO/SvgExportTests.cs",
+      "StartLine": 13,
+      "EndLine": 359,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,3926 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.CodeIndex.Tests",
+  "Relationships": [
+    {
+      "Type": "References",
+      "FromId": "F:PressToShape.CodeIndex.Tests.TestCompilation.References",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.LoadReferences",
+      "File": "tests/PressToShape.CodeIndex.Tests/TestCompilation.cs",
+      "Line": 14,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Dispose",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 17,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_DeletesFilesNotWrittenAndEmptyFolders",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 78,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_DeletesFilesNotWrittenAndEmptyFolders",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 79,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_DeletesFilesNotWrittenAndEmptyFolders",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 80,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_DeletesFilesNotWrittenAndEmptyFolders",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 81,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_DeletesFilesNotWrittenAndEmptyFolders",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 87,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_DeletesFilesNotWrittenAndEmptyFolders",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 88,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_NeverTouchesFilesOutsideTheRoot",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 94,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_NeverTouchesFilesOutsideTheRoot",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 95,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_NeverTouchesFilesOutsideTheRoot",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 97,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_RootDoesNotExist_ReturnsNothing",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 107,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_ExistingFile_IsReplacedAndNoTemporaryFileRemains",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 39,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_ExistingFile_IsReplacedAndNoTemporaryFileRemains",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 44,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_ExistingFile_IsReplacedAndNoTemporaryFileRemains",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 45,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_NewFile_CreatesFoldersAndContent",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 29,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_NewFile_CreatesFoldersAndContent",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 33,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_PathOutsideRoot_IsRejectedAndNothingIsWritten(System.String)",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 68,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_PathOutsideRoot_IsRejectedAndNothingIsWritten(System.String)",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 72,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_TargetCannotBeReplaced_LeavesNoTemporaryFile",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_TargetCannotBeReplaced_LeavesNoTemporaryFile",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 52,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_TargetCannotBeReplaced_LeavesNoTemporaryFile",
+      "ToId": "F:PressToShape.CodeIndex.Tests.AtomicFileWriterTests._root",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 56,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 226,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 227,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 228,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.RemoveStaleCalls",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 239,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Writes",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 229,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Writes",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 238,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 226,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 227,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 228,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 229,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 238,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 239,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 237,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.OutLines",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 234,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.OutLines",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 235,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.OutLines",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 236,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 225,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_FreshIndex_ReportsUpToDateAndWritesNothing",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Writes",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 213,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_FreshIndex_ReportsUpToDateAndWritesNothing",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Writes",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 219,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_FreshIndex_ReportsUpToDateAndWritesNothing",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 213,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_FreshIndex_ReportsUpToDateAndWritesNothing",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 219,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_FreshIndex_ReportsUpToDateAndWritesNothing",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 218,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_FreshIndex_ReportsUpToDateAndWritesNothing",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 212,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ProjectError_FailsWithoutComparing",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Err",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 250,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ProjectError_FailsWithoutComparing",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Problems",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 245,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ProjectError_FailsWithoutComparing",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 245,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.ListFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 49,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Read(System.String)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 47,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.RemoveStale",
+      "ToId": "F:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder._written",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 54,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.RemoveStale",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 54,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.RemoveStale",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 57,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.RemoveStale",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.RemoveStaleCalls",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 53,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Write(System.String,System.Byte[])",
+      "ToId": "F:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder._written",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 44,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Write(System.String,System.Byte[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 42,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Write(System.String,System.Byte[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Writes",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 43,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Find_NoMatch_SaysSoAndSucceeds",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 272,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Find_NoMatch_SaysSoAndSucceeds",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 267,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Find_PrintsOneLinePerHit",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.OutLines",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 261,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Find_PrintsOneLinePerHit",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 256,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_AndroidWarning_StillSucceedsAndIsPrinted",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 183,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_AndroidWarning_StillSucceedsAndIsPrinted",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Err",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 182,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_AndroidWarning_StillSucceedsAndIsPrinted",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 183,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_AndroidWarning_StillSucceedsAndIsPrinted",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Problems",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 177,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_AndroidWarning_StillSucceedsAndIsPrinted",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 177,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_Default_UsesTheSolutionAtTheRepoRoot",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.SourceRequests",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 206,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_Default_UsesTheSolutionAtTheRepoRoot",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 206,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_Default_UsesTheSolutionAtTheRepoRoot",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 202,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 163,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 170,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.RemoveStaleCalls",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 169,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Writes",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 168,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Err",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 171,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 163,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 168,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 169,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 170,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Problems",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 162,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 162,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_SolutionOption_IsResolvedAgainstTheStartFolder",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.SourceRequests",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 194,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_SolutionOption_IsResolvedAgainstTheStartFolder",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 195,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_SolutionOption_IsResolvedAgainstTheStartFolder",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 196,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_SolutionOption_IsResolvedAgainstTheStartFolder",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 190,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 146,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 151,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 152,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Files",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 153,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.RemoveStaleCalls",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 156,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 146,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 151,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 152,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 153,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 156,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 154,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 155,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 145,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Err",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 104,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 103,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 99,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 101,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Code",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 90,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Err",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 93,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 92,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 93,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Problems",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 90,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.SourceRequests",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 89,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 86,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 93,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 90,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Help_ListsEveryCommandAndOptionAndExitsWithSuccess",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 118,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Help_ListsEveryCommandAndOptionAndExitsWithSuccess",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 111,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_Find_ProducesValidJsonArray",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 336,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_Find_ProducesValidJsonArray",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 332,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 347,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 352,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 354,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 359,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 361,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 344,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.QueryCommands_PrintTheirHits(System.String,System.String,System.String)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 326,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.QueryCommands_PrintTheirHits(System.String,System.String,System.String)",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 321,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_DoesNotCompileTheSolution",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.SourceRequests",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 383,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_DoesNotCompileTheSolution",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.SourceRequests",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 389,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_DoesNotCompileTheSolution",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 382,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_WithoutIndex_SaysHowToCreateItAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Err",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 375,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_WithoutIndex_SaysHowToCreateItAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 376,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_WithoutIndex_SaysHowToCreateItAndFails",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 370,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_AmbiguousName_ListsIdsAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 298,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_AmbiguousName_ListsIdsAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.OutLines",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 299,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_AmbiguousName_ListsIdsAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.OutLines",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 300,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_AmbiguousName_ListsIdsAndFails",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 293,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_PrintsSignatureDocsAndRelationships",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 283,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_PrintsSignatureDocsAndRelationships",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 278,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_Unknown_SuggestsFindAndFails",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 311,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_Unknown_SuggestsFindAndFails",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 306,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.UsageErrors_ExitWithTwoAndPrintUsageToStderr(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder.Writes",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 139,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.UsageErrors_ExitWithTwoAndPrintUsageToStderr(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Err",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 137,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.UsageErrors_ExitWithTwoAndPrintUsageToStderr(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 139,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.UsageErrors_ExitWithTwoAndPrintUsageToStderr(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 138,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.UsageErrors_ExitWithTwoAndPrintUsageToStderr(System.String[])",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.Harness",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 132,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 12,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "ToId": "F:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Stubs",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 18,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 19,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "ToId": "T:PressToShape.CodeIndex.Tests.FixedSourceGenerator",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 18,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Generate(PressToShape.CodeIndex.Loading.ICompilationSource)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 31,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_Cancelled_Throws",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 120,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_Cancelled_Throws",
+      "ToId": "T:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 120,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_EdgeAcrossProjects_IsRecordedInTheProjectThatHasTheSource",
+      "ToId": "T:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 52,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_ErrorProblem_SetsHasErrorsAndKeepsTheOtherProjects",
+      "ToId": "T:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 65,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_OnlyWarningProblems_DoNotSetHasErrors",
+      "ToId": "T:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 78,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_TwoProjects_ExtractsSymbolsPerProjectSortedByName",
+      "ToId": "T:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 38,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_NoProjects_StillWritesAManifestAndEmptyNames",
+      "ToId": "T:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 107,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_TwoRuns_ProduceIdenticalFilesIncludingTheProblemsInTheManifest",
+      "ToId": "T:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 92,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_TwoRuns_ProduceIdenticalFilesIncludingTheProblemsInTheManifest",
+      "ToId": "T:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 93,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexModelTests.IndexManifest_RoundTrip_KeepsProjectsAndWarnings",
+      "ToId": "F:PressToShape.CodeIndex.Tests.IndexModelTests.Options",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexModelTests.cs",
+      "Line": 50,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexModelTests.IndexManifest_RoundTrip_KeepsProjectsAndWarnings",
+      "ToId": "F:PressToShape.CodeIndex.Tests.IndexModelTests.Options",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexModelTests.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexModelTests.IndexManifest_RoundTrip_KeepsProjectsAndWarnings",
+      "ToId": "F:PressToShape.CodeIndex.Tests.IndexModelTests.Options",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexModelTests.cs",
+      "Line": 54,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexModelTests.RelationshipRecord_RoundTrip_WritesEnumsAsNames",
+      "ToId": "F:PressToShape.CodeIndex.Tests.IndexModelTests.Options",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexModelTests.cs",
+      "Line": 36,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexModelTests.RelationshipRecord_RoundTrip_WritesEnumsAsNames",
+      "ToId": "F:PressToShape.CodeIndex.Tests.IndexModelTests.Options",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexModelTests.cs",
+      "Line": 37,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexModelTests.SymbolRecord_RoundTrip_KeepsAllValues",
+      "ToId": "F:PressToShape.CodeIndex.Tests.IndexModelTests.Options",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexModelTests.cs",
+      "Line": 23,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexModelTests.SymbolRecord_RoundTrip_KeepsAllValues",
+      "ToId": "F:PressToShape.CodeIndex.Tests.IndexModelTests.Options",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexModelTests.cs",
+      "Line": 24,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexModelTests.SymbolRecord_RoundTrip_KeepsAllValues",
+      "ToId": "F:PressToShape.CodeIndex.Tests.IndexModelTests.Options",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexModelTests.cs",
+      "Line": 27,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "ToId": "F:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Source",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 29,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 30,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 32,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_AnyFile_HasNoAbsolutePathsNoMachineNamesNoTimestampsNoBom",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 132,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_AnyPage_HasNoAbsolutePathsNoCarriageReturnsNoBomAndAnotherWordForKind",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 119,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_PrivateMembersAndTypes_AreLeftOutButInternalOnesStay",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 72,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 27,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 28,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_ContainerRegistration_RecordsServiceToImplementation",
+      "ToId": "F:PressToShape.CodeIndex.Tests.OperationRelationshipTests.DiStub",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 208,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.ProjectReferenceTests.SrcProjects_References_NoToolOrRoslynOrLocator",
+      "ToId": "M:PressToShape.CodeIndex.Tests.ProjectReferenceTests.IsToolPackage(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/ProjectReferenceTests.cs",
+      "Line": 26,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "ToId": "F:PressToShape.CodeIndex.Tests.QueryServiceTests.Source",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 53,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 53,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "ToId": "T:PressToShape.CodeIndex.Tests.QueryServiceTests.FakeSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 53,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.CountingSource.Read(System.String)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.QueryServiceTests.CountingSource.Reads",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 44,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Search_ReadsOnlyTheManifestAndTheNamesTable",
+      "ToId": "P:PressToShape.CodeIndex.Tests.QueryServiceTests.CountingSource.Reads",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 234,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Search_ReadsOnlyTheManifestAndTheNamesTable",
+      "ToId": "T:PressToShape.CodeIndex.Tests.QueryServiceTests.CountingSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 230,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_ReadsOneSymbolFileNotTheWholeIndex",
+      "ToId": "P:PressToShape.CodeIndex.Tests.QueryServiceTests.CountingSource.Reads",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 244,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_ReadsOneSymbolFileNotTheWholeIndex",
+      "ToId": "T:PressToShape.CodeIndex.Tests.QueryServiceTests.CountingSource",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 240,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.BuildFor(PressToShape.CodeIndex.Extraction.ProjectCompilation,PressToShape.CodeIndex.Extraction.ProjectCompilation[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 21,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.BuildFor(PressToShape.CodeIndex.Extraction.ProjectCompilation,PressToShape.CodeIndex.Extraction.ProjectCompilation[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 24,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_ClassChain_RecordsInheritsForEachLevel",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Describe(PressToShape.CodeIndex.Model.RelationshipRecord)",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 36,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_ConstructorParameters_RecordInjectedDependencies",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Describe(PressToShape.CodeIndex.Model.RelationshipRecord)",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 78,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_GenericBaseAndParameter_UseTheOriginalDefinition",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Describe(PressToShape.CodeIndex.Model.RelationshipRecord)",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 111,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_InterfaceImplementation_RecordsImplementsIncludingInheritedInterfaces",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Describe(PressToShape.CodeIndex.Model.RelationshipRecord)",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_NestedTypes_AreIncluded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Describe(PressToShape.CodeIndex.Model.RelationshipRecord)",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 127,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_Output_IsSortedAndStable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Describe(PressToShape.CodeIndex.Model.RelationshipRecord)",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 147,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_Output_IsSortedAndStable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Describe(PressToShape.CodeIndex.Model.RelationshipRecord)",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 148,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_TargetInAnotherProject_IsRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Describe(PressToShape.CodeIndex.Model.RelationshipRecord)",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 139,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RepoPaths.Combine(System.String)",
+      "ToId": "P:PressToShape.CodeIndex.Tests.RepoPaths.Root",
+      "File": "tests/PressToShape.CodeIndex.Tests/RepoPaths.cs",
+      "Line": 11,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 12,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "ToId": "F:PressToShape.CodeIndex.Tests.TestCompilation.References",
+      "File": "tests/PressToShape.CodeIndex.Tests/TestCompilation.cs",
+      "Line": 27,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "ToId": "P:PressToShape.CodeIndex.Tests.TestCompilation.RepoRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/TestCompilation.cs",
+      "Line": 23,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Code",
+      "ToId": "F:PressToShape.CodeIndex.Tests.CliAppTests.Source",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 81,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Folder",
+      "ToId": "T:PressToShape.CodeIndex.Tests.CliAppTests.FakeFolder",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 71,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.OutLines",
+      "ToId": "P:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Out",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 96,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.InMemoryFileSink_Write_KeepsFilesSortedAndRejectsBadPaths",
+      "ToId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Bytes(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 115,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.InMemoryFileSink_Write_KeepsFilesSortedAndRejectsBadPaths",
+      "ToId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Bytes(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 116,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.InMemoryFileSink_Write_KeepsFilesSortedAndRejectsBadPaths",
+      "ToId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Bytes(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 119,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.RemoveStale_DeletesFilesNotWrittenAndEmptyFolders",
+      "ToId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Bytes(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 82,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_ExistingFile_IsReplacedAndNoTemporaryFileRemains",
+      "ToId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Bytes(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 40,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_ExistingFile_IsReplacedAndNoTemporaryFileRemains",
+      "ToId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Bytes(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 42,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_NewFile_CreatesFoldersAndContent",
+      "ToId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Bytes(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 31,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_PathOutsideRoot_IsRejectedAndNothingIsWritten(System.String)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Bytes(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 70,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Write_TargetCannotBeReplaced_LeavesNoTemporaryFile",
+      "ToId": "M:PressToShape.CodeIndex.Tests.AtomicFileWriterTests.Bytes(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs",
+      "Line": 54,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 225,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ChangedMissingAndStaleFiles_AreListed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 231,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_FreshIndex_ReportsUpToDateAndWritesNothing",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 212,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_FreshIndex_ReportsUpToDateAndWritesNothing",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 215,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Check_ProjectError_FailsWithoutComparing",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 247,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Find_NoMatch_SaysSoAndSucceeds",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 267,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Find_NoMatch_SaysSoAndSucceeds",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 269,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Find_PrintsOneLinePerHit",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 256,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Find_PrintsOneLinePerHit",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 258,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_AndroidWarning_StillSucceedsAndIsPrinted",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 179,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_Default_UsesTheSolutionAtTheRepoRoot",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 204,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_ProjectError_WritesNothingKeepsOldFilesAndFails",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 165,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_SolutionOption_IsResolvedAgainstTheStartFolder",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 192,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generate_WritesTheIndexReportsCountsAndRemovesStaleFiles",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 148,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 102,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.FakeSource.#ctor(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Extraction.ProjectCompilation},System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.LoadProblem})",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 90,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 90,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Help_ListsEveryCommandAndOptionAndExitsWithSuccess",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 113,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_Find_ProducesValidJsonArray",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 332,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_Find_ProducesValidJsonArray",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 334,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 344,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 346,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 353,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Json_ShowRefsAndAmbiguous_AreValidJson",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 360,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.QueryCommands_PrintTheirHits(System.String,System.String,System.String)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 321,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.QueryCommands_PrintTheirHits(System.String,System.String,System.String)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 323,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_DoesNotCompileTheSolution",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 382,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_DoesNotCompileTheSolution",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 385,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_DoesNotCompileTheSolution",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 386,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_DoesNotCompileTheSolution",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 387,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Query_WithoutIndex_SaysHowToCreateItAndFails",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 372,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_AmbiguousName_ListsIdsAndFails",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 293,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_AmbiguousName_ListsIdsAndFails",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 295,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_PrintsSignatureDocsAndRelationships",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 278,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_PrintsSignatureDocsAndRelationships",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 280,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_Unknown_SuggestsFindAndFails",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Generated(PressToShape.CodeIndex.Tests.CliAppTests.Harness)",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 306,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Show_Unknown_SuggestsFindAndFails",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 308,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.CliAppTests.UsageErrors_ExitWithTwoAndPrintUsageToStderr(System.String[])",
+      "ToId": "M:PressToShape.CodeIndex.Tests.CliAppTests.Harness.Run(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/CliAppTests.cs",
+      "Line": 134,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 12,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_EmptySummary_CountsAsUndocumented",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 67,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_FullComment_StoresEverySection",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 17,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_InheritDocChain_PointsAtTheSymbolThatHasTheText",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 124,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_InheritDocOnInterfaceImplementation_UsesInterfaceText",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 91,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_InheritDocOnOverride_UsesBaseTextAndNamesSource",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 75,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_InheritDocWithCref_UsesThatSymbol",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 155,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_InheritDocWithOwnSummary_KeepsOwnTextAndFillsTheRest",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 106,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_InheritDocWithoutDocumentedSource_StaysUndocumented",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 141,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_InlineTags_AreShownAsPlainText",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 170,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_MalformedXml_DoesNotThrowAndIsUndocumented",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 188,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_NoComment_IsUndocumentedWithoutText",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 46,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_OnlySummary_LeavesOtherSectionsEmpty",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 57,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Read_ParamsAreKeptInSourceOrder",
+      "ToId": "M:PressToShape.CodeIndex.Tests.DocCommentReaderTests.Get(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/DocCommentReaderTests.cs",
+      "Line": 197,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.FixedSourceGenerator.#ctor(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 18,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 18,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.WithGenerator(PressToShape.CodeIndex.Extraction.ProjectCompilation,Microsoft.CodeAnalysis.IIncrementalGenerator)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 18,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract_FieldWithPrefix_MapsToCapitalizedPropertyName",
+      "ToId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 66,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract_GeneratedCommand_IsLinkedToTheRelayCommandMethod",
+      "ToId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 55,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract_GeneratedMemberWithoutMatchingSource_HasNoOrigin",
+      "ToId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 76,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract_GeneratedMembers_NeverContainMachinePaths",
+      "ToId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 113,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract_GeneratedProperty_IsMarkedAndLinkedToTheObservableField",
+      "ToId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 25,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract_HandWrittenMember_IsNotGenerated",
+      "ToId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 89,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract_PartialPropertyWithGeneratedImplementation_StaysHandWrittenAndKeepsItsAttribute",
+      "ToId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 40,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract_PartialTypeWithGeneratedPart_PointsAtHandWrittenFile",
+      "ToId": "M:PressToShape.CodeIndex.Tests.GeneratedMemberLinkerTests.Extract(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/GeneratedMemberLinkerTests.cs",
+      "Line": 103,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_Cancelled_Throws",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource.#ctor(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Extraction.ProjectCompilation},PressToShape.CodeIndex.Model.LoadProblem[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 120,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_Cancelled_Throws",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.TwoProjects",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 116,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_EdgeAcrossProjects_IsRecordedInTheProjectThatHasTheSource",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource.#ctor(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Extraction.ProjectCompilation},PressToShape.CodeIndex.Model.LoadProblem[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 52,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_EdgeAcrossProjects_IsRecordedInTheProjectThatHasTheSource",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Generate(PressToShape.CodeIndex.Loading.ICompilationSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 52,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_EdgeAcrossProjects_IsRecordedInTheProjectThatHasTheSource",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.TwoProjects",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 50,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_ErrorProblem_SetsHasErrorsAndKeepsTheOtherProjects",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource.#ctor(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Extraction.ProjectCompilation},PressToShape.CodeIndex.Model.LoadProblem[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 65,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_ErrorProblem_SetsHasErrorsAndKeepsTheOtherProjects",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Generate(PressToShape.CodeIndex.Loading.ICompilationSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 65,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_ErrorProblem_SetsHasErrorsAndKeepsTheOtherProjects",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.TwoProjects",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 62,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_OnlyWarningProblems_DoNotSetHasErrors",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource.#ctor(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Extraction.ProjectCompilation},PressToShape.CodeIndex.Model.LoadProblem[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 78,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_OnlyWarningProblems_DoNotSetHasErrors",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Generate(PressToShape.CodeIndex.Loading.ICompilationSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 78,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_OnlyWarningProblems_DoNotSetHasErrors",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.TwoProjects",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 75,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_TwoProjects_ExtractsSymbolsPerProjectSortedByName",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource.#ctor(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Extraction.ProjectCompilation},PressToShape.CodeIndex.Model.LoadProblem[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 38,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_TwoProjects_ExtractsSymbolsPerProjectSortedByName",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Generate(PressToShape.CodeIndex.Loading.ICompilationSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 38,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.GenerateAsync_TwoProjects_ExtractsSymbolsPerProjectSortedByName",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.TwoProjects",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 36,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.TwoProjects",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 24,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.TwoProjects",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 25,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_NoProjects_StillWritesAManifestAndEmptyNames",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource.#ctor(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Extraction.ProjectCompilation},PressToShape.CodeIndex.Model.LoadProblem[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 107,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_NoProjects_StillWritesAManifestAndEmptyNames",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Generate(PressToShape.CodeIndex.Loading.ICompilationSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 107,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_TwoRuns_ProduceIdenticalFilesIncludingTheProblemsInTheManifest",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource.#ctor(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Extraction.ProjectCompilation},PressToShape.CodeIndex.Model.LoadProblem[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 92,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_TwoRuns_ProduceIdenticalFilesIncludingTheProblemsInTheManifest",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.FakeSource.#ctor(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Extraction.ProjectCompilation},PressToShape.CodeIndex.Model.LoadProblem[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 93,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_TwoRuns_ProduceIdenticalFilesIncludingTheProblemsInTheManifest",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Generate(PressToShape.CodeIndex.Loading.ICompilationSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 92,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_TwoRuns_ProduceIdenticalFilesIncludingTheProblemsInTheManifest",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Generate(PressToShape.CodeIndex.Loading.ICompilationSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 93,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.Write_TwoRuns_ProduceIdenticalFilesIncludingTheProblemsInTheManifest",
+      "ToId": "M:PressToShape.CodeIndex.Tests.IndexGeneratorTests.TwoProjects",
+      "File": "tests/PressToShape.CodeIndex.Tests/IndexGeneratorTests.cs",
+      "Line": 87,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 29,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 33,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_AnyFile_HasNoAbsolutePathsNoMachineNamesNoTimestampsNoBom",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 124,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_AnyFile_HasNoAbsolutePathsNoMachineNamesNoTimestampsNoBom",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 124,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_Enums_AreNamesAndHtmlCharactersStayReadable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 144,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_Enums_AreNamesAndHtmlCharactersStayReadable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 144,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_InputInAnotherOrder_ProducesIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 69,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_InputInAnotherOrder_ProducesIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 70,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_InputInAnotherOrder_ProducesIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 69,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_InputInAnotherOrder_ProducesIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 70,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_Layout_HasManifestNamesOneFilePerNamespaceAndRelationshipFilePerProject",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 79,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_Layout_HasManifestNamesOneFilePerNamespaceAndRelationshipFilePerProject",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 79,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_Manifest_HasSchemaVersionToolVersionCountsAndWarnings",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 93,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_Manifest_HasSchemaVersionToolVersionCountsAndWarnings",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 94,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_NamesTable_HasOneLinePerTypeAndMemberWithoutNamespacesAndConstructors",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 153,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_NamesTable_HasOneLinePerTypeAndMemberWithoutNamespacesAndConstructors",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 153,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_SymbolAndRelationshipFiles_CarrySchemaVersionAndSortedContent",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 108,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_SymbolAndRelationshipFiles_CarrySchemaVersionAndSortedContent",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 108,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_TwoRuns_ProduceIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 59,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_TwoRuns_ProduceIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 60,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_TwoRuns_ProduceIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 59,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write_TwoRuns_ProduceIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/JsonIndexWriterTests.cs",
+      "Line": 60,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_AnyPage_HasNoAbsolutePathsNoCarriageReturnsNoBomAndAnotherWordForKind",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 115,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_AnyPage_HasNoAbsolutePathsNoCarriageReturnsNoBomAndAnotherWordForKind",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 115,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_ChangedSummaryInTheModel_ChangesThePage",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 97,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_ChangedSummaryInTheModel_ChangesThePage",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Text(PressToShape.CodeIndex.Output.InMemoryFileSink,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 106,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_ChangedSummaryInTheModel_ChangesThePage",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 106,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_GeneratedMember_ShowsItsOrigin",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Member(System.String,System.String,System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 135,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_GeneratedMember_ShowsItsOrigin",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Text(PressToShape.CodeIndex.Output.InMemoryFileSink,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 139,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_GeneratedMember_ShowsItsOrigin",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Type(System.String,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 134,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_GeneratedMember_ShowsItsOrigin",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 139,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_InferredEdges_AreMarked",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 84,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_InferredEdges_AreMarked",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Text(PressToShape.CodeIndex.Output.InMemoryFileSink,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 89,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_InferredEdges_AreMarked",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 89,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_Layout_HasReadmeAndOnePagePerNamespaceWithTypes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 34,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_Layout_HasReadmeAndOnePagePerNamespaceWithTypes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Text(PressToShape.CodeIndex.Output.InMemoryFileSink,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 39,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_Layout_HasReadmeAndOnePagePerNamespaceWithTypes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 34,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_PrivateMembersAndTypes_AreLeftOutButInternalOnesStay",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Text(PressToShape.CodeIndex.Output.InMemoryFileSink,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 73,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_PrivateMembersAndTypes_AreLeftOutButInternalOnesStay",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 73,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_PrivateMembersAndTypes_AreLeftOutButInternalOnesStay",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 71,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_TwoRunsAndShuffledInput_ProduceIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 24,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_TwoRunsAndShuffledInput_ProduceIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 25,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_TwoRunsAndShuffledInput_ProduceIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 24,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_TwoRunsAndShuffledInput_ProduceIdenticalBytes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 25,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_TypePage_ShowsHeaderSourceSummaryMembersAndRelationships",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 47,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_TypePage_ShowsHeaderSourceSummaryMembersAndRelationships",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Text(PressToShape.CodeIndex.Output.InMemoryFileSink,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 47,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_TypePage_ShowsHeaderSourceSummaryMembersAndRelationships",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 47,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_UndocumentedSymbols_AreMarkedWithoutInventedText",
+      "ToId": "M:PressToShape.CodeIndex.Tests.JsonIndexWriterTests.BuildData(System.Boolean)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 63,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_UndocumentedSymbols_AreMarkedWithoutInventedText",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Text(PressToShape.CodeIndex.Output.InMemoryFileSink,System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 63,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write_UndocumentedSymbols_AreMarkedWithoutInventedText",
+      "ToId": "M:PressToShape.CodeIndex.Tests.MarkdownWriterTests.Write(PressToShape.CodeIndex.Model.IndexData)",
+      "File": "tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs",
+      "Line": 63,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 26,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_AccessorsInitializersAndConstructorChaining_AreAttributed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 171,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_AccessorsInitializersAndConstructorChaining_AreAttributed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Of(System.Collections.Generic.IEnumerable{PressToShape.CodeIndex.Model.RelationshipRecord},PressToShape.CodeIndex.Model.RelationshipType)",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 186,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_AllEdges_AreVerifiedAndSorted",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 232,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_CallThroughInterface_PointsAtTheInterfaceMethod",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_CallThroughInterface_PointsAtTheInterfaceMethod",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Of(System.Collections.Generic.IEnumerable{PressToShape.CodeIndex.Model.RelationshipRecord},PressToShape.CodeIndex.Model.RelationshipType)",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 53,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_ContainerRegistration_RecordsServiceToImplementation",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 208,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_DirectCall_RecordsCallWithLine",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 37,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_DynamicAndDelegateCalls_AreNotRecordedAsCalls",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 133,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_FrameworkTargets_AreNotRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 125,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_GenericMethodAndExtensionMethod_UseTheDeclaration",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 59,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_GenericMethodAndExtensionMethod_UseTheDeclaration",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Of(System.Collections.Generic.IEnumerable{PressToShape.CodeIndex.Model.RelationshipRecord},PressToShape.CodeIndex.Model.RelationshipType)",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 65,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_LambdaAndLocalFunction_AreAttributedToTheEnclosingMember",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 149,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_LambdaAndLocalFunction_AreAttributedToTheEnclosingMember",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Of(System.Collections.Generic.IEnumerable{PressToShape.CodeIndex.Model.RelationshipRecord},PressToShape.CodeIndex.Model.RelationshipType)",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 163,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_MemberReferences_AreRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 74,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_MemberReferences_AreRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Of(System.Collections.Generic.IEnumerable{PressToShape.CodeIndex.Model.RelationshipRecord},PressToShape.CodeIndex.Model.RelationshipType)",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 83,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_NoContainer_NoRegistrationIsInvented",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 200,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_NoContainer_NoRegistrationIsInvented",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Of(System.Collections.Generic.IEnumerable{PressToShape.CodeIndex.Model.RelationshipRecord},PressToShape.CodeIndex.Model.RelationshipType)",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 202,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_ObjectCreation_RecordsConstructorCallAndTypeReference",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 94,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_ObjectCreation_RecordsConstructorCallAndTypeReference",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Of(System.Collections.Generic.IEnumerable{PressToShape.CodeIndex.Model.RelationshipRecord},PressToShape.CodeIndex.Model.RelationshipType)",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 96,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_ObjectCreation_RecordsConstructorCallAndTypeReference",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Of(System.Collections.Generic.IEnumerable{PressToShape.CodeIndex.Model.RelationshipRecord},PressToShape.CodeIndex.Model.RelationshipType)",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 97,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_SignatureTypes_AreReferences",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 103,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Build_SignatureTypes_AreReferences",
+      "ToId": "M:PressToShape.CodeIndex.Tests.OperationRelationshipTests.Of(System.Collections.Generic.IEnumerable{PressToShape.CodeIndex.Model.RelationshipRecord},PressToShape.CodeIndex.Model.RelationshipType)",
+      "File": "tests/PressToShape.CodeIndex.Tests/OperationRelationshipTests.cs",
+      "Line": 114,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.ProjectReferenceTests.AllProjects_PackageReference_HasNoVersionAttribute",
+      "ToId": "M:PressToShape.CodeIndex.Tests.ProjectReferenceTests.FindProjectFiles(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/ProjectReferenceTests.cs",
+      "Line": 33,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.ProjectReferenceTests.FindProjectFiles(System.String)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RepoPaths.Combine(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/ProjectReferenceTests.cs",
+      "Line": 53,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.ProjectReferenceTests.SrcProjects_References_NoToolOrRoslynOrLocator",
+      "ToId": "M:PressToShape.CodeIndex.Tests.ProjectReferenceTests.FindProjectFiles(System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/ProjectReferenceTests.cs",
+      "Line": 14,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.FakeSource.#ctor(PressToShape.CodeIndex.Extraction.ProjectCompilation[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 53,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 53,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Dependencies_Type_ListsConstructorDependencies",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 208,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Derived_Class_ListsDirectSubtypes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Ids(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Query.QueryHit})",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 171,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Derived_Class_ListsDirectSubtypes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 171,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Derived_Class_ListsDirectSubtypes",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 172,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Implementations_InterfaceMethod_ListsMatchingMembersAsInferred",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Ids(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Query.QueryHit})",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 160,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Implementations_InterfaceMethod_ListsMatchingMembersAsInferred",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 158,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Implementations_Interface_ListsVerifiedImplementersAndExtendingInterfaces",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Ids(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Query.QueryHit})",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 151,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Implementations_Interface_ListsVerifiedImplementersAndExtendingInterfaces",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 149,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Queries_UnknownSymbol_AreNotFoundForEveryQuery",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 219,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Reader_DamagedNamesTable_IsReportedNotCrashed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 272,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Reader_DamagedNamesTable_IsReportedNotCrashed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 275,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Reader_InvalidJson_IsReportedNotCrashed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 283,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Reader_InvalidJson_IsReportedNotCrashed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 286,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Reader_MissingIndex_SaysHowToCreateIt",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 250,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Reader_OtherSchemaVersion_SaysHowToRegenerate",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 259,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Reader_OtherSchemaVersion_SaysHowToRegenerate",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 263,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.References_Method_ListsVerifiedCallsAndInferredCallsThroughTheInterface",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Ids(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Query.QueryHit})",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 182,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.References_Method_ListsVerifiedCallsAndInferredCallsThroughTheInterface",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 178,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.References_OverrideMethod_AlsoCountsCallsOfTheBaseMember",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 189,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.References_Type_ListsSignatureAndCreationReferences",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 199,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Search_ExactBeforePrefixBeforeSubstring_AndCaseInsensitiveAfterExact",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 77,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Search_ExactMatches_AreOrderedById",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 66,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Search_ReadsOnlyTheManifestAndTheNamesTable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 230,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Search_ReadsOnlyTheManifestAndTheNamesTable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.CountingSource.#ctor(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 230,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Search_ReadsOnlyTheManifestAndTheNamesTable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 232,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Search_TermWithDot_AlsoMatchesIdsAndRespectsLimit",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 91,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 59,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_AmbiguousName_ListsCandidatesAndNoValue",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 130,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_ById_ResolvesAMember",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 114,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_ReadsOneSymbolFileNotTheWholeIndex",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.BuildIndex",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 240,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_ReadsOneSymbolFileNotTheWholeIndex",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.CountingSource.#ctor(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 240,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_ReadsOneSymbolFileNotTheWholeIndex",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 242,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_TypeWithSameShortNameAsFullName_ResolvesWithoutPrefix",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 124,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_UniqueType_ReturnsSymbolWithDocsAndRelationships",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 101,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Show_UnknownName_IsNotFound",
+      "ToId": "M:PressToShape.CodeIndex.Tests.QueryServiceTests.Service(PressToShape.CodeIndex.Query.IIndexFileSource)",
+      "File": "tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs",
+      "Line": 140,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.BuildFor(PressToShape.CodeIndex.Extraction.ProjectCompilation,PressToShape.CodeIndex.Extraction.ProjectCompilation[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 16,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 15,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_ClassChain_RecordsInheritsForEachLevel",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 34,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_ConstructorParameters_RecordInjectedDependencies",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 70,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_ExplicitConstructor_RecordsInjectedDependency",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 84,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_FrameworkTypes_AreNeverTargets",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 62,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_GenericBaseAndParameter_UseTheOriginalDefinition",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 104,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_InterfaceImplementation_RecordsImplementsIncludingInheritedInterfaces",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 43,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_NestedTypes_AreIncluded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 125,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_Output_IsSortedAndStable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 147,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_Output_IsSortedAndStable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 148,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_RecordCopyConstructorAndSelfReference_AreIgnored",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 117,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_TargetInAnotherProject_IsRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.BuildFor(PressToShape.CodeIndex.Extraction.ProjectCompilation,PressToShape.CodeIndex.Extraction.ProjectCompilation[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 137,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_TargetInAnotherProject_IsRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 133,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_TargetInAnotherProject_IsRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 134,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build_TwoConstructorsSameParameter_GiveOneEdge",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RelationshipBuilderTests.Build(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/RelationshipBuilderTests.cs",
+      "Line": 96,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 12,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Accessibility_UsesCSharpWords",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 120,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Accessibility_UsesCSharpWords",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 128,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Accessibility_UsesCSharpWords",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 129,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Accessibility_UsesCSharpWords",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 130,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Accessibility_UsesCSharpWords",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 131,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Accessibility_UsesCSharpWords",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 132,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Accessibility_UsesCSharpWords",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 133,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Attributes_RecordNameAndArguments",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 158,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Attributes_RecordNameAndArguments",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 164,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Attributes_RecordNameAndArguments",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 168,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_BaseTypeAndInterfaces_AreRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 139,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_BaseTypeAndInterfaces_AreRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 148,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_BaseTypeAndInterfaces_AreRecorded",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 152,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Delegate_TakesParametersFromInvoke",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 79,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Delegate_TakesParametersFromInvoke",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 81,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 20,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 30,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 31,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 32,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 33,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 34,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 35,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 36,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 37,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 38,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 39,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 40,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 41,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_EachSymbolType_IsRecognized",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 42,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_ImplicitMembers_AreSkipped",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 212,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_InterfaceAndItsMembers_AreNotMarkedAbstract",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 110,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_InterfaceAndItsMembers_AreNotMarkedAbstract",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 112,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_InterfaceAndItsMembers_AreNotMarkedAbstract",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 113,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_InterfaceAndItsMembers_AreNotMarkedAbstract",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 114,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Locations_AreRepoRelativeWithForwardSlashesAndLineRanges",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 222,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Locations_AreRepoRelativeWithForwardSlashesAndLineRanges",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 224,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Locations_AreRepoRelativeWithForwardSlashesAndLineRanges",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 225,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Method_RecordsSignatureParametersAndReturnType",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 48,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Method_RecordsSignatureParametersAndReturnType",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 50,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Modifiers_AreSortedAndStaticClassIsNotAbstractSealed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 90,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Modifiers_AreSortedAndStaticClassIsNotAbstractSealed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 97,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Modifiers_AreSortedAndStaticClassIsNotAbstractSealed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 98,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Modifiers_AreSortedAndStaticClassIsNotAbstractSealed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 99,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Modifiers_AreSortedAndStaticClassIsNotAbstractSealed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 100,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Modifiers_AreSortedAndStaticClassIsNotAbstractSealed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 101,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Modifiers_AreSortedAndStaticClassIsNotAbstractSealed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 102,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Modifiers_AreSortedAndStaticClassIsNotAbstractSealed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 103,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Modifiers_AreSortedAndStaticClassIsNotAbstractSealed",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 104,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Namespaces_AreListedWithParents",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 237,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Namespaces_AreListedWithParents",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 239,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Namespaces_AreListedWithParents",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 240,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Namespaces_AreListedWithParents",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 241,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Namespaces_AreListedWithParents",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 242,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_NestedAndGenericTypes_AreLinkedToTheirContainer",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 174,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_NestedAndGenericTypes_AreLinkedToTheirContainer",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 176,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Output_IsSortedAndStable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 248,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Output_IsSortedAndStable",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 249,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_PartialType_AppearsOnceAtItsFirstDeclaration",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 186,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_PartialType_AppearsOnceAtItsFirstDeclaration",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 190,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_PartialType_AppearsOnceAtItsFirstDeclaration",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 195,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_PrimaryConstructor_IsListedWithItsParameters",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 201,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_PrimaryConstructor_IsListedWithItsParameters",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 203,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Property_RecordsTypeAndSignature",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract(System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 66,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Property_RecordsTypeAndSignature",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 68,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Extract_Property_RecordsTypeAndSignature",
+      "ToId": "M:PressToShape.CodeIndex.Tests.SymbolExtractorTests.Get(System.Collections.Generic.IReadOnlyList{PressToShape.CodeIndex.Model.SymbolRecord},System.String)",
+      "File": "tests/PressToShape.CodeIndex.Tests/SymbolExtractorTests.cs",
+      "Line": 69,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String[])",
+      "ToId": "M:PressToShape.CodeIndex.Tests.TestCompilation.Project(System.String,System.String[])",
+      "File": "tests/PressToShape.CodeIndex.Tests/TestCompilation.cs",
+      "Line": 40,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "P:PressToShape.CodeIndex.Tests.RepoPaths.Root",
+      "ToId": "M:PressToShape.CodeIndex.Tests.RepoPaths.FindSolutionRoot",
+      "File": "tests/PressToShape.CodeIndex.Tests/RepoPaths.cs",
+      "Line": 9,
+      "Confidence": "Verified"
+    }
+  ]
+}

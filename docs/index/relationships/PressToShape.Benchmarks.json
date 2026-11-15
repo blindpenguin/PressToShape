@@ -1,0 +1,1038 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.Benchmarks",
+  "Relationships": [
+    {
+      "Type": "References",
+      "FromId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._canvas",
+      "ToId": "T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 25,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "ToId": "T:PressToShape.App.Workspace.SelectionEditor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 23,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "ToId": "T:PressToShape.App.Workspace.CanvasInteraction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 24,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "ToId": "T:PressToShape.App.Workspace.EditorState",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 22,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.Program.Main(System.String[])",
+      "ToId": "F:PressToShape.Benchmarks.Program.DefaultHeapLimit",
+      "File": "tests/PressToShape.Benchmarks/Program.cs",
+      "Line": 20,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.Program.Main(System.String[])",
+      "ToId": "F:PressToShape.Benchmarks.Program.HeapLimitVariable",
+      "File": "tests/PressToShape.Benchmarks/Program.cs",
+      "Line": 18,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.Program.Main(System.String[])",
+      "ToId": "F:PressToShape.Benchmarks.Program.HeapLimitVariable",
+      "File": "tests/PressToShape.Benchmarks/Program.cs",
+      "Line": 20,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.Program.Main(System.String[])",
+      "ToId": "T:PressToShape.Benchmarks.Program",
+      "File": "tests/PressToShape.Benchmarks/Program.cs",
+      "Line": 23,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.CopyPaste",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 121,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.CopyPaste",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 122,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.CopyPaste",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 124,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.CopyPaste",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 123,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Cut",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 113,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Cut",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 115,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Cut",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 114,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Duplicate",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 105,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Duplicate",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 107,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Duplicate",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 106,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.ExportSvg",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 134,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.ExportSvg",
+      "ToId": "P:PressToShape.App.Workspace.EditorState.Document",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 134,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.GroupMove",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 89,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.GroupMove",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 90,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.GroupMove",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 91,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.GroupMove",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 92,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._handleX",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 80,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._handleX",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 81,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._handleY",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 80,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._handleY",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 81,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 80,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 81,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 82,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 83,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HitTest",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 75,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HitTest",
+      "ToId": "P:PressToShape.App.Workspace.EditorState.Document",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 75,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.MarqueeSelect",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 68,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.MarqueeSelect",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 65,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.MarqueeSelect",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 66,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.MarqueeSelect",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 67,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Nudge",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 98,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Nudge",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 99,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Overlay",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._canvas",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 72,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Overlay",
+      "ToId": "P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.Overlay",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 72,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Overlay",
+      "ToId": "P:PressToShape.App.Workspace.SelectionOverlay.Outlines",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 72,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.SaveProject",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 131,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.SaveProject",
+      "ToId": "P:PressToShape.App.Workspace.EditorState.Document",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 131,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.SelectAll",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 59,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.SelectAll",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 58,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.App.Workspace.HandleType.BottomRight",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 52,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._canvas",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 45,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 46,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._editor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 49,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._handleX",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 52,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._handleY",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 52,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._interaction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 47,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 44,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 45,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 46,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 47,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 48,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.ViewportHeight",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 45,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.ViewportWidth",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 45,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.App.Workspace.EditorState.Document",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 48,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.App.Workspace.EditorState.Document",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.App.Workspace.EditorState.SelectedShapeIds",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Benchmarks.ShapeOperationBenchmarks.ShapeCount",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 39,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Documents.Document.Layers",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 44,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Documents.Layer.Shapes",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 44,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Shapes.Shape.Height",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 41,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Shapes.Shape.Height",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 42,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Shapes.Shape.Width",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 41,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Shapes.Shape.Width",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 42,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Shapes.Shape.X",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 41,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Shapes.Shape.X",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 42,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Shapes.Shape.Y",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 41,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "P:PressToShape.Core.Shapes.Shape.Y",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 42,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 45,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "T:PressToShape.App.Workspace.CanvasInteraction",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 47,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "T:PressToShape.App.Workspace.EditorState",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 44,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "T:PressToShape.App.Workspace.SelectionEditor",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 46,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "T:PressToShape.App.Workspace.SelectionFrame",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "T:PressToShape.Core.Documents.Document",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 38,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "T:PressToShape.Core.Shapes.EllipseShape",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 42,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "T:PressToShape.Core.Shapes.RectangleShape",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 41,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "T:PressToShape.Core.Shapes.Shape",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 39,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Values",
+      "ToId": "F:PressToShape.Benchmarks.ShapeOperationBenchmarks._state",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 128,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Values",
+      "ToId": "P:PressToShape.App.Workspace.EditorState.Document",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 128,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "References",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Values",
+      "ToId": "P:PressToShape.App.Workspace.EditorState.SelectedShapeIds",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 128,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.CopyPaste",
+      "ToId": "M:PressToShape.App.Workspace.EditorState.Undo",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 123,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.CopyPaste",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.Copy",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 121,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.CopyPaste",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.Paste(System.Boolean)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 122,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.CopyPaste",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.SelectAll",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 124,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Cut",
+      "ToId": "M:PressToShape.App.Workspace.EditorState.Undo",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 114,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Cut",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.Cut",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 113,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Cut",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.SelectAll",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 115,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Duplicate",
+      "ToId": "M:PressToShape.App.Workspace.EditorState.Undo",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 106,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Duplicate",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.Duplicate",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 105,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Duplicate",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.SelectAll",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 107,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.ExportSvg",
+      "ToId": "M:PressToShape.Core.IO.SvgExport.ToUtf8(PressToShape.Core.Documents.Document)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 134,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.GroupMove",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.Cancel",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 91,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.GroupMove",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.PointerMoved(System.Double,System.Double,System.Boolean,System.Boolean)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 90,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.GroupMove",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.PointerPressed(System.Double,System.Double,System.Boolean)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 89,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.GroupMove",
+      "ToId": "M:PressToShape.App.Workspace.EditorState.Undo",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 92,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.Cancel",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 82,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.PointerMoved(System.Double,System.Double,System.Boolean,System.Boolean)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 81,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.PointerPressed(System.Double,System.Double,System.Boolean)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 80,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HandleDrag",
+      "ToId": "M:PressToShape.App.Workspace.EditorState.Undo",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 83,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.HitTest",
+      "ToId": "M:PressToShape.Core.Documents.Document.HitTest(System.Double,System.Double)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 75,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.MarqueeSelect",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.PointerMoved(System.Double,System.Double,System.Boolean,System.Boolean)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 66,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.MarqueeSelect",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.PointerPressed(System.Double,System.Double,System.Boolean)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 65,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.MarqueeSelect",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.PointerReleased(System.Double,System.Double,System.Boolean,System.Boolean)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 67,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.MarqueeSelect",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.SelectAll",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 68,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Nudge",
+      "ToId": "M:PressToShape.App.Workspace.EditorState.Undo",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 99,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Nudge",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.Nudge(System.Double,System.Double)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 98,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.SaveProject",
+      "ToId": "M:PressToShape.Core.IO.ProjectFile.Write(PressToShape.Core.Documents.Document)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 131,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.SelectAll",
+      "ToId": "M:PressToShape.App.Workspace.EditorState.ClearSelection",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 58,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.SelectAll",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.SelectAll",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 59,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.#ctor(PressToShape.App.Workspace.EditorState,PressToShape.App.Workspace.SelectionEditor)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 45,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.App.Workspace.CanvasInteraction.#ctor(PressToShape.App.Workspace.EditorState)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 47,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.App.Workspace.EditorState.#ctor(PressToShape.Core.Documents.Document)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 44,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.#ctor(PressToShape.App.Workspace.EditorState,System.Func{System.Guid})",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 46,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.App.Workspace.SelectionEditor.SelectAll",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 49,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.App.Workspace.SelectionGeometry.FrameOf(System.Collections.Generic.IReadOnlyList{PressToShape.Core.Shapes.Shape})",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.App.Workspace.SelectionGeometry.HandlePosition(PressToShape.App.Workspace.SelectionFrame,PressToShape.App.Workspace.HandleType,System.Double)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 52,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.App.Workspace.SelectionQueries.SelectedShapes(PressToShape.Core.Documents.Document,System.Collections.Generic.IEnumerable{System.Guid})",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 51,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.Core.Documents.Document.Create(System.String)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 38,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Setup",
+      "ToId": "M:PressToShape.Core.Documents.Document.HitTest(System.Double,System.Double)",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 48,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Values",
+      "ToId": "M:PressToShape.App.Workspace.SelectionQueries.SelectedShapes(PressToShape.Core.Documents.Document,System.Collections.Generic.IEnumerable{System.Guid})",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 128,
+      "Confidence": "Verified"
+    },
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Benchmarks.ShapeOperationBenchmarks.Values",
+      "ToId": "M:PressToShape.App.Workspace.SelectionValues.From(System.Collections.Generic.IReadOnlyList{PressToShape.Core.Shapes.Shape})",
+      "File": "tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs",
+      "Line": 128,
+      "Confidence": "Verified"
+    }
+  ]
+}

@@ -1,0 +1,927 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.Core.Tests",
+  "Namespace": "PressToShape.Core.Tests.History",
+  "Symbols": [
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Arguments_Invalid_Throw",
+      "Name": "Arguments_Invalid_Throw",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Arguments_Invalid_Throw",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 245,
+      "EndLine": 255,
+      "Signature": "void Arguments_Invalid_Throw()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.JumpTo_ForwardBackAndToTheCurrentIndex",
+      "Name": "JumpTo_ForwardBackAndToTheCurrentIndex",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.JumpTo_ForwardBackAndToTheCurrentIndex",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 181,
+      "EndLine": 200,
+      "Signature": "void JumpTo_ForwardBackAndToTheCurrentIndex()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.JumpTo_OutOfRange_ReturnsNullAndChangesNothing(System.Int32)",
+      "Name": "JumpTo_OutOfRange_ReturnsNullAndChangesNothing",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.JumpTo_OutOfRange_ReturnsNullAndChangesNothing",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 202,
+      "EndLine": 215,
+      "Signature": "void JumpTo_OutOfRange_ReturnsNullAndChangesNothing(int index)",
+      "Parameters": [
+        {
+          "Name": "index",
+          "Type": "int"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "-1"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "5"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "int.MaxValue"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "int.MinValue"
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.ManyShapes_RecordingIsCheap_BecauseDocumentsShareLayers",
+      "Name": "ManyShapes_RecordingIsCheap_BecauseDocumentsShareLayers",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.ManyShapes_RecordingIsCheap_BecauseDocumentsShareLayers",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 311,
+      "EndLine": 326,
+      "Signature": "void ManyShapes_RecordingIsCheap_BecauseDocumentsShareLayers()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.MaxSteps_One_KeepsOnlyTheLastStep",
+      "Name": "MaxSteps_One_KeepsOnlyTheLastStep",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.MaxSteps_One_KeepsOnlyTheLastStep",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 167,
+      "EndLine": 179,
+      "Signature": "void MaxSteps_One_KeepsOnlyTheLastStep()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.New_StartsAtTheGivenDocumentWithoutSteps",
+      "Name": "New_StartsAtTheGivenDocumentWithoutSteps",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.New_StartsAtTheGivenDocumentWithoutSteps",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 18,
+      "EndLine": 31,
+      "Signature": "void New_StartsAtTheGivenDocumentWithoutSteps()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Next(PressToShape.Core.Documents.Document,System.Double)",
+      "Name": "Next",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Next",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 15,
+      "EndLine": 16,
+      "Signature": "Document Next(Document from, double x = 0)",
+      "Parameters": [
+        {
+          "Name": "from",
+          "Type": "Document"
+        },
+        {
+          "Name": "x",
+          "Type": "double"
+        }
+      ],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.OriginalDocuments_AreNeverChanged",
+      "Name": "OriginalDocuments_AreNeverChanged",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.OriginalDocuments_AreNeverChanged",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 257,
+      "EndLine": 270,
+      "Signature": "void OriginalDocuments_AreNeverChanged()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.RandomCalls_NeverThrow_AndCurrentIsAlwaysARecordedDocument",
+      "Name": "RandomCalls_NeverThrow_AndCurrentIsAlwaysARecordedDocument",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.RandomCalls_NeverThrow_AndCurrentIsAlwaysARecordedDocument",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 272,
+      "EndLine": 309,
+      "Signature": "void RandomCalls_NeverThrow_AndCurrentIsAlwaysARecordedDocument()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_AfterUndoOfTheOnlyStepOfThatType_DoesNotExtendTheEarlierStep",
+      "Name": "RecordOrExtend_AfterUndoOfTheOnlyStepOfThatType_DoesNotExtendTheEarlierStep",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_AfterUndoOfTheOnlyStepOfThatType_DoesNotExtendTheEarlierStep",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 386,
+      "EndLine": 398,
+      "Signature": "void RecordOrExtend_AfterUndoOfTheOnlyStepOfThatType_DoesNotExtendTheEarlierStep()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_AfterUndo_RecordsANewStepAndDropsTheRedoSteps",
+      "Name": "RecordOrExtend_AfterUndo_RecordsANewStepAndDropsTheRedoSteps",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_AfterUndo_RecordsANewStepAndDropsTheRedoSteps",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 372,
+      "EndLine": 384,
+      "Signature": "void RecordOrExtend_AfterUndo_RecordsANewStepAndDropsTheRedoSteps()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_DifferentType_RecordsANewStep",
+      "Name": "RecordOrExtend_DifferentType_RecordsANewStep",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_DifferentType_RecordsANewStep",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 360,
+      "EndLine": 370,
+      "Signature": "void RecordOrExtend_DifferentType_RecordsANewStep()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_FirstStep_IsRecorded",
+      "Name": "RecordOrExtend_FirstStep_IsRecorded",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_FirstStep_IsRecorded",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 328,
+      "EndLine": 338,
+      "Signature": "void RecordOrExtend_FirstStep_IsRecorded()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_KeepsTheLimit",
+      "Name": "RecordOrExtend_KeepsTheLimit",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_KeepsTheLimit",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 410,
+      "EndLine": 421,
+      "Signature": "void RecordOrExtend_KeepsTheLimit()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_NullDocument_Throws",
+      "Name": "RecordOrExtend_NullDocument_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_NullDocument_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 423,
+      "EndLine": 427,
+      "Signature": "void RecordOrExtend_NullDocument_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_SameTypeAgain_ExtendsTheLastStep",
+      "Name": "RecordOrExtend_SameTypeAgain_ExtendsTheLastStep",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_SameTypeAgain_ExtendsTheLastStep",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 340,
+      "EndLine": 358,
+      "Signature": "void RecordOrExtend_SameTypeAgain_ExtendsTheLastStep()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_TheCurrentInstance_DoesNothing",
+      "Name": "RecordOrExtend_TheCurrentInstance_DoesNothing",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.RecordOrExtend_TheCurrentInstance_DoesNothing",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 400,
+      "EndLine": 408,
+      "Signature": "void RecordOrExtend_TheCurrentInstance_DoesNothing()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Record_AfterUndo_DropsTheRedoSteps",
+      "Name": "Record_AfterUndo_DropsTheRedoSteps",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Record_AfterUndo_DropsTheRedoSteps",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 101,
+      "EndLine": 118,
+      "Signature": "void Record_AfterUndo_DropsTheRedoSteps()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Record_AnEqualButDifferentInstance_IsRecorded",
+      "Name": "Record_AnEqualButDifferentInstance_IsRecorded",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Record_AnEqualButDifferentInstance_IsRecorded",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 60,
+      "EndLine": 68,
+      "Signature": "void Record_AnEqualButDifferentInstance_IsRecorded()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Record_NewDocument_BecomesCurrentAndAddsTheStep",
+      "Name": "Record_NewDocument_BecomesCurrentAndAddsTheStep",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Record_NewDocument_BecomesCurrentAndAddsTheStep",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 33,
+      "EndLine": 47,
+      "Signature": "void Record_NewDocument_BecomesCurrentAndAddsTheStep()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Record_OverTheLimit_AfterUndo_KeepsIndexAndStepsConsistent",
+      "Name": "Record_OverTheLimit_AfterUndo_KeepsIndexAndStepsConsistent",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Record_OverTheLimit_AfterUndo_KeepsIndexAndStepsConsistent",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 146,
+      "EndLine": 165,
+      "Signature": "void Record_OverTheLimit_AfterUndo_KeepsIndexAndStepsConsistent()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Record_OverTheLimit_AllowsExactlyTheLimitOfUndosAndDropsTheOldest",
+      "Name": "Record_OverTheLimit_AllowsExactlyTheLimitOfUndosAndDropsTheOldest",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Record_OverTheLimit_AllowsExactlyTheLimitOfUndosAndDropsTheOldest",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 120,
+      "EndLine": 144,
+      "Signature": "void Record_OverTheLimit_AllowsExactlyTheLimitOfUndosAndDropsTheOldest()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Record_TheCurrentInstance_IsNotRecorded",
+      "Name": "Record_TheCurrentInstance_IsNotRecorded",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Record_TheCurrentInstance_IsNotRecorded",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 49,
+      "EndLine": 58,
+      "Signature": "void Record_TheCurrentInstance_IsNotRecorded()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Redo_AfterUndo_ReturnsTheSameInstance",
+      "Name": "Redo_AfterUndo_ReturnsTheSameInstance",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Redo_AfterUndo_ReturnsTheSameInstance",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 89,
+      "EndLine": 99,
+      "Signature": "void Redo_AfterUndo_ReturnsTheSameInstance()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Reset_ForgetsEverything",
+      "Name": "Reset_ForgetsEverything",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Reset_ForgetsEverything",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 217,
+      "EndLine": 231,
+      "Signature": "void Reset_ForgetsEverything()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Start",
+      "Name": "Start",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Start",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 13,
+      "EndLine": 13,
+      "Signature": "Document Start()",
+      "Parameters": [],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.Steps_IsALiveReadOnlyView",
+      "Name": "Steps_IsALiveReadOnlyView",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.Steps_IsALiveReadOnlyView",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 233,
+      "EndLine": 243,
+      "Signature": "void Steps_IsALiveReadOnlyView()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.History.DocumentHistoryTests.UndoAndRedo_WalkBackAndForth",
+      "Name": "UndoAndRedo_WalkBackAndForth",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests.UndoAndRedo_WalkBackAndForth",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 70,
+      "EndLine": 87,
+      "Signature": "void UndoAndRedo_WalkBackAndForth()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "N:PressToShape.Core.Tests.History",
+      "Name": "History",
+      "QualifiedName": "PressToShape.Core.Tests.History",
+      "SymbolType": "Namespace",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.Core.Tests",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 9,
+      "EndLine": 428,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "Name": "DocumentHistoryTests",
+      "QualifiedName": "PressToShape.Core.Tests.History.DocumentHistoryTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests.History",
+      "Namespace": "PressToShape.Core.Tests.History",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/History/DocumentHistoryTests.cs",
+      "StartLine": 11,
+      "EndLine": 428,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,2146 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.Core",
+  "Namespace": "PressToShape.Core.IO",
+  "Symbols": [
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFile.EllipseType",
+      "Name": "EllipseType",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.EllipseType",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 29,
+      "EndLine": 29,
+      "Signature": "string EllipseType",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFile.FormatName",
+      "Name": "FormatName",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.FormatName",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 27,
+      "EndLine": 27,
+      "Signature": "string FormatName",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFile.FormatVersion",
+      "Name": "FormatVersion",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.FormatVersion",
+      "SymbolType": "Field",
+      "Accessibility": "public",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 22,
+      "EndLine": 22,
+      "Signature": "int FormatVersion",
+      "Parameters": [],
+      "TypeName": "int",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The format version this code writes and reads.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFile.MaxBytes",
+      "Name": "MaxBytes",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.MaxBytes",
+      "SymbolType": "Field",
+      "Accessibility": "public",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 25,
+      "EndLine": 25,
+      "Signature": "long MaxBytes",
+      "Parameters": [],
+      "TypeName": "long",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The largest content PressToShape.Core.IO.ProjectFile.Read accepts, in bytes.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFile.Options",
+      "Name": "Options",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.Options",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 31,
+      "EndLine": 38,
+      "Signature": "JsonSerializerOptions Options",
+      "Parameters": [],
+      "TypeName": "JsonSerializerOptions",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFile.RectangleType",
+      "Name": "RectangleType",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.RectangleType",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 28,
+      "EndLine": 28,
+      "Signature": "string RectangleType",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFileError.InvalidValue",
+      "Name": "InvalidValue",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileError.InvalidValue",
+      "SymbolType": "Field",
+      "Accessibility": "public",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileError",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileError.cs",
+      "StartLine": 19,
+      "EndLine": 19,
+      "Signature": "InvalidValue",
+      "Parameters": [],
+      "TypeName": "ProjectFileError",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "A value is not valid for the document model, for example a negative width or a duplicate id.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFileError.NewerVersion",
+      "Name": "NewerVersion",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileError.NewerVersion",
+      "SymbolType": "Field",
+      "Accessibility": "public",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileError",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileError.cs",
+      "StartLine": 10,
+      "EndLine": 10,
+      "Signature": "NewerVersion",
+      "Parameters": [],
+      "TypeName": "ProjectFileError",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The file was written by a newer version of the format than this reader knows.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFileError.NotProjectFile",
+      "Name": "NotProjectFile",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileError.NotProjectFile",
+      "SymbolType": "Field",
+      "Accessibility": "public",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileError",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileError.cs",
+      "StartLine": 7,
+      "EndLine": 7,
+      "Signature": "NotProjectFile",
+      "Parameters": [],
+      "TypeName": "ProjectFileError",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The content is not a PressToShape project file: not JSON, wrong format name or a missing entry.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFileError.TooLarge",
+      "Name": "TooLarge",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileError.TooLarge",
+      "SymbolType": "Field",
+      "Accessibility": "public",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileError",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileError.cs",
+      "StartLine": 13,
+      "EndLine": 13,
+      "Signature": "TooLarge",
+      "Parameters": [],
+      "TypeName": "ProjectFileError",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The content is larger than PressToShape.Core.IO.ProjectFile.MaxBytes.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.ProjectFileError.UnknownShapeType",
+      "Name": "UnknownShapeType",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileError.UnknownShapeType",
+      "SymbolType": "Field",
+      "Accessibility": "public",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileError",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileError.cs",
+      "StartLine": 16,
+      "EndLine": 16,
+      "Signature": "UnknownShapeType",
+      "Parameters": [],
+      "TypeName": "ProjectFileError",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "A shape has a type this version does not know.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.SvgExport.InkscapeNamespace",
+      "Name": "InkscapeNamespace",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport.InkscapeNamespace",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.SvgExport",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 19,
+      "EndLine": 19,
+      "Signature": "string InkscapeNamespace",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.IO.SvgExport.SvgNamespace",
+      "Name": "SvgNamespace",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport.SvgNamespace",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.SvgExport",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 18,
+      "EndLine": 18,
+      "Signature": "string SvgNamespace",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.Build(PressToShape.Core.IO.ProjectFile.FileDto)",
+      "Name": "Build",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.Build",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 97,
+      "EndLine": 141,
+      "Signature": "ProjectFileResult Build(FileDto file)",
+      "Parameters": [
+        {
+          "Name": "file",
+          "Type": "FileDto"
+        }
+      ],
+      "TypeName": "ProjectFileResult",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.BuildShape(PressToShape.Core.IO.ProjectFile.ShapeDto,PressToShape.Core.IO.ProjectFileResult@)",
+      "Name": "BuildShape",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.BuildShape",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 143,
+      "EndLine": 176,
+      "Signature": "Shape? BuildShape(ShapeDto? dto, out ProjectFileResult? failure)",
+      "Parameters": [
+        {
+          "Name": "dto",
+          "Type": "ShapeDto?"
+        },
+        {
+          "Name": "failure",
+          "Type": "ProjectFileResult?"
+        }
+      ],
+      "TypeName": "Shape?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.IsParseFailure(System.Exception)",
+      "Name": "IsParseFailure",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.IsParseFailure",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 94,
+      "EndLine": 95,
+      "Signature": "bool IsParseFailure(Exception ex)",
+      "Parameters": [
+        {
+          "Name": "ex",
+          "Type": "Exception"
+        }
+      ],
+      "TypeName": "bool",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.Read(System.ReadOnlySpan{System.Byte})",
+      "Name": "Read",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.Read",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 57,
+      "EndLine": 92,
+      "Signature": "ProjectFileResult Read(ReadOnlySpan<byte> utf8)",
+      "Parameters": [
+        {
+          "Name": "utf8",
+          "Type": "ReadOnlySpan<byte>"
+        }
+      ],
+      "TypeName": "ProjectFileResult",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Reads a document. Returns an error result for anything that is not a valid project file.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.ReplaceLoneSurrogates(System.String)",
+      "Name": "ReplaceLoneSurrogates",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ReplaceLoneSurrogates",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 208,
+      "EndLine": 224,
+      "Signature": "string ReplaceLoneSurrogates(string text)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.ToDto(PressToShape.Core.Documents.Layer)",
+      "Name": "ToDto",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ToDto",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 178,
+      "EndLine": 185,
+      "Signature": "LayerDto ToDto(Layer layer)",
+      "Parameters": [
+        {
+          "Name": "layer",
+          "Type": "Layer"
+        }
+      ],
+      "TypeName": "LayerDto",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.ToDto(PressToShape.Core.Shapes.Shape)",
+      "Name": "ToDto",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ToDto",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 187,
+      "EndLine": 205,
+      "Signature": "ShapeDto ToDto(Shape shape)",
+      "Parameters": [
+        {
+          "Name": "shape",
+          "Type": "Shape"
+        }
+      ],
+      "TypeName": "ShapeDto",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.ToText(System.Nullable{PressToShape.Core.Shapes.Color})",
+      "Name": "ToText",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ToText",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 226,
+      "EndLine": 227,
+      "Signature": "string? ToText(Color? color)",
+      "Parameters": [
+        {
+          "Name": "color",
+          "Type": "Color?"
+        }
+      ],
+      "TypeName": "string?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.TryParseColor(System.String,System.Nullable{PressToShape.Core.Shapes.Color}@)",
+      "Name": "TryParseColor",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.TryParseColor",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 236,
+      "EndLine": 252,
+      "Signature": "bool TryParseColor(string? text, out Color? color)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string?"
+        },
+        {
+          "Name": "color",
+          "Type": "Color?"
+        }
+      ],
+      "TypeName": "bool",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.TryParseId(System.String,System.Guid@)",
+      "Name": "TryParseId",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.TryParseId",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 229,
+      "EndLine": 233,
+      "Signature": "bool TryParseId(string? text, out Guid id)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string?"
+        },
+        {
+          "Name": "id",
+          "Type": "Guid"
+        }
+      ],
+      "TypeName": "bool",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFile.Write(PressToShape.Core.Documents.Document)",
+      "Name": "Write",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.Write",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 41,
+      "EndLine": 54,
+      "Signature": "byte[] Write(Document document)",
+      "Parameters": [
+        {
+          "Name": "document",
+          "Type": "Document"
+        }
+      ],
+      "TypeName": "byte[]",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Writes the document as UTF-8 JSON without a byte order mark.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFileResult.#ctor(PressToShape.Core.Documents.Document,System.Nullable{PressToShape.Core.IO.ProjectFileError},System.String)",
+      "Name": "ProjectFileResult",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileResult.ProjectFileResult",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileResult",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileResult.cs",
+      "StartLine": 9,
+      "EndLine": 17,
+      "Signature": "ProjectFileResult(Document? Document, ProjectFileError? Error, string? Detail)",
+      "Parameters": [
+        {
+          "Name": "Document",
+          "Type": "Document?"
+        },
+        {
+          "Name": "Error",
+          "Type": "ProjectFileError?"
+        },
+        {
+          "Name": "Detail",
+          "Type": "string?"
+        }
+      ],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The outcome of reading a project file: either a document or an error.",
+        "Params": {
+          "Document": "The document, or null if reading failed.",
+          "Error": "The reason for the failure, or null if reading succeeded.",
+          "Detail": "A technical English hint for logs, for example the entry that was wrong. Not meant to be shown as is."
+        },
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFileResult.Failure(PressToShape.Core.IO.ProjectFileError,System.String)",
+      "Name": "Failure",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileResult.Failure",
+      "SymbolType": "Method",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileResult",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileResult.cs",
+      "StartLine": 16,
+      "EndLine": 16,
+      "Signature": "ProjectFileResult Failure(ProjectFileError error, string detail)",
+      "Parameters": [
+        {
+          "Name": "error",
+          "Type": "ProjectFileError"
+        },
+        {
+          "Name": "detail",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "ProjectFileResult",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.ProjectFileResult.Success(PressToShape.Core.Documents.Document)",
+      "Name": "Success",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileResult.Success",
+      "SymbolType": "Method",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileResult",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileResult.cs",
+      "StartLine": 14,
+      "EndLine": 14,
+      "Signature": "ProjectFileResult Success(Document document)",
+      "Parameters": [
+        {
+          "Name": "document",
+          "Type": "Document"
+        }
+      ],
+      "TypeName": "ProjectFileResult",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.SvgExport.Hex(PressToShape.Core.Shapes.Color)",
+      "Name": "Hex",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport.Hex",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.SvgExport",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 139,
+      "EndLine": 140,
+      "Signature": "string Hex(Color color)",
+      "Parameters": [
+        {
+          "Name": "color",
+          "Type": "Color"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.SvgExport.Number(System.Double)",
+      "Name": "Number",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport.Number",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.SvgExport",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 143,
+      "EndLine": 147,
+      "Signature": "string Number(double value)",
+      "Parameters": [
+        {
+          "Name": "value",
+          "Type": "double"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.SvgExport.ToUtf8(PressToShape.Core.Documents.Document)",
+      "Name": "ToUtf8",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport.ToUtf8",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.SvgExport",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 22,
+      "EndLine": 55,
+      "Signature": "byte[] ToUtf8(Document document)",
+      "Parameters": [
+        {
+          "Name": "document",
+          "Type": "Document"
+        }
+      ],
+      "TypeName": "byte[]",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Writes the document as UTF-8 SVG without a byte order mark.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.SvgExport.WriteAlpha(System.Xml.XmlWriter,System.String,System.Byte)",
+      "Name": "WriteAlpha",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport.WriteAlpha",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.SvgExport",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 131,
+      "EndLine": 137,
+      "Signature": "void WriteAlpha(XmlWriter writer, string name, byte alpha)",
+      "Parameters": [
+        {
+          "Name": "writer",
+          "Type": "XmlWriter"
+        },
+        {
+          "Name": "name",
+          "Type": "string"
+        },
+        {
+          "Name": "alpha",
+          "Type": "byte"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.SvgExport.WriteLayer(System.Xml.XmlWriter,PressToShape.Core.Documents.Layer,System.Int32)",
+      "Name": "WriteLayer",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport.WriteLayer",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.SvgExport",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 57,
+      "EndLine": 75,
+      "Signature": "void WriteLayer(XmlWriter writer, Layer layer, int number)",
+      "Parameters": [
+        {
+          "Name": "writer",
+          "Type": "XmlWriter"
+        },
+        {
+          "Name": "layer",
+          "Type": "Layer"
+        },
+        {
+          "Name": "number",
+          "Type": "int"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.SvgExport.WriteShape(System.Xml.XmlWriter,PressToShape.Core.Shapes.Shape)",
+      "Name": "WriteShape",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport.WriteShape",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.SvgExport",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 77,
+      "EndLine": 129,
+      "Signature": "void WriteShape(XmlWriter writer, Shape shape)",
+      "Parameters": [
+        {
+          "Name": "writer",
+          "Type": "XmlWriter"
+        },
+        {
+          "Name": "shape",
+          "Type": "Shape"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.IO.SvgExport.XmlSafe(System.String)",
+      "Name": "XmlSafe",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport.XmlSafe",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.SvgExport",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 150,
+      "EndLine": 171,
+      "Signature": "string XmlSafe(string text)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "N:PressToShape.Core.IO",
+      "Name": "IO",
+      "QualifiedName": "PressToShape.Core.IO",
+      "SymbolType": "Namespace",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.Core",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 12,
+      "EndLine": 312,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ArtboardDto.Height",
+      "Name": "Height",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ArtboardDto.Height",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ArtboardDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 269,
+      "EndLine": 269,
+      "Signature": "double? Height { get; set; }",
+      "Parameters": [],
+      "TypeName": "double?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"height\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ArtboardDto.Width",
+      "Name": "Width",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ArtboardDto.Width",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ArtboardDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 267,
+      "EndLine": 267,
+      "Signature": "double? Width { get; set; }",
+      "Parameters": [],
+      "TypeName": "double?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"width\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.FileDto.Artboard",
+      "Name": "Artboard",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.FileDto.Artboard",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.FileDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 260,
+      "EndLine": 260,
+      "Signature": "ArtboardDto? Artboard { get; set; }",
+      "Parameters": [],
+      "TypeName": "ArtboardDto?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"artboard\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.FileDto.Format",
+      "Name": "Format",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.FileDto.Format",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.FileDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 256,
+      "EndLine": 256,
+      "Signature": "string? Format { get; set; }",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"format\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.FileDto.Layers",
+      "Name": "Layers",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.FileDto.Layers",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.FileDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 262,
+      "EndLine": 262,
+      "Signature": "List<LayerDto?>? Layers { get; set; }",
+      "Parameters": [],
+      "TypeName": "List<LayerDto?>?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"layers\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.FileDto.Version",
+      "Name": "Version",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.FileDto.Version",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.FileDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 258,
+      "EndLine": 258,
+      "Signature": "int? Version { get; set; }",
+      "Parameters": [],
+      "TypeName": "int?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"version\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.LayerDto.Id",
+      "Name": "Id",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.LayerDto.Id",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.LayerDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 274,
+      "EndLine": 274,
+      "Signature": "string? Id { get; set; }",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"id\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.LayerDto.Locked",
+      "Name": "Locked",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.LayerDto.Locked",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.LayerDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 280,
+      "EndLine": 280,
+      "Signature": "bool? Locked { get; set; }",
+      "Parameters": [],
+      "TypeName": "bool?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"locked\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.LayerDto.Name",
+      "Name": "Name",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.LayerDto.Name",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.LayerDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 276,
+      "EndLine": 276,
+      "Signature": "string? Name { get; set; }",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"name\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.LayerDto.Shapes",
+      "Name": "Shapes",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.LayerDto.Shapes",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.LayerDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 282,
+      "EndLine": 282,
+      "Signature": "List<ShapeDto?>? Shapes { get; set; }",
+      "Parameters": [],
+      "TypeName": "List<ShapeDto?>?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"shapes\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.LayerDto.Visible",
+      "Name": "Visible",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.LayerDto.Visible",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.LayerDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 278,
+      "EndLine": 278,
+      "Signature": "bool? Visible { get; set; }",
+      "Parameters": [],
+      "TypeName": "bool?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"visible\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.Fill",
+      "Name": "Fill",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.Fill",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 299,
+      "EndLine": 299,
+      "Signature": "string? Fill { get; set; }",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"fill\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.Height",
+      "Name": "Height",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.Height",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 297,
+      "EndLine": 297,
+      "Signature": "double? Height { get; set; }",
+      "Parameters": [],
+      "TypeName": "double?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"height\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.Id",
+      "Name": "Id",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.Id",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 289,
+      "EndLine": 289,
+      "Signature": "string? Id { get; set; }",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"id\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.Opacity",
+      "Name": "Opacity",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.Opacity",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 305,
+      "EndLine": 305,
+      "Signature": "double? Opacity { get; set; }",
+      "Parameters": [],
+      "TypeName": "double?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"opacity\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.Rotation",
+      "Name": "Rotation",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.Rotation",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 308,
+      "EndLine": 310,
+      "Signature": "double? Rotation { get; set; }",
+      "Parameters": [],
+      "TypeName": "double?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"rotation\""
+          ]
+        },
+        {
+          "Name": "JsonIgnore",
+          "Arguments": [
+            "Condition = JsonIgnoreCondition.WhenWritingNull"
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.Stroke",
+      "Name": "Stroke",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.Stroke",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 301,
+      "EndLine": 301,
+      "Signature": "string? Stroke { get; set; }",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"stroke\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.StrokeWidth",
+      "Name": "StrokeWidth",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.StrokeWidth",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 303,
+      "EndLine": 303,
+      "Signature": "double? StrokeWidth { get; set; }",
+      "Parameters": [],
+      "TypeName": "double?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"strokeWidth\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.Type",
+      "Name": "Type",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.Type",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 287,
+      "EndLine": 287,
+      "Signature": "string? Type { get; set; }",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"type\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.Width",
+      "Name": "Width",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.Width",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 295,
+      "EndLine": 295,
+      "Signature": "double? Width { get; set; }",
+      "Parameters": [],
+      "TypeName": "double?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"width\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.X",
+      "Name": "X",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.X",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 291,
+      "EndLine": 291,
+      "Signature": "double? X { get; set; }",
+      "Parameters": [],
+      "TypeName": "double?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"x\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFile.ShapeDto.Y",
+      "Name": "Y",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto.Y",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 293,
+      "EndLine": 293,
+      "Signature": "double? Y { get; set; }",
+      "Parameters": [],
+      "TypeName": "double?",
+      "Attributes": [
+        {
+          "Name": "JsonPropertyName",
+          "Arguments": [
+            "\"y\""
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFileResult.Detail",
+      "Name": "Detail",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileResult.Detail",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileResult",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileResult.cs",
+      "StartLine": 9,
+      "EndLine": 9,
+      "Signature": "string? Detail { get; init; }",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "A technical English hint for logs, for example the entry that was wrong. Not meant to be shown as is.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFileResult.Document",
+      "Name": "Document",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileResult.Document",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileResult",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileResult.cs",
+      "StartLine": 9,
+      "EndLine": 9,
+      "Signature": "Document? Document { get; init; }",
+      "Parameters": [],
+      "TypeName": "Document?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The document, or null if reading failed.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFileResult.Error",
+      "Name": "Error",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileResult.Error",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileResult",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileResult.cs",
+      "StartLine": 9,
+      "EndLine": 9,
+      "Signature": "ProjectFileError? Error { get; init; }",
+      "Parameters": [],
+      "TypeName": "ProjectFileError?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The reason for the failure, or null if reading succeeded.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.Core.IO.ProjectFileResult.Succeeded",
+      "Name": "Succeeded",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileResult.Succeeded",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFileResult",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileResult.cs",
+      "StartLine": 12,
+      "EndLine": 12,
+      "Signature": "bool Succeeded { get; }",
+      "Parameters": [],
+      "TypeName": "bool",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Whether a document was read.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.IO.ProjectFile",
+      "Name": "ProjectFile",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.Core.IO",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 19,
+      "EndLine": 312,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "PressToShape's own project format: UTF-8 JSON with a format name and a version number. Reading treats the content as untrusted: it is size-checked, parsed with a depth limit and validated by the document model itself. PressToShape.Core.IO.ProjectFile.Read never throws for bad content, it returns an error.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.IO.ProjectFile.ArtboardDto",
+      "Name": "ArtboardDto",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ArtboardDto",
+      "SymbolType": "Class",
+      "Accessibility": "private",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 265,
+      "EndLine": 270,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.IO.ProjectFile.FileDto",
+      "Name": "FileDto",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.FileDto",
+      "SymbolType": "Class",
+      "Accessibility": "private",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 254,
+      "EndLine": 263,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.IO.ProjectFile.LayerDto",
+      "Name": "LayerDto",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.LayerDto",
+      "SymbolType": "Class",
+      "Accessibility": "private",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 272,
+      "EndLine": 283,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "Name": "ShapeDto",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFile.ShapeDto",
+      "SymbolType": "Class",
+      "Accessibility": "private",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "T:PressToShape.Core.IO.ProjectFile",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFile.cs",
+      "StartLine": 285,
+      "EndLine": 311,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.IO.ProjectFileError",
+      "Name": "ProjectFileError",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileError",
+      "SymbolType": "Enum",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.IO",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileError.cs",
+      "StartLine": 4,
+      "EndLine": 20,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Why a project file could not be read. The app turns each value into a translated message.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.IO.ProjectFileResult",
+      "Name": "ProjectFileResult",
+      "QualifiedName": "PressToShape.Core.IO.ProjectFileResult",
+      "SymbolType": "Record",
+      "Accessibility": "public",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "N:PressToShape.Core.IO",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/ProjectFileResult.cs",
+      "StartLine": 9,
+      "EndLine": 17,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [
+        "IEquatable<ProjectFileResult>"
+      ],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The outcome of reading a project file: either a document or an error.",
+        "Params": {
+          "Document": "The document, or null if reading failed.",
+          "Error": "The reason for the failure, or null if reading succeeded.",
+          "Detail": "A technical English hint for logs, for example the entry that was wrong. Not meant to be shown as is."
+        },
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.IO.SvgExport",
+      "Name": "SvgExport",
+      "QualifiedName": "PressToShape.Core.IO.SvgExport",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.Core.IO",
+      "Namespace": "PressToShape.Core.IO",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/IO/SvgExport.cs",
+      "StartLine": 16,
+      "EndLine": 172,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Exports a document as SVG 1.1. The artboard becomes the viewport, every visible layer one group (marked as an Inkscape layer), and every shape a rect or ellipse. There is no background and the output holds no scripts, links or external references.",
+        "Params": {},
+        "Exceptions": []
+      }
+    }
+  ]
+}

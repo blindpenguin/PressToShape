@@ -1,0 +1,14 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.Desktop",
+  "Relationships": [
+    {
+      "Type": "Calls",
+      "FromId": "M:PressToShape.Desktop.Program.Main(System.String[])",
+      "ToId": "M:PressToShape.Desktop.Program.BuildAvaloniaApp",
+      "File": "src/PressToShape.Desktop/Program.cs",
+      "Line": 13,
+      "Confidence": "Verified"
+    }
+  ]
+}

@@ -1,0 +1,2244 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.App",
+  "Namespace": "PressToShape.App.Localization",
+  "Symbols": [
+    {
+      "Id": "E:PressToShape.App.Localization.ILocalizer.LanguageChanged",
+      "Name": "LanguageChanged",
+      "QualifiedName": "PressToShape.App.Localization.ILocalizer.LanguageChanged",
+      "SymbolType": "Event",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ILocalizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ILocalizer.cs",
+      "StartLine": 28,
+      "EndLine": 28,
+      "Signature": "EventHandler? LanguageChanged",
+      "Parameters": [],
+      "TypeName": "void EventHandler(object? sender, EventArgs e)?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Raised after the language has changed.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "E:PressToShape.App.Localization.Localizer.LanguageChanged",
+      "Name": "LanguageChanged",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.LanguageChanged",
+      "SymbolType": "Event",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 26,
+      "EndLine": 26,
+      "Signature": "EventHandler? LanguageChanged",
+      "Parameters": [],
+      "TypeName": "void EventHandler(object? sender, EventArgs e)?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.EmbeddedCatalogSource.ResourcePrefix",
+      "Name": "ResourcePrefix",
+      "QualifiedName": "PressToShape.App.Localization.EmbeddedCatalogSource.ResourcePrefix",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.EmbeddedCatalogSource",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/EmbeddedCatalogSource.cs",
+      "StartLine": 15,
+      "EndLine": 15,
+      "Signature": "string ResourcePrefix",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.EmbeddedCatalogSource._assembly",
+      "Name": "_assembly",
+      "QualifiedName": "PressToShape.App.Localization.EmbeddedCatalogSource._assembly",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.EmbeddedCatalogSource",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/EmbeddedCatalogSource.cs",
+      "StartLine": 17,
+      "EndLine": 17,
+      "Signature": "Assembly _assembly",
+      "Parameters": [],
+      "TypeName": "Assembly",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.GettextCatalog._catalog",
+      "Name": "_catalog",
+      "QualifiedName": "PressToShape.App.Localization.GettextCatalog._catalog",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.GettextCatalog",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/GettextCatalog.cs",
+      "StartLine": 11,
+      "EndLine": 11,
+      "Signature": "Catalog _catalog",
+      "Parameters": [],
+      "TypeName": "Catalog",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.LanguagePreference._localizer",
+      "Name": "_localizer",
+      "QualifiedName": "PressToShape.App.Localization.LanguagePreference._localizer",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LanguagePreference",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguagePreference.cs",
+      "StartLine": 13,
+      "EndLine": 13,
+      "Signature": "ILocalizer _localizer",
+      "Parameters": [],
+      "TypeName": "ILocalizer",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.LanguagePreference._store",
+      "Name": "_store",
+      "QualifiedName": "PressToShape.App.Localization.LanguagePreference._store",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LanguagePreference",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguagePreference.cs",
+      "StartLine": 12,
+      "EndLine": 12,
+      "Signature": "ISettingsStore _store",
+      "Parameters": [],
+      "TypeName": "ISettingsStore",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.LocalizationHost._localizer",
+      "Name": "_localizer",
+      "QualifiedName": "PressToShape.App.Localization.LocalizationHost._localizer",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizationHost",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizationHost.cs",
+      "StartLine": 11,
+      "EndLine": 11,
+      "Signature": "ILocalizer? _localizer",
+      "Parameters": [],
+      "TypeName": "ILocalizer?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.LocalizedTextObservable.Subscription._dispose",
+      "Name": "_dispose",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable.Subscription._dispose",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizedTextObservable.Subscription",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 36,
+      "EndLine": 36,
+      "Signature": "Action? _dispose",
+      "Parameters": [],
+      "TypeName": "void Action()?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.LocalizedTextObservable._context",
+      "Name": "_context",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable._context",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizedTextObservable",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 12,
+      "EndLine": 12,
+      "Signature": "string? _context",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.LocalizedTextObservable._localizer",
+      "Name": "_localizer",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable._localizer",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizedTextObservable",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 11,
+      "EndLine": 11,
+      "Signature": "ILocalizer _localizer",
+      "Parameters": [],
+      "TypeName": "ILocalizer",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.LocalizedTextObservable._text",
+      "Name": "_text",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable._text",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizedTextObservable",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 13,
+      "EndLine": 13,
+      "Signature": "string _text",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.Localizer._catalog",
+      "Name": "_catalog",
+      "QualifiedName": "PressToShape.App.Localization.Localizer._catalog",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 14,
+      "EndLine": 14,
+      "Signature": "ITranslationCatalog? _catalog",
+      "Parameters": [],
+      "TypeName": "ITranslationCatalog?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.Localizer._source",
+      "Name": "_source",
+      "QualifiedName": "PressToShape.App.Localization.Localizer._source",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 13,
+      "EndLine": 13,
+      "Signature": "ICatalogSource _source",
+      "Parameters": [],
+      "TypeName": "ICatalogSource",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.App.Localization.SupportedLanguages.DefaultCode",
+      "Name": "DefaultCode",
+      "QualifiedName": "PressToShape.App.Localization.SupportedLanguages.DefaultCode",
+      "SymbolType": "Field",
+      "Accessibility": "public",
+      "Modifiers": [
+        "const",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.SupportedLanguages",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/SupportedLanguages.cs",
+      "StartLine": 12,
+      "EndLine": 12,
+      "Signature": "string DefaultCode",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.EmbeddedCatalogSource.#ctor",
+      "Name": "EmbeddedCatalogSource",
+      "QualifiedName": "PressToShape.App.Localization.EmbeddedCatalogSource.EmbeddedCatalogSource",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.EmbeddedCatalogSource",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/EmbeddedCatalogSource.cs",
+      "StartLine": 19,
+      "EndLine": 22,
+      "Signature": "EmbeddedCatalogSource()",
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.EmbeddedCatalogSource.#ctor(System.Reflection.Assembly)",
+      "Name": "EmbeddedCatalogSource",
+      "QualifiedName": "PressToShape.App.Localization.EmbeddedCatalogSource.EmbeddedCatalogSource",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.EmbeddedCatalogSource",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/EmbeddedCatalogSource.cs",
+      "StartLine": 24,
+      "EndLine": 27,
+      "Signature": "EmbeddedCatalogSource(Assembly assembly)",
+      "Parameters": [
+        {
+          "Name": "assembly",
+          "Type": "Assembly"
+        }
+      ],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.EmbeddedCatalogSource.Load(System.String)",
+      "Name": "Load",
+      "QualifiedName": "PressToShape.App.Localization.EmbeddedCatalogSource.Load",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.EmbeddedCatalogSource",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/EmbeddedCatalogSource.cs",
+      "StartLine": 29,
+      "EndLine": 52,
+      "Signature": "ITranslationCatalog? Load(string languageCode)",
+      "Parameters": [
+        {
+          "Name": "languageCode",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "ITranslationCatalog?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.GettextCatalog.#ctor(System.IO.Stream,System.Globalization.CultureInfo)",
+      "Name": "GettextCatalog",
+      "QualifiedName": "PressToShape.App.Localization.GettextCatalog.GettextCatalog",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.GettextCatalog",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/GettextCatalog.cs",
+      "StartLine": 14,
+      "EndLine": 20,
+      "Signature": "GettextCatalog(Stream moStream, CultureInfo culture)",
+      "Parameters": [
+        {
+          "Name": "moStream",
+          "Type": "Stream"
+        },
+        {
+          "Name": "culture",
+          "Type": "CultureInfo"
+        }
+      ],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Reads the catalog from a .mo stream. Throws if the stream is not a valid .mo file.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.GettextCatalog.Translate(System.String)",
+      "Name": "Translate",
+      "QualifiedName": "PressToShape.App.Localization.GettextCatalog.Translate",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.GettextCatalog",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/GettextCatalog.cs",
+      "StartLine": 22,
+      "EndLine": 31,
+      "Signature": "string? Translate(string text)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.GettextCatalog.Translate(System.String,System.String)",
+      "Name": "Translate",
+      "QualifiedName": "PressToShape.App.Localization.GettextCatalog.Translate",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.GettextCatalog",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/GettextCatalog.cs",
+      "StartLine": 33,
+      "EndLine": 41,
+      "Signature": "string? Translate(string context, string text)",
+      "Parameters": [
+        {
+          "Name": "context",
+          "Type": "string"
+        },
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.ICatalogSource.Load(System.String)",
+      "Name": "Load",
+      "QualifiedName": "PressToShape.App.Localization.ICatalogSource.Load",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ICatalogSource",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ICatalogSource.cs",
+      "StartLine": 7,
+      "EndLine": 7,
+      "Signature": "ITranslationCatalog? Load(string languageCode)",
+      "Parameters": [
+        {
+          "Name": "languageCode",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "ITranslationCatalog?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Loads the catalog for a language code such as \"de\". Returns null when there is none.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.ILocalizer.SetLanguage(System.String)",
+      "Name": "SetLanguage",
+      "QualifiedName": "PressToShape.App.Localization.ILocalizer.SetLanguage",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ILocalizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ILocalizer.cs",
+      "StartLine": 25,
+      "EndLine": 25,
+      "Signature": "void SetLanguage(string code)",
+      "Parameters": [
+        {
+          "Name": "code",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Switches the language. Unknown codes and the current language are ignored.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.ILocalizer.T(System.String)",
+      "Name": "T",
+      "QualifiedName": "PressToShape.App.Localization.ILocalizer.T",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ILocalizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ILocalizer.cs",
+      "StartLine": 19,
+      "EndLine": 19,
+      "Signature": "string T(string text)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Translates a text. Returns the English text when there is no translation.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.ILocalizer.TC(System.String,System.String)",
+      "Name": "TC",
+      "QualifiedName": "PressToShape.App.Localization.ILocalizer.TC",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ILocalizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ILocalizer.cs",
+      "StartLine": 22,
+      "EndLine": 22,
+      "Signature": "string TC(string context, string text)",
+      "Parameters": [
+        {
+          "Name": "context",
+          "Type": "string"
+        },
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Translates a text with a message context, for equal texts that need different translations.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.ITranslationCatalog.Translate(System.String)",
+      "Name": "Translate",
+      "QualifiedName": "PressToShape.App.Localization.ITranslationCatalog.Translate",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ITranslationCatalog",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ITranslationCatalog.cs",
+      "StartLine": 6,
+      "EndLine": 6,
+      "Signature": "string? Translate(string text)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.ITranslationCatalog.Translate(System.String,System.String)",
+      "Name": "Translate",
+      "QualifiedName": "PressToShape.App.Localization.ITranslationCatalog.Translate",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ITranslationCatalog",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ITranslationCatalog.cs",
+      "StartLine": 8,
+      "EndLine": 8,
+      "Signature": "string? Translate(string context, string text)",
+      "Parameters": [
+        {
+          "Name": "context",
+          "Type": "string"
+        },
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LanguageInfo.#ctor(System.String,System.String)",
+      "Name": "LanguageInfo",
+      "QualifiedName": "PressToShape.App.Localization.LanguageInfo.LanguageInfo",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LanguageInfo",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguageInfo.cs",
+      "StartLine": 4,
+      "EndLine": 4,
+      "Signature": "LanguageInfo(string Code, string DisplayName)",
+      "Parameters": [
+        {
+          "Name": "Code",
+          "Type": "string"
+        },
+        {
+          "Name": "DisplayName",
+          "Type": "string"
+        }
+      ],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "A language the app can show. The display name is written in the language itself and is not translated.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LanguagePreference.#ctor(PressToShape.App.Settings.ISettingsStore,PressToShape.App.Localization.ILocalizer)",
+      "Name": "LanguagePreference",
+      "QualifiedName": "PressToShape.App.Localization.LanguagePreference.LanguagePreference",
+      "SymbolType": "Constructor",
+      "Accessibility": "private",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LanguagePreference",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguagePreference.cs",
+      "StartLine": 15,
+      "EndLine": 19,
+      "Signature": "LanguagePreference(ISettingsStore store, ILocalizer localizer)",
+      "Parameters": [
+        {
+          "Name": "store",
+          "Type": "ISettingsStore"
+        },
+        {
+          "Name": "localizer",
+          "Type": "ILocalizer"
+        }
+      ],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LanguagePreference.Attach(PressToShape.App.Settings.ISettingsStore,PressToShape.App.Localization.ILocalizer)",
+      "Name": "Attach",
+      "QualifiedName": "PressToShape.App.Localization.LanguagePreference.Attach",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LanguagePreference",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguagePreference.cs",
+      "StartLine": 29,
+      "EndLine": 37,
+      "Signature": "LanguagePreference Attach(ISettingsStore store, ILocalizer localizer)",
+      "Parameters": [
+        {
+          "Name": "store",
+          "Type": "ISettingsStore"
+        },
+        {
+          "Name": "localizer",
+          "Type": "ILocalizer"
+        }
+      ],
+      "TypeName": "LanguagePreference",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Saves the language whenever it changes. Keep the returned object alive for the app's lifetime.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LanguagePreference.ChooseStartLanguage(PressToShape.App.Settings.ISettingsStore,System.Globalization.CultureInfo)",
+      "Name": "ChooseStartLanguage",
+      "QualifiedName": "PressToShape.App.Localization.LanguagePreference.ChooseStartLanguage",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LanguagePreference",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguagePreference.cs",
+      "StartLine": 22,
+      "EndLine": 26,
+      "Signature": "string ChooseStartLanguage(ISettingsStore store, CultureInfo systemUiCulture)",
+      "Parameters": [
+        {
+          "Name": "store",
+          "Type": "ISettingsStore"
+        },
+        {
+          "Name": "systemUiCulture",
+          "Type": "CultureInfo"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The start language: the saved choice, otherwise German for a German system, otherwise English.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LanguagePreference.OnLanguageChanged(System.Object,System.EventArgs)",
+      "Name": "OnLanguageChanged",
+      "QualifiedName": "PressToShape.App.Localization.LanguagePreference.OnLanguageChanged",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LanguagePreference",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguagePreference.cs",
+      "StartLine": 39,
+      "EndLine": 45,
+      "Signature": "void OnLanguageChanged(object? sender, EventArgs e)",
+      "Parameters": [
+        {
+          "Name": "sender",
+          "Type": "object?"
+        },
+        {
+          "Name": "e",
+          "Type": "EventArgs"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LanguageSelector.Choose(System.String,System.Globalization.CultureInfo)",
+      "Name": "Choose",
+      "QualifiedName": "PressToShape.App.Localization.LanguageSelector.Choose",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LanguageSelector",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguageSelector.cs",
+      "StartLine": 9,
+      "EndLine": 24,
+      "Signature": "string Choose(string? savedCode, CultureInfo systemUiCulture)",
+      "Parameters": [
+        {
+          "Name": "savedCode",
+          "Type": "string?"
+        },
+        {
+          "Name": "systemUiCulture",
+          "Type": "CultureInfo"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LocalizationHost.Initialize(PressToShape.App.Localization.ILocalizer)",
+      "Name": "Initialize",
+      "QualifiedName": "PressToShape.App.Localization.LocalizationHost.Initialize",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizationHost",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizationHost.cs",
+      "StartLine": 16,
+      "EndLine": 19,
+      "Signature": "void Initialize(ILocalizer localizer)",
+      "Parameters": [
+        {
+          "Name": "localizer",
+          "Type": "ILocalizer"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LocalizationHost.NoCatalogSource.Load(System.String)",
+      "Name": "Load",
+      "QualifiedName": "PressToShape.App.Localization.LocalizationHost.NoCatalogSource.Load",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizationHost.NoCatalogSource",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizationHost.cs",
+      "StartLine": 23,
+      "EndLine": 23,
+      "Signature": "ITranslationCatalog? Load(string languageCode)",
+      "Parameters": [
+        {
+          "Name": "languageCode",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "ITranslationCatalog?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LocalizedTextObservable.#ctor(PressToShape.App.Localization.ILocalizer,System.String,System.String)",
+      "Name": "LocalizedTextObservable",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable.LocalizedTextObservable",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizedTextObservable",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 15,
+      "EndLine": 20,
+      "Signature": "LocalizedTextObservable(ILocalizer localizer, string? context, string text)",
+      "Parameters": [
+        {
+          "Name": "localizer",
+          "Type": "ILocalizer"
+        },
+        {
+          "Name": "context",
+          "Type": "string?"
+        },
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LocalizedTextObservable.Subscribe(System.IObserver{System.String})",
+      "Name": "Subscribe",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable.Subscribe",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizedTextObservable",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 22,
+      "EndLine": 32,
+      "Signature": "IDisposable Subscribe(IObserver<string> observer)",
+      "Parameters": [
+        {
+          "Name": "observer",
+          "Type": "IObserver<string>"
+        }
+      ],
+      "TypeName": "IDisposable",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LocalizedTextObservable.Subscription.#ctor(System.Action)",
+      "Name": "Subscription",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable.Subscription.Subscription",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizedTextObservable.Subscription",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 38,
+      "EndLine": 38,
+      "Signature": "Subscription(Action dispose)",
+      "Parameters": [
+        {
+          "Name": "dispose",
+          "Type": "void Action()"
+        }
+      ],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.LocalizedTextObservable.Subscription.Dispose",
+      "Name": "Dispose",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable.Subscription.Dispose",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizedTextObservable.Subscription",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 40,
+      "EndLine": 44,
+      "Signature": "void Dispose()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.Localizer.#ctor(PressToShape.App.Localization.ICatalogSource,System.String)",
+      "Name": "Localizer",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.Localizer",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 16,
+      "EndLine": 24,
+      "Signature": "Localizer(ICatalogSource source, string initialLanguage = \"en\")",
+      "Parameters": [
+        {
+          "Name": "source",
+          "Type": "ICatalogSource"
+        },
+        {
+          "Name": "initialLanguage",
+          "Type": "string"
+        }
+      ],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.Localizer.LoadCatalog(System.String)",
+      "Name": "LoadCatalog",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.LoadCatalog",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 67,
+      "EndLine": 68,
+      "Signature": "ITranslationCatalog? LoadCatalog(string code)",
+      "Parameters": [
+        {
+          "Name": "code",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "ITranslationCatalog?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.Localizer.N(System.String)",
+      "Name": "N",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.N",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 38,
+      "EndLine": 38,
+      "Signature": "string N(string text)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Marks a text as translatable without translating it now. Use it in data tables, then translate with PressToShape.App.Localization.Localizer.T when the text is shown. The marker lets the translation checks find the text.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.Localizer.SetLanguage(System.String)",
+      "Name": "SetLanguage",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.SetLanguage",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 53,
+      "EndLine": 65,
+      "Signature": "void SetLanguage(string code)",
+      "Parameters": [
+        {
+          "Name": "code",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.Localizer.T(System.String)",
+      "Name": "T",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.T",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 40,
+      "EndLine": 44,
+      "Signature": "string T(string text)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.Localizer.TC(System.String,System.String)",
+      "Name": "TC",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.TC",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 46,
+      "EndLine": 51,
+      "Signature": "string TC(string context, string text)",
+      "Parameters": [
+        {
+          "Name": "context",
+          "Type": "string"
+        },
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.SupportedLanguages.Find(System.String)",
+      "Name": "Find",
+      "QualifiedName": "PressToShape.App.Localization.SupportedLanguages.Find",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.SupportedLanguages",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/SupportedLanguages.cs",
+      "StartLine": 22,
+      "EndLine": 25,
+      "Signature": "LanguageInfo? Find(string? code)",
+      "Parameters": [
+        {
+          "Name": "code",
+          "Type": "string?"
+        }
+      ],
+      "TypeName": "LanguageInfo?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.SupportedLanguages.IsSupported(System.String)",
+      "Name": "IsSupported",
+      "QualifiedName": "PressToShape.App.Localization.SupportedLanguages.IsSupported",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.SupportedLanguages",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/SupportedLanguages.cs",
+      "StartLine": 20,
+      "EndLine": 20,
+      "Signature": "bool IsSupported(string? code)",
+      "Parameters": [
+        {
+          "Name": "code",
+          "Type": "string?"
+        }
+      ],
+      "TypeName": "bool",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.TExtension.#ctor",
+      "Name": "TExtension",
+      "QualifiedName": "PressToShape.App.Localization.TExtension.TExtension",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.TExtension",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/TExtension.cs",
+      "StartLine": 13,
+      "EndLine": 15,
+      "Signature": "TExtension()",
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.TExtension.#ctor(System.String)",
+      "Name": "TExtension",
+      "QualifiedName": "PressToShape.App.Localization.TExtension.TExtension",
+      "SymbolType": "Constructor",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.TExtension",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/TExtension.cs",
+      "StartLine": 17,
+      "EndLine": 20,
+      "Signature": "TExtension(string text)",
+      "Parameters": [
+        {
+          "Name": "text",
+          "Type": "string"
+        }
+      ],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.App.Localization.TExtension.ProvideValue(System.IServiceProvider)",
+      "Name": "ProvideValue",
+      "QualifiedName": "PressToShape.App.Localization.TExtension.ProvideValue",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "override"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.TExtension",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/TExtension.cs",
+      "StartLine": 28,
+      "EndLine": 32,
+      "Signature": "object ProvideValue(IServiceProvider serviceProvider)",
+      "Parameters": [
+        {
+          "Name": "serviceProvider",
+          "Type": "IServiceProvider"
+        }
+      ],
+      "TypeName": "object",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "N:PressToShape.App.Localization",
+      "Name": "Localization",
+      "QualifiedName": "PressToShape.App.Localization",
+      "SymbolType": "Namespace",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.App",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/EmbeddedCatalogSource.cs",
+      "StartLine": 7,
+      "EndLine": 53,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.ILocalizer.Culture",
+      "Name": "Culture",
+      "QualifiedName": "PressToShape.App.Localization.ILocalizer.Culture",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ILocalizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ILocalizer.cs",
+      "StartLine": 11,
+      "EndLine": 11,
+      "Signature": "CultureInfo Culture { get; }",
+      "Parameters": [],
+      "TypeName": "CultureInfo",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The culture of the current language, used for number formatting.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.ILocalizer.LanguageCode",
+      "Name": "LanguageCode",
+      "QualifiedName": "PressToShape.App.Localization.ILocalizer.LanguageCode",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ILocalizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ILocalizer.cs",
+      "StartLine": 14,
+      "EndLine": 14,
+      "Signature": "string LanguageCode { get; }",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The code of the current language, for example \"en\" or \"de\".",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.ILocalizer.Languages",
+      "Name": "Languages",
+      "QualifiedName": "PressToShape.App.Localization.ILocalizer.Languages",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.ILocalizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ILocalizer.cs",
+      "StartLine": 16,
+      "EndLine": 16,
+      "Signature": "IReadOnlyList<LanguageInfo> Languages { get; }",
+      "Parameters": [],
+      "TypeName": "IReadOnlyList<LanguageInfo>",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.LanguageInfo.Code",
+      "Name": "Code",
+      "QualifiedName": "PressToShape.App.Localization.LanguageInfo.Code",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LanguageInfo",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguageInfo.cs",
+      "StartLine": 4,
+      "EndLine": 4,
+      "Signature": "string Code { get; init; }",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.LanguageInfo.DisplayName",
+      "Name": "DisplayName",
+      "QualifiedName": "PressToShape.App.Localization.LanguageInfo.DisplayName",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.LanguageInfo",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguageInfo.cs",
+      "StartLine": 4,
+      "EndLine": 4,
+      "Signature": "string DisplayName { get; init; }",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.LocalizationHost.Localizer",
+      "Name": "Localizer",
+      "QualifiedName": "PressToShape.App.Localization.LocalizationHost.Localizer",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizationHost",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizationHost.cs",
+      "StartLine": 14,
+      "EndLine": 14,
+      "Signature": "ILocalizer Localizer { get; }",
+      "Parameters": [],
+      "TypeName": "ILocalizer",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The application localizer. Before startup sets it, this is an English localizer without catalogs.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.Localizer.Culture",
+      "Name": "Culture",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.Culture",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 28,
+      "EndLine": 28,
+      "Signature": "CultureInfo Culture { get; private set; }",
+      "Parameters": [],
+      "TypeName": "CultureInfo",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.Localizer.LanguageCode",
+      "Name": "LanguageCode",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.LanguageCode",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 30,
+      "EndLine": 30,
+      "Signature": "string LanguageCode { get; private set; }",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.Localizer.Languages",
+      "Name": "Languages",
+      "QualifiedName": "PressToShape.App.Localization.Localizer.Languages",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.Localizer",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 32,
+      "EndLine": 32,
+      "Signature": "IReadOnlyList<LanguageInfo> Languages { get; }",
+      "Parameters": [],
+      "TypeName": "IReadOnlyList<LanguageInfo>",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.SupportedLanguages.All",
+      "Name": "All",
+      "QualifiedName": "PressToShape.App.Localization.SupportedLanguages.All",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.SupportedLanguages",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/SupportedLanguages.cs",
+      "StartLine": 14,
+      "EndLine": 18,
+      "Signature": "IReadOnlyList<LanguageInfo> All { get; }",
+      "Parameters": [],
+      "TypeName": "IReadOnlyList<LanguageInfo>",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.TExtension.Context",
+      "Name": "Context",
+      "QualifiedName": "PressToShape.App.Localization.TExtension.Context",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.TExtension",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/TExtension.cs",
+      "StartLine": 26,
+      "EndLine": 26,
+      "Signature": "string? Context { get; set; }",
+      "Parameters": [],
+      "TypeName": "string?",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The gettext message context, or null for none.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "P:PressToShape.App.Localization.TExtension.Text",
+      "Name": "Text",
+      "QualifiedName": "PressToShape.App.Localization.TExtension.Text",
+      "SymbolType": "Property",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.App.Localization.TExtension",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/TExtension.cs",
+      "StartLine": 23,
+      "EndLine": 23,
+      "Signature": "string Text { get; set; }",
+      "Parameters": [],
+      "TypeName": "string",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The English source text, used as the message id.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.EmbeddedCatalogSource",
+      "Name": "EmbeddedCatalogSource",
+      "QualifiedName": "PressToShape.App.Localization.EmbeddedCatalogSource",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/EmbeddedCatalogSource.cs",
+      "StartLine": 13,
+      "EndLine": 53,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [
+        "ICatalogSource"
+      ],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Loads the compiled catalog of a language from the embedded resource PressToShape.App.Translations.CODE.mo. Never throws: a missing or unreadable catalog means English.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.GettextCatalog",
+      "Name": "GettextCatalog",
+      "QualifiedName": "PressToShape.App.Localization.GettextCatalog",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/GettextCatalog.cs",
+      "StartLine": 9,
+      "EndLine": 42,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [
+        "ITranslationCatalog"
+      ],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "A translation catalog backed by a compiled gettext .mo file, through GetText.NET.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.ICatalogSource",
+      "Name": "ICatalogSource",
+      "QualifiedName": "PressToShape.App.Localization.ICatalogSource",
+      "SymbolType": "Interface",
+      "Accessibility": "internal",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ICatalogSource.cs",
+      "StartLine": 4,
+      "EndLine": 8,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Finds the translation catalog of a language. English has no catalog, because the source text is English.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.ILocalizer",
+      "Name": "ILocalizer",
+      "QualifiedName": "PressToShape.App.Localization.ILocalizer",
+      "SymbolType": "Interface",
+      "Accessibility": "internal",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ILocalizer.cs",
+      "StartLine": 8,
+      "EndLine": 29,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Translates user-visible texts. The English source text is the message id.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.ITranslationCatalog",
+      "Name": "ITranslationCatalog",
+      "QualifiedName": "PressToShape.App.Localization.ITranslationCatalog",
+      "SymbolType": "Interface",
+      "Accessibility": "internal",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/ITranslationCatalog.cs",
+      "StartLine": 4,
+      "EndLine": 9,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "A set of translations for one language. Returns null when a text has no translation.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.LanguageInfo",
+      "Name": "LanguageInfo",
+      "QualifiedName": "PressToShape.App.Localization.LanguageInfo",
+      "SymbolType": "Record",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguageInfo.cs",
+      "StartLine": 4,
+      "EndLine": 4,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [
+        "IEquatable<LanguageInfo>"
+      ],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "A language the app can show. The display name is written in the language itself and is not translated.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.LanguagePreference",
+      "Name": "LanguagePreference",
+      "QualifiedName": "PressToShape.App.Localization.LanguagePreference",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguagePreference.cs",
+      "StartLine": 10,
+      "EndLine": 46,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Connects the localizer to the settings: it chooses the start language and saves the language when it changes.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.LanguageSelector",
+      "Name": "LanguageSelector",
+      "QualifiedName": "PressToShape.App.Localization.LanguageSelector",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LanguageSelector.cs",
+      "StartLine": 7,
+      "EndLine": 25,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The startup rule for the language: saved choice, then German for a German system, otherwise English.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.LocalizationHost",
+      "Name": "LocalizationHost",
+      "QualifiedName": "PressToShape.App.Localization.LocalizationHost",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizationHost.cs",
+      "StartLine": 9,
+      "EndLine": 25,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Holds the application's localizer for XAML markup extensions, which cannot receive injected services. View models must not use this class: they get an PressToShape.App.Localization.ILocalizer through their constructor.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.LocalizationHost.NoCatalogSource",
+      "Name": "NoCatalogSource",
+      "QualifiedName": "PressToShape.App.Localization.LocalizationHost.NoCatalogSource",
+      "SymbolType": "Class",
+      "Accessibility": "private",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizationHost",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizationHost.cs",
+      "StartLine": 21,
+      "EndLine": 24,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [
+        "ICatalogSource"
+      ],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.LocalizedTextObservable",
+      "Name": "LocalizedTextObservable",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 9,
+      "EndLine": 46,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [
+        "IObservable<string>"
+      ],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "An observable text that emits the current translation when subscribed and again after every language change. It is the source of the bindings created by PressToShape.App.Localization.TExtension.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.LocalizedTextObservable.Subscription",
+      "Name": "Subscription",
+      "QualifiedName": "PressToShape.App.Localization.LocalizedTextObservable.Subscription",
+      "SymbolType": "Class",
+      "Accessibility": "private",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "T:PressToShape.App.Localization.LocalizedTextObservable",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/LocalizedTextObservable.cs",
+      "StartLine": 34,
+      "EndLine": 45,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [
+        "IDisposable"
+      ],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.Localizer",
+      "Name": "Localizer",
+      "QualifiedName": "PressToShape.App.Localization.Localizer",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/Localizer.cs",
+      "StartLine": 11,
+      "EndLine": 69,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [
+        "ILocalizer"
+      ],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Holds the current language and translates texts through the catalog of that language. English has no catalog: the English source text is returned unchanged.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.SupportedLanguages",
+      "Name": "SupportedLanguages",
+      "QualifiedName": "PressToShape.App.Localization.SupportedLanguages",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/SupportedLanguages.cs",
+      "StartLine": 10,
+      "EndLine": 26,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "The languages the app supports. To add a language: add its .po file to Translations/ and one entry here.",
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.App.Localization.TExtension",
+      "Name": "TExtension",
+      "QualifiedName": "PressToShape.App.Localization.TExtension",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "sealed"
+      ],
+      "ContainingId": "N:PressToShape.App.Localization",
+      "Namespace": "PressToShape.App.Localization",
+      "Project": "PressToShape.App",
+      "File": "src/PressToShape.App/Localization/TExtension.cs",
+      "StartLine": 11,
+      "EndLine": 33,
+      "Parameters": [],
+      "Attributes": [],
+      "BaseType": "MarkupExtension",
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "XAML markup extension for translated text: Text=\"{loc:T 'Open'}\". The English text is the message id. The value updates when the language changes. An optional PressToShape.App.Localization.TExtension.Context selects a message context.",
+        "Params": {},
+        "Exceptions": []
+      }
+    }
+  ]
+}

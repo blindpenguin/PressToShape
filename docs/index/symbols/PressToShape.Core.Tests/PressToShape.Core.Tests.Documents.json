@@ -1,0 +1,2667 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.Core.Tests",
+  "Namespace": "PressToShape.Core.Tests.Documents",
+  "Symbols": [
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.LayerA",
+      "Name": "LayerA",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.LayerA",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 12,
+      "EndLine": 12,
+      "Signature": "Guid LayerA",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.LayerB",
+      "Name": "LayerB",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.LayerB",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 13,
+      "EndLine": 13,
+      "Signature": "Guid LayerB",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.S1",
+      "Name": "S1",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.S1",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 14,
+      "EndLine": 14,
+      "Signature": "RectangleShape S1",
+      "Parameters": [],
+      "TypeName": "RectangleShape",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.S2",
+      "Name": "S2",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.S2",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 15,
+      "EndLine": 15,
+      "Signature": "RectangleShape S2",
+      "Parameters": [],
+      "TypeName": "RectangleShape",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.S3",
+      "Name": "S3",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.S3",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 16,
+      "EndLine": 16,
+      "Signature": "RectangleShape S3",
+      "Parameters": [],
+      "TypeName": "RectangleShape",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentHitTestTests.LayerA",
+      "Name": "LayerA",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.LayerA",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 11,
+      "EndLine": 11,
+      "Signature": "Guid LayerA",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentHitTestTests.LayerB",
+      "Name": "LayerB",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.LayerB",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 12,
+      "EndLine": 12,
+      "Signature": "Guid LayerB",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentHitTestTests.Shape1",
+      "Name": "Shape1",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.Shape1",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 13,
+      "EndLine": 13,
+      "Signature": "Guid Shape1",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentHitTestTests.Shape2",
+      "Name": "Shape2",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.Shape2",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 14,
+      "EndLine": 14,
+      "Signature": "Guid Shape2",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentHitTestTests.Shape3",
+      "Name": "Shape3",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.Shape3",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 15,
+      "EndLine": 15,
+      "Signature": "Guid Shape3",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentLayerTests.LayerA",
+      "Name": "LayerA",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.LayerA",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 12,
+      "EndLine": 12,
+      "Signature": "Guid LayerA",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentLayerTests.LayerB",
+      "Name": "LayerB",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.LayerB",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 13,
+      "EndLine": 13,
+      "Signature": "Guid LayerB",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentLayerTests.ShapeA",
+      "Name": "ShapeA",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.ShapeA",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 14,
+      "EndLine": 14,
+      "Signature": "Guid ShapeA",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentShapeTests.LayerA",
+      "Name": "LayerA",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.LayerA",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 12,
+      "EndLine": 12,
+      "Signature": "Guid LayerA",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentShapeTests.LayerB",
+      "Name": "LayerB",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.LayerB",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 13,
+      "EndLine": 13,
+      "Signature": "Guid LayerB",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentShapeTests.Shape1",
+      "Name": "Shape1",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.Shape1",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 14,
+      "EndLine": 14,
+      "Signature": "Guid Shape1",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentShapeTests.Shape2",
+      "Name": "Shape2",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.Shape2",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 15,
+      "EndLine": 15,
+      "Signature": "Guid Shape2",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "F:PressToShape.Core.Tests.Documents.DocumentShapeTests.Shape3",
+      "Name": "Shape3",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.Shape3",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 16,
+      "EndLine": 16,
+      "Signature": "Guid Shape3",
+      "Parameters": [],
+      "TypeName": "Guid",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.AddShapes_AddsOnTopInOrder_AndRejectsDuplicateIdsAndUnknownLayers",
+      "Name": "AddShapes_AddsOnTopInOrder_AndRejectsDuplicateIdsAndUnknownLayers",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.AddShapes_AddsOnTopInOrder_AndRejectsDuplicateIdsAndUnknownLayers",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 75,
+      "EndLine": 88,
+      "Signature": "void AddShapes_AddsOnTopInOrder_AndRejectsDuplicateIdsAndUnknownLayers()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.Doc",
+      "Name": "Doc",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.Doc",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 18,
+      "EndLine": 20,
+      "Signature": "Document Doc()",
+      "Parameters": [],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.Order(PressToShape.Core.Documents.Document)",
+      "Name": "Order",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.Order",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 22,
+      "EndLine": 22,
+      "Signature": "IEnumerable<Guid> Order(Document d)",
+      "Parameters": [
+        {
+          "Name": "d",
+          "Type": "Document"
+        }
+      ],
+      "TypeName": "IEnumerable<Guid>",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.RemoveShapes_EmptyAndUnknown",
+      "Name": "RemoveShapes_EmptyAndUnknown",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.RemoveShapes_EmptyAndUnknown",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 66,
+      "EndLine": 73,
+      "Signature": "void RemoveShapes_EmptyAndUnknown()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.RemoveShapes_RemovesSeveral_AcrossLayers",
+      "Name": "RemoveShapes_RemovesSeveral_AcrossLayers",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.RemoveShapes_RemovesSeveral_AcrossLayers",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 57,
+      "EndLine": 64,
+      "Signature": "void RemoveShapes_RemovesSeveral_AcrossLayers()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.UpdateShapes_NothingToReplace_ReturnsTheSameDocument_AndSharesUnchangedLayers",
+      "Name": "UpdateShapes_NothingToReplace_ReturnsTheSameDocument_AndSharesUnchangedLayers",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.UpdateShapes_NothingToReplace_ReturnsTheSameDocument_AndSharesUnchangedLayers",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 37,
+      "EndLine": 45,
+      "Signature": "void UpdateShapes_NothingToReplace_ReturnsTheSameDocument_AndSharesUnchangedLayers()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.UpdateShapes_ReplacesSeveralShapes_KeepingTheirPlaces",
+      "Name": "UpdateShapes_ReplacesSeveralShapes_KeepingTheirPlaces",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.UpdateShapes_ReplacesSeveralShapes_KeepingTheirPlaces",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 24,
+      "EndLine": 35,
+      "Signature": "void UpdateShapes_ReplacesSeveralShapes_KeepingTheirPlaces()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.UpdateShapes_UnknownIdOrWrongId_Throws",
+      "Name": "UpdateShapes_UnknownIdOrWrongId_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests.UpdateShapes_UnknownIdOrWrongId_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 47,
+      "EndLine": 55,
+      "Signature": "void UpdateShapes_UnknownIdOrWrongId_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_EllipseBoundingBoxCorner_Misses",
+      "Name": "HitTest_EllipseBoundingBoxCorner_Misses",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_EllipseBoundingBoxCorner_Misses",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 99,
+      "EndLine": 105,
+      "Signature": "void HitTest_EllipseBoundingBoxCorner_Misses()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_HiddenLayer_IsSkipped",
+      "Name": "HitTest_HiddenLayer_IsSkipped",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_HiddenLayer_IsSkipped",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 56,
+      "EndLine": 67,
+      "Signature": "void HitTest_HiddenLayer_IsSkipped()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_LockedLayer_IsIncluded",
+      "Name": "HitTest_LockedLayer_IsIncluded",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_LockedLayer_IsIncluded",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 69,
+      "EndLine": 77,
+      "Signature": "void HitTest_LockedLayer_IsIncluded()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_Miss_ReturnsEmptyListNotNull",
+      "Name": "HitTest_Miss_ReturnsEmptyListNotNull",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_Miss_ReturnsEmptyListNotNull",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 79,
+      "EndLine": 88,
+      "Signature": "void HitTest_Miss_ReturnsEmptyListNotNull()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_OverlappingShapesInOneLayer_ReturnsTopmostFirst",
+      "Name": "HitTest_OverlappingShapesInOneLayer_ReturnsTopmostFirst",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_OverlappingShapesInOneLayer_ReturnsTopmostFirst",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 22,
+      "EndLine": 30,
+      "Signature": "void HitTest_OverlappingShapesInOneLayer_ReturnsTopmostFirst()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_PointOnRectangleEdge_Hits",
+      "Name": "HitTest_PointOnRectangleEdge_Hits",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_PointOnRectangleEdge_Hits",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 90,
+      "EndLine": 97,
+      "Signature": "void HitTest_PointOnRectangleEdge_Hits()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_RectangleAndEllipse_EachUsesItsOwnGeometry",
+      "Name": "HitTest_RectangleAndEllipse_EachUsesItsOwnGeometry",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_RectangleAndEllipse_EachUsesItsOwnGeometry",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 45,
+      "EndLine": 54,
+      "Signature": "void HitTest_RectangleAndEllipse_EachUsesItsOwnGeometry()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_ShapesInTwoLayers_UpperLayerComesBeforeLowerLayer",
+      "Name": "HitTest_ShapesInTwoLayers_UpperLayerComesBeforeLowerLayer",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_ShapesInTwoLayers_UpperLayerComesBeforeLowerLayer",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 32,
+      "EndLine": 43,
+      "Signature": "void HitTest_ShapesInTwoLayers_UpperLayerComesBeforeLowerLayer()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_StrokeWidth_IsIgnored",
+      "Name": "HitTest_StrokeWidth_IsIgnored",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.HitTest_StrokeWidth_IsIgnored",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 107,
+      "EndLine": 114,
+      "Signature": "void HitTest_StrokeWidth_IsIgnored()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.Rect(System.Guid)",
+      "Name": "Rect",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.Rect",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 20,
+      "EndLine": 20,
+      "Signature": "RectangleShape Rect(Guid id)",
+      "Parameters": [
+        {
+          "Name": "id",
+          "Type": "Guid"
+        }
+      ],
+      "TypeName": "RectangleShape",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentHitTestTests.TwoLayers",
+      "Name": "TwoLayers",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests.TwoLayers",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 17,
+      "EndLine": 18,
+      "Signature": "Document TwoLayers()",
+      "Parameters": [],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.AddLayer_DuplicateId_ThrowsAndLeavesDocumentUnchanged",
+      "Name": "AddLayer_DuplicateId_ThrowsAndLeavesDocumentUnchanged",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.AddLayer_DuplicateId_ThrowsAndLeavesDocumentUnchanged",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 108,
+      "EndLine": 116,
+      "Signature": "void AddLayer_DuplicateId_ThrowsAndLeavesDocumentUnchanged()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.AddLayer_NewLayer_IsPlacedOnTopAndOriginalStaysUnchanged",
+      "Name": "AddLayer_NewLayer_IsPlacedOnTopAndOriginalStaysUnchanged",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.AddLayer_NewLayer_IsPlacedOnTopAndOriginalStaysUnchanged",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 86,
+      "EndLine": 96,
+      "Signature": "void AddLayer_NewLayer_IsPlacedOnTopAndOriginalStaysUnchanged()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.AddLayer_NewLayer_SharesExistingLayerInstances",
+      "Name": "AddLayer_NewLayer_SharesExistingLayerInstances",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.AddLayer_NewLayer_SharesExistingLayerInstances",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 98,
+      "EndLine": 106,
+      "Signature": "void AddLayer_NewLayer_SharesExistingLayerInstances()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.AddLayer_Null_Throws",
+      "Name": "AddLayer_Null_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.AddLayer_Null_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 118,
+      "EndLine": 122,
+      "Signature": "void AddLayer_Null_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.Create_FirstLayerName_Has1200By800AndOneVisibleUnlockedLayer",
+      "Name": "Create_FirstLayerName_Has1200By800AndOneVisibleUnlockedLayer",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.Create_FirstLayerName_Has1200By800AndOneVisibleUnlockedLayer",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 22,
+      "EndLine": 33,
+      "Signature": "void Create_FirstLayerName_Has1200By800AndOneVisibleUnlockedLayer()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.Create_NullName_Throws",
+      "Name": "Create_NullName_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.Create_NullName_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 35,
+      "EndLine": 39,
+      "Signature": "void Create_NullName_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.Layers_EmptyOrDefault_Throws",
+      "Name": "Layers_EmptyOrDefault_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.Layers_EmptyOrDefault_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 77,
+      "EndLine": 84,
+      "Signature": "void Layers_EmptyOrDefault_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.RemoveLayer_ExistingLayer_RemovesItAndKeepsTheOrderOfTheOthers",
+      "Name": "RemoveLayer_ExistingLayer_RemovesItAndKeepsTheOrderOfTheOthers",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.RemoveLayer_ExistingLayer_RemovesItAndKeepsTheOrderOfTheOthers",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 124,
+      "EndLine": 133,
+      "Signature": "void RemoveLayer_ExistingLayer_RemovesItAndKeepsTheOrderOfTheOthers()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.RemoveLayer_LastLayer_Throws",
+      "Name": "RemoveLayer_LastLayer_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.RemoveLayer_LastLayer_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 152,
+      "EndLine": 158,
+      "Signature": "void RemoveLayer_LastLayer_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.RemoveLayer_LayerWithShapes_RemovesItsShapes",
+      "Name": "RemoveLayer_LayerWithShapes_RemovesItsShapes",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.RemoveLayer_LayerWithShapes_RemovesItsShapes",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 135,
+      "EndLine": 150,
+      "Signature": "void RemoveLayer_LayerWithShapes_RemovesItsShapes()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.RemoveLayer_UnknownId_Throws",
+      "Name": "RemoveLayer_UnknownId_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.RemoveLayer_UnknownId_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 160,
+      "EndLine": 164,
+      "Signature": "void RemoveLayer_UnknownId_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.TwoLayers",
+      "Name": "TwoLayers",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.TwoLayers",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 16,
+      "EndLine": 20,
+      "Signature": "Document TwoLayers()",
+      "Parameters": [],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_ChangeReturnsNull_Throws",
+      "Name": "UpdateLayer_ChangeReturnsNull_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_ChangeReturnsNull_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 194,
+      "EndLine": 198,
+      "Signature": "void UpdateLayer_ChangeReturnsNull_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_ChangeReturnsOtherId_Throws",
+      "Name": "UpdateLayer_ChangeReturnsOtherId_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_ChangeReturnsOtherId_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 188,
+      "EndLine": 192,
+      "Signature": "void UpdateLayer_ChangeReturnsOtherId_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_NameVisibilityAndLock_ChangesOnlyThatLayer",
+      "Name": "UpdateLayer_NameVisibilityAndLock_ChangesOnlyThatLayer",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_NameVisibilityAndLock_ChangesOnlyThatLayer",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 166,
+      "EndLine": 180,
+      "Signature": "void UpdateLayer_NameVisibilityAndLock_ChangesOnlyThatLayer()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_NullChange_Throws",
+      "Name": "UpdateLayer_NullChange_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_NullChange_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 200,
+      "EndLine": 204,
+      "Signature": "void UpdateLayer_NullChange_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_UnknownId_Throws",
+      "Name": "UpdateLayer_UnknownId_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.UpdateLayer_UnknownId_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 182,
+      "EndLine": 186,
+      "Signature": "void UpdateLayer_UnknownId_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.WithArtboardSize_InvalidHeight_Throws(System.Double,System.Double)",
+      "Name": "WithArtboardSize_InvalidHeight_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.WithArtboardSize_InvalidHeight_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 53,
+      "EndLine": 63,
+      "Signature": "void WithArtboardSize_InvalidHeight_Throws(double width, double height)",
+      "Parameters": [
+        {
+          "Name": "width",
+          "Type": "double"
+        },
+        {
+          "Name": "height",
+          "Type": "double"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "100",
+            "0"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "100",
+            "-1"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "100",
+            "double.NaN"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "100",
+            "double.NegativeInfinity"
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.WithArtboardSize_InvalidWidth_Throws(System.Double,System.Double)",
+      "Name": "WithArtboardSize_InvalidWidth_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.WithArtboardSize_InvalidWidth_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 41,
+      "EndLine": 51,
+      "Signature": "void WithArtboardSize_InvalidWidth_Throws(double width, double height)",
+      "Parameters": [
+        {
+          "Name": "width",
+          "Type": "double"
+        },
+        {
+          "Name": "height",
+          "Type": "double"
+        }
+      ],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Theory",
+          "Arguments": []
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "0",
+            "100"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "-1",
+            "100"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "double.NaN",
+            "100"
+          ]
+        },
+        {
+          "Name": "InlineData",
+          "Arguments": [
+            "double.PositiveInfinity",
+            "100"
+          ]
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentLayerTests.WithArtboardSize_Valid_ReturnsNewDocumentAndKeepsOriginal",
+      "Name": "WithArtboardSize_Valid_ReturnsNewDocumentAndKeepsOriginal",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests.WithArtboardSize_Valid_ReturnsNewDocumentAndKeepsOriginal",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 65,
+      "EndLine": 75,
+      "Signature": "void WithArtboardSize_Valid_ReturnsNewDocumentAndKeepsOriginal()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_DuplicateIdInOtherLayer_ThrowsAndLeavesDocumentUnchanged",
+      "Name": "AddShape_DuplicateIdInOtherLayer_ThrowsAndLeavesDocumentUnchanged",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_DuplicateIdInOtherLayer_ThrowsAndLeavesDocumentUnchanged",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 45,
+      "EndLine": 53,
+      "Signature": "void AddShape_DuplicateIdInOtherLayer_ThrowsAndLeavesDocumentUnchanged()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_Null_Throws",
+      "Name": "AddShape_Null_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_Null_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 61,
+      "EndLine": 65,
+      "Signature": "void AddShape_Null_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_Shape_LeavesOriginalUnchangedAndSharesOtherLayers",
+      "Name": "AddShape_Shape_LeavesOriginalUnchangedAndSharesOtherLayers",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_Shape_LeavesOriginalUnchangedAndSharesOtherLayers",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 33,
+      "EndLine": 43,
+      "Signature": "void AddShape_Shape_LeavesOriginalUnchangedAndSharesOtherLayers()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_TwoShapes_AreStackedBottomFirstInTheRightLayer",
+      "Name": "AddShape_TwoShapes_AreStackedBottomFirstInTheRightLayer",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_TwoShapes_AreStackedBottomFirstInTheRightLayer",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 21,
+      "EndLine": 31,
+      "Signature": "void AddShape_TwoShapes_AreStackedBottomFirstInTheRightLayer()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_UnknownLayer_Throws",
+      "Name": "AddShape_UnknownLayer_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.AddShape_UnknownLayer_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 55,
+      "EndLine": 59,
+      "Signature": "void AddShape_UnknownLayer_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.FindShape_AfterRemove_ReturnsNull",
+      "Name": "FindShape_AfterRemove_ReturnsNull",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.FindShape_AfterRemove_ReturnsNull",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 161,
+      "EndLine": 167,
+      "Signature": "void FindShape_AfterRemove_ReturnsNull()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.FindShape_ExistingShape_ReturnsShapeAndItsLayer",
+      "Name": "FindShape_ExistingShape_ReturnsShapeAndItsLayer",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.FindShape_ExistingShape_ReturnsShapeAndItsLayer",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 142,
+      "EndLine": 153,
+      "Signature": "void FindShape_ExistingShape_ReturnsShapeAndItsLayer()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.FindShape_UnknownId_ReturnsNullWithoutThrowing",
+      "Name": "FindShape_UnknownId_ReturnsNullWithoutThrowing",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.FindShape_UnknownId_ReturnsNullWithoutThrowing",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 155,
+      "EndLine": 159,
+      "Signature": "void FindShape_UnknownId_ReturnsNullWithoutThrowing()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.RemoveShape_ExistingShape_RemovesOnlyThatShape",
+      "Name": "RemoveShape_ExistingShape_RemovesOnlyThatShape",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.RemoveShape_ExistingShape_RemovesOnlyThatShape",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 123,
+      "EndLine": 134,
+      "Signature": "void RemoveShape_ExistingShape_RemovesOnlyThatShape()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.RemoveShape_UnknownId_Throws",
+      "Name": "RemoveShape_UnknownId_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.RemoveShape_UnknownId_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 136,
+      "EndLine": 140,
+      "Signature": "void RemoveShape_UnknownId_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.TwoLayers",
+      "Name": "TwoLayers",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.TwoLayers",
+      "SymbolType": "Method",
+      "Accessibility": "private",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 18,
+      "EndLine": 19,
+      "Signature": "Document TwoLayers()",
+      "Parameters": [],
+      "TypeName": "Document",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_ChangeReturnsNull_Throws",
+      "Name": "UpdateShape_ChangeReturnsNull_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_ChangeReturnsNull_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 107,
+      "EndLine": 113,
+      "Signature": "void UpdateShape_ChangeReturnsNull_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_ChangeReturnsOtherId_Throws",
+      "Name": "UpdateShape_ChangeReturnsOtherId_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_ChangeReturnsOtherId_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 99,
+      "EndLine": 105,
+      "Signature": "void UpdateShape_ChangeReturnsOtherId_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_ChangeToOtherShapeType_IsAllowedWithSameId",
+      "Name": "UpdateShape_ChangeToOtherShapeType_IsAllowedWithSameId",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_ChangeToOtherShapeType_IsAllowedWithSameId",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 83,
+      "EndLine": 91,
+      "Signature": "void UpdateShape_ChangeToOtherShapeType_IsAllowedWithSameId()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_GeometryAndAppearance_ReplacesShapeAndKeepsItsPlace",
+      "Name": "UpdateShape_GeometryAndAppearance_ReplacesShapeAndKeepsItsPlace",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_GeometryAndAppearance_ReplacesShapeAndKeepsItsPlace",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 67,
+      "EndLine": 81,
+      "Signature": "void UpdateShape_GeometryAndAppearance_ReplacesShapeAndKeepsItsPlace()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_NullChange_Throws",
+      "Name": "UpdateShape_NullChange_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_NullChange_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 115,
+      "EndLine": 121,
+      "Signature": "void UpdateShape_NullChange_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_UnknownId_Throws",
+      "Name": "UpdateShape_UnknownId_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests.UpdateShape_UnknownId_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 93,
+      "EndLine": 97,
+      "Signature": "void UpdateShape_UnknownId_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.LayerTests.Constructor_Defaults_VisibleUnlockedAndEmpty",
+      "Name": "Constructor_Defaults_VisibleUnlockedAndEmpty",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests.Constructor_Defaults_VisibleUnlockedAndEmpty",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 11,
+      "EndLine": 20,
+      "Signature": "void Constructor_Defaults_VisibleUnlockedAndEmpty()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.LayerTests.Constructor_NoId_GetsNonEmptyUniqueIds",
+      "Name": "Constructor_NoId_GetsNonEmptyUniqueIds",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests.Constructor_NoId_GetsNonEmptyUniqueIds",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 22,
+      "EndLine": 30,
+      "Signature": "void Constructor_NoId_GetsNonEmptyUniqueIds()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.LayerTests.Id_Empty_Throws",
+      "Name": "Id_Empty_Throws",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests.Id_Empty_Throws",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 45,
+      "EndLine": 49,
+      "Signature": "void Id_Empty_Throws()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.LayerTests.Name_EmptyString_IsAllowed",
+      "Name": "Name_EmptyString_IsAllowed",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests.Name_EmptyString_IsAllowed",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 32,
+      "EndLine": 36,
+      "Signature": "void Name_EmptyString_IsAllowed()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.LayerTests.Name_Null_ThrowsOnCreationAndWith",
+      "Name": "Name_Null_ThrowsOnCreationAndWith",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests.Name_Null_ThrowsOnCreationAndWith",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 38,
+      "EndLine": 43,
+      "Signature": "void Name_Null_ThrowsOnCreationAndWith()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.LayerTests.ShapeLocation_LayerAndShape_AreKept",
+      "Name": "ShapeLocation_LayerAndShape_AreKept",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests.ShapeLocation_LayerAndShape_AreKept",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 87,
+      "EndLine": 97,
+      "Signature": "void ShapeLocation_LayerAndShape_AreKept()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.LayerTests.Shapes_DefaultArray_BecomesEmpty",
+      "Name": "Shapes_DefaultArray_BecomesEmpty",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests.Shapes_DefaultArray_BecomesEmpty",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 51,
+      "EndLine": 58,
+      "Signature": "void Shapes_DefaultArray_BecomesEmpty()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.LayerTests.With_NameVisibilityAndLock_ChangesCopyAndLeavesOriginalUnchanged",
+      "Name": "With_NameVisibilityAndLock_ChangesCopyAndLeavesOriginalUnchanged",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests.With_NameVisibilityAndLock_ChangesCopyAndLeavesOriginalUnchanged",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 60,
+      "EndLine": 74,
+      "Signature": "void With_NameVisibilityAndLock_ChangesCopyAndLeavesOriginalUnchanged()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.Documents.LayerTests.With_Shapes_KeepsGivenShapesInOrder",
+      "Name": "With_Shapes_KeepsGivenShapesInOrder",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests.With_Shapes_KeepsGivenShapesInOrder",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 76,
+      "EndLine": 85,
+      "Signature": "void With_Shapes_KeepsGivenShapesInOrder()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "N:PressToShape.Core.Tests.Documents",
+      "Name": "Documents",
+      "QualifiedName": "PressToShape.Core.Tests.Documents",
+      "SymbolType": "Namespace",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.Core.Tests",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 8,
+      "EndLine": 89,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "Name": "DocumentBatchShapeTests",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentBatchShapeTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests.Documents",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentBatchShapeTests.cs",
+      "StartLine": 10,
+      "EndLine": 89,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "Name": "DocumentHitTestTests",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentHitTestTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests.Documents",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentHitTestTests.cs",
+      "StartLine": 9,
+      "EndLine": 115,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "Name": "DocumentLayerTests",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentLayerTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests.Documents",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentLayerTests.cs",
+      "StartLine": 10,
+      "EndLine": 205,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "Name": "DocumentShapeTests",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.DocumentShapeTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests.Documents",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/DocumentShapeTests.cs",
+      "StartLine": 10,
+      "EndLine": 168,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.Documents.LayerTests",
+      "Name": "LayerTests",
+      "QualifiedName": "PressToShape.Core.Tests.Documents.LayerTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests.Documents",
+      "Namespace": "PressToShape.Core.Tests.Documents",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/Documents/LayerTests.cs",
+      "StartLine": 9,
+      "EndLine": 98,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    }
+  ]
+}

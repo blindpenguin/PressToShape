@@ -1,0 +1,210 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.Core",
+  "Namespace": "PressToShape.Core",
+  "Symbols": [
+    {
+      "Id": "M:PressToShape.Core.Guard.Finite(System.Double,System.String)",
+      "Name": "Finite",
+      "QualifiedName": "PressToShape.Core.Guard.Finite",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Guard",
+      "Namespace": "PressToShape.Core",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/Guard.cs",
+      "StartLine": 8,
+      "EndLine": 16,
+      "Signature": "double Finite(double value, string name)",
+      "Parameters": [
+        {
+          "Name": "value",
+          "Type": "double"
+        },
+        {
+          "Name": "name",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "double",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Guard.FiniteInRange(System.Double,System.Double,System.Double,System.String)",
+      "Name": "FiniteInRange",
+      "QualifiedName": "PressToShape.Core.Guard.FiniteInRange",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Guard",
+      "Namespace": "PressToShape.Core",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/Guard.cs",
+      "StartLine": 38,
+      "EndLine": 46,
+      "Signature": "double FiniteInRange(double value, double min, double max, string name)",
+      "Parameters": [
+        {
+          "Name": "value",
+          "Type": "double"
+        },
+        {
+          "Name": "min",
+          "Type": "double"
+        },
+        {
+          "Name": "max",
+          "Type": "double"
+        },
+        {
+          "Name": "name",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "double",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Guard.FiniteNonNegative(System.Double,System.String)",
+      "Name": "FiniteNonNegative",
+      "QualifiedName": "PressToShape.Core.Guard.FiniteNonNegative",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Guard",
+      "Namespace": "PressToShape.Core",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/Guard.cs",
+      "StartLine": 18,
+      "EndLine": 26,
+      "Signature": "double FiniteNonNegative(double value, string name)",
+      "Parameters": [
+        {
+          "Name": "value",
+          "Type": "double"
+        },
+        {
+          "Name": "name",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "double",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Guard.FinitePositive(System.Double,System.String)",
+      "Name": "FinitePositive",
+      "QualifiedName": "PressToShape.Core.Guard.FinitePositive",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Guard",
+      "Namespace": "PressToShape.Core",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/Guard.cs",
+      "StartLine": 28,
+      "EndLine": 36,
+      "Signature": "double FinitePositive(double value, string name)",
+      "Parameters": [
+        {
+          "Name": "value",
+          "Type": "double"
+        },
+        {
+          "Name": "name",
+          "Type": "string"
+        }
+      ],
+      "TypeName": "double",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "N:PressToShape.Core",
+      "Name": "Core",
+      "QualifiedName": "PressToShape.Core",
+      "SymbolType": "Namespace",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape",
+      "Namespace": "PressToShape.Core",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/Documents/Document.cs",
+      "StartLine": 7,
+      "EndLine": 7,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Guard",
+      "Name": "Guard",
+      "QualifiedName": "PressToShape.Core.Guard",
+      "SymbolType": "Class",
+      "Accessibility": "internal",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.Core",
+      "Namespace": "PressToShape.Core",
+      "Project": "PressToShape.Core",
+      "File": "src/PressToShape.Core/Guard.cs",
+      "StartLine": 6,
+      "EndLine": 47,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": true,
+        "Summary": "Argument checks shared by the document model, so every type reports invalid values the same way.",
+        "Params": {},
+        "Exceptions": []
+      }
+    }
+  ]
+}

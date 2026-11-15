@@ -1,0 +1,173 @@
+{
+  "SchemaVersion": 1,
+  "Project": "PressToShape.Core.Tests",
+  "Namespace": "PressToShape.Core.Tests",
+  "Symbols": [
+    {
+      "Id": "F:PressToShape.Core.Tests.CoreArchitectureTests.CoreAssembly",
+      "Name": "CoreAssembly",
+      "QualifiedName": "PressToShape.Core.Tests.CoreArchitectureTests.CoreAssembly",
+      "SymbolType": "Field",
+      "Accessibility": "private",
+      "Modifiers": [
+        "readonly",
+        "static"
+      ],
+      "ContainingId": "T:PressToShape.Core.Tests.CoreArchitectureTests",
+      "Namespace": "PressToShape.Core.Tests",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/CoreArchitectureTests.cs",
+      "StartLine": 9,
+      "EndLine": 9,
+      "Signature": "Assembly CoreAssembly",
+      "Parameters": [],
+      "TypeName": "Assembly",
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.CoreArchitectureTests.CoreAssembly_IsLoadable",
+      "Name": "CoreAssembly_IsLoadable",
+      "QualifiedName": "PressToShape.Core.Tests.CoreArchitectureTests.CoreAssembly_IsLoadable",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.CoreArchitectureTests",
+      "Namespace": "PressToShape.Core.Tests",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/CoreArchitectureTests.cs",
+      "StartLine": 11,
+      "EndLine": 15,
+      "Signature": "void CoreAssembly_IsLoadable()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.CoreArchitectureTests.Core_References_NoAvaloniaAssembly",
+      "Name": "Core_References_NoAvaloniaAssembly",
+      "QualifiedName": "PressToShape.Core.Tests.CoreArchitectureTests.Core_References_NoAvaloniaAssembly",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.CoreArchitectureTests",
+      "Namespace": "PressToShape.Core.Tests",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/CoreArchitectureTests.cs",
+      "StartLine": 17,
+      "EndLine": 26,
+      "Signature": "void Core_References_NoAvaloniaAssembly()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "M:PressToShape.Core.Tests.CoreArchitectureTests.Core_References_NoOtherSolutionProject",
+      "Name": "Core_References_NoOtherSolutionProject",
+      "QualifiedName": "PressToShape.Core.Tests.CoreArchitectureTests.Core_References_NoOtherSolutionProject",
+      "SymbolType": "Method",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "T:PressToShape.Core.Tests.CoreArchitectureTests",
+      "Namespace": "PressToShape.Core.Tests",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/CoreArchitectureTests.cs",
+      "StartLine": 28,
+      "EndLine": 37,
+      "Signature": "void Core_References_NoOtherSolutionProject()",
+      "Parameters": [],
+      "TypeName": "void",
+      "Attributes": [
+        {
+          "Name": "Fact",
+          "Arguments": []
+        }
+      ],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "N:PressToShape.Core.Tests",
+      "Name": "Tests",
+      "QualifiedName": "PressToShape.Core.Tests",
+      "SymbolType": "Namespace",
+      "Accessibility": "public",
+      "Modifiers": [
+        "static"
+      ],
+      "ContainingId": "N:PressToShape.Core",
+      "Namespace": "PressToShape.Core.Tests",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/CoreArchitectureTests.cs",
+      "StartLine": 5,
+      "EndLine": 38,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    },
+    {
+      "Id": "T:PressToShape.Core.Tests.CoreArchitectureTests",
+      "Name": "CoreArchitectureTests",
+      "QualifiedName": "PressToShape.Core.Tests.CoreArchitectureTests",
+      "SymbolType": "Class",
+      "Accessibility": "public",
+      "Modifiers": [],
+      "ContainingId": "N:PressToShape.Core.Tests",
+      "Namespace": "PressToShape.Core.Tests",
+      "Project": "PressToShape.Core.Tests",
+      "File": "tests/PressToShape.Core.Tests/CoreArchitectureTests.cs",
+      "StartLine": 7,
+      "EndLine": 38,
+      "Parameters": [],
+      "Attributes": [],
+      "Interfaces": [],
+      "IsGenerated": false,
+      "Doc": {
+        "HasDocumentation": false,
+        "Params": {},
+        "Exceptions": []
+      }
+    }
+  ]
+}
