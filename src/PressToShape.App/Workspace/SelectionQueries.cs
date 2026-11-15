@@ -66,4 +66,18 @@ internal static class SelectionQueries
             .Where(shape => wanted.Contains(shape.Id))
             .ToList();
     }
+
+    /// <summary>The shapes with these ids that can be selected, in document order. One pass, however many ids.</summary>
+    public static IReadOnlyList<Shape> SelectedSelectable(Document document, IEnumerable<Guid> shapeIds)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(shapeIds);
+
+        var wanted = shapeIds.ToHashSet();
+        return document.Layers
+            .Where(layer => layer.IsVisible && !layer.IsLocked)
+            .SelectMany(layer => layer.Shapes)
+            .Where(shape => wanted.Contains(shape.Id))
+            .ToList();
+    }
 }

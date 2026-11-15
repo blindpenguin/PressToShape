@@ -152,16 +152,17 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     private void Preview(Func<Shape, Shape> change)
     {
         _previewBase ??= _state.Document;
-        var document = _previewBase;
-        foreach (var shape in SelectionQueries.SelectedShapes(document, _state.SelectedShapeIds))
+        var changed = new Dictionary<Guid, Shape>();
+        foreach (var shape in SelectionQueries.SelectedShapes(_previewBase, _state.SelectedShapeIds))
         {
-            var changed = change(shape);
-            if (!Equals(changed, shape))
+            var replacement = change(shape);
+            if (!Equals(replacement, shape))
             {
-                document = document.UpdateShape(shape.Id, _ => changed);
+                changed[shape.Id] = replacement;
             }
         }
 
+        var document = _previewBase.UpdateShapes(changed);
         _state.Preview(document);
     }
 

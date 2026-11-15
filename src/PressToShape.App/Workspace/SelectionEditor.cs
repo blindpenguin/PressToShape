@@ -63,7 +63,8 @@ internal sealed class SelectionEditor
 
         var shapes = SelectedShapes();
         _state.Clipboard.Set(shapes);
-        _state.Edit(HistoryStepType.CutShapes, document => shapes.Aggregate(document, (d, shape) => d.RemoveShape(shape.Id)));
+        var ids = shapes.Select(shape => shape.Id).ToHashSet();
+        _state.Edit(HistoryStepType.CutShapes, document => document.RemoveShapes(ids));
     }
 
     /// <summary>
@@ -80,7 +81,7 @@ internal sealed class SelectionEditor
         var offset = inPlace ? 0 : _state.Clipboard.NextPasteOffset();
         var copies = _state.Clipboard.Shapes.Select(shape => Moved(shape, offset)).ToList();
         var layerId = _state.ActiveLayerId;
-        _state.Edit(HistoryStepType.PasteShapes, document => copies.Aggregate(document, (d, copy) => d.AddShape(layerId, copy)));
+        _state.Edit(HistoryStepType.PasteShapes, document => document.AddShapes(layerId, copies));
         _state.SetSelection(copies.Select(c => c.Id));
     }
 
@@ -96,10 +97,13 @@ internal sealed class SelectionEditor
         }
 
         var originals = SelectedShapes();
+        var layerOf = _state.Document.Layers.SelectMany(layer => layer.Shapes.Select(shape => (shape.Id, LayerId: layer.Id))).ToDictionary(x => x.Id, x => x.LayerId);
         var copies = originals
-            .Select(shape => (LayerId: _state.Document.FindShape(shape.Id)!.Layer.Id, Copy: Moved(shape, ShapeClipboard.PasteStep)))
+            .Select(shape => (LayerId: layerOf[shape.Id], Copy: Moved(shape, ShapeClipboard.PasteStep)))
             .ToList();
-        _state.Edit(HistoryStepType.DuplicateShapes, document => copies.Aggregate(document, (d, c) => d.AddShape(c.LayerId, c.Copy)));
+        _state.Edit(
+            HistoryStepType.DuplicateShapes,
+            document => copies.GroupBy(c => c.LayerId).Aggregate(document, (d, group) => d.AddShapes(group.Key, group.Select(c => c.Copy))));
         _state.SetSelection(copies.Select(c => c.Copy.Id));
     }
 
@@ -171,16 +175,8 @@ internal sealed class SelectionEditor
 
     private static Document ReplaceShapes(Document document, IReadOnlyList<Shape> current, Dictionary<Guid, Shape> replacements)
     {
-        foreach (var shape in current)
-        {
-            var replacement = replacements[shape.Id];
-            if (!Equals(shape, replacement))
-            {
-                document = document.UpdateShape(shape.Id, _ => replacement);
-            }
-        }
-
-        return document;
+        var changed = current.Where(shape => !Equals(shape, replacements[shape.Id])).ToDictionary(shape => shape.Id, shape => replacements[shape.Id]);
+        return document.UpdateShapes(changed);
     }
 
     private Shape Moved(Shape shape, double offset) => shape with { Id = _newId(), X = shape.X + offset, Y = shape.Y + offset };

@@ -157,7 +157,8 @@ internal sealed class CanvasInteraction
         }
 
         Cancel();
-        _state.Edit(HistoryStepType.DeleteShape, document => shapes.Aggregate(document, (d, shape) => d.RemoveShape(shape.Id)));
+        var ids = shapes.Select(shape => shape.Id).ToHashSet();
+        _state.Edit(HistoryStepType.DeleteShape, document => document.RemoveShapes(ids));
         _state.ClearSelection();
     }
 
@@ -327,15 +328,16 @@ internal sealed class CanvasInteraction
             return;
         }
 
-        var document = original;
+        var changed = new Dictionary<Guid, Shape>();
         for (var i = 0; i < shapes.Count; i++)
         {
             if (!Equals(shapes[i], _startShapes[i]))
             {
-                var shape = shapes[i];
-                document = document.UpdateShape(shape.Id, _ => shape);
+                changed[shapes[i].Id] = shapes[i];
             }
         }
+
+        var document = original.UpdateShapes(changed);
 
         if (!ReferenceEquals(document, _state.Document))
         {

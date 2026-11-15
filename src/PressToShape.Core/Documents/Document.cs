@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using PressToShape.Core.Shapes;
 
 namespace PressToShape.Core.Documents;
@@ -125,6 +126,102 @@ public sealed record Document
         }
 
         return this with { Layers = Layers.SetItem(layerIndex, layer with { Shapes = layer.Shapes.SetItem(shapeIndex, changed) }) };
+    }
+
+    /// <summary>Returns a document with the shapes added above the existing shapes of the layer, in the given order. One pass, however many shapes.</summary>
+    /// <exception cref="KeyNotFoundException">No layer has this id.</exception>
+    /// <exception cref="ArgumentException">A shape has an id that already exists in the document.</exception>
+    public Document AddShapes(Guid layerId, IEnumerable<Shape> shapes)
+    {
+        ArgumentNullException.ThrowIfNull(shapes);
+
+        var index = IndexOfLayer(layerId);
+        var layer = Layers[index];
+        var added = layer.Shapes.AddRange(shapes);
+        return added.Length == layer.Shapes.Length ? this : this with { Layers = Layers.SetItem(index, layer with { Shapes = added }) };
+    }
+
+    /// <summary>
+    /// Returns a document in which every shape whose id is a key of <paramref name="replacements"/> is replaced by its value.
+    /// Their places in the stack stay. One pass over the document, however many shapes change.
+    /// </summary>
+    /// <exception cref="KeyNotFoundException">A key is not the id of a shape.</exception>
+    /// <exception cref="InvalidOperationException">A replacement has another id than its key.</exception>
+    public Document UpdateShapes(IReadOnlyDictionary<Guid, Shape> replacements)
+    {
+        ArgumentNullException.ThrowIfNull(replacements);
+
+        if (replacements.Count == 0)
+        {
+            return this;
+        }
+
+        var found = 0;
+        var layers = Layers.ToBuilder();
+        for (var layerIndex = 0; layerIndex < layers.Count; layerIndex++)
+        {
+            var shapes = layers[layerIndex].Shapes;
+            ImmutableArray<Shape>.Builder? builder = null;
+            for (var i = 0; i < shapes.Length; i++)
+            {
+                if (!replacements.TryGetValue(shapes[i].Id, out var replacement))
+                {
+                    continue;
+                }
+
+                if (replacement is null || replacement.Id != shapes[i].Id)
+                {
+                    throw new InvalidOperationException("A replacement must be a shape with the same id.");
+                }
+
+                builder ??= shapes.ToBuilder();
+                builder[i] = replacement;
+                found++;
+            }
+
+            if (builder is not null)
+            {
+                layers[layerIndex] = layers[layerIndex] with { Shapes = builder.MoveToImmutable() };
+            }
+        }
+
+        if (found != replacements.Count)
+        {
+            throw new KeyNotFoundException("Some ids are not shapes of the document.");
+        }
+
+        return this with { Layers = layers.MoveToImmutable() };
+    }
+
+    /// <summary>Returns a document without the shapes with these ids. One pass over the document.</summary>
+    /// <exception cref="KeyNotFoundException">An id is not the id of a shape.</exception>
+    public Document RemoveShapes(IReadOnlySet<Guid> shapeIds)
+    {
+        ArgumentNullException.ThrowIfNull(shapeIds);
+
+        if (shapeIds.Count == 0)
+        {
+            return this;
+        }
+
+        var removed = 0;
+        var layers = Layers.ToBuilder();
+        for (var layerIndex = 0; layerIndex < layers.Count; layerIndex++)
+        {
+            var kept = layers[layerIndex].Shapes.Where(shape => !shapeIds.Contains(shape.Id)).ToImmutableArray();
+            if (kept.Length != layers[layerIndex].Shapes.Length)
+            {
+                removed += layers[layerIndex].Shapes.Length - kept.Length;
+                layers[layerIndex] = layers[layerIndex] with { Shapes = kept };
+            }
+        }
+
+        if (removed != shapeIds.Count)
+        {
+            throw new KeyNotFoundException("Some ids are not shapes of the document.");
+        }
+
+        return this with { Layers = layers.MoveToImmutable() };
     }
 
     /// <summary>Returns a document without the shape.</summary>

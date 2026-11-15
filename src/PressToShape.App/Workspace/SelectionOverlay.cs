@@ -60,7 +60,7 @@ internal sealed record SelectionOverlay(
                 dragged.Height * scale)
             : (ScreenRect?)null;
 
-        var shapes = SelectionQueries.SelectedShapes(document, selectedIds.Where(id => SelectionQueries.IsSelectable(document, id)));
+        var shapes = SelectionQueries.SelectedSelectable(document, selectedIds);
         if (shapes.Count == 0)
         {
             return box is null ? Empty : Empty with { SelectionBox = box };
