@@ -1,5 +1,5 @@
 {
-  "SchemaVersion": 2,
+  "SchemaVersion": 3,
   "ToolVersion": "1.0.0",
   "Projects": [
     {
@@ -13,42 +13,42 @@
       "Name": "PressToShape.App",
       "Path": "src/PressToShape.App/PressToShape.App.csproj",
       "SymbolCount": 1384,
-      "RelationshipCount": 4223,
+      "RelationshipCount": 4269,
       "XamlFileCount": 17
     },
     {
       "Name": "PressToShape.App.Tests",
       "Path": "tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj",
       "SymbolCount": 1174,
-      "RelationshipCount": 10388,
+      "RelationshipCount": 10537,
       "XamlFileCount": 0
     },
     {
       "Name": "PressToShape.Benchmarks",
       "Path": "tests/PressToShape.Benchmarks/PressToShape.Benchmarks.csproj",
       "SymbolCount": 29,
-      "RelationshipCount": 129,
+      "RelationshipCount": 131,
       "XamlFileCount": 0
     },
     {
       "Name": "PressToShape.CodeIndex.Tests",
       "Path": "tests/PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.csproj",
-      "SymbolCount": 648,
-      "RelationshipCount": 1280,
+      "SymbolCount": 887,
+      "RelationshipCount": 1689,
       "XamlFileCount": 0
     },
     {
       "Name": "PressToShape.Core",
       "Path": "src/PressToShape.Core/PressToShape.Core.csproj",
       "SymbolCount": 208,
-      "RelationshipCount": 543,
+      "RelationshipCount": 553,
       "XamlFileCount": 0
     },
     {
       "Name": "PressToShape.Core.Tests",
       "Path": "tests/PressToShape.Core.Tests/PressToShape.Core.Tests.csproj",
       "SymbolCount": 286,
-      "RelationshipCount": 1943,
+      "RelationshipCount": 2066,
       "XamlFileCount": 0
     },
     {
@@ -59,7 +59,7 @@
       "XamlFileCount": 0
     }
   ],
-  "SymbolCount": 3741,
-  "RelationshipCount": 18507,
+  "SymbolCount": 3980,
+  "RelationshipCount": 19246,
   "Warnings": []
 }

@@ -1,3 +1,3 @@
-{"SchemaVersion":2,"Project":"PressToShape.Desktop","Namespace":"PressToShape","Symbols":[
+{"SchemaVersion":3,"Project":"PressToShape.Desktop","Namespace":"PressToShape","Symbols":[
 {"Id":"N:PressToShape","Name":"PressToShape","QualifiedName":"PressToShape","SymbolType":"Namespace","Accessibility":"public","Modifiers":["static"],"Namespace":"PressToShape","Project":"PressToShape.Desktop","File":"src/PressToShape.Desktop/Program.cs","StartLine":5,"EndLine":5,"Parameters":[],"Attributes":[],"Interfaces":[],"IsGenerated":false,"Doc":{"HasDocumentation":false,"Params":{},"Exceptions":[]}}
 ]}

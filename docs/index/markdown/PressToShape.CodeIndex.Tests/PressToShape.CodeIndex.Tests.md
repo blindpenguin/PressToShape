@@ -2,6 +2,27 @@
 
 Project: PressToShape.CodeIndex.Tests
 
+## ApplicationFactsTests (class)
+
+`public class ApplicationFactsTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Avalonia/ApplicationFactsTests.cs:10-177`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Extract_Converters_ListBothInterfacesAndIgnoreLookAlikes()` - _(no documentation)_
+- `public void Extract_Application_HasTheClassAndItsLifecycleOverridesOnly()` - _(no documentation)_
+- `public void Extract_Initialize_ListsCreatedSolutionTypesAndIgnoresFrameworkTypes()` - _(no documentation)_
+- `public void Extract_LifetimeBranches_HaveTheirOwnCreations()` - _(no documentation)_
+- `public void Extract_CreationOutsideAnyBranch_IsInTheMethodListAndNotInTheBranches()` - _(no documentation)_
+- `public void Extract_BranchAndMethodLines_AreTheLinesOfTheCode()` - _(no documentation)_
+- `public void Extract_NonOverrideMethodsAndOtherClasses_AreIgnored()` - _(no documentation)_
+- `public void Extract_NoApplicationOrConverters_GivesEmptyLists()` - _(no documentation)_
+- `public void Extract_OverrideWithoutCreations_IsStillListed()` - _(no documentation)_
+- `public void Extract_TwoRuns_GiveTheSameFacts()` - _(no documentation)_
+
 ## AtomicFileWriterTests (class)
 
 `public sealed class AtomicFileWriterTests : IDisposable`
@@ -21,6 +42,79 @@ The only tests that touch the file system, each in its own unique temporary fold
 - `public void RemoveStale_NeverTouchesFilesOutsideTheRoot()` - _(no documentation)_
 - `public void RemoveStale_RootDoesNotExist_ReturnsNothing()` - _(no documentation)_
 - `public void InMemoryFileSink_Write_KeepsFilesSortedAndRejectsBadPaths()` - _(no documentation)_
+
+## AvaloniaModelTests (class)
+
+`public class AvaloniaModelTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Avalonia/AvaloniaModelTests.cs:10-88`
+
+_(no documentation)_
+
+**Members**
+
+- `public void RelationshipType_ExecutesMethod_IsAppendedLast()` - _(no documentation)_
+- `public void IndexSchema_Version_IsThree()` - _(no documentation)_
+- `public void IndexData_WithoutFacts_HasNullAvalonia()` - _(no documentation)_
+- `public void IndexData_WithFacts_KeepsThem()` - _(no documentation)_
+- `public void AvaloniaFacts_Empty_HasNoItems()` - _(no documentation)_
+- `public void Facts_AreWritableAsPlainDataAndReadBack()` - _(no documentation)_
+- `public void Writer_DoesNotWriteFactsAsFiles()` - _(no documentation)_
+
+## AvaloniaPagesPartTwoTests (class)
+
+`public class AvaloniaPagesPartTwoTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Avalonia/AvaloniaPagesPartTwoTests.cs:13-172`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Styles_ListFilesWithCountsAndVariants()` - _(no documentation)_
+- `public void Styles_ListKeysThatAreMissingOrUnused()` - _(no documentation)_
+- `public void Styles_GraphStartsAtTheApplicationFile()` - _(no documentation)_
+- `public void Services_ListInterfacesWithImplementationsUsersAndCreationSites()` - _(no documentation)_
+- `public void Services_WithoutRegistrations_NameTheMembersThatCreateServices()` - _(no documentation)_
+- `public Task Services_WithARegistrationAndAnInterfaceWithoutImplementation_ListThem()` - _(no documentation)_
+- `public void Application_ListsTheClassItsLifetimeBranchesAndTheConvention()` - _(no documentation)_
+- `public void Application_ConventionListsOnlyViewLocatorReasons()` - _(no documentation)_
+- `public void Application_ListsContentHostsAsInferredAndClaimsNoNavigation()` - _(no documentation)_
+- `public void Application_WithoutAnApplicationClass_SaysNoneFound()` - _(no documentation)_
+- `public void Pages_AreDeterministicAndFreeOfAbsolutePathsAndTheWordKind(string name)` - _(no documentation)_
+- `public void Readme_LinksAllSixPages()` - _(no documentation)_
+
+## AvaloniaPagesTests (class)
+
+`public class AvaloniaPagesTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Avalonia/AvaloniaPagesTests.cs:13-128`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Views_ListsViewsWithViewModelsEvidenceAndCounts()` - _(no documentation)_
+- `public void Views_MarksInferredLinksWithTheirReason()` - _(no documentation)_
+- `public Task Views_DoNotListTheApplicationClass()` - _(no documentation)_
+- `public void Views_ListsViewModelsWithoutAViewAndSaysNoneForViewsWithoutAViewModel()` - _(no documentation)_
+- `public void Controls_ListsPropertiesAndSaysNoneFoundForEvents()` - _(no documentation)_
+- `public void Converters_ShowUsesAndMarkAnUnusedConverter()` - _(no documentation)_
+- `public void Readme_LinksTheAvaloniaPages()` - _(no documentation)_
+- `public void Pages_AreDeterministicAndFreeOfAbsolutePathsAndTheWordKind(string name)` - _(no documentation)_
+- `public void Pages_WithoutFacts_SayNoneFound()` - _(no documentation)_
+
+## AvaloniaPagesWriterAccess (class)
+
+`internal static class AvaloniaPagesWriterAccess`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Avalonia/AvaloniaPagesTests.cs:130-134`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Write(IndexData data, IIndexFileSink sink)` - _(no documentation)_
 
 ## BindingResolverTests (class)
 
@@ -55,6 +149,56 @@ _(no documentation)_
 - `public void Parse_LeadingBangs_AreCounted()` - _(no documentation)_
 - `public void Parse_BadInput_NeverThrowsAndReportsUnsupported(string path)` - _(no documentation)_
 
+## ChainViewModelTests (class)
+
+`public class ChainViewModelTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Chain/ChainViewModelTests.cs:15-157`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Build_ViewModel_ListsTheViewsThatUseItWithEvidence()` - _(no documentation)_
+- `public void Build_ViewModelWithAVerifiedAndAnInferredLink_ListsBoth()` - _(no documentation)_
+- `public void Build_ViewModel_ListsCommandsWithHandlersAndTheXamlPlacesThatBindThem()` - _(no documentation)_
+- `public void Build_ViewModel_HasServicesModelsAndTests()` - _(no documentation)_
+- `public void Build_GeneratedCommand_ShowsHandlerBindingsAndNoTests()` - _(no documentation)_
+- `public void Build_MethodGroupCommandAndParameterCommand_ShowTheirHandlers()` - _(no documentation)_
+- `public Task Build_CommandBoundByAButtonAndAKeyBinding_ListsBothPlaces()` - _(no documentation)_
+- `public void Build_SymbolsThatAreNotViewsViewModelsOrCommands_AreNotSupported()` - _(no documentation)_
+- `public void Build_NotSupportedMessage_NamesTheSymbolType()` - _(no documentation)_
+
+## ChainViewTests (class)
+
+`public class ChainViewTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Chain/ChainViewTests.cs:18-250`
+
+_(no documentation)_
+
+**Members**
+
+- `internal ChainBuilder Sample()` - _(no documentation)_
+- `internal IEnumerable<ChainNode> All(ChainNode node)` - _(no documentation)_
+- `internal ChainNode Find(ChainNode root, string labelStart)` - _(no documentation)_
+- `public void Build_View_HasTheViewItsXamlFileAndItsViewModelWithEvidence()` - _(no documentation)_
+- `public void Build_View_ListsBindingsWithHandlersOfCommands()` - _(no documentation)_
+- `public void Build_View_MethodGroupHandlerAndUnknownHandler()` - _(no documentation)_
+- `public void Build_View_ListsServicesWithImplementationsAndCreationSites()` - _(no documentation)_
+- `public void Build_View_ListsModelsOfProjectsWithoutViews()` - _(no documentation)_
+- `public void Build_View_ListsChildViewsWithVerifiedAndInferredLinks()` - _(no documentation)_
+- `public void Build_View_ListsResourcesConvertersAndUnresolvedThemeKeys()` - _(no documentation)_
+- `public void Build_View_ListsTestsOfTheViewModelAndSaysNoneForTheView()` - _(no documentation)_
+- `public void Build_ViewWithTwoLinksToTheSameViewModel_UsesTheVerifiedOneAndNotesTheOther()` - _(no documentation)_
+- `public void Build_ByXamlFileId_GivesTheSameChain()` - _(no documentation)_
+- `public void Build_XamlFileWithoutAClass_IsNotSupported()` - _(no documentation)_
+- `public void Build_UnknownAndAmbiguousNames_BehaveLikeShow()` - _(no documentation)_
+- `public void Build_DepthOne_DoesNotExpandChildViewsAndDepthTwoDoes()` - _(no documentation)_
+- `public void Build_DepthIsLimited()` - _(no documentation)_
+- `public Task Build_ViewsThatHostEachOther_StopAtTheSecondVisit()` - _(no documentation)_
+- `public void Build_Twice_GivesTheSameTreeAndTheViewHasNoChildViewsWhenItHostsNone()` - _(no documentation)_
+
 ## CliAppTests (class)
 
 `public class CliAppTests`
@@ -86,6 +230,29 @@ _(no documentation)_
 - `public Task Query_WithoutIndex_SaysHowToCreateItAndFails()` - _(no documentation)_
 - `public Task Query_DoesNotCompileTheSolution()` - _(no documentation)_
 
+## CliChainTests (class)
+
+`public class CliChainTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Chain/CliChainTests.cs:13-223`
+
+_(no documentation)_
+
+**Members**
+
+- `public Task Chain_View_PrintsAnIndentedTreeWithConfidenceAndLocations()` - _(no documentation)_
+- `public Task Chain_View_ShowsInferredLinksWithTheirReason()` - _(no documentation)_
+- `public Task Chain_ViewModelAndCommand_PrintTheirTrees()` - _(no documentation)_
+- `public Task Chain_Json_IsAValidTreeWithTheSameSections()` - _(no documentation)_
+- `public Task Chain_AmbiguousUnknownAndNotSupported_ExitWithOne()` - _(no documentation)_
+- `public Task Chain_JsonForAProblem_IsValidJsonWithTheStatus()` - _(no documentation)_
+- `public Task Chain_BadDepth_IsAUsageError(params string[] depth)` - _(no documentation)_
+- `public Task Chain_Depth_ExpandsChildViews()` - _(no documentation)_
+- `public Task Chain_WithoutAnArgument_IsAUsageError()` - _(no documentation)_
+- `public Task Chain_WithoutAnIndex_SaysHowToCreateIt()` - _(no documentation)_
+- `public Task Help_ListsChainAndTheDepthOption()` - _(no documentation)_
+- `public Task Chain_DoesNotCompileTheSolution()` - _(no documentation)_
+
 ## CliXamlTests (class)
 
 `public class CliXamlTests`
@@ -110,6 +277,50 @@ _(no documentation)_
 - `public Task Check_AfterGenerate_IncludesXamlFilesAndReportsUpToDate()` - _(no documentation)_
 - `public Task Check_ChangedXamlSource_IsReportedAsChanged()` - _(no documentation)_
 - `public Task Help_ListsTheXamlSymbolTypes()` - _(no documentation)_
+
+## CommandHandlerTests (class)
+
+`public class CommandHandlerTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/CommandHandlerTests.cs:9-139`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Build_MethodGroupAssignedInAConstructor_GivesAVerifiedEdgeWithFileAndLine()` - _(no documentation)_
+- `public void Build_FieldAndPropertyInitializers_GiveEdges()` - _(no documentation)_
+- `public void Build_AsyncAndGenericForms_GiveEdges()` - _(no documentation)_
+- `public void Build_Lambda_GivesNoEdge()` - _(no documentation)_
+- `public void Build_ParameterAndLocal_GiveNoEdge()` - _(no documentation)_
+- `public void Build_MethodOfAnotherAssembly_GivesNoEdge()` - _(no documentation)_
+- `public void Build_AssignmentToALocal_GivesNoEdge()` - _(no documentation)_
+- `public void Build_AnotherCommandType_GivesNoEdge()` - _(no documentation)_
+- `public void Build_TwoCommandsInOneConstructor_GiveTwoEdges()` - _(no documentation)_
+- `public void FromGenerated_PropertyGeneratedFromARelayCommandMethod_GivesAVerifiedEdgeAtTheMethod()` - _(no documentation)_
+- `public void FromGenerated_ObservablePropertyFieldAndHandWrittenMembers_GiveNoEdge()` - _(no documentation)_
+
+## ControlFactsTests (class)
+
+`public class ControlFactsTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Avalonia/ControlFactsTests.cs:10-171`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Extract_CustomControl_HasIdBaseTypeSummaryFileAndLine()` - _(no documentation)_
+- `public void Extract_ClassesThatAreNotControlsOrAreViews_AreSkipped()` - _(no documentation)_
+- `public void Extract_StyledProperty_HasNameTypeDefaultAndWrapper()` - _(no documentation)_
+- `public void Extract_StyledPropertyWithoutDefaultAndWrapper_SaysSo()` - _(no documentation)_
+- `public void Extract_AttachedProperty_UsesTheStaticGetterAsWrapper()` - _(no documentation)_
+- `public void Extract_DirectProperty_UsesTheValueTypeArgument()` - _(no documentation)_
+- `public void Extract_NonConstantRegistrationName_FallsBackToTheFieldNameWithoutProperty()` - _(no documentation)_
+- `public void Extract_Properties_AreSortedByName()` - _(no documentation)_
+- `public void Extract_RoutedEvents_HaveNameArgumentTypeAndRoutingAsWritten()` - _(no documentation)_
+- `public void Extract_ControlWithoutPropertiesOrEvents_HasEmptyLists()` - _(no documentation)_
+- `public void Extract_ProjectWithoutControls_IsEmptyAndTheOutputIsDeterministic()` - _(no documentation)_
 
 ## DataContextAssignmentTests (class)
 
@@ -204,6 +415,48 @@ A XAML file source over a dictionary of repo-relative paths. Used by the XAML te
 - `public IReadOnlyList<string> List(string projectDirectory)` - _(no documentation)_
 - `public string Read(string repoRelativePath)` - _(no documentation)_
 
+## IndexAnalysisTests (class)
+
+`public class IndexAnalysisTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Chain/IndexAnalysisTests.cs:16-237`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ViewModelsOf_View_GivesEvidenceAndConfidence()` - _(no documentation)_
+- `public void ViewsOf_ViewModel_GivesTheViewsAndNoneForAnOrphan()` - _(no documentation)_
+- `public void Services_ListInterfacesWithImplementationsAndCreationSitesWithoutTests()` - _(no documentation)_
+- `public void Services_InterfaceWithoutImplementation_HasNoImplementationsAndAClassDependencyListsItsCreationSites()` - _(no documentation)_
+- `public void Models_AreReferencedTypesOfProjectsWithoutViewsAndNotTheServices()` - _(no documentation)_
+- `public void Models_TypeOfTheSameProjectIsNotAModel()` - _(no documentation)_
+- `public void Commands_ListGeneratedMethodGroupAndBoundCommandsWithTheirHandlers()` - _(no documentation)_
+- `public void Commands_AreBoundAtTheXamlPlaces()` - _(no documentation)_
+- `public void IsCommand_IsTrueForCommandsAndFalseForOtherMembers()` - _(no documentation)_
+- `public void HandlerOf_UnknownId_IsNotStaticallyKnown()` - _(no documentation)_
+- `public void TestsFor_GroupsPerTestClassAndIgnoresClassesWithoutTestMethods()` - _(no documentation)_
+- `public void Services_IgnoreFakesAndHelpersOfTestProjects()` - _(no documentation)_
+- `public void CreationSites_ExcludeTestsAndCoverImplicitAndExplicitConstructors()` - _(no documentation)_
+- `public void NameOf_UsesTheSymbolNameOrDescribesXamlIds()` - _(no documentation)_
+
+## IndexGeneratorFactsTests (class)
+
+`public class IndexGeneratorFactsTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Avalonia/IndexGeneratorFactsTests.cs:13-136`
+
+_(no documentation)_
+
+**Members**
+
+- `public Task GenerateAsync_MergesFactsOfAllProjectsSorted()` - _(no documentation)_
+- `public Task GenerateAsync_ViewWithAXamlFile_IsNotACustomControl()` - _(no documentation)_
+- `public Task GenerateAsync_GeneratedCommandAndMethodGroupCommand_GetExecutesMethodEdgesInTheOwningProject()` - _(no documentation)_
+- `public Task GenerateAsync_ProjectWithoutAvaloniaTypes_HasEmptyFacts()` - _(no documentation)_
+- `public Task GenerateAsync_ShuffledProjects_GiveTheSameFactsAndEdges()` - _(no documentation)_
+- `public Task GenerateAsync_FactsAreNotWrittenAsJson()` - _(no documentation)_
+
 ## IndexGeneratorTests (class)
 
 `public class IndexGeneratorTests`
@@ -262,6 +515,27 @@ _(no documentation)_
 - `public void RepoRoot_Find_ReturnsFirstFolderWithSolution()` - _(no documentation)_
 - `public void RepoRoot_Find_NoSolution_Throws()` - _(no documentation)_
 
+## IndexViewTests (class)
+
+`public class IndexViewTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Chain/IndexViewTests.cs:12-153`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Parity_Projects_AreTheSame()` - _(no documentation)_
+- `public void Parity_Relationships_AreTheSameSet()` - _(no documentation)_
+- `public void Parity_EverySymbolExceptNamespaces_IsFoundWithTheSameRecord()` - _(no documentation)_
+- `public void Parity_MembersOfEveryType_AreTheSame()` - _(no documentation)_
+- `public void Parity_XamlFiles_AreTheSame()` - _(no documentation)_
+- `public void ReaderView_ConstructorSymbol_IsFoundThroughItsType()` - _(no documentation)_
+- `public void Views_UnknownIds_GiveNullOrEmpty()` - _(no documentation)_
+- `public void ReaderView_ReadsOnlyWhatItNeeds()` - _(no documentation)_
+- `public void ReaderView_SingleXamlFile_DoesNotReadTheOthers()` - _(no documentation)_
+- `public void ModelView_Output_IsDeterministicForShuffledProjects()` - _(no documentation)_
+
 ## JsonIndexWriterTests (class)
 
 `public class JsonIndexWriterTests`
@@ -302,7 +576,7 @@ _(no documentation)_
 
 `public class MarkdownWriterTests`
 
-Source: `tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs:10-149`
+Source: `tests/PressToShape.CodeIndex.Tests/MarkdownWriterTests.cs:10-160`
 
 _(no documentation)_
 
@@ -348,6 +622,41 @@ _(no documentation)_
 - `public void TryParse_VeryLongInput_ReturnsFalse()` - _(no documentation)_
 - `public void TryParse_ManyArguments_AreAllKept()` - _(no documentation)_
 - `public void TryParse_Garbage_NeverThrows()` - _(no documentation)_
+
+## MemoryIndexFolder (class)
+
+`internal sealed class MemoryIndexFolder : IIndexFolder`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Chain/MemoryIndexFolder.cs:9-30`
+
+An index folder in memory, with the stale-file removal of the real one, for command line tests.
+
+**Members**
+
+- `public void Write(string relativePath, byte[] content)` - _(no documentation)_
+- `public byte[]? Read(string relativePath)` - _(no documentation)_
+- `public IReadOnlyList<string> ListFiles()` - _(no documentation)_
+- `public IReadOnlyList<string> RemoveStale()` - _(no documentation)_
+
+## MvvmSampleData (class)
+
+`internal static class MvvmSampleData`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Avalonia/MvvmSampleData.cs:15-274`
+
+A small MVVM solution for the chain and page tests: a model project, an app project (views, view models, services, a control, converters, the application class) and a test project. It is built through the real generator, with in-memory XAML.
+
+**Members**
+
+- `public string ToolkitStubs` - _(no documentation)_
+- `public string CoreSource` - _(no documentation)_
+- `public string AppSource` - _(no documentation)_
+- `public string TestSource` - _(no documentation)_
+- `public InMemoryXamlFileSource Files()` - _(no documentation)_
+- `public ProjectCompilation[] Projects()` - _(no documentation)_
+- `public GenerateResult Generate(bool reverse = false)` - _(no documentation)_
+- `public IndexData Data(bool reverse = false)` - _(no documentation)_
+- `public InMemoryFileSink Index(bool reverse = false)` - _(no documentation)_
 
 ## OperationRelationshipTests (class)
 
@@ -501,6 +810,41 @@ _(no documentation)_
 - `public void Definitions_ListsEveryEntryWithIdsAndVariants()` - _(no documentation)_
 - `public void IncludesOf_ListsStyleAndResourceIncludesWithTargets()` - _(no documentation)_
 - `public void ApplicationFor_PrefersTheApplicationOfTheSameProject()` - _(no documentation)_
+
+## RuleFileTests (class)
+
+`public class RuleFileTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/RuleFileTests.cs:11-91`
+
+The agent rule file is documentation that must stay true: it names real commands and is scoped to the UI files. These tests read it from the repository.
+
+**Members**
+
+- `public void Rule_HasPathsFrontmatterForTheUiFiles()` - _(no documentation)_
+- `public void Rule_NamesTheCommandsAndEachOneIsInTheHelpText()` - _(no documentation)_
+- `public void Rule_NamesOnlyCommandsThatExist()` - _(no documentation)_
+- `public void Rule_HasTheSevenStepsInOrder()` - _(no documentation)_
+- `public void Rule_ForbidsAssumingFromNamesAndExplainsInferredLinks()` - _(no documentation)_
+- `public void Rule_HasNoAbsolutePathsAndNoWordKind()` - _(no documentation)_
+- `public void ProjectOverview_PointsToTheRuleAndReadmeDescribesChain()` - _(no documentation)_
+
+## SampleSolutionTests (class)
+
+`public class SampleSolutionTests`
+
+Source: `tests/PressToShape.CodeIndex.Tests/Avalonia/SampleSolutionTests.cs:7-69`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Generate_Sample_HasNoErrorsAndThreeProjects()` - _(no documentation)_
+- `public void Generate_Sample_HasTheAvaloniaFactsThePagesNeed()` - _(no documentation)_
+- `public void Generate_Sample_HasHandlerEdgesForGeneratedAndMethodGroupCommandsOnly()` - _(no documentation)_
+- `public void Generate_Sample_HasVerifiedAndInferredViewModelLinks()` - _(no documentation)_
+- `public void Generate_Sample_HasTestClassesThatReferenceTheViewModelAndTheService()` - _(no documentation)_
+- `public void Generate_Sample_IsDeterministicForShuffledProjects()` - _(no documentation)_
 
 ## SymbolExtractorTests (class)
 
@@ -706,7 +1050,7 @@ _(no documentation)_
 
 - `public void XamlFileRecord_RoundTrip_KeepsEveryList()` - _(no documentation)_
 - `public void RelationshipType_XamlValues_AreAppendedAfterTheEarlierOnes()` - _(no documentation)_
-- `public void IndexSchema_Version_IsTwo()` - _(no documentation)_
+- `public void IndexSchema_Version_IsThree()` - _(no documentation)_
 - `public void ManifestProject_WithoutXamlCount_DefaultsToZero()` - _(no documentation)_
 - `public void ProjectIndex_WithoutXaml_HasAnEmptyList()` - _(no documentation)_
 - `public void Ids_AreBuiltFromRepoRelativePathsOnly()` - _(no documentation)_
@@ -826,7 +1170,7 @@ _(no documentation)_
 
 `internal sealed class XamlTestHost`
 
-Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlTestHost.cs:12-106`
+Source: `tests/PressToShape.CodeIndex.Tests/Xaml/XamlTestHost.cs:12-141`
 
 Builds a small solution in memory: stub Avalonia types, application C# source, XAML files, and the resolver over them.
 
@@ -840,6 +1184,7 @@ Builds a small solution in memory: stub Avalonia types, application C# source, X
 - `public ProjectCompilation Project { get; }` - _(no documentation)_
 - `public ViewLocatorConvention? Convention { get; }` - _(no documentation)_
 - `public XamlTestHost Create(string appSource, params (string Path, string Xml)[] files)` - Creates the host. XAML files are given as (path, text). A file with a root Application is the application document.
+- `public ProjectCompilation AppProject(string name, params string[] sources)` - An application project that references the stub Avalonia types as metadata, so that they are not indexed as part of the solution.
 - `public XamlResolution Resolve(string path)` - _(no documentation)_
 - `public string Edge(RelationshipRecord edge)` - _(no documentation)_
 

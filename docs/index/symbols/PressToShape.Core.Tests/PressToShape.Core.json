@@ -1,3 +1,3 @@
-{"SchemaVersion":2,"Project":"PressToShape.Core.Tests","Namespace":"PressToShape.Core","Symbols":[
+{"SchemaVersion":3,"Project":"PressToShape.Core.Tests","Namespace":"PressToShape.Core","Symbols":[
 {"Id":"N:PressToShape.Core","Name":"Core","QualifiedName":"PressToShape.Core","SymbolType":"Namespace","Accessibility":"public","Modifiers":["static"],"ContainingId":"N:PressToShape","Namespace":"PressToShape.Core","Project":"PressToShape.Core.Tests","File":"tests/PressToShape.Core.Tests/CoreArchitectureTests.cs","StartLine":5,"EndLine":5,"Parameters":[],"Attributes":[],"Interfaces":[],"IsGenerated":false,"Doc":{"HasDocumentation":false,"Params":{},"Exceptions":[]}}
 ]}

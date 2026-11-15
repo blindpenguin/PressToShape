@@ -1,3 +1,3 @@
-{"SchemaVersion":2,"Project":"PressToShape.App","Namespace":"PressToShape","Symbols":[
+{"SchemaVersion":3,"Project":"PressToShape.App","Namespace":"PressToShape","Symbols":[
 {"Id":"N:PressToShape","Name":"PressToShape","QualifiedName":"PressToShape","SymbolType":"Namespace","Accessibility":"public","Modifiers":["static"],"Namespace":"PressToShape","Project":"PressToShape.App","File":"src/PressToShape.App/Controls/CollapsibleSection.cs","StartLine":6,"EndLine":6,"Parameters":[],"Attributes":[],"Interfaces":[],"IsGenerated":false,"Doc":{"HasDocumentation":false,"Params":{},"Exceptions":[]}}
 ]}
