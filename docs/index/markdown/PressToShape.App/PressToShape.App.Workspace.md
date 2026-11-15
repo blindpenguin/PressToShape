@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal enum CanvasCursorType`
 
-Source: `src/PressToShape.App/Workspace/CanvasCursorType.cs:4-35`
+Source: `src/PressToShape.App/Workspace/CanvasCursorType.cs:4-38`
 
 The pointer shape the canvas should show. The view turns it into a real cursor.
 
@@ -17,6 +17,7 @@ The pointer shape the canvas should show. The view turns it into a real cursor.
 - `public OpenHand` - An open hand, for the Hand tool.
 - `public ClosedHand` - A closed hand, while the view is being dragged.
 - `public Magnifier` - A magnifier, for the Zoom tool.
+- `public MagnifierMinus` - A magnifier with a minus, for the Zoom tool while Alt is held, because a click then zooms out.
 - `public ResizeNorthSouth` - A double arrow pointing up and down, for the top and bottom handles.
 - `public ResizeWestEast` - A double arrow pointing left and right, for the left and right handles.
 - `public ResizeNorthWestSouthEast` - A diagonal double arrow from top left to bottom right.
@@ -88,6 +89,21 @@ Turns a document into the shapes to draw on the canvas, so the drawing control n
 
 - `public IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY)` - Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones. Hidden layers are left out. Locked layers are drawn like any other.
 - `public ScreenShape BuildShape(Shape shape, double zoomPercent, double originX, double originY)` - Converts one shape, for example a shape that is still being drawn and is not in a document.
+
+## CursorImages (class)
+
+`internal static class CursorImages`
+
+Source: `src/PressToShape.App/Workspace/CursorImages.cs:11-84`
+
+The facts about the cursor images of the canvas: which size fits a screen scale, the file name of each image and its active point. Pure logic. The images are made by tools/PressToShape.CursorImages and committed under Assets/Cursors.
+
+**Members**
+
+- `public IReadOnlyList<int> Sizes { get; }` - The image sizes in pixels, ascending. The images are square.
+- `public int SizeFor(double scale)` - The image size for a screen scale (1.0 is 100%). A scale that is not a finite positive number counts as 100%, because a wrong size is better than no cursor.
+- `public string? FileName(CanvasCursorType type, int size)` - The file name of the image for a cursor type and size, or null for the arrow, which stays the system cursor.
+- `public (int X, int Y) Hotspot(CanvasCursorType type, int size)` - The active point of the image in its own pixels. It is the center of the image, except for the magnifier, where it is the center of the lens. The point at 64 px is exactly double the point at 32 px.
 
 ## DocumentFileService (class)
 

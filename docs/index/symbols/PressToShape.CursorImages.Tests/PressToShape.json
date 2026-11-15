@@ -1,0 +1,3 @@
+{"SchemaVersion":3,"Project":"PressToShape.CursorImages.Tests","Namespace":"PressToShape","Symbols":[
+{"Id":"N:PressToShape","Name":"PressToShape","QualifiedName":"PressToShape","SymbolType":"Namespace","Accessibility":"public","Modifiers":["static"],"Namespace":"PressToShape","Project":"PressToShape.CursorImages.Tests","File":"tests/PressToShape.CursorImages.Tests/CommandTests.cs","StartLine":7,"EndLine":7,"Parameters":[],"Attributes":[],"Interfaces":[],"IsGenerated":false,"Doc":{"HasDocumentation":false,"Params":{},"Exceptions":[]}}
+]}

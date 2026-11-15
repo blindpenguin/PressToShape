@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `public partial class CanvasAreaView : UserControl`
 
-Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:9-205`
+Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:10-238`
 
 _(no documentation)_
 
@@ -14,22 +14,24 @@ _(no documentation)_
 
 - `internal Panel Viewport` _(generated)_ - _(no documentation)_
 - `internal ScrollBar VerticalBar` _(generated)_ - _(no documentation)_
-- `public CanvasAreaView()` - _(no documentation)_
 - `internal ScrollBar HorizontalBar` _(generated)_ - _(no documentation)_
+- `public CanvasAreaView()` - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+- `protected void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)` - _(no documentation)_
+- `protected void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)` - _(no documentation)_
 - `protected void OnDataContextChanged(EventArgs e)` - _(no documentation)_
 
 ## CanvasCursors (class)
 
 `internal static class CanvasCursors`
 
-Source: `src/PressToShape.App/Views/Editor/CanvasCursors.cs:17-76`
+Source: `src/PressToShape.App/Views/Editor/CanvasCursors.cs:17-77`
 
-The pointer shapes of the canvas. Avalonia has no standard open hand, closed hand or magnifier, so these are drawn from the Material icons the tool column already uses, with a light fill and a dark outline that show on both themes. If a cursor cannot be created, a standard cursor is used instead.
+The pointer shapes of the canvas. Avalonia has no standard rotate, open hand, closed hand or magnifier, so the cursors come from pre-drawn images (Assets/Cursors, made from Lucide icons by tools/PressToShape.CursorImages) in the size that fits the screen scale. The plain arrow stays the system cursor. If an image cannot be loaded or the platform rejects it, a standard cursor is used instead.
 
 **Members**
 
-- `public Cursor For(CanvasCursorType type)` - The cursor for a type. Created on first use and then reused.
+- `public Cursor For(CanvasCursorType type, double scale)` - The cursor for a type on a screen with this scale (1.0 is 100%). Created on first use and then reused.
 
 ## CoreColorBrushConverter (class)
 

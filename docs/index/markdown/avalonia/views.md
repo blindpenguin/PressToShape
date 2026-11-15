@@ -37,7 +37,7 @@ _(no documentation)_
 
 ### CanvasAreaView
 
-`T:PressToShape.App.Views.Editor.CanvasAreaView` at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:9. XAML: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml`, 26 bindings.
+`T:PressToShape.App.Views.Editor.CanvasAreaView` at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:10. XAML: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml`, 26 bindings.
 _(no documentation)_
 
 - view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42); 0 commands, 3 test classes

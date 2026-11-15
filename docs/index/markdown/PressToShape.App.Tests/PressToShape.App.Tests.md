@@ -20,7 +20,7 @@ _(no documentation)_
 
 `public class CanvasAreaViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelTests.cs:12-1075`
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelTests.cs:12-1185`
 
 _(no documentation)_
 
@@ -69,6 +69,14 @@ _(no documentation)_
 - `public void ZoomTool_AtTheLimits_ChangesNothing()` - _(no documentation)_
 - `public void ZoomTool_Click_DoesNotSelectOrDrawAnything()` - _(no documentation)_
 - `public void CursorType_FollowsTheActiveTool()` - _(no documentation)_
+- `public void CursorType_ZoomToolWithAlt_IsTheZoomOutMagnifier_AndBackWhenAltIsReleased()` - _(no documentation)_
+- `public void IsAltHeld_SetToTheSameValue_RaisesNothing()` - _(no documentation)_
+- `public void CursorType_OtherToolsWithAlt_IgnoreAlt(string tool, string expected)` - _(no documentation)_
+- `public void CursorType_AHandleUnderThePointerWithAlt_IgnoresAlt()` - _(no documentation)_
+- `public void CursorType_SelectingTheZoomToolWhileAltIsHeld_ShowsTheMinusAtOnce()` - _(no documentation)_
+- `public void Pointer_MovePressAndRelease_TakeTheAltStateFromTheirArgument()` - _(no documentation)_
+- `public void Pointer_ReleaseAfterAPanWithAlt_KeepsAltHeld()` - _(no documentation)_
+- `public void ZoomTool_AltHeld_StillZoomsOutOnClick()` - _(no documentation)_
 - `public void CursorType_DuringAPan_IsAClosedHand_AndBackAfterwards()` - _(no documentation)_
 - `public void Drawing_AfterPanningAndZooming_StillLandsUnderThePointer()` - _(no documentation)_
 - `public void ScrollRange_IsTheAllowedOffsetRange_AndFollowsZoomViewportAndArtboard()` - _(no documentation)_
@@ -285,6 +293,42 @@ _(no documentation)_
 - `public void WrongInput_GivesNull()` - _(no documentation)_
 - `public void BrushConverter_MakesASolidBrushWithTheColor()` - _(no documentation)_
 - `public void BrushConverter_DoesNotConvertBack()` - _(no documentation)_
+
+## CursorImageFilesTests (class)
+
+`public class CursorImageFilesTests`
+
+Source: `tests/PressToShape.App.Tests/CursorImageFilesTests.cs:10-58`
+
+_(no documentation)_
+
+**Members**
+
+- `public void EveryCursorTypeButArrow_HasAnImageOfTheRightSize_AtEverySize()` - _(no documentation)_
+- `public void CursorsFolder_HoldsNoOtherFiles()` - _(no documentation)_
+
+## CursorImagesTests (class)
+
+`public class CursorImagesTests`
+
+Source: `tests/PressToShape.App.Tests/CursorImagesTests.cs:9-133`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SizeFor_Scale_ReturnsNearestSize(double scale, int expected)` - _(no documentation)_
+- `public void SizeFor_ScaleNotUsable_ReturnsSmallSize(double scale)` - _(no documentation)_
+- `public void Sizes_AreTheTwoImageSizes()` - _(no documentation)_
+- `public void FileName_EveryTypeButArrow_HasAName()` - _(no documentation)_
+- `public void FileName_Arrow_HasNone()` - _(no documentation)_
+- `public void FileName_AllImages_AreUnique()` - _(no documentation)_
+- `public void FileName_Type_MatchesTheToolOutput(string typeName, int size, string expected)` - _(no documentation)_
+- `public void Hotspot_At64_IsDoubleTheHotspotAt32()` - _(no documentation)_
+- `public void Hotspot_Magnifier_IsTheLensCenter()` - _(no documentation)_
+- `public void Hotspot_OtherTypes_AreTheImageCenter()` - _(no documentation)_
+- `public void SizeDependentMembers_UnknownSize_Throw(int size)` - _(no documentation)_
+- `public void Hotspot_Arrow_Throws()` - _(no documentation)_
 
 ## DesktopShellViewModelTests (class)
 

@@ -20,7 +20,7 @@ Project file: `src/PressToShape.Android/PressToShape.Android.csproj`. 7 symbols,
 
 ## PressToShape.App
 
-Project file: `src/PressToShape.App/PressToShape.App.csproj`. 1384 symbols, 4269 relationships.
+Project file: `src/PressToShape.App/PressToShape.App.csproj`. 1407 symbols, 4321 relationships.
 
 - [CommunityToolkit.Mvvm.ComponentModel.__Internals](PressToShape.App/CommunityToolkit.Mvvm.ComponentModel.__Internals.md) (2 types)
 - [PressToShape.App](PressToShape.App/PressToShape.App.md) (2 types)
@@ -34,7 +34,7 @@ Project file: `src/PressToShape.App/PressToShape.App.csproj`. 1384 symbols, 4269
 - [PressToShape.App.Views](PressToShape.App/PressToShape.App.Views.md) (3 types)
 - [PressToShape.App.Views.Desktop](PressToShape.App/PressToShape.App.Views.Desktop.md) (6 types)
 - [PressToShape.App.Views.Editor](PressToShape.App/PressToShape.App.Views.Editor.md) (10 types)
-- [PressToShape.App.Workspace](PressToShape.App/PressToShape.App.Workspace.md) (37 types)
+- [PressToShape.App.Workspace](PressToShape.App/PressToShape.App.Workspace.md) (38 types)
 - [PressToShapeApp.axaml](PressToShape.App/xaml/PressToShapeApp.axaml.md) (XAML, 0 bindings)
 - [Controls.axaml](PressToShape.App/xaml/Styles.Controls.axaml.md) (XAML, 9 bindings)
 - [Theme.axaml](PressToShape.App/xaml/Styles.Theme.axaml.md) (XAML, 0 bindings)
@@ -55,10 +55,10 @@ Project file: `src/PressToShape.App/PressToShape.App.csproj`. 1384 symbols, 4269
 
 ## PressToShape.App.Tests
 
-Project file: `tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj`. 1174 symbols, 10537 relationships.
+Project file: `tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj`. 1202 symbols, 10648 relationships.
 
 - [<global namespace>](PressToShape.App.Tests/_global_namespace_.md) (1 types)
-- [PressToShape.App.Tests](PressToShape.App.Tests/PressToShape.App.Tests.md) (61 types)
+- [PressToShape.App.Tests](PressToShape.App.Tests/PressToShape.App.Tests.md) (63 types)
 
 ## PressToShape.Benchmarks
 
@@ -94,6 +94,13 @@ Project file: `tests/PressToShape.Core.Tests/PressToShape.Core.Tests.csproj`. 28
 - [PressToShape.Core.Tests.History](PressToShape.Core.Tests/PressToShape.Core.Tests.History.md) (1 types)
 - [PressToShape.Core.Tests.IO](PressToShape.Core.Tests/PressToShape.Core.Tests.IO.md) (3 types)
 - [PressToShape.Core.Tests.Shapes](PressToShape.Core.Tests/PressToShape.Core.Tests.Shapes.md) (5 types)
+
+## PressToShape.CursorImages.Tests
+
+Project file: `tests/PressToShape.CursorImages.Tests/PressToShape.CursorImages.Tests.csproj`. 58 symbols, 76 relationships.
+
+- [<global namespace>](PressToShape.CursorImages.Tests/_global_namespace_.md) (1 types)
+- [PressToShape.CursorImages.Tests](PressToShape.CursorImages.Tests/PressToShape.CursorImages.Tests.md) (4 types)
 
 ## PressToShape.Desktop
 

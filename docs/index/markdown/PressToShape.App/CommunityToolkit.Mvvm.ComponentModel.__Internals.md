@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class __KnownINotifyPropertyChangedArgs`
 
-Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-153` (generated)
+Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-161` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangedEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -14,6 +14,8 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 
 - `public PropertyChangedEventArgs ViewportWidth` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "ViewportWidth" generated properties.
 - `public PropertyChangedEventArgs ViewportHeight` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "ViewportHeight" generated properties.
+- `public PropertyChangedEventArgs IsAltHeld` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsAltHeld" generated properties.
+- `public PropertyChangedEventArgs CursorType` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "CursorType" generated properties.
 - `public PropertyChangedEventArgs HasColor` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "HasColor" generated properties.
 - `public PropertyChangedEventArgs IsNone` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsNone" generated properties.
 - `public PropertyChangedEventArgs IsMixed` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsMixed" generated properties.
@@ -51,7 +53,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 
 `internal static class __KnownINotifyPropertyChangingArgs`
 
-Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-153` (generated)
+Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-161` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangingEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -59,6 +61,8 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 
 - `public PropertyChangingEventArgs ViewportWidth` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "ViewportWidth" generated properties.
 - `public PropertyChangingEventArgs ViewportHeight` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "ViewportHeight" generated properties.
+- `public PropertyChangingEventArgs IsAltHeld` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsAltHeld" generated properties.
+- `public PropertyChangingEventArgs CursorType` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "CursorType" generated properties.
 - `public PropertyChangingEventArgs HasColor` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "HasColor" generated properties.
 - `public PropertyChangingEventArgs IsNone` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsNone" generated properties.
 - `public PropertyChangingEventArgs IsMixed` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsMixed" generated properties.

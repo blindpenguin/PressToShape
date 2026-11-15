@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal partial sealed class CanvasAreaViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:13-438`
+Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:13-449`
 
 Geometry of the canvas area: where the artboard is drawn and where the ruler zero points are. The view only reports the viewport size, everything else is derived here.
 
@@ -15,10 +15,11 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null)` - _(no documentation)_
 - `public double ViewportWidth { get; set; }` - _(no documentation)_
 - `public double ViewportHeight { get; set; }` - _(no documentation)_
+- `public bool IsAltHeld { get; set; }` - _(no documentation)_
 - `public Document Document { get; }` - The document the canvas draws.
 - `public ScreenShape? Draft { get; }` - The shape that is being drawn, in screen space, or null.
 - `public SelectionOverlay Overlay { get; }` - Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.
-- `public CanvasCursorType CursorType { get; }` - The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle, otherwise the shape of the active tool.
+- `public CanvasCursorType CursorType { get; }` - The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle, otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
 - `public double HorizontalScrollMinimum { get; }` - Smallest value of the horizontal scroll bar: minus the furthest the view offset may go.
 - `public double HorizontalScrollMaximum { get; }` - Largest value of the horizontal scroll bar: the furthest the view offset may go.
 - `public double HorizontalScrollValue { get; set; }` - The horizontal scroll bar's value: the view offset, negated, because the bar's value grows when the view moves right. Setting it moves the view.
