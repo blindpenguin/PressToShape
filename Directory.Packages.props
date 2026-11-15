@@ -30,6 +30,10 @@
         <PackageVersion Include="Microsoft.Build.Framework" Version="18.7.1" />
         <PackageVersion Include="Microsoft.NET.StringTools" Version="18.7.1" />
 
+        <!-- Developer tooling (tools/PressToShape.CursorImages only) -->
+        <PackageVersion Include="SkiaSharp" Version="3.119.4" />
+        <PackageVersion Include="SkiaSharp.NativeAssets.Linux" Version="3.119.4" />
+
         <!-- Testing -->
         <PackageVersion Include="xunit" Version="2.9.3" />
         <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
