@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15). Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions stay in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15). Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -140,7 +140,7 @@ The most important structural gap: **Core has only `RectangleShape` and `Ellipse
 | Tablet layout, floating panels, grouped tools | Done | MVP |
 | Pinch zoom, two-finger pan, long press | Done | MVP |
 | Pen pressure and tilt | Missing | Unplanned |
-| Palm rejection | Shelved, see `palm-detection.md` | Unplanned |
+| Palm rejection | Shelved, see [palm-detection.md](palm-detection.md) | Unplanned |
 | Stylus-button actions, eraser end | Missing | Unplanned |
 | On-screen modifier keys (shift, ctrl) | Missing | Unplanned |
 
@@ -149,23 +149,5 @@ The most important structural gap: **Core has only `RectangleShape` and `Ellipse
 | Feature | State | Stage |
 |---|---|---|
 | SVG 1.1 export of rect and ellipse | Done | MVP |
-| W3C SVG conformity as a goal | Idea, see `svg-conformity.md` | Not decided |
+| W3C SVG conformity as a goal | Idea, see [svg-conformity.md](svg-conformity.md) | Not decided |
 | Accessibility (keyboard navigation, screen reader names) | Partly: accessible names exist | Unplanned |
-
-## Suggested order (to discuss)
-
-1. **Path and group model in Core.** Everything below needs it.
-2. **Layer management and arrange.** Small, and the placeholders already exist.
-3. **Pen tool and node editing.** This is the core of a vector editor.
-4. **Snapping, grid, guides.** Precision is a product principle.
-5. **Stroke options** (cap, join, dashes) and **gradients.**
-6. **Star, boolean operations, align and distribute, text.**
-7. **SVG import.**
-8. **Autosave.** Cheap protection for the "no lost work" principle.
-
-## Open questions
-
-- Should the "Unplanned" rows that most editors have (stroke options, guides, autosave, rounded corners) be added to the MVP in `product.md`?
-- Is pen pressure wanted for a freehand tool on the tablet, or only the pen as a pointer?
-- Which units are needed besides px?
-- Is a single artboard enough?
