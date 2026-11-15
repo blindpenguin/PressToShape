@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal partial sealed class CanvasAreaViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:13-471`
+Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:13-547`
 
 Geometry of the canvas area: where the artboard is drawn and where the ruler zero points are. The view only reports the viewport size, everything else is derived here.
 
@@ -38,7 +38,12 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public double ArtboardScreenHeight { get; }` - _(no documentation)_
 - `public double OriginX { get; }` - Horizontal screen position of the artboard's left edge, where the horizontal ruler's zero is. The artboard is centered (also when it is larger than the canvas area) and then moved by the view offset.
 - `public double OriginY { get; }` - Vertical screen position of the artboard's top edge. The vertical ruler's zero is here.
-- `public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false)` - The primary button went down. The position is in screen pixels of the canvas area. With the Hand tool this starts dragging the view, with the Zoom tool it zooms one step in (with alt: out) around the position, with the other tools it is handled by the tool.
+- `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. The tablet layout sets it from the theme.
+- `public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = Mouse)` - The primary button went down. The position is in screen pixels of the canvas area. With the Hand tool this starts dragging the view, with the Zoom tool it zooms one step in (with alt: out) around the position, with the other tools it is handled by the tool. inputType is the device: a finger grabs handles from a larger area.
+- `public void TouchPressed(int id, double screenX, double screenY)` - A finger went down. One finger acts with the active tool like the mouse. A second finger undoes that action (see PressToShape.App.Workspace.CanvasInteraction.Abort) and the two fingers then move and zoom the view. Mouse and pen use PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.PointerPressed. The id only has to be unique from this press to the release.
+- `public void TouchMoved(int id, double screenX, double screenY)` - A finger moved.
+- `public void TouchReleased(int id, double screenX, double screenY)` - A finger went up.
+- `public void TouchCancelled()` - The system took the fingers away, or the pointer capture was lost. All fingers are forgotten and an action of one finger that was not finished is undone. Does nothing if no finger is down, for example after a normal release.
 - `public void MiddlePressed(double screenX, double screenY)` - The middle button went down: drags the view with any tool, unless another drag is in progress.
 - `public void PointerMoved(double screenX, double screenY, bool shift = false, bool alt = false)` - The pointer moved. The position is in screen pixels of the canvas area.
 - `public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)` - The button went up. The position is in screen pixels of the canvas area.
@@ -85,6 +90,105 @@ A color of the Properties tab (fill or stroke). While the color picker is open t
 
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 - Injected into `PressToShape.App.ViewModels.Editor.PaletteViewModel`
+
+## EditMenuCommands (record)
+
+`internal sealed record EditMenuCommands : IEquatable<EditMenuCommands>`
+
+Source: `src/PressToShape.App/ViewModels/Editor/EditMenuCommands.cs:6-14`
+
+What the clipboard, delete and selection items of the Edit menu do. Undo and Redo are passed on their own.
+
+**Members**
+
+- `public EditMenuCommands(ICommand Cut, ICommand Copy, ICommand Paste, ICommand PasteInPlace, ICommand Duplicate, ICommand Delete, ICommand SelectAll, ICommand Deselect)` - What the clipboard, delete and selection items of the Edit menu do. Undo and Redo are passed on their own.
+- `public ICommand Cut { get; init; }` - _(no documentation)_
+- `public ICommand Copy { get; init; }` - _(no documentation)_
+- `public ICommand Paste { get; init; }` - _(no documentation)_
+- `public ICommand PasteInPlace { get; init; }` - _(no documentation)_
+- `public ICommand Duplicate { get; init; }` - _(no documentation)_
+- `public ICommand Delete { get; init; }` - _(no documentation)_
+- `public ICommand SelectAll { get; init; }` - _(no documentation)_
+- `public ICommand Deselect { get; init; }` - _(no documentation)_
+
+**Relationships**
+
+- Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
+
+## EditorShellViewModel (class)
+
+`internal abstract partial class EditorShellViewModel : ViewModelBase`
+
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:17-215`
+
+What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
+
+**Members**
+
+- `public IRelayCommand CopyCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy.
+- `public IRelayCommand CutCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut.
+- `public IRelayCommand DeleteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete.
+- `public IRelayCommand DeselectCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Deselect`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Deselect.
+- `public IRelayCommand DuplicateCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Duplicate`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Duplicate.
+- `public IAsyncRelayCommand ExportSvgCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ExportSvgAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ExportSvgAsync.
+- `public IAsyncRelayCommand NewCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.NewAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.NewAsync.
+- `public IAsyncRelayCommand OpenCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenAsync.
+- `public IRelayCommand PasteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Paste`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Paste.
+- `public IRelayCommand PasteInPlaceCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.PasteInPlace`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.PasteInPlace.
+- `public IRelayCommand RedoCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Redo`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Redo.
+- `public IAsyncRelayCommand SaveAsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsAsync.
+- `public IAsyncRelayCommand SaveCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsync.
+- `public IRelayCommand SelectAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SelectAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SelectAll.
+- `public IRelayCommand UndoCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Undo`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Undo.
+- `protected EditorShellViewModel(ILocalizer localizer, FileServices services)` - _(no documentation)_
+- `public EditorState State { get; }` - _(no documentation)_
+- `public ToolboxViewModel Toolbox { get; }` - _(no documentation)_
+- `public SelectionEditor Editor { get; }` - The selection edits (copy, paste, nudge, property changes). One instance, shared by the canvas, the inspector and the menus.
+- `public CanvasAreaViewModel Canvas { get; }` - _(no documentation)_
+- `public InspectorViewModel Inspector { get; }` - _(no documentation)_
+- `public string DocumentName { get; }` - The file name of the document, or the translated word for "Untitled" while it has none.
+- `public bool IsDirty { get; }` - Whether the document has changes that were not saved.
+- `public string WindowTitle { get; }` - The window title: an asterisk while there are unsaved changes, the file name (or "Untitled") and the product name.
+- `protected RecentFiles Recent { get; }` - The recently used files, for layouts that list them.
+- `protected FileMenuCommands FileCommands { get; }` - The commands behind the file items of a menu.
+- `protected EditMenuCommands EditCommands { get; }` - The commands behind the edit items of a menu.
+- `public Task<bool> ConfirmCloseAsync()` - Asks about unsaved changes before the window closes. Returns whether closing may go on.
+- `public void FitToWindow()` - Zooms so the artboard fits the canvas area. Does nothing until the canvas has a size.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Services.FileServices`
+- Inherited by `PressToShape.App.Tests.EditorShellViewModelTests.BareShell`
+- Inherited by `PressToShape.App.Tests.TestShell`
+- Inherited by `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
+- Inherited by `PressToShape.App.ViewModels.Tablet.TabletShellViewModel`
+- Inherits `PressToShape.App.ViewModels.ViewModelBase`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`
+
+## FileMenuCommands (record)
+
+`internal sealed record FileMenuCommands : IEquatable<FileMenuCommands>`
+
+Source: `src/PressToShape.App/ViewModels/Editor/FileMenuCommands.cs:7-13`
+
+What the File menu items do. OpenRecent creates the command for one entry of the recent list.
+
+**Members**
+
+- `public FileMenuCommands(ICommand New, ICommand Open, ICommand Save, ICommand SaveAs, ICommand ExportSvg, Func<string, ICommand> OpenRecent)` - What the File menu items do. OpenRecent creates the command for one entry of the recent list.
+- `public ICommand New { get; init; }` - _(no documentation)_
+- `public ICommand Open { get; init; }` - _(no documentation)_
+- `public ICommand Save { get; init; }` - _(no documentation)_
+- `public ICommand SaveAs { get; init; }` - _(no documentation)_
+- `public ICommand ExportSvg { get; init; }` - _(no documentation)_
+- `public Func<string, ICommand> OpenRecent { get; init; }` - _(no documentation)_
+
+**Relationships**
+
+- Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
 
 ## HistoryItemViewModel (class)
 
@@ -153,6 +257,7 @@ State of the inspector: the selected tab and the view models of its tabs.
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`
 
 ## LayerItemViewModel (class)
 
@@ -274,7 +379,7 @@ An inspector tab that only shows an empty-state message (Assets). Title and mess
 
 `internal partial sealed class PropertiesViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:21-338`
+Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:21-354`
 
 The Properties tab: the position, size, rotation and appearance of the selected shapes, and the section expansion. The fields show the current values (updated in place while shapes are dragged or edited elsewhere) and every committed edit is one undo step.
 
@@ -293,6 +398,7 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public ColorFieldViewModel Stroke { get; }` - _(no documentation)_
 - `public PaletteViewModel Palette { get; }` - The swatches saved with the document.
 - `public IReadOnlyList<Color> RecentColors { get; }` - The colors picked lately, most recent first.
+- `public void CommitPendingEdits()` - Applies every number field that the user is still typing in, as if it had been left. For a layout that hides the fields without moving the focus first, so a typed value is not lost.
 - `public bool HasSelection { get; }` - _(no documentation)_
 - `public bool ShowNothingSelectedHint { get; }` - _(no documentation)_
 - `public bool ShowTransform { get; }` - _(no documentation)_
@@ -321,6 +427,7 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletColorSwatchViewModel`
 
 ## ToolItemViewModel (class)
 
@@ -369,3 +476,47 @@ State of the tool column: tool list, active tool, shortcut lookup, and the (not 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.ToolGroupViewModel`
+
+## ZoomPresetViewModel (class)
+
+`internal sealed class ZoomPresetViewModel`
+
+Source: `src/PressToShape.App/ViewModels/Editor/ZoomPresetViewModel.cs:8-23`
+
+One entry of the zoom drop-down. It carries its own command so the menu needs no parent lookup.
+
+**Members**
+
+- `public ZoomPresetViewModel(double percent, Action apply)` - _(no documentation)_
+- `public double Percent { get; }` - _(no documentation)_
+- `public string Text { get; }` - _(no documentation)_
+- `public ICommand SelectCommand { get; }` - _(no documentation)_
+
+## ZoomViewModel (class)
+
+`internal partial sealed class ZoomViewModel : LocalizedViewModel`
+
+Source: `src/PressToShape.App/ViewModels/Editor/ZoomViewModel.cs:13-59`
+
+The zoom as the user sees it: the text, the preset list and the commands. Shared by the desktop status bar and the tablet toolbar.
+
+**Members**
+
+- `public IRelayCommand FitToWindowCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ZoomViewModel.FitToWindow`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ZoomViewModel.FitToWindow.
+- `public IRelayCommand<double> SetZoomCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ZoomViewModel.SetZoom(System.Double)`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand`1 instance wrapping PressToShape.App.ViewModels.Editor.ZoomViewModel.SetZoom.
+- `public IRelayCommand ZoomInCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ZoomViewModel.ZoomIn`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ZoomViewModel.ZoomIn.
+- `public IRelayCommand ZoomOutCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ZoomViewModel.ZoomOut`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ZoomViewModel.ZoomOut.
+- `public ZoomViewModel(EditorState state, ILocalizer localizer, Action fitToWindow)` - _(no documentation)_
+- `public double ZoomPercent { get; }` - _(no documentation)_
+- `public string ZoomText { get; }` - The zoom as shown to the user, for example "100%" or "133.33%".
+- `public IReadOnlyList<ZoomPresetViewModel> ZoomPresets { get; }` - The zoom values offered in the drop-down. Each entry carries its own command.
+- `public string FormatZoom(double percent, CultureInfo culture)` - Formats a zoom value with the decimal separator of the given culture, for example "80.75%" or "80,75%".
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`

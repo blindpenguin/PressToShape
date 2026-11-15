@@ -6,17 +6,14 @@
 
 `T:PressToShape.App.PressToShapeApp` in src/PressToShape.App/PressToShapeApp.axaml.cs.
 
-- `Initialize` at line 21: creates `JsonFileSettingsStore` (line 24), `Localizer` (line 25), `EmbeddedCatalogSource` (line 26)
-- `OnFrameworkInitializationCompleted` at line 34: creates nothing from this solution
-  - when the lifetime is `IClassicDesktopStyleApplicationLifetime` (line 36): creates `FileServices` (line 39), `LocalFileStore` (line 41), `AvaloniaFileDialogs` (line 42), `AvaloniaMessageDialogs` (line 43), `MainWindow` (line 44), `DesktopAppShutdown` (line 46), `DesktopShellViewModel` (line 46)
-  - when the lifetime is `IActivityApplicationLifetime` (line 49): creates `MainViewModel` (line 51), `MainView` (line 51)
-  - when the lifetime is `ISingleViewApplicationLifetime` (line 53): creates `MainView` (line 55), `MainViewModel` (line 57)
+- `Initialize` at line 22: creates `JsonFileSettingsStore` (line 25), `Localizer` (line 26), `EmbeddedCatalogSource` (line 27)
+- `OnFrameworkInitializationCompleted` at line 35: creates nothing from this solution
 
 ### HeadlessUiApp
 
 `T:PressToShape.App.Tests.HeadlessUiApp` in tests/PressToShape.App.Tests/HeadlessUi.cs.
 
-- `Initialize` at line 21: creates nothing from this solution
+- `Initialize` at line 21: creates `ViewLocator` (line 26)
 
 ## View locator convention
 
@@ -26,12 +23,15 @@
 
 - `vm:ToolbarButtonViewModel` at src/PressToShape.App/Views/Desktop/ToolbarView.axaml:13
 - `vm:HistoryItemViewModel` at src/PressToShape.App/Views/Editor/HistoryView.axaml:33
-- `vm:LayerItemViewModel` at src/PressToShape.App/Views/Editor/LayersView.axaml:37
+- `vm:LayerItemViewModel` at src/PressToShape.App/Views/Editor/LayersView.axaml:42
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:113
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:153
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:204
-- `vm:ToolItemViewModel` at src/PressToShape.App/Views/Editor/ToolboxView.axaml:13
-- `vm:MessageDialogButtonViewModel` at src/PressToShape.App/Views/MessageDialogWindow.axaml:29
+- `vm:ToolItemViewModel` at src/PressToShape.App/Views/Editor/ToolboxView.axaml:15
+- `vm:MessageDialogButtonViewModel` at src/PressToShape.App/Views/MessageDialogView.axaml:22
+- `vm:ToolGroupViewModel` at src/PressToShape.App/Views/Tablet/TabletToolColumnView.axaml:29
+- `editorVm:ToolItemViewModel` at src/PressToShape.App/Views/Tablet/TabletToolColumnView.axaml:56
+- `vm:PanelButtonViewModel` at src/PressToShape.App/Views/Tablet/TabletToolbarView.axaml:85
 
 ## Content hosts
 

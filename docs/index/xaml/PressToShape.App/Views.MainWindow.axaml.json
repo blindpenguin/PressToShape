@@ -2,5 +2,5 @@
 {"Id":"X:src/PressToShape.App/Views/MainWindow.axaml#/Window","Type":"Window","Line":1},
 {"Id":"X:src/PressToShape.App/Views/MainWindow.axaml#/Window/desktop:DesktopShellView[1]","ParentId":"X:src/PressToShape.App/Views/MainWindow.axaml#/Window","Type":"desktop:DesktopShellView","TypeId":"T:PressToShape.App.Views.Desktop.DesktopShellView","Line":16}
 ],"Bindings":[
-{"Id":"X:src/PressToShape.App/Views/MainWindow.axaml#/Window@Title","ElementId":"X:src/PressToShape.App/Views/MainWindow.axaml#/Window","Property":"Title","BindingType":"Binding","Path":"WindowTitle","TargetId":"P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.WindowTitle","IsCommand":false,"Confidence":"Verified","Reason":"x:DataType vm:DesktopShellViewModel","Line":11}
+{"Id":"X:src/PressToShape.App/Views/MainWindow.axaml#/Window@Title","ElementId":"X:src/PressToShape.App/Views/MainWindow.axaml#/Window","Property":"Title","BindingType":"Binding","Path":"WindowTitle","TargetId":"P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.WindowTitle","IsCommand":false,"Confidence":"Verified","Reason":"x:DataType vm:DesktopShellViewModel","Line":11}
 ],"Resources":[],"ResourceRefs":[],"Styles":[],"Templates":[],"Handlers":[]}

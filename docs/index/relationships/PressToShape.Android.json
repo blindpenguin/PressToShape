@@ -1,1 +1,3 @@
-{"SchemaVersion":3,"Project":"PressToShape.Android","Relationships":[]}
+{"SchemaVersion":3,"Project":"PressToShape.Android","Relationships":[
+{"Type":"References","FromId":"M:PressToShape.Android.MainActivity.OnCreate(Android.OS.Bundle)","ToId":"P:PressToShape.App.PressToShapeApp.ExitRequested","File":"src/PressToShape.Android/MainActivity.cs","Line":25,"Confidence":"Verified"}
+]}

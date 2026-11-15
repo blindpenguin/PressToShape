@@ -27,22 +27,11 @@ Base class for view models that show translated text. When the language changes 
 - Inherited by `PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.ToolItemViewModel`
-- Inherits `PressToShape.App.ViewModels.ViewModelBase`
-
-## MainViewModel (class)
-
-`internal partial class MainViewModel : ViewModelBase`
-
-Source: `src/PressToShape.App/ViewModels/MainViewModel.cs:5-8`
-
-_(no documentation)_
-
-**Members**
-
-- `public string Greeting { get; set; }` - _(no documentation)_
-
-**Relationships**
-
+- Inherited by `PressToShape.App.ViewModels.Editor.ZoomViewModel`
+- Inherited by `PressToShape.App.ViewModels.Tablet.PanelButtonViewModel`
+- Inherited by `PressToShape.App.ViewModels.Tablet.TabletColorSwatchViewModel`
+- Inherited by `PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`
+- Inherited by `PressToShape.App.ViewModels.Tablet.ToolGroupViewModel`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 
 ## MessageDialogButtonViewModel (record)
@@ -66,7 +55,7 @@ One button of a message dialog. Choosing it closes the dialog with Result.
 
 `internal sealed class MessageDialogViewModel`
 
-Source: `src/PressToShape.App/ViewModels/MessageDialogViewModel.cs:14-78`
+Source: `src/PressToShape.App/ViewModels/MessageDialogViewModel.cs:14-82`
 
 The content of a small modal dialog: a title, a message and a row of buttons. It holds no window code. Choosing a button raises PressToShape.App.ViewModels.MessageDialogViewModel.CloseRequested with that button's result. The texts are translated once when the dialog is created, because the dialog is short-lived.
 
@@ -77,8 +66,8 @@ The content of a small modal dialog: a title, a message and a row of buttons. It
 - `public string Message { get; }` - _(no documentation)_
 - `public IReadOnlyList<MessageDialogButtonViewModel> Buttons { get; }` - _(no documentation)_
 - `public int CancelResult { get; private init; }` - The result that counts when the dialog is closed without choosing a button.
-- `public MessageDialogViewModel ForUnsavedChanges(ILocalizer localizer, string documentName)` - The question about unsaved changes. The results are the PressToShape.App.Services.UnsavedChoice values.
-- `public MessageDialogViewModel ForError(ILocalizer localizer, string message)` - An error message with a single OK button.
+- `public MessageDialogViewModel ForUnsavedChanges(ILocalizer localizer, string documentName, bool escapeCancels = true)` - The question about unsaved changes. The results are the PressToShape.App.Services.UnsavedChoice values.
+- `public MessageDialogViewModel ForError(ILocalizer localizer, string message, bool escapeCancels = true)` - An error message with a single OK button. escapeCancels is as for PressToShape.App.ViewModels.MessageDialogViewModel.ForUnsavedChanges.
 
 ## ViewModelBase (class)
 
@@ -90,11 +79,11 @@ _(no documentation)_
 
 **Relationships**
 
-- Inherited by `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
 - Inherited by `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
 - Inherited by `PressToShape.App.ViewModels.Desktop.ToolbarViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.ColorFieldViewModel`
+- Inherited by `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.HistoryViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.InspectorViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.LayerItemViewModel`
@@ -102,4 +91,7 @@ _(no documentation)_
 - Inherited by `PressToShape.App.ViewModels.Editor.PaletteViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
 - Inherited by `PressToShape.App.ViewModels.LocalizedViewModel`
-- Inherited by `PressToShape.App.ViewModels.MainViewModel`
+- Inherited by `PressToShape.App.ViewModels.Tablet.MessageDialogHost`
+- Inherited by `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
+- Inherited by `PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`
+- Inherited by `PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`

@@ -6,7 +6,8 @@ Class: `PressToShape.App.Views.Editor.PropertiesView`.
 ## View model links
 
 - `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (inferred): ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.PropertiesViewModel maps to PressToShape.App.Views.Editor.PropertiesView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:26 (src/PressToShape.App/Views/Editor/InspectorView.axaml:26)
-- `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewColorTests.cs:28)
+- `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewColorTests.cs:29)
+- `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:159)
 - `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): x:DataType (src/PressToShape.App/Views/Editor/PropertiesView.axaml:1)
 
 ## Bindings
@@ -77,19 +78,51 @@ Class: `PressToShape.App.Views.Editor.PropertiesView`.
 ## Resource references
 
 - line 17: Setter.Foreground = DynamicResource `TextSecondaryBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/TextSecondaryBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/TextSecondaryBrush@Light` (verified)
-- line 18: Setter.FontSize = StaticResource `UiFontSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/UiFontSize` (verified)
+- line 18: Setter.FontSize = DynamicResource `UiFontSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/UiFontSize` (verified)
+- line 23: Setter.MinHeight = DynamicResource `SwatchButtonMinSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SwatchButtonMinSize` (verified)
+- line 24: Setter.MinWidth = DynamicResource `SwatchButtonMinSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SwatchButtonMinSize` (verified)
+- line 28: Setter.Width = DynamicResource `SmallSwatchSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SmallSwatchSize` (verified)
+- line 29: Setter.Height = DynamicResource `SmallSwatchSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SmallSwatchSize` (verified)
 - line 32: Setter.BorderBrush = DynamicResource `BorderStrongBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderStrongBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderStrongBrush@Light` (verified)
+- line 35: Setter.Width = DynamicResource `PropertySwatchWidth` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PropertySwatchWidth` (verified)
+- line 36: Setter.Height = DynamicResource `PropertySwatchHeight` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PropertySwatchHeight` (verified)
 - line 39: Setter.BorderBrush = DynamicResource `BorderStrongBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderStrongBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderStrongBrush@Light` (verified)
+- line 69: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 69: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 88: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 88: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
 - line 126: Border.Background = DynamicResource `ControlBackgroundBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ControlBackgroundBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ControlBackgroundBrush@Light` (verified)
 - line 166: Border.Background = DynamicResource `ControlBackgroundBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ControlBackgroundBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ControlBackgroundBrush@Light` (verified)
+- line 184: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 184: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 187: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 187: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 190: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 190: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 193: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 193: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 241: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 241: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 244: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 244: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 247: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 247: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 250: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 250: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
 - line 252: Border.Background = DynamicResource `BorderSubtleBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderSubtleBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderSubtleBrush@Light` (verified)
+- line 254: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 254: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 257: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 257: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 260: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 260: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
 
 ## Styles
 
 - line 16: `TextBlock.label`, sets FontSize, Foreground, VerticalAlignment, uses TextSecondaryBrush, UiFontSize
-- line 21: `Button.swatchButton`, sets Background, MinHeight, MinWidth, Padding
-- line 27: `Border.smallSwatch`, sets BorderBrush, BorderThickness, CornerRadius, Height, Width, uses BorderStrongBrush
-- line 34: `Border.swatch`, sets BorderBrush, BorderThickness, CornerRadius, Height, Width, uses BorderStrongBrush
+- line 21: `Button.swatchButton`, sets Background, MinHeight, MinWidth, Padding, uses SwatchButtonMinSize
+- line 27: `Border.smallSwatch`, sets BorderBrush, BorderThickness, CornerRadius, Height, Width, uses BorderStrongBrush, SmallSwatchSize
+- line 34: `Border.swatch`, sets BorderBrush, BorderThickness, CornerRadius, Height, Width, uses BorderStrongBrush, PropertySwatchHeight, PropertySwatchWidth
 
 ## Templates
 

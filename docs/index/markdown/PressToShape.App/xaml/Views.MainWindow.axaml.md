@@ -5,9 +5,9 @@ Class: `PressToShape.App.Views.MainWindow`.
 
 ## View model links
 
-- `T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel` (verified): DataContext assignment (src/PressToShape.App/PressToShapeApp.axaml.cs:46)
+- `T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel` (verified): DataContext assignment (src/PressToShape.App/AppLayout.cs:40)
 - `T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel` (verified): x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1)
 
 ## Bindings
 
-- line 11: Window.Title = Binding `WindowTitle` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.WindowTitle` (verified)
+- line 11: Window.Title = Binding `WindowTitle` -> `P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.WindowTitle` (verified)

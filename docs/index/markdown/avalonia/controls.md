@@ -25,6 +25,7 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 
 - `Document` (Styled, `Document?`, default not set) at line 17
 - `Draft` (Styled, `ScreenShape?`, default not set) at line 33
+- `HandleSize` (Styled, `double`, default SelectionOverlay.HandleSize) at line 49
 - `OriginX` (Styled, `double`, default not set) at line 25
 - `OriginY` (Styled, `double`, default not set) at line 29
 - `Overlay` (Styled, `SelectionOverlay?`, default not set) at line 37
@@ -47,6 +48,34 @@ A horizontal or vertical ruler. It asks PressToShape.App.Workspace.RulerTicks fo
 - `Orientation` (Styled, `Orientation`, default Orientation.Horizontal) at line 16
 - `OriginPx` (Styled, `double`, default not set) at line 24
 - `ZoomPercent` (Styled, `double`, default 100) at line 20
+
+**Events**
+
+none found
+
+
+## ToolGroupButton
+
+`T:PressToShape.App.Controls.ToolGroupButton` at src/PressToShape.App/Controls/ToolGroupButton.cs:16, base `ToolToggleButton`.
+The button of a tool group in the tablet tool column. A tap selects the current tool of the group (see PressToShape.App.Controls.ToolToggleButton). Holding the pointer down for a while runs PressToShape.App.Controls.ToolGroupButton.LongPressCommand (which opens the flyout of the group), and the click that follows the release is then swallowed, so a long press never also selects the tool. The decision is made by PressToShape.App.Workspace.LongPressTracker; this control only passes it pointer events and the time. It looks like a plain toggle button, so the tool styles apply to it.
+
+**Properties**
+
+- `LongPressCommand` (Styled, `ICommand?`, default not set) at line 20
+
+**Events**
+
+none found
+
+
+## ToolToggleButton
+
+`T:PressToShape.App.Controls.ToolToggleButton` at src/PressToShape.App/Controls/ToolToggleButton.cs:12, base `ToggleButton`.
+A toggle button for something whose state lives in a view model: a tool in the tool column, or the icon that shows whether a panel is open. Its checked state comes only from the binding. A tap runs the command and does not flip the button by itself, so tapping the active tool again keeps it active (a plain toggle button would show it as off while the tool is still the active one, and would also lose its binding). It looks like a plain toggle button, so the tool styles apply.
+
+**Properties**
+
+none found
 
 **Events**
 

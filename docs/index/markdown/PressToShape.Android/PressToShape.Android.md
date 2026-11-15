@@ -19,9 +19,13 @@ _(no documentation)_
 
 `public class MainActivity : AvaloniaMainActivity`
 
-Source: `src/PressToShape.Android/MainActivity.cs:8-16`
+Source: `src/PressToShape.Android/MainActivity.cs:10-28`
 
 _(no documentation)_
+
+**Members**
+
+- `protected void OnCreate(Bundle? savedInstanceState)` - _(no documentation)_
 
 ## Resource (class)
 

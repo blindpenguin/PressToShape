@@ -5,22 +5,22 @@
     {
       "Name": "PressToShape.Android",
       "Path": "src/PressToShape.Android/PressToShape.Android.csproj",
-      "SymbolCount": 7,
-      "RelationshipCount": 0,
+      "SymbolCount": 8,
+      "RelationshipCount": 1,
       "XamlFileCount": 0
     },
     {
       "Name": "PressToShape.App",
       "Path": "src/PressToShape.App/PressToShape.App.csproj",
-      "SymbolCount": 1489,
-      "RelationshipCount": 4669,
-      "XamlFileCount": 17
+      "SymbolCount": 1842,
+      "RelationshipCount": 5963,
+      "XamlFileCount": 23
     },
     {
       "Name": "PressToShape.App.Tests",
       "Path": "tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj",
-      "SymbolCount": 1327,
-      "RelationshipCount": 11902,
+      "SymbolCount": 1851,
+      "RelationshipCount": 16094,
       "XamlFileCount": 0
     },
     {
@@ -66,7 +66,7 @@
       "XamlFileCount": 0
     }
   ],
-  "SymbolCount": 4325,
-  "RelationshipCount": 21231,
+  "SymbolCount": 5203,
+  "RelationshipCount": 26718,
   "Warnings": []
 }

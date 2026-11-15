@@ -82,12 +82,17 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.Localization.LocalizedTextObservable`
 - Injected into `PressToShape.App.Services.AvaloniaFileDialogs`
 - Injected into `PressToShape.App.Services.AvaloniaMessageDialogs`
+- Injected into `PressToShape.App.Services.OverlayMessageDialogs`
+- Injected into `PressToShape.App.Tests.EditorShellViewModelTests.BareShell`
+- Injected into `PressToShape.App.Tests.EditorShellViewModelTests.Fixture`
+- Injected into `PressToShape.App.Tests.TestShell`
 - Injected into `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.StatusBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.ToolbarButtonViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.ToolbarViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.HistoryItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.HistoryViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
@@ -96,7 +101,16 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.ZoomViewModel`
 - Injected into `PressToShape.App.ViewModels.LocalizedViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.PanelButtonViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletColorSwatchViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletShellViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.ToolGroupViewModel`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
 
 ## ITranslationCatalog (interface)

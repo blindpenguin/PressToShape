@@ -4,105 +4,36 @@ Project: PressToShape.App
 
 ## DesktopShellViewModel (class)
 
-`internal partial sealed class DesktopShellViewModel : ViewModelBase`
+`internal partial sealed class DesktopShellViewModel : EditorShellViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:16-220`
+Source: `src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:12-47`
 
-Root of the desktop layout. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region, so toolbar, tool column, menu, canvas, inspector and status bar always agree.
+Root of the desktop layout. Adds the menu bar, the toolbar and the status bar to what every shell has (see PressToShape.App.ViewModels.Editor.EditorShellViewModel).
 
 **Members**
 
 - `public IRelayCommand ActualSizeCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ActualSize`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ActualSize.
-- `public IRelayCommand CopyCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Copy`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Copy.
-- `public IRelayCommand CutCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Cut`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Cut.
-- `public IRelayCommand DeleteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Delete`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Delete.
-- `public IRelayCommand DeselectCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Deselect`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Deselect.
-- `public IRelayCommand DuplicateCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Duplicate`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Duplicate.
-- `public IAsyncRelayCommand ExportSvgCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ExportSvgAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ExportSvgAsync.
 - `public IRelayCommand FitArtboardCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.FitArtboard`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.FitArtboard.
-- `public IAsyncRelayCommand NewCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.NewAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.NewAsync.
-- `public IAsyncRelayCommand OpenCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.OpenAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.OpenAsync.
-- `public IRelayCommand PasteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Paste`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Paste.
-- `public IRelayCommand PasteInPlaceCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.PasteInPlace`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.PasteInPlace.
 - `public IRelayCommand QuitCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Quit`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Quit.
-- `public IRelayCommand RedoCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Redo`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Redo.
-- `public IAsyncRelayCommand SaveAsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.SaveAsAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.SaveAsAsync.
-- `public IAsyncRelayCommand SaveCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.SaveAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.SaveAsync.
-- `public IRelayCommand SelectAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.SelectAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.SelectAll.
-- `public IRelayCommand UndoCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Undo`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Undo.
 - `public IRelayCommand ZoomInCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ZoomIn`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ZoomIn.
 - `public IRelayCommand ZoomOutCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ZoomOut`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ZoomOut.
 - `public DesktopShellViewModel(IAppShutdown shutdown, ILocalizer localizer, FileServices services)` - _(no documentation)_
-- `public EditorState State { get; }` - _(no documentation)_
 - `public MenuBarViewModel MenuBar { get; }` - _(no documentation)_
 - `public ToolbarViewModel Toolbar { get; }` - _(no documentation)_
-- `public ToolboxViewModel Toolbox { get; }` - _(no documentation)_
-- `public SelectionEditor Editor { get; }` - The selection edits (copy, paste, nudge, property changes). One instance, shared by the canvas, the inspector and the menus.
-- `public CanvasAreaViewModel Canvas { get; }` - _(no documentation)_
-- `public InspectorViewModel Inspector { get; }` - _(no documentation)_
 - `public StatusBarViewModel StatusBar { get; }` - _(no documentation)_
-- `public string WindowTitle { get; }` - The window title: an asterisk while there are unsaved changes, the file name (or "Untitled") and the product name.
-- `public Task<bool> ConfirmCloseAsync()` - Asks about unsaved changes before the window closes. Returns whether closing may go on.
-- `public void FitToWindow()` - Zooms so the artboard fits the canvas area. Does nothing until the canvas has a size.
 
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Services.FileServices`
 - Depends on (constructor) `PressToShape.App.Services.IAppShutdown`
-- Inherits `PressToShape.App.ViewModels.ViewModelBase`
-
-## EditMenuCommands (record)
-
-`internal sealed record EditMenuCommands : IEquatable<EditMenuCommands>`
-
-Source: `src/PressToShape.App/ViewModels/Desktop/EditMenuCommands.cs:6-14`
-
-What the clipboard, delete and selection items of the Edit menu do. Undo and Redo are passed on their own.
-
-**Members**
-
-- `public EditMenuCommands(ICommand Cut, ICommand Copy, ICommand Paste, ICommand PasteInPlace, ICommand Duplicate, ICommand Delete, ICommand SelectAll, ICommand Deselect)` - What the clipboard, delete and selection items of the Edit menu do. Undo and Redo are passed on their own.
-- `public ICommand Cut { get; init; }` - _(no documentation)_
-- `public ICommand Copy { get; init; }` - _(no documentation)_
-- `public ICommand Paste { get; init; }` - _(no documentation)_
-- `public ICommand PasteInPlace { get; init; }` - _(no documentation)_
-- `public ICommand Duplicate { get; init; }` - _(no documentation)_
-- `public ICommand Delete { get; init; }` - _(no documentation)_
-- `public ICommand SelectAll { get; init; }` - _(no documentation)_
-- `public ICommand Deselect { get; init; }` - _(no documentation)_
-
-**Relationships**
-
-- Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
-
-## FileMenuCommands (record)
-
-`internal sealed record FileMenuCommands : IEquatable<FileMenuCommands>`
-
-Source: `src/PressToShape.App/ViewModels/Desktop/FileMenuCommands.cs:7-13`
-
-What the File menu items do. OpenRecent creates the command for one entry of the recent list.
-
-**Members**
-
-- `public FileMenuCommands(ICommand New, ICommand Open, ICommand Save, ICommand SaveAs, ICommand ExportSvg, Func<string, ICommand> OpenRecent)` - What the File menu items do. OpenRecent creates the command for one entry of the recent list.
-- `public ICommand New { get; init; }` - _(no documentation)_
-- `public ICommand Open { get; init; }` - _(no documentation)_
-- `public ICommand Save { get; init; }` - _(no documentation)_
-- `public ICommand SaveAs { get; init; }` - _(no documentation)_
-- `public ICommand ExportSvg { get; init; }` - _(no documentation)_
-- `public Func<string, ICommand> OpenRecent { get; init; }` - _(no documentation)_
-
-**Relationships**
-
-- Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
+- Inherits `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
 
 ## MenuBarViewModel (class)
 
 `internal sealed class MenuBarViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:19-181`
+Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:20-175`
 
 The complete menu structure. The File actions, the Edit actions, Quit, the zoom items, the Window items and the languages have behavior. Everything else has no command and is therefore disabled until its feature exists.
 
@@ -115,8 +46,8 @@ The complete menu structure. The File actions, the Edit actions, Quit, the zoom 
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Services.IAppShutdown`
-- Depends on (constructor) `PressToShape.App.ViewModels.Desktop.EditMenuCommands`
-- Depends on (constructor) `PressToShape.App.ViewModels.Desktop.FileMenuCommands`
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.EditMenuCommands`
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.FileMenuCommands`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.RecentFiles`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
@@ -125,7 +56,7 @@ The complete menu structure. The File actions, the Edit actions, Quit, the zoom 
 
 `internal sealed class MenuItemViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Desktop/MenuItemViewModel.cs:15-107`
+Source: `src/PressToShape.App/ViewModels/Desktop/MenuItemViewModel.cs:15-150`
 
 One entry of the menu bar. The header is translated and refreshes when the language changes. A leaf item without a command is disabled. A submenu is always enabled so it can be opened and its (possibly disabled) items inspected. A separator is rendered with the header "-".
 
@@ -133,6 +64,7 @@ One entry of the menu bar. The header is translated and refreshes when the langu
 
 - `public string SeparatorHeader` - _(no documentation)_
 - `public string Header { get; }` - The shown header: the translation of the message id, or a fixed text for language names.
+- `public string PlainHeader { get; }` - The header without the Alt-key underscore, for a menu that has no Alt keys, such as the overflow menu of the tablet layout. A single underscore marks the key and is dropped, a double underscore is one underscore. A fixed text (a file or language name) is data and stays as it is.
 - `public string? Gesture { get; }` - Shortcut text shown next to the item. Display only.
 - `public string? ToolTip { get; }` - Tooltip text, or null. Not translated: it is used for data such as a folder path.
 - `public ICommand? Command { get; }` - _(no documentation)_
@@ -147,6 +79,8 @@ One entry of the menu bar. The header is translated and refreshes when the langu
 - `public MenuItemViewModel Fixed(ILocalizer localizer, string text, ICommand command, string? toolTip = null)` - An item with a fixed, untranslated text, for data such as a file name, and an optional tooltip.
 - `public MenuItemViewModel Separator(ILocalizer localizer)` - _(no documentation)_
 - `public MenuItemViewModel Checkable(ILocalizer localizer, string fixedHeader, ICommand command, Func<bool> isChecked)` - A checkable item with a fixed, untranslated header, for language names such as "Deutsch".
+- `internal string RemoveMnemonic(string text)` - Removes the mnemonic marker of a menu text: "_Save" gives "Save", "Save __ As" gives "Save _ As".
+- `public MenuItemViewModel[] LanguageItems(ILocalizer localizer)` - One checkable item for every language of the app, named in its own language. Choosing one switches the language.
 - `public IEnumerable<MenuItemViewModel> Descendants()` - All items of this item and its descendants.
 
 **Relationships**
@@ -158,17 +92,13 @@ One entry of the menu bar. The header is translated and refreshes when the langu
 
 `internal partial sealed class StatusBarViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Desktop/StatusBarViewModel.cs:14-86`
+Source: `src/PressToShape.App/ViewModels/Desktop/StatusBarViewModel.cs:13-74`
 
 Status bar: selection summary on the left, zoom controls on the right.
 
 **Members**
 
 - `public IRelayCommand ActivateHandToolCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.StatusBarViewModel.ActivateHandTool`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.StatusBarViewModel.ActivateHandTool.
-- `public IRelayCommand FitToWindowCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.StatusBarViewModel.FitToWindow`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.StatusBarViewModel.FitToWindow.
-- `public IRelayCommand<double> SetZoomCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.StatusBarViewModel.SetZoom(System.Double)`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand`1 instance wrapping PressToShape.App.ViewModels.Desktop.StatusBarViewModel.SetZoom.
-- `public IRelayCommand ZoomInCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.StatusBarViewModel.ZoomIn`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.StatusBarViewModel.ZoomIn.
-- `public IRelayCommand ZoomOutCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.StatusBarViewModel.ZoomOut`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.StatusBarViewModel.ZoomOut.
 - `public StatusBarViewModel(EditorState state, ILocalizer localizer, Action fitToWindow)` - _(no documentation)_
 - `public string SelectionSummary { get; }` - The translated selection text: "Nothing selected", "1 selected" or "N selected".
 - `public string PathLengthText { get; }` - Path length of the selection, for example "Path length: 2,480.6 px". Empty until selections exist.
@@ -176,6 +106,10 @@ Status bar: selection summary on the left, zoom controls on the right.
 - `public double ZoomPercent { get; }` - _(no documentation)_
 - `public string ZoomText { get; }` - The zoom as shown in the status bar, for example "100%" or "133.33%".
 - `public IReadOnlyList<ZoomPresetViewModel> ZoomPresets { get; }` - The zoom values offered in the drop-down. Each entry carries its own command.
+- `public IRelayCommand ZoomInCommand { get; }` - _(no documentation)_
+- `public IRelayCommand ZoomOutCommand { get; }` - _(no documentation)_
+- `public IRelayCommand FitToWindowCommand { get; }` - _(no documentation)_
+- `public IRelayCommand<double> SetZoomCommand { get; }` - _(no documentation)_
 - `public string FormatZoom(double percent, CultureInfo culture)` - Formats a zoom value with the decimal separator of the given culture, for example "80.75%" or "80,75%".
 
 **Relationships**
@@ -230,18 +164,3 @@ The toolbar groups from the mockup, left to right: file actions, history, tool t
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
-
-## ZoomPresetViewModel (class)
-
-`internal sealed class ZoomPresetViewModel`
-
-Source: `src/PressToShape.App/ViewModels/Desktop/ZoomPresetViewModel.cs:8-23`
-
-One entry of the zoom drop-down. It carries its own command so the menu needs no parent lookup.
-
-**Members**
-
-- `public ZoomPresetViewModel(double percent, Action apply)` - _(no documentation)_
-- `public double Percent { get; }` - _(no documentation)_
-- `public string Text { get; }` - _(no documentation)_
-- `public ICommand SelectCommand { get; }` - _(no documentation)_

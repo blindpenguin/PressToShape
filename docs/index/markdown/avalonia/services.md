@@ -23,49 +23,57 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.DocumentSession`. Which file the open document belongs to and whether it has unsaved changes. Documents are immutable, so "unsaved" means: the editor's document is no longer the instance that was last saved or opened. A change that is changed back still counts as unsaved.
 
 - used by: `DocumentFileService`
-- created at `DesktopShellViewModel.DesktopShellViewModel` (src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:31)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:30)
 
 ### EditMenuCommands (class)
 
-`T:PressToShape.App.ViewModels.Desktop.EditMenuCommands`. What the clipboard, delete and selection items of the Edit menu do. Undo and Redo are passed on their own.
+`T:PressToShape.App.ViewModels.Editor.EditMenuCommands`. What the clipboard, delete and selection items of the Edit menu do. Undo and Redo are passed on their own.
 
-- used by: `MenuBarViewModel`
-- created at `DesktopShellViewModel.DesktopShellViewModel` (src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:47)
+- used by: `MenuBarViewModel`, `OverflowMenuViewModel`
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:44)
+
+### EditorShellViewModel (class)
+
+`T:PressToShape.App.ViewModels.Editor.EditorShellViewModel`. What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
+
+- used by: `TabletToolbarViewModel`
+- created at `DesktopShellViewModel.DesktopShellViewModel` (src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:17), `TabletShellViewModel.TabletShellViewModel` (src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:23)
 
 ### EditorState (class)
 
 `T:PressToShape.App.Workspace.EditorState`. State shared by all regions of the editor shell: the document, its undo history, active tool, zoom and selection summary. View models observe it through PropertyChanged, so every route that changes a value stays in sync. This class is the only place that changes the document: edits go through PressToShape.App.Workspace.EditorState.Edit, a drag through PressToShape.App.Workspace.EditorState.Preview and PressToShape.App.Workspace.EditorState.Commit, and a new or opened document through PressToShape.App.Workspace.EditorState.ReplaceDocument.
 
-- used by: `CanvasAreaViewModel`, `CanvasInteraction`, `DocumentFileService`, `DocumentSession`, `HistoryViewModel`, `InspectorViewModel`, `LayerItemViewModel`, `LayersViewModel`, `MenuBarViewModel`, `PaletteViewModel`, `PropertiesViewModel`, `SelectionEditor`, `StatusBarViewModel`, `ToolbarViewModel`, `ToolboxViewModel`
-- created at `DesktopShellViewModel.DesktopShellViewModel` (src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:30), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:44)
+- used by: `CanvasAreaViewModel`, `CanvasInteraction`, `DocumentFileService`, `DocumentSession`, `HistoryViewModel`, `InspectorViewModel`, `LayerItemViewModel`, `LayersViewModel`, `MenuBarViewModel`, `PaletteViewModel`, `PropertiesViewModel`, `SelectionEditor`, `StatusBarViewModel`, `TabletToolColumnViewModel`, `ToolGroupViewModel`, `ToolbarViewModel`, `ToolboxViewModel`, `ZoomViewModel`
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:29), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:44)
 
 ### FileMenuCommands (class)
 
-`T:PressToShape.App.ViewModels.Desktop.FileMenuCommands`. What the File menu items do. OpenRecent creates the command for one entry of the recent list.
+`T:PressToShape.App.ViewModels.Editor.FileMenuCommands`. What the File menu items do. OpenRecent creates the command for one entry of the recent list.
 
-- used by: `MenuBarViewModel`
-- created at `DesktopShellViewModel.DesktopShellViewModel` (src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:40)
+- used by: `MenuBarViewModel`, `OverflowMenuViewModel`
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:37)
 
 ### FileServices (class)
 
 `T:PressToShape.App.Services.FileServices`. What the file actions need from the outside: settings, files, file pickers and message dialogs.
 
-- used by: `DesktopShellViewModel`
-- created at `PressToShapeApp.OnFrameworkInitializationCompleted` (src/PressToShape.App/PressToShapeApp.axaml.cs:39)
+- used by: `DesktopShellViewModel`, `EditorShellViewModel`, `TabletShellViewModel`
+- created at `AppLayout.Choose` (src/PressToShape.App/AppLayout.cs:33), `AppLayout.CreateTabletShell` (src/PressToShape.App/AppLayout.cs:66)
 
 ### IAppShutdown (interface)
 
 `T:PressToShape.App.Services.IAppShutdown`. Lets view models close the application without referencing Avalonia types.
 
-- used by: `DesktopShellViewModel`, `MenuBarViewModel`
-- implemented by `DesktopAppShutdown`, created at `PressToShapeApp.OnFrameworkInitializationCompleted` (src/PressToShape.App/PressToShapeApp.axaml.cs:46)
+- used by: `DesktopShellViewModel`, `MenuBarViewModel`, `TabletShellViewModel`
+- implemented by `DelegateAppShutdown`, created at `AppLayout.CreateTabletShell` (src/PressToShape.App/AppLayout.cs:72)
+- implemented by `DesktopAppShutdown`, created at `AppLayout.Choose` (src/PressToShape.App/AppLayout.cs:40)
 
 ### ICatalogSource (interface)
 
 `T:PressToShape.App.Localization.ICatalogSource`. Finds the translation catalog of a language. English has no catalog, because the source text is English.
 
 - used by: `Localizer`
-- implemented by `EmbeddedCatalogSource`, created at `EmbeddedCatalogSource.EmbeddedCatalogSource` (src/PressToShape.App/Localization/EmbeddedCatalogSource.cs:20), `PressToShapeApp.Initialize` (src/PressToShape.App/PressToShapeApp.axaml.cs:26)
+- implemented by `EmbeddedCatalogSource`, created at `EmbeddedCatalogSource.EmbeddedCatalogSource` (src/PressToShape.App/Localization/EmbeddedCatalogSource.cs:20), `PressToShapeApp.Initialize` (src/PressToShape.App/PressToShapeApp.axaml.cs:27)
 - implemented by `NoCatalogSource`, created at `LocalizationHost.Localizer` (src/PressToShape.App/Localization/LocalizationHost.cs:14)
 
 ### IFileDialogs (interface)
@@ -73,35 +81,44 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Services.IFileDialogs`. The file pickers. Each returns a local file path, or null if the user cancelled.
 
 - used by: `DocumentFileService`, `FileServices`
-- implemented by `AvaloniaFileDialogs`, created at `PressToShapeApp.OnFrameworkInitializationCompleted` (src/PressToShape.App/PressToShapeApp.axaml.cs:42)
+- implemented by `AvaloniaFileDialogs`, created at `AppLayout.Choose` (src/PressToShape.App/AppLayout.cs:36), `AppLayout.CreateTabletShell` (src/PressToShape.App/AppLayout.cs:69)
 
 ### IFileStore (interface)
 
-`T:PressToShape.App.Services.IFileStore`. Reads and writes whole files. Lets the file actions be tested without a real file system.
+`T:PressToShape.App.Services.IFileStore`. Reads and writes whole files. Lets the file actions be tested without a real file system, and lets a platform without file paths supply its own storage.
 
 - used by: `DocumentFileService`, `FileServices`
-- implemented by `LocalFileStore`, created at `PressToShapeApp.OnFrameworkInitializationCompleted` (src/PressToShape.App/PressToShapeApp.axaml.cs:41)
+- implemented by `LocalFileStore`, created at `AppLayout.Choose` (src/PressToShape.App/AppLayout.cs:35)
+- implemented by `StorageFileStore`, created at `AppLayout.CreateTabletShell` (src/PressToShape.App/AppLayout.cs:68)
 
 ### ILocalizer (interface)
 
 `T:PressToShape.App.Localization.ILocalizer`. Translates user-visible texts. The English source text is the message id.
 
-- used by: `AvaloniaFileDialogs`, `AvaloniaMessageDialogs`, `DesktopShellViewModel`, `DocumentFileService`, `HistoryItemViewModel`, `HistoryViewModel`, `InspectorViewModel`, `LanguagePreference`, `LocalizedTextObservable`, `LocalizedViewModel`, `MenuBarViewModel`, `MenuItemViewModel`, `NumberFieldViewModel`, `PlaceholderPanelViewModel`, `PropertiesViewModel`, `StatusBarViewModel`, `ToolItemViewModel`, `ToolbarButtonViewModel`, `ToolbarViewModel`, `ToolboxViewModel`
-- implemented by `Localizer`, created at `LocalizationHost.Localizer` (src/PressToShape.App/Localization/LocalizationHost.cs:14), `PressToShapeApp.Initialize` (src/PressToShape.App/PressToShapeApp.axaml.cs:25)
+- used by: `AvaloniaFileDialogs`, `AvaloniaMessageDialogs`, `DesktopShellViewModel`, `DocumentFileService`, `EditorShellViewModel`, `HistoryItemViewModel`, `HistoryViewModel`, `InspectorViewModel`, `LanguagePreference`, `LocalizedTextObservable`, `LocalizedViewModel`, `MenuBarViewModel`, `MenuItemViewModel`, `NumberFieldViewModel`, `OverflowMenuViewModel`, `OverlayMessageDialogs`, `PanelButtonViewModel`, `PlaceholderPanelViewModel`, `PropertiesViewModel`, `StatusBarViewModel`, `TabletColorSwatchViewModel`, `TabletPanelViewModel`, `TabletShellViewModel`, `TabletToolColumnViewModel`, `TabletToolbarViewModel`, `ToolGroupViewModel`, `ToolItemViewModel`, `ToolbarButtonViewModel`, `ToolbarViewModel`, `ToolboxViewModel`, `ZoomViewModel`
+- implemented by `Localizer`, created at `LocalizationHost.Localizer` (src/PressToShape.App/Localization/LocalizationHost.cs:14), `PressToShapeApp.Initialize` (src/PressToShape.App/PressToShapeApp.axaml.cs:26)
 
 ### IMessageDialogs (interface)
 
 `T:PressToShape.App.Services.IMessageDialogs`. The questions and messages shown to the user. The texts are translated by the caller.
 
 - used by: `DocumentFileService`, `FileServices`
-- implemented by `AvaloniaMessageDialogs`, created at `PressToShapeApp.OnFrameworkInitializationCompleted` (src/PressToShape.App/PressToShapeApp.axaml.cs:43)
+- implemented by `AvaloniaMessageDialogs`, created at `AppLayout.Choose` (src/PressToShape.App/AppLayout.cs:37)
+- implemented by `OverlayMessageDialogs`, created at `AppLayout.CreateTabletShell` (src/PressToShape.App/AppLayout.cs:70)
 
 ### ISettingsStore (interface)
 
 `T:PressToShape.App.Settings.ISettingsStore`. Loads and saves PressToShape.App.Settings.AppSettings. Neither operation throws.
 
 - used by: `FileServices`, `LanguagePreference`, `RecentFiles`
-- implemented by `JsonFileSettingsStore`, created at `PressToShapeApp.Initialize` (src/PressToShape.App/PressToShapeApp.axaml.cs:24)
+- implemented by `JsonFileSettingsStore`, created at `PressToShapeApp.Initialize` (src/PressToShape.App/PressToShapeApp.axaml.cs:25)
+
+### InspectorViewModel (class)
+
+`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`. State of the inspector: the selected tab and the view models of its tabs.
+
+- used by: `TabletPanelViewModel`
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:36)
 
 ### Layer (class)
 
@@ -110,6 +127,13 @@ Types that other types take as constructor parameters, and where they are provid
 - used by: `LayerItemViewModel`, `ShapeLocation`
 - created at `Document.Create` (src/PressToShape.Core/Documents/Document.cs:61), `ProjectFile.Build` (src/PressToShape.Core/IO/ProjectFile.cs:130)
 
+### MessageDialogHost (class)
+
+`T:PressToShape.App.ViewModels.Tablet.MessageDialogHost`. Shows message dialogs inside the layout, for a platform without windows. The layout shows PressToShape.App.ViewModels.Tablet.MessageDialogHost.Current over everything else while it is not null. Only one dialog is shown at a time: a second request waits until the first is closed.
+
+- used by: `OverlayMessageDialogs`, `TabletShellViewModel`
+- created at `AppLayout.CreateTabletShell` (src/PressToShape.App/AppLayout.cs:64)
+
 ### Mixed (class)
 
 `T:PressToShape.App.Workspace.Mixed`1`. A value that is the same for every selected shape, or marked as mixed when the shapes differ.
@@ -117,12 +141,26 @@ Types that other types take as constructor parameters, and where they are provid
 - used by: `SelectionValues`
 - created at `Mixed.Of` (src/PressToShape.App/Workspace/SelectionValues.cs:31), `Mixed.Of` (src/PressToShape.App/Workspace/SelectionValues.cs:35)
 
+### OverflowMenuViewModel (class)
+
+`T:PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`. The "..." menu of the tablet toolbar: the file actions, the edit actions and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
+
+- used by: `TabletToolbarViewModel`
+- created at `TabletShellViewModel.TabletShellViewModel` (src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:28)
+
+### PropertiesViewModel (class)
+
+`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`. The Properties tab: the position, size, rotation and appearance of the selected shapes, and the section expansion. The fields show the current values (updated in place while shapes are dragged or edited elsewhere) and every committed edit is one undo step.
+
+- used by: `TabletColorSwatchViewModel`
+- created at `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:20)
+
 ### RecentFiles (class)
 
-`T:PressToShape.App.Workspace.RecentFiles`. The list of recently used files, most recent first, kept in the settings file. It holds each path once and at most PressToShape.App.Workspace.RecentFiles.MaxCount paths. The stored value is untrusted: anything that is not a list of paths is ignored.
+`T:PressToShape.App.Workspace.RecentFiles`. The list of recently used files, most recent first, kept in the settings file. It holds each path once and at most PressToShape.App.Workspace.RecentFiles.MaxCount paths. The stored value is untrusted: anything that is not a list of paths is ignored. A list that does not persist stays empty: the paths of a platform whose file references do not survive a restart are of no use later.
 
 - used by: `DocumentFileService`, `MenuBarViewModel`
-- created at `DesktopShellViewModel.DesktopShellViewModel` (src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:32)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:31)
 
 ### ScreenPoint (class)
 
@@ -143,7 +181,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.SelectionEditor`. Edits that work on the selected shapes and do not need the mouse: select all, deselect, copy, cut, paste, duplicate (and, in the same class, nudging and property edits). Every change of the document is one history step.
 
 - used by: `CanvasAreaViewModel`, `InspectorViewModel`, `PropertiesViewModel`
-- created at `DesktopShellViewModel.DesktopShellViewModel` (src/PressToShape.App/ViewModels/Desktop/DesktopShellViewModel.cs:35), `CanvasAreaViewModel.CanvasAreaViewModel` (src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:31), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:20), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:46)
+- created at `CanvasAreaViewModel.CanvasAreaViewModel` (src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:33), `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:34), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:20), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:46)
 
 ### Shape (class)
 
@@ -152,6 +190,27 @@ Types that other types take as constructor parameters, and where they are provid
 - used by: `ShapeLocation`
 - created at no creation site found
 
+### StorageFileRegistry (class)
+
+`T:PressToShape.App.Services.StorageFileRegistry`. Remembers the files that the platform's file picker returned, and hands out a text reference for each. The rest of the app works with file paths as text, but the Android picker gives no path, only a handle. A reference looks like storage:<id>/<file name>, so code that shows "the name after the last slash" shows the real file name. References only live as long as the app runs.
+
+- used by: `AvaloniaFileDialogs`, `StorageFileStore`
+- created at `AppLayout.CreateTabletShell` (src/PressToShape.App/AppLayout.cs:63)
+
+### TabletColorSwatchViewModel (class)
+
+`T:PressToShape.App.ViewModels.Tablet.TabletColorSwatchViewModel`. The small color swatch at the bottom of the tablet tool column: the fill in the middle and the stroke as a ring around it. It shows what the Properties panel shows (the color of the selection, or of the next shape when nothing is selected) by reading the fill and stroke fields of the PressToShape.App.ViewModels.Editor.PropertiesViewModel, so there is one source of truth. A tap opens the Properties panel at its Appearance section, where the colors are edited.
+
+- used by: `TabletToolColumnViewModel`
+- created at `TabletShellViewModel.TabletShellViewModel` (src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:30)
+
+### TabletPanelViewModel (class)
+
+`T:PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`. The panel of the tablet layout, which floats over the canvas and shows one of the inspector's tabs (Properties, Layers or History) while it is open. A toolbar icon toggles it. The shown tab is kept in PressToShape.App.ViewModels.Editor.InspectorViewModel.SelectedTab, as on the desktop. There is no Assets panel on the tablet until Assets has content.
+
+- used by: `PanelButtonViewModel`, `TabletColorSwatchViewModel`, `TabletToolbarViewModel`
+- created at `TabletShellViewModel.TabletShellViewModel` (src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:29)
+
 ### ToolDefinition (class)
 
 `T:PressToShape.App.Workspace.ToolDefinition`. Display data for one tool: name, optional single-key shortcut and icon.
@@ -159,6 +218,27 @@ Types that other types take as constructor parameters, and where they are provid
 - used by: `ToolItemViewModel`
 - created at `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:13), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:14), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:15), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:16), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:17), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:18), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:19), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:20), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:21), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:22), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:23), `ToolDefinitions.All` (src/PressToShape.App/Workspace/ToolDefinitions.cs:24)
 
+### ToolGroupDefinition (class)
+
+`T:PressToShape.App.Workspace.ToolGroupDefinition`. Tools that share one icon in the tablet tool column. The first tool is the one the group starts with.
+
+- used by: `ToolGroupViewModel`
+- created at `ToolGroups.All` (src/PressToShape.App/Workspace/ToolGroups.cs:11), `ToolGroups.All` (src/PressToShape.App/Workspace/ToolGroups.cs:12), `ToolGroups.All` (src/PressToShape.App/Workspace/ToolGroups.cs:13), `ToolGroups.All` (src/PressToShape.App/Workspace/ToolGroups.cs:14), `ToolGroups.All` (src/PressToShape.App/Workspace/ToolGroups.cs:15), `ToolGroups.All` (src/PressToShape.App/Workspace/ToolGroups.cs:16)
+
+### ToolboxViewModel (class)
+
+`T:PressToShape.App.ViewModels.Editor.ToolboxViewModel`. State of the tool column: tool list, active tool, shortcut lookup, and the (not yet usable) color swatch commands.
+
+- used by: `TabletToolColumnViewModel`, `ToolGroupViewModel`
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:33)
+
+### ZoomViewModel (class)
+
+`T:PressToShape.App.ViewModels.Editor.ZoomViewModel`. The zoom as the user sees it: the text, the preset list and the commands. Shared by the desktop status bar and the tablet toolbar.
+
+- used by: `TabletToolbarViewModel`
+- created at `StatusBarViewModel.StatusBarViewModel` (src/PressToShape.App/ViewModels/Desktop/StatusBarViewModel.cs:22), `TabletShellViewModel.TabletShellViewModel` (src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:31)
+
 ## Container registrations
 
-no container registrations found; services are created by hand in `CanvasAreaViewModel.CanvasAreaViewModel`, `DesktopShellViewModel.DesktopShellViewModel`, `Document.Create`, `EmbeddedCatalogSource.EmbeddedCatalogSource`, `InspectorViewModel.InspectorViewModel`, `LocalizationHost.Localizer`, `Mixed.Of`, `PressToShapeApp.Initialize`, `PressToShapeApp.OnFrameworkInitializationCompleted`, `ProjectFile.Build`, `PropertiesViewModel.PropertiesViewModel`, `ScreenPolygon.FromBox`, `SelectionOverlay.Build`, `ShapeOperationBenchmarks.Setup`, `ToolDefinitions.All`.
+no container registrations found; services are created by hand in `AppLayout.Choose`, `AppLayout.CreateTabletShell`, `CanvasAreaViewModel.CanvasAreaViewModel`, `DesktopShellViewModel.DesktopShellViewModel`, `Document.Create`, `EditorShellViewModel.EditorShellViewModel`, `EmbeddedCatalogSource.EmbeddedCatalogSource`, `InspectorViewModel.InspectorViewModel`, `LocalizationHost.Localizer`, `Mixed.Of`, `PressToShapeApp.Initialize`, `ProjectFile.Build`, `PropertiesViewModel.PropertiesViewModel`, `ScreenPolygon.FromBox`, `SelectionOverlay.Build`, `ShapeOperationBenchmarks.Setup`, `StatusBarViewModel.StatusBarViewModel`, `TabletShellViewModel.TabletShellViewModel`, `ToolDefinitions.All`, `ToolGroups.All`.

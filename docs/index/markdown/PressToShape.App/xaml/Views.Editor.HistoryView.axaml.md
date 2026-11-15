@@ -6,6 +6,7 @@ Class: `PressToShape.App.Views.Editor.HistoryView`.
 ## View model links
 
 - `T:PressToShape.App.ViewModels.Editor.HistoryViewModel` (inferred): ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.HistoryViewModel maps to PressToShape.App.Views.Editor.HistoryView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:35 (src/PressToShape.App/Views/Editor/InspectorView.axaml:35)
+- `T:PressToShape.App.ViewModels.Editor.HistoryViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:246)
 - `T:PressToShape.App.ViewModels.Editor.HistoryViewModel` (verified): x:DataType (src/PressToShape.App/Views/Editor/HistoryView.axaml:1)
 
 ## Bindings
@@ -20,11 +21,16 @@ Class: `PressToShape.App.Views.Editor.HistoryView`.
 
 ## Resource references
 
+- line 14: Setter.MinHeight = DynamicResource `HistoryRowMinHeight` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/HistoryRowMinHeight` (verified)
 - line 23: DockPanel.Margin = StaticResource `PanelPadding` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelPadding` (verified)
+- line 37: Panel.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
+- line 37: Panel.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
+- line 38: materialIcons:MaterialIcon.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
+- line 38: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
 
 ## Styles
 
-- line 13: `ListBoxItem`, sets MinHeight, Padding
+- line 13: `ListBoxItem`, sets MinHeight, Padding, uses HistoryRowMinHeight
 - line 18: `Grid.redoable`, sets Opacity
 
 ## Templates

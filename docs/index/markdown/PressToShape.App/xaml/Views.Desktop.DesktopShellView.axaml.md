@@ -18,16 +18,16 @@ Class: `PressToShape.App.Views.Desktop.DesktopShellView`.
 - line 21: KeyBinding.Command = Binding `ActualSizeCommand` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ActualSizeCommand` (verified), command
 - line 22: KeyBinding.Command = Binding `ActualSizeCommand` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ActualSizeCommand` (verified), command
 - line 23: KeyBinding.Command = Binding `QuitCommand` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.QuitCommand` (verified), command
-- line 24: KeyBinding.Command = Binding `NewCommand` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.NewCommand` (verified), command
-- line 25: KeyBinding.Command = Binding `OpenCommand` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.OpenCommand` (verified), command
-- line 26: KeyBinding.Command = Binding `SaveCommand` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.SaveCommand` (verified), command
-- line 27: KeyBinding.Command = Binding `SaveAsCommand` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.SaveAsCommand` (verified), command
-- line 28: KeyBinding.Command = Binding `ExportSvgCommand` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.ExportSvgCommand` (verified), command
+- line 24: KeyBinding.Command = Binding `NewCommand` -> `P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.NewCommand` (verified), command
+- line 25: KeyBinding.Command = Binding `OpenCommand` -> `P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenCommand` (verified), command
+- line 26: KeyBinding.Command = Binding `SaveCommand` -> `P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveCommand` (verified), command
+- line 27: KeyBinding.Command = Binding `SaveAsCommand` -> `P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsCommand` (verified), command
+- line 28: KeyBinding.Command = Binding `ExportSvgCommand` -> `P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ExportSvgCommand` (verified), command
 - line 35: desktop:MenuBarView.DataContext = Binding `MenuBar` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.MenuBar` (verified)
 - line 38: desktop:ToolbarView.DataContext = Binding `Toolbar` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Toolbar` (verified)
-- line 41: editor:ToolboxView.DataContext = Binding `Toolbox` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Toolbox` (verified)
-- line 42: editor:CanvasAreaView.DataContext = Binding `Canvas` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Canvas` (verified)
-- line 46: editor:InspectorView.DataContext = Binding `Inspector` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.Inspector` (verified)
+- line 41: editor:ToolboxView.DataContext = Binding `Toolbox` -> `P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Toolbox` (verified)
+- line 42: editor:CanvasAreaView.DataContext = Binding `Canvas` -> `P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Canvas` (verified)
+- line 46: editor:InspectorView.DataContext = Binding `Inspector` -> `P:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Inspector` (verified)
 - line 49: desktop:StatusBarView.DataContext = Binding `StatusBar` -> `P:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel.StatusBar` (verified)
 
 ## Resource references

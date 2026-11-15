@@ -16,6 +16,60 @@ _(no documentation)_
 - `public void OnlyEditorState_AssignsTheDocument()` - _(no documentation)_
 - `public void DocumentAssignmentPattern_FlagsAssignmentsOnly(string line, bool expected)` - _(no documentation)_
 
+## AppLayoutTests (class)
+
+`public class AppLayoutTests`
+
+Source: `tests/PressToShape.App.Tests/AppLayoutTests.cs:17-145`
+
+_(no documentation)_
+
+**Members**
+
+- `public void AnApplicationWithAWindow_GetsTheDesktopLayout()` - _(no documentation)_
+- `public void WithoutALifetime_NothingHappens()` - _(no documentation)_
+- `public void TheTabletFactory_BuildsTheTabletLayout_OnlyWhenCalled()` - _(no documentation)_
+- `public void EveryCallOfTheFactory_GivesAnIndependentLayout()` - _(no documentation)_
+- `public void LeavingTheTabletLayout_CallsTheExitThatTheHeadSetLate()` - _(no documentation)_
+- `public void LeavingBeforeTheHeadSetTheExit_DoesNotCrash()` - _(no documentation)_
+- `public void TheTabletLayout_ShowsItsDialogsInsideTheLayout_NotInAWindow()` - _(no documentation)_
+- `public void TheTabletLayout_UsesTheGivenSettings_ForTheLanguageAndNotTheRealFile()` - _(no documentation)_
+- `public void NullArguments_Throw()` - _(no documentation)_
+
+## AvaloniaFileDialogsTests (class)
+
+`public class AvaloniaFileDialogsTests`
+
+Source: `tests/PressToShape.App.Tests/AvaloniaFileDialogsTests.cs:8-80`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ChooseReference_WithALocalPath_ReturnsThePathAndDoesNotRegister()` - _(no documentation)_
+- `public void ChooseReference_WithoutAPath_RegistersAndReturnsTheReference()` - _(no documentation)_
+- `public void ChooseReference_WithoutAPathAndWithoutRegistry_ReturnsNull()` - _(no documentation)_
+- `public void BuildSaveOptions_SuggestedNameWithTheEnding_PassesNoDefaultExtension(string suggested, string extension)` - _(no documentation)_
+- `public void BuildSaveOptions_SuggestedNameWithoutTheEnding_KeepsTheDefaultExtension(string suggested, string extension)` - _(no documentation)_
+- `public void BuildSaveOptions_SetsTitleOverwritePromptAndTheFileType()` - _(no documentation)_
+- `public void Constructor_NullOwnerOrLocalizer_Throws()` - _(no documentation)_
+
+## BackRequestGuardTests (class)
+
+`public class BackRequestGuardTests`
+
+Source: `tests/PressToShape.App.Tests/BackRequestGuardTests.cs:6-53`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ConsumeIfSamePress_WithoutAClose_IsFalse()` - _(no documentation)_
+- `public void ConsumeIfSamePress_RightAfterAClose_IsTrueOnce()` - _(no documentation)_
+- `public void ConsumeIfSamePress_AtTheEndOfTheWindow_IsTrue()` - _(no documentation)_
+- `public void ConsumeIfSamePress_AfterTheWindow_IsFalse()` - _(no documentation)_
+- `public void NoteClosed_Again_StartsANewWindow()` - _(no documentation)_
+
 ## CanvasAreaViewModelTests (class)
 
 `public class CanvasAreaViewModelTests`
@@ -103,11 +157,43 @@ _(no documentation)_
 - `public void DeleteSelection_OfSeveralShapes_RemovesAllOfThem()` - _(no documentation)_
 - `public void SharedEditor_IsUsedForKeys()` - _(no documentation)_
 
+## CanvasAreaViewModelTouchTests (class)
+
+`public class CanvasAreaViewModelTouchTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelTouchTests.cs:12-400`
+
+_(no documentation)_
+
+**Members**
+
+- `public void OneFinger_DrawsARectangle_AsOneHistoryStep()` - _(no documentation)_
+- `public void OneFinger_WithTheSelectTool_MovesTheShape()` - _(no documentation)_
+- `public void OneFinger_WithTheHandTool_PansTheView()` - _(no documentation)_
+- `public void AfterAFingerIsUp_TheNextFingerDrawsAgain_WithAnotherId()` - _(no documentation)_
+- `public void SecondFinger_DuringDrawing_LeavesNoShapeAndNoStep()` - _(no documentation)_
+- `public void SecondFinger_DuringAMove_PutsTheShapeBackAndRecordsNothing()` - _(no documentation)_
+- `public void SecondFinger_DuringAResize_PutsTheShapeBack()` - _(no documentation)_
+- `public void SecondFinger_WithTheHandTool_EndsThePanAndStartsTheGesture()` - _(no documentation)_
+- `public void Pinch_ZoomsAroundTheMidpointOfTheFingers()` - _(no documentation)_
+- `public void Pinch_MovingTogether_ZoomsOut()` - _(no documentation)_
+- `public void TwoFingersMovingTogether_PanTheView()` - _(no documentation)_
+- `public void Pinch_IsKeptInsideTheZoomRange()` - _(no documentation)_
+- `public void WhileTwoFingersMoveTheView_UndoIsBlocked_AndTheDocumentIsUntouched()` - _(no documentation)_
+- `public void AfterTheGesture_TheLiftingFingerDoesNotDraw_ButTheNextTouchDoes()` - _(no documentation)_
+- `public void AThirdFinger_DoesNotDisturbTheGesture()` - _(no documentation)_
+- `public void TouchCancelled_DuringAMove_PutsTheShapeBackAndForgetsTheFinger()` - _(no documentation)_
+- `public void TouchCancelled_AfterANormalRelease_ChangesNothing()` - _(no documentation)_
+- `public void TouchCancelled_DuringAGesture_EndsItAndFreesTheHistory()` - _(no documentation)_
+- `public void Finger_FifteenPixelsFromAHandle_GrabsIt_ButTheMouseDoesNot()` - _(no documentation)_
+- `public void TouchGrabSize_CanBeChanged()` - _(no documentation)_
+- `public void Mouse_StillDrawsWithTheExistingMethods()` - _(no documentation)_
+
 ## CanvasInteractionTests (class)
 
 `public class CanvasInteractionTests`
 
-Source: `tests/PressToShape.App.Tests/CanvasInteractionTests.cs:11-1395`
+Source: `tests/PressToShape.App.Tests/CanvasInteractionTests.cs:11-1586`
 
 _(no documentation)_
 
@@ -182,6 +268,18 @@ _(no documentation)_
 - `public void CancelDuringAMoveOfSeveralShapes_KeepsTheReachedPositionAsOneStep()` - _(no documentation)_
 - `public void SelectionChanges_CreateNoHistorySteps()` - _(no documentation)_
 - `public void ResizeDrag_BottomRight_ChangesTheSizeAsOneStep_AndUndoRestores()` - _(no documentation)_
+- `public void Press_ByTouch_FifteenPixelsFromAHandle_StartsAResize()` - _(no documentation)_
+- `public void Press_ByMouseOrPen_FifteenPixelsFromAHandle_DoesNotGrabIt(int deviceType)` - _(no documentation)_
+- `public void Press_ByTouch_UsesTheConfiguredGrabSize()` - _(no documentation)_
+- `public void Press_ByTouch_InTheMiddleOfAShape_MovesItInsteadOfResizing()` - _(no documentation)_
+- `public void Abort_DuringDrawing_DropsTheDraftAndRecordsNothing()` - _(no documentation)_
+- `public void Abort_DuringAMove_PutsTheDocumentBackAndRecordsNothing()` - _(no documentation)_
+- `public void Abort_DuringAResize_PutsTheDocumentBackAndRecordsNothing()` - _(no documentation)_
+- `public void Abort_DuringARotate_PutsTheDocumentBackAndRecordsNothing()` - _(no documentation)_
+- `public void Abort_DuringAMarquee_DropsTheBoxAndKeepsTheSelection()` - _(no documentation)_
+- `public void Abort_WithoutADrag_DoesNothing()` - _(no documentation)_
+- `public void Abort_ThenANewDrag_WorksAsUsual()` - _(no documentation)_
+- `public void Cancel_AfterAMove_StillKeepsTheReachedPosition()` - _(no documentation)_
 - `public void ResizeDrag_AnEdgeHandle_ChangesOnlyOneSide()` - _(no documentation)_
 - `public void ResizeDrag_PressedAFewPixelsOffTheHandle_DoesNotJump()` - _(no documentation)_
 - `public void ResizeDrag_ShiftKeepsTheRatio_AltResizesAroundTheCenter()` - _(no documentation)_
@@ -362,6 +460,20 @@ _(no documentation)_
 - `public void Draw_UnchangedDefault_ShapeUsesModelDefault()` - _(no documentation)_
 - `public void UndoRedoAndReplaceDocument_DoNotChangeTheDefault()` - _(no documentation)_
 
+## DelegateAppShutdownTests (class)
+
+`public class DelegateAppShutdownTests`
+
+Source: `tests/PressToShape.App.Tests/DelegateAppShutdownTests.cs:7-40`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Shutdown_CallsTheDelegate_EachTime()` - _(no documentation)_
+- `public void Shutdown_ReadsTheTargetWhenCalled_SoALateAssignmentWorks()` - _(no documentation)_
+- `public void Constructor_NullDelegate_Throws()` - _(no documentation)_
+
 ## DesktopShellViewModelTests (class)
 
 `public class DesktopShellViewModelTests`
@@ -429,7 +541,7 @@ _(no documentation)_
 
 `public sealed class DocumentFileServiceTests : IDisposable`
 
-Source: `tests/PressToShape.App.Tests/DocumentFileServiceTests.cs:18-776`
+Source: `tests/PressToShape.App.Tests/DocumentFileServiceTests.cs:18-803`
 
 _(no documentation)_
 
@@ -439,6 +551,8 @@ _(no documentation)_
 - `public Task Save_WithoutAFile_AsksForOneAndWritesTheProject()` - _(no documentation)_
 - `public Task Save_WithAFile_WritesWithoutADialog()` - _(no documentation)_
 - `public Task SaveAs_Cancelled_WritesNothingAndChangesNothing()` - _(no documentation)_
+- `public Task SaveAs_WithAReferenceFromTheSystemPicker_KeepsTheReferenceAsItIs(string reference)` - _(no documentation)_
+- `public Task Export_WithAReferenceFromTheSystemPicker_KeepsTheReferenceAsItIs()` - _(no documentation)_
 - `public Task SaveAs_AddsTheEndingOnlyWhenMissing(string chosen, string expected)` - _(no documentation)_
 - `public Task SaveAs_ChangesTheTargetOfLaterSaves_AndSuggestsTheFileName()` - _(no documentation)_
 - `public Task Save_WriteFailure_KeepsTheOldBytesTheDirtyStateAndShowsTheFileName()` - _(no documentation)_
@@ -508,6 +622,26 @@ _(no documentation)_
 - `public void Undo_BackToTheSavedInstance_IsClean_AndRedoIsDirtyAgain()` - _(no documentation)_
 - `public void Save_ThenUndo_IsDirty_AndRedoIsCleanAgain()` - _(no documentation)_
 - `public void Save_DoesNotTouchTheHistory()` - _(no documentation)_
+
+## EditorShellViewModelTests (class)
+
+`public class EditorShellViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/EditorShellViewModelTests.cs:14-157`
+
+_(no documentation)_
+
+**Members**
+
+- `public void NewShell_IsUntitledAndClean()` - _(no documentation)_
+- `public void AnEdit_MakesTheShellDirty_AndRaisesTheNameNotifications()` - _(no documentation)_
+- `public Task SaveAs_GivesTheFileNameAndClearsTheDirtyMark()` - _(no documentation)_
+- `public void DocumentName_FollowsTheLanguage()` - _(no documentation)_
+- `public void SharedRegions_UseTheSameEditorState()` - _(no documentation)_
+- `public void UndoAndRedo_FollowTheHistory()` - _(no documentation)_
+- `public Task ConfirmClose_WithoutChanges_AllowsClosingWithoutAQuestion()` - _(no documentation)_
+- `public Task ConfirmClose_WithChanges_AsksAndFollowsTheAnswer()` - _(no documentation)_
+- `public void FitToWindow_UsesTheCanvasViewport()` - _(no documentation)_
 
 ## EditorStateTests (class)
 
@@ -687,12 +821,13 @@ Returns queued answers instead of showing pickers, and records what it was asked
 **Relationships**
 
 - Implements `PressToShape.App.Services.IFileDialogs`
+- Injected into `PressToShape.App.Tests.TestShell`
 
 ## FakeFileStore (class)
 
 `internal sealed class FakeFileStore : IFileStore`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:11-48`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:12-48`
 
 An in-memory file system. Can be told to fail on write or read.
 
@@ -702,13 +837,13 @@ An in-memory file system. Can be told to fail on write or read.
 - `public Exception? WriteFailure { get; set; }` - _(no documentation)_
 - `public Exception? ReadFailure { get; set; }` - _(no documentation)_
 - `public int WriteCount { get; private set; }` - _(no documentation)_
-- `public byte[] ReadAllBytes(string path, long maxBytes)` - _(no documentation)_
-- `public void WriteAllBytesAtomic(string path, byte[] bytes)` - _(no documentation)_
-- `public bool Exists(string path)` - _(no documentation)_
+- `public Task<byte[]> ReadAllBytesAsync(string path, long maxBytes, CancellationToken cancellationToken = default(CancellationToken))` - _(no documentation)_
+- `public Task WriteAllBytesAtomicAsync(string path, byte[] bytes, CancellationToken cancellationToken = default(CancellationToken))` - _(no documentation)_
 
 **Relationships**
 
 - Implements `PressToShape.App.Services.IFileStore`
+- Injected into `PressToShape.App.Tests.TestShell`
 
 ## FakeLocalizer (class)
 
@@ -742,6 +877,31 @@ Answers the unsaved-changes question with a fixed or queued choice, and records 
 
 - Implements `PressToShape.App.Services.IMessageDialogs`
 - Injected into `PressToShape.App.Tests.SelectionAndPropertiesIntegrationTests.Session`
+- Injected into `PressToShape.App.Tests.TestShell`
+
+## FakePickedFile (class)
+
+`internal sealed class FakePickedFile : IPickedFile`
+
+Source: `tests/PressToShape.App.Tests/FakePickedFile.cs:12-101`
+
+A picked file kept in memory. Like the Android one, opening it for writing empties it at once. It can be told to fail after a number of written bytes, to simulate a full disk, and to fail when it is opened.
+
+**Members**
+
+- `public FakePickedFile(string name, byte[]? content = null)` - _(no documentation)_
+- `public byte[] Content { get; set; }` - _(no documentation)_
+- `public int? FailWritingAfterBytes { get; set; }` - Writing fails after this many bytes of one write stream. null means it never fails.
+- `public Exception? OpenReadFailure { get; set; }` - _(no documentation)_
+- `public int WriteOpenCount { get; private set; }` - _(no documentation)_
+- `public string Name { get; }` - _(no documentation)_
+- `public Task<Stream> OpenReadAsync()` - _(no documentation)_
+- `public Task<Stream> OpenWriteAsync()` - _(no documentation)_
+
+**Relationships**
+
+- Implements `PressToShape.App.Services.IPickedFile`
+- Injected into `PressToShape.App.Tests.FakePickedFile.WriteStream`
 
 ## GettextCatalogTests (class)
 
@@ -779,12 +939,13 @@ _(no documentation)_
 
 `internal static class HeadlessUi`
 
-Source: `tests/PressToShape.App.Tests/HeadlessUi.cs:33-68`
+Source: `tests/PressToShape.App.Tests/HeadlessUi.cs:40-78`
 
-Runs code on the one thread that owns the headless Avalonia platform. Avalonia must be used from a single thread, xUnit v2 uses many.
+Runs code on the one thread that owns the headless Avalonia platform. Avalonia must be used from a single thread, xUnit v2 uses many. The test classes that use it belong to the collection PressToShape.App.Tests.HeadlessUi.CollectionName, so they run one after the other: a test that lets the dispatcher run its jobs (to lay out a window) would otherwise also run the jobs of a test of another class, in the middle of its own steps.
 
 **Members**
 
+- `public string CollectionName` - The name of the xUnit collection of every test class that uses PressToShape.App.Tests.HeadlessUi.Run``1.
 - `public T Run<T>(Func<T> action)` - _(no documentation)_
 - `public void Run(Action action)` - _(no documentation)_
 
@@ -792,7 +953,7 @@ Runs code on the one thread that owns the headless Avalonia platform. Avalonia m
 
 `internal sealed class HeadlessUiApp : Application`
 
-Source: `tests/PressToShape.App.Tests/HeadlessUi.cs:19-30`
+Source: `tests/PressToShape.App.Tests/HeadlessUi.cs:19-33`
 
 The application of the headless UI tests: the real theme and control styles, but not the real startup, which would read and write the user's settings file. Avalonia's xUnit integration needs xunit v3, so the tests use PressToShape.App.Tests.HeadlessUi.Run``1 instead.
 
@@ -845,6 +1006,23 @@ _(no documentation)_
 - `public void Properties_SectionsCanBeToggled()` - _(no documentation)_
 - `public void Properties_FollowSelectionState()` - _(no documentation)_
 - `public void PlaceholderPanels_AreTranslated_AndRefreshOnLanguageChange()` - _(no documentation)_
+
+## KeyboardInsetTests (class)
+
+`public class KeyboardInsetTests`
+
+Source: `tests/PressToShape.App.Tests/KeyboardInsetTests.cs:6-48`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ClosedKeyboard_LeavesNoGap()` - _(no documentation)_
+- `public void OpenKeyboard_LeavesTheCoveredPartOfTheView()` - _(no documentation)_
+- `public void AKeyboardBelowTheView_LeavesNoGap()` - _(no documentation)_
+- `public void AKeyboardThatStartsExactlyAtTheEndOfTheView_LeavesNoGap()` - _(no documentation)_
+- `public void NonFiniteNumbers_LeaveNoGap(double viewBottom, double coveredTop)` - _(no documentation)_
+- `public void AKeyboardAboveTheViewTop_CoversTheWholeView()` - _(no documentation)_
 
 ## LanguagePreferenceTests (class)
 
@@ -920,27 +1098,27 @@ _(no documentation)_
 
 `public sealed class LocalFileStoreTests : IDisposable`
 
-Source: `tests/PressToShape.App.Tests/LocalFileStoreTests.cs:9-203`
+Source: `tests/PressToShape.App.Tests/LocalFileStoreTests.cs:10-206`
 
 _(no documentation)_
 
 **Members**
 
 - `public void Dispose()` - _(no documentation)_
-- `public void Write_NewFileInNewFolder_CreatesBoth()` - _(no documentation)_
-- `public void Write_ExistingFile_IsReplaced()` - _(no documentation)_
-- `public void Write_Success_LeavesNoTemporaryFile()` - _(no documentation)_
-- `public void Write_TargetIsAnExistingDirectory_ThrowsAndLeavesNoTemporaryFile()` - _(no documentation)_
-- `public void Write_FolderIsAFile_Throws()` - _(no documentation)_
-- `public void Write_FolderIsReadOnly_ThrowsAndKeepsTheOldFile()` - _(no documentation)_
-- `public void Read_ExistingFile_ReturnsTheBytes()` - _(no documentation)_
-- `public void Read_EmptyFile_ReturnsNoBytes()` - _(no documentation)_
-- `public void Read_FileOverTheLimit_ThrowsInvalidDataException()` - _(no documentation)_
-- `public void Read_FileExactlyAtTheLimit_IsRead()` - _(no documentation)_
-- `public void Read_MissingFile_ThrowsFileNotFoundException()` - _(no documentation)_
-- `public void Read_MissingFolder_ThrowsDirectoryNotFoundException()` - _(no documentation)_
-- `public void Exists_ReportsFilesOnly()` - _(no documentation)_
-- `public void Arguments_EmptyPathOrNullBytes_Throw()` - _(no documentation)_
+- `public Task Write_NewFileInNewFolder_CreatesBoth()` - _(no documentation)_
+- `public Task Write_ExistingFile_IsReplaced()` - _(no documentation)_
+- `public Task Write_Success_LeavesNoTemporaryFile()` - _(no documentation)_
+- `public Task Write_TargetIsAnExistingDirectory_ThrowsAndLeavesNoTemporaryFile()` - _(no documentation)_
+- `public Task Write_FolderIsAFile_Throws()` - _(no documentation)_
+- `public Task Write_FolderIsReadOnly_ThrowsAndKeepsTheOldFile()` - _(no documentation)_
+- `public Task Read_ExistingFile_ReturnsTheBytes()` - _(no documentation)_
+- `public Task Read_EmptyFile_ReturnsNoBytes()` - _(no documentation)_
+- `public Task Read_FileOverTheLimit_ThrowsInvalidDataException()` - _(no documentation)_
+- `public Task Read_FileExactlyAtTheLimit_IsRead()` - _(no documentation)_
+- `public Task Read_MissingFile_ThrowsFileNotFoundException()` - _(no documentation)_
+- `public Task Read_MissingFolder_ThrowsDirectoryNotFoundException()` - _(no documentation)_
+- `public Task CancelledToken_ThrowsBeforeTouchingTheFile()` - _(no documentation)_
+- `public Task Arguments_EmptyPathOrNullBytes_Throw()` - _(no documentation)_
 
 ## LocalizerTests (class)
 
@@ -968,17 +1146,27 @@ _(no documentation)_
 - `public void N_ReturnsItsArgument()` - _(no documentation)_
 - `public void CultureUsedForFormatting_FollowsTheLanguage()` - _(no documentation)_
 
-## MainViewModelTests (class)
+## LongPressTrackerTests (class)
 
-`public class MainViewModelTests`
+`public class LongPressTrackerTests`
 
-Source: `tests/PressToShape.App.Tests/MainViewModelTests.cs:6-15`
+Source: `tests/PressToShape.App.Tests/LongPressTrackerTests.cs:6-122`
 
 _(no documentation)_
 
 **Members**
 
-- `public void Greeting_Default_IsWelcomeMessage()` - _(no documentation)_
+- `public void Tick_BeforeTheDelay_DoesNotFire()` - _(no documentation)_
+- `public void Tick_AtTheDelay_FiresOnce()` - _(no documentation)_
+- `public void Tick_AfterMovingBeyondTheSlop_DoesNotFire()` - _(no documentation)_
+- `public void Tick_AfterMovingWithinTheSlop_StillFires()` - _(no documentation)_
+- `public void Tick_AfterRelease_DoesNotFire()` - _(no documentation)_
+- `public void Tick_AfterCancel_DoesNotFire()` - _(no documentation)_
+- `public void Tick_WithoutPress_DoesNotFire()` - _(no documentation)_
+- `public void ConsumeFired_AfterAFiredPress_IsTrueOnce()` - _(no documentation)_
+- `public void ConsumeFired_AfterAShortPress_IsFalse()` - _(no documentation)_
+- `public void Press_AfterAFiredPress_ResetsTheFiredFlag()` - _(no documentation)_
+- `public void IsWatching_IsTrueOnlyWhileWaiting()` - _(no documentation)_
 
 ## MemorySettingsStore (class)
 
@@ -1002,7 +1190,7 @@ Settings kept in memory.
 
 `public class MenuBarViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:12-565`
+Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-566`
 
 _(no documentation)_
 
@@ -1044,6 +1232,43 @@ _(no documentation)_
 - `public void UndoAndRedoItems_FollowTheirCommands_AndKeepTheirShortcutHints()` - _(no documentation)_
 - `public void EditItems_AreDisabledUntilTheirCommandCanRun_AndRunTheirCommand()` - _(no documentation)_
 - `public void EditItems_KeepTheirGestureHints()` - _(no documentation)_
+
+## MenuItemViewModelTests (class)
+
+`public class MenuItemViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/MenuItemViewModelTests.cs:7-74`
+
+_(no documentation)_
+
+**Members**
+
+- `public void RemoveMnemonic_DropsTheMarker_AndKeepsDoubleUnderscoresAsOne(string text, string expected)` - _(no documentation)_
+- `public void PlainHeader_OfATranslatedItem_HasNoMarker()` - _(no documentation)_
+- `public void PlainHeader_FollowsTheLanguage_AndDropsTheMarkerOfTheTranslation()` - _(no documentation)_
+- `public void PlainHeader_OfAFixedText_IsLeftAsItIs()` - _(no documentation)_
+- `public void PlainHeader_OfASubmenu_HasNoMarker()` - _(no documentation)_
+- `public void PlainHeader_OfASeparator_IsTheSeparatorHeader()` - _(no documentation)_
+
+## MessageDialogHostTests (class)
+
+`public class MessageDialogHostTests`
+
+Source: `tests/PressToShape.App.Tests/MessageDialogHostTests.cs:12-170`
+
+_(no documentation)_
+
+**Members**
+
+- `public void NewHost_ShowsNothing()` - _(no documentation)_
+- `public Task ShowAsync_ShowsTheDialog_AndCompletesWithTheChosenResult()` - _(no documentation)_
+- `public Task ShowAsync_AfterTheResult_ClosesTheDialogAndNotifies()` - _(no documentation)_
+- `public Task SecondRequest_WaitsUntilTheFirstIsClosed()` - _(no documentation)_
+- `public Task Dismiss_ClosesTheDialogWithoutAChoice()` - _(no documentation)_
+- `public void Dismiss_WithoutADialog_DoesNothing()` - _(no documentation)_
+- `public Task ADismissedDialog_CannotCompleteTheNextOne()` - _(no documentation)_
+- `public Task AfterADialogIsClosed_TheNextRequestShowsImmediately()` - _(no documentation)_
+- `public Task ShowAsync_NullDialog_Throws()` - _(no documentation)_
 
 ## MessageDialogViewModelTests (class)
 
@@ -1089,6 +1314,45 @@ _(no documentation)_
 - `public void NullValue_DisablesTheField_AndCommitDoesNothing()` - _(no documentation)_
 - `public void WhileEditing_NewValuesDoNotReplaceTheTypedText_UntilRevertedOrCommitted()` - _(no documentation)_
 - `public void Constructor_RejectsBadArguments()` - _(no documentation)_
+
+## OverflowMenuViewModelTests (class)
+
+`public class OverflowMenuViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-161`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Items_AreTheFileActions_TheEditActions_AndTheLanguage_InOrder()` - _(no documentation)_
+- `public void Items_HaveNoQuitAndNoRecentFiles()` - _(no documentation)_
+- `public void Items_ShowNoShortcutTexts()` - _(no documentation)_
+- `public void Items_RunTheMatchingCommand()` - _(no documentation)_
+- `public void AnItemWhoseCommandCannotRun_IsDisabled_AndFollowsTheCommand()` - _(no documentation)_
+- `public void TheLanguageSubmenu_IsAlwaysEnabled_AndListsBothLanguages()` - _(no documentation)_
+- `public void ChoosingALanguage_SwitchesIt_MovesTheCheckMark_AndTranslatesTheHeaders()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+
+## OverlayMessageDialogsTests (class)
+
+`public class OverlayMessageDialogsTests`
+
+Source: `tests/PressToShape.App.Tests/OverlayMessageDialogsTests.cs:10-124`
+
+_(no documentation)_
+
+**Members**
+
+- `public OverlayMessageDialogsTests()` - _(no documentation)_
+- `public Task AskUnsavedChanges_GivesTheChoiceOfTheButton(int button, int expected)` - _(no documentation)_
+- `public Task TheDialogsInsideTheLayout_AreNotCancelledByEscape_BecauseTheBackRequestDoesThat()` - _(no documentation)_
+- `public void TheWindowDialogs_StillCancelOnEscape()` - _(no documentation)_
+- `public Task AskUnsavedChanges_ShowsTheSameTextAsTheWindowDialog()` - _(no documentation)_
+- `public Task AskUnsavedChanges_DismissedWithoutAChoice_CountsAsCancel()` - _(no documentation)_
+- `public Task ShowError_ShowsTheMessage_AndCompletesWhenOkIsChosen()` - _(no documentation)_
+- `public Task AQuestionAfterAnError_WaitsForTheError()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
 
 ## PaletteViewModelTests (class)
 
@@ -1197,7 +1461,7 @@ _(no documentation)_
 
 `public class PropertiesViewColorTests`
 
-Source: `tests/PressToShape.App.Tests/PropertiesViewColorTests.cs:20-100`
+Source: `tests/PressToShape.App.Tests/PropertiesViewColorTests.cs:20-101`
 
 _(no documentation)_
 
@@ -1212,12 +1476,13 @@ _(no documentation)_
 
 `public class PropertiesViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/PropertiesViewModelTests.cs:14-789`
+Source: `tests/PressToShape.App.Tests/PropertiesViewModelTests.cs:14-807`
 
 _(no documentation)_
 
 **Members**
 
+- `public void CommitPendingEdits_AppliesOnlyTheFieldsBeingEdited_AsOneStepEach()` - _(no documentation)_
 - `public void NothingSelected_DisablesEverything_AndShowsTheHeader()` - _(no documentation)_
 - `public void NothingSelected_ColorFieldsStayEnabled_AndShowTheDefaults()` - _(no documentation)_
 - `public void NothingSelected_ColorEdit_ChangesTheDefaultsAndNotTheDocumentOrHistory()` - _(no documentation)_
@@ -1286,13 +1551,16 @@ _(no documentation)_
 
 `public sealed class RecentFilesTests : IDisposable`
 
-Source: `tests/PressToShape.App.Tests/RecentFilesTests.cs:12-239`
+Source: `tests/PressToShape.App.Tests/RecentFilesTests.cs:12-281`
 
 _(no documentation)_
 
 **Members**
 
 - `public void Dispose()` - _(no documentation)_
+- `public void WithoutPersisting_AddAndRemove_DoNothing()` - _(no documentation)_
+- `public void WithoutPersisting_AStoredList_IsIgnoredAndKept()` - _(no documentation)_
+- `public void WithPersisting_IsTheDefault()` - _(no documentation)_
 - `public void New_WithoutStoredList_IsEmpty()` - _(no documentation)_
 - `public void Add_NewPaths_GoToTheTop()` - _(no documentation)_
 - `public void Add_ExistingPath_MovesToTheTopWithoutDuplicate()` - _(no documentation)_
@@ -1415,7 +1683,7 @@ _(no documentation)_
 
 `public class SelectionGeometryTests`
 
-Source: `tests/PressToShape.App.Tests/SelectionGeometryTests.cs:8-182`
+Source: `tests/PressToShape.App.Tests/SelectionGeometryTests.cs:8-230`
 
 _(no documentation)_
 
@@ -1429,6 +1697,10 @@ _(no documentation)_
 - `public void HandlePosition_Rotated90_TurnsClockwise()` - _(no documentation)_
 - `public void HandlePosition_Rotated30_StaysOnTheTurnedFrame()` - _(no documentation)_
 - `public void HitHandle_UsesAGrabSizeThatIsConstantOnTheScreen(double zoom)` - _(no documentation)_
+- `public void HitHandle_AFingerSizedGrabArea_ReachesFurtherThanTheDefault_ConstantOnTheScreen(double zoom)` - _(no documentation)_
+- `public void HitHandle_AFingerSizedGrabArea_DoesNotCoverTheMiddleOfASmallShape()` - _(no documentation)_
+- `public void HitHandle_AFingerSizedGrabArea_NeverShrinksBelowTheMouseGrabArea()` - _(no documentation)_
+- `public void HitHandle_AnUnusableGrabSize_FallsBackToTheMouseSizeOrNothing_WithoutThrowing(double grabSize)` - _(no documentation)_
 - `public void HitHandle_AwayFromAllHandles_IsNull()` - _(no documentation)_
 - `public void HitHandle_RotateHandleIsOutsideTheFrame()` - _(no documentation)_
 - `public void HitHandle_RotatedFrame_FollowsTheTurnedHandles()` - _(no documentation)_
@@ -1485,6 +1757,20 @@ _(no documentation)_
 - `public void EmptyDocumentAndEmptyInputs_GiveEmptyResults()` - _(no documentation)_
 - `public void ThousandShapes_AreHandledInOnePass()` - _(no documentation)_
 - `public void Arguments_Null_Throw()` - _(no documentation)_
+
+## SelectionSummaryTextTests (class)
+
+`public class SelectionSummaryTextTests`
+
+Source: `tests/PressToShape.App.Tests/SelectionSummaryTextTests.cs:7-46`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Format_English_GivesTheCountText(int count, string expected)` - _(no documentation)_
+- `public void Format_German_UsesTheTranslations()` - _(no documentation)_
+- `public void Format_ChangesWithTheLanguageOfTheLocalizer()` - _(no documentation)_
 
 ## SelectionTransformsTests (class)
 
@@ -1630,6 +1916,52 @@ _(no documentation)_
 - `public void FormatZoom_GermanCulture_UsesAComma()` - _(no documentation)_
 - `public void SelectedShapeWithoutDescription_ShowsOneSelected_AndTranslatesIt()` - _(no documentation)_
 
+## StorageFileRegistryTests (class)
+
+`public class StorageFileRegistryTests`
+
+Source: `tests/PressToShape.App.Tests/StorageFileRegistryTests.cs:6-88`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Register_ReturnsAReferenceThatEndsWithTheFileName()` - _(no documentation)_
+- `public void TryGet_ReturnsTheRegisteredFile()` - _(no documentation)_
+- `public void Register_TheSameFileTwice_GivesTwoWorkingReferences()` - _(no documentation)_
+- `public void TryGet_UnknownReference_ReturnsFalse(string reference)` - _(no documentation)_
+- `public void Register_NameWithSeparatorsOrEmpty_StillEndsWithASingleName(string name, string expectedEnd)` - _(no documentation)_
+- `public void IsReference_RecognizesOnlyTheRegistryPrefix(string path, bool expected)` - _(no documentation)_
+- `public void IsReference_ForARegisteredFile_IsTrue()` - _(no documentation)_
+
+## StorageFileStoreTests (class)
+
+`public class StorageFileStoreTests`
+
+Source: `tests/PressToShape.App.Tests/StorageFileStoreTests.cs:11-163`
+
+_(no documentation)_
+
+**Members**
+
+- `public StorageFileStoreTests()` - _(no documentation)_
+- `public Task Read_PickedFile_ReturnsTheBytes()` - _(no documentation)_
+- `public Task Read_EmptyFile_ReturnsNoBytes()` - _(no documentation)_
+- `public Task Read_FileExactlyAtTheLimit_IsRead()` - _(no documentation)_
+- `public Task Read_FileOverTheLimit_ThrowsInvalidDataException()` - _(no documentation)_
+- `public Task Read_LargeFile_IsReadInSeveralChunks()` - _(no documentation)_
+- `public Task Read_UnknownReference_ThrowsFileNotFoundException()` - _(no documentation)_
+- `public Task Read_PlatformFailure_BecomesAnIOException()` - _(no documentation)_
+- `public Task Write_ReplacesTheContent()` - _(no documentation)_
+- `public Task Write_NewEmptyFile_WritesTheBytes()` - _(no documentation)_
+- `public Task Write_FailingMidway_WhenTheRestoreFailsToo_StillThrowsTheOriginalError()` - _(no documentation)_
+- `public Task Write_FailingMidway_WhenTheRestoreCanSucceed_LeavesTheOldContent()` - _(no documentation)_
+- `public Task Write_WhenTheOldContentCannotBeRead_StillWrites()` - _(no documentation)_
+- `public Task Write_CancelledBeforeStarting_DoesNotTouchTheFile()` - _(no documentation)_
+- `public Task Write_UnknownReference_ThrowsFileNotFoundException()` - _(no documentation)_
+- `public Task Write_NullBytes_Throws()` - _(no documentation)_
+- `public void Constructor_NullRegistry_Throws()` - _(no documentation)_
+
 ## SwitchableCommand (class)
 
 `internal sealed class SwitchableCommand : ICommand`
@@ -1646,6 +1978,193 @@ A command whose CanExecute can be switched by the test.
 - `public void Set(bool canExecute)` - _(no documentation)_
 - `public bool CanExecute(object? parameter)` - _(no documentation)_
 - `public void Execute(object? parameter)` - _(no documentation)_
+
+## TabletColorSwatchViewModelTests (class)
+
+`public class TabletColorSwatchViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/TabletColorSwatchViewModelTests.cs:10-192`
+
+_(no documentation)_
+
+**Members**
+
+- `public void NothingSelected_ShowsTheColorsOfTheNextShape()` - _(no documentation)_
+- `public void ASelectedShape_ShowsItsFillAndStroke()` - _(no documentation)_
+- `public void AShapeWithoutFillOrStroke_HasNone()` - _(no documentation)_
+- `public void ShapesWithDifferentFills_ShowNoFill_ButTheSameStrokeStays()` - _(no documentation)_
+- `public void AColorChangedInThePanel_IsShownAndNotified()` - _(no documentation)_
+- `public void Undo_ShowsTheOldColorAgain()` - _(no documentation)_
+- `public void ANewSelection_ShowsItsColors_AndNotifiesTheFlags()` - _(no documentation)_
+- `public void Open_FromClosed_OpensTheProperties()` - _(no documentation)_
+- `public void Open_WithAnotherTabOpen_SwitchesToTheProperties()` - _(no documentation)_
+- `public void Open_WhenAlreadyOnTheProperties_KeepsThePanelOpen()` - _(no documentation)_
+- `public void Open_ExpandsACollapsedAppearanceSection()` - _(no documentation)_
+- `public void Name_FollowsTheLanguage()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+
+## TabletPanelViewModelTests (class)
+
+`public class TabletPanelViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/TabletPanelViewModelTests.cs:9-195`
+
+_(no documentation)_
+
+**Members**
+
+- `public void New_IsClosedAndHasNoContent()` - _(no documentation)_
+- `public void Toggle_WhenClosed_OpensTheTab()` - _(no documentation)_
+- `public void Toggle_TheOpenTab_ClosesThePanel()` - _(no documentation)_
+- `public void Toggle_AnotherTab_SwitchesTheContentAndStaysOpen()` - _(no documentation)_
+- `public void Toggle_Assets_IsIgnored()` - _(no documentation)_
+- `public void Toggle_Assets_WhileOpen_KeepsTheOpenTab()` - _(no documentation)_
+- `public void Open_WhenClosed_OpensTheTab()` - _(no documentation)_
+- `public void Open_AnotherTab_Switches()` - _(no documentation)_
+- `public void Open_TheOpenTab_KeepsItOpen()` - _(no documentation)_
+- `public void Open_Assets_IsIgnored()` - _(no documentation)_
+- `public void Title_FollowsTheTabAndTheLanguage()` - _(no documentation)_
+- `public void PropertyChanged_IsRaisedForOpenStateContentAndTitle()` - _(no documentation)_
+- `public void Close_AppliesAFieldThatIsStillBeingTypedIn()` - _(no documentation)_
+- `public void Close_WhenNothingIsBeingTypedIn_ChangesNothing()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+
+## TabletShellViewModelTests (class)
+
+`public class TabletShellViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/TabletShellViewModelTests.cs:13-438`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Shell_CreatesAllRegions()` - _(no documentation)_
+- `public void TheColorSwatch_OpensThePanelOfTheShell_OnTheSharedProperties()` - _(no documentation)_
+- `public void ATool_ChosenInTheToolColumn_IsTheActiveToolOfTheEditor()` - _(no documentation)_
+- `public void AnEdit_ShowsInTheToolbar_TheTitle_AndTheCanvas()` - _(no documentation)_
+- `public void ASelection_ShowsInThePropertiesTab()` - _(no documentation)_
+- `public void TheZoomOfTheToolbar_IsTheZoomOfTheEditor()` - _(no documentation)_
+- `public Task Leave_WithoutChanges_EndsTheAppWithoutAQuestion()` - _(no documentation)_
+- `public Task Leave_WithChanges_Save_SavesAndEndsTheApp()` - _(no documentation)_
+- `public Task Leave_WithChanges_DontSave_EndsTheAppWithoutSaving()` - _(no documentation)_
+- `public Task Leave_WithChanges_Cancel_KeepsTheAppAndTheDrawing()` - _(no documentation)_
+- `public Task Leave_WithChanges_SaveFailing_KeepsTheAppAndShowsTheError()` - _(no documentation)_
+- `public Task Leave_WhileADialogIsOpen_ClosesItAsCancel_AndTheAppStays()` - _(no documentation)_
+- `public Task Leave_WithTheOverlayDialog_DontSaveEndsTheApp()` - _(no documentation)_
+- `public Task Leave_WithTheOverlayDialog_BackWhileTheQuestionIsOpen_CancelsIt()` - _(no documentation)_
+- `public Task Leave_ARequestAfterACancel_AsksAgain()` - _(no documentation)_
+- `public Task Back_WhileADialogIsOpen_ClosesOnlyTheDialog()` - _(no documentation)_
+- `public Task Back_WhileAToolFlyoutIsOpen_ClosesOnlyTheFlyout()` - _(no documentation)_
+- `public Task Back_WhileThePanelIsOpen_ClosesOnlyThePanel_EvenWithUnsavedChanges()` - _(no documentation)_
+- `public Task Back_WithNothingOpen_LeavesLikeBefore()` - _(no documentation)_
+- `public Task Back_WithNothingOpenAndUnsavedChanges_Asks()` - _(no documentation)_
+- `public Task Back_PressedRepeatedly_ClosesFlyoutThenPanelThenAsks()` - _(no documentation)_
+- `public Task NewDocument_WhileTheLayersPanelIsOpen_KeepsThePanelAndShowsTheNewDocument()` - _(no documentation)_
+- `public Task RecentFiles_AreKept_ByDefault()` - _(no documentation)_
+- `public Task RecentFiles_AreNotKept_WhenTheServicesSayNo()` - _(no documentation)_
+- `public void TheOverflowMenu_HasNoRecentFilesList()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+
+## TabletToolColumnViewModelTests (class)
+
+`public class TabletToolColumnViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/TabletToolColumnViewModelTests.cs:8-72`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Groups_AreTheSixGroupsInOrder()` - _(no documentation)_
+- `public void ColorSwatch_IsGiven_AndNullIsRefused()` - _(no documentation)_
+- `public void OpeningAFlyout_ClosesTheOtherOne()` - _(no documentation)_
+- `public void HasOpenFlyout_FollowsTheGroups()` - _(no documentation)_
+- `public void CloseFlyouts_ClosesTheOpenOne()` - _(no documentation)_
+
+## TabletToolbarViewModelTests (class)
+
+`public class TabletToolbarViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/TabletToolbarViewModelTests.cs:10-245`
+
+_(no documentation)_
+
+**Members**
+
+- `public void NewDocument_IsShownAsUntitled_WithoutAStar()` - _(no documentation)_
+- `public void AnEdit_PutsAStarInFront_AndNotifies()` - _(no documentation)_
+- `public Task AfterSaveAs_TheTitleIsTheFileName_WithoutAStar()` - _(no documentation)_
+- `public void TheTitle_FollowsTheLanguage()` - _(no documentation)_
+- `public void UndoAndRedoButtons_AreNamed_AndDisabledWithoutHistory()` - _(no documentation)_
+- `public void UndoAndRedoButtons_FollowTheHistory_AndChangeTheDocument()` - _(no documentation)_
+- `public void UndoButtonChangesNotify_WhenTheHistoryChanges()` - _(no documentation)_
+- `public void Zoom_ShowsTheZoomOfTheEditor_AndItsCommandsWork()` - _(no documentation)_
+- `public void TheOverflowMenu_IsTheOneThatWasGiven()` - _(no documentation)_
+- `public void DuplicateAndDelete_AreDisabledWithoutSelection_AndNamed()` - _(no documentation)_
+- `public void Duplicate_WithASelection_AddsACopyAndSelectsIt()` - _(no documentation)_
+- `public void Delete_WithASelection_RemovesItAsOneUndoStep()` - _(no documentation)_
+- `public void PanelButtons_AreProperties_Layers_History_InThatOrder()` - _(no documentation)_
+- `public void PanelButton_Toggle_OpensThePanel_AndMarksOnlyItActive()` - _(no documentation)_
+- `public void PanelButton_IsActive_NotifiesWhenThePanelChanges()` - _(no documentation)_
+- `public void ButtonNames_FollowTheLanguage()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+
+## TabletViewsTests (class)
+
+`public class TabletViewsTests`
+
+Source: `tests/PressToShape.App.Tests/TabletViewsTests.cs:20-915`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Toolbar_BuildsAndShowsTheTitleAndTheZoom()` - _(no documentation)_
+- `public void Toolbar_FollowsTheDocument_StarUndoAndZoom()` - _(no documentation)_
+- `public void Toolbar_TheButtonsHaveAccessibleNames()` - _(no documentation)_
+- `public void Toolbar_WithTheTouchSizes_EveryControlIsAtLeast48()` - _(no documentation)_
+- `public void Toolbar_TheOverflowButton_HasTheMenuOfTheViewModel()` - _(no documentation)_
+- `public void Toolbar_ShowsTheGermanTitleAfterALanguageChange()` - _(no documentation)_
+- `public void Toolbar_HasThePanelIconsInOrder_AndTheOpenOneIsChecked()` - _(no documentation)_
+- `public void Toolbar_DuplicateAndDelete_AreDisabledWithoutASelection_AndActOnIt()` - _(no documentation)_
+- `public void Toolbar_FitsInOneRow_AtTheTabletWidths(int width)` - _(no documentation)_
+- `public void Toolbar_MenuClosed_IsRaisedWhenAMenuCloses()` - _(no documentation)_
+- `public void Toolbar_TryCloseMenu_ClosesTheOpenMenu_AndSaysSo()` - _(no documentation)_
+- `public void Panel_WhileClosed_IsHiddenAndShowsNoContent()` - _(no documentation)_
+- `public void Panel_Open_ShowsTheTitleAndTheContentOfTheTab()` - _(no documentation)_
+- `public void Panel_SwitchingTheTab_ShowsTheOtherContent()` - _(no documentation)_
+- `public void Panel_ShowsTheSameInspectorAsTheShell()` - _(no documentation)_
+- `public void Panel_HasTheWidthOfTheTheme()` - _(no documentation)_
+- `public void Panel_WithTheTouchSizes_TheContentIsTouchSized()` - _(no documentation)_
+- `public void Shell_ShowsEveryRegion_WithItsViewModel()` - _(no documentation)_
+- `public void Shell_HasNoRulers_NoMenuBar_NoStatusBar_AndNoBarUnderTheCanvas()` - _(no documentation)_
+- `public void Shell_IsTouchSized_WithoutAnyHelp()` - _(no documentation)_
+- `public void Shell_Layout_ToolbarOnTop_ToolColumnLeft_CanvasFillsTheRest()` - _(no documentation)_
+- `public void Shell_TheCanvas_IsAsWideAsTheLayoutMinusTheNarrowColumn()` - _(no documentation)_
+- `public void Shell_OpeningAndClosingThePanel_DoesNotChangeTheCanvas()` - _(no documentation)_
+- `public void Shell_APressOnTheCanvas_ClosesThePanel_AndStillDrawsWithTheTool()` - _(no documentation)_
+- `public void Shell_APressOnAToolOrTheToolbar_KeepsThePanelOpen()` - _(no documentation)_
+- `public void Shell_TheDialogOverlay_IsHidden_UntilADialogIsOpen_AndShowsItsTitleAndMessage()` - _(no documentation)_
+- `public void Shell_TheDialogButtons_AreTouchSized()` - _(no documentation)_
+- `public void ToolColumn_ShowsSixGroupButtonsInOrder_OnlyTheActiveOneChecked()` - _(no documentation)_
+- `public void ToolColumn_MarksOnlyTheGroups()` - _(no documentation)_
+- `public void ToolColumn_ChangingTheToolFromOutside_MovesTheHighlightAndTheIcon()` - _(no documentation)_
+- `public void ToolColumn_ATapOnAGroupSelectsItsCurrentTool()` - _(no documentation)_
+- `public void ToolColumn_TheLongPressCommand_OpensTheFlyoutWithAllToolsOfTheGroup()` - _(no documentation)_
+- `public void ToolColumn_ChoosingAnEntry_SelectsTheToolAndClosesTheFlyout()` - _(no documentation)_
+- `public void ToolColumn_TappingTheActiveToolAgain_KeepsItHighlighted()` - _(no documentation)_
+- `public void ToolColumn_ATapOnAnotherTool_StillMovesTheHighlightBothWays()` - _(no documentation)_
+- `public void ToolColumn_TappingTheActiveEntryOfAFlyoutAgain_KeepsItChecked()` - _(no documentation)_
+- `public void Toolbar_ThePanelIcon_FollowsThePanelAlsoWhenThePanelClosesByItself()` - _(no documentation)_
+- `public void ToolColumn_ASingleToolGroup_OpensNoFlyout()` - _(no documentation)_
+- `public void ToolColumn_WithTheTouchSizes_EveryButtonIsAtLeast48_AlsoInTheFlyout()` - _(no documentation)_
+- `public void ToolColumn_FitsTheHeightOfATablet()` - _(no documentation)_
+- `public void ToolColumn_HasNoSwapOrResetButton_AndOneSwatchOfAtLeast48()` - _(no documentation)_
+- `public void ToolColumn_IsNarrow_AndEverythingIsCentered()` - _(no documentation)_
+- `public void ColorSwatch_ShowsTheFillInTheMiddleAndTheStrokeAsRing_AndFollowsChanges()` - _(no documentation)_
+- `public void ColorSwatch_WithoutFillOrStroke_ShowsEmptyOutlinedParts()` - _(no documentation)_
+- `public void ColorSwatch_ATap_OpensThePropertiesPanel()` - _(no documentation)_
 
 ## TestFileServices (class)
 
@@ -1670,6 +2189,34 @@ Helpers that put shapes into the editor state and select them, the way tools wou
 **Members**
 
 - `public Guid[] AddAndSelect(EditorState state, int count = 1)` - Adds rectangles to the active layer (one history step) and selects all of them. Returns their ids.
+
+## TestShell (class)
+
+`internal sealed class TestShell : EditorShellViewModel`
+
+Source: `tests/PressToShape.App.Tests/TestShell.cs:10-56`
+
+The smallest shell: only what the base class gives every layout, with fake files, dialogs and settings. For testing the parts of a layout.
+
+**Members**
+
+- `public TestShell(ILocalizer? localizer = null)` - _(no documentation)_
+- `public ILocalizer LocalizerForTests { get; }` - The localizer the shell was made with.
+- `public FileMenuCommands FileCommandsForTests { get; }` - The commands behind the file items of a menu, which the base class keeps protected.
+- `public EditMenuCommands EditCommandsForTests { get; }` - The commands behind the edit items of a menu, which the base class keeps protected.
+- `public FakeFileStore Files { get; }` - _(no documentation)_
+- `public FakeFileDialogs Dialogs { get; }` - _(no documentation)_
+- `public FakeMessageDialogs Messages { get; }` - _(no documentation)_
+- `public RectangleShape AddRectangle(double x = 100, double y = 100, double width = 200, double height = 100)` - Draws a rectangle on the active layer as one history step, without selecting it.
+- `public RectangleShape AddAndSelectRectangle(double x = 100, double y = 100, double width = 200, double height = 100)` - Draws a rectangle and selects it.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Tests.FakeFileDialogs`
+- Depends on (constructor) `PressToShape.App.Tests.FakeFileStore`
+- Depends on (constructor) `PressToShape.App.Tests.FakeMessageDialogs`
+- Inherits `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
 
 ## ThemeResourceTests (class)
 
@@ -1703,6 +2250,60 @@ _(no documentation)_
 - `public void FindByShortcut_UnknownKey_ReturnsNull(char key)` - _(no documentation)_
 - `public void StarAndSpiral_HaveNoShortcut(string toolName)` - _(no documentation)_
 - `public void ToolTip_ShowsShortcutWhenPresent()` - _(no documentation)_
+
+## ToolGroupButtonTests (class)
+
+`public class ToolGroupButtonTests`
+
+Source: `tests/PressToShape.App.Tests/ToolGroupButtonTests.cs:13-145`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ATap_RaisesTheClick_AndNoLongPress()` - _(no documentation)_
+- `public void AHold_RunsTheLongPressCommand_AndSwallowsTheClick()` - _(no documentation)_
+- `public void AHold_RunsTheLongPressCommandOnlyOnce()` - _(no documentation)_
+- `public void ATapAfterAHold_SelectsAgain()` - _(no documentation)_
+- `public void MovingFarBeforeTheDelay_CancelsTheLongPress()` - _(no documentation)_
+- `public void ALongPressCommandThatCannotRun_IsNotRun()` - _(no documentation)_
+
+## ToolGroupViewModelTests (class)
+
+`public class ToolGroupViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/ToolGroupViewModelTests.cs:9-136`
+
+_(no documentation)_
+
+**Members**
+
+- `public void New_StartsWithTheFirstToolOfTheGroup()` - _(no documentation)_
+- `public void New_WhenTheActiveToolIsAMember_ShowsItAndIsActive()` - _(no documentation)_
+- `public void SelectCurrent_MakesTheCurrentToolActive()` - _(no documentation)_
+- `public void SelectMember_SetsTheActiveToolMakesItCurrentAndClosesTheFlyout()` - _(no documentation)_
+- `public void SelectCurrent_AfterAChoiceInTheFlyout_UsesThatTool()` - _(no documentation)_
+- `public void ActiveTool_ChangedFromOutsideToAMember_UpdatesCurrentAndTheIcon()` - _(no documentation)_
+- `public void ActiveTool_ChangedToAToolOfAnotherGroup_IsNotActiveAndKeepsCurrent()` - _(no documentation)_
+- `public void Name_FollowsTheLanguage()` - _(no documentation)_
+- `public void IsGroup_ForASingleTool_IsFalseAndOpenFlyoutDoesNothing()` - _(no documentation)_
+- `public void OpenFlyout_ForAGroup_OpensIt()` - _(no documentation)_
+
+## ToolGroupsTests (class)
+
+`public class ToolGroupsTests`
+
+Source: `tests/PressToShape.App.Tests/ToolGroupsTests.cs:8-60`
+
+_(no documentation)_
+
+**Members**
+
+- `public void All_HasTheSixGroupsInOrder()` - _(no documentation)_
+- `public void All_ContainsEveryToolExactlyOnce()` - _(no documentation)_
+- `public void Of_ForEveryTool_ReturnsTheGroupThatHoldsIt()` - _(no documentation)_
+- `public void DefaultTool_IsTheFirstToolOfTheGroup()` - _(no documentation)_
+- `public void IsGroup_IsFalseOnlyForTextAndEyedropper()` - _(no documentation)_
 
 ## ToolbarViewModelTests (class)
 
@@ -1746,11 +2347,77 @@ _(no documentation)_
 - `public void SwatchCommands_ExistButCannotExecute()` - _(no documentation)_
 - `public void ToolNamesAndTooltips_AreTranslated_AndRefreshOnLanguageChange()` - _(no documentation)_
 
+## TouchGestureTrackerTests (class)
+
+`public class TouchGestureTrackerTests`
+
+Source: `tests/PressToShape.App.Tests/TouchGestureTrackerTests.cs:6-352`
+
+_(no documentation)_
+
+**Members**
+
+- `public void FirstTouch_IsPassedOnAsAPress()` - _(no documentation)_
+- `public void OneFinger_MoveAndRelease_ArePassedOn()` - _(no documentation)_
+- `public void AfterARelease_TheNextTouchIsAFirstTouchAgain_EvenWithAnotherId()` - _(no documentation)_
+- `public void SecondTouch_CancelsTheRunningAction_AndStartsAGesture()` - _(no documentation)_
+- `public void WhileTwoFingersAreDown_NothingIsPassedToTheTool()` - _(no documentation)_
+- `public void Pinch_MovingApart_DoublesTheZoom()` - _(no documentation)_
+- `public void Pinch_MovingTogether_HalvesTheZoom()` - _(no documentation)_
+- `public void Pinch_StartsFromTheZoomThatWasGivenWhenTheSecondFingerArrived()` - _(no documentation)_
+- `public void Pinch_TheTargetZoomIsRelativeToTheStart_NotToThePreviousMove()` - _(no documentation)_
+- `public void Pinch_IsClampedToTheZoomRange()` - _(no documentation)_
+- `public void BothFingersMovingTogether_PansWithoutZooming()` - _(no documentation)_
+- `public void Gesture_ReportsTheMidpointBeforeAndAfter()` - _(no documentation)_
+- `public void FingersAtTheSameSpot_DoNotDivideByZero()` - _(no documentation)_
+- `public void OneFingerLifting_EndsTheGesture_AndTheRestIsIgnored()` - _(no documentation)_
+- `public void AfterAllFingersAreUp_TheNextTouchActsAgain()` - _(no documentation)_
+- `public void ANewFingerWhileTheHandIsLifting_IsIgnored_UntilEveryFingerIsUp()` - _(no documentation)_
+- `public void AThirdFinger_IsIgnored_AndDoesNotDisturbTheGesture()` - _(no documentation)_
+- `public void MouseAndPen_AreNotTracked_AndDoNotChangeTheState(int deviceType)` - _(no documentation)_
+- `public void Cancel_DuringOneFinger_AsksToCancelTheAction_AndForgetsTheFinger()` - _(no documentation)_
+- `public void Cancel_DuringAGesture_ResetsWithoutAnotherCancel()` - _(no documentation)_
+- `public void Cancel_WhenIdle_DoesNothing()` - _(no documentation)_
+- `public void UnknownIds_AreIgnored()` - _(no documentation)_
+- `public void ADuplicatePress_IsIgnored()` - _(no documentation)_
+- `public void NonFinitePositions_AreIgnored(double x, double y)` - _(no documentation)_
+- `public void NonFiniteZoomWhenTheSecondFingerArrives_IsIgnored()` - _(no documentation)_
+- `public void TheSecondFingersIdMayDifferFromEveryEarlierId()` - _(no documentation)_
+
+## TouchSizesTests (class)
+
+`public class TouchSizesTests`
+
+Source: `tests/PressToShape.App.Tests/TouchSizesTests.cs:23-387`
+
+_(no documentation)_
+
+**Members**
+
+- `public void EveryTouchKey_HasADesktopValueOfTheSameType()` - _(no documentation)_
+- `public void TouchTargets_AreAtLeast48(string key)` - _(no documentation)_
+- `public void ApplyTo_CanBeUsedForSeveralRoots()` - _(no documentation)_
+- `public void Desktop_ToolColumn_KeepsOneColumnOf36()` - _(no documentation)_
+- `public void Desktop_TappingTheActiveToolAgain_KeepsItHighlighted()` - _(no documentation)_
+- `public void WithTheTouchSizes_ToolButtonsAre48_InOneColumn()` - _(no documentation)_
+- `public void Desktop_PropertiesPanel_KeepsItsSizes()` - _(no documentation)_
+- `public void WithTheTouchSizes_EveryControlOfThePropertiesPanel_IsAtLeast48High()` - _(no documentation)_
+- `public void WithTheTouchSizes_ButtonsOfThePropertiesPanel_AreAtLeast48Wide()` - _(no documentation)_
+- `public void Desktop_LayerRows_KeepTheirSize()` - _(no documentation)_
+- `public void Desktop_HistoryRows_KeepTheirSize()` - _(no documentation)_
+- `public void WithTheTouchSizes_LayerRowsAndTheirButtons_AreAtLeast48()` - _(no documentation)_
+- `public void WithTheTouchSizes_HistoryRows_AreAtLeast48High()` - _(no documentation)_
+- `public void Canvas_ShowsItsRulers_ByDefault_AndHidesThemWhenAsked()` - _(no documentation)_
+- `public void Desktop_SelectionHandles_AreDrawnWith8()` - _(no documentation)_
+- `public void WithTheTouchSizes_SelectionHandles_AreDrawnLarger()` - _(no documentation)_
+- `public void TheTouchGrabSize_ComesFromTheTheme()` - _(no documentation)_
+- `public void TheGrabAreaForAFinger_IsLargerThanTheDrawnHandle()` - _(no documentation)_
+
 ## TranslationConsistencyTests (class)
 
 `public class TranslationConsistencyTests`
 
-Source: `tests/PressToShape.App.Tests/TranslationConsistencyTests.cs:13-152`
+Source: `tests/PressToShape.App.Tests/TranslationConsistencyTests.cs:14-153`
 
 Guards the German catalog against the texts in the code. These tests read de.po directly and do not need msgfmt.
 
@@ -1812,3 +2479,23 @@ _(no documentation)_
 - `public void FitToViewport_ClampsToMaximum()` - _(no documentation)_
 - `public void FitToViewport_NonPositiveSize_ReturnsNull(double vw, double vh, double aw, double ah)` - _(no documentation)_
 - `public void FitToViewport_ViewportSmallerThanMargin_ClampsToMinimum()` - _(no documentation)_
+
+## ZoomViewModelTests (class)
+
+`public class ZoomViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/ZoomViewModelTests.cs:10-119`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Defaults_Show100Percent()` - _(no documentation)_
+- `public void ZoomInAndOutCommands_StepThroughThePresets()` - _(no documentation)_
+- `public void SetZoomCommand_AppliesAValue()` - _(no documentation)_
+- `public void FitCommand_InvokesTheCallbackOnce()` - _(no documentation)_
+- `public void Presets_AreTheZoomLevels_AndTheirCommandsSetTheZoom()` - _(no documentation)_
+- `public void ZoomChangedElsewhere_RaisesNotificationsForTheValueAndTheText()` - _(no documentation)_
+- `public void ZoomText_FollowsTheDecimalSeparatorOfTheLanguage()` - _(no documentation)_
+- `public void WholeNumberPresets_LookTheSameInEveryLanguage()` - _(no documentation)_
+- `public void FormatZoom_UsesTheGivenCulture(double percent, string expected)` - _(no documentation)_

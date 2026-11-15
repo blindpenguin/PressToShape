@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class __KnownINotifyPropertyChangedArgs`
 
-Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-169` (generated)
+Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-189` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangedEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -38,7 +38,12 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 - `public PropertyChangedEventArgs IsAlignExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsAlignExpanded" generated properties.
 - `public PropertyChangedEventArgs IsQuickActionsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsQuickActionsExpanded" generated properties.
 - `public PropertyChangedEventArgs IsActive` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsActive" generated properties.
-- `public PropertyChangedEventArgs Greeting` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Greeting" generated properties.
+- `public PropertyChangedEventArgs Current` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Current" generated properties.
+- `public PropertyChangedEventArgs IsOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsOpen" generated properties.
+- `public PropertyChangedEventArgs OpenTab` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "OpenTab" generated properties.
+- `public PropertyChangedEventArgs Content` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Content" generated properties.
+- `public PropertyChangedEventArgs Title` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Title" generated properties.
+- `public PropertyChangedEventArgs IsFlyoutOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsFlyoutOpen" generated properties.
 - `public PropertyChangedEventArgs IsDragInProgress` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsDragInProgress" generated properties.
 - `public PropertyChangedEventArgs Document` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Document" generated properties.
 - `public PropertyChangedEventArgs ActiveLayerId` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "ActiveLayerId" generated properties.
@@ -55,7 +60,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 
 `internal static class __KnownINotifyPropertyChangingArgs`
 
-Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-169` (generated)
+Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-189` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangingEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -87,7 +92,12 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 - `public PropertyChangingEventArgs IsAlignExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsAlignExpanded" generated properties.
 - `public PropertyChangingEventArgs IsQuickActionsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsQuickActionsExpanded" generated properties.
 - `public PropertyChangingEventArgs IsActive` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsActive" generated properties.
-- `public PropertyChangingEventArgs Greeting` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Greeting" generated properties.
+- `public PropertyChangingEventArgs Current` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Current" generated properties.
+- `public PropertyChangingEventArgs IsOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsOpen" generated properties.
+- `public PropertyChangingEventArgs OpenTab` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "OpenTab" generated properties.
+- `public PropertyChangingEventArgs Content` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Content" generated properties.
+- `public PropertyChangingEventArgs Title` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Title" generated properties.
+- `public PropertyChangingEventArgs IsFlyoutOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsFlyoutOpen" generated properties.
 - `public PropertyChangingEventArgs IsDragInProgress` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsDragInProgress" generated properties.
 - `public PropertyChangingEventArgs Document` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Document" generated properties.
 - `public PropertyChangingEventArgs ActiveLayerId` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "ActiveLayerId" generated properties.

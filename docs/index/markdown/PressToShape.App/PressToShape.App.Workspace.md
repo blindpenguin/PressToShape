@@ -2,6 +2,20 @@
 
 Project: PressToShape.App
 
+## BackRequestGuard (class)
+
+`internal sealed class BackRequestGuard`
+
+Source: `src/PressToShape.App/Workspace/BackRequestGuard.cs:9-30`
+
+On Android one press of the Back key arrives twice: as the Escape key, which closes an open menu or flyout by itself, and as the back request. If the Escape half already closed something, the back request must not do more (it would go on to ask about unsaved changes). The layout tells this guard when a menu or flyout closed; a back request right after that (within PressToShape.App.Workspace.BackRequestGuard.WindowMs) is the second half of the same press. The caller passes the time, so tests need no real time.
+
+**Members**
+
+- `public long WindowMs` - How long after a close a back request still counts as the second half of the same key press, in milliseconds.
+- `public void NoteClosed(long nowMs)` - A menu or flyout was closed now.
+- `public bool ConsumeIfSamePress(long nowMs)` - Whether a back request now is the second half of a press that already closed something. Answers true once for each close.
+
 ## CanvasCursorType (enum)
 
 `internal enum CanvasCursorType`
@@ -29,7 +43,7 @@ The pointer shape the canvas should show. The view turns it into a real cursor.
 
 `internal sealed class CanvasInteraction`
 
-Source: `src/PressToShape.App/Workspace/CanvasInteraction.cs:15-399`
+Source: `src/PressToShape.App/Workspace/CanvasInteraction.cs:15-422`
 
 What the mouse does on the canvas: draw rectangles and ellipses, select, move and delete shapes. Works on document positions and edits the document through PressToShape.App.Workspace.EditorState. It has no UI types. A drag that is in progress ends with PressToShape.App.Workspace.CanvasInteraction.PointerReleased or PressToShape.App.Workspace.CanvasInteraction.Cancel.
 
@@ -38,10 +52,12 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 - `public CanvasInteraction(EditorState state)` - _(no documentation)_
 - `public bool IsDragging { get; }` - Whether a drag is in progress.
 - `public HandleType? DraggedHandle { get; }` - The handle that is being dragged, or null if no resize or rotate drag is in progress.
-- `public void PointerPressed(double x, double y, bool shift = false)` - The primary button went down at this document position. shift adds to or removes from the selection.
+- `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. A press by mouse or pen uses PressToShape.App.Workspace.SelectionGeometry.GrabSize.
+- `public void PointerPressed(double x, double y, bool shift = false, InputPointerType inputType = Mouse)` - The primary button went down at this document position. shift adds to or removes from the selection. inputType is the device: a finger grabs a handle from a larger area than a mouse or a pen.
 - `public void PointerMoved(double x, double y, bool shift = false, bool alt = false)` - The pointer moved to this document position. Does nothing without a drag.
 - `public void PointerReleased(double x, double y, bool shift = false, bool alt = false)` - The button went up at this document position. Ends the drag in every case.
 - `public void Cancel()` - Ends a drag without a result: the draft is dropped and a moved shape keeps the position it has, which then counts as one step if the shape moved.
+- `public void Abort()` - Ends a drag and undoes it: the draft and the selection box are dropped, and a move, resize or rotate puts the document back to the one from the press. Nothing is recorded in the history. Used when the drag was a mistake, for example when a second finger arrives. Does nothing without a drag. PressToShape.App.Workspace.CanvasInteraction.Cancel differs: it keeps what the drag reached.
 - `public void DeleteSelection()` - Removes all selected shapes from the document as one step. Does nothing without a selection.
 - `public HandleType? HoverHandle(double x, double y)` - The handle under this document position, for the cursor. null during a drag, for other tools than Select, without a selection, or away from the handles.
 
@@ -124,9 +140,9 @@ The facts about the cursor images of the canvas: which size fits a screen scale,
 
 `internal sealed class DocumentFileService`
 
-Source: `src/PressToShape.App/Workspace/DocumentFileService.cs:17-244`
+Source: `src/PressToShape.App/Workspace/DocumentFileService.cs:18-249`
 
-The file actions of the File menu: New, Open, Open Recent, Save, Save As, Export as SVG, and the question what to do with unsaved changes. It works through interfaces for files, dialogs and messages, so it is tested without a UI. Reading, parsing, serializing and writing run off the calling (UI) context. State changes happen on the calling context.
+The file actions of the File menu: New, Open, Open Recent, Save, Save As, Export as SVG, and the question what to do with unsaved changes. It works through interfaces for files, dialogs and messages, so it is tested without a UI. Parsing and serializing run off the calling (UI) context, and the file store does its reading and writing without blocking it. State changes happen on the calling context.
 
 **Members**
 
@@ -247,6 +263,9 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.ViewModels.Editor.PaletteViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.ZoomViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.ToolGroupViewModel`
 - Injected into `PressToShape.App.Workspace.CanvasInteraction`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
 - Injected into `PressToShape.App.Workspace.DocumentSession`
@@ -285,6 +304,20 @@ The message ids (English texts) for the rows of the history list. Translate them
 - `public string Start { get; }` - The first row of the list: the state before the first kept step.
 - `public string MessageId(HistoryStepType type)` - The message id for the name of a step type.
 
+## InputPointerType (enum)
+
+`internal enum InputPointerType`
+
+Source: `src/PressToShape.App/Workspace/InputPointerType.cs:4-9`
+
+The device that made a pointer event.
+
+**Members**
+
+- `public Mouse` - _(no documentation)_
+- `public Pen` - _(no documentation)_
+- `public Touch` - _(no documentation)_
+
 ## InspectorTab (enum)
 
 `internal enum InspectorTab`
@@ -299,6 +332,38 @@ The tabs of the inspector panel.
 - `public Layers` - _(no documentation)_
 - `public Assets` - _(no documentation)_
 - `public History` - _(no documentation)_
+
+## KeyboardInset (class)
+
+`internal static class KeyboardInset`
+
+Source: `src/PressToShape.App/Workspace/KeyboardInset.cs:9-27`
+
+How far the layout has to stop above the bottom of the screen so that the on-screen keyboard does not cover it. On Android the keyboard does not resize the view, it only reports the area it covers, so the layout leaves that gap itself.
+
+**Members**
+
+- `public double Gap(bool isKeyboardOpen, double viewBottom, double coveredTop)` - The gap at the bottom of the view, in the same units as the arguments.
+
+## LongPressTracker (class)
+
+`internal sealed class LongPressTracker`
+
+Source: `src/PressToShape.App/Workspace/LongPressTracker.cs:8-80`
+
+Decides whether a press became a long press. The caller feeds it the pointer events and the time (so there is no clock in here and tests need no real time). It fires once, when the pointer has been down for PressToShape.App.Workspace.LongPressTracker.DelayMs without moving farther than PressToShape.App.Workspace.LongPressTracker.Slop. PressToShape.App.Workspace.LongPressTracker.ConsumeFired tells the caller to ignore the click that follows the release.
+
+**Members**
+
+- `public long DelayMs` - How long the pointer must stay down, in milliseconds.
+- `public double Slop` - How far the pointer may move and still count as holding, in the units of the caller (dp).
+- `public bool IsWatching { get; }` - Whether a press is being watched, so the caller knows to keep ticking.
+- `public void Press(double x, double y, long timestampMs)` - _(no documentation)_
+- `public void Move(double x, double y)` - The pointer moved. Moving too far ends the watching.
+- `public void Release()` - _(no documentation)_
+- `public void Cancel()` - _(no documentation)_
+- `public bool Tick(long timestampMs)` - Time passed. Returns true exactly once, at the moment the long press happens.
+- `public bool ConsumeFired()` - Whether the last press was a long press. True once, then false until the next long press.
 
 ## Mixed<T> (record)
 
@@ -366,14 +431,14 @@ The colors the user picked lately, most recent first. Each color appears once an
 
 `internal sealed class RecentFiles`
 
-Source: `src/PressToShape.App/Workspace/RecentFiles.cs:13-87`
+Source: `src/PressToShape.App/Workspace/RecentFiles.cs:14-92`
 
-The list of recently used files, most recent first, kept in the settings file. It holds each path once and at most PressToShape.App.Workspace.RecentFiles.MaxCount paths. The stored value is untrusted: anything that is not a list of paths is ignored.
+The list of recently used files, most recent first, kept in the settings file. It holds each path once and at most PressToShape.App.Workspace.RecentFiles.MaxCount paths. The stored value is untrusted: anything that is not a list of paths is ignored. A list that does not persist stays empty: the paths of a platform whose file references do not survive a restart are of no use later.
 
 **Members**
 
 - `public int MaxCount` - The most paths the list keeps.
-- `public RecentFiles(ISettingsStore store)` - _(no documentation)_
+- `public RecentFiles(ISettingsStore store, bool persist = true)` - _(no documentation)_
 - `public EventHandler? Changed` - Raised after the list changed.
 - `public IReadOnlyList<string> Paths { get; }` - The paths, most recent first.
 - `public void Add(string path)` - Puts a path at the top. An existing entry for the same path moves up. Blank paths are ignored.
@@ -609,18 +674,19 @@ The box around the selection, in document units: one shape gives its own (possib
 
 `internal static class SelectionGeometry`
 
-Source: `src/PressToShape.App/Workspace/SelectionGeometry.cs:8-142`
+Source: `src/PressToShape.App/Workspace/SelectionGeometry.cs:8-157`
 
 Where the selection frame and its handles are, and which handle a point hits. Pure functions, document units.
 
 **Members**
 
 - `public double RotateHandleDistance` - How far the rotate handle is from the top edge, in screen pixels.
-- `public double GrabSize` - The size of the area that grabs a handle, in screen pixels.
+- `public double GrabSize` - The size of the area that grabs a handle with a mouse or a pen, in screen pixels.
+- `public double TouchGrabSize` - The size of the area that grabs a handle with a finger, in screen pixels. The tablet layout can set its own through the theme.
 - `public SelectionFrame? FrameOf(IReadOnlyList<Shape> shapes)` - The frame of the shapes, or null for none.
 - `public (int X, int Y) Direction(HandleType handle)` - The direction of a handle from the frame center in frame units: (-1, -1) is the top left corner.
 - `public (double X, double Y) HandlePosition(SelectionFrame frame, HandleType handle, double zoomPercent)` - The center of the handle in document units. The handles turn with the frame.
-- `public HandleType? HitHandle(SelectionFrame frame, double x, double y, double zoomPercent)` - The handle whose grab area contains the document point, or null. The closest handle wins, then the priority order.
+- `public HandleType? HitHandle(SelectionFrame frame, double x, double y, double zoomPercent, double grabSize = 10)` - The handle whose grab area contains the document point, or null. The closest handle wins, then the priority order. A grab area larger than PressToShape.App.Workspace.SelectionGeometry.GrabSize (for a finger) is limited to a quarter of the shorter side of the frame, so that the handles of a small shape do not cover its middle and the shape can still be moved by it.
 - `public double HandleDirectionDegrees(HandleType handle, double rotation)` - The direction in which a handle points on the screen, in degrees [0, 360): 0 is right, 90 is down. For choosing a cursor.
 
 ## SelectionOverlay (record)
@@ -662,6 +728,18 @@ Questions about which shapes can be selected and which shapes a selection box to
 - `public IReadOnlyList<Shape> ShapesTouching(Document document, double x, double y, double width, double height)` - The selectable shapes whose axis-aligned bounds, after rotation, overlap the rectangle. Touching edges count.
 - `public IReadOnlyList<Shape> SelectedShapes(Document document, IEnumerable<Guid> shapeIds)` - The shapes with these ids, in document order. Unknown ids are ignored.
 - `public IReadOnlyList<Shape> SelectedSelectable(Document document, IEnumerable<Guid> shapeIds)` - The shapes with these ids that can be selected, in document order. One pass, however many ids.
+
+## SelectionSummaryText (class)
+
+`internal static class SelectionSummaryText`
+
+Source: `src/PressToShape.App/Workspace/SelectionSummaryText.cs:7-15`
+
+The translated selection text: "Nothing selected", "1 selected" or "N selected".
+
+**Members**
+
+- `public string Format(ILocalizer localizer, int selectedCount)` - _(no documentation)_
 
 ## SelectionTransforms (class)
 
@@ -798,6 +876,91 @@ The ordered list of tools, in the order shown in the mockup, with Illustrator-st
 - `public IReadOnlyList<ToolDefinition> All { get; }` - _(no documentation)_
 - `public ToolDefinition Get(Tool tool)` - _(no documentation)_
 - `public ToolDefinition? FindByShortcut(char key)` - Finds the tool for a shortcut key, ignoring case. Returns null for unknown keys.
+
+## ToolGroupDefinition (record)
+
+`internal sealed record ToolGroupDefinition : IEquatable<ToolGroupDefinition>`
+
+Source: `src/PressToShape.App/Workspace/ToolGroupDefinition.cs:6-13`
+
+Tools that share one icon in the tablet tool column. The first tool is the one the group starts with.
+
+**Members**
+
+- `public ToolGroupDefinition(IReadOnlyList<Tool> Tools)` - Tools that share one icon in the tablet tool column. The first tool is the one the group starts with.
+- `public IReadOnlyList<Tool> Tools { get; init; }` - _(no documentation)_
+- `public Tool DefaultTool { get; }` - The tool the group has before any other one was chosen.
+- `public bool IsGroup { get; }` - Whether the group has more than one tool, so it needs a mark and a flyout.
+
+**Relationships**
+
+- Injected into `PressToShape.App.ViewModels.Tablet.ToolGroupViewModel`
+
+## ToolGroups (class)
+
+`internal static class ToolGroups`
+
+Source: `src/PressToShape.App/Workspace/ToolGroups.cs:7-21`
+
+The icons of the tablet tool column, in order. Text and Eyedropper are groups of one tool.
+
+**Members**
+
+- `public IReadOnlyList<ToolGroupDefinition> All { get; }` - _(no documentation)_
+- `public ToolGroupDefinition Of(Tool tool)` - The group a tool belongs to.
+
+## TouchGestureStep (record)
+
+`internal readonly record TouchGestureStep : IEquatable<TouchGestureStep>`
+
+Source: `src/PressToShape.App/Workspace/TouchGestureStep.cs:10-19`
+
+One decision of the PressToShape.App.Workspace.TouchGestureTracker. All positions are screen positions of the canvas.
+
+**Members**
+
+- `public TouchGestureStep(TouchGestureStepType Type, double X = 0, double Y = 0, double TargetZoom = 0, double PreviousMidX = 0, double PreviousMidY = 0)` - One decision of the PressToShape.App.Workspace.TouchGestureTracker. All positions are screen positions of the canvas.
+- `public TouchGestureStepType Type { get; init; }` - What to do.
+- `public double X { get; init; }` - The position of the press, move or release, or the midpoint of the two fingers for a gesture.
+- `public double Y { get; init; }` - See X.
+- `public double TargetZoom { get; init; }` - For a gesture: the zoom in percent, within the zoom range.
+- `public double PreviousMidX { get; init; }` - For a gesture: the midpoint of the two fingers before this event.
+- `public double PreviousMidY { get; init; }` - For a gesture: see PreviousMidX.
+- `public TouchGestureStep Ignored { get; }` - _(no documentation)_
+
+## TouchGestureStepType (enum)
+
+`internal enum TouchGestureStepType`
+
+Source: `src/PressToShape.App/Workspace/TouchGestureStepType.cs:4-26`
+
+What the canvas has to do after a touch event, as decided by PressToShape.App.Workspace.TouchGestureTracker.
+
+**Members**
+
+- `public Ignore` - Nothing. The finger is not used.
+- `public NotTracked` - The event is not a finger (mouse or pen). The caller handles it as usual.
+- `public Press` - The first finger went down: the active tool acts, like a mouse press at X, Y.
+- `public Move` - The first finger moved: like a mouse move at X, Y.
+- `public Release` - The first finger went up: like a mouse release at X, Y.
+- `public CancelPress` - The one-finger action that was running must be cancelled without a result, because a second finger arrived or the gesture was cancelled.
+- `public Gesture` - Two fingers moved: zoom to TargetZoom around the previous midpoint, then move the view by the midpoint's change.
+
+## TouchGestureTracker (class)
+
+`internal sealed class TouchGestureTracker`
+
+Source: `src/PressToShape.App/Workspace/TouchGestureTracker.cs:12-146`
+
+Decides what the fingers on the canvas mean. One finger acts with the active tool, like the mouse. A second finger cancels that action (so nothing stray stays in the drawing) and the two fingers then move and zoom the view around their midpoint. When a finger of the two lifts, the rest is ignored until every finger is up, so a lifting hand does not draw. Mouse and pen are not tracked. The tracker works on plain numbers and holds no document or view state. A pointer id only has to be unique from a finger's press to its release.
+
+**Members**
+
+- `public bool IsGestureActive { get; }` - Whether two fingers are moving the view right now.
+- `public TouchGestureStep PointerDown(int id, InputPointerType type, double x, double y, double currentZoomPercent)` - _(no documentation)_
+- `public TouchGestureStep PointerMove(int id, double x, double y)` - _(no documentation)_
+- `public TouchGestureStep PointerUp(int id, double x, double y)` - _(no documentation)_
+- `public TouchGestureStep Cancel()` - The system took the fingers away (for example the pointer capture was lost). Forgets every finger. A running one-finger action must be cancelled.
 
 ## ViewGeometry (class)
 

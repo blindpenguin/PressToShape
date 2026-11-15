@@ -6,17 +6,19 @@ Project: PressToShape.App
 
 `public partial class CanvasAreaView : UserControl`
 
-Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:10-238`
+Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:11-309`
 
 _(no documentation)_
 
 **Members**
 
 - `internal Panel Viewport` _(generated)_ - _(no documentation)_
+- `public StyledProperty<bool> ShowRulersProperty` - Whether the rulers (and the corner between them) are shown. The desktop layout shows them, the tablet layout does not.
 - `internal ScrollBar VerticalBar` _(generated)_ - _(no documentation)_
 - `internal ScrollBar HorizontalBar` _(generated)_ - _(no documentation)_
-- `public CanvasAreaView()` - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+- `public CanvasAreaView()` - _(no documentation)_
+- `public bool ShowRulers { get; set; }` - _(no documentation)_
 - `protected void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)` - _(no documentation)_
 - `protected void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)` - _(no documentation)_
 - `protected void OnDataContextChanged(EventArgs e)` - _(no documentation)_
@@ -120,9 +122,9 @@ _(no documentation)_
 
 `public partial class PropertiesView : UserControl`
 
-Source: `src/PressToShape.App/Views/Editor/PropertiesView.axaml.cs:14-183`
+Source: `src/PressToShape.App/Views/Editor/PropertiesView.axaml.cs:15-143`
 
-The Properties tab. The code-behind only forwards: focus, Enter and Escape of the number fields, the pickers' open and close, the pick, add-to-palette and recent-color buttons of the pickers, the palette swatches (with the Shift state), and the opacity slider's drag. Every decision is in PressToShape.App.ViewModels.Editor.PropertiesViewModel.
+The Properties tab. The code-behind only forwards: the number fields (shared with the contextual bar of the tablet layout), the pickers' open and close, the pick, add-to-palette and recent-color buttons of the pickers, the palette swatches (with the Shift state), and the opacity slider's drag. Every decision is in PressToShape.App.ViewModels.Editor.PropertiesViewModel.
 
 **Members**
 
@@ -130,9 +132,22 @@ The Properties tab. The code-behind only forwards: focus, Enter and Escape of th
 - `internal ColorView FillColorView` _(generated)_ - _(no documentation)_
 - `internal Button StrokeSwatchButton` _(generated)_ - _(no documentation)_
 - `internal ColorView StrokeColorView` _(generated)_ - _(no documentation)_
-- `public PropertiesView()` - _(no documentation)_
 - `internal ItemsControl PaletteStrip` _(generated)_ - _(no documentation)_
+- `public PropertiesView()` - _(no documentation)_
 - `internal Slider OpacitySlider` _(generated)_ - _(no documentation)_
+- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+
+## SwatchesView (class)
+
+`public partial class SwatchesView : UserControl`
+
+Source: `src/PressToShape.App/Views/Editor/SwatchesView.axaml.cs:6-12`
+
+The fill and stroke swatches with the swap and reset buttons. Used by the desktop tool column and the tablet tool column.
+
+**Members**
+
+- `public SwatchesView()` - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
 
 ## ToolboxView (class)

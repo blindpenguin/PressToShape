@@ -8,6 +8,7 @@ Classes that implement `IValueConverter` or `IMultiValueConverter`. Uses are the
 Maps the view model flag IsCheckable to a radio toggle for menu items. Other items show no toggle.
 
 - used at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:38
+- used at src/PressToShape.App/Views/Tablet/TabletToolbarView.axaml:35
 
 ## GestureTextConverter
 
@@ -26,6 +27,8 @@ Turns the Core color of a shape into a brush, for swatches. It does not convert 
 - used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:155
 - used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:164
 - used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:211
+- used at src/PressToShape.App/Views/Tablet/TabletColorSwatchView.axaml:30
+- used at src/PressToShape.App/Views/Tablet/TabletColorSwatchView.axaml:36
 
 ## CoreColorConverter
 
