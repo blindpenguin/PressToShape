@@ -69,8 +69,11 @@ dotnet run --project tools/PressToShape.CodeIndex -- generate          # write d
 dotnet run --project tools/PressToShape.CodeIndex -- check             # exit 1 if docs/index/ is out of date
 dotnet run --project tools/PressToShape.CodeIndex -- find Localizer    # search by name
 dotnet run --project tools/PressToShape.CodeIndex -- show ILocalizer   # signature, docs, relationships
+dotnet run --project tools/PressToShape.CodeIndex -- chain ShellView    # MVVM chain of a view, view model or command
 dotnet run --project tools/PressToShape.CodeIndex -- --help            # impls, derived, refs, deps, --json
 ```
+
+`chain <view|view model|command> [--depth 1-5] [--json]` prints one tree: the view and its XAML file, the view model with the evidence and `verified` or `inferred` for each link, the bindings with the handler method of each command (or "not statically known"), services with implementations and where they are created, models, child views, resources, converters, styles, templates and the tests that use them. `generate` also writes six pages to `docs/index/markdown/avalonia/`: `views.md`, `controls.md`, `converters.md`, `styles-and-resources.md`, `services.md` and `application.md`. The rule `.claude/rules/code-index.md` tells coding agents how to use all of this.
 
 A view class shows its XAML file with `show`, and `refs` of a view model property, command, converter or resource key lists the XAML places that use it. A View to ViewModel link made by the `ViewLocator` name convention is marked `inferred` with the reason. Regenerate and commit the index after changing code or XAML. `docs/index/markdown/README.md` is the human-readable entry point, `names.tsv` is a flat list for `grep`. The query commands read only the index files and do not compile anything.
 

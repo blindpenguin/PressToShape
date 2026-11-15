@@ -30,3 +30,4 @@ Solution `PressToShape.sln`. Dependencies point one way: `Desktop/Android -> App
 - Colors and sizes live only in `Styles/Theme.axaml` (light and dark). Never hardcode a color in a view.
 - Never commit secrets. Do not edit `bin/`, `obj/`, or `.idea/`.
 - Features that span several files go through the spec workflow (see `spec-workflow.md`).
+- Before changing UI code, explore it with the committed code index in `docs/index/` (see `code-index.md`). Regenerate and commit it after code changes.
