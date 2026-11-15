@@ -7,7 +7,7 @@
         mc:Ignorable="d" d:DesignWidth="1440" d:DesignHeight="900"
         x:Class="PressToShape.App.Views.MainWindow"
         x:DataType="vm:DesktopShellViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/presstoshape.ico"
         Title="{Binding WindowTitle}"
         Width="1440" Height="900"
         MinWidth="900" MinHeight="600"

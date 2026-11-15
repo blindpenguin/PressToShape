@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="56" fill="#1f4e8c"/>
+  <!-- Bezier handles -->
+  <path d="M60 196 L60 112 M196 60 L196 144" stroke="#9cc3f0" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <!-- Curve -->
+  <path d="M60 196 C60 112 196 144 196 60" stroke="#ffffff" stroke-width="16" stroke-linecap="round" fill="none"/>
+  <!-- Handle ends -->
+  <circle cx="60" cy="112" r="11" fill="#9cc3f0"/>
+  <circle cx="196" cy="144" r="11" fill="#9cc3f0"/>
+  <!-- Anchor nodes -->
+  <rect x="42" y="178" width="36" height="36" rx="6" fill="#ffffff"/>
+  <rect x="178" y="42" width="36" height="36" rx="6" fill="#ffffff"/>
+</svg>

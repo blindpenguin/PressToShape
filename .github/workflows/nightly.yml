@@ -59,7 +59,7 @@ jobs:
         with:
           dotnet-version: 10.0.x
       - name: Install gettext
-        run: sudo apt-get update && sudo apt-get install -y gettext imagemagick
+        run: sudo apt-get update && sudo apt-get install -y gettext
       - name: Test
         run: |
           dotnet build tests/PressToShape.Core.Tests -c Release
@@ -84,7 +84,7 @@ jobs:
           mkdir -p AppDir/usr/bin
           cp -r publish/linux-x64/. AppDir/usr/bin/
           cp packaging/presstoshape.desktop AppDir/
-          convert "src/PressToShape.App/Assets/avalonia-logo.ico[0]" -resize 256x256 AppDir/presstoshape.png
+          cp packaging/presstoshape.png AppDir/presstoshape.png
           printf '#!/bin/sh\nexec "$(dirname "$(readlink -f "$0")")/usr/bin/PressToShape.Desktop" "$@"\n' > AppDir/AppRun
           chmod +x AppDir/AppRun
           curl -fsSL -o appimagetool \
