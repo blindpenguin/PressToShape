@@ -2,7 +2,7 @@ using PressToShape.App.Localization;
 
 namespace PressToShape.App.ViewModels.Editor;
 
-/// <summary>An inspector tab that only shows an empty-state message (Assets, History). Title and message are message ids.</summary>
+/// <summary>An inspector tab that only shows an empty-state message (Assets). Title and message are message ids.</summary>
 internal sealed class PlaceholderPanelViewModel : LocalizedViewModel
 {
     private readonly string _title;

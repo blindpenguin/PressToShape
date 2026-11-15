@@ -17,7 +17,7 @@ internal sealed partial class InspectorViewModel : ViewModelBase
         Properties = new PropertiesViewModel(state);
         Layers = new LayersViewModel(state);
         Assets = new PlaceholderPanelViewModel(localizer, N("Assets"), N("No assets yet"));
-        History = new PlaceholderPanelViewModel(localizer, N("History"), N("No history yet"));
+        History = new HistoryViewModel(state, localizer);
     }
 
     public PropertiesViewModel Properties { get; }
@@ -26,7 +26,7 @@ internal sealed partial class InspectorViewModel : ViewModelBase
 
     public PlaceholderPanelViewModel Assets { get; }
 
-    public PlaceholderPanelViewModel History { get; }
+    public HistoryViewModel History { get; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedTabIndex))]

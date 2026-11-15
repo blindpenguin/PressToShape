@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 using Xunit;
@@ -64,12 +65,23 @@ public class InspectorViewModelTests
     }
 
     [Fact]
-    public void AssetsAndHistory_ShowEmptyStateMessages()
+    public void Assets_ShowAnEmptyStateMessage_AndHistoryListsTheStartState()
     {
         var inspector = new InspectorViewModel(new EditorState(), FakeLocalizer.Create());
 
         Assert.Equal("No assets yet", inspector.Assets.Message);
-        Assert.Equal("No history yet", inspector.History.Message);
+        Assert.Equal("Start", Assert.Single(inspector.History.Items).Name);
+    }
+
+    [Fact]
+    public void History_FollowsTheEditorState()
+    {
+        var state = new EditorState(PressToShape.Core.Documents.Document.Create("L"));
+        var inspector = new InspectorViewModel(state, FakeLocalizer.Create());
+
+        state.Edit(PressToShape.Core.History.HistoryStepType.HideLayer, d => d.UpdateLayer(state.ActiveLayerId, l => l with { IsVisible = false }));
+
+        Assert.Equal(new[] { "Start", "Hide layer" }, inspector.History.Items.Select(i => i.Name));
     }
 
     [Fact]
@@ -117,7 +129,6 @@ public class InspectorViewModelTests
         var localizer = FakeLocalizer.Create("en", new Dictionary<string, string>
         {
             ["No assets yet"] = "Noch keine Assets",
-            ["History"] = "Verlauf",
         });
         var inspector = new InspectorViewModel(new EditorState(), localizer);
         Assert.Equal("No assets yet", inspector.Assets.Message);
@@ -125,7 +136,5 @@ public class InspectorViewModelTests
         localizer.SetLanguage("de");
 
         Assert.Equal("Noch keine Assets", inspector.Assets.Message);
-        Assert.Equal("Verlauf", inspector.History.Title);
-        Assert.Equal("No history yet", inspector.History.Message); // fallback
     }
 }

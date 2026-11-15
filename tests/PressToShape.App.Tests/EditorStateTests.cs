@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.History;
 using PressToShape.Core.Shapes;
 using Xunit;
 
@@ -186,7 +187,7 @@ public class EditorStateTests
         var before = state.Document;
         var layerId = before.Layers[0].Id;
 
-        state.UpdateLayer(layerId, l => l with { IsVisible = false });
+        state.UpdateLayer(layerId, l => l with { IsVisible = false }, HistoryStepType.HideLayer);
 
         Assert.False(state.Document.Layers[0].IsVisible);
         Assert.True(before.Layers[0].IsVisible);
@@ -199,7 +200,7 @@ public class EditorStateTests
         var state = new EditorState();
         var before = state.Document;
 
-        Assert.Throws<KeyNotFoundException>(() => state.UpdateLayer(Guid.NewGuid(), l => l));
+        Assert.Throws<KeyNotFoundException>(() => state.UpdateLayer(Guid.NewGuid(), l => l, HistoryStepType.HideLayer));
 
         Assert.Same(before, state.Document);
     }
@@ -337,5 +338,254 @@ public class EditorStateTests
         state.Draft = new RectangleShape { Width = 1, Height = 1 };
 
         Assert.Contains(nameof(EditorState.Draft), raised);
+    }
+
+    private static RectangleShape Rect() => new() { Width = 5, Height = 5 };
+
+    [Fact]
+    public void Edit_RecordsAStepAndSetsTheDocument()
+    {
+        var state = new EditorState(Document.Create("L"));
+        var before = state.Document;
+
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, Rect()));
+
+        Assert.NotSame(before, state.Document);
+        Assert.Same(state.Document, state.History.Current);
+        Assert.Equal(new[] { HistoryStepType.DrawRectangle }, state.History.Steps);
+        Assert.True(state.CanUndo);
+        Assert.False(state.CanRedo);
+    }
+
+    [Fact]
+    public void Edit_ReturningTheSameInstance_RecordsNothing()
+    {
+        var state = new EditorState(Document.Create("L"));
+        var raised = 0;
+        state.HistoryChanged += (_, _) => raised++;
+
+        state.Edit(HistoryStepType.MoveShape, d => d);
+
+        Assert.Empty(state.History.Steps);
+        Assert.Equal(0, raised);
+        Assert.False(state.CanUndo);
+    }
+
+    [Fact]
+    public void Edit_WhenTheChangeThrows_ChangesNothing()
+    {
+        var state = new EditorState(Document.Create("L"));
+        var before = state.Document;
+
+        Assert.Throws<KeyNotFoundException>(() => state.Edit(HistoryStepType.DeleteShape, d => d.RemoveShape(Guid.NewGuid())));
+
+        Assert.Same(before, state.Document);
+        Assert.Empty(state.History.Steps);
+    }
+
+    [Fact]
+    public void PreviewThenCommit_RecordsOneStep()
+    {
+        var state = new EditorState(Document.Create("L"));
+        var layer = state.ActiveLayerId;
+        var shape = Rect();
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(layer, shape));
+
+        for (var i = 1; i <= 20; i++)
+        {
+            state.Preview(state.Document.UpdateShape(shape.Id, s => s is RectangleShape r ? r with { X = i } : s));
+        }
+
+        Assert.Single(state.History.Steps);
+        state.Commit(HistoryStepType.MoveShape);
+
+        Assert.Equal(new[] { HistoryStepType.DrawRectangle, HistoryStepType.MoveShape }, state.History.Steps);
+        Assert.Same(state.Document, state.History.Current);
+    }
+
+    [Fact]
+    public void Commit_WithoutAChange_RecordsNothing()
+    {
+        var state = new EditorState(Document.Create("L"));
+        var raised = 0;
+        state.HistoryChanged += (_, _) => raised++;
+
+        state.Commit(HistoryStepType.MoveShape);
+
+        Assert.Empty(state.History.Steps);
+        Assert.Equal(0, raised);
+    }
+
+    [Fact]
+    public void UndoRedoAndJump_SetTheDocumentAndRaiseTheNotifications()
+    {
+        var state = new EditorState(Document.Create("L"));
+        var layer = state.ActiveLayerId;
+        var d0 = state.Document;
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(layer, Rect()));
+        var d1 = state.Document;
+        state.Edit(HistoryStepType.DrawEllipse, d => d.AddShape(layer, new EllipseShape { Width = 3, Height = 3 }));
+        var d2 = state.Document;
+        var raised = new List<string?>();
+        state.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+        var historyEvents = 0;
+        state.HistoryChanged += (_, _) => historyEvents++;
+
+        state.Undo();
+        Assert.Same(d1, state.Document);
+        Assert.True(state.CanRedo);
+
+        state.Undo();
+        Assert.Same(d0, state.Document);
+        Assert.False(state.CanUndo);
+
+        state.Redo();
+        Assert.Same(d1, state.Document);
+
+        state.JumpToStep(2);
+        Assert.Same(d2, state.Document);
+
+        state.JumpToStep(0);
+        Assert.Same(d0, state.Document);
+
+        Assert.Equal(5, historyEvents);
+        Assert.Contains(nameof(EditorState.CanUndo), raised);
+        Assert.Contains(nameof(EditorState.CanRedo), raised);
+        Assert.Contains(nameof(EditorState.Document), raised);
+    }
+
+    [Fact]
+    public void UndoRedoAndJump_WithNothingToDo_DoNothing()
+    {
+        var state = new EditorState(Document.Create("L"));
+        var before = state.Document;
+        var raised = 0;
+        state.HistoryChanged += (_, _) => raised++;
+
+        state.Undo();
+        state.Redo();
+        state.JumpToStep(0);
+        state.JumpToStep(9);
+        state.JumpToStep(-1);
+
+        Assert.Same(before, state.Document);
+        Assert.Equal(0, raised);
+    }
+
+    [Fact]
+    public void Undo_KeepsTheSelectionWhileTheShapeExists_AndClearsItOtherwise()
+    {
+        var state = new EditorState(Document.Create("L"));
+        var layer = state.ActiveLayerId;
+        var first = Rect();
+        var second = Rect();
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(layer, first));
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(layer, second));
+
+        state.Select(first.Id);
+        state.Undo();
+        Assert.Equal(first.Id, state.SelectedShapeId);
+        Assert.True(state.HasSelection);
+
+        state.Undo();
+        Assert.Null(state.SelectedShapeId);
+        Assert.False(state.HasSelection);
+    }
+
+    [Fact]
+    public void Undo_OfADeletedShape_BringsItBackWithoutSelection()
+    {
+        var state = new EditorState(Document.Create("L"));
+        var shape = Rect();
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, shape));
+        state.Select(shape.Id);
+        state.Edit(HistoryStepType.DeleteShape, d => d.RemoveShape(shape.Id));
+        state.Select(null);
+
+        state.Undo();
+
+        Assert.NotNull(state.Document.FindShape(shape.Id));
+        Assert.Null(state.SelectedShapeId);
+    }
+
+    [Fact]
+    public void CanUndoAndCanRedo_FollowTheDragFlag()
+    {
+        var state = new EditorState(Document.Create("L"));
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, Rect()));
+        state.Undo();
+        state.Redo();
+        state.Undo();
+        var raised = new List<string?>();
+        state.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        Assert.False(state.CanUndo);
+        Assert.True(state.CanRedo);
+
+        state.Redo();
+        Assert.True(state.CanUndo);
+
+        state.IsDragInProgress = true;
+        Assert.False(state.CanUndo);
+        Assert.False(state.CanRedo);
+        Assert.Contains(nameof(EditorState.CanUndo), raised);
+
+        var document = state.Document;
+        state.Undo();
+        state.Redo();
+        state.JumpToStep(0);
+        Assert.Same(document, state.Document);
+
+        state.IsDragInProgress = false;
+        Assert.True(state.CanUndo);
+    }
+
+    [Fact]
+    public void ReplaceDocument_ResetsTheHistoryAndShowsTheDocument()
+    {
+        var state = new EditorState(Document.Create("L"));
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, Rect()));
+        var other = Document.Create("Other");
+        var raised = 0;
+        state.HistoryChanged += (_, _) => raised++;
+
+        state.ReplaceDocument(other);
+
+        Assert.Same(other, state.Document);
+        Assert.Same(other, state.History.Current);
+        Assert.Empty(state.History.Steps);
+        Assert.False(state.CanUndo);
+        Assert.Equal(1, raised);
+        Assert.Equal(other.Layers[0].Id, state.ActiveLayerId);
+    }
+
+    [Fact]
+    public void UndoBeyondTheLimit_IsNotPossible()
+    {
+        var state = new EditorState(Document.Create("L"));
+        for (var i = 0; i < 130; i++)
+        {
+            state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, Rect()));
+        }
+
+        var undone = 0;
+        while (state.CanUndo)
+        {
+            state.Undo();
+            undone++;
+        }
+
+        Assert.Equal(100, undone);
+        Assert.Equal(30, state.Document.Layers[0].Shapes.Length);
+    }
+
+    [Fact]
+    public void Arguments_Invalid_Throw()
+    {
+        var state = new EditorState(Document.Create("L"));
+
+        Assert.Throws<ArgumentNullException>(() => state.Edit(HistoryStepType.MoveShape, null!));
+        Assert.Throws<ArgumentNullException>(() => state.Preview(null!));
+        Assert.Throws<ArgumentNullException>(() => state.ReplaceDocument(null!));
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.History;
 using PressToShape.Core.Shapes;
 using Xunit;
 
@@ -530,5 +531,197 @@ public class CanvasInteractionTests
         interaction.DeleteSelection();
 
         Assert.Same(before, state.Document);
+    }
+
+    // ---- history steps ----
+
+    [Fact]
+    public void Draw_Rectangle_IsOneStepOfTheRightType()
+    {
+        var (state, interaction) = Create(Tool.Rectangle);
+        var before = state.Document;
+
+        Drag(interaction, 0, 0, 50, 50);
+
+        Assert.Equal(new[] { HistoryStepType.DrawRectangle }, state.History.Steps);
+        Assert.Same(state.Document, state.History.Current);
+        state.Undo();
+        Assert.Same(before, state.Document);
+    }
+
+    [Fact]
+    public void Draw_Ellipse_IsOneStepOfTheRightType()
+    {
+        var (state, interaction) = Create(Tool.Ellipse);
+
+        Drag(interaction, 0, 0, 50, 50);
+
+        Assert.Equal(new[] { HistoryStepType.DrawEllipse }, state.History.Steps);
+    }
+
+    [Fact]
+    public void Draw_TooSmallOrBlockedOrCancelled_IsNoStep()
+    {
+        var (state, interaction) = Create(Tool.Rectangle);
+        Drag(interaction, 0, 0, 1, 1);
+
+        state.Document = state.Document.UpdateLayer(Top, l => l with { IsLocked = true });
+        Drag(interaction, 0, 0, 50, 50);
+
+        state.Document = state.Document.UpdateLayer(Top, l => l with { IsLocked = false });
+        interaction.PointerPressed(0, 0);
+        interaction.PointerMoved(30, 30);
+        interaction.Cancel();
+        interaction.PointerReleased(50, 50);
+
+        Assert.Empty(state.History.Steps);
+    }
+
+    [Fact]
+    public void Move_ManyPointerMoves_AreOneMoveStep_AndUndoGoesBackToTheStart()
+    {
+        var (state, interaction) = Create(Tool.Select, WithShapes(out _, out var front, out _));
+        state.ReplaceDocument(state.Document);
+        var before = state.Document;
+
+        interaction.PointerPressed(75, 75);
+        for (var i = 1; i <= 50; i++)
+        {
+            interaction.PointerMoved(75 + i, 75 + i);
+            Assert.Empty(state.History.Steps);
+        }
+
+        interaction.PointerReleased(150, 150);
+
+        Assert.Equal(new[] { HistoryStepType.MoveShape }, state.History.Steps);
+        Assert.Equal(125, state.Document.FindShape(front)!.Shape.X);
+        state.Undo();
+        Assert.Same(before, state.Document);
+        Assert.Equal(50, state.Document.FindShape(front)!.Shape.X);
+        state.Redo();
+        Assert.Equal(125, state.Document.FindShape(front)!.Shape.X);
+    }
+
+    [Fact]
+    public void Move_ClickWithoutMovement_IsNoStep_AndKeepsTheDocumentInstance()
+    {
+        var (state, interaction) = Create(Tool.Select, WithShapes(out _, out _, out _));
+        var before = state.Document;
+
+        interaction.PointerPressed(75, 75);
+        interaction.PointerReleased(75, 75);
+
+        Assert.Empty(state.History.Steps);
+        Assert.Same(before, state.Document);
+    }
+
+    [Fact]
+    public void Move_PressOnEmptySpaceAndDrag_IsNoStep()
+    {
+        var (state, interaction) = Create(Tool.Select, WithShapes(out _, out _, out _));
+
+        Drag(interaction, 700, 700, 800, 800);
+
+        Assert.Empty(state.History.Steps);
+    }
+
+    [Fact]
+    public void Move_CancelAfterMovement_IsOneStepWithTheReachedPosition()
+    {
+        var (state, interaction) = Create(Tool.Select, WithShapes(out _, out var front, out _));
+        interaction.PointerPressed(75, 75);
+        interaction.PointerMoved(95, 75);
+
+        interaction.Cancel();
+
+        Assert.Equal(new[] { HistoryStepType.MoveShape }, state.History.Steps);
+        Assert.Equal(70, state.Document.FindShape(front)!.Shape.X);
+        Assert.False(state.IsDragInProgress);
+    }
+
+    [Fact]
+    public void Move_ToolChangeAfterMovement_IsOneStep()
+    {
+        var (state, interaction) = Create(Tool.Select, WithShapes(out _, out _, out _));
+        interaction.PointerPressed(75, 75);
+        interaction.PointerMoved(95, 75);
+
+        state.ActiveTool = Tool.Rectangle;
+        interaction.PointerMoved(120, 75);
+        interaction.PointerReleased(120, 75);
+
+        Assert.Equal(new[] { HistoryStepType.MoveShape }, state.History.Steps);
+    }
+
+    [Fact]
+    public void Move_CancelWithoutMovement_IsNoStep()
+    {
+        var (state, interaction) = Create(Tool.Select, WithShapes(out _, out _, out _));
+        interaction.PointerPressed(75, 75);
+
+        interaction.Cancel();
+
+        Assert.Empty(state.History.Steps);
+    }
+
+    [Fact]
+    public void Delete_IsOneStep_AndUndoBringsTheShapeBack()
+    {
+        var (state, interaction) = Create(Tool.Select, WithShapes(out _, out var front, out _));
+        state.Select(front);
+        var before = state.Document;
+
+        interaction.DeleteSelection();
+
+        Assert.Equal(new[] { HistoryStepType.DeleteShape }, state.History.Steps);
+        state.Undo();
+        Assert.Same(before, state.Document);
+        Assert.NotNull(state.Document.FindShape(front));
+    }
+
+    [Fact]
+    public void Delete_WithoutSelection_IsNoStep()
+    {
+        var (state, interaction) = Create(Tool.Select, WithShapes(out _, out _, out _));
+
+        interaction.DeleteSelection();
+
+        Assert.Empty(state.History.Steps);
+    }
+
+    [Fact]
+    public void DragFlag_IsSetDuringEveryDragAndClearedAtTheEnd()
+    {
+        var (state, interaction) = Create(Tool.Rectangle, WithShapes(out _, out _, out _));
+
+        interaction.PointerPressed(400, 400);
+        Assert.True(state.IsDragInProgress);
+        interaction.PointerReleased(450, 450);
+        Assert.False(state.IsDragInProgress);
+
+        state.ActiveTool = Tool.Select;
+        interaction.PointerPressed(75, 75);
+        Assert.True(state.IsDragInProgress);
+        interaction.PointerReleased(80, 80);
+        Assert.False(state.IsDragInProgress);
+
+        interaction.PointerPressed(700, 700);
+        Assert.False(state.IsDragInProgress);
+    }
+
+    [Fact]
+    public void Undo_DuringADrag_IsRefused()
+    {
+        var (state, interaction) = Create(Tool.Rectangle);
+        Drag(interaction, 0, 0, 50, 50);
+        interaction.PointerPressed(100, 100);
+        var document = state.Document;
+
+        state.Undo();
+
+        Assert.Same(document, state.Document);
+        Assert.False(state.CanUndo);
+        interaction.PointerReleased(100, 100);
+        Assert.True(state.CanUndo);
     }
 }

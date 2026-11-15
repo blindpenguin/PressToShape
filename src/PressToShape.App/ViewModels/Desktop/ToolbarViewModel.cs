@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Input;
 using Material.Icons;
 using PressToShape.App.Localization;
 using PressToShape.App.Workspace;
@@ -11,15 +12,17 @@ namespace PressToShape.App.ViewModels.Desktop;
 /// <summary>
 /// The toolbar groups from the mockup, left to right: file actions, history, tool toggles,
 /// horizontal alignment, transform fields, transform buttons, vertical alignment, other actions.
-/// All buttons are disabled for now. The Select and Node toggles are wired to the active tool.
+/// Undo and Redo work, the other buttons are disabled for now. The Select and Node toggles are wired to the active tool.
 /// </summary>
 internal sealed class ToolbarViewModel : ViewModelBase
 {
     private readonly EditorState _state;
 
-    public ToolbarViewModel(EditorState state, ILocalizer localizer)
+    public ToolbarViewModel(EditorState state, ILocalizer localizer, ICommand undo, ICommand redo)
     {
         ArgumentNullException.ThrowIfNull(localizer);
+        ArgumentNullException.ThrowIfNull(undo);
+        ArgumentNullException.ThrowIfNull(redo);
         _state = state ?? throw new ArgumentNullException(nameof(state));
 
         FileActions =
@@ -30,8 +33,8 @@ internal sealed class ToolbarViewModel : ViewModelBase
         ];
         HistoryActions =
         [
-            Button(localizer, N("Undo"), MaterialIconKind.Undo),
-            Button(localizer, N("Redo"), MaterialIconKind.Redo),
+            Button(localizer, N("Undo"), MaterialIconKind.Undo, undo),
+            Button(localizer, N("Redo"), MaterialIconKind.Redo, redo),
         ];
         HorizontalAlignActions =
         [
@@ -96,8 +99,8 @@ internal sealed class ToolbarViewModel : ViewModelBase
 
     public string Height => string.Empty;
 
-    private static ToolbarButtonViewModel Button(ILocalizer localizer, string name, MaterialIconKind icon) =>
-        new(localizer, name, icon);
+    private static ToolbarButtonViewModel Button(ILocalizer localizer, string name, MaterialIconKind icon, ICommand? command = null) =>
+        new(localizer, name, icon, command);
 
     private void SetTool(Tool tool, bool isChecked, string propertyName)
     {

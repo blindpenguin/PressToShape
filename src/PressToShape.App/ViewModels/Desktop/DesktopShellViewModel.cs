@@ -34,7 +34,7 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
         Toolbox = new ToolboxViewModel(State, localizer);
         Canvas = new CanvasAreaViewModel(State);
         Inspector = new InspectorViewModel(State, localizer);
-        Toolbar = new ToolbarViewModel(State, localizer);
+        Toolbar = new ToolbarViewModel(State, localizer, UndoCommand, RedoCommand);
         StatusBar = new StatusBarViewModel(State, localizer, FitToWindow);
         var fileCommands = new FileMenuCommands(
             NewCommand,
@@ -43,10 +43,11 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
             SaveAsCommand,
             ExportSvgCommand,
             path => new AsyncRelayCommand(() => _files.OpenRecentAsync(path)));
-        MenuBar = new MenuBarViewModel(State, shutdown, localizer, Inspector.ShowTab, FitToWindow, fileCommands, recent);
+        MenuBar = new MenuBarViewModel(State, shutdown, localizer, Inspector.ShowTab, FitToWindow, fileCommands, recent, UndoCommand, RedoCommand);
 
         Canvas.PropertyChanged += OnCanvasPropertyChanged;
         _session.PropertyChanged += (_, _) => OnPropertyChanged(nameof(WindowTitle));
+        State.PropertyChanged += OnStateHistoryAvailabilityChanged;
         localizer.LanguageChanged += (_, _) => OnPropertyChanged(nameof(WindowTitle));
     }
 
@@ -104,6 +105,30 @@ internal sealed partial class DesktopShellViewModel : ViewModelBase
 
     [RelayCommand]
     private Task ExportSvgAsync() => _files.ExportSvgAsync();
+
+    // Undo and redo. The menu items, the toolbar buttons and the keyboard shortcuts all use these commands.
+    [RelayCommand(CanExecute = nameof(CanUndo))]
+    private void Undo() => State.Undo();
+
+    [RelayCommand(CanExecute = nameof(CanRedo))]
+    private void Redo() => State.Redo();
+
+    private bool CanUndo() => State.CanUndo;
+
+    private bool CanRedo() => State.CanRedo;
+
+    private void OnStateHistoryAvailabilityChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(EditorState.CanUndo):
+                UndoCommand.NotifyCanExecuteChanged();
+                break;
+            case nameof(EditorState.CanRedo):
+                RedoCommand.NotifyCanExecuteChanged();
+                break;
+        }
+    }
 
     // Commands for window-level keyboard shortcuts. They do the same as the matching menu items.
     [RelayCommand]

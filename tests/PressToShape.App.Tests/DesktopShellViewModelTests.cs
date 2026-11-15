@@ -287,7 +287,7 @@ public class DesktopShellViewModelTests
         public DesktopShellViewModel Shell { get; }
 
         public void Edit() =>
-            Shell.State.Document = Shell.State.Document.AddShape(Shell.State.ActiveLayerId, new PressToShape.Core.Shapes.RectangleShape { Width = 5, Height = 5 });
+            Shell.State.Edit(PressToShape.Core.History.HistoryStepType.DrawRectangle, d => d.AddShape(Shell.State.ActiveLayerId, new PressToShape.Core.Shapes.RectangleShape { Width = 5, Height = 5 }));
     }
 
     [Fact]
@@ -455,5 +455,193 @@ public class DesktopShellViewModelTests
         var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create(), TestFileServices.Create(settings: settings));
 
         Assert.Equal("one.p2s", FindItem(shell, "Open Recent").Children.Single().Header);
+    }
+
+    // ---- undo and redo ----
+
+    private static MenuItemViewModel EditItem(DesktopShellViewModel shell, string header) => FindItem(shell, header);
+
+    private static void DrawRectangle(DesktopShellViewModel shell, double x1, double y1, double x2, double y2)
+    {
+        shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Rectangle).SelectCommand.Execute(null);
+        shell.Canvas.PointerPressed(24 + x1, 24 + y1);
+        shell.Canvas.PointerMoved(24 + (x1 + x2) / 2, 24 + (y1 + y2) / 2);
+        shell.Canvas.PointerReleased(24 + x2, 24 + y2);
+    }
+
+    private static DesktopShellViewModel NewFittedShell(FakeShutdown? shutdown = null)
+    {
+        var shell = new DesktopShellViewModel(shutdown ?? new FakeShutdown(), FakeLocalizer.Create(), TestFileServices.Create());
+        shell.Canvas.ViewportWidth = 648;  // fits the artboard at 50%, origin (24, 24)
+        shell.Canvas.ViewportHeight = 448;
+        return shell;
+    }
+
+    [Fact]
+    public void UndoAndRedo_AtStart_AreDisabledInMenuToolbarAndAsCommands()
+    {
+        var shell = NewFittedShell();
+
+        Assert.False(shell.UndoCommand.CanExecute(null));
+        Assert.False(shell.RedoCommand.CanExecute(null));
+        Assert.False(EditItem(shell, "Undo").IsEnabled);
+        Assert.False(EditItem(shell, "Redo").IsEnabled);
+        Assert.False(shell.Toolbar.HistoryActions[0].IsEnabled);
+        Assert.False(shell.Toolbar.HistoryActions[1].IsEnabled);
+    }
+
+    [Fact]
+    public void UndoAndRedo_EnableAndDisableWithTheHistory()
+    {
+        var shell = NewFittedShell();
+        var raised = new List<string?>();
+        EditItem(shell, "Undo").PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        DrawRectangle(shell, 100, 100, 300, 200);
+
+        Assert.True(shell.UndoCommand.CanExecute(null));
+        Assert.True(EditItem(shell, "Undo").IsEnabled);
+        Assert.True(shell.Toolbar.HistoryActions[0].IsEnabled);
+        Assert.False(EditItem(shell, "Redo").IsEnabled);
+        Assert.Contains(nameof(MenuItemViewModel.IsEnabled), raised);
+
+        EditItem(shell, "Undo").Command!.Execute(null);
+
+        Assert.False(EditItem(shell, "Undo").IsEnabled);
+        Assert.True(EditItem(shell, "Redo").IsEnabled);
+        Assert.True(shell.Toolbar.HistoryActions[1].IsEnabled);
+        Assert.Empty(shell.State.Document.Layers[0].Shapes);
+
+        shell.Toolbar.HistoryActions[1].Command!.Execute(null);
+
+        Assert.Single(shell.State.Document.Layers[0].Shapes);
+        Assert.False(EditItem(shell, "Redo").IsEnabled);
+    }
+
+    [Fact]
+    public void UndoAndRedo_AreDisabledWhileADragIsInProgress()
+    {
+        var shell = NewFittedShell();
+        DrawRectangle(shell, 100, 100, 300, 200);
+        shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Rectangle).SelectCommand.Execute(null);
+
+        shell.Canvas.PointerPressed(24 + 400, 24 + 300);
+
+        Assert.False(shell.UndoCommand.CanExecute(null));
+        Assert.False(EditItem(shell, "Undo").IsEnabled);
+        Assert.False(shell.Toolbar.HistoryActions[0].IsEnabled);
+
+        shell.Canvas.PointerReleased(24 + 400, 24 + 300);
+
+        Assert.True(shell.UndoCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void UndoRedoAndJump_EndToEnd_ThroughCanvasLayersHistoryAndTitle()
+    {
+        var shell = NewFittedShell();
+        DrawRectangle(shell, 100, 100, 300, 200);
+        DrawRectangle(shell, 400, 100, 600, 200);
+        var twoShapes = shell.State.Document;
+        Assert.Equal("* Untitled — PressToShape", shell.WindowTitle);
+        Assert.Equal(new[] { "Start", "Draw rectangle", "Draw rectangle" }, shell.Inspector.History.Items.Select(i => i.Name));
+
+        shell.UndoCommand.Execute(null);
+        shell.UndoCommand.Execute(null);
+
+        Assert.Empty(shell.State.Document.Layers[0].Shapes);
+        Assert.Same(shell.State.Document, shell.Canvas.Document);
+        Assert.Equal("Untitled — PressToShape", shell.WindowTitle); // back to the start instance: clean
+        Assert.False(shell.State.HasSelection);
+        Assert.True(shell.Inspector.History.Items[0].IsCurrent);
+        Assert.True(shell.Inspector.History.Items[2].IsRedoable);
+
+        shell.RedoCommand.Execute(null);
+        Assert.Single(shell.State.Document.Layers[0].Shapes);
+        Assert.Equal("* Untitled — PressToShape", shell.WindowTitle);
+
+        shell.Inspector.History.SelectedItem = shell.Inspector.History.Items[2];
+        Assert.Same(twoShapes, shell.State.Document);
+
+        shell.Inspector.History.SelectedItem = shell.Inspector.History.Items[0];
+        Assert.Empty(shell.State.Document.Layers[0].Shapes);
+        Assert.Equal("Untitled — PressToShape", shell.WindowTitle);
+    }
+
+    [Fact]
+    public void Undo_AfterAMoveDrag_RestoresThePositionInOneStep()
+    {
+        var shell = NewFittedShell();
+        DrawRectangle(shell, 100, 100, 300, 200);
+        var shape = shell.State.Document.Layers[0].Shapes[0];
+        shell.Toolbox.Tools.Single(t => t.Definition.Tool == Tool.Select).SelectCommand.Execute(null);
+
+        shell.Canvas.PointerPressed(24 + 150, 24 + 150);
+        for (var i = 1; i <= 30; i++)
+        {
+            shell.Canvas.PointerMoved(24 + 150 + i, 24 + 150);
+        }
+
+        shell.Canvas.PointerReleased(24 + 180, 24 + 150);
+        Assert.Equal(new[] { "Start", "Draw rectangle", "Move shape" }, shell.Inspector.History.Items.Select(i => i.Name));
+
+        shell.UndoCommand.Execute(null);
+
+        Assert.Equal(shape.X, shell.State.Document.Layers[0].Shapes[0].X);
+    }
+
+    [Fact]
+    public void LayerToggle_IsUndoableFromTheLayersPanel()
+    {
+        var shell = NewFittedShell();
+
+        shell.Inspector.Layers.Items[0].ToggleVisibilityCommand.Execute(null);
+        Assert.False(shell.State.Document.Layers[0].IsVisible);
+
+        shell.UndoCommand.Execute(null);
+
+        Assert.True(shell.State.Document.Layers[0].IsVisible);
+        Assert.True(shell.Inspector.Layers.Items[0].IsVisible);
+    }
+
+    [Fact]
+    public async Task NewAndOpen_ClearTheHistoryAndSaveKeepsIt()
+    {
+        var files = new FakeFileStore();
+        var dialogs = new FakeFileDialogs();
+        var messages = new FakeMessageDialogs { Answer = UnsavedChoice.DontSave };
+        var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create(), TestFileServices.Create(files, dialogs, messages));
+        shell.Canvas.ViewportWidth = 648;
+        shell.Canvas.ViewportHeight = 448;
+        DrawRectangle(shell, 100, 100, 300, 200);
+        dialogs.SaveAnswers.Enqueue("/work/a.p2s");
+
+        await shell.SaveAsCommand.ExecuteAsync(null);
+        Assert.True(shell.UndoCommand.CanExecute(null));
+        Assert.Equal("a.p2s — PressToShape", shell.WindowTitle);
+
+        shell.UndoCommand.Execute(null);
+        Assert.Equal("* a.p2s — PressToShape", shell.WindowTitle);
+        shell.RedoCommand.Execute(null);
+        Assert.Equal("a.p2s — PressToShape", shell.WindowTitle);
+
+        await shell.NewCommand.ExecuteAsync(null);
+
+        Assert.False(shell.UndoCommand.CanExecute(null));
+        Assert.False(shell.RedoCommand.CanExecute(null));
+        Assert.Equal(new[] { "Start" }, shell.Inspector.History.Items.Select(i => i.Name));
+    }
+
+    [Fact]
+    public void ShortcutCommands_ExistForUndoAndRedo()
+    {
+        var shell = NewFittedShell();
+        DrawRectangle(shell, 100, 100, 300, 200);
+
+        shell.UndoCommand.Execute(null);
+        Assert.Empty(shell.State.Document.Layers[0].Shapes);
+
+        shell.RedoCommand.Execute(null);
+        Assert.Single(shell.State.Document.Layers[0].Shapes);
     }
 }

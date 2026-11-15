@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.History;
 
 namespace PressToShape.App.ViewModels.Editor;
 
@@ -43,8 +44,8 @@ internal sealed partial class LayerItemViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ToggleVisibility() => _state.UpdateLayer(LayerId, l => l with { IsVisible = !l.IsVisible });
+    private void ToggleVisibility() => _state.UpdateLayer(LayerId, l => l with { IsVisible = !l.IsVisible }, IsVisible ? HistoryStepType.HideLayer : HistoryStepType.ShowLayer);
 
     [RelayCommand]
-    private void ToggleLock() => _state.UpdateLayer(LayerId, l => l with { IsLocked = !l.IsLocked });
+    private void ToggleLock() => _state.UpdateLayer(LayerId, l => l with { IsLocked = !l.IsLocked }, IsLocked ? HistoryStepType.UnlockLayer : HistoryStepType.LockLayer);
 }

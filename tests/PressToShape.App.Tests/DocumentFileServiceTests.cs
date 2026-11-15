@@ -8,6 +8,7 @@ using PressToShape.App.Localization;
 using PressToShape.App.Services;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.History;
 using PressToShape.Core.IO;
 using PressToShape.Core.Shapes;
 using Xunit;
@@ -66,7 +67,7 @@ public sealed class DocumentFileServiceTests : IDisposable
         public int FitCount { get; private set; }
 
         public void Edit() =>
-            State.Document = State.Document.AddShape(State.ActiveLayerId, new RectangleShape { Width = 10, Height = 10 });
+            State.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(State.ActiveLayerId, new RectangleShape { Width = 10, Height = 10 }));
     }
 
     [Fact]
@@ -708,5 +709,68 @@ public sealed class DocumentFileServiceTests : IDisposable
         Assert.Equal(writer.State.Document.Layers[0].Shapes[1].Id, reader.State.Document.Layers[0].Shapes[1].Id);
         Assert.Equal(new[] { "round.p2s" }, Directory.GetFiles(_folder).Select(Path.GetFileName).ToArray());
         Assert.False(reader.Session.IsDirty);
+    }
+
+    // ---- history ----
+
+    [Fact]
+    public async Task New_ResetsTheHistory()
+    {
+        var s = new Setup();
+        s.Edit();
+        s.Messages.Answer = UnsavedChoice.DontSave;
+
+        await s.Service.NewAsync();
+
+        Assert.Empty(s.State.History.Steps);
+        Assert.False(s.State.CanUndo);
+        Assert.Same(s.State.Document, s.State.History.Current);
+    }
+
+    [Fact]
+    public async Task Open_ResetsTheHistory()
+    {
+        var s = new Setup();
+        s.Edit();
+        s.Messages.Answer = UnsavedChoice.DontSave;
+        s.Fake.Files["/work/o.p2s"] = ProjectWith(2);
+        s.Dialogs.OpenAnswers.Enqueue("/work/o.p2s");
+
+        await s.Service.OpenAsync();
+
+        Assert.Empty(s.State.History.Steps);
+        Assert.False(s.State.CanUndo);
+        Assert.Equal(2, s.State.Document.Layers[0].Shapes.Length);
+    }
+
+    [Fact]
+    public async Task Open_FailedOrCancelled_KeepsTheHistory()
+    {
+        var s = new Setup();
+        s.Edit();
+        s.Messages.Answer = UnsavedChoice.DontSave;
+        s.Fake.Files["/work/bad.p2s"] = Encoding.UTF8.GetBytes("nope");
+        s.Dialogs.OpenAnswers.Enqueue("/work/bad.p2s");
+        await s.Service.OpenAsync();
+        s.Dialogs.OpenAnswers.Enqueue(null);
+        await s.Service.OpenAsync();
+
+        Assert.Single(s.State.History.Steps);
+        Assert.True(s.State.CanUndo);
+    }
+
+    [Fact]
+    public async Task SaveAndExport_KeepTheHistory()
+    {
+        var s = new Setup();
+        s.Edit();
+        s.Dialogs.SaveAnswers.Enqueue("/work/a.p2s");
+        s.Dialogs.ExportAnswers.Enqueue("/out/a.svg");
+
+        await s.Service.SaveAsAsync();
+        await s.Service.ExportSvgAsync();
+
+        Assert.Single(s.State.History.Steps);
+        Assert.True(s.State.CanUndo);
     }
 }

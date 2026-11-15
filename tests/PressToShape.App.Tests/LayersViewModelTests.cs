@@ -4,6 +4,7 @@ using System.Linq;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.History;
 using Xunit;
 
 namespace PressToShape.App.Tests;
@@ -108,7 +109,7 @@ public class LayersViewModelTests
         var (state, layers) = Create();
         var itemsBefore = layers.Items.ToList();
 
-        state.UpdateLayer(LayerB, l => l with { Name = "Renamed", IsVisible = false, IsLocked = true });
+        state.UpdateLayer(LayerB, l => l with { Name = "Renamed", IsVisible = false, IsLocked = true }, HistoryStepType.HideLayer);
 
         Assert.Equal(itemsBefore, layers.Items);
         Assert.Equal("Renamed", layers.Items[1].Name);
@@ -123,7 +124,7 @@ public class LayersViewModelTests
         var changed = new List<string?>();
         layers.Items[0].PropertyChanged += (_, e) => changed.Add(e.PropertyName);
 
-        state.UpdateLayer(LayerC, l => l with { Name = "Sky" });
+        state.UpdateLayer(LayerC, l => l with { Name = "Sky" }, HistoryStepType.HideLayer);
 
         Assert.Contains(nameof(LayerItemViewModel.Name), changed);
     }
@@ -284,5 +285,35 @@ public class LayersViewModelTests
         layers.Items[1].ToggleLockCommand.Execute(null);
 
         Assert.Equal(LayerC, state.ActiveLayerId);
+    }
+
+    [Fact]
+    public void Toggles_RecordTheFourStepTypes()
+    {
+        var (state, layers) = Create();
+        var item = layers.Items[0];
+
+        item.ToggleVisibilityCommand.Execute(null);
+        item.ToggleVisibilityCommand.Execute(null);
+        item.ToggleLockCommand.Execute(null);
+        item.ToggleLockCommand.Execute(null);
+
+        Assert.Equal(
+            new[] { HistoryStepType.HideLayer, HistoryStepType.ShowLayer, HistoryStepType.LockLayer, HistoryStepType.UnlockLayer },
+            state.History.Steps);
+    }
+
+    [Fact]
+    public void Toggle_ThenUndo_RestoresTheLayerAndTheRow()
+    {
+        var (state, layers) = Create();
+
+        layers.Items[0].ToggleVisibilityCommand.Execute(null);
+        Assert.False(layers.Items[0].IsVisible);
+
+        state.Undo();
+
+        Assert.True(layers.Items[0].IsVisible);
+        Assert.True(state.Document.Layers[2].IsVisible);
     }
 }

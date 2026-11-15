@@ -77,7 +77,7 @@ internal sealed class DocumentFileService
         }
 
         var document = Document.Create(_localizer.T("Layer 1"));
-        _state.Document = document;
+        _state.ReplaceDocument(document);
         _session.Reset(null, document);
         _fitToWindow();
     }
@@ -172,7 +172,7 @@ internal sealed class DocumentFileService
             return;
         }
 
-        _state.Document = document;
+        _state.ReplaceDocument(document);
         _session.Reset(path, document);
         _recent.Add(path);
         _fitToWindow();

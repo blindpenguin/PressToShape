@@ -38,6 +38,12 @@ internal sealed class MenuItemViewModel : LocalizedViewModel
         Children = children;
         _isChecked = isChecked;
         ToolTip = toolTip;
+
+        if (command is not null)
+        {
+            // Menu items live as long as the app, so this subscription is never removed.
+            command.CanExecuteChanged += (_, _) => OnPropertyChanged(nameof(IsEnabled));
+        }
     }
 
     /// <summary>The shown header: the translation of the message id, or a fixed text for language names.</summary>
@@ -55,7 +61,8 @@ internal sealed class MenuItemViewModel : LocalizedViewModel
 
     public bool IsSeparator => _header == SeparatorHeader;
 
-    public bool IsEnabled => !IsSeparator && (Command is not null || Children.Count > 0);
+    /// <summary>A submenu is always enabled. A leaf item is enabled while its command can execute, and an item without a command is disabled.</summary>
+    public bool IsEnabled => !IsSeparator && ((Command?.CanExecute(null) ?? false) || Children.Count > 0);
 
     /// <summary>True for items that show a check state, such as the languages in the Language submenu.</summary>
     public bool IsCheckable => _isChecked is not null;

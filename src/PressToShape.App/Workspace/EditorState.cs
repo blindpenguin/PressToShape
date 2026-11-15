@@ -2,13 +2,16 @@ using System;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PressToShape.Core.Documents;
+using PressToShape.Core.History;
 using PressToShape.Core.Shapes;
 
 namespace PressToShape.App.Workspace;
 
 /// <summary>
-/// State shared by all regions of the editor shell: the document, active tool, zoom and selection summary.
+/// State shared by all regions of the editor shell: the document, its undo history, active tool, zoom and selection summary.
 /// View models observe it through PropertyChanged, so every route that changes a value stays in sync.
+/// This class is the only place that changes the document: edits go through <see cref="Edit"/>, a drag through
+/// <see cref="Preview"/> and <see cref="Commit"/>, and a new or opened document through <see cref="ReplaceDocument"/>.
 /// </summary>
 internal sealed partial class EditorState : ObservableObject
 {
@@ -19,7 +22,23 @@ internal sealed partial class EditorState : ObservableObject
     {
         Document = document ?? Document.Create(string.Empty);
         ActiveLayerId = Document.Layers[^1].Id;
+        History = new DocumentHistory(Document);
     }
+
+    /// <summary>Raised after the undo history changed: a step was recorded, undone or redone, or the history was reset.</summary>
+    public event EventHandler? HistoryChanged;
+
+    /// <summary>The undo history of the current document.</summary>
+    public DocumentHistory History { get; }
+
+    /// <summary>Whether a drag on the canvas is in progress. Undo, redo and jumping in the history are not possible then.</summary>
+    [ObservableProperty] public partial bool IsDragInProgress { get; set; }
+
+    /// <summary>Whether a step can be undone right now.</summary>
+    public bool CanUndo => !IsDragInProgress && History.CanUndo;
+
+    /// <summary>Whether a step can be redone right now.</summary>
+    public bool CanRedo => !IsDragInProgress && History.CanRedo;
 
     /// <summary>The current document. It is immutable: an edit replaces it by a new version, which notifies observers.</summary>
     [ObservableProperty] public partial Document Document { get; set; }
@@ -46,9 +65,105 @@ internal sealed partial class EditorState : ObservableObject
     /// <summary>Artboard height of the current document.</summary>
     public double ArtboardHeight => Document.ArtboardHeight;
 
-    /// <summary>Replaces one layer of the document by the result of <paramref name="change"/>.</summary>
-    public void UpdateLayer(Guid layerId, Func<Layer, Layer> change) =>
-        Document = Document.UpdateLayer(layerId, change);
+    /// <summary>
+    /// Changes the document and records the change as one history step. If <paramref name="change"/> returns the
+    /// same document instance, nothing changed and no step is recorded.
+    /// </summary>
+    public void Edit(HistoryStepType type, Func<Document, Document> change)
+    {
+        ArgumentNullException.ThrowIfNull(change);
+
+        var after = change(Document);
+        if (ReferenceEquals(after, Document))
+        {
+            return;
+        }
+
+        Document = after;
+        if (History.Record(type, after))
+        {
+            RaiseHistoryChanged();
+        }
+    }
+
+    /// <summary>Replaces one layer of the document by the result of <paramref name="change"/>, as one history step.</summary>
+    public void UpdateLayer(Guid layerId, Func<Layer, Layer> change, HistoryStepType type) =>
+        Edit(type, document => document.UpdateLayer(layerId, change));
+
+    /// <summary>Sets the document without recording a step, for a change that is still going on such as a drag. End it with <see cref="Commit"/>.</summary>
+    public void Preview(Document document)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        Document = document;
+    }
+
+    /// <summary>Records the current document as one step, if it differs from the last recorded one.</summary>
+    public void Commit(HistoryStepType type)
+    {
+        if (History.Record(type, Document))
+        {
+            RaiseHistoryChanged();
+        }
+    }
+
+    /// <summary>Shows a different document (New, Open) and starts a fresh history.</summary>
+    public void ReplaceDocument(Document document)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+
+        Document = document;
+        History.Reset(document);
+        RaiseHistoryChanged();
+    }
+
+    /// <summary>Goes one step back. Does nothing if there is no step or a drag is in progress.</summary>
+    public void Undo()
+    {
+        if (CanUndo && History.Undo() is { } document)
+        {
+            ApplyFromHistory(document);
+        }
+    }
+
+    /// <summary>Goes one step forward. Does nothing if there is no step or a drag is in progress.</summary>
+    public void Redo()
+    {
+        if (CanRedo && History.Redo() is { } document)
+        {
+            ApplyFromHistory(document);
+        }
+    }
+
+    /// <summary>
+    /// Goes to the state at <paramref name="index"/> (0 is the start state). Does nothing for the current or an
+    /// invalid index, or while a drag is in progress.
+    /// </summary>
+    public void JumpToStep(int index)
+    {
+        if (!IsDragInProgress && History.JumpTo(index) is { } document)
+        {
+            ApplyFromHistory(document);
+        }
+    }
+
+    private void ApplyFromHistory(Document document)
+    {
+        Document = document;
+        RaiseHistoryChanged();
+    }
+
+    private void RaiseHistoryChanged()
+    {
+        HistoryChanged?.Invoke(this, EventArgs.Empty);
+        OnPropertyChanged(nameof(CanUndo));
+        OnPropertyChanged(nameof(CanRedo));
+    }
+
+    partial void OnIsDragInProgressChanged(bool value)
+    {
+        OnPropertyChanged(nameof(CanUndo));
+        OnPropertyChanged(nameof(CanRedo));
+    }
 
     /// <summary>Zoom in percent. Values outside the allowed range are clamped.</summary>
     public double ZoomPercent

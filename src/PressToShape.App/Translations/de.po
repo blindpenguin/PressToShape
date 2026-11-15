@@ -297,9 +297,6 @@ msgstr "Noch keine Assets"
 msgid "History"
 msgstr "Verlauf"
 
-msgid "No history yet"
-msgstr "Noch kein Verlauf"
-
 msgid "Select"
 msgstr "Auswählen"
 
@@ -566,3 +563,30 @@ msgstr "SVG-Bild"
 
 msgid "All files"
 msgstr "Alle Dateien"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Draw rectangle"
+msgstr "Rechteck zeichnen"
+
+msgid "Draw ellipse"
+msgstr "Ellipse zeichnen"
+
+msgid "Move shape"
+msgstr "Form verschieben"
+
+msgid "Delete shape"
+msgstr "Form löschen"
+
+msgid "Hide layer"
+msgstr "Ebene ausblenden"
+
+msgid "Show layer"
+msgstr "Ebene einblenden"
+
+msgid "Lock layer"
+msgstr "Ebene sperren"
+
+msgid "Unlock layer"
+msgstr "Ebene entsperren"

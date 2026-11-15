@@ -13,7 +13,7 @@ using static PressToShape.App.Localization.Localizer;
 namespace PressToShape.App.ViewModels.Desktop;
 
 /// <summary>
-/// The complete menu structure. The File actions, Quit, the zoom items, the Window items and the languages have behavior.
+/// The complete menu structure. The File actions, Undo and Redo, Quit, the zoom items, the Window items and the languages have behavior.
 /// Everything else has no command and is therefore disabled until its feature exists.
 /// </summary>
 internal sealed class MenuBarViewModel : ViewModelBase
@@ -25,7 +25,9 @@ internal sealed class MenuBarViewModel : ViewModelBase
         Action<InspectorTab> showTab,
         Action fitToWindow,
         FileMenuCommands files,
-        RecentFiles recent)
+        RecentFiles recent,
+        ICommand undo,
+        ICommand redo)
     {
         ArgumentNullException.ThrowIfNull(localizer);
         ArgumentNullException.ThrowIfNull(state);
@@ -34,6 +36,8 @@ internal sealed class MenuBarViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(fitToWindow);
         ArgumentNullException.ThrowIfNull(files);
         ArgumentNullException.ThrowIfNull(recent);
+        ArgumentNullException.ThrowIfNull(undo);
+        ArgumentNullException.ThrowIfNull(redo);
 
         var quit = new RelayCommand(shutdown.Shutdown);
         var zoomIn = new RelayCommand(state.ZoomIn);
@@ -89,8 +93,8 @@ internal sealed class MenuBarViewModel : ViewModelBase
                 Separator(),
                 Item(N("_Quit"), "Ctrl+Q", quit)),
             Submenu(N("_Edit"),
-                Item(N("_Undo"), "Ctrl+Z"),
-                Item(N("_Redo"), "Ctrl+Shift+Z"),
+                Item(N("_Undo"), "Ctrl+Z", undo),
+                Item(N("_Redo"), "Ctrl+Shift+Z", redo),
                 Separator(),
                 Item(N("Cu_t"), "Ctrl+X"),
                 Item(N("_Copy"), "Ctrl+C"),

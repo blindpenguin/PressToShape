@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using PressToShape.Core.History;
 using PressToShape.Core.Shapes;
 
 namespace PressToShape.App.Workspace;
@@ -86,21 +87,27 @@ internal sealed class CanvasInteraction
             return;
         }
 
-        var drag = _drag;
-        EndDrag();
-
-        if (drag == DragType.Moving)
+        if (_drag == DragType.Moving)
         {
+            // The final position counts, then the whole drag is recorded as one step.
             MoveShape(x, y);
+            EndDrag();
+            return;
         }
-        else if (CanDrawInActiveLayer() && CreateShape(x, y) is { } shape && IsBigEnough(shape))
+
+        EndDrag();
+        if (CanDrawInActiveLayer() && CreateShape(x, y) is { } shape && IsBigEnough(shape))
         {
-            _state.Document = _state.Document.AddShape(_state.ActiveLayerId, shape);
+            var type = shape is EllipseShape ? HistoryStepType.DrawEllipse : HistoryStepType.DrawRectangle;
+            _state.Edit(type, document => document.AddShape(_state.ActiveLayerId, shape));
             _state.Select(shape.Id);
         }
     }
 
-    /// <summary>Ends a drag without a result: the draft is dropped and a moved shape keeps the position it has.</summary>
+    /// <summary>
+    /// Ends a drag without a result: the draft is dropped and a moved shape keeps the position it has,
+    /// which then counts as one step if the shape moved.
+    /// </summary>
     public void Cancel()
     {
         EndDrag();
@@ -115,7 +122,7 @@ internal sealed class CanvasInteraction
         }
 
         Cancel();
-        _state.Document = _state.Document.RemoveShape(id);
+        _state.Edit(HistoryStepType.DeleteShape, document => document.RemoveShape(id));
         _state.Select(null);
     }
 
@@ -149,6 +156,7 @@ internal sealed class CanvasInteraction
         _dragTool = _state.ActiveTool;
         _startX = x;
         _startY = y;
+        _state.IsDragInProgress = true;
     }
 
     // A drag only goes on while the tool is the one it started with.
@@ -170,27 +178,41 @@ internal sealed class CanvasInteraction
 
     private void EndDrag()
     {
+        var wasMoving = _drag == DragType.Moving;
         _drag = DragType.None;
         _state.Draft = null;
+        _state.IsDragInProgress = false;
+
+        if (wasMoving)
+        {
+            // The pointer moves only previewed the document. If the shape moved, the whole drag is one step.
+            _state.Commit(HistoryStepType.MoveShape);
+        }
     }
 
     // Absolute from the press point, so many small moves never add up to a drift.
     private void MoveShape(double x, double y)
     {
         var shapeId = _movedShapeId;
-        if (_state.Document.FindShape(shapeId) is null)
+        if (_state.Document.FindShape(shapeId) is not { } location)
         {
             return;
         }
 
         var newX = _movedShapeStartX + (x - _startX);
         var newY = _movedShapeStartY + (y - _startY);
-        _state.Document = _state.Document.UpdateShape(shapeId, s => s switch
+        if (location.Shape.X == newX && location.Shape.Y == newY)
+        {
+            // Nothing to change: a click without movement must not create a new document or a step.
+            return;
+        }
+
+        _state.Preview(_state.Document.UpdateShape(shapeId, s => s switch
         {
             RectangleShape r => r with { X = newX, Y = newY },
             EllipseShape e => e with { X = newX, Y = newY },
             _ => s,
-        });
+        }));
     }
 
     private Shape? CreateShape(double x, double y)

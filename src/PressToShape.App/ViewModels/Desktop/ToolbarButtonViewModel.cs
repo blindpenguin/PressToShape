@@ -16,6 +16,12 @@ internal sealed class ToolbarButtonViewModel : LocalizedViewModel
         _name = name;
         Icon = icon;
         Command = command;
+
+        if (command is not null)
+        {
+            // The toolbar lives as long as the app, so this subscription is never removed.
+            command.CanExecuteChanged += (_, _) => OnPropertyChanged(nameof(IsEnabled));
+        }
     }
 
     /// <summary>The translated name, used as the tooltip and as the accessible name.</summary>
@@ -25,5 +31,6 @@ internal sealed class ToolbarButtonViewModel : LocalizedViewModel
 
     public ICommand? Command { get; }
 
-    public bool IsEnabled => Command is not null;
+    /// <summary>Enabled while the command can execute. A button without a command is disabled.</summary>
+    public bool IsEnabled => Command?.CanExecute(null) ?? false;
 }

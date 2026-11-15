@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="400"
+             x:Class="PressToShape.App.Views.Editor.HistoryView"
+             x:DataType="vm:HistoryViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="ListBoxItem">
+            <Setter Property="MinHeight" Value="28" />
+            <Setter Property="Padding" Value="4,0" />
+        </Style>
+        <!-- Steps that redo would bring back are dimmed. -->
+        <Style Selector="Grid.redoable">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+    </UserControl.Styles>
+
+    <DockPanel Margin="{StaticResource PanelPadding}">
+
+        <TextBlock DockPanel.Dock="Top" Classes="section-header" Margin="0,0,0,6" Text="{loc:T 'History'}" />
+
+        <!-- Start state first, then one row per step. The selected row is the current state, a click jumps to a row. -->
+        <ListBox x:Name="StepList"
+                 ItemsSource="{Binding Items}"
+                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                 Background="Transparent">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="vm:HistoryItemViewModel">
+                    <Grid ColumnDefinitions="Auto,*" MinHeight="24"
+                          Classes.redoable="{Binding IsRedoable}"
+                          AutomationProperties.Name="{Binding Name}">
+                        <Panel Grid.Column="0" Width="16" Height="16" Margin="0,0,8,0">
+                            <materialIcons:MaterialIcon Kind="CircleMedium" Width="16" Height="16" IsVisible="{Binding IsCurrent}" />
+                            <materialIcons:MaterialIcon Kind="CircleOutline" Width="12" Height="12" IsVisible="{Binding !IsCurrent}" />
+                        </Panel>
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </DockPanel>
+
+</UserControl>

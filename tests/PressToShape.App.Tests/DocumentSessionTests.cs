@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.History;
 using PressToShape.Core.Shapes;
 using Xunit;
 
@@ -49,7 +50,7 @@ public class DocumentSessionTests
     {
         var (state, session) = Create();
 
-        state.UpdateLayer(state.ActiveLayerId, l => l with { IsVisible = false });
+        state.UpdateLayer(state.ActiveLayerId, l => l with { IsVisible = false }, HistoryStepType.HideLayer);
 
         Assert.True(session.IsDirty);
     }
@@ -60,8 +61,8 @@ public class DocumentSessionTests
         var (state, session) = Create();
         var original = state.Document;
 
-        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true });
-        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = false });
+        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true }, HistoryStepType.LockLayer);
+        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = false }, HistoryStepType.UnlockLayer);
 
         Assert.NotSame(original, state.Document);
         Assert.True(session.IsDirty);
@@ -72,7 +73,7 @@ public class DocumentSessionTests
     {
         var (state, session) = Create();
         var saved = state.Document;
-        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true });
+        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true }, HistoryStepType.LockLayer);
 
         state.Document = saved;
 
@@ -83,7 +84,7 @@ public class DocumentSessionTests
     public void MarkSaved_WithTheWrittenInstance_MakesItCleanAndSetsThePath()
     {
         var (state, session) = Create();
-        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true });
+        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true }, HistoryStepType.LockLayer);
         var raised = Record(session);
 
         session.MarkSaved("/home/a/drawing.p2s", state.Document);
@@ -101,7 +102,7 @@ public class DocumentSessionTests
     {
         var (state, session) = Create();
         var written = state.Document;
-        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true });
+        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true }, HistoryStepType.LockLayer);
 
         session.MarkSaved("/a.p2s", written);
 
@@ -113,7 +114,7 @@ public class DocumentSessionTests
     public void Reset_SetsThePathAndClearsDirty()
     {
         var (state, session) = Create();
-        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true });
+        state.UpdateLayer(state.ActiveLayerId, l => l with { IsLocked = true }, HistoryStepType.LockLayer);
         var opened = Document.Create("Opened");
         state.Document = opened;
 
@@ -171,5 +172,46 @@ public class DocumentSessionTests
         state.Select(null);
 
         Assert.False(session.IsDirty);
+    }
+
+    [Fact]
+    public void Undo_BackToTheSavedInstance_IsClean_AndRedoIsDirtyAgain()
+    {
+        var (state, session) = Create();
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, new RectangleShape { Width = 1, Height = 1 }));
+        Assert.True(session.IsDirty);
+
+        state.Undo();
+        Assert.False(session.IsDirty);
+
+        state.Redo();
+        Assert.True(session.IsDirty);
+    }
+
+    [Fact]
+    public void Save_ThenUndo_IsDirty_AndRedoIsCleanAgain()
+    {
+        var (state, session) = Create();
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, new RectangleShape { Width = 1, Height = 1 }));
+        session.MarkSaved("/a.p2s", state.Document);
+
+        state.Undo();
+        Assert.True(session.IsDirty);
+        Assert.True(state.CanRedo);
+
+        state.Redo();
+        Assert.False(session.IsDirty);
+    }
+
+    [Fact]
+    public void Save_DoesNotTouchTheHistory()
+    {
+        var (state, session) = Create();
+        state.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(state.ActiveLayerId, new RectangleShape { Width = 1, Height = 1 }));
+
+        session.MarkSaved("/a.p2s", state.Document);
+
+        Assert.Single(state.History.Steps);
+        Assert.True(state.CanUndo);
     }
 }

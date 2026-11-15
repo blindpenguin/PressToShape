@@ -32,6 +32,10 @@ public class MenuBarViewModelTests
 
         public RecentFiles Recent { get; } = new(new MemorySettingsStore());
 
+        public SwitchableCommand Undo { get; } = new(false);
+
+        public SwitchableCommand Redo { get; } = new(false);
+
         public MenuBarViewModel Menu { get; }
 
         public Localizer Localizer { get; }
@@ -52,7 +56,7 @@ public class MenuBarViewModelTests
                 new RelayCommand(() => FileCalls.Add("save as")),
                 new RelayCommand(() => FileCalls.Add("export")),
                 path => new RelayCommand(() => FileCalls.Add("recent " + path)));
-            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, Recent);
+            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, Recent, Undo, Redo);
         }
     }
 
@@ -444,5 +448,67 @@ public class MenuBarViewModelTests
         f.Localizer.SetLanguage("de");
 
         Assert.Equal("one.p2s", Find(f, "Open Recent").Children[0].Header);
+    }
+
+    [Fact]
+    public void MenuItem_FollowsTheCommandsCanExecute()
+    {
+        var command = new SwitchableCommand(false);
+        var item = MenuItemViewModel.Item(FakeLocalizer.Create(), "_Undo", "Ctrl+Z", command);
+        var raised = new List<string?>();
+        item.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        Assert.False(item.IsEnabled);
+
+        command.Set(true);
+        Assert.True(item.IsEnabled);
+        Assert.Contains(nameof(MenuItemViewModel.IsEnabled), raised);
+
+        command.Set(false);
+        Assert.False(item.IsEnabled);
+    }
+
+    [Fact]
+    public void MenuItem_WithAnAlwaysExecutableCommand_StaysEnabled_AndSubmenusAndSeparatorsKeepTheirRules()
+    {
+        var localizer = FakeLocalizer.Create();
+        var enabled = MenuItemViewModel.Item(localizer, "_Quit", null, new RelayCommand(() => { }));
+        var withoutCommand = MenuItemViewModel.Item(localizer, "_Cut");
+        var submenu = MenuItemViewModel.Submenu(localizer, "_Edit", withoutCommand);
+        var separator = MenuItemViewModel.Separator(localizer);
+
+        Assert.True(enabled.IsEnabled);
+        Assert.False(withoutCommand.IsEnabled);
+        Assert.True(submenu.IsEnabled);
+        Assert.False(separator.IsEnabled);
+    }
+
+    [Fact]
+    public void SubmenuWithACommandThatCannotExecute_StaysEnabled()
+    {
+        var submenu = MenuItemViewModel.Submenu(FakeLocalizer.Create(), "_Edit", MenuItemViewModel.Item(FakeLocalizer.Create(), "_Cut"));
+
+        Assert.True(submenu.IsEnabled);
+    }
+
+    [Fact]
+    public void UndoAndRedoItems_FollowTheirCommands_AndKeepTheirShortcutHints()
+    {
+        var f = new Fixture();
+
+        Assert.False(Find(f, "Undo").IsEnabled);
+        Assert.False(Find(f, "Redo").IsEnabled);
+        Assert.Equal("Ctrl+Z", Find(f, "Undo").Gesture);
+        Assert.Equal("Ctrl+Shift+Z", Find(f, "Redo").Gesture);
+
+        f.Undo.Set(true);
+        f.Redo.Set(true);
+        Assert.True(Find(f, "Undo").IsEnabled);
+        Assert.True(Find(f, "Redo").IsEnabled);
+
+        Find(f, "Undo").Command!.Execute(null);
+        Find(f, "Redo").Command!.Execute(null);
+        Assert.Equal(1, f.Undo.Executions);
+        Assert.Equal(1, f.Redo.Executions);
     }
 }
