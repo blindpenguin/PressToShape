@@ -491,3 +491,78 @@ msgstr "Farben zurücksetzen"
 
 msgid "Layer 1"
 msgstr "Ebene 1"
+
+msgid "Untitled"
+msgstr "Unbenannt"
+
+msgid "Could not save “{0}”. {1}"
+msgstr "„{0}“ konnte nicht gespeichert werden. {1}"
+
+msgid "Could not export “{0}”. {1}"
+msgstr "„{0}“ konnte nicht exportiert werden. {1}"
+
+msgid "The file could not be written. Check the folder, the permissions and the free space."
+msgstr "Die Datei konnte nicht geschrieben werden. Ordner, Berechtigungen und freien Speicherplatz prüfen."
+
+msgid "The file dialog could not be used."
+msgstr "Der Dateidialog konnte nicht verwendet werden."
+
+msgid "Could not open “{0}”. {1}"
+msgstr "„{0}“ konnte nicht geöffnet werden. {1}"
+
+msgid "The file was not found."
+msgstr "Die Datei wurde nicht gefunden."
+
+msgid "The file is too large."
+msgstr "Die Datei ist zu groß."
+
+msgid "The file could not be read."
+msgstr "Die Datei konnte nicht gelesen werden."
+
+msgid "The file was made by a newer version of PressToShape."
+msgstr "Die Datei stammt von einer neueren Version von PressToShape."
+
+msgid "The file contains a shape type that this version does not know."
+msgstr "Die Datei enthält einen Formtyp, den diese Version nicht kennt."
+
+msgid "The file contains invalid data."
+msgstr "Die Datei enthält ungültige Daten."
+
+msgid "This is not a PressToShape file."
+msgstr "Das ist keine PressToShape-Datei."
+
+msgid "Unsaved changes"
+msgstr "Nicht gespeicherte Änderungen"
+
+msgid "“{0}” has unsaved changes. Save them before continuing?"
+msgstr "„{0}“ hat nicht gespeicherte Änderungen. Vor dem Fortfahren speichern?"
+
+msgid "Don't save"
+msgstr "Nicht speichern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Error"
+msgstr "Fehler"
+
+msgid "Open drawing"
+msgstr "Zeichnung öffnen"
+
+msgid "Save drawing"
+msgstr "Zeichnung speichern"
+
+msgid "Export as SVG"
+msgstr "Als SVG exportieren"
+
+msgid "PressToShape drawing"
+msgstr "PressToShape-Zeichnung"
+
+msgid "SVG image"
+msgstr "SVG-Bild"
+
+msgid "All files"
+msgstr "Alle Dateien"

@@ -33,6 +33,7 @@
             <Setter Property="ItemsSource" Value="{Binding Children}" />
             <Setter Property="Command" Value="{Binding Command}" />
             <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+            <Setter Property="ToolTip.Tip" Value="{Binding ToolTip}" />
             <Setter Property="InputGesture" Value="{Binding Gesture, Converter={StaticResource GestureTextConverter}}" />
             <Setter Property="ToggleType" Value="{Binding IsCheckable, Converter={StaticResource CheckableToggleTypeConverter}}" />
             <Setter Property="IsChecked" Value="{Binding IsChecked, Mode=TwoWay}" />

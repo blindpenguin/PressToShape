@@ -103,7 +103,8 @@ public class TranslationConsistencyTests
     public void MenuMnemonics_AreUniquePerMenuLevel(string language)
     {
         var localizer = new Localizer(new FakeCatalogSource().Add("de", GermanDictionary()), language);
-        var menu = new MenuBarViewModel(new EditorState(), new NoShutdown(), localizer, _ => { }, () => { });
+        var menu = new MenuBarViewModel(
+            new EditorState(), new NoShutdown(), localizer, _ => { }, () => { }, NoFileCommands(), new RecentFiles(new MemorySettingsStore()));
 
         var problems = new List<string>();
         CheckLevel("menu bar", menu.Menus, problems);
@@ -113,6 +114,12 @@ public class TranslationConsistencyTests
         }
 
         Assert.True(problems.Count == 0, string.Join("; ", problems));
+    }
+
+    private static FileMenuCommands NoFileCommands()
+    {
+        var none = new CommunityToolkit.Mvvm.Input.RelayCommand(() => { });
+        return new FileMenuCommands(none, none, none, none, none, _ => none);
     }
 
     private static void CheckLevel(string level, IReadOnlyList<MenuItemViewModel> items, List<string> problems)

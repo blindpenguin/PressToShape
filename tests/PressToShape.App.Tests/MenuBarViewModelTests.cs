@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Mvvm.Input;
 using PressToShape.App.Localization;
 using PressToShape.App.Services;
 using PressToShape.App.ViewModels.Desktop;
@@ -27,6 +28,10 @@ public class MenuBarViewModelTests
 
         public int FitCalls { get; private set; }
 
+        public List<string> FileCalls { get; } = [];
+
+        public RecentFiles Recent { get; } = new(new MemorySettingsStore());
+
         public MenuBarViewModel Menu { get; }
 
         public Localizer Localizer { get; }
@@ -40,7 +45,14 @@ public class MenuBarViewModelTests
                 ["_New"] = "_Neu",
                 ["Zoom _In"] = "_Vergrößern",
             });
-            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++);
+            var files = new FileMenuCommands(
+                new RelayCommand(() => FileCalls.Add("new")),
+                new RelayCommand(() => FileCalls.Add("open")),
+                new RelayCommand(() => FileCalls.Add("save")),
+                new RelayCommand(() => FileCalls.Add("save as")),
+                new RelayCommand(() => FileCalls.Add("export")),
+                path => new RelayCommand(() => FileCalls.Add("recent " + path)));
+            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, Recent);
         }
     }
 
@@ -63,7 +75,7 @@ public class MenuBarViewModelTests
     }
 
     [Fact]
-    public void OnlyQuitZoomWindowAndLanguageItems_AreEnabledLeafItems()
+    public void OnlyTheImplementedItems_AreEnabledLeafItems()
     {
         var f = new Fixture();
 
@@ -75,6 +87,7 @@ public class MenuBarViewModelTests
 
         var expected = new[]
         {
+            "New", "Open…", "Save", "Save As…", "Export as SVG…",
             "Quit", "Zoom In", "Zoom Out", "Fit Artboard in Window", "Actual Size (100%)",
             "Properties", "Layers", "Assets", "History",
             "English", "Deutsch",
@@ -331,5 +344,105 @@ public class MenuBarViewModelTests
         Assert.All(
             Flatten(f.Menu.Menus).Where(i => !LanguageMenu(f).Children.Contains(i)),
             i => Assert.False(i.IsCheckable, i.Header));
+    }
+
+    [Theory]
+    [InlineData("New", "new")]
+    [InlineData("Open…", "open")]
+    [InlineData("Save", "save")]
+    [InlineData("Save As…", "save as")]
+    [InlineData("Export as SVG…", "export")]
+    public void FileItems_ExecuteTheirCommands(string header, string expected)
+    {
+        var f = new Fixture();
+
+        Find(f, header).Command!.Execute(null);
+
+        Assert.Equal(new[] { expected }, f.FileCalls);
+    }
+
+    [Fact]
+    public void FileItems_KeepTheirShortcutHints()
+    {
+        var f = new Fixture();
+
+        Assert.Equal("Ctrl+N", Find(f, "New").Gesture);
+        Assert.Equal("Ctrl+O", Find(f, "Open…").Gesture);
+        Assert.Equal("Ctrl+S", Find(f, "Save").Gesture);
+        Assert.Equal("Ctrl+Shift+S", Find(f, "Save As…").Gesture);
+        Assert.Equal("Ctrl+Shift+E", Find(f, "Export as SVG…").Gesture);
+    }
+
+    [Fact]
+    public void OpenRecent_WithoutFiles_ShowsOneDisabledTranslatedItem()
+    {
+        var f = new Fixture();
+
+        var item = Assert.Single(Find(f, "Open Recent").Children);
+
+        Assert.Equal("(No recent files)", item.Header);
+        Assert.False(item.IsEnabled);
+        Assert.True(Find(f, "Open Recent").IsEnabled);
+    }
+
+    [Fact]
+    public void OpenRecent_AfterFilesWereUsed_ListsThemMostRecentFirstWithTheFolderAsToolTip()
+    {
+        var f = new Fixture();
+        var submenu = Find(f, "Open Recent");
+
+        f.Recent.Add("/work/one.p2s");
+        f.Recent.Add("/other/two.p2s");
+
+        Assert.Equal(new[] { "two.p2s", "one.p2s" }, submenu.Children.Select(c => c.Header));
+        Assert.Equal(new[] { "/other", "/work" }, submenu.Children.Select(c => c.ToolTip));
+        Assert.All(submenu.Children, c => Assert.True(c.IsEnabled));
+    }
+
+    [Fact]
+    public void OpenRecent_ChoosingAnEntry_RunsTheCommandWithTheFullPath()
+    {
+        var f = new Fixture();
+        f.Recent.Add("/work/one.p2s");
+
+        Find(f, "Open Recent").Children[0].Command!.Execute(null);
+
+        Assert.Equal(new[] { "recent /work/one.p2s" }, f.FileCalls);
+    }
+
+    [Fact]
+    public void OpenRecent_AfterTheLastEntryIsRemoved_ShowsTheEmptyItemAgain()
+    {
+        var f = new Fixture();
+        f.Recent.Add("/a.p2s");
+
+        f.Recent.Remove("/a.p2s");
+
+        var item = Assert.Single(Find(f, "Open Recent").Children);
+        Assert.Equal("(No recent files)", item.Header);
+    }
+
+    [Fact]
+    public void OpenRecent_AtMostTenEntries()
+    {
+        var f = new Fixture();
+
+        for (var i = 0; i < 15; i++)
+        {
+            f.Recent.Add($"/f{i}.p2s");
+        }
+
+        Assert.Equal(RecentFiles.MaxCount, Find(f, "Open Recent").Children.Count);
+    }
+
+    [Fact]
+    public void OpenRecent_LanguageSwitch_KeepsTheEntryNamesAndTranslatesTheEmptyItem()
+    {
+        var f = new Fixture();
+        f.Recent.Add("/work/one.p2s");
+
+        f.Localizer.SetLanguage("de");
+
+        Assert.Equal("one.p2s", Find(f, "Open Recent").Children[0].Header);
     }
 }

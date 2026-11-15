@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -15,16 +16,17 @@ public partial class PressToShapeApp : Application
 {
     // Keeps the language preference (which saves the language on change) alive for the app's lifetime.
     private LanguagePreference? _languagePreference;
+    private JsonFileSettingsStore? _settingsStore;
 
     public override void Initialize()
     {
         // The localizer must exist before the XAML is loaded, because {loc:T} extensions read it while loading.
-        var settingsStore = new JsonFileSettingsStore(JsonFileSettingsStore.DefaultPath);
+        _settingsStore = new JsonFileSettingsStore(JsonFileSettingsStore.DefaultPath);
         var localizer = new Localizer(
             new EmbeddedCatalogSource(),
-            LanguagePreference.ChooseStartLanguage(settingsStore, CultureInfo.CurrentUICulture));
+            LanguagePreference.ChooseStartLanguage(_settingsStore, CultureInfo.CurrentUICulture));
         LocalizationHost.Initialize(localizer);
-        _languagePreference = LanguagePreference.Attach(settingsStore, localizer);
+        _languagePreference = LanguagePreference.Attach(_settingsStore, localizer);
 
         AvaloniaXamlLoader.Load(this);
     }
@@ -33,9 +35,15 @@ public partial class PressToShapeApp : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var localizer = LocalizationHost.Localizer;
+            var services = new FileServices(
+                _settingsStore ?? throw new InvalidOperationException("The settings store is created in Initialize."),
+                new LocalFileStore(),
+                new AvaloniaFileDialogs(() => desktop.MainWindow, localizer),
+                new AvaloniaMessageDialogs(() => desktop.MainWindow, localizer));
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new DesktopShellViewModel(new DesktopAppShutdown(), LocalizationHost.Localizer),
+                DataContext = new DesktopShellViewModel(new DesktopAppShutdown(), localizer, services),
             };
         }
         else if (ApplicationLifetime is IActivityApplicationLifetime activityLifetime)

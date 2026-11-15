@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
@@ -11,18 +13,27 @@ using static PressToShape.App.Localization.Localizer;
 namespace PressToShape.App.ViewModels.Desktop;
 
 /// <summary>
-/// The complete menu structure. Only Quit, the zoom items and the Window items have behavior.
+/// The complete menu structure. The File actions, Quit, the zoom items, the Window items and the languages have behavior.
 /// Everything else has no command and is therefore disabled until its feature exists.
 /// </summary>
 internal sealed class MenuBarViewModel : ViewModelBase
 {
-    public MenuBarViewModel(EditorState state, IAppShutdown shutdown, ILocalizer localizer, Action<InspectorTab> showTab, Action fitToWindow)
+    public MenuBarViewModel(
+        EditorState state,
+        IAppShutdown shutdown,
+        ILocalizer localizer,
+        Action<InspectorTab> showTab,
+        Action fitToWindow,
+        FileMenuCommands files,
+        RecentFiles recent)
     {
         ArgumentNullException.ThrowIfNull(localizer);
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(shutdown);
         ArgumentNullException.ThrowIfNull(showTab);
         ArgumentNullException.ThrowIfNull(fitToWindow);
+        ArgumentNullException.ThrowIfNull(files);
+        ArgumentNullException.ThrowIfNull(recent);
 
         var quit = new RelayCommand(shutdown.Shutdown);
         var zoomIn = new RelayCommand(state.ZoomIn);
@@ -45,16 +56,34 @@ internal sealed class MenuBarViewModel : ViewModelBase
                 () => localizer.LanguageCode == language.Code))
             .ToArray();
 
+        var recentItems = new ObservableCollection<MenuItemViewModel>();
+        void RebuildRecent()
+        {
+            recentItems.Clear();
+            foreach (var path in recent.Paths)
+            {
+                recentItems.Add(MenuItemViewModel.Fixed(localizer, FileNameOf(path), files.OpenRecent(path), Path.GetDirectoryName(path)));
+            }
+
+            if (recentItems.Count == 0)
+            {
+                recentItems.Add(Item(N("(No recent files)")));
+            }
+        }
+
+        RebuildRecent();
+        recent.Changed += (_, _) => RebuildRecent();
+
         Menus =
         [
             Submenu(N("_File"),
-                Item(N("_New"), "Ctrl+N"),
-                Item(N("_Open…"), "Ctrl+O"),
-                Submenu(N("Open _Recent"), Item(N("(No recent files)"))),
+                Item(N("_New"), "Ctrl+N", files.New),
+                Item(N("_Open…"), "Ctrl+O", files.Open),
+                MenuItemViewModel.Submenu(localizer, N("Open _Recent"), recentItems),
                 Separator(),
-                Item(N("_Save"), "Ctrl+S"),
-                Item(N("Save _As…"), "Ctrl+Shift+S"),
-                Item(N("_Export as SVG…"), "Ctrl+Shift+E"),
+                Item(N("_Save"), "Ctrl+S", files.Save),
+                Item(N("Save _As…"), "Ctrl+Shift+S", files.SaveAs),
+                Item(N("_Export as SVG…"), "Ctrl+Shift+E", files.ExportSvg),
                 Separator(),
                 Item(N("_Document Settings…")),
                 Separator(),
@@ -140,4 +169,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
     }
 
     public IReadOnlyList<MenuItemViewModel> Menus { get; }
+
+    // Both separators, so a path from another platform still gives a readable name.
+    private static string FileNameOf(string path) => path[(path.LastIndexOfAny(['/', '\\']) + 1)..];
 }

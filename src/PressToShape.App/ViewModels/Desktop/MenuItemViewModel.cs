@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using PressToShape.App.Localization;
@@ -26,7 +27,8 @@ internal sealed class MenuItemViewModel : LocalizedViewModel
         string? gesture,
         ICommand? command,
         IReadOnlyList<MenuItemViewModel> children,
-        Func<bool>? isChecked)
+        Func<bool>? isChecked,
+        string? toolTip = null)
         : base(localizer)
     {
         _header = header;
@@ -35,6 +37,7 @@ internal sealed class MenuItemViewModel : LocalizedViewModel
         Command = command;
         Children = children;
         _isChecked = isChecked;
+        ToolTip = toolTip;
     }
 
     /// <summary>The shown header: the translation of the message id, or a fixed text for language names.</summary>
@@ -42,6 +45,9 @@ internal sealed class MenuItemViewModel : LocalizedViewModel
 
     /// <summary>Shortcut text shown next to the item. Display only.</summary>
     public string? Gesture { get; }
+
+    /// <summary>Tooltip text, or <c>null</c>. Not translated: it is used for data such as a folder path.</summary>
+    public string? ToolTip { get; }
 
     public ICommand? Command { get; }
 
@@ -69,6 +75,17 @@ internal sealed class MenuItemViewModel : LocalizedViewModel
 
     public static MenuItemViewModel Submenu(ILocalizer localizer, string header, params MenuItemViewModel[] children) =>
         new(localizer, header, true, null, null, children, null);
+
+    /// <summary>
+    /// A submenu whose items are replaced while the app runs, such as Open Recent. The caller changes the collection,
+    /// and the menu follows. Give it at least one item at all times so the submenu stays enabled.
+    /// </summary>
+    public static MenuItemViewModel Submenu(ILocalizer localizer, string header, ObservableCollection<MenuItemViewModel> children) =>
+        new(localizer, header, true, null, null, children ?? throw new ArgumentNullException(nameof(children)), null);
+
+    /// <summary>An item with a fixed, untranslated text, for data such as a file name, and an optional tooltip.</summary>
+    public static MenuItemViewModel Fixed(ILocalizer localizer, string text, ICommand command, string? toolTip = null) =>
+        new(localizer, text, false, null, command ?? throw new ArgumentNullException(nameof(command)), [], null, toolTip);
 
     public static MenuItemViewModel Separator(ILocalizer localizer) =>
         new(localizer, SeparatorHeader, false, null, null, [], null);
