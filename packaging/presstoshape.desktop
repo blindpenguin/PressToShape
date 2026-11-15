@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=PressToShape
+Comment=Vector drawing program
+Exec=PressToShape.Desktop
+Icon=presstoshape
+Categories=Graphics;VectorGraphics;
+Terminal=false

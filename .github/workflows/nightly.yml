@@ -1,0 +1,104 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # 02:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    name: Check for changes
+    runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.check.outputs.release }}
+      tag: ${{ steps.check.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="nightly-$(date -u +%Y%m%d)"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          head_sha="$(git rev-parse HEAD)"
+          last_tag="$(gh release list --limit 100 --json tagName --jq '[.[] | select(.tagName | startswith("nightly-"))][0].tagName // ""')"
+          if [ -n "$last_tag" ]; then
+            last_sha="$(gh api "repos/${{ github.repository }}/commits/$last_tag" --jq .sha)"
+          else
+            last_sha=""
+          fi
+          if [ "$head_sha" = "$last_sha" ]; then
+            echo "master has not changed since $last_tag. No release."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          elif gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists. No release."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  release:
+    name: Build and release
+    needs: check
+    if: needs.check.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      APPIMAGE_EXTRACT_AND_RUN: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Install gettext
+        run: sudo apt-get update && sudo apt-get install -y gettext imagemagick
+      - name: Test
+        run: |
+          dotnet build tests/PressToShape.Core.Tests -c Release
+          dotnet build tests/PressToShape.App.Tests -c Release
+          dotnet test tests/PressToShape.Core.Tests -c Release --no-build
+          dotnet test tests/PressToShape.App.Tests -c Release --no-build
+      - name: Publish Linux and Windows
+        run: |
+          for rid in linux-x64 win-x64; do
+            dotnet publish src/PressToShape.Desktop -c Release -r "$rid" --self-contained \
+              -p:DebugType=None -p:DebugSymbols=false -o "publish/$rid"
+          done
+      - name: Package
+        run: |
+          mkdir dist
+          tag='${{ needs.check.outputs.tag }}'
+          tar -C publish/linux-x64 -czf "dist/PressToShape-$tag-linux-x64.tar.gz" .
+          (cd publish/win-x64 && zip -qr "../../dist/PressToShape-$tag-win-x64.zip" .)
+      - name: Build AppImage
+        run: |
+          tag='${{ needs.check.outputs.tag }}'
+          mkdir -p AppDir/usr/bin
+          cp -r publish/linux-x64/. AppDir/usr/bin/
+          cp packaging/presstoshape.desktop AppDir/
+          convert "src/PressToShape.App/Assets/avalonia-logo.ico[0]" -resize 256x256 AppDir/presstoshape.png
+          printf '#!/bin/sh\nexec "$(dirname "$(readlink -f "$0")")/usr/bin/PressToShape.Desktop" "$@"\n' > AppDir/AppRun
+          chmod +x AppDir/AppRun
+          curl -fsSL -o appimagetool \
+            https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool
+          ARCH=x86_64 ./appimagetool AppDir "dist/PressToShape-$tag-x86_64.AppImage"
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag='${{ needs.check.outputs.tag }}'
+          sha="$(git rev-parse HEAD)"
+          gh release create "$tag" dist/* \
+            --target "$sha" \
+            --prerelease \
+            --title "Nightly $(date -u +%Y-%m-%d)" \
+            --notes "Automatic build of master at $sha."
