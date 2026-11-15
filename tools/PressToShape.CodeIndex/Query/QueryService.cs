@@ -27,6 +27,7 @@ internal sealed class QueryService
     private readonly IndexReader _reader;
     private readonly MemberMatcher _matcher;
     private readonly XamlQueries _xaml;
+    private readonly NameResolver _resolver;
 
     public QueryService(IndexReader reader)
     {
@@ -34,6 +35,7 @@ internal sealed class QueryService
         _reader = reader;
         _matcher = new MemberMatcher(reader);
         _xaml = new XamlQueries(reader);
+        _resolver = new NameResolver(reader);
     }
 
     /// <summary>Finds symbols by name. Exact matches come first, then prefix, then substring. A term with a dot or colon also matches ids.</summary>
@@ -115,25 +117,12 @@ internal sealed class QueryService
 
     private QueryResult<T> Resolve<T>(string query, Func<NameEntry, T> answer)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(query);
-
-        var names = _reader.Names;
-        var matches = names.Where(n => n.Id == query || (!query.Contains(':', StringComparison.Ordinal) && n.Id == "T:" + query)).ToList();
-        if (matches.Count == 0)
+        var resolution = _resolver.Resolve(query);
+        return resolution.Status switch
         {
-            matches = names.Where(n => n.Name == query).ToList();
-        }
-
-        if (matches.Count > 1 && matches.Count(IsTypeEntry) == 1)
-        {
-            matches = matches.Where(IsTypeEntry).ToList();
-        }
-
-        return matches.Count switch
-        {
-            0 => new QueryResult<T>(QueryStatus.NotFound, default, []),
-            1 => new QueryResult<T>(QueryStatus.Found, answer(matches[0]), matches),
-            _ => new QueryResult<T>(QueryStatus.Ambiguous, default, matches.OrderBy(m => m.Id, StringComparer.Ordinal).ToList()),
+            QueryStatus.Found => new QueryResult<T>(QueryStatus.Found, answer(resolution.Matches[0]), resolution.Matches),
+            QueryStatus.Ambiguous => new QueryResult<T>(QueryStatus.Ambiguous, default, resolution.Matches),
+            _ => new QueryResult<T>(QueryStatus.NotFound, default, []),
         };
     }
 
@@ -151,8 +140,6 @@ internal sealed class QueryService
         new(symbol.Id, symbol.Name, $"{symbol.File}:{symbol.StartLine}", relationType, Confidence.Inferred, reason);
 
     private string NameOf(string id) => _xaml.NameOf(id);
-
-    private static bool IsTypeEntry(NameEntry n) => n.SymbolType is "Class" or "Interface" or "Record" or "Struct" or "Enum" or "Delegate";
 
     private static int Rank(NameEntry n, string term, bool idSearch)
     {

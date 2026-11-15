@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using PressToShape.CodeIndex.Chain;
 using PressToShape.CodeIndex.Model;
 using PressToShape.CodeIndex.Output;
 using PressToShape.CodeIndex.Query;
@@ -20,7 +21,7 @@ internal sealed class CliApp
     private const string SolutionFileName = RepoRoot.SolutionFileName;
     private const string IndexFolder = "docs/index";
 
-    private static readonly HashSet<string> QueryCommands = ["find", "show", "impls", "derived", "refs", "deps"];
+    private static readonly HashSet<string> QueryCommands = ["find", "show", "impls", "derived", "refs", "deps", "chain"];
 
     private readonly TextWriter _out;
     private readonly TextWriter _err;
@@ -194,6 +195,11 @@ internal sealed class CliApp
         {
             printer.Search(argument, query.Search(argument));
             return Success;
+        }
+
+        if (options.Command == "chain")
+        {
+            return ChainPrinter.Print(new ChainBuilder(new IndexReader(folder)).Build(argument, options.Depth), _out, options.Json) ? Success : Failure;
         }
 
         var found = options.Command switch

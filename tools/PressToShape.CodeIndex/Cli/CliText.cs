@@ -13,6 +13,7 @@ internal static class CliText
           check               Compare a fresh analysis with the committed index. Exit code 1 if they differ
           find <term>         Search symbols by name (exact, then prefix, then substring)
           show <name|id>      Signature, documentation and relationships of one symbol
+          chain <name|id>     The MVVM chain of a view, view model or command: bindings, handlers, services, models, resources, tests
           impls <name|id>     Implementations of an interface, or of an interface member
           derived <name|id>   Types that derive directly from a type
           refs <name|id>      Where a symbol is referenced or called
@@ -20,6 +21,7 @@ internal static class CliText
 
         Options:
           --json              Print JSON instead of text (query commands)
+          --depth <1-5>       How many levels of child views `chain` expands (default 1)
           --solution <path>   The solution to analyse (default: PressToShape.sln above the current folder)
           --help              Show this text
 
