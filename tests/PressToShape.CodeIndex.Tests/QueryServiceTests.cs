@@ -102,7 +102,7 @@ public class QueryServiceTests
 
         Assert.Equal(QueryStatus.Found, result.Status);
         var shown = result.Value!;
-        Assert.Equal("T:N.IService", shown.Symbol.Id);
+        Assert.Equal("T:N.IService", shown.Symbol!.Id);
         Assert.Equal("Does the work.", shown.Symbol.Doc.Summary);
         Assert.Contains(shown.Incoming, h => h.Id == "T:N.Base" && h.RelationType == "Implements" && h.Confidence == Confidence.Verified);
         Assert.Contains(shown.Incoming, h => h.Id == "T:N.Consumer" && h.RelationType == "InjectedDependency");
@@ -114,14 +114,14 @@ public class QueryServiceTests
         var result = Service().Show("M:N.Base.Run(System.Int32)");
 
         Assert.Equal(QueryStatus.Found, result.Status);
-        Assert.Equal("void Run(int x)", result.Value!.Symbol.Signature);
+        Assert.Equal("void Run(int x)", result.Value!.Symbol!.Signature);
         Assert.Contains(result.Value.Incoming, h => h.Id == "M:N.Helper.Go(N.Base)" && h.RelationType == "Calls" && h.Location.StartsWith("src/Core/File0.cs:", StringComparison.Ordinal));
     }
 
     [Fact]
     public void Show_TypeWithSameShortNameAsFullName_ResolvesWithoutPrefix()
     {
-        Assert.Equal("T:N.Consumer", Service().Show("N.Consumer").Value!.Symbol.Id);
+        Assert.Equal("T:N.Consumer", Service().Show("N.Consumer").Value!.Symbol!.Id);
     }
 
     [Fact]
@@ -257,7 +257,7 @@ public class QueryServiceTests
     public void Reader_OtherSchemaVersion_SaysHowToRegenerate()
     {
         var sink = BuildIndex();
-        var manifest = Encoding.UTF8.GetString(sink.Files["manifest.json"]).Replace("\"SchemaVersion\": 1", "\"SchemaVersion\": 99", StringComparison.Ordinal);
+        var manifest = Encoding.UTF8.GetString(sink.Files["manifest.json"]).Replace($"\"SchemaVersion\": {IndexSchema.Version}", "\"SchemaVersion\": 99", StringComparison.Ordinal);
         sink.Write("manifest.json", Encoding.UTF8.GetBytes(manifest));
 
         var ex = Assert.Throws<IndexToolException>(() => Service(sink).Search("x"));

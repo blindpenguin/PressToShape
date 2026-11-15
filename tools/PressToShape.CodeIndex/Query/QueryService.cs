@@ -8,14 +8,32 @@ namespace PressToShape.CodeIndex.Query;
 /// <summary>Answers questions about the index. Every result carries its confidence, and anything that is not proven by the compiler is marked inferred.</summary>
 internal sealed class QueryService
 {
+    /// <summary>The relationship types that count as a use of the target: C# references and calls, and the XAML places that bind, reference, handle, use or include it.</summary>
+    private static readonly RelationshipType[] UsageTypes =
+    [
+        RelationshipType.References,
+        RelationshipType.Calls,
+        RelationshipType.Registers,
+        RelationshipType.UsesViewModel,
+        RelationshipType.CodeBehind,
+        RelationshipType.BindsTo,
+        RelationshipType.ReferencesResource,
+        RelationshipType.UsesConverter,
+        RelationshipType.HandledBy,
+        RelationshipType.UsesType,
+        RelationshipType.Includes,
+    ];
+
     private readonly IndexReader _reader;
     private readonly MemberMatcher _matcher;
+    private readonly XamlQueries _xaml;
 
     public QueryService(IndexReader reader)
     {
         ArgumentNullException.ThrowIfNull(reader);
         _reader = reader;
         _matcher = new MemberMatcher(reader);
+        _xaml = new XamlQueries(reader);
     }
 
     /// <summary>Finds symbols by name. Exact matches come first, then prefix, then substring. A term with a dot or colon also matches ids.</summary>
@@ -35,14 +53,23 @@ internal sealed class QueryService
             .ToList();
     }
 
+    /// <summary>A C# symbol (with the XAML file of a view class) or a XAML entity, with the relationships that start or end at it.</summary>
     public QueryResult<ShowResult> Show(string query) => Resolve(query, entry =>
     {
-        var symbol = _reader.SymbolOf(entry.Id) ?? throw new IndexToolException($"The symbol {entry.Id} is listed in names.tsv but missing in {entry.IndexFile}. Regenerate the index with: {IndexHints.Regenerate}");
         var edges = _reader.Relationships;
-        return new ShowResult(
-            symbol,
-            edges.Where(e => e.FromId == entry.Id).Select(e => ToHit(e, e.ToId)).OrderBy(h => h.RelationType, StringComparer.Ordinal).ThenBy(h => h.Id, StringComparer.Ordinal).ToList(),
-            edges.Where(e => e.ToId == entry.Id).Select(e => ToHit(e, e.FromId)).OrderBy(h => h.RelationType, StringComparer.Ordinal).ThenBy(h => h.Id, StringComparer.Ordinal).ToList());
+        var startsAt = XamlQueries.StartsAt(entry);
+        var outgoing = edges.Where(startsAt).Select(e => ToHit(e, e.ToId)).OrderBy(h => h.RelationType, StringComparer.Ordinal).ThenBy(h => h.Id, StringComparer.Ordinal).ToList();
+        var incoming = edges.Where(e => e.ToId == entry.Id).Select(e => ToHit(e, e.FromId)).OrderBy(h => h.RelationType, StringComparer.Ordinal).ThenBy(h => h.Id, StringComparer.Ordinal).ToList();
+
+        if (XamlQueries.IsXamlEntry(entry))
+        {
+            var xaml = _xaml.ForEntry(entry);
+            var viewClass = entry.SymbolType == "View" && xaml.File.ClassId is { } classId ? _reader.SymbolOf(classId) : null;
+            return new ShowResult(viewClass, xaml, outgoing, incoming);
+        }
+
+        var symbol = _reader.SymbolOf(entry.Id) ?? throw new IndexToolException($"The symbol {entry.Id} is listed in names.tsv but missing in {entry.IndexFile}. Regenerate the index with: {IndexHints.Regenerate}");
+        return new ShowResult(symbol, _xaml.ViewOfClass(symbol.Id), outgoing, incoming);
     });
 
     /// <summary>Types that implement an interface (verified). For an interface member, members with the same name and parameters in implementing types (inferred).</summary>
@@ -67,7 +94,7 @@ internal sealed class QueryService
     /// <summary>Places that reference, call or register a symbol. Calls to the interface or base member that the symbol implements or overrides are added as inferred.</summary>
     public QueryResult<IReadOnlyList<QueryHit>> References(string query) => Resolve(query, entry =>
     {
-        var usageTypes = new[] { RelationshipType.References, RelationshipType.Calls, RelationshipType.Registers };
+        var usageTypes = UsageTypes;
         var hits = _reader.Relationships.Where(e => e.ToId == entry.Id && usageTypes.Contains(e.Type)).Select(e => ToHit(e, e.FromId)).ToList();
         if (_reader.SymbolOf(entry.Id) is { } symbol)
         {
@@ -123,7 +150,7 @@ internal sealed class QueryService
     private QueryHit SymbolHit(SymbolRecord symbol, string relationType, string reason) =>
         new(symbol.Id, symbol.Name, $"{symbol.File}:{symbol.StartLine}", relationType, Confidence.Inferred, reason);
 
-    private string NameOf(string id) => _reader.EntryOf(id)?.Name ?? id;
+    private string NameOf(string id) => _xaml.NameOf(id);
 
     private static bool IsTypeEntry(NameEntry n) => n.SymbolType is "Class" or "Interface" or "Record" or "Struct" or "Enum" or "Delegate";
 

@@ -35,6 +35,7 @@ internal static class MarkdownWriter
             }
         }
 
+        XamlMarkdownWriter.Write(projects, sink);
         sink.Write(IndexLayout.MarkdownReadmePath, Encode(RenderReadme(projects, pages, data.Warnings)));
     }
 
@@ -55,6 +56,11 @@ internal static class MarkdownWriter
                 var name = page.Namespace.Length == 0 ? "(global namespace)" : page.Namespace;
                 var link = IndexLayout.MarkdownPath(page.Project, page.Namespace)["markdown/".Length..];
                 text.Append("- [").Append(name).Append("](").Append(link).Append(") (").Append(page.Types).Append(" types)\n");
+            }
+
+            foreach (var line in XamlMarkdownWriter.ReadmeLines(project))
+            {
+                text.Append(line).Append('\n');
             }
         }
 

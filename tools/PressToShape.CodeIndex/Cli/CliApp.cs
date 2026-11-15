@@ -114,7 +114,13 @@ internal sealed class CliApp
         var removed = folder.RemoveStale();
 
         var projects = result.Data.Projects;
-        _out.Write($"Indexed {projects.Count} projects, {projects.Sum(p => p.Symbols.Count)} symbols and {projects.Sum(p => p.Relationships.Count)} relationships into {IndexFolder}.\n");
+        var xamlFiles = projects.SelectMany(p => p.Xaml).ToList();
+        _out.Write($"Indexed {projects.Count} projects, {projects.Sum(p => p.Symbols.Count)} symbols, {projects.Sum(p => p.Relationships.Count)} relationships and {xamlFiles.Count} XAML files into {IndexFolder}.\n");
+        foreach (var finding in xamlFiles.OrderBy(f => f.File, StringComparer.Ordinal).SelectMany(f => f.Findings.Select(text => (f.File, text))))
+        {
+            _err.Write($"Finding: {finding.File}: {finding.text}\n");
+        }
+
         if (removed.Count > 0)
         {
             _out.Write($"Removed {removed.Count} files that are no longer produced.\n");
@@ -169,7 +175,7 @@ internal sealed class CliApp
     private async Task<GenerateResult> Analyse(string solutionPath, string repoRoot, CancellationToken ct)
     {
         var source = _services.CreateCompilationSource(solutionPath, repoRoot);
-        var result = await new IndexGenerator(source, repoRoot).GenerateAsync(ct);
+        var result = await new IndexGenerator(source, repoRoot, _services.CreateXamlFileSource?.Invoke(repoRoot)).GenerateAsync(ct);
         foreach (var problem in result.Data.Warnings.OrderBy(p => p.Project, StringComparer.Ordinal))
         {
             _err.Write($"{(problem.IsWarning ? "Warning" : "Error")}: {problem.Project}: {problem.Reason}\n");

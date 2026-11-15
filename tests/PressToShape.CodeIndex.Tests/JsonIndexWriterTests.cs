@@ -175,7 +175,7 @@ public class JsonIndexWriterTests
 
         Assert.Equal(symbols.Symbols.Count + 2, symbolText.TrimEnd('\n').Split('\n').Length);
         Assert.Equal(relationships.Relationships.Count + 2, relationshipText.TrimEnd('\n').Split('\n').Length);
-        Assert.StartsWith("{\"SchemaVersion\":1,\"Project\":\"Core\",\"Namespace\":\"A.B\",\"Symbols\":[\n{", symbolText, StringComparison.Ordinal);
+        Assert.StartsWith($"{{\"SchemaVersion\":{IndexSchema.Version},\"Project\":\"Core\",\"Namespace\":\"A.B\",\"Symbols\":[\n{{", symbolText, StringComparison.Ordinal);
         Assert.EndsWith("\n]}\n", symbolText, StringComparison.Ordinal);
     }
 
@@ -186,7 +186,7 @@ public class JsonIndexWriterTests
 
         var text = Encoding.UTF8.GetString(Write(data).Files["relationships/Empty.json"]);
 
-        Assert.Equal("{\"SchemaVersion\":1,\"Project\":\"Empty\",\"Relationships\":[]}\n", text);
+        Assert.Equal($"{{\"SchemaVersion\":{IndexSchema.Version},\"Project\":\"Empty\",\"Relationships\":[]}}\n", text);
         Assert.Empty(JsonSerializer.Deserialize<RelationshipsFile>(text, JsonIndexWriter.Options)!.Relationships);
     }
 

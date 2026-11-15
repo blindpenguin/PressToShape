@@ -35,6 +35,7 @@ internal static class JsonIndexWriter
             WriteRelationships(project, sink);
         }
 
+        XamlJsonWriter.Write(projects, sink);
         WriteManifest(projects, data.Warnings, sink);
         NamesTableWriter.Write(projects, sink);
     }
@@ -65,7 +66,7 @@ internal static class JsonIndexWriter
         var manifest = new IndexManifest(
             IndexSchema.Version,
             IndexSchema.ToolVersion,
-            projects.Select(p => new ManifestProject(p.Name, p.Path, p.Symbols.Count, p.Relationships.Count)).ToList(),
+            projects.Select(p => new ManifestProject(p.Name, p.Path, p.Symbols.Count, p.Relationships.Count, p.Xaml.Count)).ToList(),
             projects.Sum(p => p.Symbols.Count),
             projects.Sum(p => p.Relationships.Count),
             warnings.OrderBy(w => w.Project, StringComparer.Ordinal).ThenBy(w => w.Reason, StringComparer.Ordinal).ToList());

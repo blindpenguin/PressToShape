@@ -8,6 +8,7 @@ using PressToShape.CodeIndex.Loading;
 using PressToShape.CodeIndex.Model;
 using PressToShape.CodeIndex.Output;
 using PressToShape.CodeIndex.Relationships;
+using PressToShape.CodeIndex.Xaml;
 
 namespace PressToShape.CodeIndex;
 
@@ -19,13 +20,16 @@ internal sealed class IndexGenerator
 {
     private readonly ICompilationSource _source;
     private readonly string _repoRoot;
+    private readonly IXamlFileSource? _xamlSource;
 
-    public IndexGenerator(ICompilationSource source, string repoRoot)
+    /// <param name="xamlSource">Where the XAML files come from. Null means that XAML is not indexed.</param>
+    public IndexGenerator(ICompilationSource source, string repoRoot, IXamlFileSource? xamlSource = null)
     {
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(repoRoot);
         _source = source;
         _repoRoot = repoRoot;
+        _xamlSource = xamlSource;
     }
 
     public async Task<GenerateResult> GenerateAsync(CancellationToken cancellationToken)
@@ -42,12 +46,21 @@ internal sealed class IndexGenerator
         var knownIds = extracted.SelectMany(e => e.Symbols).Select(s => s.Id).ToHashSet(StringComparer.Ordinal);
         var builder = new RelationshipBuilder(knownIds, _repoRoot);
 
+        var xaml = _xamlSource is null
+            ? XamlIndexResult.Empty
+            : new XamlIndexer(_xamlSource).Index(loaded.Projects.ToList(), knownIds, cancellationToken);
+
         var projects = extracted
-            .Select(e => new ProjectIndex(e.Project.Name, e.Project.ProjectPath, e.Symbols, builder.Build(e.Project, cancellationToken)))
+            .Select(e =>
+            {
+                var xamlData = xaml.For(e.Project.Name);
+                var edges = builder.Build(e.Project, cancellationToken).Concat(xamlData.Relationships).ToList();
+                return new ProjectIndex(e.Project.Name, e.Project.ProjectPath, e.Symbols, edges, xamlData.Files);
+            })
             .ToList();
 
-        var data = new IndexData(projects, loaded.Problems);
-        return new GenerateResult(data, loaded.Problems.Any(p => !p.IsWarning));
+        var problems = loaded.Problems.Concat(xaml.Problems).ToList();
+        return new GenerateResult(new IndexData(projects, problems), problems.Any(p => !p.IsWarning));
     }
 
     /// <summary>Writes the JSON and Markdown files of the data to the sink.</summary>

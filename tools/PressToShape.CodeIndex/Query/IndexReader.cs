@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.Json;
 using PressToShape.CodeIndex.Model;
 using PressToShape.CodeIndex.Output;
+using PressToShape.CodeIndex.Xaml;
+using PressToShape.CodeIndex.Xaml.Model;
 
 namespace PressToShape.CodeIndex.Query;
 
@@ -13,6 +15,7 @@ internal sealed class IndexReader
 {
     private readonly IIndexFileSource _source;
     private readonly Dictionary<string, SymbolsFile> _symbolFiles = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, XamlFileRecord> _xamlFiles = new(StringComparer.Ordinal);
     private IndexManifest? _manifest;
     private IReadOnlyList<NameEntry>? _names;
     private Dictionary<string, NameEntry>? _namesById;
@@ -34,8 +37,9 @@ internal sealed class IndexReader
         return _namesById.GetValueOrDefault(id);
     }
 
+    /// <summary>The symbol with the id, or null for ids that are not C# symbols (XAML ids have no symbol record).</summary>
     public SymbolRecord? SymbolOf(string id) =>
-        EntryOf(id) is { } entry ? Symbols(entry.IndexFile).Symbols.FirstOrDefault(s => s.Id == id) : null;
+        !XamlIds.IsXaml(id) && EntryOf(id) is { } entry ? Symbols(entry.IndexFile).Symbols.FirstOrDefault(s => s.Id == id) : null;
 
     public IReadOnlyList<SymbolRecord> MembersOf(string typeId) =>
         EntryOf(typeId) is { } entry ? Symbols(entry.IndexFile).Symbols.Where(s => s.ContainingId == typeId).ToList() : [];
@@ -47,6 +51,28 @@ internal sealed class IndexReader
             file = Deserialize<SymbolsFile>(path);
             CheckSchema(file.SchemaVersion, path);
             _symbolFiles[path] = file;
+        }
+
+        return file;
+    }
+
+    /// <summary>Reads one XAML file of the index (<c>xaml/&lt;Project&gt;/...json</c>) and checks its schema version.</summary>
+    public XamlFileRecord XamlFile(string path)
+    {
+        if (!_xamlFiles.TryGetValue(path, out var file))
+        {
+            var bytes = _source.Read(path) ?? throw Missing(path);
+            try
+            {
+                CheckSchema((JsonSerializer.Deserialize<SchemaOnly>(bytes, JsonIndexWriter.Options) ?? throw Damaged(path)).SchemaVersion, path);
+                file = JsonSerializer.Deserialize<XamlFileRecord>(bytes, JsonIndexWriter.Options) ?? throw Damaged(path);
+            }
+            catch (JsonException)
+            {
+                throw Damaged(path);
+            }
+
+            _xamlFiles[path] = file;
         }
 
         return file;
@@ -116,4 +142,6 @@ internal sealed class IndexReader
 
     private static IndexToolException Damaged(string path) =>
         new($"The index file {path} is damaged. Regenerate the index with: {IndexHints.Regenerate}");
+
+    private sealed record SchemaOnly(int SchemaVersion);
 }

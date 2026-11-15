@@ -12,4 +12,14 @@ internal enum RelationshipType
     References,
     Calls,
     Registers,
+
+    // XAML relationships. Appended, so the order of the earlier values never changes.
+    UsesViewModel,
+    CodeBehind,
+    BindsTo,
+    ReferencesResource,
+    UsesConverter,
+    HandledBy,
+    UsesType,
+    Includes,
 }

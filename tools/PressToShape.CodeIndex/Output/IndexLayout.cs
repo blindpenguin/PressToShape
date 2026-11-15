@@ -11,6 +11,20 @@ internal static class IndexLayout
 
     public static string SymbolsPath(string project, string ns) => $"symbols/{FileName(project)}/{NamespaceFileName(ns)}.json";
 
+    /// <summary>The file of one XAML file: <c>xaml/&lt;Project&gt;/&lt;path inside the project with / as .&gt;.json</c>.</summary>
+    public static string XamlPath(string project, string projectDirectory, string file)
+    {
+        var relative = projectDirectory.Length > 0 && file.StartsWith(projectDirectory + "/", System.StringComparison.Ordinal) ? file[(projectDirectory.Length + 1)..] : file;
+        return $"xaml/{FileName(project)}/{FileName(relative.Replace('/', '.'))}.json";
+    }
+
+    /// <summary>The Markdown page of one XAML file: <c>markdown/&lt;Project&gt;/xaml/&lt;same name as the JSON file&gt;.md</c>.</summary>
+    public static string XamlMarkdownPath(string project, string projectDirectory, string file)
+    {
+        var json = XamlPath(project, projectDirectory, file);
+        return $"markdown/{FileName(project)}/xaml/{json[(json.LastIndexOf('/') + 1)..^".json".Length]}.md";
+    }
+
     public static string RelationshipsPath(string project) => $"relationships/{FileName(project)}.json";
 
     public static string MarkdownPath(string project, string ns) => $"markdown/{FileName(project)}/{NamespaceFileName(ns)}.md";

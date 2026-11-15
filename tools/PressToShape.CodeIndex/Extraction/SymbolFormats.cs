@@ -107,6 +107,20 @@ internal static class SymbolFormats
         return modifiers;
     }
 
+    /// <summary>True when the type or one of its base types has the given full name, for example <c>Avalonia.Controls.Control</c>.</summary>
+    public static bool DerivesFrom(ITypeSymbol type, string fullName)
+    {
+        for (var current = type; current is not null; current = current.BaseType)
+        {
+            if (current.ToDisplayString() == fullName)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static IReadOnlyList<string> AttributeArguments(AttributeData attribute) =>
         attribute.ApplicationSyntaxReference?.GetSyntax() is AttributeSyntax { ArgumentList: { } list }
             ? list.Arguments.Select(a => a.ToString()).ToList()

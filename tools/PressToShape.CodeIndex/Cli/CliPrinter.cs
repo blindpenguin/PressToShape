@@ -99,7 +99,15 @@ internal sealed class CliPrinter
             return;
         }
 
-        var symbol = result.Symbol;
+        if (result.Symbol is not { } symbol)
+        {
+            // XAML entities without a C# class (elements, resources, styles, templates, files without x:Class).
+            XamlPrinter.Print(result.Xaml!, Line);
+            PrintHits("Outgoing", result.Outgoing);
+            PrintHits("Incoming", result.Incoming);
+            return;
+        }
+
         Line($"{symbol.Id} [{symbol.SymbolType}] {symbol.File}:{symbol.StartLine}-{symbol.EndLine}{(symbol.IsGenerated ? " (generated)" : string.Empty)}");
         Line($"{symbol.Accessibility}{(symbol.Modifiers.Count > 0 ? " " + string.Join(' ', symbol.Modifiers) : string.Empty)} {symbol.Signature ?? symbol.QualifiedName}".TrimEnd());
         if (symbol.BaseType is not null || symbol.Interfaces.Count > 0)
@@ -114,6 +122,11 @@ internal sealed class CliPrinter
 
         Line(symbol.Doc.HasDocumentation && symbol.Doc.Summary is { } summary ? "Summary: " + summary : "(no documentation)");
         PrintDocDetails(symbol.Doc);
+        if (result.Xaml is { } xaml)
+        {
+            XamlPrinter.Print(xaml, Line);
+        }
+
         PrintHits("Outgoing", result.Outgoing);
         PrintHits("Incoming", result.Incoming);
     }
@@ -151,7 +164,8 @@ internal sealed class CliPrinter
         Line(title + ":");
         foreach (var hit in hits)
         {
-            Line($"  {hit.RelationType} [{hit.Confidence.ToString().ToLowerInvariant()}] {hit.Name} {hit.Location} {hit.Id}".TrimEnd());
+            var reason = hit.Reason is null ? string.Empty : $" - {hit.Reason}";
+            Line($"  {hit.RelationType} [{hit.Confidence.ToString().ToLowerInvariant()}] {hit.Name} {hit.Location} {hit.Id}{reason}".TrimEnd());
         }
     }
 

@@ -106,6 +106,9 @@ internal sealed class OperationRelationshipWalker
 
                 AddTypeReferences(creation.Type, fromId, operation.Syntax, context);
                 break;
+            case ISimpleAssignmentOperation assignment:
+                AddDataContextAssignment(assignment, context);
+                break;
             case IFieldReferenceOperation field:
                 AddReference(field.Field, fromId, operation.Syntax, context);
                 break;
@@ -125,6 +128,17 @@ internal sealed class OperationRelationshipWalker
                 AddTypeReferences(declarator.Symbol.Type, fromId, operation.Syntax, context);
                 break;
         }
+    }
+
+    private void AddDataContextAssignment(ISimpleAssignmentOperation assignment, Context context)
+    {
+        if (DataContextAssignment.Match(assignment, _knownIds) is not var (viewId, viewModelId))
+        {
+            return;
+        }
+
+        var (file, line) = Locate(assignment.Syntax, context);
+        context.Edges.Add(new RelationshipRecord(RelationshipType.UsesViewModel, viewId, viewModelId, file, line, Confidence.Verified, "DataContext assignment"));
     }
 
     private void AddSignatureTypes(ISymbol owner, string fromId, SyntaxNode member, Context context)

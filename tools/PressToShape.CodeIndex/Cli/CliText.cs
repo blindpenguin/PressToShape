@@ -23,6 +23,9 @@ internal static class CliText
           --solution <path>   The solution to analyse (default: PressToShape.sln above the current folder)
           --help              Show this text
 
+        Symbol types in results: Class, Interface, Record, Struct, Enum, Delegate, Method, Property, Field, Event, and for XAML View, Element, Resource, Style and Template.
+        A view class also shows its XAML file. Bindings, resources and handlers show whether they are verified, inferred or unresolved.
+
         Exit codes: 0 success, 1 failure or differences found, 2 usage error.
         Results marked "inferred" are not proven by the compiler. Each one carries a reason.
         Run `dotnet restore` before `generate` or `check`.
