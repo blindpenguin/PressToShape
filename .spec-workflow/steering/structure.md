@@ -13,12 +13,16 @@ PressToShape/
 │   ├── PressToShape.Desktop/      # Linux and Windows head: platform startup only
 │   └── PressToShape.Android/      # Android head: platform startup only
 ├── tools/
-│   └── PressToShape.CodeIndex/    # Developer tool: Roslyn code index and query commands (not shipped)
+│   ├── PressToShape.CodeIndex/    # Developer tool: Roslyn code index and query commands (not shipped)
+│   └── PressToShape.CursorImages/ # Developer tool: renders the canvas cursor PNGs from the Lucide SVGs (not shipped)
 ├── tests/
 │   ├── PressToShape.Core.Tests/   # Unit tests for the core
 │   ├── PressToShape.App.Tests/    # View model tests, plus headless UI tests where needed
 │   ├── PressToShape.CodeIndex.Tests/  # Tests for the code index tool
+│   ├── PressToShape.CursorImages.Tests/  # Tests for the cursor image tool
 │   └── PressToShape.Benchmarks/   # BenchmarkDotNet performance benchmarks
+├── assets-src/
+│   └── cursors/                   # Source artwork of the canvas cursors (Lucide SVGs, ISC licence) and the cursor table
 ├── docs/
 │   ├── mockup/                    # GUI mockup images (design reference)
 │   └── index/                     # Generated code index of the C# source and the XAML (JSON and Markdown, with xaml/ per XAML file and markdown/avalonia/ pages for views, controls, converters, styles, services and the application), committed, never edited by hand
@@ -42,6 +46,7 @@ Services/             small interfaces and implementations such as IAppShutdown
 Localization/         translation: ILocalizer, Localizer, language selection, gettext catalog, XAML extension
 Settings/             the settings file: AppSettings, ISettingsStore, JsonFileSettingsStore
 Translations/         gettext .po files (de.po); compiled to .mo and embedded at build time
+Assets/Cursors/       generated cursor PNGs (32 and 64 px), embedded as resources, never edited by hand
 ```
 A future tablet layout adds `Views/Tablet` and `ViewModels/Tablet` and reuses `Views/Editor`, `ViewModels/Editor` and `Workspace`.
 
