@@ -34,7 +34,18 @@ public class MarkdownWriterTests
         var sink = Write(JsonIndexWriterTests.BuildData());
 
         Assert.Equal(
-            ["markdown/App/App.md", "markdown/Core/A.B.md", "markdown/Core/A.md", "markdown/README.md"],
+            [
+                "markdown/App/App.md",
+                "markdown/Core/A.B.md",
+                "markdown/Core/A.md",
+                "markdown/README.md",
+                "markdown/avalonia/application.md",
+                "markdown/avalonia/controls.md",
+                "markdown/avalonia/converters.md",
+                "markdown/avalonia/services.md",
+                "markdown/avalonia/styles-and-resources.md",
+                "markdown/avalonia/views.md",
+            ],
             sink.Files.Keys.OrderBy(k => k, StringComparer.Ordinal));
         var readme = Text(sink, "markdown/README.md");
         Assert.Contains("[A.B](Core/A.B.md)", readme, StringComparison.Ordinal);
