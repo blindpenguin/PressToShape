@@ -29,7 +29,7 @@ internal sealed class RelationshipBuilder
         ArgumentNullException.ThrowIfNull(project);
 
         var edges = new HashSet<RelationshipRecord>();
-        foreach (var type in SourceTypes(project.Compilation.Assembly.GlobalNamespace))
+        foreach (var type in Extraction.SourceTypes.In(project.Compilation.Assembly.GlobalNamespace))
         {
             cancellationToken.ThrowIfCancellationRequested();
             AddStructural(project, type, edges);
@@ -112,33 +112,5 @@ internal sealed class RelationshipBuilder
         }
 
         return (SourcePaths.Of(project, reference.SyntaxTree, _repoRoot), reference.SyntaxTree.GetLineSpan(reference.Span).StartLinePosition.Line + 1);
-    }
-
-    private static IEnumerable<INamedTypeSymbol> SourceTypes(INamespaceSymbol ns)
-    {
-        foreach (var type in ns.GetTypeMembers())
-        {
-            foreach (var nested in WithNested(type))
-            {
-                yield return nested;
-            }
-        }
-
-        foreach (var child in ns.GetNamespaceMembers())
-        {
-            foreach (var type in SourceTypes(child))
-            {
-                yield return type;
-            }
-        }
-    }
-
-    private static IEnumerable<INamedTypeSymbol> WithNested(INamedTypeSymbol type)
-    {
-        yield return type;
-        foreach (var nested in type.GetTypeMembers().SelectMany(WithNested))
-        {
-            yield return nested;
-        }
     }
 }

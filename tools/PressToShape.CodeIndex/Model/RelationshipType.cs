@@ -22,4 +22,7 @@ internal enum RelationshipType
     HandledBy,
     UsesType,
     Includes,
+
+    // MVVM relationships.
+    ExecutesMethod,
 }

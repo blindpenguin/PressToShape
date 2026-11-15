@@ -83,6 +83,12 @@ internal sealed class OperationRelationshipWalker
                 continue;
             }
 
+            if (root!.Parent is EqualsValueClauseSyntax)
+            {
+                // A field or property initializer: the command is assigned to the member itself.
+                AddCommandHandler(fromId, CommandAssignment.MethodIdOf(operation, _knownIds), operation.Syntax, context);
+            }
+
             foreach (var current in operation.DescendantsAndSelf())
             {
                 VisitOperation(current, fromId, context);
@@ -99,7 +105,12 @@ internal sealed class OperationRelationshipWalker
                 AddRegistration(invocation, fromId, context);
                 break;
             case IObjectCreationOperation creation:
-                if (creation.Constructor is { } constructor)
+                if (creation.Constructor is { IsImplicitlyDeclared: true } && creation.Type is INamedTypeSymbol created)
+                {
+                    // The implicit constructor is not indexed, so the creation is recorded as a call of the type.
+                    AddEdge(RelationshipType.Calls, fromId, created.OriginalDefinition, operation.Syntax, context, "implicit constructor");
+                }
+                else if (creation.Constructor is { } constructor)
                 {
                     AddCall(constructor, fromId, operation.Syntax, context);
                 }
@@ -108,6 +119,11 @@ internal sealed class OperationRelationshipWalker
                 break;
             case ISimpleAssignmentOperation assignment:
                 AddDataContextAssignment(assignment, context);
+                if (CommandAssignment.TargetMember(assignment.Target)?.OriginalDefinition.GetDocumentationCommentId() is { } commandId)
+                {
+                    AddCommandHandler(commandId, CommandAssignment.MethodIdOf(assignment.Value, _knownIds), assignment.Syntax, context);
+                }
+
                 break;
             case IFieldReferenceOperation field:
                 AddReference(field.Field, fromId, operation.Syntax, context);
@@ -139,6 +155,17 @@ internal sealed class OperationRelationshipWalker
 
         var (file, line) = Locate(assignment.Syntax, context);
         context.Edges.Add(new RelationshipRecord(RelationshipType.UsesViewModel, viewId, viewModelId, file, line, Confidence.Verified, "DataContext assignment"));
+    }
+
+    private void AddCommandHandler(string commandId, string? methodId, SyntaxNode at, Context context)
+    {
+        if (methodId is null || !_knownIds.Contains(commandId))
+        {
+            return;
+        }
+
+        var (file, line) = Locate(at, context);
+        context.Edges.Add(new RelationshipRecord(RelationshipType.ExecutesMethod, commandId, methodId, file, line, Confidence.Verified, "new RelayCommand(method group)"));
     }
 
     private void AddSignatureTypes(ISymbol owner, string fromId, SyntaxNode member, Context context)
