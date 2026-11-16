@@ -60,6 +60,11 @@
                                             HandleSize="{DynamicResource SelectionHandleSize}"
                                             SelectionBrush="{DynamicResource SelectionOutlineBrush}"
                                             SelectionHandleFillBrush="{DynamicResource SelectionHandleFillBrush}" />
+            <!-- The ring context menu. It fills the viewport while it is open, so the canvas does not get pointer input then. -->
+            <controls:RingMenuControl x:Name="RingMenu"
+                                      DataContext="{Binding Ring}"
+                                      InnerRadius="{DynamicResource RingInnerRadius}"
+                                      OuterRadius="{DynamicResource RingOuterRadius}" />
         </Panel>
 
         <!-- Scroll bars. They sit outside the viewport, so the ruler zero stays aligned with the canvas.

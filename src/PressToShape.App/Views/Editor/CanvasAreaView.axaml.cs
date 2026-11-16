@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 
@@ -22,6 +23,10 @@ public partial class CanvasAreaView : UserControl
     private CanvasAreaViewModel? _observed;
     private TopLevel? _window;
 
+    // Ticks the long press of a finger or a pen while a press is watched (the view model has no clock of its own to wait on).
+    private readonly DispatcherTimer _longPressTimer = new() { Interval = System.TimeSpan.FromMilliseconds(50) };
+    private IPointer? _watchedPointer;
+
     public CanvasAreaView()
     {
         InitializeComponent();
@@ -37,6 +42,8 @@ public partial class CanvasAreaView : UserControl
         Viewport.PointerExited += OnViewportPointerExited;
         Viewport.PointerWheelChanged += OnViewportPointerWheelChanged;
         Viewport.KeyDown += OnViewportKeyDown;
+
+        _longPressTimer.Tick += OnLongPressTick;
 
         // The bars only report what the user did. The view model decides what that means.
         HorizontalBar.Scroll += (_, e) =>
@@ -84,14 +91,28 @@ public partial class CanvasAreaView : UserControl
             _touches.Add(e.Pointer.Id);
             var touchPosition = e.GetPosition(Viewport);
             touchViewModel.TouchPressed(e.Pointer.Id, touchPosition.X, touchPosition.Y);
+            WatchLongPress(touchViewModel, e.Pointer);
             e.Handled = true;
             return;
         }
 
         var properties = e.GetCurrentPoint(Viewport).Properties;
-        if (DataContext is not CanvasAreaViewModel viewModel
-            || e.Pointer.Captured == Viewport
-            || (!properties.IsLeftButtonPressed && !properties.IsMiddleButtonPressed))
+        if (DataContext is not CanvasAreaViewModel viewModel || e.Pointer.Captured == Viewport)
+        {
+            return;
+        }
+
+        // The right mouse button and the barrel button of a pen open the ring menu.
+        if (properties.IsRightButtonPressed || properties.IsBarrelButtonPressed)
+        {
+            Viewport.Focus();
+            var menuPosition = e.GetPosition(Viewport);
+            viewModel.OpenContextMenu(menuPosition.X, menuPosition.Y, InputTypeOf(e.Pointer.Type));
+            e.Handled = true;
+            return;
+        }
+
+        if (!properties.IsLeftButtonPressed && !properties.IsMiddleButtonPressed)
         {
             return;
         }
@@ -116,11 +137,53 @@ public partial class CanvasAreaView : UserControl
             }
             else
             {
-                viewModel.PointerPressed(position.X, position.Y, alt, shift);
+                viewModel.PointerPressed(position.X, position.Y, alt, shift, InputTypeOf(e.Pointer.Type));
+                WatchLongPress(viewModel, e.Pointer);
             }
         }
 
         e.Handled = true;
+    }
+
+    private static InputPointerType InputTypeOf(PointerType type) => type switch
+    {
+        PointerType.Touch => InputPointerType.Touch,
+        PointerType.Pen => InputPointerType.Pen,
+        _ => InputPointerType.Mouse,
+    };
+
+    // Starts the timer if the view model watches the press for a long press.
+    private void WatchLongPress(CanvasAreaViewModel viewModel, IPointer pointer)
+    {
+        if (viewModel.IsWatchingLongPress)
+        {
+            _watchedPointer = pointer;
+            _longPressTimer.Start();
+        }
+    }
+
+    private void OnLongPressTick(object? sender, System.EventArgs e)
+    {
+        if (DataContext is not CanvasAreaViewModel { Ring: { } ring } viewModel)
+        {
+            _longPressTimer.Stop();
+            return;
+        }
+
+        var wasOpen = ring.IsOpen;
+        viewModel.Tick();
+        if (!wasOpen && ring.IsOpen && _watchedPointer is { } pointer)
+        {
+            // The ring opened under the finger or the pen that is still down: from now on the ring gets that pointer.
+            _activeButton = null;
+            RingMenu.AdoptPointer(pointer);
+        }
+
+        if (!viewModel.IsWatchingLongPress)
+        {
+            _longPressTimer.Stop();
+            _watchedPointer = null;
+        }
     }
 
     private void OnViewportPointerMoved(object? sender, PointerEventArgs e)
@@ -231,6 +294,8 @@ public partial class CanvasAreaView : UserControl
             Key.Up => CanvasKey.Up,
             Key.Down => CanvasKey.Down,
             Key.Escape => CanvasKey.Escape,
+            Key.Apps => CanvasKey.ContextMenu,
+            Key.F10 when e.KeyModifiers.HasFlag(KeyModifiers.Shift) => CanvasKey.ContextMenu,
             _ => (CanvasKey?)null,
         };
 
@@ -263,6 +328,7 @@ public partial class CanvasAreaView : UserControl
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
+        _longPressTimer.Stop();
         _window?.RemoveHandler(KeyDownEvent, OnWindowAltKey);
         _window?.RemoveHandler(KeyUpEvent, OnWindowAltKey);
         _window = null;
@@ -285,6 +351,10 @@ public partial class CanvasAreaView : UserControl
         if (_observed is not null)
         {
             _observed.PropertyChanged -= OnViewModelPropertyChanged;
+            if (_observed.Ring is { } oldRing)
+            {
+                oldRing.PropertyChanged -= OnRingPropertyChanged;
+            }
         }
 
         _touches.Clear();
@@ -300,7 +370,31 @@ public partial class CanvasAreaView : UserControl
             viewModel.ViewportWidth = Viewport.Bounds.Width;
             viewModel.ViewportHeight = Viewport.Bounds.Height;
             viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            if (viewModel.Ring is { } ring)
+            {
+                ring.PropertyChanged += OnRingPropertyChanged;
+            }
+
             Viewport.Cursor = CursorFor(viewModel.CursorType);
+        }
+    }
+
+    // View-only concern: the keyboard focus goes to the ring while it is open and back to the canvas when it closes, so that the arrow keys,
+    // Enter and Escape reach the ring and the Delete key reaches the canvas again.
+    private void OnRingPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(RingMenuViewModel.IsOpen) || sender is not RingMenuViewModel ring)
+        {
+            return;
+        }
+
+        if (ring.IsOpen)
+        {
+            Dispatcher.UIThread.Post(() => RingMenu.Focus(), DispatcherPriority.Input);
+        }
+        else if (RingMenu.IsFocused || RingMenu.IsKeyboardFocusWithin)
+        {
+            Viewport.Focus();
         }
     }
 

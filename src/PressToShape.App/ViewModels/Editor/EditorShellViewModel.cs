@@ -33,7 +33,8 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         Toolbox = new ToolboxViewModel(State, localizer);
         Editor = new SelectionEditor(State);
         Objects = new ObjectEditor(State);
-        Canvas = new CanvasAreaViewModel(State, Editor);
+        var ring = new RingMenuViewModel(localizer);
+        Canvas = new CanvasAreaViewModel(State, Editor, ring: ring);
         Inspector = new InspectorViewModel(State, localizer, Editor, Objects);
         FileCommands = new FileMenuCommands(
             NewCommand,
@@ -63,6 +64,8 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
             UnlockAllCommand,
             HideCommand,
             ShowAllCommand);
+
+        ring.Content = RingMenuContent.Create(ObjectCommands, EditCommands);
 
         Canvas.PropertyChanged += OnCanvasPropertyChanged;
         _session.PropertyChanged += (_, _) => NotifyDocumentNameChanged();

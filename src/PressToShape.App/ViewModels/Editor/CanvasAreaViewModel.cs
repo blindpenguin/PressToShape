@@ -34,8 +34,10 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <param name="state">The editor state.</param>
     /// <param name="editor">The editor for keyboard edits. The shell passes the one it shares with the menus. Without one the view model makes its own.</param>
     /// <param name="time">The clock for the double-tap of a finger. Defaults to the system clock, tests pass their own.</param>
-    public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null)
+    /// <param name="ring">The ring context menu of the canvas. The shell passes it (it needs the localizer). Without one the canvas has no ring menu.</param>
+    public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null)
     {
+        Ring = ring;
         _time = time ?? TimeProvider.System;
         _clockStart = _time.GetTimestamp();
         _state = state ?? throw new ArgumentNullException(nameof(state));
@@ -57,6 +59,9 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CursorType))]
     public partial bool IsAltHeld { get; set; }
+
+    /// <summary>The ring context menu, or <c>null</c> when the canvas was made without one.</summary>
+    public RingMenuViewModel? Ring { get; }
 
     /// <summary>The document the canvas draws.</summary>
     public Document Document => _state.Document;
@@ -180,6 +185,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = InputPointerType.Mouse)
     {
         IsAltHeld = alt;
+        WatchLongPress(screenX, screenY, inputType);
         if (_state.ColorPick != ColorPickTarget.None)
         {
             // A pick from the canvas takes the click, whatever the active tool is.
@@ -204,6 +210,51 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 break;
         }
     }
+
+    /// <summary>
+    /// Opens the ring menu at this position, in screen pixels of the canvas area (right-click, long press or the barrel button of a pen).
+    /// First applies the selection rules of the menu (see <see cref="CanvasInteraction.SelectForContextMenu"/>). Does nothing without a ring,
+    /// with a tool other than Select, or while a drag, a pan, a pick from the canvas or a two-finger gesture is in progress.
+    /// </summary>
+    /// <returns>Whether the ring is open now.</returns>
+    public bool OpenContextMenu(double screenX, double screenY, InputPointerType inputType = InputPointerType.Mouse)
+    {
+        if (!CanOpenContextMenu())
+        {
+            return false;
+        }
+
+        var grabSize = inputType == InputPointerType.Touch ? TouchGrabSize : SelectionGeometry.GrabSize;
+        var mode = _interaction.SelectForContextMenu(ToDocumentX(screenX), ToDocumentY(screenY), grabSize);
+        Ring!.Open(mode, screenX, screenY);
+        SetHover(null);
+        return Ring.IsOpen;
+    }
+
+    // The Menu key: the ring opens in the middle of the selection, or of the visible canvas, and the first slot has the keyboard focus.
+    private bool OpenContextMenuFromKeyboard()
+    {
+        if (!CanOpenContextMenu())
+        {
+            return false;
+        }
+
+        var frame = SelectionGeometry.FrameOf(SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds));
+        var (x, y) = frame is null
+            ? (ViewportWidth / 2, ViewportHeight / 2)
+            : (OriginX + frame.CenterX * ZoomPercent / 100, OriginY + frame.CenterY * ZoomPercent / 100);
+        Ring!.Open(_state.HasSelection ? RingMenuMode.Selection : RingMenuMode.EmptyCanvas, x, y);
+        Ring.MoveFocus(1);
+        return Ring.IsOpen;
+    }
+
+    private bool CanOpenContextMenu() =>
+        Ring is not null
+        && _state.ActiveTool == Tool.Select
+        && _state.ColorPick == ColorPickTarget.None
+        && !_state.IsDragInProgress
+        && !_panning
+        && !_touch.IsGestureActive;
 
     /// <summary>
     /// The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters
@@ -257,13 +308,24 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 break;
             case TouchGestureStepType.Release:
                 PointerReleased(step.X, step.Y);
-                CountTap(step.X, step.Y);
+                if (_longPress.ConsumeFired())
+                {
+                    // The long press opened the ring, so the release is no tap.
+                    _doubleTap.Reset();
+                }
+                else
+                {
+                    CountTap(step.X, step.Y);
+                }
+
                 break;
             case TouchGestureStepType.CancelPress:
+                _longPress.Cancel();
                 _doubleTap.Reset();
                 AbortAction();
                 break;
             case TouchGestureStepType.Gesture:
+                _longPress.Cancel();
                 _doubleTap.Reset();
                 _state.ZoomAround(step.TargetZoom, step.PreviousMidX, step.PreviousMidY);
                 _state.PanBy(step.X - step.PreviousMidX, step.Y - step.PreviousMidY);
@@ -293,7 +355,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             return;
         }
 
-        if (_doubleTap.Tap((long)_time.GetElapsedTime(_clockStart).TotalMilliseconds, screenX, screenY))
+        if (_doubleTap.Tap(ElapsedMilliseconds, screenX, screenY))
         {
             DoubleClick(screenX, screenY);
         }
@@ -324,6 +386,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     public void PointerMoved(double screenX, double screenY, bool shift = false, bool alt = false)
     {
         IsAltHeld = alt;
+        _longPress.Move(screenX, screenY);
         if (_panning)
         {
             // Absolute from the press, so the point under the pointer stays under it however often the pointer moved.
@@ -338,6 +401,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)
     {
         IsAltHeld = alt;
+        _longPress.Release();
         if (_panning)
         {
             PointerMoved(screenX, screenY, alt: alt);
@@ -365,6 +429,11 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <returns>Whether the key did something, so the caller marks it as handled.</returns>
     public bool KeyPressed(CanvasKey key, bool shift)
     {
+        if (key == CanvasKey.ContextMenu)
+        {
+            return OpenContextMenuFromKeyboard();
+        }
+
         if (key == CanvasKey.Escape && _state.ColorPick != ColorPickTarget.None)
         {
             _state.CancelColorPick();
@@ -548,12 +617,18 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         switch (e.PropertyName)
         {
             case nameof(EditorState.Document):
+                Ring?.Close();
                 OnPropertyChanged(nameof(Document));
                 NotifyOverlayChanged();
                 break;
             case nameof(EditorState.Draft):
             case nameof(EditorState.SelectedShapeIds):
             case nameof(EditorState.SelectionBox):
+                if (e.PropertyName == nameof(EditorState.SelectedShapeIds))
+                {
+                    Ring?.Close();
+                }
+
                 NotifyOverlayChanged();
                 SetHover(null);
                 OnPropertyChanged(nameof(CursorType));

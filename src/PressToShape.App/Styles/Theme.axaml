@@ -53,6 +53,15 @@
 
             <!-- Dims the layout behind a message dialog -->
             <SolidColorBrush x:Key="ScrimBrush">#99000000</SolidColorBrush>
+
+            <!-- Ring context menu: wedges, the center disc and the icons. Slightly see-through, so the drawing stays readable behind it. -->
+            <SolidColorBrush x:Key="RingWedgeBrush">#F025252C</SolidColorBrush>
+            <SolidColorBrush x:Key="RingWedgeHoverBrush">#F0363642</SolidColorBrush>
+            <SolidColorBrush x:Key="RingWedgeFocusBrush">#F03D3566</SolidColorBrush>
+            <SolidColorBrush x:Key="RingWedgeOutlineBrush">#4A4A57</SolidColorBrush>
+            <SolidColorBrush x:Key="RingCenterBrush">#F0202026</SolidColorBrush>
+            <SolidColorBrush x:Key="RingIconBrush">#E8E8EE</SolidColorBrush>
+            <SolidColorBrush x:Key="RingIconUnavailableBrush">#5E5E6B</SolidColorBrush>
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="Light">
@@ -100,6 +109,15 @@
 
             <!-- Dims the layout behind a message dialog -->
             <SolidColorBrush x:Key="ScrimBrush">#66000000</SolidColorBrush>
+
+            <!-- Ring context menu: wedges, the center disc and the icons. Slightly see-through, so the drawing stays readable behind it. -->
+            <SolidColorBrush x:Key="RingWedgeBrush">#F0F7F7FA</SolidColorBrush>
+            <SolidColorBrush x:Key="RingWedgeHoverBrush">#F0E4E4EC</SolidColorBrush>
+            <SolidColorBrush x:Key="RingWedgeFocusBrush">#F0DCD3F5</SolidColorBrush>
+            <SolidColorBrush x:Key="RingWedgeOutlineBrush">#B4B4C2</SolidColorBrush>
+            <SolidColorBrush x:Key="RingCenterBrush">#F0FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="RingIconBrush">#1E1E26</SolidColorBrush>
+            <SolidColorBrush x:Key="RingIconUnavailableBrush">#A8A8B5</SolidColorBrush>
         </ResourceDictionary>
 
     </ResourceDictionary.ThemeDictionaries>
@@ -161,6 +179,10 @@
     <!-- The most height a menu that opens from the toolbar may have. A longer menu scrolls (the overflow menu and the zoom list do not fit the screen at 48 dp per row). -->
     <x:Double x:Key="FlyoutMaxHeight">520</x:Double>
 
+    <!-- The ring context menu: the outer and the inner radius of the wedges (the inner one is the center disc) and the icon size. -->
+    <x:Double x:Key="RingOuterRadius">110</x:Double>
+    <x:Double x:Key="RingInnerRadius">34</x:Double>
+    <x:Double x:Key="RingIconSize">22</x:Double>
     <!-- The width of the panel that floats over the canvas in the tablet layout. -->
     <x:Double x:Key="TabletPanelWidth">340</x:Double>
 
@@ -194,5 +216,8 @@
         <x:Double x:Key="RowIndentSize">24</x:Double>
         <x:Double x:Key="SelectionHandleSize">18</x:Double>
         <x:Double x:Key="ToolbarHeight">56</x:Double>
+        <x:Double x:Key="RingOuterRadius">150</x:Double>
+        <x:Double x:Key="RingInnerRadius">44</x:Double>
+        <x:Double x:Key="RingIconSize">30</x:Double>
     </ResourceDictionary>
 </ResourceDictionary>

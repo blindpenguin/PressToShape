@@ -198,4 +198,44 @@
     <Style Selector=".touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider">
         <Setter Property="MinHeight" Value="{DynamicResource TouchTargetSize}" />
     </Style>
+
+    <!--
+        The ring context menu (Controls/RingMenuControl). The control makes a Path per wedge and sets the classes hovered, focused and unavailable.
+        An unavailable wedge keeps its place and its fill and only dims its icon, so it does not light up under the pointer.
+    -->
+    <Style Selector="Path.ringWedge">
+        <Setter Property="Fill" Value="{DynamicResource RingWedgeBrush}" />
+        <Setter Property="Stroke" Value="{DynamicResource RingWedgeOutlineBrush}" />
+        <Setter Property="StrokeThickness" Value="1" />
+    </Style>
+    <Style Selector="Path.ringWedge.hovered">
+        <Setter Property="Fill" Value="{DynamicResource RingWedgeHoverBrush}" />
+    </Style>
+    <Style Selector="Path.ringWedge.focused">
+        <Setter Property="Fill" Value="{DynamicResource RingWedgeFocusBrush}" />
+        <Setter Property="Stroke" Value="{DynamicResource SelectionOutlineBrush}" />
+        <Setter Property="StrokeThickness" Value="2" />
+    </Style>
+    <Style Selector="Path.ringWedge.unavailable.hovered">
+        <Setter Property="Fill" Value="{DynamicResource RingWedgeBrush}" />
+    </Style>
+    <Style Selector="materialIcons|MaterialIcon.ringIcon">
+        <Setter Property="Foreground" Value="{DynamicResource RingIconBrush}" />
+        <Setter Property="Width" Value="{DynamicResource RingIconSize}" />
+        <Setter Property="Height" Value="{DynamicResource RingIconSize}" />
+    </Style>
+    <Style Selector="materialIcons|MaterialIcon.ringIcon.unavailable">
+        <Setter Property="Foreground" Value="{DynamicResource RingIconUnavailableBrush}" />
+    </Style>
+    <Style Selector="Ellipse.ringCenter">
+        <Setter Property="Fill" Value="{DynamicResource RingCenterBrush}" />
+        <Setter Property="Stroke" Value="{DynamicResource RingWedgeOutlineBrush}" />
+        <Setter Property="StrokeThickness" Value="1" />
+    </Style>
+    <Style Selector="TextBlock.ringCenterText">
+        <Setter Property="Foreground" Value="{DynamicResource RingIconBrush}" />
+        <Setter Property="FontSize" Value="{DynamicResource UiFontSize}" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
 </Styles>

@@ -729,3 +729,36 @@ msgstr "Duplizieren"
 
 msgid "Delete"
 msgstr "Löschen"
+
+msgid "Lock"
+msgstr "Sperren"
+
+msgid "Hide"
+msgstr "Verbergen"
+
+msgid "Arrange"
+msgstr "Anordnen"
+
+msgid "Paste"
+msgstr "Einfügen"
+
+msgid "Select All"
+msgstr "Alles auswählen"
+
+msgid "Bring to Front"
+msgstr "In den Vordergrund"
+
+msgid "Bring Forward"
+msgstr "Eine Stufe nach vorn"
+
+msgid "Send Backward"
+msgstr "Eine Stufe nach hinten"
+
+msgid "Send to Back"
+msgstr "In den Hintergrund"
+
+msgid "Back"
+msgstr "Zurück"
+
+msgid "Close"
+msgstr "Schließen"
