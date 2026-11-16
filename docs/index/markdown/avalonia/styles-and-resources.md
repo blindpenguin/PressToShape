@@ -12,7 +12,7 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 
 ### src/PressToShape.App/Styles/Controls.axaml
 
-- 2 resources, 34 styles
+- 2 resources, 37 styles
 - style `^:pointerover /template/ Border#PART_LayoutRoot` at line 37, 1 setters
 - style `^:pointerover` at line 40, 1 setters
 - style `^:selected` at line 43, 1 setters
@@ -26,27 +26,30 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - style `ToggleButton.tool:checked /template/ ContentPresenter#PART_ContentPresenter` at line 118, 2 setters
 - style `ToggleButton.tool:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 122, 1 setters
 - style `ToggleButton.tool:disabled /template/ ContentPresenter#PART_ContentPresenter` at line 125, 1 setters
-- style `ToggleButton.section-toggle` at line 130, 7 setters
-- style `ToggleButton.section-toggle /template/ ContentPresenter#PART_ContentPresenter` at line 139, 2 setters
-- style `ToggleButton.section-toggle:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 143, 1 setters
-- style `ToggleButton.section-toggle:checked /template/ ContentPresenter#PART_ContentPresenter` at line 146, 2 setters
-- style `ToggleButton.section-toggle:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 150, 1 setters
-- style `ToggleButton.section-toggle:checked materialIcons|MaterialIcon.collapsed` at line 153, 1 setters
-- style `ToggleButton.section-toggle:not(:checked) materialIcons|MaterialIcon.expanded` at line 156, 1 setters
-- style `Border.panel` at line 163, 2 setters
-- style `TextBlock.section-header` at line 167, 4 setters
-- style `TextBlock.secondary` at line 173, 1 setters
-- style `TextBlock.unit` at line 178, 3 setters
-- style `TextBox.field` at line 183, 8 setters
-- style `.touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider` at line 198, 1 setters
-- style `Path.ringWedge` at line 206, 3 setters
-- style `Path.ringWedge.hovered` at line 211, 1 setters
-- style `Path.ringWedge.focused` at line 214, 3 setters
-- style `Path.ringWedge.unavailable.hovered` at line 219, 1 setters
-- style `materialIcons|MaterialIcon.ringIcon` at line 222, 3 setters
-- style `materialIcons|MaterialIcon.ringIcon.unavailable` at line 227, 1 setters
-- style `Ellipse.ringCenter` at line 230, 3 setters
-- style `TextBlock.ringCenterText` at line 235, 4 setters
+- style `Button.choice` at line 130, 2 setters
+- style `Button.choice.selected /template/ ContentPresenter#PART_ContentPresenter` at line 134, 2 setters
+- style `Button.choice.selected:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 138, 1 setters
+- style `ToggleButton.section-toggle` at line 143, 7 setters
+- style `ToggleButton.section-toggle /template/ ContentPresenter#PART_ContentPresenter` at line 152, 2 setters
+- style `ToggleButton.section-toggle:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 156, 1 setters
+- style `ToggleButton.section-toggle:checked /template/ ContentPresenter#PART_ContentPresenter` at line 159, 2 setters
+- style `ToggleButton.section-toggle:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 163, 1 setters
+- style `ToggleButton.section-toggle:checked materialIcons|MaterialIcon.collapsed` at line 166, 1 setters
+- style `ToggleButton.section-toggle:not(:checked) materialIcons|MaterialIcon.expanded` at line 169, 1 setters
+- style `Border.panel` at line 176, 2 setters
+- style `TextBlock.section-header` at line 180, 4 setters
+- style `TextBlock.secondary` at line 186, 1 setters
+- style `TextBlock.unit` at line 191, 3 setters
+- style `TextBox.field` at line 196, 8 setters
+- style `.touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider` at line 211, 1 setters
+- style `Path.ringWedge` at line 219, 3 setters
+- style `Path.ringWedge.hovered` at line 224, 1 setters
+- style `Path.ringWedge.focused` at line 227, 3 setters
+- style `Path.ringWedge.unavailable.hovered` at line 232, 1 setters
+- style `materialIcons|MaterialIcon.ringIcon` at line 235, 3 setters
+- style `materialIcons|MaterialIcon.ringIcon.unavailable` at line 240, 1 setters
+- style `Ellipse.ringCenter` at line 243, 3 setters
+- style `TextBlock.ringCenterText` at line 248, 4 setters
 
 ### src/PressToShape.App/Styles/Theme.axaml
 

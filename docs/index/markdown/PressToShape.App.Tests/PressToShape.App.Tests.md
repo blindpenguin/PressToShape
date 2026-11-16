@@ -114,6 +114,34 @@ _(no documentation)_
 - `public void Tick_NothingWatched_DoesNothing()` - _(no documentation)_
 - `public void Tick_OnEmptyCanvas_OpensTheEmptyCanvasRing()` - _(no documentation)_
 
+## CanvasAreaViewModelPenTests (class)
+
+`public class CanvasAreaViewModelPenTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelPenTests.cs:9-246`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Enter_WhileThePenDraws_FinishesThePath()` - _(no documentation)_
+- `public void Enter_WithoutADrawing_IsNotHandledAndKeepsTheSelection()` - _(no documentation)_
+- `public void Escape_WhileThePenDraws_DropsThePathAndKeepsTheSelection()` - _(no documentation)_
+- `public void Escape_WithoutADrawing_StillClearsTheSelection()` - _(no documentation)_
+- `public void Hover_WithThePenAndANode_ShowsThePreviewSegment()` - _(no documentation)_
+- `public void Hover_WithAnotherTool_DoesNotTouchThePen()` - _(no documentation)_
+- `public void Hover_ThePenWithoutNodes_ShowsNothing()` - _(no documentation)_
+- `public void Release_AfterAClick_ShowsThePreviewAtTheReleasePosition()` - _(no documentation)_
+- `public void Drag_WithCapture_PullsOutTheHandles()` - _(no documentation)_
+- `public void CursorType_ForThePen_IsTheCrosshair()` - _(no documentation)_
+- `public void PenOverlay_WithoutADrawing_IsNull()` - _(no documentation)_
+- `public void PenOverlay_AfterClicks_ListsTheNodesInScreenPixels()` - _(no documentation)_
+- `public void PenOverlay_AfterZoomingIn_FollowsTheZoomAndTheOrigin()` - _(no documentation)_
+- `public void PenOverlay_SmoothNode_CarriesItsHandlesInScreenPixels()` - _(no documentation)_
+- `public void PenOverlay_HoveringTheFirstNodeOfThree_HighlightsIt()` - _(no documentation)_
+- `public void PenOverlay_AndHiddenShapeId_RaisePropertyChanged()` - _(no documentation)_
+- `public void ContinuingAPath_HidesItInTheCanvas()` - _(no documentation)_
+
 ## CanvasAreaViewModelRingTests (class)
 
 `public class CanvasAreaViewModelRingTests`
@@ -310,6 +338,70 @@ _(no documentation)_
 - `public void DeleteSelection_Group_RemovesTheWholeGroupAsOneStep()` - _(no documentation)_
 - `public void Escape_InAnEnteredGroup_LeavesIt()` - _(no documentation)_
 
+## CanvasInteractionPenEditTests (class)
+
+`public class CanvasInteractionPenEditTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionPenEditTests.cs:11-358`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Press_OnTheEndOfTheSelectedOpenPath_ContinuesIt()` - _(no documentation)_
+- `public void Continue_FromTheEnd_AppendsNodesAndReplacesThePathInOneStep()` - _(no documentation)_
+- `public void Continue_FromTheStart_ReversesThePathAndAppendsAtTheOldStart()` - _(no documentation)_
+- `public void Continue_ThenUndo_RestoresTheOriginalPath()` - _(no documentation)_
+- `public void Continue_KeepsTheLookNameAndFillRuleOfTheOldPath()` - _(no documentation)_
+- `public void Continue_DiscardedWithEscape_LeavesTheOriginalAlone()` - _(no documentation)_
+- `public void Continue_FinishedAtOnceWithoutANewNode_MakesNoStep()` - _(no documentation)_
+- `public void Continue_ThenClickOnTheOtherEnd_ClosesThePath()` - _(no documentation)_
+- `public void Continue_ChangingTheTool_FinishesThePathWithItsNewNodes()` - _(no documentation)_
+- `public void Press_OnAMiddleNode_DeletesItInOneStep()` - _(no documentation)_
+- `public void Press_OnANodeOfAClosedPath_DeletesIt()` - _(no documentation)_
+- `public void Delete_DownToOneNode_RemovesTheWholePath()` - _(no documentation)_
+- `public void Press_OnASegment_AddsANodeThereInOneStep()` - _(no documentation)_
+- `public void Add_OnACurvedSegment_KeepsTheCurve()` - _(no documentation)_
+- `public void Press_AwayFromThePath_DrawsANewPathAsBefore()` - _(no documentation)_
+- `public void Press_WithoutASelection_DrawsANewPath()` - _(no documentation)_
+- `public void Press_OnALockedPath_ChangesNothingAndStartsANewPath()` - _(no documentation)_
+- `public void Press_TwentyPixelsFromAnEnd_OnlyATouchContinues()` - _(no documentation)_
+- `public void Press_NearANodeWhenZoomedIn_UsesScreenPixels()` - _(no documentation)_
+- `public void Continue_RotatedPath_BakesTheRotationIntoTheNodesAndKeepsThemOnScreen()` - _(no documentation)_
+- `public void Add_OnARotatedPath_KeepsTheRotation()` - _(no documentation)_
+- `public void Add_ThenUndo_RestoresThePath()` - _(no documentation)_
+
+## CanvasInteractionPenTests (class)
+
+`public class CanvasInteractionPenTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionPenTests.cs:10-317`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Click_ThreeTimesThenFinish_AddsOneOpenPathToTheActiveLayerAndSelectsIt()` - _(no documentation)_
+- `public void Finish_NewPath_HasTheDefaultAppearance()` - _(no documentation)_
+- `public void Drawing_AWholePath_IsOneUndoStep()` - _(no documentation)_
+- `public void Drag_OnPress_MakesACurvedSegment()` - _(no documentation)_
+- `public void Click_OnTheFirstNodeOfThree_ClosesAndFinishesThePath()` - _(no documentation)_
+- `public void DoubleClick_OnTheLastNode_FinishesOpenWithoutAnExtraNode()` - _(no documentation)_
+- `public void DoubleTap_NearTheLastNodeByTouch_UsesTheLargerDistance()` - _(no documentation)_
+- `public void ClickAtTheSamePlaceByMouse_FarEnoughForMouseButNotTouch_AddsANodeByMouse()` - _(no documentation)_
+- `public void FinishPen_WithOneNode_CreatesNothing()` - _(no documentation)_
+- `public void FinishPen_NothingDrawn_ReturnsFalse()` - _(no documentation)_
+- `public void DiscardPen_AfterNodes_DropsThePathWithoutAStep()` - _(no documentation)_
+- `public void ChangingTheTool_WithTwoNodes_FinishesTheOpenPath()` - _(no documentation)_
+- `public void ChangingTheTool_WithOneNode_DropsThePath()` - _(no documentation)_
+- `public void Draw_HiddenOrLockedLayer_CreatesNothing()` - _(no documentation)_
+- `public void Draw_LayerLockedWhileDrawing_DropsThePathOnTheNextPress()` - _(no documentation)_
+- `public void Drawing_ShowsTheDraftAndTheOverlayAndClearsThemAfterwards()` - _(no documentation)_
+- `public void Press_WhileDown_BlocksUndoUntilRelease()` - _(no documentation)_
+- `public void Abort_DuringAPress_TakesBackThatNodeAndKeepsTheEarlierOnes()` - _(no documentation)_
+- `public void Zoomed_DistancesAreInScreenPixels()` - _(no documentation)_
+- `public void OtherTools_DoNotTouchThePen()` - _(no documentation)_
+
 ## CanvasInteractionTests (class)
 
 `public class CanvasInteractionTests`
@@ -456,6 +548,24 @@ _(no documentation)_
 - `public void Build_EnteredNestedGroup_DimsSiblingsOfItsParentsToo()` - _(no documentation)_
 - `public void Build_EnteredOuterGroup_DimsNothingInsideIt()` - _(no documentation)_
 - `public void Build_RotatedLeafInGroup_KeepsItsRotationAndPosition()` - _(no documentation)_
+
+## CanvasScenePathTests (class)
+
+`public class CanvasScenePathTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasScenePathTests.cs:10-123`
+
+_(no documentation)_
+
+**Members**
+
+- `public void BuildShape_Path_PutsTheBoxAndTheNodesInScreenPixels(double zoom)` - _(no documentation)_
+- `public void BuildShape_ClosedPath_CarriesTheClosedFlagAndTheFillRule()` - _(no documentation)_
+- `public void BuildShape_RotatedPathWithAStroke_CarriesRotationAndAppearance()` - _(no documentation)_
+- `public void BuildShape_StraightHorizontalPath_HasZeroHeightAndFiniteNodes()` - _(no documentation)_
+- `public void BuildShape_RectangleAndEllipse_HaveNoPathData()` - _(no documentation)_
+- `public void Build_PathInAGroup_IsFlattenedLikeOtherShapes()` - _(no documentation)_
+- `public void Build_HiddenPath_IsLeftOut()` - _(no documentation)_
 
 ## CanvasSceneTests (class)
 
@@ -678,6 +788,24 @@ _(no documentation)_
 - `public void CutDuplicateDeleteAndSelectCommands_DoTheirWork()` - _(no documentation)_
 - `public void TheEditMenuItems_UseTheShellCommands()` - _(no documentation)_
 
+## DocumentCanvasControlPathTests (class)
+
+`public class DocumentCanvasControlPathTests`
+
+Source: `tests/PressToShape.App.Tests/DocumentCanvasControlPathTests.cs:13-143`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Render_OpenAndClosedPaths_DoesNotThrow()` - _(no documentation)_
+- `public void Render_RotatedPathWithOpacityAndNoFill_DoesNotThrow()` - _(no documentation)_
+- `public void Render_StraightLinePathAndPathWithoutStroke_DoesNotThrow()` - _(no documentation)_
+- `public void Render_PathAsDraft_DoesNotThrow()` - _(no documentation)_
+- `public void Render_PenOverlayWithAndWithoutNodes_DoesNotThrow()` - _(no documentation)_
+- `public void Render_HiddenShapeId_DoesNotThrow()` - _(no documentation)_
+- `public void ScreenPenOverlay_From_MapsNodesHandlesAndTheHighlightToTheScreen()` - _(no documentation)_
+
 ## DocumentFileServiceTests (class)
 
 `public sealed class DocumentFileServiceTests : IDisposable`
@@ -850,6 +978,26 @@ _(no documentation)_
 - `public void Selection_GroupGetsHidden_LeavesTheSelection()` - _(no documentation)_
 - `public void Selection_ChildSelectedThenGroupLocked_LeavesTheSelection()` - _(no documentation)_
 - `public void Selection_AllMembersRemoved_GroupDisappearsFromTheSelection()` - _(no documentation)_
+
+## EditorStatePenTests (class)
+
+`public class EditorStatePenTests`
+
+Source: `tests/PressToShape.App.Tests/EditorStatePenTests.cs:10-122`
+
+_(no documentation)_
+
+**Members**
+
+- `public void NewState_HasNoPenOverlayAndNoContinuedPath()` - _(no documentation)_
+- `public void PenOverlay_WhenSet_RaisesPropertyChanged()` - _(no documentation)_
+- `public void ActiveTool_Changed_ResetsThePenState()` - _(no documentation)_
+- `public void ActiveTool_SetToTheSameTool_KeepsThePenState()` - _(no documentation)_
+- `public void ReplaceDocument_ResetsThePenState()` - _(no documentation)_
+- `public void Edit_WhileThePenDraws_KeepsThePenState()` - _(no documentation)_
+- `public void Build_HiddenShapeId_LeavesThatShapeOut()` - _(no documentation)_
+- `public void Build_HiddenShapeIdInsideAGroup_LeavesThatShapeOut()` - _(no documentation)_
+- `public void Build_NoHiddenShapeId_DrawsEverything()` - _(no documentation)_
 
 ## EditorStateTests (class)
 
@@ -1173,7 +1321,7 @@ The application of the headless UI tests: the real theme and control styles, but
 
 `public class HistoryViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-238`
+Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-239`
 
 _(no documentation)_
 
@@ -1265,6 +1413,23 @@ _(no documentation)_
 - `public void NoSavedChoice_OtherSystemLanguage_StartsInEnglish(string system)` - _(no documentation)_
 - `public void UnsupportedSavedChoice_IsIgnored(string saved, string system, string expected)` - _(no documentation)_
 - `public void InvariantCulture_FallsBackToEnglish()` - _(no documentation)_
+
+## LayersViewModelPathTests (class)
+
+`public class LayersViewModelPathTests`
+
+Source: `tests/PressToShape.App.Tests/LayersViewModelPathTests.cs:12-90`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Rows_Path_HasThePathTypeAndNoOtherShapeFlag()` - _(no documentation)_
+- `public void Rows_PathWithoutAName_IsCalledPath()` - _(no documentation)_
+- `public void Rows_PathWithAName_ShowsTheName()` - _(no documentation)_
+- `public void Rows_PathName_IsTranslatedAndFollowsALanguageChange()` - _(no documentation)_
+- `public void Rows_PathInsideAGroup_IsListedBelowTheGroup()` - _(no documentation)_
+- `public void Rows_RectangleAndEllipse_AreNotMistakenForPaths()` - _(no documentation)_
 
 ## LayersViewModelTests (class)
 
@@ -1686,6 +1851,92 @@ _(no documentation)_
 - `public void Apply_WithNothingSelected_ChangesTheDefaultsOnly()` - _(no documentation)_
 - `public void Constructor_NullArguments_Throw()` - _(no documentation)_
 
+## PathEditingFeaturesTests (class)
+
+`public class PathEditingFeaturesTests`
+
+Source: `tests/PressToShape.App.Tests/PathEditingFeaturesTests.cs:14-278`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SelectTool_ClickInsideThePath_SelectsIt()` - _(no documentation)_
+- `public void SelectTool_ClickOutsideThePath_SelectsNothing()` - _(no documentation)_
+- `public void SelectTool_RubberBandAroundThePath_SelectsIt()` - _(no documentation)_
+- `public void SelectTool_DraggingThePath_MovesItAsOneStepAndKeepsItsShape()` - _(no documentation)_
+- `public void SelectTool_DraggingAResizeHandle_ScalesThePath()` - _(no documentation)_
+- `public void SetSizeAndSetRotation_OnAPath_ChangeTheBoxAndKeepTheNodes()` - _(no documentation)_
+- `public void CopyAndPaste_APath_AddsACopyWithANewIdAndTheSameNodes()` - _(no documentation)_
+- `public void Duplicate_APath_AddsACopy()` - _(no documentation)_
+- `public void CutAndDelete_APath_RemoveIt()` - _(no documentation)_
+- `public void Nudge_APath_MovesIt()` - _(no documentation)_
+- `public void GroupAndUngroup_APathWithARectangle_KeepsThePath()` - _(no documentation)_
+- `public void Arrange_BringToFrontAndSendToBack_ReorderAPath()` - _(no documentation)_
+- `public void HideAndLock_APath_ChangeItsFlags()` - _(no documentation)_
+- `public void Eyedropper_OnAPath_TakesItsFill()` - _(no documentation)_
+- `public void PenToSaveAndExport_ADrawnPath_SurvivesTheFileAndShowsInTheSvg()` - _(no documentation)_
+- `public void UndoAndRedo_OfEveryPenStep_RestoreThePath()` - _(no documentation)_
+
+## PathOutlineTests (class)
+
+`public class PathOutlineTests`
+
+Source: `tests/PressToShape.App.Tests/PathOutlineTests.cs:8-104`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Commands_OpenLines_MoveThenLinesAndNoClose()` - _(no documentation)_
+- `public void Commands_ClosedLines_EndsWithCloseAndNoRedundantClosingLine()` - _(no documentation)_
+- `public void Commands_SegmentWithHandles_IsACubicWithTheHandlePoints()` - _(no documentation)_
+- `public void Commands_OnlyOneHandle_UsesTheAnchorForTheMissingOne()` - _(no documentation)_
+- `public void Commands_ClosedPathWithACurvedClosingSegment_WritesTheCurveBeforeClose()` - _(no documentation)_
+- `public void Commands_Origin_MovesEveryPoint()` - _(no documentation)_
+- `public void Commands_NullPath_Throws()` - _(no documentation)_
+- `public void ScreenPathNode_HasInAndHasOut_NeedBothNumbers()` - _(no documentation)_
+
+## PenDrawingTests (class)
+
+`public class PenDrawingTests`
+
+Source: `tests/PressToShape.App.Tests/PenDrawingTests.cs:8-389`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Press_OnEmptyPath_AddsACornerNode()` - _(no documentation)_
+- `public void Click_SeveralTimes_AddsCornerNodesInOrder()` - _(no documentation)_
+- `public void Drag_AfterPress_MakesASmoothNodeWithMirroredHandles()` - _(no documentation)_
+- `public void Drag_ShorterThanTheThreshold_LeavesACorner()` - _(no documentation)_
+- `public void Drag_BackToTheNode_RemovesTheHandlesAgain()` - _(no documentation)_
+- `public void Drag_ZeroLengthWithZeroThreshold_LeavesACorner()` - _(no documentation)_
+- `public void Drag_WithoutAPress_DoesNothing()` - _(no documentation)_
+- `public void Drag_OnlyChangesTheNodeThatWasJustAdded()` - _(no documentation)_
+- `public void PreviewShape_OneNodeAndNoPointer_IsNull()` - _(no documentation)_
+- `public void PreviewShape_NodeAndPointerWithoutHandle_IsALine()` - _(no documentation)_
+- `public void PreviewShape_LastNodeWithAnOutHandle_IsACurve()` - _(no documentation)_
+- `public void PreviewShape_WhileTheButtonIsDown_ShowsOnlyTheNodes()` - _(no documentation)_
+- `public void Press_OnTheFirstNodeOfThree_Closes()` - _(no documentation)_
+- `public void Press_OnTheFirstNodeOfTwo_AddsANodeInstead()` - _(no documentation)_
+- `public void Press_OnTheLastNode_FinishesWithoutAddingANode()` - _(no documentation)_
+- `public void Press_OnTheOnlyNode_FinishesAndFinishGivesNothing()` - _(no documentation)_
+- `public void Hover_NearTheFirstNodeOfThree_HighlightsIt()` - _(no documentation)_
+- `public void Hover_NearTheFirstNodeOfTwo_DoesNotHighlight()` - _(no documentation)_
+- `public void Finish_Open_ReturnsAPathWithTheNodes()` - _(no documentation)_
+- `public void Finish_Closed_ReturnsAClosedPath()` - _(no documentation)_
+- `public void Finish_KeepsTheHandlesOfSmoothNodes()` - _(no documentation)_
+- `public void Discard_AfterDrawing_EmptiesEverything()` - _(no documentation)_
+- `public void Begin_WithExistingNodes_ContinuesAfterTheLastOne()` - _(no documentation)_
+- `public void Begin_PressOnItsLastNode_FinishesWithTheExistingNodes()` - _(no documentation)_
+- `public void Begin_AfterEarlierDrawing_ReplacesTheOldNodes()` - _(no documentation)_
+- `public void Overlay_AfterNodes_ListsThemWithTheirHandles()` - _(no documentation)_
+- `public void AbortPress_AfterAPress_TakesBackTheNodeThatWasAdded()` - _(no documentation)_
+- `public void AbortPress_WithoutAPress_DoesNothing()` - _(no documentation)_
+- `public void PreviewShape_PointerExactlyOnTheLastNode_IsNull()` - _(no documentation)_
+
 ## PoEntry (record)
 
 `internal sealed record PoEntry : IEquatable<PoEntry>`
@@ -1779,6 +2030,35 @@ _(no documentation)_
 - `public void TheApp_IncludesTheColorPickerTheme()` - _(no documentation)_
 - `public void TheColorPicker_WithTheAppsStyles_HasASize()` - _(no documentation)_
 
+## PropertiesViewModelPathTests (class)
+
+`public class PropertiesViewModelPathTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewModelPathTests.cs:12-282`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SelectingAPath_ShowsThePathSectionEvenWithTheSelectTool()` - _(no documentation)_
+- `public void SelectingARectangle_DoesNotShowThePathSection()` - _(no documentation)_
+- `public void ThePenTool_ShowsThePathSectionWithoutASelection()` - _(no documentation)_
+- `public void ToolsWithoutProperties_ShowNoPathSectionEvenForAPath()` - _(no documentation)_
+- `public void ThePathInsideAGroup_CountsAsSelected()` - _(no documentation)_
+- `public void Values_OfASinglePath_ShowItsState()` - _(no documentation)_
+- `public void Values_OfMixedPaths_SetNeitherChoice()` - _(no documentation)_
+- `public void ClosePath_OpenPath_ClosesItAsOneStep()` - _(no documentation)_
+- `public void OpenPath_ClosedPath_OpensIt()` - _(no documentation)_
+- `public void ClosePath_PathWithACurvedClosingSegment_GrowsTheBoxToTheCurve()` - _(no documentation)_
+- `public void ClosePath_RotatedPath_KeepsTheNodesWhereTheyAre()` - _(no documentation)_
+- `public void FillRuleCommands_ChangeTheRuleAsOneStep()` - _(no documentation)_
+- `public void Commands_ThatChangeNothing_MakeNoStep()` - _(no documentation)_
+- `public void Commands_OnAMixedSelection_ChangeThePathsOnly()` - _(no documentation)_
+- `public void Commands_OnSeveralPaths_ApplyToAllInOneStep()` - _(no documentation)_
+- `public void Commands_AreDisabledWithoutAPath()` - _(no documentation)_
+- `public void Values_AfterUndo_FollowTheDocument()` - _(no documentation)_
+- `public void PropertyChanged_WhenTheSelectionChanges_IsRaisedForThePathValues()` - _(no documentation)_
+
 ## PropertiesViewModelTests (class)
 
 `public class PropertiesViewModelTests`
@@ -1837,6 +2117,21 @@ _(no documentation)_
 - `public void Sections_PenTool_ShowsAppearanceAndPathOnly()` - _(no documentation)_
 - `public void Sections_ToolWithoutProperties_HidesEverythingAndShowsTheHint()` - _(no documentation)_
 - `public void ActiveTool_Switched_KeepsExpansionAndFieldValues()` - _(no documentation)_
+
+## PropertiesViewPathTests (class)
+
+`public class PropertiesViewPathTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewPathTests.cs:16-119`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ThePathSection_WithoutAPath_ShowsTheHintAndNoChoices()` - _(no documentation)_
+- `public void ThePathSection_WithASelectedPath_ShowsTheChoicesAndMarksTheOnesThatAreSet()` - _(no documentation)_
+- `public void ThePathSection_ClickingAChoice_ChangesThePathAndMovesTheMark()` - _(no documentation)_
+- `public void ThePathSection_InTheTouchLayout_HasButtonsOfAtLeast48()` - _(no documentation)_
 
 ## RecentColorsTests (class)
 

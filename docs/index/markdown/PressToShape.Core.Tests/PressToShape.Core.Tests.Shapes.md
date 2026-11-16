@@ -81,6 +81,100 @@ _(no documentation)_
 - `public void MovedCopy_Group_GivesNewIdsAndMovesAllLeaves()` - _(no documentation)_
 - `public void Leaves_PlainShapeAndNestedGroups_ReturnTheNonGroupShapes()` - _(no documentation)_
 
+## PathEditingTests (class)
+
+`public class PathEditingTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/PathEditingTests.cs:10-225`
+
+_(no documentation)_
+
+**Members**
+
+- `public void InsertNode_OnALine_AddsACornerOnTheLine()` - _(no documentation)_
+- `public void InsertNode_OnACurve_KeepsTheCurve(int segment, double t)` - _(no documentation)_
+- `public void InsertNode_OnTheClosingSegmentOfAClosedPath_AppendsTheNode()` - _(no documentation)_
+- `public void InsertNode_BadArguments_Throw()` - _(no documentation)_
+- `public void RemoveNode_MiddleNode_NeighborsConnect()` - _(no documentation)_
+- `public void RemoveNode_EndNodeOfAnOpenPath_ShortensThePath()` - _(no documentation)_
+- `public void RemoveNode_AtTwoNodes_ReturnsNull()` - _(no documentation)_
+- `public void RemoveNode_BadIndex_Throws()` - _(no documentation)_
+- `public void Continue_AtTheEnd_ReturnsTheNodesAsTheyAre()` - _(no documentation)_
+- `public void Continue_AtTheStart_ReversesTheOrderAndSwapsTheHandles()` - _(no documentation)_
+- `public void Continue_ClosedPath_Throws()` - _(no documentation)_
+- `public void InsertAndRemove_RotatedPath_KeepEveryOriginalNodeWhereItWas(double rotation)` - _(no documentation)_
+
+## PathNodeTests (class)
+
+`public class PathNodeTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/PathNodeTests.cs:7-78`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Create_AnchorOnly_HasNoHandles()` - _(no documentation)_
+- `public void Create_WithBothHandles_KeepsThem()` - _(no documentation)_
+- `public void Create_NonFiniteAnchor_Throws(double x, double y)` - _(no documentation)_
+- `public void Create_NonFiniteHandle_Throws()` - _(no documentation)_
+- `public void Create_HalfAHandle_Throws()` - _(no documentation)_
+- `public void Equals_SameValues_AreEqual()` - _(no documentation)_
+- `public void DocumentNode_ValidAndInvalidValues_FollowTheSameRules()` - _(no documentation)_
+- `public void FillRule_Default_IsNonZero()` - _(no documentation)_
+
+## PathShapeGeometryTests (class)
+
+`public class PathShapeGeometryTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/PathShapeGeometryTests.cs:9-200`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Rebuilt_MovedNode_EveryNodeStaysWhereItWasOnTheScreen(double rotation)` - _(no documentation)_
+- `public void Rebuilt_Edit_KeepsIdAppearanceNameFlagsAndRotation()` - _(no documentation)_
+- `public void Rebuilt_FewerThanTwoNodes_Throws()` - _(no documentation)_
+- `public void Contains_PentagramCenterWithNonZero_IsInside()` - _(no documentation)_
+- `public void Contains_PentagramCenterWithEvenOdd_IsOutside()` - _(no documentation)_
+- `public void Contains_PentagramPointOfTheStar_IsInsideWithBothRules(FillRule rule)` - _(no documentation)_
+- `public void Contains_OutsideAClosedFilledPath_IsAMiss()` - _(no documentation)_
+- `public void Contains_ThinStrokeOfAnUnfilledOpenPath_IsHitNearTheLineOnly()` - _(no documentation)_
+- `public void Contains_WideStroke_HitsWithinHalfTheStrokeWidth()` - _(no documentation)_
+- `public void Contains_UnfilledOpenCurve_DoesNotHitTheEmptyInside()` - _(no documentation)_
+- `public void Contains_FilledOpenPath_IsFilledAcrossTheGapButTheClosingLineIsNotAnOutline()` - _(no documentation)_
+- `public void Contains_RotatedPath_UsesTheTurnedPath()` - _(no documentation)_
+- `public void Contains_CurvedClosedPath_FollowsTheCurve()` - _(no documentation)_
+
+## PathShapeTests (class)
+
+`public class PathShapeTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/PathShapeTests.cs:10-229`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Create_Line_BoxIsTheBoxOfTheEndPoints()` - _(no documentation)_
+- `public void Create_Triangle_StoresNodesAsFractionsOfTheBox()` - _(no documentation)_
+- `public void Create_CurveThatOvershootsItsAnchors_BoxReachesTheCurveNotTheHandles()` - _(no documentation)_
+- `public void Create_ClosedPathWithACurvedClosingSegment_BoxIncludesTheClosingCurve()` - _(no documentation)_
+- `public void Create_FewerThanTwoNodes_Throws()` - _(no documentation)_
+- `public void Nodes_FewerThanTwoOrDefault_Throws()` - _(no documentation)_
+- `public void Create_HorizontalLine_HasZeroHeightAndKeepsItsPosition()` - _(no documentation)_
+- `public void Create_VerticalLine_HasZeroWidthAndKeepsItsPosition()` - _(no documentation)_
+- `public void Create_TwoEqualPoints_HasZeroSizeWithoutNaN()` - _(no documentation)_
+- `public void ToDocumentNodes_AfterCreate_ReturnsTheGivenNodes()` - _(no documentation)_
+- `public void With_DoubledWidth_ScalesThePicture()` - _(no documentation)_
+- `public void With_NewPosition_MovesThePicture()` - _(no documentation)_
+- `public void With_WidthZeroAndBack_RestoresThePicture()` - _(no documentation)_
+- `public void MovedCopy_Path_MovesTheBoxAndGetsANewId()` - _(no documentation)_
+- `public void RotatedBounds_RotatedPath_IsTheTurnedBox()` - _(no documentation)_
+- `public void Segments_ClosedTriangle_HasThreeLines()` - _(no documentation)_
+- `public void Segments_OpenPath_HasOneLessThanNodes()` - _(no documentation)_
+
 ## RectangleShapeTests (class)
 
 `public class RectangleShapeTests`

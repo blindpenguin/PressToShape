@@ -51,7 +51,10 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 
 - `public RingMenuMode SelectForContextMenu(double x, double y, double grabSize = 10)` - Prepares the selection for the ring menu at this document position, with the same hit rules as a click. A selected object, or a handle of the selection, keeps the selection as it is. Another object that can be selected (a group counts as one object, and inside an entered group a member counts) becomes the only selected one. Empty canvas, and objects that are hidden or locked, clear the selection. Returns which slots the ring shows. The selection changes, but no history step is recorded.
 - `public void DoubleClicked(double x, double y)` - A double-click at this document position. With the Select tool on a group it enters the group and selects what is under the pointer; on a shape of an entered group that is a group itself it enters that group. On empty space it leaves the entered group by one level. Ends a drag that is in progress without a result.
+- `public bool IsPenDrawing { get; }` - Whether the Pen has an unfinished path.
+- `public bool FinishPen()` - Finishes the path of the Pen as an open path (the Enter key). A path with fewer than two nodes is dropped. Returns whether there was a path to finish.
 - `public CanvasInteraction(EditorState state)` - _(no documentation)_
+- `public bool DiscardPen()` - Drops the unfinished path of the Pen (the Escape key). Returns whether there was one.
 - `public bool IsDragging { get; }` - Whether a drag is in progress.
 - `public HandleType? DraggedHandle { get; }` - The handle that is being dragged, or null if no resize or rotate drag is in progress.
 - `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. A press by mouse or pen uses PressToShape.App.Workspace.SelectionGeometry.GrabSize.
@@ -73,7 +76,7 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 
 `internal enum CanvasKey`
 
-Source: `src/PressToShape.App/Workspace/CanvasKey.cs:4-12`
+Source: `src/PressToShape.App/Workspace/CanvasKey.cs:4-13`
 
 The keys the canvas reacts to. The view turns real key events into these, so the view model needs no UI types.
 
@@ -84,6 +87,7 @@ The keys the canvas reacts to. The view turns real key events into these, so the
 - `public Up` - _(no documentation)_
 - `public Down` - _(no documentation)_
 - `public Escape` - _(no documentation)_
+- `public Enter` - _(no documentation)_
 - `public ContextMenu` - _(no documentation)_
 
 ## CanvasMapping (class)
@@ -103,13 +107,13 @@ The one mapping between screen pixels and document units. Drawing and picking bo
 
 `internal static class CanvasScene`
 
-Source: `src/PressToShape.App/Workspace/CanvasScene.cs:11-95`
+Source: `src/PressToShape.App/Workspace/CanvasScene.cs:12-120`
 
 Turns a document into the shapes to draw on the canvas, so the drawing control needs no geometry rules.
 
 **Members**
 
-- `public IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY, Guid? enteredGroupId = null)` - Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones. Groups are flattened: only the shapes in them are drawn, in order. Hidden layers, hidden shapes and the shapes of hidden groups are left out. Locked shapes are drawn like any other.
+- `public IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY, Guid? enteredGroupId = null, Guid? hiddenShapeId = null)` - Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones. Groups are flattened: only the shapes in them are drawn, in order. Hidden layers, hidden shapes and the shapes of hidden groups are left out. Locked shapes are drawn like any other.
 - `public ScreenShape BuildShape(Shape shape, double zoomPercent, double originX, double originY)` - Converts one shape, for example a shape that is still being drawn and is not in a document.
 
 ## ColorPickTarget (enum)
@@ -217,6 +221,8 @@ State shared by all regions of the editor shell: the document, its undo history,
 
 **Members**
 
+- `public PenOverlay? PenOverlay { get; set; }` - _(no documentation)_
+- `public Guid? PenContinuedId { get; set; }` - _(no documentation)_
 - `public Guid? EnteredGroupId { get; private set; }` - _(no documentation)_
 - `public EditorState(Document? document = null)` - Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.
 - `public bool EnterGroup(Guid groupId)` - Enters the group. Of the selection only the direct children of the group stay selected. Does nothing if the id is not a group that can be selected.
@@ -323,7 +329,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-56`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-60`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -450,6 +456,104 @@ Edits of the structure of the drawing: group and ungroup, arrange, lock and hide
 - Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.LayersViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
+
+## PathCommand (record)
+
+`internal readonly record PathCommand : IEquatable<PathCommand>`
+
+Source: `src/PressToShape.App/Workspace/PathCommand.cs:11-18`
+
+One step of the outline of a path in screen pixels. PressToShape.App.Workspace.PathCommandType.Move and PressToShape.App.Workspace.PathCommandType.Line use only the end point, PressToShape.App.Workspace.PathCommandType.Close none.
+
+**Members**
+
+- `public PathCommand(PathCommandType Type, double X = 0, double Y = 0, double Control1X = 0, double Control1Y = 0, double Control2X = 0, double Control2Y = 0)` - One step of the outline of a path in screen pixels. PressToShape.App.Workspace.PathCommandType.Move and PressToShape.App.Workspace.PathCommandType.Line use only the end point, PressToShape.App.Workspace.PathCommandType.Close none.
+- `public PathCommandType Type { get; init; }` - What the step does.
+- `public double X { get; init; }` - End point x.
+- `public double Y { get; init; }` - End point y.
+- `public double Control1X { get; init; }` - First handle point x, for a curve.
+- `public double Control1Y { get; init; }` - First handle point y, for a curve.
+- `public double Control2X { get; init; }` - Second handle point x, for a curve.
+- `public double Control2Y { get; init; }` - Second handle point y, for a curve.
+
+## PathCommandType (enum)
+
+`internal enum PathCommandType`
+
+Source: `src/PressToShape.App/Workspace/PathCommandType.cs:4-17`
+
+What a PressToShape.App.Workspace.PathCommand does.
+
+**Members**
+
+- `public Move` - Starts the outline at a point.
+- `public Line` - A straight line to a point.
+- `public Cubic` - A cubic bezier curve to a point, with two handle points.
+- `public Close` - Ends a closed outline.
+
+## PathOutline (class)
+
+`internal static class PathOutline`
+
+Source: `src/PressToShape.App/Workspace/PathOutline.cs:7-57`
+
+Turns a PressToShape.App.Workspace.ScreenPath into drawing steps, so the canvas control only replays them and the rules are tested without a UI.
+
+**Members**
+
+- `public IReadOnlyList<PathCommand> Commands(ScreenPath path, double originX, double originY)` - The steps that draw the path, moved by the origin (the top left corner of the shape's box on the screen). A segment without handles is a line. A closed path ends with the segment from the last node back to the first (a line or a curve) and a PressToShape.App.Workspace.PathCommandType.Close. An open path has no close step.
+
+## PenDrawing (class)
+
+`internal sealed class PenDrawing`
+
+Source: `src/PressToShape.App/Workspace/PenDrawing.cs:13-171`
+
+The state of a path that the Pen is drawing: the nodes so far and the gesture in progress. It knows nothing about the document, the zoom or the pointer device, so it is tested alone. Distances are in document units, the caller converts them from screen pixels. A press adds a corner node, a drag after it pulls out the handles (smooth node), a press on the first node closes the path and a press on the last node finishes it.
+
+**Members**
+
+- `public bool IsDrawing { get; }` - Whether the path has at least one node.
+- `public bool IsPressing { get; }` - Whether the button is down after a press that added a node.
+- `public IReadOnlyList<DocumentNode> Nodes { get; }` - The nodes so far, in document coordinates.
+- `public PathShape? PreviewShape { get; }` - The path as it would be if it ended at the pointer: the nodes so far plus a corner node at the last known pointer position, which gives a line, or a curve if the last node has an out handle. While the button is down the pointer is dragging a handle, so only the nodes are shown. null while there are fewer than two nodes to show.
+- `public PenOverlay? Overlay { get; }` - What to show over the unfinished path, or null when nothing is drawn.
+- `public void Begin(IReadOnlyList<DocumentNode> existing)` - Starts from the nodes of an existing open path, to continue it. The last node is the one the new nodes follow.
+- `public PenPressResult Press(double x, double y, double lastNodeDistance, double closeDistance)` - The button went down at this position. A press within lastNodeDistance of the last node means finish (a double click or double tap). A press within closeDistance of the first node of a path with at least three nodes means close. Otherwise a corner node is added.
+- `public void Drag(double x, double y, double threshold)` - The pointer moved with the button down. Once it is farther than threshold from the node that was just added, the node becomes smooth: the out handle follows the pointer and the in handle is the mirror image on the other side. A shorter drag leaves a corner. Does nothing when no press added a node.
+- `public void AbortPress()` - Takes back the node that the press in progress added, for a press that turns out to be a mistake. Does nothing when no press is in progress.
+- `public void Release()` - The button went up. The node that was added keeps the handles the drag gave it.
+- `public void Hover(double x, double y, double closeDistance)` - The pointer moved without a button. Remembers the position for the preview and checks whether a click would close the path.
+- `public PathShape? Finish(bool close)` - Ends the drawing and returns the path with the nodes so far, or null if there are fewer than two. The state is empty afterwards in both cases.
+- `public void Discard()` - Drops everything that was drawn.
+
+## PenOverlay (record)
+
+`internal sealed record PenOverlay : IEquatable<PenOverlay>`
+
+Source: `src/PressToShape.App/Workspace/PenOverlay.cs:9-9`
+
+What the canvas shows on top of an unfinished path: its nodes with their handles, in document coordinates.
+
+**Members**
+
+- `public PenOverlay(IReadOnlyList<DocumentNode> Nodes, bool HighlightFirst)` - What the canvas shows on top of an unfinished path: its nodes with their handles, in document coordinates.
+- `public bool HighlightFirst { get; init; }` - Whether the first node is highlighted because a click would close the path.
+- `public IReadOnlyList<DocumentNode> Nodes { get; init; }` - The nodes drawn so far, in order.
+
+## PenPressResult (enum)
+
+`internal enum PenPressResult`
+
+Source: `src/PressToShape.App/Workspace/PenPressResult.cs:4-14`
+
+What a press with the Pen did to the unfinished path.
+
+**Members**
+
+- `public AddedNode` - A node was added. A drag that follows turns it into a smooth point.
+- `public ClosedPath` - The press hit the first node of a path with at least three nodes: the path is to be finished as closed.
+- `public FinishedPath` - The press landed on the last node (a double click or double tap): the path is to be finished as open.
 
 ## PropertiesSection (enum)
 
@@ -652,6 +756,60 @@ A line in screen pixels.
 
 - Depends on (constructor) `PressToShape.App.Workspace.ScreenPoint`
 
+## ScreenPath (record)
+
+`internal sealed record ScreenPath : IEquatable<ScreenPath>`
+
+Source: `src/PressToShape.App/Workspace/ScreenPath.cs:14-14`
+
+The outline of a path ready to draw: every node is already in screen pixels, relative to the top left corner of the PressToShape.App.Workspace.ScreenShape that holds it. A segment is a curve if the node it starts at has an out handle or the node it ends at has an in handle, otherwise a line.
+
+**Members**
+
+- `public ScreenPath(ImmutableArray<ScreenPathNode> Nodes, bool IsClosed, FillRule FillRule)` - The outline of a path ready to draw: every node is already in screen pixels, relative to the top left corner of the PressToShape.App.Workspace.ScreenShape that holds it. A segment is a curve if the node it starts at has an out handle or the node it ends at has an in handle, otherwise a line.
+- `public FillRule FillRule { get; init; }` - How the inside is decided where the path crosses itself.
+- `public bool IsClosed { get; init; }` - Whether the last node connects back to the first one.
+- `public ImmutableArray<ScreenPathNode> Nodes { get; init; }` - The nodes in drawing order, at least two.
+
+**Relationships**
+
+- Injected into `PressToShape.App.Workspace.ScreenShape`
+
+## ScreenPathNode (record)
+
+`internal readonly record ScreenPathNode : IEquatable<ScreenPathNode>`
+
+Source: `src/PressToShape.App/Workspace/ScreenPathNode.cs:10-17`
+
+A node of a PressToShape.App.Workspace.ScreenPath in screen pixels, relative to the top left corner of the shape's box.
+
+**Members**
+
+- `public ScreenPathNode(double X, double Y, double? InX = null, double? InY = null, double? OutX = null, double? OutY = null)` - A node of a PressToShape.App.Workspace.ScreenPath in screen pixels, relative to the top left corner of the shape's box.
+- `public double? InX { get; init; }` - Handle point on the side of the previous node, or null for no handle.
+- `public double? InY { get; init; }` - Handle point on the side of the previous node, or null for no handle.
+- `public double? OutX { get; init; }` - Handle point on the side of the next node, or null for no handle.
+- `public double? OutY { get; init; }` - Handle point on the side of the next node, or null for no handle.
+- `public double X { get; init; }` - Anchor x.
+- `public double Y { get; init; }` - Anchor y.
+- `public bool HasIn { get; }` - Whether the node has an in handle.
+- `public bool HasOut { get; }` - Whether the node has an out handle.
+
+## ScreenPenOverlay (record)
+
+`internal sealed record ScreenPenOverlay : IEquatable<ScreenPenOverlay>`
+
+Source: `src/PressToShape.App/Workspace/ScreenPenOverlay.cs:12-31`
+
+What the canvas shows over the unfinished path of the Pen, in screen pixels of the canvas area: the nodes with their handle points. The positions are absolute here, not relative to a box as in PressToShape.App.Workspace.ScreenPath.
+
+**Members**
+
+- `public ScreenPenOverlay(IReadOnlyList<ScreenPathNode> Nodes, bool HighlightFirst)` - What the canvas shows over the unfinished path of the Pen, in screen pixels of the canvas area: the nodes with their handle points. The positions are absolute here, not relative to a box as in PressToShape.App.Workspace.ScreenPath.
+- `public bool HighlightFirst { get; init; }` - Whether the first node is highlighted because a click would close the path.
+- `public IReadOnlyList<ScreenPathNode> Nodes { get; init; }` - The nodes drawn so far, in order.
+- `public ScreenPenOverlay From(PenOverlay overlay, double zoomPercent, double originX, double originY)` - Converts the overlay from document coordinates to the screen with the same mapping the canvas uses for shapes.
+
 ## ScreenPoint (record)
 
 `internal readonly record ScreenPoint : IEquatable<ScreenPoint>`
@@ -709,14 +867,14 @@ A rectangle in screen pixels, for example the outline of the selected shape.
 
 `internal readonly record ScreenShape : IEquatable<ScreenShape>`
 
-Source: `src/PressToShape.App/Workspace/ScreenShape.cs:20-31`
+Source: `src/PressToShape.App/Workspace/ScreenShape.cs:21-33`
 
 A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
 
 **Members**
 
-- `public ScreenShape(ScreenShapeType Type, double X, double Y, double Width, double Height, Color? Fill, Color? Stroke, double StrokeWidth, double Opacity, double RotationDegrees = 0, bool IsDimmed = false)` - A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
-- `public ScreenShapeType Type { get; init; }` - Rectangle or ellipse.
+- `public ScreenShape(ScreenShapeType Type, double X, double Y, double Width, double Height, Color? Fill, Color? Stroke, double StrokeWidth, double Opacity, double RotationDegrees = 0, bool IsDimmed = false, ScreenPath? Path = null)` - A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
+- `public ScreenShapeType Type { get; init; }` - Rectangle, ellipse or path.
 - `public double X { get; init; }` - Left edge in screen pixels.
 - `public double Y { get; init; }` - Top edge in screen pixels.
 - `public double Width { get; init; }` - Width in screen pixels.
@@ -727,12 +885,17 @@ A shape ready to draw: position, size and stroke width are already in screen pix
 - `public double Opacity { get; init; }` - Opacity of the whole shape, 0 to 1.
 - `public double RotationDegrees { get; init; }` - Rotation in degrees, clockwise, around the center of the box. 0 for an upright shape.
 - `public bool IsDimmed { get; init; }` - Whether the shape is drawn faded because a group is entered and the shape is not inside it.
+- `public ScreenPath? Path { get; init; }` - The outline of a path, relative to the top left corner of the box. null for every type except PressToShape.App.Workspace.ScreenShapeType.Path.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Workspace.ScreenPath`
 
 ## ScreenShapeType (enum)
 
 `internal enum ScreenShapeType`
 
-Source: `src/PressToShape.App/Workspace/ScreenShapeType.cs:4-8`
+Source: `src/PressToShape.App/Workspace/ScreenShapeType.cs:4-11`
 
 The geometry a PressToShape.App.Workspace.ScreenShape is drawn with.
 
@@ -740,6 +903,7 @@ The geometry a PressToShape.App.Workspace.ScreenShape is drawn with.
 
 - `public Rectangle` - _(no documentation)_
 - `public Ellipse` - _(no documentation)_
+- `public Path` - A path of lines and curves. The shape's PressToShape.App.Workspace.ScreenShape.Path holds its outline.
 
 ## SelectionBox (record)
 

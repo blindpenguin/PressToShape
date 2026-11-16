@@ -29,18 +29,19 @@ Class: `PressToShape.App.Views.Editor.LayersView`.
 - line 91: materialIcons:MaterialIcon.IsVisible = Binding `IsRectangle` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsRectangle` (verified)
 - line 92: materialIcons:MaterialIcon.IsVisible = Binding `IsEllipse` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsEllipse` (verified)
 - line 93: materialIcons:MaterialIcon.IsVisible = Binding `IsGroup` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsGroup` (verified)
-- line 96: TextBlock.IsVisible = Binding `!IsRenaming` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsRenaming` (verified)
-- line 96: TextBlock.Text = Binding `Name` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.Name` (verified)
-- line 97: TextBox.IsVisible = Binding `IsRenaming` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsRenaming` (verified)
-- line 97: TextBox.Text = Binding `EditText` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.EditText` (verified)
-- line 100: KeyBinding.Command = Binding `CommitRenameCommand` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.CommitRenameCommand` (verified), command
-- line 101: KeyBinding.Command = Binding `CancelRenameCommand` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.CancelRenameCommand` (verified), command
-- line 105: Button.Command = Binding `ToggleLockCommand` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleLockCommand` (verified), command
-- line 108: materialIcons:MaterialIcon.IsVisible = Binding `IsLocked` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsLocked` (verified)
-- line 109: materialIcons:MaterialIcon.IsVisible = Binding `!IsLocked` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsLocked` (verified)
-- line 112: Button.Command = Binding `ToggleVisibilityCommand` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleVisibilityCommand` (verified), command
-- line 115: materialIcons:MaterialIcon.IsVisible = Binding `IsVisible` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsVisible` (verified)
-- line 116: materialIcons:MaterialIcon.IsVisible = Binding `!IsVisible` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsVisible` (verified)
+- line 94: materialIcons:MaterialIcon.IsVisible = Binding `IsPath` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsPath` (verified)
+- line 97: TextBlock.IsVisible = Binding `!IsRenaming` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsRenaming` (verified)
+- line 97: TextBlock.Text = Binding `Name` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.Name` (verified)
+- line 98: TextBox.IsVisible = Binding `IsRenaming` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsRenaming` (verified)
+- line 98: TextBox.Text = Binding `EditText` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.EditText` (verified)
+- line 101: KeyBinding.Command = Binding `CommitRenameCommand` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.CommitRenameCommand` (verified), command
+- line 102: KeyBinding.Command = Binding `CancelRenameCommand` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.CancelRenameCommand` (verified), command
+- line 106: Button.Command = Binding `ToggleLockCommand` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleLockCommand` (verified), command
+- line 109: materialIcons:MaterialIcon.IsVisible = Binding `IsLocked` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsLocked` (verified)
+- line 110: materialIcons:MaterialIcon.IsVisible = Binding `!IsLocked` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsLocked` (verified)
+- line 113: Button.Command = Binding `ToggleVisibilityCommand` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleVisibilityCommand` (verified), command
+- line 116: materialIcons:MaterialIcon.IsVisible = Binding `IsVisible` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsVisible` (verified)
+- line 117: materialIcons:MaterialIcon.IsVisible = Binding `!IsVisible` -> `P:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.IsVisible` (verified)
 
 ## Resource references
 
@@ -68,14 +69,16 @@ Class: `PressToShape.App.Views.Editor.LayersView`.
 - line 92: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
 - line 93: materialIcons:MaterialIcon.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
 - line 93: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
-- line 108: materialIcons:MaterialIcon.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
-- line 108: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
+- line 94: materialIcons:MaterialIcon.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
+- line 94: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
 - line 109: materialIcons:MaterialIcon.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
 - line 109: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
-- line 115: materialIcons:MaterialIcon.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
-- line 115: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
+- line 110: materialIcons:MaterialIcon.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
+- line 110: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
 - line 116: materialIcons:MaterialIcon.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
 - line 116: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
+- line 117: materialIcons:MaterialIcon.Height = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
+- line 117: materialIcons:MaterialIcon.Width = DynamicResource `RowIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RowIconSize` (verified)
 
 ## Resources defined
 

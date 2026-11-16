@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `public partial class CanvasAreaView : UserControl`
 
-Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:12-412`
+Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:12-413`
 
 _(no documentation)_
 

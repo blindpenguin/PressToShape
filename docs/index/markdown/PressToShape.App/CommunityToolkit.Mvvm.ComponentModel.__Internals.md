@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class __KnownINotifyPropertyChangedArgs`
 
-Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-257` (generated)
+Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-265` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangedEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -72,12 +72,14 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 - `public PropertyChangedEventArgs PanX` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PanX" generated properties.
 - `public PropertyChangedEventArgs PanY` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PanY" generated properties.
 - `public PropertyChangedEventArgs EnteredGroupId` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "EnteredGroupId" generated properties.
+- `public PropertyChangedEventArgs PenOverlay` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PenOverlay" generated properties.
+- `public PropertyChangedEventArgs PenContinuedId` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PenContinuedId" generated properties.
 
 ## __KnownINotifyPropertyChangingArgs (class)
 
 `internal static class __KnownINotifyPropertyChangingArgs`
 
-Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-257` (generated)
+Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-265` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangingEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -143,3 +145,5 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 - `public PropertyChangingEventArgs PanX` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PanX" generated properties.
 - `public PropertyChangingEventArgs PanY` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PanY" generated properties.
 - `public PropertyChangingEventArgs EnteredGroupId` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "EnteredGroupId" generated properties.
+- `public PropertyChangingEventArgs PenOverlay` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PenOverlay" generated properties.
+- `public PropertyChangingEventArgs PenContinuedId` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PenContinuedId" generated properties.

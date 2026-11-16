@@ -35,7 +35,7 @@ The undo and redo history of a document, kept as snapshots. Documents are immuta
 
 `public enum HistoryStepType`
 
-Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-119`
+Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-131`
 
 What a step of the history did. The app turns each value into a translated name.
 
@@ -79,3 +79,7 @@ What a step of the history did. The app turns each value into a translated name.
 - `public UnlockAll` - Every shape was unlocked.
 - `public ShowAll` - Every shape was shown.
 - `public RenameShape` - A shape was renamed.
+- `public DrawPath` - A path was drawn with the Pen.
+- `public AddPathNode` - A point was added to a path.
+- `public DeletePathNode` - A point was deleted from a path.
+- `public ChangePath` - A path was opened or closed, or its fill rule was changed.

@@ -45,6 +45,33 @@ _(no documentation)_
 - `public void Read_InvalidPaletteEntry_FailsWithInvalidValue(string palette)` - _(no documentation)_
 - `public void WriteThenRead_StrokeWithAlpha_IsKept()` - _(no documentation)_
 
+## ProjectFilePathTests (class)
+
+`public class ProjectFilePathTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/ProjectFilePathTests.cs:10-212`
+
+_(no documentation)_
+
+**Members**
+
+- `public void WriteThenRead_PathWithCurvesClosedEvenOddAndRotation_IsKept()` - _(no documentation)_
+- `public void WriteThenRead_OpenPathWithDefaults_WritesNoClosedOrFillRuleEntry()` - _(no documentation)_
+- `public void WriteThenRead_PathInsideAGroup_IsKept()` - _(no documentation)_
+- `public void Read_MinimalPath_Succeeds()` - _(no documentation)_
+- `public void Read_PathWithOneNode_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_PathWithEmptyNodes_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_PathWithoutNodes_FailsWithNotProjectFile()` - _(no documentation)_
+- `public void Read_NodeWithoutAnY_FailsWithNotProjectFile()` - _(no documentation)_
+- `public void Read_NullNode_FailsWithNotProjectFile()` - _(no documentation)_
+- `public void Read_HalfAHandle_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_NumberThatIsNotFinite_Fails()` - _(no documentation)_
+- `public void Read_NumberWrittenAsText_Fails()` - _(no documentation)_
+- `public void Read_UnknownFillRule_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_TooManyNodes_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_PathWithNegativeWidth_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_FileWithoutPaths_StillLoads()` - _(no documentation)_
+
 ## ProjectFileTests (class)
 
 `public class ProjectFileTests`
@@ -131,6 +158,29 @@ _(no documentation)_
 - `public void ToUtf8_LockedShapes_AreExported()` - _(no documentation)_
 - `public void ToUtf8_RotatedChildInGroup_KeepsItsOwnTransform()` - _(no documentation)_
 - `public void ToUtf8_GroupWithOnlyHiddenChildren_IsAnEmptyG()` - _(no documentation)_
+
+## SvgExportPathTests (class)
+
+`public class SvgExportPathTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/SvgExportPathTests.cs:12-159`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ToUtf8_ClosedLinePath_WritesMLLAndZ()` - _(no documentation)_
+- `public void ToUtf8_OpenLinePath_HasNoZ()` - _(no documentation)_
+- `public void ToUtf8_CurvedSegment_WritesC()` - _(no documentation)_
+- `public void ToUtf8_SegmentWithOnlyOneHandle_UsesTheAnchorForTheMissingOne()` - _(no documentation)_
+- `public void ToUtf8_ClosedPathWithACurvedClosingSegment_WritesTheCurveBeforeZ()` - _(no documentation)_
+- `public void ToUtf8_EvenOddPath_WritesFillRule()` - _(no documentation)_
+- `public void ToUtf8_PathAppearance_IsWrittenLikeOtherShapes()` - _(no documentation)_
+- `public void ToUtf8_RotatedPath_TurnsAroundTheCenterOfItsBox()` - _(no documentation)_
+- `public void ToUtf8_PathAfterAResizeWithWith_WritesTheScaledCoordinates()` - _(no documentation)_
+- `public void ToUtf8_PathInAGroup_IsWrittenInsideTheGroup()` - _(no documentation)_
+- `public void ToUtf8_HiddenPathAndPathInAHiddenLayer_AreLeftOut()` - _(no documentation)_
+- `public void ToUtf8_GermanCulture_StillWritesDots()` - _(no documentation)_
 
 ## SvgExportTests (class)
 

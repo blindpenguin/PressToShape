@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, the object list, and the ring context menu. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, the object list, the ring context menu, and the path model with the Pen tool. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -10,21 +10,21 @@ Columns:
 
 ## Summary
 
-The shell, the canvas, rectangles and ellipses, selection and transform, appearance, undo and redo, groups and arrange, lock and hide, the object list, and file save, load and SVG export work. The big gaps are everything that is not a rectangle, an ellipse or a group: the pen and path model, node editing, layer management, snapping, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
+The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, appearance, undo and redo, groups and arrange, lock and hide, the object list, and file save, load and SVG export work. The big gaps are node editing (moving nodes and handles), the shapes that need a path (star, spiral), layer management, snapping, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
 
-The most important structural gap: **Core has only `RectangleShape`, `EllipseShape` and `GroupShape`**. The first two are defined by a box and a rotation, a group has a box that follows its members. There is no path type. Pen, node editing, star, spiral, text, boolean operations, masks and SVG import all depend on adding one.
+The structural base is in place: **`PathShape`** (line and cubic bezier segments, open or closed, non-zero or even-odd fill) keeps the box and rotation of every other shape and stores its nodes as fractions of the box, so move, resize, rotate, groups and arrange work on it unchanged. Node editing, star, spiral, text, boolean operations, masks and SVG import build on it (a path has one sub-path only, no compound paths yet).
 
 ## 1. Drawing tools
 
 | Feature | State | Stage |
 |---|---|---|
 | Rectangle, ellipse | Done | MVP |
-| Pen / bezier | UI only (tool button) | MVP |
+| Pen / bezier (click, drag, preview, close, continue, add and delete points) | Done | MVP |
 | Node / curve tool, Direct Select | UI only | MVP |
 | Star | UI only | MVP |
 | Spiral | UI only | Unplanned |
 | Freehand pencil / brush with pen pressure | Missing | Unplanned |
-| Line and polyline | Missing | Unplanned |
+| Line and polyline | Done (an open path of the Pen) | Unplanned |
 | Rounded corners on rectangles | Missing | Unplanned |
 | Arc, pie and polygon (n sides) | Missing | Unplanned |
 | Text | UI only | After MVP |
@@ -40,7 +40,7 @@ The most important structural gap: **Core has only `RectangleShape`, `EllipseSha
 | Nudge with arrow keys | Done | MVP |
 | Cut, copy, paste, paste in place, duplicate, delete | Done | MVP |
 | Rotate 90° and flip (menu) | UI only | MVP |
-| Edit path nodes, handles, add and delete nodes | Missing | MVP |
+| Edit path nodes, handles, add and delete nodes | Partly: add and delete points and continue a path with the Pen, moving nodes and handles is missing | MVP |
 | Skew / shear | Missing | Unplanned |
 | Scale and rotate around a chosen origin | Missing | Unplanned |
 | Select same fill or stroke, select by type | Missing | Unplanned |

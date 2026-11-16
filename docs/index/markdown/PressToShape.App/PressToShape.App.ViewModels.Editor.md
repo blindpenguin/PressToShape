@@ -23,6 +23,8 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public ScreenShape? Draft { get; }` - The shape that is being drawn, in screen space, or null.
 - `public SelectionOverlay Overlay { get; }` - Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.
 - `public Guid? EnteredGroupId { get; }` - The group that was entered, or null. The canvas dims everything outside it.
+- `public ScreenPenOverlay? PenOverlay { get; }` - The nodes and handles of the path that the Pen is drawing, in screen pixels. null when the Pen is not drawing.
+- `public Guid? HiddenShapeId { get; }` - The path that the Pen is continuing. The canvas leaves it out, because the draft shows it. null when none is.
 - `public CanvasCursorType CursorType { get; }` - The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle, otherwise the eyedropper while a pick is active, otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
 - `public double HorizontalScrollMinimum { get; }` - Smallest value of the horizontal scroll bar: minus the furthest the view offset may go.
 - `public double HorizontalScrollMaximum { get; }` - Largest value of the horizontal scroll bar: the furthest the view offset may go.
@@ -53,7 +55,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public void MiddlePressed(double screenX, double screenY)` - The middle button went down: drags the view with any tool, unless another drag is in progress.
 - `public void PointerMoved(double screenX, double screenY, bool shift = false, bool alt = false)` - The pointer moved. The position is in screen pixels of the canvas area.
 - `public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)` - The button went up. The position is in screen pixels of the canvas area.
-- `public void PointerHover(double screenX, double screenY)` - The pointer moved over the canvas without a drag: the handle under it decides the cursor.
+- `public void PointerHover(double screenX, double screenY)` - The pointer moved over the canvas without a drag: the handle under it decides the cursor, and the Pen shows its next segment.
 - `public void PointerLeft()` - The pointer left the canvas: no handle is hovered any more.
 - `public bool KeyPressed(CanvasKey key, bool shift)` - A key went down on the canvas. The arrow keys move the selection by 1 unit, with shift by 10. Escape leaves the entered group, or clears the selection, or ends a pick from the canvas. Nothing else happens during a drag.
 - `public void Cancel()` - Ends a drag without a result, for example when the pointer capture is lost.
@@ -286,7 +288,7 @@ State of the inspector: the selected tab and the view models of its tabs.
 
 `internal partial sealed class LayersViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:22-381`
+Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:22-383`
 
 State of the Layers tab: the layers of the document as header rows, and below each layer its shapes and groups as a tree, topmost first. PressToShape.App.ViewModels.Editor.LayersViewModel.Rows is the flat list that the view shows: the rows whose groups and layer are expanded. The list follows the document. When only names, flags or the selection changed, the existing rows are updated, so the list is not rebuilt under the user's click, and which groups are open survives undo and redo as far as the groups still exist.
 
@@ -372,7 +374,7 @@ What the Group, Arrange, Lock and Hide items of the Object menu do. A command is
 
 `internal enum ObjectRowType`
 
-Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowType.cs:4-17`
+Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowType.cs:4-20`
 
 What a row of the object list stands for. It decides the icon and the default name.
 
@@ -382,12 +384,13 @@ What a row of the object list stands for. It decides the icon and the default na
 - `public Rectangle` - A rectangle.
 - `public Ellipse` - An ellipse.
 - `public Group` - A group, which has rows of its own below it.
+- `public Path` - A path.
 
 ## ObjectRowViewModel (class)
 
 `internal partial sealed class ObjectRowViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowViewModel.cs:11-137`
+Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowViewModel.cs:11-140`
 
 One row of the object list: a layer header, a shape or a group. The values are display values that PressToShape.App.ViewModels.Editor.LayersViewModel copies from the document. The commands ask the list to change the document, they never change these values themselves.
 
@@ -408,6 +411,7 @@ One row of the object list: a layer header, a shape or a group. The values are d
 - `public bool IsGroup { get; }` - Whether the row is a group, so it can be opened and closed.
 - `public bool IsRectangle { get; }` - Whether the row is a rectangle.
 - `public bool IsEllipse { get; }` - Whether the row is an ellipse.
+- `public bool IsPath { get; }` - Whether the row is a path.
 - `public bool HasChildren { get; }` - Whether the row has an expander: layers and groups.
 - `public bool CanRename { get; }` - Whether the row can be renamed in the list. A layer is renamed elsewhere.
 - `public string Name { get; private set; }` - _(no documentation)_
@@ -480,15 +484,24 @@ An inspector tab that only shows an empty-state message (Assets). Title and mess
 
 `internal partial sealed class PropertiesViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:21-376`
+Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.Path.cs:12-72`
 
 The Properties tab: the position, size, rotation and appearance of the selected shapes, and the section expansion. The fields show the current values (updated in place while shapes are dragged or edited elsewhere) and every committed edit is one undo step.
 
 **Members**
 
+- `public IRelayCommand ClosePathCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ClosePath`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.ClosePath.
 - `public IRelayCommand GroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.Group`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.Group.
+- `public IRelayCommand OpenPathCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.OpenPath`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.OpenPath.
 - `public IRelayCommand ResetTransformCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ResetTransform`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.ResetTransform.
 - `public IRelayCommand UngroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.Ungroup`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.Ungroup.
+- `public IRelayCommand UseEvenOddFillCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseEvenOddFill`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseEvenOddFill.
+- `public IRelayCommand UseNonZeroFillCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseNonZeroFill`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseNonZeroFill.
+- `public bool HasPathSelected { get; }` - Whether the selection has at least one path (also inside a selected group).
+- `public bool IsPathClosed { get; }` - Whether every selected path is closed.
+- `public bool IsPathOpen { get; }` - Whether every selected path is open.
+- `public bool IsFillRuleNonZero { get; }` - Whether every selected path uses the non-zero fill rule.
+- `public bool IsFillRuleEvenOdd { get; }` - Whether every selected path uses the even-odd fill rule.
 - `public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null)` - _(no documentation)_
 - `public NumberFieldViewModel X { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Y { get; }` - _(no documentation)_
