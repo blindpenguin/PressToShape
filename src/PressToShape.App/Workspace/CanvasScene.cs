@@ -95,8 +95,12 @@ internal static class CanvasScene
             hasStroke ? appearance.StrokeWidth * scale : 0,
             appearance.Opacity,
             shape.Rotation,
-            Path: shape is PathShape path ? BuildPath(path, scale) : null);
+            Path: shape is PathShape path ? BuildPath(path, scale) : null,
+            Corners: shape is RectangleShape { EffectiveRadii.IsZero: false } rectangle ? Scaled(rectangle.EffectiveRadii, scale) : null);
     }
+
+    private static CornerRadii Scaled(CornerRadii radii, double scale) =>
+        new(radii.TopLeft * scale, radii.TopRight * scale, radii.BottomRight * scale, radii.BottomLeft * scale);
 
     // Fractions of the box become screen pixels from the box's top left corner, so the control needs no knowledge of the model.
     private static ScreenPath BuildPath(PathShape path, double scale)

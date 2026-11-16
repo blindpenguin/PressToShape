@@ -61,6 +61,7 @@ internal static class HistoryStepNames
         HistoryStepType.BendSegment => N("Bend segment"),
         HistoryStepType.ChangeSegment => N("Change segment"),
         HistoryStepType.DeletePathPoints => N("Delete path points"),
+        HistoryStepType.ChangeCornerRadius => N("Change corner radius"),
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown history step type."),
     };
 }

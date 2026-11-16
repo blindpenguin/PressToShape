@@ -17,6 +17,7 @@ namespace PressToShape.App.Workspace;
 /// <param name="Opacity">Opacity of the whole shape, 0 to 1.</param>
 /// <param name="RotationDegrees">Rotation in degrees, clockwise, around the center of the box. 0 for an upright shape.</param>
 /// <param name="Path">The outline of a path, relative to the top left corner of the box. <c>null</c> for every type except <see cref="ScreenShapeType.Path"/>.</param>
+/// <param name="Corners">The corner radii of a rectangle in screen pixels (the radii that are really used, see <see cref="RectangleShape.EffectiveRadii"/>). <c>null</c> for square corners and for every other type.</param>
 /// <param name="IsDimmed">Whether the shape is drawn faded because a group is entered and the shape is not inside it.</param>
 internal readonly record struct ScreenShape(
     ScreenShapeType Type,
@@ -30,4 +31,5 @@ internal readonly record struct ScreenShape(
     double Opacity,
     double RotationDegrees = 0,
     bool IsDimmed = false,
-    ScreenPath? Path = null);
+    ScreenPath? Path = null,
+    CornerRadii? Corners = null);

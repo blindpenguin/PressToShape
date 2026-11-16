@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
 using PressToShape.Core.History;
@@ -214,5 +215,78 @@ public class EditorStateNodeTests
         state.Edit(HistoryStepType.MovePathPoints, d => d.UpdateShapes(new Dictionary<Guid, Shape> { [path.Id] = path with { X = path.X + 1 } }));
 
         Assert.Equal([new NodeRef(path.Id, 1)], state.SelectedNodes);
+    }
+}
+
+public class EditorStateRoundedRectangleTests
+{
+    private static (EditorState State, RectangleShape Rectangle) Create(CornerRadii radii)
+    {
+        var rectangle = new RectangleShape { X = 0, Y = 0, Width = 200, Height = 100, Radii = radii };
+        var document = Document.Create("x");
+        var state = new EditorState(document.AddShape(document.Layers[0].Id, rectangle)) { ActiveTool = Tool.DirectSelect };
+        state.Select(rectangle.Id);
+        return (state, rectangle);
+    }
+
+    [Fact]
+    public void LinkCornerRadii_NewState_IsOn()
+    {
+        Assert.True(new EditorState().LinkCornerRadii);
+    }
+
+    [Fact]
+    public void LinkCornerRadii_Changed_RaisesPropertyChanged()
+    {
+        var state = new EditorState();
+        var raised = new List<string?>();
+        state.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        state.LinkCornerRadii = false;
+
+        Assert.Contains(nameof(EditorState.LinkCornerRadii), raised);
+    }
+
+    [Theory]
+    [InlineData(0, 4)]
+    [InlineData(1, 5)]
+    [InlineData(4, 8)]
+    public void SetNodeSelection_RectangleWithRoundedCorners_AllowsAllItsNodes(int roundedCorners, int nodeCount)
+    {
+        var radii = CornerRadii.Zero;
+        foreach (var corner in Enum.GetValues<Corner>().Take(roundedCorners))
+        {
+            radii = radii.With(corner, 10);
+        }
+
+        var (state, rectangle) = Create(radii);
+
+        state.SetNodeSelection(Enumerable.Range(0, nodeCount).Select(index => new NodeRef(rectangle.Id, index)));
+        state.Select(rectangle.Id);
+        state.SetNodeSelection([new NodeRef(rectangle.Id, nodeCount - 1)]);
+
+        Assert.Single(state.SelectedNodes);
+    }
+
+    [Fact]
+    public void Edit_RadiusRemoved_DropsNodeSelectionsThatNoLongerExist()
+    {
+        var (state, rectangle) = Create(CornerRadii.Uniform(10));
+        state.SetNodeSelection([new NodeRef(rectangle.Id, 7), new NodeRef(rectangle.Id, 2)]);
+
+        state.Edit(HistoryStepType.ChangeCornerRadius, document => document.UpdateShape(rectangle.Id, _ => rectangle with { Radii = CornerRadii.Zero }));
+
+        Assert.Equal([new NodeRef(rectangle.Id, 2)], state.SelectedNodes);
+    }
+
+    [Fact]
+    public void Edit_RadiusAdded_KeepsTheNodeSelection()
+    {
+        var (state, rectangle) = Create(CornerRadii.Zero);
+        state.SetNodeSelection([new NodeRef(rectangle.Id, 3)]);
+
+        state.Edit(HistoryStepType.ChangeCornerRadius, document => document.UpdateShape(rectangle.Id, _ => rectangle with { Radii = CornerRadii.Uniform(10) }));
+
+        Assert.Equal([new NodeRef(rectangle.Id, 3)], state.SelectedNodes);
     }
 }

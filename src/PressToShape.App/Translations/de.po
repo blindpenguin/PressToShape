@@ -363,6 +363,27 @@ msgstr "Breite"
 msgid "Keep proportions"
 msgstr "Proportionen beibehalten"
 
+msgid "Corners"
+msgstr "Ecken"
+
+msgid "Corner radius"
+msgstr "Eckenradius"
+
+msgid "Top left radius"
+msgstr "Radius oben links"
+
+msgid "Top right radius"
+msgstr "Radius oben rechts"
+
+msgid "Bottom right radius"
+msgstr "Radius unten rechts"
+
+msgid "Bottom left radius"
+msgstr "Radius unten links"
+
+msgid "Link corners"
+msgstr "Ecken verknüpfen"
+
 msgid "Height"
 msgstr "Höhe"
 
@@ -755,6 +776,9 @@ msgstr "Segment ändern"
 
 msgid "Delete path points"
 msgstr "Pfadpunkte löschen"
+
+msgid "Change corner radius"
+msgstr "Eckenradius ändern"
 
 msgctxt "object name"
 msgid "Group"

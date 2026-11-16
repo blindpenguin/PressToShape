@@ -512,6 +512,59 @@ _(no documentation)_
 - `public void Zoomed_DistancesAreInScreenPixels()` - _(no documentation)_
 - `public void OtherTools_DoNotTouchThePen()` - _(no documentation)_
 
+## CanvasInteractionRadiusDirectSelectTests (class)
+
+`public class CanvasInteractionRadiusDirectSelectTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionRadiusDirectSelectTests.cs:11-136`
+
+_(no documentation)_
+
+**Members**
+
+- `public void DragARadiusHandle_WithDirectSelect_ChangesTheRadii()` - _(no documentation)_
+- `public void DragWithDirectSelect_ShiftChangesOnlyThatCorner()` - _(no documentation)_
+- `public void Press_OnTheSameSpotWithTheNodeTool_StartsNoRadiusDragAndDoesNotChangeTheRadii()` - _(no documentation)_
+- `public void Press_OnARadiusHandleWithDirectSelect_WinsOverANodeAtTheSameSpot()` - _(no documentation)_
+- `public void Press_OnANodeOfASquareRectangle_StillSelectsTheNode()` - _(no documentation)_
+- `public void DragANodeOfARoundedRectangle_ConvertsItToALookAlikePathInOneStep()` - _(no documentation)_
+- `public void Undo_AfterEditingANodeOfARoundedRectangle_GivesBackTheRectangleWithItsRadii()` - _(no documentation)_
+- `public void RoundedRectangle_ShowsAllNodesOfItsOutlineAsSelectable()` - _(no documentation)_
+
+## CanvasInteractionRadiusTests (class)
+
+`public class CanvasInteractionRadiusTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionRadiusTests.cs:10-322`
+
+_(no documentation)_
+
+**Members**
+
+- `public void DragARadiusHandle_WithoutShift_SetsAllFourRadii()` - _(no documentation)_
+- `public void DragARadiusHandle_WithShift_ChangesOnlyThatCorner()` - _(no documentation)_
+- `public void DragARadiusHandle_WithAPen_BehavesLikeAMouse()` - _(no documentation)_
+- `public void DragARadiusHandle_ByMouseWithTheToggleOff_StillChangesAllWithoutShift()` - _(no documentation)_
+- `public void DragARadiusHandle_ByMouseWithTheToggleOn_ChangesOneCornerWithShift()` - _(no documentation)_
+- `public void DragARadiusHandle_ByTouchWithTheToggleOn_ChangesAllFour()` - _(no documentation)_
+- `public void DragARadiusHandle_ByTouchWithTheToggleOff_ChangesOnlyThatCorner()` - _(no documentation)_
+- `public void DragARadiusHandle_IsOneStepAndUndoPutsTheRadiiBack()` - _(no documentation)_
+- `public void DragARadiusHandle_BackToTheStart_RecordsNoStep()` - _(no documentation)_
+- `public void DragARadiusHandle_JustPressedOffTheCenter_DoesNotChangeTheRadius()` - _(no documentation)_
+- `public void DragARadiusHandle_PastTheLimit_StopsAtHalfOfTheShorterSide()` - _(no documentation)_
+- `public void DragARadiusHandle_TowardTheCorner_StopsAtZero()` - _(no documentation)_
+- `public void DragARadiusHandle_DuringTheDrag_ShowsThePreviewAndMarksTheDrag()` - _(no documentation)_
+- `public void Abort_DuringTheDrag_PutsTheRadiiBackWithoutAStep()` - _(no documentation)_
+- `public void DragARadiusHandle_LeavesTheSelectionPositionAndSizeAlone()` - _(no documentation)_
+- `public void Press_ByTouchBetweenTheCornerAndTheRadiusHandle_GrabsTheRadiusHandleNotTheResizeHandle()` - _(no documentation)_
+- `public void Press_OnTheCornerResizeHandle_StillResizes()` - _(no documentation)_
+- `public void Press_InTheMiddleOfTheRectangle_StillMoves()` - _(no documentation)_
+- `public void Press_OnTheHandleOfALockedRectangle_StartsNoRadiusDrag()` - _(no documentation)_
+- `public void Press_OnASmallRectangle_StartsNoRadiusDrag()` - _(no documentation)_
+- `public void Press_WithTwoShapesSelected_StartsNoRadiusDrag()` - _(no documentation)_
+- `public void DragARadiusHandle_OnARotatedRectangle_UsesTheRotatedFrame()` - _(no documentation)_
+- `public void DragARadiusHandle_ZoomedIn_FollowsTheScreenInset()` - _(no documentation)_
+
 ## CanvasInteractionTests (class)
 
 `public class CanvasInteractionTests`
@@ -676,6 +729,23 @@ _(no documentation)_
 - `public void BuildShape_RectangleAndEllipse_HaveNoPathData()` - _(no documentation)_
 - `public void Build_PathInAGroup_IsFlattenedLikeOtherShapes()` - _(no documentation)_
 - `public void Build_HiddenPath_IsLeftOut()` - _(no documentation)_
+
+## CanvasSceneRoundedTests (class)
+
+`public class CanvasSceneRoundedTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasSceneRoundedTests.cs:7-61`
+
+_(no documentation)_
+
+**Members**
+
+- `public void BuildShape_SquareRectangle_HasNoCorners()` - _(no documentation)_
+- `public void BuildShape_RoundedRectangle_ScalesTheRadiiByTheZoom()` - _(no documentation)_
+- `public void BuildShape_RadiusAboveTheLimit_IsPassedLimited()` - _(no documentation)_
+- `public void BuildShape_FlatRectangle_HasNoCorners()` - _(no documentation)_
+- `public void BuildShape_EllipseAndPath_HaveNoCorners()` - _(no documentation)_
+- `public void BuildShape_RotatedRoundedRectangle_KeepsTheRotationAndTheRadii()` - _(no documentation)_
 
 ## CanvasSceneTests (class)
 
@@ -932,6 +1002,34 @@ _(no documentation)_
 - `public void Render_HiddenShapeId_DoesNotThrow()` - _(no documentation)_
 - `public void ScreenPenOverlay_From_MapsNodesHandlesAndTheHighlightToTheScreen()` - _(no documentation)_
 
+## DocumentCanvasControlRadiusHandleTests (class)
+
+`public class DocumentCanvasControlRadiusHandleTests`
+
+Source: `tests/PressToShape.App.Tests/DocumentCanvasControlRadiusHandleTests.cs:14-73`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Render_SelectOverlayWithRadiusHandles_DoesNotThrow()` - _(no documentation)_
+- `public void Render_DirectSelectOverlayWithRadiusHandlesAtTouchSize_DoesNotThrow()` - _(no documentation)_
+- `public void Render_OverlayWithoutRadiusHandles_DoesNotThrow()` - _(no documentation)_
+
+## DocumentCanvasControlRoundedTests (class)
+
+`public class DocumentCanvasControlRoundedTests`
+
+Source: `tests/PressToShape.App.Tests/DocumentCanvasControlRoundedTests.cs:12-52`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Render_RoundedRectangles_DoesNotThrow()` - _(no documentation)_
+- `public void Render_RoundedRectangleWithoutFillOrStrokeAndWithOpacity_DoesNotThrow()` - _(no documentation)_
+- `public void Render_FlatRoundedRectangle_DoesNotThrow()` - _(no documentation)_
+
 ## DocumentFileServiceTests (class)
 
 `public sealed class DocumentFileServiceTests : IDisposable`
@@ -1109,7 +1207,7 @@ _(no documentation)_
 
 `public class EditorStateNodeTests`
 
-Source: `tests/PressToShape.App.Tests/EditorStateNodeTests.cs:11-218`
+Source: `tests/PressToShape.App.Tests/EditorStateNodeTests.cs:12-219`
 
 _(no documentation)_
 
@@ -1151,6 +1249,22 @@ _(no documentation)_
 - `public void Build_HiddenShapeId_LeavesThatShapeOut()` - _(no documentation)_
 - `public void Build_HiddenShapeIdInsideAGroup_LeavesThatShapeOut()` - _(no documentation)_
 - `public void Build_NoHiddenShapeId_DrawsEverything()` - _(no documentation)_
+
+## EditorStateRoundedRectangleTests (class)
+
+`public class EditorStateRoundedRectangleTests`
+
+Source: `tests/PressToShape.App.Tests/EditorStateNodeTests.cs:221-292`
+
+_(no documentation)_
+
+**Members**
+
+- `public void LinkCornerRadii_NewState_IsOn()` - _(no documentation)_
+- `public void LinkCornerRadii_Changed_RaisesPropertyChanged()` - _(no documentation)_
+- `public void SetNodeSelection_RectangleWithRoundedCorners_AllowsAllItsNodes(int roundedCorners, int nodeCount)` - _(no documentation)_
+- `public void Edit_RadiusRemoved_DropsNodeSelectionsThatNoLongerExist()` - _(no documentation)_
+- `public void Edit_RadiusAdded_KeepsTheNodeSelection()` - _(no documentation)_
 
 ## EditorStateTests (class)
 
@@ -1474,7 +1588,7 @@ The application of the headless UI tests: the real theme and control styles, but
 
 `public class HistoryViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-240`
+Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-241`
 
 _(no documentation)_
 
@@ -2273,7 +2387,7 @@ _(no documentation)_
 
 `public class PropertiesSectionsTests`
 
-Source: `tests/PressToShape.App.Tests/PropertiesSectionsTests.cs:8-72`
+Source: `tests/PressToShape.App.Tests/PropertiesSectionsTests.cs:8-81`
 
 _(no documentation)_
 
@@ -2286,6 +2400,7 @@ _(no documentation)_
 - `public void For_NodeTool_ShowsAppearancePathAndNode()` - _(no documentation)_
 - `public void For_ToolWithoutProperties_ShowsNothing()` - _(no documentation)_
 - `public void For_EveryTool_IsDefinedAndShowsPathForPenDirectSelectAndNode_AndNodeForDirectSelectAndNode()` - _(no documentation)_
+- `public void For_EveryTool_ShowsTheCornersSectionOnlyForSelectAndDirectSelect()` - _(no documentation)_
 - `public void For_UndefinedTool_Throws()` - _(no documentation)_
 
 ## PropertiesViewColorTests (class)
@@ -2302,6 +2417,56 @@ _(no documentation)_
 - `public void ShiftClickOnASwatch_AppliesItToTheStroke_AndAPlainClickToTheFill()` - _(no documentation)_
 - `public void TheApp_IncludesTheColorPickerTheme()` - _(no documentation)_
 - `public void TheColorPicker_WithTheAppsStyles_HasASize()` - _(no documentation)_
+
+## PropertiesViewCornersTests (class)
+
+`public class PropertiesViewCornersTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewCornersTests.cs:18-133`
+
+_(no documentation)_
+
+**Members**
+
+- `public void CornersSection_OneRectangleSelected_ShowsTheFiveFieldsAndTheToggle()` - _(no documentation)_
+- `public void CornersSection_AnEllipseSelected_IsHidden()` - _(no documentation)_
+- `public void CornersSection_Fields_ShowTheRadiiAndTheLinkedFieldIsEmptyWhenTheyDiffer()` - _(no documentation)_
+- `public void CornersSection_ViewModelChange_UpdatesTheText()` - _(no documentation)_
+- `public void CornersSection_LinkToggle_IsBoundToTheSharedState()` - _(no documentation)_
+- `public void CornersSection_OnTheTabletLayout_IsStillShown()` - _(no documentation)_
+
+## PropertiesViewModelCornersTests (class)
+
+`public class PropertiesViewModelCornersTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewModelCornersTests.cs:11-314`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ShowCorners_OneRectangleWithSelectAndDirectSelect_IsTrue()` - _(no documentation)_
+- `public void ShowCorners_OtherTools_IsFalse()` - _(no documentation)_
+- `public void ShowCorners_ChangingTheTool_UpdatesTheFlag()` - _(no documentation)_
+- `public void ShowCorners_EllipsePathTwoShapesOrGroup_IsFalse()` - _(no documentation)_
+- `public void ShowCorners_NothingSelected_IsFalse()` - _(no documentation)_
+- `public void Fields_ShowTheEffectiveRadii()` - _(no documentation)_
+- `public void LinkedField_AllRadiiEqual_ShowsTheValue()` - _(no documentation)_
+- `public void LinkedField_RadiiDiffer_IsMixedAndEmpty()` - _(no documentation)_
+- `public void LinkedField_Entry_SetsAllFourRadiiAsOneStep()` - _(no documentation)_
+- `public void CornerField_WithTheToggleOn_SetsAllFour()` - _(no documentation)_
+- `public void CornerField_WithTheToggleOff_SetsOnlyThatCorner()` - _(no documentation)_
+- `public void LinkedField_WithTheToggleOff_StillSetsAllFour()` - _(no documentation)_
+- `public void LinkCorners_SharesTheStateWithTheEditorState()` - _(no documentation)_
+- `public void Entry_AboveTheLimit_IsLimitedAndTheFieldShowsTheLimitedValue()` - _(no documentation)_
+- `public void Entry_AboveTheLimitWhenAlreadyAtTheLimit_ShowsTheLimitedValueAndMakesNoStep()` - _(no documentation)_
+- `public void Entry_InvalidText_RevertsWithoutAStep(string text)` - _(no documentation)_
+- `public void Entry_ThenUndo_PutsAllRadiiBack()` - _(no documentation)_
+- `public void Fields_FollowAChangeOfTheDocumentLikeADrag()` - _(no documentation)_
+- `public void Fields_AfterAResize_ShowTheLimitedRadius()` - _(no documentation)_
+- `public void ShowCorners_RectangleThatGetsLocked_IsHiddenBecauseALockedShapeIsNotSelected()` - _(no documentation)_
+- `public void CommitPendingEdits_TypedRadius_IsApplied()` - _(no documentation)_
+- `public void ChangingTheRadius_DoesNotChangeThePositionOrSizeOrSelection()` - _(no documentation)_
 
 ## PropertiesViewModelNodeTests (class)
 
@@ -2454,6 +2619,39 @@ _(no documentation)_
 - `public void ThePathSection_WithASelectedPath_ShowsTheChoicesAndMarksTheOnesThatAreSet()` - _(no documentation)_
 - `public void ThePathSection_ClickingAChoice_ChangesThePathAndMovesTheMark()` - _(no documentation)_
 - `public void ThePathSection_InTheTouchLayout_HasButtonsOfAtLeast48()` - _(no documentation)_
+
+## RadiusHandlesTests (class)
+
+`public class RadiusHandlesTests`
+
+Source: `tests/PressToShape.App.Tests/RadiusHandlesTests.cs:8-237`
+
+_(no documentation)_
+
+**Members**
+
+- `public void IsShown_ShorterSideOnTheScreen_NeedsAtLeastSixtyFourPixels(double zoom, double side, bool expected)` - _(no documentation)_
+- `public void IsShown_UsesTheShorterSideEvenIfItIsTheWidth()` - _(no documentation)_
+- `public void Position_RadiusZero_IsTwentyFourPixelsInOnBothSides()` - _(no documentation)_
+- `public void Position_RadiusZeroAtDoubleZoom_IsTwelveDocumentUnitsIn()` - _(no documentation)_
+- `public void Position_LargestRadius_IsHalfTheShorterSideIn()` - _(no documentation)_
+- `public void Position_RadiusInBetween_MovesInAStraightLine()` - _(no documentation)_
+- `public void Position_UsesTheRadiusOfThatCornerOnly()` - _(no documentation)_
+- `public void Position_RadiusAboveTheLimit_IsPlacedAtTheLimit()` - _(no documentation)_
+- `public void Position_RotatedByNinetyDegrees_TurnsAboutTheCenter()` - _(no documentation)_
+- `public void Hit_AtTheHandleCenter_FindsTheCorner()` - _(no documentation)_
+- `public void Hit_InsideAndOutsideTheGrabArea_DependsOnTheGrabSize()` - _(no documentation)_
+- `public void Hit_GrabAreaIsInScreenPixels_SoItShrinksInDocumentUnitsWhenZoomedIn()` - _(no documentation)_
+- `public void Hit_NothingNear_IsNull()` - _(no documentation)_
+- `public void Hit_TwoHandlesOverlap_TheCloserOneWins()` - _(no documentation)_
+- `public void Hit_Rotated_UsesTheRotatedPositions()` - _(no documentation)_
+- `public void RadiusAt_PointerAtTheHandle_GivesTheCurrentRadius()` - _(no documentation)_
+- `public void RadiusAt_PressedAFewPixelsOffTheHandle_DoesNotJumpWithTheGrabOffset()` - _(no documentation)_
+- `public void RadiusAt_DragInwardAndOutward_Follows()` - _(no documentation)_
+- `public void RadiusAt_Limits_StayBetweenZeroAndHalfTheShorterSide()` - _(no documentation)_
+- `public void RadiusAt_UsesTheMeanOfTheTwoInsets()` - _(no documentation)_
+- `public void RadiusAt_EveryCornerWhenRotated_RoundTripsWithPosition(Corner corner)` - _(no documentation)_
+- `public void RadiusAt_ZoomedIn_UsesTheMinimumInsetInDocumentUnits()` - _(no documentation)_
 
 ## RecentColorsTests (class)
 
@@ -2805,6 +3003,28 @@ _(no documentation)_
 - `public void EnteredGroup_HasAnOutlineEvenWithoutSelection()` - _(no documentation)_
 - `public void EnteredGroup_IsPartOfTheOverlayForOtherToolsToo()` - _(no documentation)_
 - `public void NoEnteredGroupOrUnknownId_HasNoEnteredOutline()` - _(no documentation)_
+
+## SelectionOverlayRadiusTests (class)
+
+`public class SelectionOverlayRadiusTests`
+
+Source: `tests/PressToShape.App.Tests/SelectionOverlayRadiusTests.cs:10-140`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Build_OneRectangle_HasFourRadiusHandlesAtTheirPositions()` - _(no documentation)_
+- `public void Build_RadiusHandles_FollowTheZoomAndTheOrigin()` - _(no documentation)_
+- `public void Build_SelectKeepsItsResizeHandlesAndDirectSelectHasNoneOfThem()` - _(no documentation)_
+- `public void Build_OtherTools_HaveNoRadiusHandles()` - _(no documentation)_
+- `public void Build_TwoShapes_HaveNoRadiusHandles()` - _(no documentation)_
+- `public void Build_EllipseAndPath_HaveNoRadiusHandles()` - _(no documentation)_
+- `public void Build_GroupWithOneRectangle_HasNoRadiusHandles()` - _(no documentation)_
+- `public void Build_LockedOrHiddenRectangle_HasNoRadiusHandles()` - _(no documentation)_
+- `public void Build_SmallRectangleOnTheScreen_HasNoRadiusHandlesUntilItIsBigEnough()` - _(no documentation)_
+- `public void Build_RoundedAndRotatedRectangle_PutsTheHandlesOnTheRotatedPositions()` - _(no documentation)_
+- `public void Empty_HasNoRadiusHandles()` - _(no documentation)_
 
 ## SelectionOverlayTests (class)
 

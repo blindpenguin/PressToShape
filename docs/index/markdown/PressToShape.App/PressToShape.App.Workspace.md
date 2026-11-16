@@ -51,6 +51,7 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 
 - `public RingMenuMode SelectForContextMenu(double x, double y, double grabSize = 10)` - Prepares the selection for the ring menu at this document position, with the same hit rules as a click. A selected object, or a handle of the selection, keeps the selection as it is. Another object that can be selected (a group counts as one object, and inside an entered group a member counts) becomes the only selected one. Empty canvas, and objects that are hidden or locked, clear the selection. Returns which slots the ring shows. The selection changes, but no history step is recorded.
 - `public void DoubleClicked(double x, double y, InputPointerType inputType = Mouse)` - A double-click at this document position. With the Node tool on a node it changes the type of the node (see PressToShape.App.Workspace.CanvasInteraction.NodeDoubleClicked). With the Select tool on a group it enters the group and selects what is under the pointer; on a shape of an entered group that is a group itself it enters that group. On empty space it leaves the entered group by one level. Ends a drag that is in progress without a result.
+- `public bool IsRadiusDragging { get; }` - Whether a radius handle is being dragged.
 - `internal NodeEditor Nodes { get; }` - The editor of the selected nodes (type, segments, delete, nudge, position). Shared with the keys of the canvas.
 - `public bool IsNodeDragging { get; }` - Whether a node, handle or bend drag is in progress.
 - `public bool IsPenDrawing { get; }` - Whether the Pen has an unfinished path.
@@ -110,7 +111,7 @@ The one mapping between screen pixels and document units. Drawing and picking bo
 
 `internal static class CanvasScene`
 
-Source: `src/PressToShape.App/Workspace/CanvasScene.cs:12-120`
+Source: `src/PressToShape.App/Workspace/CanvasScene.cs:12-124`
 
 Turns a document into the shapes to draw on the canvas, so the drawing control needs no geometry rules.
 
@@ -269,6 +270,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - `public void CancelColorPick()` - Ends the pick without a color (Escape, or a click away from every shape).
 - `public void CompleteColorPick(Color? color)` - Ends the pick. A color is reported to PressToShape.App.Workspace.EditorState.ColorPicked, null ends the pick without a change.
 - `public Appearance DefaultAppearance { get; set; }` - _(no documentation)_
+- `public bool LinkCornerRadii { get; set; }` - _(no documentation)_
 - `public ShapeClipboard Clipboard { get; }` - The shapes that were copied or cut. Kept by the app, nothing goes to the system clipboard.
 - `public SelectionBox? SelectionBox { get; set; }` - _(no documentation)_
 - `public double ArtboardWidth { get; }` - Artboard width of the current document.
@@ -353,7 +355,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-66`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-67`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -701,7 +703,7 @@ What a press with the Pen did to the unfinished path.
 
 `internal enum PropertiesSection`
 
-Source: `src/PressToShape.App/Workspace/PropertiesSection.cs:6-18`
+Source: `src/PressToShape.App/Workspace/PropertiesSection.cs:6-21`
 
 The sections of the Properties tab. Combined as flags to say which ones a tool shows.
 
@@ -714,18 +716,39 @@ The sections of the Properties tab. Combined as flags to say which ones a tool s
 - `public Align` - _(no documentation)_
 - `public QuickActions` - _(no documentation)_
 - `public Node` - The nodes of the selected paths: position of a node and, for the Node tool, the type and segment buttons.
+- `public Corners` - The corner radii of the one selected rectangle. Shown by the tools that show the radius handles.
 
 ## PropertiesSections (class)
 
 `internal static class PropertiesSections`
 
-Source: `src/PressToShape.App/Workspace/PropertiesSections.cs:6-25`
+Source: `src/PressToShape.App/Workspace/PropertiesSections.cs:6-26`
 
 Which sections of the Properties tab are relevant for a tool.
 
 **Members**
 
 - `public PropertiesSection For(Tool tool)` - The sections to show for tool. A rule and not a table. The throwing arm only covers values outside the enum (the compiler asks for it). A test covers every PressToShape.App.Workspace.Tool value, so a new tool fails there until it is placed here.
+
+## RadiusHandles (class)
+
+`internal static class RadiusHandles`
+
+Source: `src/PressToShape.App/Workspace/RadiusHandles.cs:12-157`
+
+Where the four radius handles of a rectangle are and which radius a pointer position means. Pure functions, document units, like PressToShape.App.Workspace.SelectionGeometry. A handle sits inside the rectangle on the diagonal of its corner: it is the same distance (the inset) from both sides of the corner. The inset runs from PressToShape.App.Workspace.RadiusHandles.MinInset screen pixels at radius 0 to half of the shorter side at the largest radius, in a straight line, so a handle never jumps when it is pressed and never lies on the corner resize handle.
+
+**Members**
+
+- `public double MinInset` - The inset of a handle at radius 0, in screen pixels.
+- `public double MinSide` - The handles are only shown when the shorter side of the rectangle is at least this long on the screen, in screen pixels.
+- `public double GrabSize` - The size of the area that grabs a handle with a mouse or a pen, in screen pixels.
+- `public double TouchGrabSize` - The size of the area that grabs a handle with a finger, in screen pixels. Smaller than the grab area of a resize handle, so the corner handle stays reachable.
+- `public bool IsShown(RectangleShape rectangle, double zoomPercent)` - Whether the handles are shown for the rectangle at this zoom: its shorter side is at least PressToShape.App.Workspace.RadiusHandles.MinSide on the screen.
+- `public (double X, double Y) Position(RectangleShape rectangle, Corner corner, double zoomPercent)` - The center of the handle of a corner in document units, with the rotation of the rectangle applied.
+- `public Corner? Hit(RectangleShape rectangle, double x, double y, double zoomPercent, double grabSize = 14)` - The corner whose handle grab area contains the document point, or null. The closest handle wins, then the order top left, top right, bottom right, bottom left.
+- `public double GrabOffset(RectangleShape rectangle, Corner corner, double x, double y, double zoomPercent)` - How far the center of the handle is from the pointer along the diagonal, in document units of inset. The pointer may be a few pixels off the handle's center when it presses: pass this to PressToShape.App.Workspace.RadiusHandles.RadiusAt so the handle does not jump.
+- `public double RadiusAt(RectangleShape rectangle, Corner corner, double x, double y, double zoomPercent, double grabOffset)` - The radius a pointer position means for a corner: from 0 to half of the shorter side. Drag with the same grabOffset (from PressToShape.App.Workspace.RadiusHandles.GrabOffset at the press) for the whole drag.
 
 ## RecentColors (class)
 
@@ -1005,6 +1028,7 @@ A point in screen pixels.
 
 - Injected into `PressToShape.App.Workspace.ScreenHandle`
 - Injected into `PressToShape.App.Workspace.ScreenLine`
+- Injected into `PressToShape.App.Workspace.ScreenRadiusHandle`
 
 ## ScreenPolygon (record)
 
@@ -1023,6 +1047,25 @@ A closed shape of straight lines in screen pixels, for example the turned outlin
 **Relationships**
 
 - Injected into `PressToShape.App.Workspace.SelectionOverlay`
+
+## ScreenRadiusHandle (record)
+
+`internal readonly record ScreenRadiusHandle : IEquatable<ScreenRadiusHandle>`
+
+Source: `src/PressToShape.App/Workspace/ScreenRadiusHandle.cs:6-6`
+
+A radius handle to draw: the corner it belongs to, its center and its side length, in screen pixels.
+
+**Members**
+
+- `public ScreenRadiusHandle(Corner Corner, ScreenPoint Center, double Size)` - A radius handle to draw: the corner it belongs to, its center and its side length, in screen pixels.
+- `public ScreenPoint Center { get; init; }` - _(no documentation)_
+- `public Corner Corner { get; init; }` - _(no documentation)_
+- `public double Size { get; init; }` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Workspace.ScreenPoint`
 
 ## ScreenRect (record)
 
@@ -1044,13 +1087,13 @@ A rectangle in screen pixels, for example the outline of the selected shape.
 
 `internal readonly record ScreenShape : IEquatable<ScreenShape>`
 
-Source: `src/PressToShape.App/Workspace/ScreenShape.cs:21-33`
+Source: `src/PressToShape.App/Workspace/ScreenShape.cs:22-35`
 
 A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
 
 **Members**
 
-- `public ScreenShape(ScreenShapeType Type, double X, double Y, double Width, double Height, Color? Fill, Color? Stroke, double StrokeWidth, double Opacity, double RotationDegrees = 0, bool IsDimmed = false, ScreenPath? Path = null)` - A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
+- `public ScreenShape(ScreenShapeType Type, double X, double Y, double Width, double Height, Color? Fill, Color? Stroke, double StrokeWidth, double Opacity, double RotationDegrees = 0, bool IsDimmed = false, ScreenPath? Path = null, CornerRadii? Corners = null)` - A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
 - `public ScreenShapeType Type { get; init; }` - Rectangle, ellipse or path.
 - `public double X { get; init; }` - Left edge in screen pixels.
 - `public double Y { get; init; }` - Top edge in screen pixels.
@@ -1063,6 +1106,7 @@ A shape ready to draw: position, size and stroke width are already in screen pix
 - `public double RotationDegrees { get; init; }` - Rotation in degrees, clockwise, around the center of the box. 0 for an upright shape.
 - `public bool IsDimmed { get; init; }` - Whether the shape is drawn faded because a group is entered and the shape is not inside it.
 - `public ScreenPath? Path { get; init; }` - The outline of a path, relative to the top left corner of the box. null for every type except PressToShape.App.Workspace.ScreenShapeType.Path.
+- `public CornerRadii? Corners { get; init; }` - The corner radii of a rectangle in screen pixels (the radii that are really used, see PressToShape.Core.Shapes.RectangleShape.EffectiveRadii). null for square corners and for every other type.
 
 **Relationships**
 
@@ -1172,7 +1216,7 @@ Where the selection frame and its handles are, and which handle a point hits. Pu
 
 `internal sealed record SelectionOverlay : IEquatable<SelectionOverlay>`
 
-Source: `src/PressToShape.App/Workspace/SelectionOverlay.cs:19-115`
+Source: `src/PressToShape.App/Workspace/SelectionOverlay.cs:20-143`
 
 Everything the canvas draws for the selection, in screen pixels: an outline for every selected shape, the box and handles around the selection, the line to the rotate handle, and the box that is being dragged on empty space.
 
@@ -1185,6 +1229,7 @@ Everything the canvas draws for the selection, in screen pixels: an outline for 
 - `public ScreenLine? RotateLink { get; init; }` - The line from the middle of the top edge to the rotate handle (Select tool only).
 - `public ScreenRect? SelectionBox { get; init; }` - The box being dragged, if any (Select tool only).
 - `public ScreenPolygon? EnteredGroup { get; init; }` - The outline of the entered group, if one is entered. Drawn for every tool.
+- `public IReadOnlyList<ScreenRadiusHandle> RadiusHandles { get; init; }` - The four radius handles of the one selected rectangle (Select and Direct Select only). Empty for anything else, and for a rectangle that is small on the screen.
 - `public double HandleSize` - The side of a handle in screen pixels.
 - `public SelectionOverlay Empty { get; }` - An overlay without anything to draw.
 - `public SelectionOverlay Build(Document document, IEnumerable<Guid> selectedIds, Tool tool, double zoomPercent, double originX, double originY, SelectionBox? selectionBox = null, Guid? enteredGroupId = null)` - Builds the overlay. Shapes of hidden or locked layers are not part of it, even if their ids are in the selection. Handles, the box, the link and the dragged box exist only for the Select tool; outlines exist for every tool.

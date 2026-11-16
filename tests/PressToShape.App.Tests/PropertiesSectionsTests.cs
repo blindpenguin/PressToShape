@@ -8,7 +8,8 @@ namespace PressToShape.App.Tests;
 public class PropertiesSectionsTests
 {
     private const PropertiesSection Selection =
-        PropertiesSection.Transform | PropertiesSection.Appearance | PropertiesSection.Align | PropertiesSection.QuickActions;
+        PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Align
+        | PropertiesSection.QuickActions;
 
     [Fact]
     public void For_SelectTool_ShowsTransformAppearanceAlignAndQuickActions()
@@ -62,6 +63,14 @@ public class PropertiesSectionsTests
 
         Assert.Equal([Tool.DirectSelect, Tool.Pen, Tool.Node], withPath);
         Assert.Equal([Tool.DirectSelect, Tool.Node], withNode);
+    }
+
+    [Fact]
+    public void For_EveryTool_ShowsTheCornersSectionOnlyForSelectAndDirectSelect()
+    {
+        var withCorners = Enum.GetValues<Tool>().Where(tool => PropertiesSections.For(tool).HasFlag(PropertiesSection.Corners)).ToArray();
+
+        Assert.Equal([Tool.Select, Tool.DirectSelect], withCorners);
     }
 
     [Fact]

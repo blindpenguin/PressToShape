@@ -88,12 +88,24 @@ public static class SvgExport
             case GroupShape group:
                 WriteGroup(writer, group);
                 return;
-            case RectangleShape:
+            case RectangleShape { EffectiveRadii.IsUniform: false } rounded:
+                // SVG has one radius for all corners of a rect, so different radii are written as a path with arcs.
+                writer.WriteStartElement("path", SvgNamespace);
+                writer.WriteAttributeString("d", RoundedRectangleData(rounded));
+                break;
+            case RectangleShape rectangle:
                 writer.WriteStartElement("rect", SvgNamespace);
                 writer.WriteAttributeString("x", Number(shape.X));
                 writer.WriteAttributeString("y", Number(shape.Y));
                 writer.WriteAttributeString("width", Number(shape.Width));
                 writer.WriteAttributeString("height", Number(shape.Height));
+                if (rectangle.EffectiveRadii.TopLeft > 0)
+                {
+                    var radius = Number(rectangle.EffectiveRadii.TopLeft);
+                    writer.WriteAttributeString("rx", radius);
+                    writer.WriteAttributeString("ry", radius);
+                }
+
                 break;
             case EllipseShape:
                 writer.WriteStartElement("ellipse", SvgNamespace);
@@ -149,6 +161,26 @@ public static class SvgExport
 
     // Absolute coordinates in the frame before the rotation, which the transform of the element turns. A segment without handles is a
     // line. An open path gets no Z, so SVG fills it as if closed but draws no stroke on the closing line.
+    // The outline clockwise from the top left: a line to the start of each arc, then the arc (a quarter circle, sweep flag 1 for clockwise).
+    private static string RoundedRectangleData(RectangleShape rectangle)
+    {
+        var corners = RoundedRectangleGeometry.Corners(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, rectangle.EffectiveRadii);
+        var data = new StringBuilder();
+        for (var i = 0; i < corners.Count; i++)
+        {
+            var corner = corners[i];
+            data.Append(i == 0 ? "M " : " L ").Append(Number(corner.Start.X)).Append(' ').Append(Number(corner.Start.Y));
+            if (corner.Radius > 0)
+            {
+                var radius = Number(corner.Radius);
+                data.Append(" A ").Append(radius).Append(' ').Append(radius).Append(" 0 0 1 ")
+                    .Append(Number(corner.End.X)).Append(' ').Append(Number(corner.End.Y));
+            }
+        }
+
+        return data.Append(" Z").ToString();
+    }
+
     private static string PathData(PathShape path)
     {
         var nodes = path.ToDocumentNodes();

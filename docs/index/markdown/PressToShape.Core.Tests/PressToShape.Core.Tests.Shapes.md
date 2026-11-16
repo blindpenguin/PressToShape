@@ -37,6 +37,29 @@ _(no documentation)_
 - `public void Equals_SameChannels_IsEqual()` - _(no documentation)_
 - `public void Equals_DifferentAlpha_IsNotEqual()` - _(no documentation)_
 
+## CornerRadiiTests (class)
+
+`public class CornerRadiiTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/CornerRadiiTests.cs:7-109`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Zero_Default_IsZeroAndUniform()` - _(no documentation)_
+- `public void Uniform_Value_SetsAllCorners()` - _(no documentation)_
+- `public void Indexer_Corner_ReturnsItsRadius(Corner corner, double expected)` - _(no documentation)_
+- `public void With_Corner_ChangesOnlyThatCorner(Corner corner)` - _(no documentation)_
+- `public void Indexer_UndefinedCorner_Throws()` - _(no documentation)_
+- `public void With_UndefinedCorner_Throws()` - _(no documentation)_
+- `public void IsUniform_DifferentRadii_IsFalse()` - _(no documentation)_
+- `public void Limited_WideBox_UsesHalfOfTheHeight()` - _(no documentation)_
+- `public void Limited_TallBox_UsesHalfOfTheWidth()` - _(no documentation)_
+- `public void Limited_SquareBox_UsesHalfOfTheSide()` - _(no documentation)_
+- `public void Limited_ZeroSizeBox_GivesZero()` - _(no documentation)_
+- `public void Limited_NegativeValue_BecomesZero()` - _(no documentation)_
+
 ## EllipseShapeTests (class)
 
 `public class EllipseShapeTests`
@@ -333,6 +356,30 @@ _(no documentation)_
 - `public void Segments_ClosedTriangle_HasThreeLines()` - _(no documentation)_
 - `public void Segments_OpenPath_HasOneLessThanNodes()` - _(no documentation)_
 
+## RectangleShapeRadiiTests (class)
+
+`public class RectangleShapeRadiiTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/RectangleShapeRadiiTests.cs:7-149`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Radii_NewRectangle_IsZero()` - _(no documentation)_
+- `public void Radii_InvalidValue_Throws(double value)` - _(no documentation)_
+- `public void EffectiveRadii_RadiusAboveLimit_IsLimitedButStoredValueIsKept()` - _(no documentation)_
+- `public void EffectiveRadii_ResizedSmallerAndLargerAgain_ReturnsToTheStoredValue()` - _(no documentation)_
+- `public void Radii_MovedAndRotated_AreKept()` - _(no documentation)_
+- `public void Equals_DifferentRadii_AreNotEqual()` - _(no documentation)_
+- `public void Contains_SquareCorners_HitsTheCornerPoints()` - _(no documentation)_
+- `public void Contains_RoundedCorner_MissesTheCutOffArea()` - _(no documentation)_
+- `public void Contains_RoundedCorner_HitsInsideTheArcAndOnTheStraightParts()` - _(no documentation)_
+- `public void Contains_OnlyOneCornerRounded_OtherCornersStaySquare()` - _(no documentation)_
+- `public void Contains_RadiusAboveLimit_UsesTheEffectiveRadius()` - _(no documentation)_
+- `public void Contains_Rotated_RoundsTheRotatedCorners()` - _(no documentation)_
+- `public void Contains_OutsideTheBox_IsFalse()` - _(no documentation)_
+
 ## RectangleShapeTests (class)
 
 `public class RectangleShapeTests`
@@ -356,6 +403,27 @@ _(no documentation)_
 - `public void Id_Empty_Throws()` - _(no documentation)_
 - `public void Appearance_Null_Throws()` - _(no documentation)_
 - `public void Contains_Point_IncludesEdges(double x, double y, bool expected)` - _(no documentation)_
+
+## ShapeConversionRoundedTests (class)
+
+`public class ShapeConversionRoundedTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/ShapeConversionRoundedTests.cs:7-178`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ToPath_ZeroRadii_GivesTheFourCornerNodesOfBefore()` - _(no documentation)_
+- `public void ToPath_RadiusOnlyAboveTheLimit_StillRoundsWithTheLimit()` - _(no documentation)_
+- `public void ToPath_OneRoundedCorner_HasFiveNodes(Corner corner)` - _(no documentation)_
+- `public void ToPath_AllCornersRounded_HasEightNodes()` - _(no documentation)_
+- `public void ToPath_AllCornersRounded_NodesSitAtTheEndsOfTheArcs()` - _(no documentation)_
+- `public void ToPath_RoundedCorner_ArcPointsLieOnTheCircle()` - _(no documentation)_
+- `public void ToPath_Rounded_KeepsIdNameFlagsBoxRotationAndAppearance()` - _(no documentation)_
+- `public void ToPath_Rounded_ContainsTheSamePointsAsTheRoundedRectangle(double rotation)` - _(no documentation)_
+- `public void Corners_ZeroRadius_StartAndEndAreTheCornerPoint()` - _(no documentation)_
+- `public void Corners_Radii_GiveClockwiseArcEnds()` - _(no documentation)_
 
 ## ShapeConversionTests (class)
 

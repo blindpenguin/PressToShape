@@ -146,4 +146,7 @@ public enum HistoryStepType
 
     /// <summary>Points were deleted from a path.</summary>
     DeletePathPoints,
+
+    /// <summary>The corner radius of a rectangle was changed, by a field or by dragging a radius handle.</summary>
+    ChangeCornerRadius,
 }

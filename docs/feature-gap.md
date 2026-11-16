@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, and the Node and Direct Select tools. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, and rounded corners on rectangles. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -25,7 +25,7 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 | Spiral | Out: not planned, the tool was removed | Out of scope |
 | Freehand pencil / brush with pen pressure | Missing | Unplanned |
 | Line and polyline | Done (an open path of the Pen) | Unplanned |
-| Rounded corners on rectangles | Missing | Unplanned |
+| Rounded corners on rectangles | Done: four radii per rectangle, set in the Properties panel or by radius handles, saved, exported to SVG | Unplanned |
 | Arc, pie and polygon (n sides) | Missing | Unplanned |
 | Text | UI only | After MVP |
 | Eraser, knife / scissors | Missing | Unplanned |

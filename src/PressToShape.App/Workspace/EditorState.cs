@@ -97,6 +97,12 @@ internal sealed partial class EditorState : ObservableObject
     /// </summary>
     [ObservableProperty] public partial Appearance DefaultAppearance { get; set; } = Appearance.Default;
 
+    /// <summary>
+    /// Whether the four corner radii of a rectangle are linked: a change of one radius in the Properties panel, or a drag of a radius handle
+    /// by touch, changes all four. Editor state, not part of the document: it is not saved and not undone.
+    /// </summary>
+    [ObservableProperty] public partial bool LinkCornerRadii { get; set; } = true;
+
     /// <summary>The shapes that were copied or cut. Kept by the app, nothing goes to the system clipboard.</summary>
     public ShapeClipboard Clipboard { get; } = new();
 

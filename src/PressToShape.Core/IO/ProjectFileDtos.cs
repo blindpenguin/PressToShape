@@ -98,6 +98,12 @@ internal sealed class ShapeDto
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? Locked { get; set; }
 
+    // Only for a rectangle: the corner radii as entered, top left, top right, bottom right, bottom left. Written only when one is not 0,
+    // and missing means square corners.
+    [JsonPropertyName("radii")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public List<double?>? Radii { get; set; }
+
     // Only for a path: its nodes, as fractions of the box (see PathNode).
     [JsonPropertyName("nodes")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

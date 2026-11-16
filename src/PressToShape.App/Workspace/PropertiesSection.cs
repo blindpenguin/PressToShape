@@ -15,4 +15,7 @@ internal enum PropertiesSection
 
     /// <summary>The nodes of the selected paths: position of a node and, for the Node tool, the type and segment buttons.</summary>
     Node = 32,
+
+    /// <summary>The corner radii of the one selected rectangle. Shown by the tools that show the radius handles.</summary>
+    Corners = 64,
 }

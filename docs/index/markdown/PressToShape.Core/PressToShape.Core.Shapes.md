@@ -35,6 +35,48 @@ An sRGB color with 8 bits per channel. Alpha 255 is fully opaque.
 - `public byte R { get; init; }` - Red channel, 0 to 255.
 - `public Color FromRgb(byte r, byte g, byte b)` - Creates a fully opaque color from red, green and blue.
 
+## Corner (enum)
+
+`public enum Corner`
+
+Source: `src/PressToShape.Core/Shapes/Corner.cs:4-17`
+
+The four corners of a rectangle, clockwise from the top left.
+
+**Members**
+
+- `public TopLeft` - The corner at the left end of the top edge.
+- `public TopRight` - The corner at the right end of the top edge.
+- `public BottomRight` - The corner at the right end of the bottom edge.
+- `public BottomLeft` - The corner at the left end of the bottom edge.
+
+## CornerRadii (record)
+
+`public readonly record CornerRadii : IEquatable<CornerRadii>`
+
+Source: `src/PressToShape.Core/Shapes/CornerRadii.cs:13-60`
+
+The radius of each corner of a rectangle, in document units. The struct only holds the values: PressToShape.Core.Shapes.RectangleShape checks that they are finite and not negative. PressToShape.Core.Shapes.CornerRadii.Limited gives the radii that are really used for a box of a given size.
+
+**Members**
+
+- `public CornerRadii(double TopLeft, double TopRight, double BottomRight, double BottomLeft)` - The radius of each corner of a rectangle, in document units. The struct only holds the values: PressToShape.Core.Shapes.RectangleShape checks that they are finite and not negative. PressToShape.Core.Shapes.CornerRadii.Limited gives the radii that are really used for a box of a given size.
+- `public double BottomLeft { get; init; }` - Radius of the bottom left corner.
+- `public double BottomRight { get; init; }` - Radius of the bottom right corner.
+- `public double TopLeft { get; init; }` - Radius of the top left corner.
+- `public double TopRight { get; init; }` - Radius of the top right corner.
+- `public CornerRadii Zero { get; }` - All four radii are 0: a rectangle with square corners.
+- `public CornerRadii Uniform(double radius)` - All four corners have the same radius.
+- `public bool IsZero { get; }` - Whether all four radii are 0.
+- `public bool IsUniform { get; }` - Whether all four radii are equal.
+- `public double this[Corner corner] { get; }` - The radius of one corner.
+- `public CornerRadii With(Corner corner, double radius)` - A copy with the radius of one corner replaced.
+- `public CornerRadii Limited(double width, double height)` - Each radius limited to at least 0 and at most half of the shorter side of a box of this size. A radius that is not a number becomes 0.
+
+**Relationships**
+
+- Injected into `PressToShape.App.Tests.PropertiesViewModelCornersTests.Fixture`
+
 ## DocumentNode (record)
 
 `public readonly record DocumentNode : IEquatable<DocumentNode>`
@@ -245,12 +287,14 @@ A path of line and cubic bezier segments, open or closed. The box (PressToShape.
 
 `public sealed record RectangleShape : Shape, IEquatable<RectangleShape>`
 
-Source: `src/PressToShape.Core/Shapes/RectangleShape.cs:4-9`
+Source: `src/PressToShape.Core/Shapes/RectangleShape.cs:4-64`
 
-An axis-aligned rectangle.
+An axis-aligned rectangle, with square or rounded corners.
 
 **Members**
 
+- `public CornerRadii Radii { get; init; }` - The corner radii as they were set: each one finite and not negative, 0 for square corners (the default). They are not trimmed when the rectangle is resized, so a corner that was limited gets its radius back when the rectangle grows. Drawing, hit tests, export and the editing fields use PressToShape.Core.Shapes.RectangleShape.EffectiveRadii.
+- `public CornerRadii EffectiveRadii { get; }` - The radii that are used: each stored radius limited to half of the shorter side of the box.
 - `protected bool ContainsLocal(double x, double y)` - Whether the point lies inside the shape's geometry before any rotation is applied.
 
 **Relationships**
@@ -258,6 +302,34 @@ An axis-aligned rectangle.
 - Inherits `PressToShape.Core.Shapes.Shape`
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
+
+## RoundedCorner (record)
+
+`internal readonly record RoundedCorner : IEquatable<RoundedCorner>`
+
+Source: `src/PressToShape.Core/Shapes/RoundedRectangleGeometry.cs:13-13`
+
+One corner of a rounded rectangle: its radius, the corner point of the box, and where the arc starts and ends when the outline is followed clockwise. For a radius of 0 the arc is empty and PressToShape.Core.Shapes.RoundedCorner.Start and PressToShape.Core.Shapes.RoundedCorner.End are the corner point.
+
+**Members**
+
+- `public RoundedCorner(double Radius, (double X, double Y) Point, (double X, double Y) Start, (double X, double Y) End)` - One corner of a rounded rectangle: its radius, the corner point of the box, and where the arc starts and ends when the outline is followed clockwise. For a radius of 0 the arc is empty and PressToShape.Core.Shapes.RoundedCorner.Start and PressToShape.Core.Shapes.RoundedCorner.End are the corner point.
+- `public (double X, double Y) End { get; init; }` - Where the arc ends, going on along the next edge.
+- `public (double X, double Y) Point { get; init; }` - The corner point of the box.
+- `public double Radius { get; init; }` - The radius used, at least 0.
+- `public (double X, double Y) Start { get; init; }` - Where the arc starts, coming along the previous edge.
+
+## RoundedRectangleGeometry (class)
+
+`internal static class RoundedRectangleGeometry`
+
+Source: `src/PressToShape.Core/Shapes/RoundedRectangleGeometry.cs:19-34`
+
+The outline of a rectangle with rounded corners, in the frame before any rotation. The conversion to a path and the SVG export both start from these points, so the two outlines are the same shape.
+
+**Members**
+
+- `public IReadOnlyList<RoundedCorner> Corners(double x, double y, double width, double height, CornerRadii effective)` - The four corners clockwise from the top left. Pass the effective radii (see PressToShape.Core.Shapes.CornerRadii.Limited).
 
 ## Shape (record)
 
@@ -304,10 +376,10 @@ A drawable shape with a position, a size and an appearance. Immutable: change it
 
 `public static class ShapeConversion`
 
-Source: `src/PressToShape.Core/Shapes/ShapeConversion.cs:6-71`
+Source: `src/PressToShape.Core/Shapes/ShapeConversion.cs:6-87`
 
 Turns shapes into paths without changing how they look, so they can be edited node by node.
 
 **Members**
 
-- `public PathShape? ToPath(Shape shape)` - A path that looks like the shape and keeps its id, name, flags, box, rotation and appearance. A rectangle becomes four corner nodes (closed), an ellipse four symmetric nodes at the top, right, bottom and left with handles of 0.2761 of the width or the height, the usual circle approximation. Returns null for a path, a group and every other type, which need no conversion.
+- `public PathShape? ToPath(Shape shape)` - A path that looks like the shape and keeps its id, name, flags, box, rotation and appearance. A rectangle becomes four corner nodes (closed), plus one more node for each rounded corner, which is two nodes joined by a curve. An ellipse becomes four symmetric nodes at the top, right, bottom and left with handles of 0.2761 of the width or the height, the usual circle approximation. Returns null for a path, a group and every other type, which need no conversion.

@@ -51,7 +51,7 @@ _(no documentation)_
 
 `internal sealed class NodeDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:123-153`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:129-159`
 
 _(no documentation)_
 
@@ -123,7 +123,7 @@ The outcome of reading a project file: either a document or an error.
 
 `internal sealed class ShapeDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:47-120`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:47-126`
 
 _(no documentation)_
 
@@ -143,6 +143,7 @@ _(no documentation)_
 - `public string? Name { get; set; }` - _(no documentation)_
 - `public bool? Visible { get; set; }` - _(no documentation)_
 - `public bool? Locked { get; set; }` - _(no documentation)_
+- `public List<double?>? Radii { get; set; }` - _(no documentation)_
 - `public List<NodeDto?>? Nodes { get; set; }` - _(no documentation)_
 - `public bool? Closed { get; set; }` - _(no documentation)_
 - `public string? FillRule { get; set; }` - _(no documentation)_
@@ -152,7 +153,7 @@ _(no documentation)_
 
 `public static class SvgExport`
 
-Source: `src/PressToShape.Core/IO/SvgExport.cs:17-247`
+Source: `src/PressToShape.Core/IO/SvgExport.cs:17-279`
 
 Exports a document as SVG 1.1. The artboard becomes the viewport, every visible layer one group (marked as an Inkscape layer), every shape a rect, ellipse or path and every group a g around its children. Hidden shapes and the shapes below hidden groups are left out. There is no background and the output holds no scripts, links or external references.
 

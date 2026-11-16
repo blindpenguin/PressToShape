@@ -51,6 +51,7 @@ internal sealed partial class CanvasInteraction
         MovingNodes,
         MovingHandle,
         Bending,
+        RoundingCorners,
     }
 
     /// <summary>Whether a drag is in progress.</summary>
@@ -102,7 +103,11 @@ internal sealed partial class CanvasInteraction
                 PressWithNodeTool(x, y, shift, inputType);
                 break;
             case Tool.Select:
-                PressWithSelectTool(x, y, shift, inputType == InputPointerType.Touch ? TouchGrabSize : SelectionGeometry.GrabSize);
+                if (!TryBeginRadiusDrag(x, y, inputType))
+                {
+                    PressWithSelectTool(x, y, shift, inputType == InputPointerType.Touch ? TouchGrabSize : SelectionGeometry.GrabSize);
+                }
+
                 break;
         }
     }
@@ -128,6 +133,9 @@ internal sealed partial class CanvasInteraction
                 break;
             case DragType.Marquee:
                 _state.SelectionBox = BoxTo(x, y);
+                break;
+            case DragType.RoundingCorners:
+                ShowRadius(x, y, shift);
                 break;
             case DragType.MovingNodes:
             case DragType.MovingHandle:
@@ -159,6 +167,13 @@ internal sealed partial class CanvasInteraction
         if (_drag is DragType.MovingNodes or DragType.MovingHandle or DragType.Bending)
         {
             ShowNodeDrag(x, y, shift, alt);
+            EndDrag();
+            return;
+        }
+
+        if (_drag == DragType.RoundingCorners)
+        {
+            ShowRadius(x, y, shift);
             EndDrag();
             return;
         }
@@ -222,6 +237,7 @@ internal sealed partial class CanvasInteraction
     {
         AbortPenPress();
         if (_drag is DragType.Moving or DragType.Resizing or DragType.Rotating or DragType.MovingNodes or DragType.MovingHandle or DragType.Bending
+            or DragType.RoundingCorners
             && _startDocument is { } original
             && !ReferenceEquals(original, _state.Document))
         {
@@ -384,6 +400,7 @@ internal sealed partial class CanvasInteraction
             DragType.MovingNodes => HistoryStepType.MovePathPoints,
             DragType.MovingHandle => HistoryStepType.MovePathHandle,
             DragType.Bending => HistoryStepType.BendSegment,
+            DragType.RoundingCorners => HistoryStepType.ChangeCornerRadius,
             _ => (HistoryStepType?)null,
         };
         _drag = DragType.None;

@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class __KnownINotifyPropertyChangedArgs`
 
-Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-273` (generated)
+Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-281` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangedEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -39,6 +39,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 - `public PropertyChangedEventArgs IsDropTarget` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsDropTarget" generated properties.
 - `public PropertyChangedEventArgs IsRenaming` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsRenaming" generated properties.
 - `public PropertyChangedEventArgs EditText` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "EditText" generated properties.
+- `public PropertyChangedEventArgs IsCornersExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsCornersExpanded" generated properties.
 - `public PropertyChangedEventArgs OpacitySliderValue` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "OpacitySliderValue" generated properties.
 - `public PropertyChangedEventArgs KeepProportions` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "KeepProportions" generated properties.
 - `public PropertyChangedEventArgs IsTransformExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsTransformExpanded" generated properties.
@@ -69,6 +70,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 - `public PropertyChangedEventArgs ActiveTool` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "ActiveTool" generated properties.
 - `public PropertyChangedEventArgs ColorPick` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "ColorPick" generated properties.
 - `public PropertyChangedEventArgs DefaultAppearance` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "DefaultAppearance" generated properties.
+- `public PropertyChangedEventArgs LinkCornerRadii` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "LinkCornerRadii" generated properties.
 - `public PropertyChangedEventArgs SelectionBox` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "SelectionBox" generated properties.
 - `public PropertyChangedEventArgs PanX` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PanX" generated properties.
 - `public PropertyChangedEventArgs PanY` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PanY" generated properties.
@@ -81,7 +83,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 
 `internal static class __KnownINotifyPropertyChangingArgs`
 
-Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-273` (generated)
+Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-281` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangingEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -114,6 +116,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 - `public PropertyChangingEventArgs IsDropTarget` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsDropTarget" generated properties.
 - `public PropertyChangingEventArgs IsRenaming` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsRenaming" generated properties.
 - `public PropertyChangingEventArgs EditText` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "EditText" generated properties.
+- `public PropertyChangingEventArgs IsCornersExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsCornersExpanded" generated properties.
 - `public PropertyChangingEventArgs OpacitySliderValue` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "OpacitySliderValue" generated properties.
 - `public PropertyChangingEventArgs KeepProportions` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "KeepProportions" generated properties.
 - `public PropertyChangingEventArgs IsTransformExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsTransformExpanded" generated properties.
@@ -144,6 +147,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 - `public PropertyChangingEventArgs ActiveTool` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "ActiveTool" generated properties.
 - `public PropertyChangingEventArgs ColorPick` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "ColorPick" generated properties.
 - `public PropertyChangingEventArgs DefaultAppearance` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "DefaultAppearance" generated properties.
+- `public PropertyChangingEventArgs LinkCornerRadii` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "LinkCornerRadii" generated properties.
 - `public PropertyChangingEventArgs SelectionBox` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "SelectionBox" generated properties.
 - `public PropertyChangingEventArgs PanX` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PanX" generated properties.
 - `public PropertyChangingEventArgs PanY` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PanY" generated properties.

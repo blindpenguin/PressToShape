@@ -22,6 +22,12 @@ internal sealed partial class CanvasInteraction
         _pendingNodeClick = null;
         _nodeDragMoved = false;
 
+        // Direct Select shows the radius handles of a selected rectangle. They win over its nodes and handles, as over the resize handles.
+        if (_state.ActiveTool == Tool.DirectSelect && TryBeginRadiusDrag(x, y, inputType))
+        {
+            return;
+        }
+
         var scale = _state.ZoomPercent / 100;
         var grab = inputType == InputPointerType.Touch ? TouchGrabSize : SelectionGeometry.GrabSize;
         var paths = EditablePathsOnScreen();

@@ -93,6 +93,26 @@ _(no documentation)_
 - `public void Read_PathWithNegativeWidth_FailsWithInvalidValue()` - _(no documentation)_
 - `public void Read_FileWithoutPaths_StillLoads()` - _(no documentation)_
 
+## ProjectFileRadiiTests (class)
+
+`public class ProjectFileRadiiTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/ProjectFileRadiiTests.cs:10-125`
+
+_(no documentation)_
+
+**Members**
+
+- `public void WriteThenRead_EqualRadii_AreKept()` - _(no documentation)_
+- `public void WriteThenRead_DifferentRadii_AreKeptPerCorner()` - _(no documentation)_
+- `public void Write_ZeroRadii_WritesNoRadiiField()` - _(no documentation)_
+- `public void Write_Radii_AreWrittenInTheOrderTopLeftTopRightBottomRightBottomLeft()` - _(no documentation)_
+- `public void Write_RadiusAboveTheLimit_IsWrittenAsStored()` - _(no documentation)_
+- `public void Read_RectangleWithoutRadii_HasSquareCorners()` - _(no documentation)_
+- `public void Read_RadiusAboveTheLimit_LoadsAndIsLimitedWhenUsed()` - _(no documentation)_
+- `public void Read_InvalidRadii_FailsWithInvalidValue(string extra)` - _(no documentation)_
+- `public void Read_RadiiOfTheWrongJsonType_Fails(string extra)` - _(no documentation)_
+
 ## ProjectFileTests (class)
 
 `public class ProjectFileTests`
@@ -202,6 +222,25 @@ _(no documentation)_
 - `public void ToUtf8_PathInAGroup_IsWrittenInsideTheGroup()` - _(no documentation)_
 - `public void ToUtf8_HiddenPathAndPathInAHiddenLayer_AreLeftOut()` - _(no documentation)_
 - `public void ToUtf8_GermanCulture_StillWritesDots()` - _(no documentation)_
+
+## SvgExportRoundedTests (class)
+
+`public class SvgExportRoundedTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/SvgExportRoundedTests.cs:11-119`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ToUtf8_ZeroRadii_IsAPlainRectWithoutRadiusAttributes()` - _(no documentation)_
+- `public void ToUtf8_EqualRadii_WritesRxAndRy()` - _(no documentation)_
+- `public void ToUtf8_EqualRadiiAboveTheLimit_WritesTheLimitedRadius()` - _(no documentation)_
+- `public void ToUtf8_DifferentStoredRadiiThatAreLimitedToTheSame_StayARect()` - _(no documentation)_
+- `public void ToUtf8_DifferentRadii_IsAPathWithArcs()` - _(no documentation)_
+- `public void ToUtf8_DifferentRadiiOnEveryCorner_HasFourArcsAndCloses()` - _(no documentation)_
+- `public void ToUtf8_DifferentRadii_KeepsFillStrokeOpacityAndRotation()` - _(no documentation)_
+- `public void ToUtf8_EqualRadii_KeepsFillStrokeOpacityAndRotation()` - _(no documentation)_
 
 ## SvgExportTests (class)
 

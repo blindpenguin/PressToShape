@@ -48,6 +48,12 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
         StrokeWidth = new NumberFieldViewModel(localizer, 0, MaxStrokeWidth, value => _editor.Apply(HistoryStepType.ChangeStrokeWidth, shape => shape with { Appearance = shape.Appearance with { StrokeWidth = value } }));
         OpacityPercent = new NumberFieldViewModel(localizer, 0, 100, value => _editor.Apply(HistoryStepType.ChangeOpacity, shape => shape with { Appearance = shape.Appearance with { Opacity = value / 100 } }));
 
+        LinkedRadius = new NumberFieldViewModel(localizer, 0, MaxCoordinate, value => SetRadius(null, value));
+        TopLeftRadius = new NumberFieldViewModel(localizer, 0, MaxCoordinate, value => SetRadius(Corner.TopLeft, value));
+        TopRightRadius = new NumberFieldViewModel(localizer, 0, MaxCoordinate, value => SetRadius(Corner.TopRight, value));
+        BottomRightRadius = new NumberFieldViewModel(localizer, 0, MaxCoordinate, value => SetRadius(Corner.BottomRight, value));
+        BottomLeftRadius = new NumberFieldViewModel(localizer, 0, MaxCoordinate, value => SetRadius(Corner.BottomLeft, value));
+
         NodeX = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Nodes.SetPosition(value, null));
         NodeY = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Nodes.SetPosition(null, value));
 
@@ -99,7 +105,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     /// </summary>
     public void CommitPendingEdits()
     {
-        foreach (var field in new[] { X, Y, Width, Height, Rotation, StrokeWidth, OpacityPercent, NodeX, NodeY })
+        foreach (var field in new[] { X, Y, Width, Height, Rotation, StrokeWidth, OpacityPercent, NodeX, NodeY, LinkedRadius, TopLeftRadius, TopRightRadius, BottomRightRadius, BottomLeftRadius })
         {
             if (field.IsEditing)
             {
@@ -299,6 +305,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     {
         RefreshPathValues();
         RefreshNodeValues();
+        RefreshCornerValues();
         var shapes = SelectedShapes();
         var values = SelectionValues.From(shapes);
         if (values is null)
@@ -364,6 +371,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
                 OnPropertyChanged(nameof(ShowTransform));
                 OnPropertyChanged(nameof(ShowAppearance));
                 OnPropertyChanged(nameof(ShowPath));
+                OnPropertyChanged(nameof(ShowCorners));
                 OnPropertyChanged(nameof(ShowNode));
                 OnPropertyChanged(nameof(ShowNodeTypeTools));
                 OnPropertyChanged(nameof(ShowAlign));
@@ -380,6 +388,9 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
                 break;
             case nameof(EditorState.SelectedCount):
                 OnPropertyChanged(nameof(Header));
+                break;
+            case nameof(EditorState.LinkCornerRadii):
+                OnPropertyChanged(nameof(LinkCorners));
                 break;
         }
     }

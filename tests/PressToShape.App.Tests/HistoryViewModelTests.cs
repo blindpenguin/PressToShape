@@ -70,6 +70,7 @@ public class HistoryViewModelTests
             "Lock shapes", "Unlock shapes", "Hide shapes", "Show shapes", "Unlock all", "Show all", "Rename shape",
             "Draw path", "Add path point", "Delete path point", "Change path",
             "Move path points", "Move handle", "Change node type", "Bend segment", "Change segment", "Delete path points",
+            "Change corner radius",
         };
         Assert.Equal(expected, Names(history));
         Assert.Equal(Enum.GetValues<HistoryStepType>().Length + 1, expected.Length);

@@ -22,11 +22,11 @@ Turns a shortcut text such as "Ctrl+Shift+S" into a Avalonia.Input.KeyGesture so
 `T:PressToShape.App.Views.Editor.CoreColorBrushConverter` at src/PressToShape.App/Views/Editor/CoreColorConverter.cs:28, implements `IValueConverter`.
 Turns the Core color of a shape into a brush, for swatches. It does not convert back.
 
-- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:115
-- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:124
-- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:155
-- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:164
-- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:211
+- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:147
+- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:156
+- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:187
+- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:196
+- used at src/PressToShape.App/Views/Editor/PropertiesView.axaml:243
 - used at src/PressToShape.App/Views/Tablet/TabletColorSwatchView.axaml:30
 - used at src/PressToShape.App/Views/Tablet/TabletColorSwatchView.axaml:36
 

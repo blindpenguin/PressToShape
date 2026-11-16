@@ -486,7 +486,7 @@ An inspector tab that only shows an empty-state message (Assets). Title and mess
 
 `internal partial sealed class PropertiesViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.Node.cs:10-90`
+Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.Corners.cs:12-89`
 
 The Properties tab: the position, size, rotation and appearance of the selected shapes, and the section expansion. The fields show the current values (updated in place while shapes are dragged or edited elsewhere) and every committed edit is one undo step.
 
@@ -506,19 +506,28 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public IRelayCommand UseNonZeroFillCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseNonZeroFill`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseNonZeroFill.
 - `public bool HasPathSelected { get; }` - Whether the selection has at least one path (also inside a selected group).
 - `public bool IsNodeExpanded { get; set; }` - _(no documentation)_
+- `public NumberFieldViewModel LinkedRadius { get; }` - The radius of all four corners. Empty when the four differ. An entry sets all four radii.
 - `public bool IsPathClosed { get; }` - Whether every selected path is closed.
 - `public NumberFieldViewModel NodeX { get; }` - The X of the only selected node on the screen, in document units. Disabled without exactly one selected node.
+- `public NumberFieldViewModel TopLeftRadius { get; }` - The radius of the top left corner.
 - `public bool IsPathOpen { get; }` - Whether every selected path is open.
 - `public NumberFieldViewModel NodeY { get; }` - The Y of the only selected node on the screen, in document units. Disabled without exactly one selected node.
+- `public NumberFieldViewModel TopRightRadius { get; }` - The radius of the top right corner.
+- `public NumberFieldViewModel BottomRightRadius { get; }` - The radius of the bottom right corner.
 - `public bool IsFillRuleNonZero { get; }` - Whether every selected path uses the non-zero fill rule.
 - `public bool ShowNode { get; }` - Whether the Node section is shown: for Direct Select and the Node tool.
+- `public NumberFieldViewModel BottomLeftRadius { get; }` - The radius of the bottom left corner.
 - `public bool IsFillRuleEvenOdd { get; }` - Whether every selected path uses the even-odd fill rule.
 - `public bool ShowNodeTypeTools { get; }` - Whether the buttons for the node type and the segments are shown: only the Node tool changes them.
+- `public bool IsCornersExpanded { get; set; }` - _(no documentation)_
 - `public bool HasNodesSelected { get; }` - Whether at least one node that can be edited is selected.
+- `public bool HasRectangleSelected { get; }` - Whether exactly one rectangle (and nothing else) is selected.
 - `public bool IsNodeCorner { get; }` - Whether every selected node is a corner.
 - `public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null)` - _(no documentation)_
+- `public bool ShowCorners { get; }` - Whether the Corners section is shown: the tool has it and one rectangle is selected.
 - `public bool IsNodeSmooth { get; }` - Whether every selected node is smooth.
 - `public bool IsNodeSymmetric { get; }` - Whether every selected node is symmetric.
+- `public bool LinkCorners { get; set; }` - Whether a change of one radius changes all four. Shared with the radius handles (a drag by touch) through the editor state, so the toggle here is the toggle there.
 - `public bool CanChangeSegment { get; }` - Whether exactly two neighboring nodes of one path are selected.
 - `public NumberFieldViewModel X { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Y { get; }` - _(no documentation)_

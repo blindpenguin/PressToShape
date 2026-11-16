@@ -35,7 +35,7 @@ The undo and redo history of a document, kept as snapshots. Documents are immuta
 
 `public enum HistoryStepType`
 
-Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-149`
+Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-152`
 
 What a step of the history did. The app turns each value into a translated name.
 
@@ -89,3 +89,4 @@ What a step of the history did. The app turns each value into a translated name.
 - `public BendSegment` - A segment of a path was bent by dragging it.
 - `public ChangeSegment` - A segment of a path was made straight or curved.
 - `public DeletePathPoints` - Points were deleted from a path.
+- `public ChangeCornerRadius` - The corner radius of a rectangle was changed, by a field or by dragging a radius handle.

@@ -19,7 +19,7 @@ A titled section whose whole header row toggles the content. Used by the inspect
 
 `internal sealed class DocumentCanvasControl : Control`
 
-Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:16-512`
+Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:16-524`
 
 Draws the shapes of a document. It only draws: PressToShape.App.Workspace.CanvasScene decides what is drawn and where. Shape colors are document data, so this control uses no theme brushes. It does not handle pointer input.
 

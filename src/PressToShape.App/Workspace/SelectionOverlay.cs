@@ -16,6 +16,7 @@ namespace PressToShape.App.Workspace;
 /// <param name="RotateLink">The line from the middle of the top edge to the rotate handle (Select tool only).</param>
 /// <param name="SelectionBox">The box being dragged, if any (Select tool only).</param>
 /// <param name="EnteredGroup">The outline of the entered group, if one is entered. Drawn for every tool.</param>
+
 internal sealed record SelectionOverlay(
     IReadOnlyList<ScreenPolygon> Outlines,
     ScreenPolygon? Box,
@@ -24,6 +25,12 @@ internal sealed record SelectionOverlay(
     ScreenRect? SelectionBox,
     ScreenPolygon? EnteredGroup = null)
 {
+    /// <summary>
+    /// The four radius handles of the one selected rectangle (Select and Direct Select only). Empty for anything else, and for a
+    /// rectangle that is small on the screen.
+    /// </summary>
+    public IReadOnlyList<ScreenRadiusHandle> RadiusHandles { get; init; } = [];
+
     /// <summary>The side of a handle in screen pixels.</summary>
     public const double HandleSize = 8;
 
@@ -88,9 +95,10 @@ internal sealed record SelectionOverlay(
                 shape.Height * scale,
                 shape.Rotation))
             .ToList();
+        var radiusHandles = tool is Tool.Select or Tool.DirectSelect ? BuildRadiusHandles(shapes, zoomPercent, originX, originY) : [];
         if (!isSelect)
         {
-            return Empty with { Outlines = outlines, EnteredGroup = entered };
+            return Empty with { Outlines = outlines, EnteredGroup = entered, RadiusHandles = radiusHandles };
         }
 
         var frame = SelectionGeometry.FrameOf(shapes)!;
@@ -110,6 +118,26 @@ internal sealed record SelectionOverlay(
             ToScreen(SelectionGeometry.HandlePosition(frame, HandleType.Top, zoomPercent)),
             ToScreen(SelectionGeometry.HandlePosition(frame, HandleType.Rotate, zoomPercent)));
 
-        return new SelectionOverlay(outlines, frameBox, handles, link, box, entered);
+        return new SelectionOverlay(outlines, frameBox, handles, link, box, entered) { RadiusHandles = radiusHandles };
+    }
+
+    // Only one selected rectangle has radius handles, and only when it is big enough on the screen to leave its resize handles reachable.
+    private static List<ScreenRadiusHandle> BuildRadiusHandles(IReadOnlyList<Shape> shapes, double zoomPercent, double originX, double originY)
+    {
+        if (shapes is not [RectangleShape rectangle] || !Workspace.RadiusHandles.IsShown(rectangle, zoomPercent))
+        {
+            return [];
+        }
+
+        return Enum.GetValues<Corner>()
+            .Select(corner =>
+            {
+                var (x, y) = Workspace.RadiusHandles.Position(rectangle, corner, zoomPercent);
+                return new ScreenRadiusHandle(
+                    corner,
+                    new ScreenPoint(CanvasMapping.ToScreen(x, originX, zoomPercent), CanvasMapping.ToScreen(y, originY, zoomPercent)),
+                    HandleSize);
+            })
+            .ToList();
     }
 }

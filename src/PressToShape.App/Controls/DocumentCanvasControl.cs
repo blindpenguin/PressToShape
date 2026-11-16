@@ -339,6 +339,14 @@ internal sealed class DocumentCanvasControl : Control
             }
         }
 
+        // A circle with a dot, so a radius handle is not taken for the plain circle of the rotate handle or the squares of the resize handles.
+        foreach (var handle in overlay.RadiusHandles)
+        {
+            var center = new Point(handle.Center.X, handle.Center.Y);
+            context.DrawEllipse(SelectionHandleFillBrush, pen, center, size / 2, size / 2);
+            context.DrawEllipse(brush, null, center, size * 0.2, size * 0.2);
+        }
+
         if (overlay.SelectionBox is { } selectionBox)
         {
             var area = new Rect(selectionBox.X, selectionBox.Y, selectionBox.Width, selectionBox.Height);
@@ -423,6 +431,10 @@ internal sealed class DocumentCanvasControl : Control
         if (shape.Type == ScreenShapeType.Ellipse)
         {
             context.DrawEllipse(fill, pen, bounds.Center, bounds.Width / 2, bounds.Height / 2);
+        }
+        else if (shape.Corners is { } corners)
+        {
+            context.DrawRectangle(fill, pen, new RoundedRect(bounds, corners.TopLeft, corners.TopRight, corners.BottomRight, corners.BottomLeft));
         }
         else
         {

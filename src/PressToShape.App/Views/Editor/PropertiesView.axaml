@@ -90,6 +90,38 @@
                     </Grid>
                 </controls:CollapsibleSection>
 
+                <controls:CollapsibleSection Header="{loc:T 'Corners'}" IsExpanded="{Binding IsCornersExpanded}" IsVisible="{Binding ShowCorners}">
+                    <Grid Margin="12,4,12,12" ColumnDefinitions="Auto,*,Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+                        <materialIcons:MaterialIcon Grid.Row="0" Grid.Column="0" Kind="RoundedCorner" Width="16" Height="16" Margin="0,0,6,0" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Classes="field" Text="{Binding LinkedRadius.Text}" IsEnabled="{Binding LinkedRadius.IsEnabled}" Tag="{Binding LinkedRadius}"
+                                 ToolTip.Tip="{loc:T 'Corner radius'}" AutomationProperties.Name="{loc:T 'Corner radius'}">
+                            <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                        </TextBox>
+                        <ToggleButton Grid.Row="0" Grid.Column="4" Classes="tool" Margin="8,0,0,0"
+                                      IsChecked="{Binding LinkCorners}"
+                                      ToolTip.Tip="{loc:T 'Link corners'}" AutomationProperties.Name="{loc:T 'Link corners'}">
+                            <materialIcons:MaterialIcon Kind="LinkVariant" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                        </ToggleButton>
+
+                        <TextBox Grid.Row="1" Grid.Column="1" Classes="field" Text="{Binding TopLeftRadius.Text}" IsEnabled="{Binding TopLeftRadius.IsEnabled}" Tag="{Binding TopLeftRadius}"
+                                 ToolTip.Tip="{loc:T 'Top left radius'}" AutomationProperties.Name="{loc:T 'Top left radius'}">
+                            <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                        </TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="3" Classes="field" Margin="8,0,0,0" Text="{Binding TopRightRadius.Text}" IsEnabled="{Binding TopRightRadius.IsEnabled}" Tag="{Binding TopRightRadius}"
+                                 ToolTip.Tip="{loc:T 'Top right radius'}" AutomationProperties.Name="{loc:T 'Top right radius'}">
+                            <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                        </TextBox>
+                        <TextBox Grid.Row="2" Grid.Column="1" Classes="field" Text="{Binding BottomLeftRadius.Text}" IsEnabled="{Binding BottomLeftRadius.IsEnabled}" Tag="{Binding BottomLeftRadius}"
+                                 ToolTip.Tip="{loc:T 'Bottom left radius'}" AutomationProperties.Name="{loc:T 'Bottom left radius'}">
+                            <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                        </TextBox>
+                        <TextBox Grid.Row="2" Grid.Column="3" Classes="field" Margin="8,0,0,0" Text="{Binding BottomRightRadius.Text}" IsEnabled="{Binding BottomRightRadius.IsEnabled}" Tag="{Binding BottomRightRadius}"
+                                 ToolTip.Tip="{loc:T 'Bottom right radius'}" AutomationProperties.Name="{loc:T 'Bottom right radius'}">
+                            <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                        </TextBox>
+                    </Grid>
+                </controls:CollapsibleSection>
+
                 <controls:CollapsibleSection Header="{loc:T 'Appearance'}" IsExpanded="{Binding IsAppearanceExpanded}" IsVisible="{Binding ShowAppearance}">
                     <Grid Margin="12,4,12,12" ColumnDefinitions="100,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="8">
                         <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="{loc:T 'Fill'}" />

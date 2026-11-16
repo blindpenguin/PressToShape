@@ -237,7 +237,13 @@ public static partial class ProjectFile
         switch (dto.Type)
         {
             case RectangleType:
-                return new RectangleShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0, Name = name, IsVisible = visible, IsLocked = locked };
+                if (!TryReadRadii(dto.Radii, out var radii))
+                {
+                    failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, "A rectangle needs four corner radii, each a number that is not negative.");
+                    return null;
+                }
+
+                return new RectangleShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Radii = radii, Appearance = appearance, Rotation = dto.Rotation ?? 0, Name = name, IsVisible = visible, IsLocked = locked };
             case EllipseType:
                 return new EllipseShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0, Name = name, IsVisible = visible, IsLocked = locked };
             case PathType:
@@ -290,12 +296,36 @@ public static partial class ProjectFile
         dto.StrokeWidth = shape.Appearance.StrokeWidth;
         dto.Opacity = shape.Appearance.Opacity;
         dto.Rotation = shape.Rotation == 0 ? null : shape.Rotation;
+        if (shape is RectangleShape { Radii.IsZero: false } rectangle)
+        {
+            var radii = rectangle.Radii;
+            dto.Radii = [radii.TopLeft, radii.TopRight, radii.BottomRight, radii.BottomLeft];
+        }
+
         if (shape is PathShape path)
         {
             AddPathData(dto, path);
         }
 
         return dto;
+    }
+
+    // Missing radii mean square corners. A value above the limit of the rectangle is fine, it is limited when it is used.
+    private static bool TryReadRadii(List<double?>? values, out CornerRadii radii)
+    {
+        radii = CornerRadii.Zero;
+        if (values is null)
+        {
+            return true;
+        }
+
+        if (values.Count != 4 || values.Exists(value => value is not { } number || !double.IsFinite(number) || number < 0))
+        {
+            return false;
+        }
+
+        radii = new CornerRadii(values[0]!.Value, values[1]!.Value, values[2]!.Value, values[3]!.Value);
+        return true;
     }
 
     // A lone surrogate cannot be written as UTF-8 JSON. It is replaced, like text encoders do.
