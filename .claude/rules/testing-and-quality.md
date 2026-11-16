@@ -8,3 +8,4 @@
 - Some Avalonia interfaces cannot be implemented in tests (`IStorageFile`, `IActivityApplicationLifetime`). Wrap them behind a small interface of ours and test through that.
 - Before finishing a change, run `dotnet build` and `dotnet test`, and fix every warning you introduced. Report failures honestly. Do not mark work done with failing tests.
 - Commits: small, focused, with imperative messages. Do not commit generated files (`bin/`, `obj/`, `.idea/`).
+- Solo project: work and commit directly on `master`. Do not create branches, worktrees or pull requests unless the owner asks for one. Commit and push only when asked.
