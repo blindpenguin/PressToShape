@@ -175,6 +175,19 @@ _(no documentation)_
 - `public void PenOverlay_AndHiddenShapeId_RaisePropertyChanged()` - _(no documentation)_
 - `public void ContinuingAPath_HidesItInTheCanvas()` - _(no documentation)_
 
+## CanvasAreaViewModelRadiusTests (class)
+
+`public class CanvasAreaViewModelRadiusTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelRadiusTests.cs:10-60`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Escape_DuringTheDragOfARadiusHandle_PutsTheRadiiBackAndRecordsNoStep()` - _(no documentation)_
+- `public void Escape_AfterTheRadiusDragEnded_KeepsTheRadii()` - _(no documentation)_
+
 ## CanvasAreaViewModelRingTests (class)
 
 `public class CanvasAreaViewModelRingTests`

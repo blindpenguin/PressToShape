@@ -471,7 +471,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
     /// <summary>
     /// A key went down on the canvas. The arrow keys move the selection by 1 unit, with <paramref name="shift"/> by 10. Escape leaves the entered group, or clears
-    /// the selection, or ends a pick from the canvas. Nothing else happens during a drag.
+    /// the selection, or ends a pick from the canvas, or cancels the drag of a radius handle. Nothing else happens during a drag.
     /// </summary>
     /// <returns>Whether the key did something, so the caller marks it as handled.</returns>
     public bool KeyPressed(CanvasKey key, bool shift)
@@ -484,6 +484,13 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         if (key == CanvasKey.Escape && _state.ColorPick != ColorPickTarget.None)
         {
             _state.CancelColorPick();
+            return true;
+        }
+
+        // Escape during the drag of a radius handle puts the radii back and records nothing, as a second finger does.
+        if (key == CanvasKey.Escape && _interaction.IsRadiusDragging)
+        {
+            _interaction.Abort();
             return true;
         }
 

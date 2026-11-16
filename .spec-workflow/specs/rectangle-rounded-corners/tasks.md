@@ -157,7 +157,7 @@ Notes for every task:
 
 ## Finish
 
-- [-] 18. Documentation, index and the final check
+- [x] 18. Documentation, index and the final check
   - Files: `docs/feature-gap.md`, `.spec-workflow/steering/tech.md` (only if a decision entry is needed), `docs/index/` (generated)
   - Update the row "Rounded corners on rectangles" in `docs/feature-gap.md` (state Done, the date, one sentence). Add a numbered decision to `tech.md` only if the owner agrees (stored versus effective radius, one optional file field), through the approval flow of the steering doc
   - Regenerate the code index (`dotnet run --project tools/PressToShape.CodeIndex -- generate`, then `check`)

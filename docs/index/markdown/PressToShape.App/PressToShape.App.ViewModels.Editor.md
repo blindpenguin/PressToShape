@@ -58,7 +58,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)` - The button went up. The position is in screen pixels of the canvas area.
 - `public void PointerHover(double screenX, double screenY)` - The pointer moved over the canvas without a drag: the handle under it decides the cursor, and the Pen shows its next segment.
 - `public void PointerLeft()` - The pointer left the canvas: no handle is hovered any more.
-- `public bool KeyPressed(CanvasKey key, bool shift)` - A key went down on the canvas. The arrow keys move the selection by 1 unit, with shift by 10. Escape leaves the entered group, or clears the selection, or ends a pick from the canvas. Nothing else happens during a drag.
+- `public bool KeyPressed(CanvasKey key, bool shift)` - A key went down on the canvas. The arrow keys move the selection by 1 unit, with shift by 10. Escape leaves the entered group, or clears the selection, or ends a pick from the canvas, or cancels the drag of a radius handle. Nothing else happens during a drag.
 - `public void Cancel()` - Ends a drag without a result, for example when the pointer capture is lost.
 - `public bool Wheel(double deltaX, double deltaY, bool control, bool shift, double screenX, double screenY)` - The wheel (or a touchpad scroll) turned over the canvas. With Ctrl it zooms around the pointer, otherwise it moves the view, Shift moving it horizontally. A positive delta moves the view toward the top or the left.
 - `public void DeleteSelection()` - Removes the selected shapes. Does nothing without a selection.

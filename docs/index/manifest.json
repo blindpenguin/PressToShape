@@ -13,14 +13,14 @@
       "Name": "PressToShape.App",
       "Path": "src/PressToShape.App/PressToShape.App.csproj",
       "SymbolCount": 2651,
-      "RelationshipCount": 9388,
+      "RelationshipCount": 9393,
       "XamlFileCount": 23
     },
     {
       "Name": "PressToShape.App.Tests",
       "Path": "tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj",
-      "SymbolCount": 2948,
-      "RelationshipCount": 27302,
+      "SymbolCount": 2953,
+      "RelationshipCount": 27365,
       "XamlFileCount": 0
     },
     {
@@ -66,7 +66,7 @@
       "XamlFileCount": 0
     }
   ],
-  "SymbolCount": 7932,
-  "RelationshipCount": 46921,
+  "SymbolCount": 7937,
+  "RelationshipCount": 46989,
   "Warnings": []
 }
