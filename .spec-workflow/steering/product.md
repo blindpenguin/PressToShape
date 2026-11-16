@@ -17,7 +17,7 @@ Scope is staged. The first usable version (MVP) comes first.
 
 ### MVP
 1. **Selection and editing**: select, move, scale and rotate objects. Edit paths node by node.
-2. **Drawing tools**: pen/bezier, basic shapes (rectangle, ellipse, star), plus shape and path creation.
+2. **Drawing tools**: pen/bezier, basic shapes (rectangle, ellipse), plus shape and path creation.
 3. **Appearance**: fill, stroke, opacity.
 4. **Layers and organization**: layers, groups, visibility and locking.
 5. **Canvas**: zoom, pan, rulers, snapping.
@@ -52,6 +52,7 @@ No numeric targets have been set. Proposed qualitative checks, to be refined by 
 
 ## Out of Scope
 - Raster image editing
+- Parametric shapes such as star and spiral (decided 2026-11-16; their tools were removed)
 - Animation
 - Collaboration and multi-user editing
 - Cloud sync and cloud storage
