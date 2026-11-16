@@ -222,9 +222,6 @@ msgstr "_Eigenschaften"
 msgid "_Layers"
 msgstr "E_benen"
 
-msgid "_Objects"
-msgstr "_Objekte"
-
 msgid "_Assets"
 msgstr "_Assets"
 
@@ -387,12 +384,6 @@ msgstr "Ebenen"
 msgid "Layers tab"
 msgstr "Reiter Ebenen"
 
-msgid "Objects"
-msgstr "Objekte"
-
-msgid "Objects tab"
-msgstr "Reiter Objekte"
-
 msgid "Show or hide the contents"
 msgstr "Inhalt ein- oder ausblenden"
 
@@ -410,9 +401,6 @@ msgstr "Ebene hinzufügen"
 
 msgid "More options"
 msgstr "Weitere Optionen"
-
-msgid "More layer options"
-msgstr "Weitere Ebenenoptionen"
 
 msgid "Toggle visibility"
 msgstr "Sichtbarkeit umschalten"

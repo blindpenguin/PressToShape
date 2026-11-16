@@ -42,4 +42,4 @@ not used
 `T:PressToShape.App.Views.Editor.ObjectIndentConverter` at src/PressToShape.App/Views/Editor/ObjectIndentConverter.cs:8, implements `IValueConverter`.
 Turns the depth of a row of the object list into the width of the empty space in front of it. The view sets PressToShape.App.Views.Editor.ObjectIndentConverter.Indent from the theme.
 
-- used at src/PressToShape.App/Views/Editor/ObjectsView.axaml:67
+- used at src/PressToShape.App/Views/Editor/LayersView.axaml:79

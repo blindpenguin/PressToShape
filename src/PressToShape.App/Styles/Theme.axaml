@@ -148,7 +148,7 @@
     <x:Double x:Key="RowButtonSize">28</x:Double>
     <x:Double x:Key="RowIconSize">16</x:Double>
 
-    <!-- How far a row of the Objects list moves to the right for each level of layer and group above it. -->
+    <!-- How far a row of the Layers list moves to the right for each level of layer and group above it. -->
     <x:Double x:Key="RowIndentSize">14</x:Double>
 
     <!-- Selection handles on the canvas: the side they are drawn with. The area that grabs a handle for a finger is TouchHandleGrabSize (only the tablet layout uses it). -->

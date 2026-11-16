@@ -135,7 +135,6 @@ A named group of shapes that can be hidden or locked. Immutable: change it with 
 
 **Relationships**
 
-- Injected into `PressToShape.App.ViewModels.Editor.LayerItemViewModel`
 - Injected into `PressToShape.Core.Documents.ShapeLocation`
 
 ## ShapeLocation (record)

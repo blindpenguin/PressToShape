@@ -33,7 +33,7 @@ Root of the desktop layout. Adds the menu bar, the toolbar and the status bar to
 
 `internal sealed class MenuBarViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:20-178`
+Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:20-177`
 
 The complete menu structure. The File actions, the Edit actions, the group, arrange, lock and hide items, Quit, the zoom items, the Window items and the languages have behavior. Everything else has no command and is therefore disabled until its feature exists.
 

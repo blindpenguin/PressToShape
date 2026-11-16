@@ -162,7 +162,6 @@ internal sealed class MenuBarViewModel : ViewModelBase
             Submenu(N("_Window"),
                 Item(N("_Properties"), command: ShowTab(InspectorTab.Properties)),
                 Item(N("_Layers"), command: ShowTab(InspectorTab.Layers)),
-                Item(N("_Objects"), command: ShowTab(InspectorTab.Objects)),
                 Item(N("_Assets"), command: ShowTab(InspectorTab.Assets)),
                 Item(N("_History"), command: ShowTab(InspectorTab.History))),
             Submenu(N("_Help"),

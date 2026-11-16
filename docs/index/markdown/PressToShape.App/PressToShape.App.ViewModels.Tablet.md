@@ -98,9 +98,9 @@ The small color swatch at the bottom of the tablet tool column: the fill in the 
 
 `internal partial sealed class TabletPanelViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/TabletPanelViewModel.cs:15-97`
+Source: `src/PressToShape.App/ViewModels/Tablet/TabletPanelViewModel.cs:15-95`
 
-The panel of the tablet layout, which floats over the canvas and shows one of the inspector's tabs (Properties, Layers, Objects or History) while it is open. A toolbar icon toggles it. The shown tab is kept in PressToShape.App.ViewModels.Editor.InspectorViewModel.SelectedTab, as on the desktop. There is no Assets panel on the tablet until Assets has content.
+The panel of the tablet layout, which floats over the canvas and shows one of the inspector's tabs (Properties, Layers or History) while it is open. A toolbar icon toggles it. The shown tab is kept in PressToShape.App.ViewModels.Editor.InspectorViewModel.SelectedTab, as on the desktop. There is no Assets panel on the tablet until Assets has content.
 
 **Members**
 
@@ -178,7 +178,7 @@ The tool column of the tablet layout: one icon per tool group (see PressToShape.
 
 `internal sealed class TabletToolbarViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/TabletToolbarViewModel.cs:19-83`
+Source: `src/PressToShape.App/ViewModels/Tablet/TabletToolbarViewModel.cs:19-82`
 
 The compact toolbar of the tablet layout: the name of the document (with a star while it has unsaved changes), undo and redo, Duplicate and Delete, the icons that open the panel, the zoom, and the overflow menu. Everything else of the desktop toolbar and menu bar is in the overflow menu.
 
@@ -190,7 +190,7 @@ The compact toolbar of the tablet layout: the name of the document (with a star 
 - `public ToolbarButtonViewModel RedoButton { get; }` - _(no documentation)_
 - `public ToolbarButtonViewModel DuplicateButton { get; }` - Duplicates the selection. Enabled only while something is selected.
 - `public ToolbarButtonViewModel DeleteButton { get; }` - Deletes the selection (one undo step). Enabled only while something is selected.
-- `public IReadOnlyList<PanelButtonViewModel> PanelButtons { get; }` - The icons that open the panel: Properties, Layers, Objects, History.
+- `public IReadOnlyList<PanelButtonViewModel> PanelButtons { get; }` - The icons that open the panel: Properties, Layers, History.
 - `public ZoomViewModel Zoom { get; }` - _(no documentation)_
 - `public OverflowMenuViewModel OverflowMenu { get; }` - _(no documentation)_
 

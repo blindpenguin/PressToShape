@@ -1,319 +1,482 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PressToShape.App.Localization;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
 using PressToShape.Core.History;
+using PressToShape.Core.Shapes;
 using Xunit;
 
 namespace PressToShape.App.Tests;
 
 public class LayersViewModelTests
 {
-    private static readonly Guid LayerA = new("aaaaaaaa-0000-0000-0000-000000000001");
-    private static readonly Guid LayerB = new("aaaaaaaa-0000-0000-0000-000000000002");
-    private static readonly Guid LayerC = new("aaaaaaaa-0000-0000-0000-000000000003");
+    private static RectangleShape Rect(string name = "", double x = 0) => new() { Name = name, X = x, Width = 10, Height = 10 };
 
-    private static Document ThreeLayers() =>
-        Document.Create("ignored") with
+    private static GroupShape Group(string name, params Shape[] children) => new() { Name = name, Children = [.. children] };
+
+    private sealed record Fixture(EditorState State, ObjectEditor Editor, LayersViewModel List, Localizer Localizer);
+
+    private static Fixture Create(Shape[] shapes, Localizer? localizer = null)
+    {
+        var document = Document.Create("Layer");
+        var state = new EditorState(document.AddShapes(document.Layers[0].Id, shapes));
+        var editor = new ObjectEditor(state);
+        localizer ??= FakeLocalizer.Create();
+        return new Fixture(state, editor, new LayersViewModel(state, editor, localizer), localizer);
+    }
+
+    private static string[] Names(Fixture f) => f.List.Rows.Select(r => r.Name).ToArray();
+
+    private static ObjectRowViewModel Row(Fixture f, Guid id) => f.List.Rows.Single(r => r.Id == id);
+
+    [Fact]
+    public void Rows_LayerThenObjectsTopmostFirst()
+    {
+        var f = Create([Rect("a"), Rect("b", 20), Rect("c", 40)]);
+
+        Assert.Equal(["Layer", "c", "b", "a"], Names(f));
+        Assert.Equal([0, 1, 1, 1], f.List.Rows.Select(r => r.Depth).ToArray());
+        Assert.True(f.List.Rows[0].IsLayer);
+    }
+
+    [Fact]
+    public void Group_AfterGrouping_IsShownClosed()
+    {
+        var a = Rect("a");
+        var b = Rect("b", 20);
+        var f = Create([a, b]);
+        f.State.SetSelection([a.Id, b.Id]);
+
+        f.Editor.Group();
+
+        Assert.Equal(["Layer", "Group"], Names(f));
+        Assert.True(f.List.Rows[1].IsSelected);
+        Assert.False(f.List.Rows[1].IsExpanded);
+    }
+
+    [Fact]
+    public void Rows_Group_IsCollapsedAtFirstAndOpensToShowItsChildren()
+    {
+        var x = Rect("x");
+        var group = Group("G", x, Rect("y", 20));
+        var f = Create([group, Rect("top", 100)]);
+
+        Assert.Equal(["Layer", "top", "G"], Names(f));
+        Assert.False(Row(f, group.Id).IsExpanded);
+
+        f.List.SetExpanded(Row(f, group.Id), true);
+
+        Assert.Equal(["Layer", "top", "G", "y", "x"], Names(f));
+        Assert.Equal([0, 1, 1, 2, 2], f.List.Rows.Select(r => r.Depth).ToArray());
+        Assert.Equal(group.Id, Row(f, x.Id).ParentId);
+    }
+
+    [Fact]
+    public void Rows_CollapsingTheLayer_HidesEverythingBelow()
+    {
+        var f = Create([Rect("a"), Rect("b", 20)]);
+
+        f.List.SetExpanded(f.List.Rows[0], false);
+
+        Assert.Equal(["Layer"], Names(f));
+        f.List.SetExpanded(f.List.Rows[0], true);
+        Assert.Equal(3, f.List.Rows.Count);
+    }
+
+    [Fact]
+    public void Rows_NoName_ShowTheDefaultNameOfTheType()
+    {
+        var f = Create([Rect(), new EllipseShape { Width = 5, Height = 5 }, Group(string.Empty, Rect())]);
+
+        Assert.Equal(["Layer", "Group", "Ellipse", "Rectangle"], Names(f));
+        Assert.Equal(string.Empty, f.List.Rows[1].StoredName);
+    }
+
+    [Fact]
+    public void Rows_DefaultNames_AreTranslated_AndFollowALanguageChange()
+    {
+        var localizer = FakeLocalizer.Create("en", new Dictionary<string, string>
         {
-            Layers = [new Layer { Id = LayerA, Name = "Bottom" }, new Layer { Id = LayerB, Name = "Middle" }, new Layer { Id = LayerC, Name = "Top" }],
-        };
-
-    private static (EditorState State, LayersViewModel Layers) Create()
-    {
-        var state = new EditorState(ThreeLayers());
-        return (state, new LayersViewModel(state));
-    }
-
-    [Fact]
-    public void Constructor_NullState_Throws()
-    {
-        Assert.Throws<ArgumentNullException>(() => new LayersViewModel(null!));
-    }
-
-    [Fact]
-    public void Items_Initially_ListTheLayersTopmostFirst()
-    {
-        var (_, layers) = Create();
-
-        Assert.Equal(new[] { "Top", "Middle", "Bottom" }, layers.Items.Select(i => i.Name));
-        Assert.Equal(new[] { LayerC, LayerB, LayerA }, layers.Items.Select(i => i.LayerId));
-    }
-
-    [Fact]
-    public void Items_NewLayer_StartsVisibleAndUnlocked()
-    {
-        var (_, layers) = Create();
-
-        Assert.All(layers.Items, item =>
-        {
-            Assert.True(item.IsVisible);
-            Assert.False(item.IsLocked);
+            ["Rectangle"] = "Rechteck",
+            ["Ellipse"] = "Ellipse",
+            ["object name|Group"] = "Gruppe",
         });
+        var f = Create([Rect(), Group(string.Empty, Rect())], localizer);
+
+        Assert.Equal(["Layer", "Group", "Rectangle"], Names(f));
+
+        localizer.SetLanguage("de");
+
+        Assert.Equal(["Layer", "Gruppe", "Rechteck"], Names(f));
     }
 
     [Fact]
-    public void ToggleVisibility_Executed_HidesTheLayerInTheDocument()
+    public void Update_FlagsAndNames_KeepTheRowInstances()
     {
-        var (state, layers) = Create();
+        var a = Rect("a");
+        var f = Create([a, Rect("b", 20)]);
+        var before = f.List.Rows.ToArray();
 
-        layers.Items[1].ToggleVisibilityCommand.Execute(null);
+        f.Editor.SetHidden([a.Id], true);
+        f.Editor.SetLocked([a.Id], true);
+        f.Editor.Rename(a.Id, "Sun");
 
-        Assert.False(state.Document.Layers.Single(l => l.Id == LayerB).IsVisible);
-        Assert.False(layers.Items[1].IsVisible);
+        Assert.True(before.SequenceEqual(f.List.Rows));
+        var row = Row(f, a.Id);
+        Assert.Equal("Sun", row.Name);
+        Assert.False(row.IsVisible);
+        Assert.True(row.IsLocked);
+        Assert.True(row.IsEffectivelyHidden);
     }
 
     [Fact]
-    public void ToggleVisibility_Twice_ReturnsToTheOriginalValue()
+    public void Update_StructureChange_ReusesTheRowsOfTheSurvivingObjects()
     {
-        var (state, layers) = Create();
+        var a = Rect("a");
+        var f = Create([a, Rect("b", 20)]);
+        var rowOfA = Row(f, a.Id);
 
-        layers.Items[0].ToggleVisibilityCommand.Execute(null);
-        layers.Items[0].ToggleVisibilityCommand.Execute(null);
+        f.State.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(d.Layers[0].Id, Rect("c", 40)));
 
-        Assert.True(state.Document.Layers.Single(l => l.Id == LayerC).IsVisible);
-        Assert.True(layers.Items[0].IsVisible);
+        Assert.Equal(["Layer", "c", "b", "a"], Names(f));
+        Assert.Same(rowOfA, Row(f, a.Id));
     }
 
     [Fact]
-    public void ToggleLock_Executed_LocksTheLayerInTheDocument()
+    public void ChildOfAHiddenOrLockedGroup_IsMarkedEffectivelyHiddenOrLocked_KeepingItsOwnFlags()
     {
-        var (state, layers) = Create();
+        var child = Rect("child");
+        var group = Group("G", child) with { IsVisible = false, IsLocked = true };
+        var f = Create([group]);
+        f.List.SetExpanded(Row(f, group.Id), true);
 
-        layers.Items[2].ToggleLockCommand.Execute(null);
+        var row = Row(f, child.Id);
 
-        Assert.True(state.Document.Layers.Single(l => l.Id == LayerA).IsLocked);
-        Assert.True(layers.Items[2].IsLocked);
-        Assert.True(layers.Items[2].IsVisible);
+        Assert.True(row.IsVisible);
+        Assert.False(row.IsLocked);
+        Assert.True(row.IsEffectivelyHidden);
+        Assert.True(row.IsEffectivelyLocked);
     }
 
     [Fact]
-    public void Toggle_Executed_LeavesTheEarlierDocumentUnchanged()
+    public void ExpandedState_SurvivesUndoAndRedoAsFarAsTheGroupExists()
     {
-        var (state, layers) = Create();
-        var before = state.Document;
+        var a = Rect("a");
+        var b = Rect("b", 20);
+        var f = Create([a, b]);
+        f.State.SetSelection([a.Id, b.Id]);
+        f.Editor.Group();
+        var group = f.State.Document.Layers[0].Shapes[0];
+        f.List.SetExpanded(Row(f, group.Id), true);
+        Assert.Equal(4, f.List.Rows.Count);
 
-        layers.Items[0].ToggleVisibilityCommand.Execute(null);
-        layers.Items[0].ToggleLockCommand.Execute(null);
+        f.State.Undo();
+        Assert.Equal(["Layer", "b", "a"], Names(f));
 
-        Assert.True(before.Layers[2].IsVisible);
-        Assert.False(before.Layers[2].IsLocked);
-        Assert.NotSame(before, state.Document);
+        f.State.Redo();
+        Assert.Equal(4, f.List.Rows.Count);
+        Assert.True(Row(f, group.Id).IsExpanded);
     }
 
     [Fact]
-    public void Sync_OnlyLayerValuesChanged_KeepsTheSameItemInstances()
+    public void Selection_OnTheCanvas_MarksRowsAndOpensTheGroupsAroundThem()
     {
-        var (state, layers) = Create();
-        var itemsBefore = layers.Items.ToList();
+        var x = Rect("x");
+        var group = Group("G", x, Rect("y", 20));
+        var f = Create([group]);
+        Assert.Equal(["Layer", "G"], Names(f));
 
-        state.UpdateLayer(LayerB, l => l with { Name = "Renamed", IsVisible = false, IsLocked = true }, HistoryStepType.HideLayer);
+        f.State.EnterGroup(group.Id);
+        f.State.SelectOnly(x.Id);
 
-        Assert.Equal(itemsBefore, layers.Items);
-        Assert.Equal("Renamed", layers.Items[1].Name);
-        Assert.False(layers.Items[1].IsVisible);
-        Assert.True(layers.Items[1].IsLocked);
+        Assert.Equal(["Layer", "G", "y", "x"], Names(f));
+        Assert.True(Row(f, x.Id).IsSelected);
+        Assert.False(Row(f, group.Id).IsSelected);
+        Assert.True(Row(f, group.Id).IsExpanded);
+
+        f.State.ClearSelection();
+        Assert.False(Row(f, x.Id).IsSelected);
     }
 
     [Fact]
-    public void Sync_NameChanged_RaisesPropertyChangedOnTheItem()
+    public void Select_RowOnTheTopLevel_SelectsTheObjectAndLeavesGroups()
     {
-        var (state, layers) = Create();
-        var changed = new List<string?>();
-        layers.Items[0].PropertyChanged += (_, e) => changed.Add(e.PropertyName);
+        var group = Group("G", Rect("x"));
+        var plain = Rect("p", 100);
+        var f = Create([group, plain]);
+        f.State.EnterGroup(group.Id);
 
-        state.UpdateLayer(LayerC, l => l with { Name = "Sky" }, HistoryStepType.HideLayer);
+        f.List.Select(Row(f, plain.Id), extend: false);
 
-        Assert.Contains(nameof(LayerItemViewModel.Name), changed);
+        Assert.Null(f.State.EnteredGroupId);
+        Assert.Equal(new[] { plain.Id }, f.State.SelectedShapeIds.ToArray());
+        Assert.True(Row(f, plain.Id).IsCurrent);
     }
 
     [Fact]
-    public void Sync_LayerAdded_RebuildsTheItemsWithTheNewLayerOnTop()
+    public void Select_RowInsideAGroup_EntersTheGroup()
     {
-        var (state, layers) = Create();
-        var newLayer = new Layer { Name = "Newest" };
+        var x = Rect("x");
+        var group = Group("G", x, Rect("y", 20));
+        var f = Create([group]);
+        f.List.SetExpanded(Row(f, group.Id), true);
 
-        state.Document = state.Document.AddLayer(newLayer);
+        f.List.Select(Row(f, x.Id), extend: false);
 
-        Assert.Equal(new[] { "Newest", "Top", "Middle", "Bottom" }, layers.Items.Select(i => i.Name));
-        Assert.Equal(newLayer.Id, layers.Items[0].LayerId);
+        Assert.Equal(group.Id, f.State.EnteredGroupId);
+        Assert.Equal(new[] { x.Id }, f.State.SelectedShapeIds.ToArray());
     }
 
     [Fact]
-    public void Sync_LayerRemoved_RebuildsTheItems()
+    public void Select_WithExtend_AddsAndRemovesRowsOfTheSameParent_AndReplacesOtherwise()
     {
-        var (state, layers) = Create();
+        var a = Rect("a");
+        var b = Rect("b", 20);
+        var inner = Rect("i", 50);
+        var group = Group("G", inner, Rect("j", 70));
+        var f = Create([a, b, group]);
+        f.List.Select(Row(f, a.Id), extend: false);
 
-        state.Document = state.Document.RemoveLayer(LayerB);
+        f.List.Select(Row(f, b.Id), extend: true);
+        Assert.Equal(new[] { a.Id, b.Id }, f.State.SelectedShapeIds.ToArray());
 
-        Assert.Equal(new[] { "Top", "Bottom" }, layers.Items.Select(i => i.Name));
+        f.List.Select(Row(f, a.Id), extend: true);
+        Assert.Equal(new[] { b.Id }, f.State.SelectedShapeIds.ToArray());
+
+        f.List.SetExpanded(Row(f, group.Id), true);
+        f.List.Select(Row(f, inner.Id), extend: true);
+        Assert.Equal(new[] { inner.Id }, f.State.SelectedShapeIds.ToArray());
+        Assert.Equal(group.Id, f.State.EnteredGroupId);
     }
 
     [Fact]
-    public void Toggle_AfterRebuild_WorksOnTheNewItems()
+    public void Select_LockedRow_OnlyMarksItAsCurrentAndKeepsTheCanvasSelection()
     {
-        var (state, layers) = Create();
-        state.Document = state.Document.AddLayer(new Layer { Name = "Newest" });
+        var a = Rect("a");
+        var locked = Rect("locked", 20) with { IsLocked = true };
+        var f = Create([a, locked]);
+        f.List.Select(Row(f, a.Id), extend: false);
 
-        layers.Items[0].ToggleVisibilityCommand.Execute(null);
+        f.List.Select(Row(f, locked.Id), extend: false);
 
-        Assert.False(state.Document.Layers[3].IsVisible);
-        Assert.False(layers.Items[0].IsVisible);
+        Assert.Equal(new[] { a.Id }, f.State.SelectedShapeIds.ToArray());
+        Assert.True(Row(f, locked.Id).IsCurrent);
+        Assert.False(Row(f, a.Id).IsCurrent);
     }
 
     [Fact]
-    public void Items_ArtboardSizeChangeOnly_KeepsTheItems()
+    public void Select_ThenTheCanvasSelectionChanges_ClearsTheCurrentMark()
     {
-        var (state, layers) = Create();
-        var itemsBefore = layers.Items.ToList();
+        var a = Rect("a");
+        var b = Rect("b", 20);
+        var f = Create([a, b]);
+        f.List.Select(Row(f, a.Id), extend: false);
+        Assert.True(Row(f, a.Id).IsCurrent);
 
-        state.Document = state.Document.WithArtboardSize(500, 400);
+        f.State.SelectOnly(b.Id);
 
-        Assert.Equal(itemsBefore, layers.Items);
+        Assert.All(f.List.Rows, row => Assert.False(row.IsCurrent));
+    }
+
+    [Fact]
+    public void Toggles_OnALockedHiddenRow_StillWork()
+    {
+        var locked = Rect("locked") with { IsLocked = true, IsVisible = false };
+        var f = Create([locked]);
+        var row = Row(f, locked.Id);
+        var steps = f.State.History.Steps.Count;
+
+        row.ToggleLockCommand.Execute(null);
+        row.ToggleVisibilityCommand.Execute(null);
+
+        Assert.Equal(steps + 2, f.State.History.Steps.Count);
+        Assert.Equal(HistoryStepType.UnlockShapes, f.State.History.Steps[^2]);
+        Assert.Equal(HistoryStepType.ShowShapes, f.State.History.Steps[^1]);
+        Assert.False(row.IsLocked);
+        Assert.True(row.IsVisible);
+    }
+
+    [Fact]
+    public void Toggles_VisibleRow_HidesAndLocksIt()
+    {
+        var a = Rect("a");
+        var f = Create([a]);
+        var row = Row(f, a.Id);
+
+        row.ToggleVisibilityCommand.Execute(null);
+        row.ToggleLockCommand.Execute(null);
+
+        Assert.Equal(HistoryStepType.HideShapes, f.State.History.Steps[^2]);
+        Assert.Equal(HistoryStepType.LockShapes, f.State.History.Steps[^1]);
+        Assert.False(row.IsVisible);
+        Assert.True(row.IsLocked);
+    }
+
+    [Fact]
+    public void Rename_CommitsAsOneStep_EmptyNameFallsBackToTheDefault()
+    {
+        var a = Rect("a");
+        var f = Create([a]);
+        var row = Row(f, a.Id);
+
+        row.BeginRenameCommand.Execute(null);
+        Assert.True(row.IsRenaming);
+        Assert.Equal("a", row.EditText);
+        row.EditText = "Sun";
+        row.CommitRenameCommand.Execute(null);
+
+        Assert.False(row.IsRenaming);
+        Assert.Equal("Sun", row.Name);
+        Assert.Equal(HistoryStepType.RenameShape, f.State.History.Steps[^1]);
+
+        row.BeginRenameCommand.Execute(null);
+        row.EditText = "  ";
+        row.CommitRenameCommand.Execute(null);
+
+        Assert.Equal("Rectangle", row.Name);
+    }
+
+    [Fact]
+    public void Rename_Cancelled_ChangesNothing()
+    {
+        var a = Rect("a");
+        var f = Create([a]);
+        var row = Row(f, a.Id);
+        var steps = f.State.History.Steps.Count;
+
+        row.BeginRenameCommand.Execute(null);
+        row.EditText = "x";
+        row.CancelRenameCommand.Execute(null);
+        row.CommitRenameCommand.Execute(null);
+
+        Assert.False(row.IsRenaming);
+        Assert.Equal("a", row.Name);
+        Assert.Equal(steps, f.State.History.Steps.Count);
+    }
+
+    [Fact]
+    public void Rename_LayerRow_IsNotPossible()
+    {
+        var f = Create([Rect("a")]);
+
+        Assert.False(f.List.Rows[0].BeginRenameCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void Reorder_WithinAParent_MovesTheObjectAboveTheTarget()
+    {
+        var a = Rect("a");
+        var c = Rect("c", 40);
+        var f = Create([a, Rect("b", 20), c]);
+
+        Assert.True(f.List.CanReorder(Row(f, a.Id), Row(f, c.Id)));
+        f.List.Reorder(Row(f, a.Id), Row(f, c.Id));
+
+        Assert.Equal(["Layer", "a", "c", "b"], Names(f));
+        Assert.Equal(HistoryStepType.ReorderShape, f.State.History.Steps[^1]);
+    }
+
+    [Fact]
+    public void Reorder_AnotherParentOrALayerRow_IsIgnored()
+    {
+        var inner = Rect("i");
+        var group = Group("G", inner);
+        var a = Rect("a", 50);
+        var f = Create([group, a]);
+        f.List.SetExpanded(Row(f, group.Id), true);
+        var steps = f.State.History.Steps.Count;
+
+        Assert.False(f.List.CanReorder(Row(f, a.Id), Row(f, inner.Id)));
+        Assert.False(f.List.CanReorder(Row(f, a.Id), f.List.Rows[0]));
+        Assert.False(f.List.CanReorder(f.List.Rows[0], Row(f, a.Id)));
+        f.List.Reorder(Row(f, a.Id), Row(f, inner.Id));
+
+        Assert.Equal(steps, f.State.History.Steps.Count);
+    }
+
+    [Fact]
+    public void Select_LayerRow_MakesTheLayerActive()
+    {
+        var f = Create([Rect("a")]);
+        f.State.Edit(HistoryStepType.DrawRectangle, d => d.AddLayer(new Layer { Name = "Two" }));
+        var first = f.List.Rows.Single(r => r.IsLayer && r.Name == "Layer");
+
+        f.List.Select(first, extend: false);
+
+        Assert.Equal(first.Id, f.State.ActiveLayerId);
+    }
+
+    [Fact]
+    public void Constructor_NullArguments_Throw()
+    {
+        var state = new EditorState();
+
+        Assert.Throws<ArgumentNullException>(() => new LayersViewModel(null!, new ObjectEditor(state), FakeLocalizer.Create()));
+        Assert.Throws<ArgumentNullException>(() => new LayersViewModel(state, null!, FakeLocalizer.Create()));
+    }
+
+    [Fact]
+    public void LayerRow_Toggles_HideAndLockTheLayerAsOneStepEach()
+    {
+        var f = Create([Rect("a")]);
+        var layer = f.List.Rows[0];
+        var steps = f.State.History.Steps.Count;
+
+        layer.ToggleVisibilityCommand.Execute(null);
+        layer.ToggleLockCommand.Execute(null);
+
+        Assert.False(f.State.Document.Layers[0].IsVisible);
+        Assert.True(f.State.Document.Layers[0].IsLocked);
+        Assert.Equal(steps + 2, f.State.History.Steps.Count);
+        Assert.Equal(HistoryStepType.HideLayer, f.State.History.Steps[^2]);
+        Assert.Equal(HistoryStepType.LockLayer, f.State.History.Steps[^1]);
+        Assert.False(layer.IsVisible);
+        Assert.True(layer.IsLocked);
+        Assert.True(f.List.Rows[1].IsEffectivelyHidden);
+
+        layer.ToggleVisibilityCommand.Execute(null);
+        layer.ToggleLockCommand.Execute(null);
+
+        Assert.Equal(HistoryStepType.ShowLayer, f.State.History.Steps[^2]);
+        Assert.Equal(HistoryStepType.UnlockLayer, f.State.History.Steps[^1]);
+    }
+
+    [Fact]
+    public void LayerToggle_ThenUndo_RestoresTheLayerAndTheRow()
+    {
+        var f = Create([Rect("a")]);
+
+        f.List.Rows[0].ToggleVisibilityCommand.Execute(null);
+        f.State.Undo();
+
+        Assert.True(f.State.Document.Layers[0].IsVisible);
+        Assert.True(f.List.Rows[0].IsVisible);
+    }
+
+    [Fact]
+    public void ActiveLayer_IsMarked_AndFollowsTheState()
+    {
+        var f = Create([Rect("a")]);
+        f.State.Edit(HistoryStepType.DrawRectangle, d => d.AddLayer(new Layer { Name = "Two" }));
+        var layers = f.List.Rows.Where(r => r.IsLayer).ToList();
+        var first = layers.Single(r => r.Name == "Layer");
+        var second = layers.Single(r => r.Name == "Two");
+
+        Assert.Equal(f.State.ActiveLayerId, Assert.Single(layers, r => r.IsActiveLayer).Id);
+
+        f.State.ActiveLayerId = first.Id;
+
+        Assert.True(first.IsActiveLayer);
+        Assert.False(second.IsActiveLayer);
+        Assert.All(f.List.Rows.Where(r => !r.IsLayer), r => Assert.False(r.IsActiveLayer));
     }
 
     [Fact]
     public void AddLayerCommand_CannotExecuteYet()
     {
-        var (_, layers) = Create();
-
-        Assert.False(layers.AddLayerCommand.CanExecute(null));
-    }
-
-    [Fact]
-    public void LayerItem_NullArguments_Throw()
-    {
-        var state = new EditorState();
-
-        Assert.Throws<ArgumentNullException>(() => new LayerItemViewModel(null!, state.Document.Layers[0]));
-        Assert.Throws<ArgumentNullException>(() => new LayerItemViewModel(state, null!));
-    }
-
-    [Fact]
-    public void SelectedItem_Initially_IsTheTopmostLayer()
-    {
-        var (state, layers) = Create();
-
-        Assert.Equal(LayerC, layers.SelectedItem!.LayerId);
-        Assert.Equal(LayerC, state.ActiveLayerId);
-    }
-
-    [Fact]
-    public void SelectedItem_Set_ChangesTheActiveLayer()
-    {
-        var (state, layers) = Create();
-
-        layers.SelectedItem = layers.Items[2];
-
-        Assert.Equal(LayerA, state.ActiveLayerId);
-        Assert.Same(layers.Items[2], layers.SelectedItem);
-    }
-
-    [Fact]
-    public void SelectedItem_ActiveLayerChangedInTheState_FollowsAndNotifies()
-    {
-        var (state, layers) = Create();
-        var raised = new List<string?>();
-        layers.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
-
-        state.ActiveLayerId = LayerB;
-
-        Assert.Equal(LayerB, layers.SelectedItem!.LayerId);
-        Assert.Contains(nameof(LayersViewModel.SelectedItem), raised);
-    }
-
-    [Fact]
-    public void SelectedItem_SetToNull_KeepsTheActiveLayer()
-    {
-        var (state, layers) = Create();
-        layers.SelectedItem = layers.Items[1];
-
-        layers.SelectedItem = null;
-
-        Assert.Equal(LayerB, state.ActiveLayerId);
-        Assert.Equal(LayerB, layers.SelectedItem!.LayerId);
-    }
-
-    [Fact]
-    public void SelectedItem_ShapeEdit_KeepsTheSameRowWithoutRebuilding()
-    {
-        var (state, layers) = Create();
-        layers.SelectedItem = layers.Items[1];
-        var rows = layers.Items.ToList();
-        var raised = new List<string?>();
-        layers.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
-
-        state.Document = state.Document.AddShape(LayerB, new PressToShape.Core.Shapes.RectangleShape { Width = 5, Height = 5 });
-
-        Assert.True(rows.SequenceEqual(layers.Items));
-        Assert.Same(rows[1], layers.SelectedItem);
-        Assert.DoesNotContain(nameof(LayersViewModel.SelectedItem), raised);
-    }
-
-    [Fact]
-    public void SelectedItem_LayerRemoved_SelectsTheNewActiveLayerInTheRebuiltList()
-    {
-        var (state, layers) = Create();
-
-        state.Document = state.Document.RemoveLayer(LayerC);
-
-        Assert.Equal(new[] { LayerB, LayerA }, layers.Items.Select(i => i.LayerId));
-        Assert.Equal(LayerB, state.ActiveLayerId);
-        Assert.Same(layers.Items[0], layers.SelectedItem);
-    }
-
-    [Fact]
-    public void SelectedItem_OtherLayerRemoved_KeepsTheActiveLayerSelected()
-    {
-        var (state, layers) = Create();
-        layers.SelectedItem = layers.Items[1];
-
-        state.Document = state.Document.RemoveLayer(LayerA);
-
-        Assert.Equal(LayerB, state.ActiveLayerId);
-        Assert.Equal(LayerB, layers.SelectedItem!.LayerId);
-    }
-
-    [Fact]
-    public void ToggleVisibility_OnAnotherRow_DoesNotChangeTheActiveLayer()
-    {
-        var (state, layers) = Create();
-
-        layers.Items[2].ToggleVisibilityCommand.Execute(null);
-        layers.Items[1].ToggleLockCommand.Execute(null);
-
-        Assert.Equal(LayerC, state.ActiveLayerId);
-    }
-
-    [Fact]
-    public void Toggles_RecordTheFourStepTypes()
-    {
-        var (state, layers) = Create();
-        var item = layers.Items[0];
-
-        item.ToggleVisibilityCommand.Execute(null);
-        item.ToggleVisibilityCommand.Execute(null);
-        item.ToggleLockCommand.Execute(null);
-        item.ToggleLockCommand.Execute(null);
-
-        Assert.Equal(
-            new[] { HistoryStepType.HideLayer, HistoryStepType.ShowLayer, HistoryStepType.LockLayer, HistoryStepType.UnlockLayer },
-            state.History.Steps);
-    }
-
-    [Fact]
-    public void Toggle_ThenUndo_RestoresTheLayerAndTheRow()
-    {
-        var (state, layers) = Create();
-
-        layers.Items[0].ToggleVisibilityCommand.Execute(null);
-        Assert.False(layers.Items[0].IsVisible);
-
-        state.Undo();
-
-        Assert.True(layers.Items[0].IsVisible);
-        Assert.True(state.Document.Layers[2].IsVisible);
+        Assert.False(Create([Rect("a")]).List.AddLayerCommand.CanExecute(null));
     }
 }

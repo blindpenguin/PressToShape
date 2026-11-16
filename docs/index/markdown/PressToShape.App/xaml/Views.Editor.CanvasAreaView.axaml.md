@@ -5,7 +5,7 @@ Class: `PressToShape.App.Views.Editor.CanvasAreaView`.
 
 ## View model links
 
-- `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:324)
+- `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:327)
 - `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42)
 - `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28)
 - `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): x:DataType (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:1)

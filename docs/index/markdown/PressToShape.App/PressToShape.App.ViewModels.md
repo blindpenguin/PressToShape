@@ -23,8 +23,8 @@ Base class for view models that show translated text. When the language changes 
 - Inherited by `PressToShape.App.ViewModels.Desktop.StatusBarViewModel`
 - Inherited by `PressToShape.App.ViewModels.Desktop.ToolbarButtonViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.HistoryItemViewModel`
+- Inherited by `PressToShape.App.ViewModels.Editor.LayersViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.NumberFieldViewModel`
-- Inherited by `PressToShape.App.ViewModels.Editor.ObjectsViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.ToolItemViewModel`
@@ -87,8 +87,6 @@ _(no documentation)_
 - Inherited by `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.HistoryViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.InspectorViewModel`
-- Inherited by `PressToShape.App.ViewModels.Editor.LayerItemViewModel`
-- Inherited by `PressToShape.App.ViewModels.Editor.LayersViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.ObjectRowViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.PaletteViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.ToolboxViewModel`

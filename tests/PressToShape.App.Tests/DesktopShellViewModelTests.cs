@@ -228,8 +228,8 @@ public class DesktopShellViewModelTests
         var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create(), TestFileServices.Create());
 
         Assert.Same(shell.State.Document, shell.Canvas.Document);
-        Assert.Equal(new[] { "Layer 1" }, shell.Inspector.Layers.Items.Select(i => i.Name));
-        Assert.Equal(shell.State.ActiveLayerId, shell.Inspector.Layers.SelectedItem!.LayerId);
+        Assert.Equal(new[] { "Layer 1" }, shell.Inspector.Layers.Rows.Where(r => r.IsLayer).Select(r => r.Name));
+        Assert.Equal(shell.State.ActiveLayerId, shell.Inspector.Layers.Rows.Single(r => r.IsActiveLayer).Id);
     }
 
     [Fact]
@@ -238,7 +238,7 @@ public class DesktopShellViewModelTests
         var shell = new DesktopShellViewModel(new FakeShutdown(), FakeLocalizer.Create(), TestFileServices.Create());
         var before = shell.Canvas.Document;
 
-        shell.Inspector.Layers.Items[0].ToggleVisibilityCommand.Execute(null);
+        shell.Inspector.Layers.Rows[0].ToggleVisibilityCommand.Execute(null);
 
         Assert.NotSame(before, shell.Canvas.Document);
         Assert.False(shell.Canvas.Document.Layers[0].IsVisible);
@@ -264,7 +264,7 @@ public class DesktopShellViewModelTests
         Assert.True(shell.Inspector.Properties.HasSelection);
         Assert.NotEmpty(shell.Canvas.Overlay.Outlines);
         Assert.Equal(Tool.Rectangle, shell.Toolbox.ActiveTool);
-        Assert.Equal(shell.State.Document.Layers[0].Id, shell.Inspector.Layers.SelectedItem!.LayerId);
+        Assert.Equal(shell.State.Document.Layers[0].Id, shell.Inspector.Layers.Rows.Single(r => r.IsActiveLayer).Id);
     }
 
     private sealed class FileShell
@@ -593,13 +593,13 @@ public class DesktopShellViewModelTests
     {
         var shell = NewFittedShell();
 
-        shell.Inspector.Layers.Items[0].ToggleVisibilityCommand.Execute(null);
+        shell.Inspector.Layers.Rows[0].ToggleVisibilityCommand.Execute(null);
         Assert.False(shell.State.Document.Layers[0].IsVisible);
 
         shell.UndoCommand.Execute(null);
 
         Assert.True(shell.State.Document.Layers[0].IsVisible);
-        Assert.True(shell.Inspector.Layers.Items[0].IsVisible);
+        Assert.True(shell.Inspector.Layers.Rows[0].IsVisible);
     }
 
     [Fact]

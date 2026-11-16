@@ -28,9 +28,6 @@
             <TabItem Header="{loc:T 'Layers'}" AutomationProperties.Name="{loc:T 'Layers tab'}">
                 <ContentControl Content="{Binding Layers}" />
             </TabItem>
-            <TabItem Header="{loc:T 'Objects'}" AutomationProperties.Name="{loc:T 'Objects tab'}">
-                <ContentControl Content="{Binding Objects}" />
-            </TabItem>
             <TabItem Header="{loc:T 'Assets'}" AutomationProperties.Name="{loc:T 'Assets tab'}">
                 <ContentControl Content="{Binding Assets}" />
             </TabItem>

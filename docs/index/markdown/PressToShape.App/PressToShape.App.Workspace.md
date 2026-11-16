@@ -275,16 +275,14 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Depends on (constructor) `PressToShape.Core.Documents.Document`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
-- Injected into `PressToShape.App.Tests.ObjectsViewModelTests.Fixture`
+- Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.StatusBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.ToolbarViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.HistoryViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
-- Injected into `PressToShape.App.ViewModels.Editor.LayerItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.LayersViewModel`
-- Injected into `PressToShape.App.ViewModels.Editor.ObjectsViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PaletteViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
@@ -348,7 +346,7 @@ The device that made a pointer event.
 
 `internal enum InspectorTab`
 
-Source: `src/PressToShape.App/Workspace/InspectorTab.cs:4-11`
+Source: `src/PressToShape.App/Workspace/InspectorTab.cs:4-10`
 
 The tabs of the inspector panel.
 
@@ -356,7 +354,6 @@ The tabs of the inspector panel.
 
 - `public Properties` - _(no documentation)_
 - `public Layers` - _(no documentation)_
-- `public Objects` - _(no documentation)_
 - `public Assets` - _(no documentation)_
 - `public History` - _(no documentation)_
 
@@ -445,9 +442,9 @@ Edits of the structure of the drawing: group and ungroup, arrange, lock and hide
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
-- Injected into `PressToShape.App.Tests.ObjectsViewModelTests.Fixture`
+- Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
 - Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
-- Injected into `PressToShape.App.ViewModels.Editor.ObjectsViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.LayersViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 
 ## PropertiesSection (enum)

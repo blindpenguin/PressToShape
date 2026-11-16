@@ -22,7 +22,7 @@ namespace PressToShape.App.Tests;
 
 // What bindings and view models cannot show about the Objects tab: that the view builds, shows the rows and reacts to the document.
 [Collection(HeadlessUi.CollectionName)]
-public class ObjectsViewTests
+public class LayersViewTests
 {
     private sealed class NoShutdown : IAppShutdown
     {
@@ -33,13 +33,13 @@ public class ObjectsViewTests
 
     private static RectangleShape Rect(string name, double x = 0) => new() { Name = name, X = x, Width = 10, Height = 10 };
 
-    private static (ObjectsView View, Window Window, EditorState State, ObjectsViewModel List, ObjectEditor Editor) Show(bool touch, params Shape[] shapes)
+    private static (LayersView View, Window Window, EditorState State, LayersViewModel List, ObjectEditor Editor) Show(bool touch, params Shape[] shapes)
     {
         var document = Document.Create("Layer");
         var state = new EditorState(document.AddShapes(document.Layers[0].Id, shapes));
         var editor = new ObjectEditor(state);
-        var list = new ObjectsViewModel(state, editor, FakeLocalizer.Create());
-        var view = new ObjectsView { DataContext = list };
+        var list = new LayersViewModel(state, editor, FakeLocalizer.Create());
+        var view = new LayersView { DataContext = list };
         var host = new Border { Child = view };
         if (touch)
         {
@@ -53,10 +53,10 @@ public class ObjectsViewTests
         return (view, window, state, list, editor);
     }
 
-    private static List<string?> Texts(ObjectsView view) =>
+    private static List<string?> Texts(LayersView view) =>
         view.GetVisualDescendants().OfType<TextBlock>().Where(t => t.IsEffectivelyVisible).Select(t => t.Text).ToList();
 
-    private static List<Button> Buttons(ObjectsView view, string automationName) =>
+    private static List<Button> Buttons(LayersView view, string automationName) =>
         view.GetVisualDescendants().OfType<Button>().Where(b => AutomationProperties.GetName(b) == automationName && b.IsEffectivelyVisible).ToList();
 
     [Fact]
@@ -66,7 +66,7 @@ public class ObjectsViewTests
 
         var texts = Texts(view);
 
-        Assert.Contains("Objects", texts);
+        Assert.Contains("Layers", texts);
         Assert.True(texts.IndexOf("Layer") < texts.IndexOf("second"));
         Assert.True(texts.IndexOf("second") < texts.IndexOf("first"));
 
@@ -79,7 +79,7 @@ public class ObjectsViewTests
         var a = Rect("a");
         var (view, window, state, list, _) = Show(touch: false, a);
 
-        var toggle = Buttons(view, "Toggle visibility").Single();
+        var toggle = Buttons(view, "Toggle visibility")[1]; // the first one is the layer's
         toggle.Command!.Execute(null);
         Dispatcher.UIThread.RunJobs();
 
@@ -137,36 +137,36 @@ public class ObjectsViewTests
 
         var buttons = view.GetVisualDescendants().OfType<Button>().Where(b => b.IsEffectivelyVisible && b.TemplatedParent is null).ToList();
 
-        Assert.Equal(5, buttons.Count); // the layer's expander and two toggles for each of the two objects
+        Assert.Equal(8, buttons.Count); // add layer, the layer's expander and two toggles, and two toggles for each of the two objects
         Assert.All(buttons, b => Assert.True(b.Bounds.Width >= 48 && b.Bounds.Height >= 48, $"{AutomationProperties.GetName(b)} {b.Bounds.Width:0}x{b.Bounds.Height:0}"));
 
         window.Close();
     });
 
     [Fact]
-    public void Inspector_ShowsTheObjectsTabThroughTheViewLocator() => HeadlessUi.Run(() =>
+    public void Inspector_ShowsTheLayersTabThroughTheViewLocator() => HeadlessUi.Run(() =>
     {
         var shell = new DesktopShellViewModel(new NoShutdown(), FakeLocalizer.Create(), TestFileServices.Create());
-        shell.Inspector.ShowTab(InspectorTab.Objects);
+        shell.Inspector.ShowTab(InspectorTab.Layers);
 
         var view = new PressToShape.App.Views.Editor.InspectorView { DataContext = shell.Inspector };
         var window = new Window { Width = 400, Height = 600, Content = view };
         window.Show();
         Dispatcher.UIThread.RunJobs();
 
-        Assert.Single(view.GetVisualDescendants().OfType<ObjectsView>());
-        Assert.Equal(5, view.GetVisualDescendants().OfType<TabItem>().Count());
+        Assert.Single(view.GetVisualDescendants().OfType<LayersView>());
+        Assert.Equal(4, view.GetVisualDescendants().OfType<TabItem>().Count());
 
         window.Close();
     });
 
     [Fact]
-    public void TabletPanel_ShowsTheObjectsListForTheObjectsTab()
+    public void TabletPanel_ShowsTheLayersListForTheLayersTab()
     {
         var shell = new TabletShellViewModel(new NoShutdown(), FakeLocalizer.Create(), TestFileServices.Create(), new MessageDialogHost());
-        shell.Panel.Toggle(InspectorTab.Objects);
+        shell.Panel.Toggle(InspectorTab.Layers);
 
-        Assert.Same(shell.Inspector.Objects, shell.Panel.Content);
-        Assert.Equal("Objects", shell.Panel.Title);
+        Assert.Same(shell.Inspector.Layers, shell.Panel.Content);
+        Assert.Equal("Layers", shell.Panel.Title);
     }
 }

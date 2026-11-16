@@ -125,7 +125,7 @@ public class MenuBarViewModelTests
         {
             "New", "Open…", "Save", "Save As…", "Export as SVG…",
             "Quit", "Zoom In", "Zoom Out", "Fit Artboard in Window", "Actual Size (100%)",
-            "Properties", "Layers", "Objects", "Assets", "History",
+            "Properties", "Layers", "Assets", "History",
             "English", "Deutsch",
         }.OrderBy(h => h);
 

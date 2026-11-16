@@ -72,20 +72,15 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 
 ### src/PressToShape.App/Views/Editor/LayersView.axaml
 
-- 0 resources, 2 styles
-- style `ListBoxItem` at line 13, 2 setters
-- style `Button.rowButton` at line 18, 2 setters
-
-### src/PressToShape.App/Views/Editor/ObjectsView.axaml
-
-- 1 resources, 7 styles
+- 1 resources, 8 styles
 - style `Button.rowButton` at line 19, 2 setters
 - style `Border.objectRow` at line 23, 3 setters
 - style `Border.objectRow:pointerover` at line 28, 1 setters
 - style `Border.objectRow.current` at line 32, 1 setters
 - style `Border.objectRow.selected` at line 35, 1 setters
-- style `Border.objectRow.drop` at line 38, 1 setters
-- style `Border.objectRow.inactive TextBlock` at line 41, 1 setters
+- style `Border.objectRow.activeLayer TextBlock` at line 39, 1 setters
+- style `Border.objectRow.drop` at line 42, 1 setters
+- style `Border.objectRow.inactive TextBlock` at line 45, 1 setters
 
 ### src/PressToShape.App/Views/Editor/PropertiesView.axaml
 
@@ -157,5 +152,5 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - `TouchSizes` (ResourceDictionary) at src/PressToShape.App/Styles/Theme.axaml:175
 - `GestureTextConverter` (views:GestureTextConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:12
 - `CheckableToggleTypeConverter` (views:CheckableToggleTypeConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:13
-- `IndentConverter` (views:ObjectIndentConverter) at src/PressToShape.App/Views/Editor/ObjectsView.axaml:14
+- `IndentConverter` (views:ObjectIndentConverter) at src/PressToShape.App/Views/Editor/LayersView.axaml:14
 - `CheckableToggleTypeConverter` (desktopViews:CheckableToggleTypeConverter) at src/PressToShape.App/Views/Tablet/TabletToolbarView.axaml:24

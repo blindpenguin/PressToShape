@@ -45,7 +45,6 @@ internal sealed class TabletToolbarViewModel : ViewModelBase
         [
             new PanelButtonViewModel(localizer, InspectorTab.Properties, N("Properties"), MaterialIconKind.TuneVariant, panel),
             new PanelButtonViewModel(localizer, InspectorTab.Layers, N("Layers"), MaterialIconKind.LayersOutline, panel),
-            new PanelButtonViewModel(localizer, InspectorTab.Objects, N("Objects"), MaterialIconKind.FormatListBulleted, panel),
             new PanelButtonViewModel(localizer, InspectorTab.History, N("History"), MaterialIconKind.History, panel),
         ];
 
@@ -66,7 +65,7 @@ internal sealed class TabletToolbarViewModel : ViewModelBase
     /// <summary>Deletes the selection (one undo step). Enabled only while something is selected.</summary>
     public ToolbarButtonViewModel DeleteButton { get; }
 
-    /// <summary>The icons that open the panel: Properties, Layers, Objects, History.</summary>
+    /// <summary>The icons that open the panel: Properties, Layers, History.</summary>
     public IReadOnlyList<PanelButtonViewModel> PanelButtons { get; }
 
     public ZoomViewModel Zoom { get; }

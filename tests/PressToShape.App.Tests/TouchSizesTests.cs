@@ -241,7 +241,10 @@ public class TouchSizesTests
         return (view, window);
     }
 
-    private static Control CreateLayers(EditorState state) => new LayersView { DataContext = new LayersViewModel(state) };
+    private static Control CreateLayers(EditorState state) => new LayersView { DataContext = new LayersViewModel(state, new PressToShape.App.Workspace.ObjectEditor(state), FakeLocalizer.Create()) };
+
+    private static List<Border> LayerRows(Visual view) =>
+        view.GetVisualDescendants().OfType<Border>().Where(b => b.Classes.Contains("objectRow")).ToList();
 
     private static Control CreateHistory(EditorState state) => new HistoryView { DataContext = new HistoryViewModel(state, FakeLocalizer.Create()) };
 
@@ -250,11 +253,11 @@ public class TouchSizesTests
     {
         var (view, window) = ShowPanel(CreateLayers, touch: false);
 
-        var rows = view.GetVisualDescendants().OfType<ListBoxItem>().ToList();
-        Assert.Equal(3, rows.Count);
+        var rows = LayerRows(view);
+        Assert.Equal(5, rows.Count); // three layers and two shapes
         Assert.All(rows, r => Assert.Equal(30, r.Bounds.Height));
-        var rowButtons = view.GetVisualDescendants().OfType<Button>().Where(b => b.TemplatedParent is null && b.FindAncestorOfType<ListBoxItem>() is not null).ToList();
-        Assert.Equal(6, rowButtons.Count);
+        var rowButtons = view.GetVisualDescendants().OfType<Button>().Where(b => b.IsEffectivelyVisible && b.TemplatedParent is null && b.FindAncestorOfType<Border>(includeSelf: false)?.Classes.Contains("objectRow") == true).ToList();
+        Assert.Equal(13, rowButtons.Count); // an expander, a lock and a visibility button per layer, a lock and a visibility button per shape
         Assert.All(rowButtons, b => Assert.Equal(28, b.Bounds.Width));
 
         window.Close();
@@ -277,11 +280,11 @@ public class TouchSizesTests
     {
         var (view, window) = ShowPanel(CreateLayers, touch: true);
 
-        var rows = view.GetVisualDescendants().OfType<ListBoxItem>().ToList();
-        Assert.Equal(3, rows.Count);
+        var rows = LayerRows(view);
+        Assert.Equal(5, rows.Count);
         Assert.All(rows, r => Assert.True(r.Bounds.Height >= MinimumTouchTarget, "Layer row " + r.Bounds.Height));
         var buttons = InteractiveControls(view);
-        Assert.Equal(8, buttons.Count); // add, more, and a lock and a visibility button per layer
+        Assert.Equal(14, buttons.Count); // add, the 13 buttons of the rows
         var tooSmall = buttons.Where(c => c.Bounds.Width < MinimumTouchTarget || c.Bounds.Height < MinimumTouchTarget).Select(Describe).ToList();
         Assert.True(tooSmall.Count == 0, "Controls under 48 dp: " + string.Join(", ", tooSmall));
 

@@ -43,7 +43,7 @@ _(no documentation)_
 - view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42); 0 commands, 10 test classes
 - view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:1); 0 commands, 10 test classes
 - view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28); 0 commands, 10 test classes
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:324); 0 commands, 10 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:327); 0 commands, 10 test classes
 
 ### HistoryView
 
@@ -51,35 +51,27 @@ _(no documentation)_
 _(no documentation)_
 
 - view model `HistoryViewModel` (`T:PressToShape.App.ViewModels.Editor.HistoryViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/HistoryView.axaml:1); 0 commands, 5 test classes
-- view model `HistoryViewModel` (`T:PressToShape.App.ViewModels.Editor.HistoryViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:246); 0 commands, 5 test classes
-- view model `HistoryViewModel` (`T:PressToShape.App.ViewModels.Editor.HistoryViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.HistoryViewModel maps to PressToShape.App.Views.Editor.HistoryView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:38 (src/PressToShape.App/Views/Editor/InspectorView.axaml:38); 0 commands, 5 test classes
+- view model `HistoryViewModel` (`T:PressToShape.App.ViewModels.Editor.HistoryViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:249); 0 commands, 5 test classes
+- view model `HistoryViewModel` (`T:PressToShape.App.ViewModels.Editor.HistoryViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.HistoryViewModel maps to PressToShape.App.Views.Editor.HistoryView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:35 (src/PressToShape.App/Views/Editor/InspectorView.axaml:35); 0 commands, 5 test classes
 
 ### InspectorView
 
-`T:PressToShape.App.Views.Editor.InspectorView` at src/PressToShape.App/Views/Editor/InspectorView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Editor/InspectorView.axaml`, 6 bindings.
+`T:PressToShape.App.Views.Editor.InspectorView` at src/PressToShape.App/Views/Editor/InspectorView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Editor/InspectorView.axaml`, 5 bindings.
 _(no documentation)_
 
 - view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46); 0 commands, 10 test classes
 - view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/InspectorView.axaml:1); 0 commands, 10 test classes
-- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/ObjectsViewTests.cs:152); 0 commands, 10 test classes
+- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/LayersViewTests.cs:152); 0 commands, 10 test classes
 
 ### LayersView
 
-`T:PressToShape.App.Views.Editor.LayersView` at src/PressToShape.App/Views/Editor/LayersView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Editor/LayersView.axaml`, 10 bindings.
-_(no documentation)_
+`T:PressToShape.App.Views.Editor.LayersView` at src/PressToShape.App/Views/Editor/LayersView.axaml.cs:16. XAML: `src/PressToShape.App/Views/Editor/LayersView.axaml`, 29 bindings.
+The Layers tab. The view only turns pointer input into calls of the view model: a press selects, a double-tap renames, and a drag (after a long press for a finger) drops an object above another one of the same group.
 
-- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/LayersView.axaml:1); 1 commands, 3 test classes
-- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:244); 1 commands, 3 test classes
-- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.LayersViewModel maps to PressToShape.App.Views.Editor.LayersView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:29 (src/PressToShape.App/Views/Editor/InspectorView.axaml:29); 1 commands, 3 test classes
-
-### ObjectsView
-
-`T:PressToShape.App.Views.Editor.ObjectsView` at src/PressToShape.App/Views/Editor/ObjectsView.axaml.cs:16. XAML: `src/PressToShape.App/Views/Editor/ObjectsView.axaml`, 29 bindings.
-The Objects tab. The view only turns pointer input into calls of the view model: a press selects, a double-tap renames, and a drag (after a long press for a finger) drops an object above another one of the same group.
-
-- view model `ObjectsViewModel` (`T:PressToShape.App.ViewModels.Editor.ObjectsViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/ObjectsView.axaml:1); 0 commands, 2 test classes
-- view model `ObjectsViewModel` (`T:PressToShape.App.ViewModels.Editor.ObjectsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/ObjectsViewTests.cs:42); 0 commands, 2 test classes
-- view model `ObjectsViewModel` (`T:PressToShape.App.ViewModels.Editor.ObjectsViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.ObjectsViewModel maps to PressToShape.App.Views.Editor.ObjectsView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:32 (src/PressToShape.App/Views/Editor/InspectorView.axaml:32); 0 commands, 2 test classes
+- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/LayersView.axaml:1); 1 commands, 4 test classes
+- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/LayersViewTests.cs:42); 1 commands, 4 test classes
+- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:244); 1 commands, 4 test classes
+- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.LayersViewModel maps to PressToShape.App.Views.Editor.LayersView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:29 (src/PressToShape.App/Views/Editor/InspectorView.axaml:29); 1 commands, 4 test classes
 
 ### PlaceholderPanelView
 
@@ -87,7 +79,7 @@ The Objects tab. The view only turns pointer input into calls of the view model:
 _(no documentation)_
 
 - view model `PlaceholderPanelViewModel` (`T:PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/PlaceholderPanelView.axaml:1); 0 commands, 2 test classes
-- view model `PlaceholderPanelViewModel` (`T:PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel maps to PressToShape.App.Views.Editor.PlaceholderPanelView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:35 (src/PressToShape.App/Views/Editor/InspectorView.axaml:35); 0 commands, 2 test classes
+- view model `PlaceholderPanelViewModel` (`T:PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel maps to PressToShape.App.Views.Editor.PlaceholderPanelView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:32 (src/PressToShape.App/Views/Editor/InspectorView.axaml:32); 0 commands, 2 test classes
 
 ### PropertiesView
 
@@ -220,7 +212,6 @@ Types that derive from a base class of a linked view model but that no view link
 - `ToolbarButtonViewModel` (`T:PressToShape.App.ViewModels.Desktop.ToolbarButtonViewModel`) at src/PressToShape.App/ViewModels/Desktop/ToolbarButtonViewModel.cs:8
 - `ColorFieldViewModel` (`T:PressToShape.App.ViewModels.Editor.ColorFieldViewModel`) at src/PressToShape.App/ViewModels/Editor/ColorFieldViewModel.cs:12
 - `HistoryItemViewModel` (`T:PressToShape.App.ViewModels.Editor.HistoryItemViewModel`) at src/PressToShape.App/ViewModels/Editor/HistoryItemViewModel.cs:11
-- `LayerItemViewModel` (`T:PressToShape.App.ViewModels.Editor.LayerItemViewModel`) at src/PressToShape.App/ViewModels/Editor/LayerItemViewModel.cs:14
 - `NumberFieldViewModel` (`T:PressToShape.App.ViewModels.Editor.NumberFieldViewModel`) at src/PressToShape.App/ViewModels/Editor/NumberFieldViewModel.cs:13
 - `ObjectRowViewModel` (`T:PressToShape.App.ViewModels.Editor.ObjectRowViewModel`) at src/PressToShape.App/ViewModels/Editor/ObjectRowViewModel.cs:11
 - `PaletteViewModel` (`T:PressToShape.App.ViewModels.Editor.PaletteViewModel`) at src/PressToShape.App/ViewModels/Editor/PaletteViewModel.cs:15

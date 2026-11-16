@@ -5,14 +5,14 @@ using CommunityToolkit.Mvvm.Input;
 namespace PressToShape.App.ViewModels.Editor;
 
 /// <summary>
-/// One row of the object list: a layer header, a shape or a group. The values are display values that <see cref="ObjectsViewModel"/> copies
+/// One row of the object list: a layer header, a shape or a group. The values are display values that <see cref="LayersViewModel"/> copies
 /// from the document. The commands ask the list to change the document, they never change these values themselves.
 /// </summary>
 internal sealed partial class ObjectRowViewModel : ViewModelBase
 {
-    private readonly ObjectsViewModel _owner;
+    private readonly LayersViewModel _owner;
 
-    public ObjectRowViewModel(ObjectsViewModel owner, Guid id, ObjectRowType type, int depth, Guid parentId)
+    public ObjectRowViewModel(LayersViewModel owner, Guid id, ObjectRowType type, int depth, Guid parentId)
     {
         _owner = owner ?? throw new ArgumentNullException(nameof(owner));
         Id = id;
@@ -48,9 +48,6 @@ internal sealed partial class ObjectRowViewModel : ViewModelBase
     /// <summary>Whether the row has an expander: layers and groups.</summary>
     public bool HasChildren => IsLayer || IsGroup;
 
-    /// <summary>Whether the row has the hide and lock toggles. A layer's flags are in the Layers tab.</summary>
-    public bool HasToggles => !IsLayer;
-
     /// <summary>Whether the row can be renamed in the list. A layer is renamed elsewhere.</summary>
     public bool CanRename => !IsLayer;
 
@@ -71,6 +68,9 @@ internal sealed partial class ObjectRowViewModel : ViewModelBase
 
     /// <summary>Whether the row is locked through itself, a group around it or its layer, so it cannot be selected on the canvas.</summary>
     [ObservableProperty] public partial bool IsEffectivelyLocked { get; private set; }
+
+    /// <summary>Whether the layer is the active one, the layer new shapes go into. Only layer rows are ever active.</summary>
+    [ObservableProperty] public partial bool IsActiveLayer { get; internal set; }
 
     /// <summary>Whether the object is part of the selection on the canvas.</summary>
     [ObservableProperty] public partial bool IsSelected { get; internal set; }

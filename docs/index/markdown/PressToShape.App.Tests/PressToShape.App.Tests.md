@@ -1182,37 +1182,59 @@ _(no documentation)_
 
 `public class LayersViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/LayersViewModelTests.cs:12-319`
+Source: `tests/PressToShape.App.Tests/LayersViewModelTests.cs:14-482`
 
 _(no documentation)_
 
 **Members**
 
-- `public void Constructor_NullState_Throws()` - _(no documentation)_
-- `public void Items_Initially_ListTheLayersTopmostFirst()` - _(no documentation)_
-- `public void Items_NewLayer_StartsVisibleAndUnlocked()` - _(no documentation)_
-- `public void ToggleVisibility_Executed_HidesTheLayerInTheDocument()` - _(no documentation)_
-- `public void ToggleVisibility_Twice_ReturnsToTheOriginalValue()` - _(no documentation)_
-- `public void ToggleLock_Executed_LocksTheLayerInTheDocument()` - _(no documentation)_
-- `public void Toggle_Executed_LeavesTheEarlierDocumentUnchanged()` - _(no documentation)_
-- `public void Sync_OnlyLayerValuesChanged_KeepsTheSameItemInstances()` - _(no documentation)_
-- `public void Sync_NameChanged_RaisesPropertyChangedOnTheItem()` - _(no documentation)_
-- `public void Sync_LayerAdded_RebuildsTheItemsWithTheNewLayerOnTop()` - _(no documentation)_
-- `public void Sync_LayerRemoved_RebuildsTheItems()` - _(no documentation)_
-- `public void Toggle_AfterRebuild_WorksOnTheNewItems()` - _(no documentation)_
-- `public void Items_ArtboardSizeChangeOnly_KeepsTheItems()` - _(no documentation)_
+- `public void Rows_LayerThenObjectsTopmostFirst()` - _(no documentation)_
+- `public void Group_AfterGrouping_IsShownClosed()` - _(no documentation)_
+- `public void Rows_Group_IsCollapsedAtFirstAndOpensToShowItsChildren()` - _(no documentation)_
+- `public void Rows_CollapsingTheLayer_HidesEverythingBelow()` - _(no documentation)_
+- `public void Rows_NoName_ShowTheDefaultNameOfTheType()` - _(no documentation)_
+- `public void Rows_DefaultNames_AreTranslated_AndFollowALanguageChange()` - _(no documentation)_
+- `public void Update_FlagsAndNames_KeepTheRowInstances()` - _(no documentation)_
+- `public void Update_StructureChange_ReusesTheRowsOfTheSurvivingObjects()` - _(no documentation)_
+- `public void ChildOfAHiddenOrLockedGroup_IsMarkedEffectivelyHiddenOrLocked_KeepingItsOwnFlags()` - _(no documentation)_
+- `public void ExpandedState_SurvivesUndoAndRedoAsFarAsTheGroupExists()` - _(no documentation)_
+- `public void Selection_OnTheCanvas_MarksRowsAndOpensTheGroupsAroundThem()` - _(no documentation)_
+- `public void Select_RowOnTheTopLevel_SelectsTheObjectAndLeavesGroups()` - _(no documentation)_
+- `public void Select_RowInsideAGroup_EntersTheGroup()` - _(no documentation)_
+- `public void Select_WithExtend_AddsAndRemovesRowsOfTheSameParent_AndReplacesOtherwise()` - _(no documentation)_
+- `public void Select_LockedRow_OnlyMarksItAsCurrentAndKeepsTheCanvasSelection()` - _(no documentation)_
+- `public void Select_ThenTheCanvasSelectionChanges_ClearsTheCurrentMark()` - _(no documentation)_
+- `public void Toggles_OnALockedHiddenRow_StillWork()` - _(no documentation)_
+- `public void Toggles_VisibleRow_HidesAndLocksIt()` - _(no documentation)_
+- `public void Rename_CommitsAsOneStep_EmptyNameFallsBackToTheDefault()` - _(no documentation)_
+- `public void Rename_Cancelled_ChangesNothing()` - _(no documentation)_
+- `public void Rename_LayerRow_IsNotPossible()` - _(no documentation)_
+- `public void Reorder_WithinAParent_MovesTheObjectAboveTheTarget()` - _(no documentation)_
+- `public void Reorder_AnotherParentOrALayerRow_IsIgnored()` - _(no documentation)_
+- `public void Select_LayerRow_MakesTheLayerActive()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+- `public void LayerRow_Toggles_HideAndLockTheLayerAsOneStepEach()` - _(no documentation)_
+- `public void LayerToggle_ThenUndo_RestoresTheLayerAndTheRow()` - _(no documentation)_
+- `public void ActiveLayer_IsMarked_AndFollowsTheState()` - _(no documentation)_
 - `public void AddLayerCommand_CannotExecuteYet()` - _(no documentation)_
-- `public void LayerItem_NullArguments_Throw()` - _(no documentation)_
-- `public void SelectedItem_Initially_IsTheTopmostLayer()` - _(no documentation)_
-- `public void SelectedItem_Set_ChangesTheActiveLayer()` - _(no documentation)_
-- `public void SelectedItem_ActiveLayerChangedInTheState_FollowsAndNotifies()` - _(no documentation)_
-- `public void SelectedItem_SetToNull_KeepsTheActiveLayer()` - _(no documentation)_
-- `public void SelectedItem_ShapeEdit_KeepsTheSameRowWithoutRebuilding()` - _(no documentation)_
-- `public void SelectedItem_LayerRemoved_SelectsTheNewActiveLayerInTheRebuiltList()` - _(no documentation)_
-- `public void SelectedItem_OtherLayerRemoved_KeepsTheActiveLayerSelected()` - _(no documentation)_
-- `public void ToggleVisibility_OnAnotherRow_DoesNotChangeTheActiveLayer()` - _(no documentation)_
-- `public void Toggles_RecordTheFourStepTypes()` - _(no documentation)_
-- `public void Toggle_ThenUndo_RestoresTheLayerAndTheRow()` - _(no documentation)_
+
+## LayersViewTests (class)
+
+`public class LayersViewTests`
+
+Source: `tests/PressToShape.App.Tests/LayersViewTests.cs:24-172`
+
+_(no documentation)_
+
+**Members**
+
+- `public void View_ShowsTheLayerAndTheObjectsTopmostFirst()` - _(no documentation)_
+- `public void View_HideToggle_HidesTheObjectAndTheRowFollows()` - _(no documentation)_
+- `public void View_RowsFollowTheDocument_AGroupShowsAfterGroupingAndOpens()` - _(no documentation)_
+- `public void View_SelectingOnTheCanvas_MarksTheRowSelected()` - _(no documentation)_
+- `public void View_WithTheTouchSizes_EveryButtonIsAtLeast48()` - _(no documentation)_
+- `public void Inspector_ShowsTheLayersTabThroughTheViewLocator()` - _(no documentation)_
+- `public void TabletPanel_ShowsTheLayersListForTheLayersTab()` - _(no documentation)_
 
 ## LocalFileStoreTests (class)
 
@@ -1510,60 +1532,6 @@ _(no documentation)_
 - `public void MoveAbove_SameParent_IsOneReorderStep()` - _(no documentation)_
 - `public void MoveAbove_DifferentParentsOrSameShape_DoesNothing()` - _(no documentation)_
 - `public void Constructor_NullState_Throws()` - _(no documentation)_
-
-## ObjectsViewModelTests (class)
-
-`public class ObjectsViewModelTests`
-
-Source: `tests/PressToShape.App.Tests/ObjectsViewModelTests.cs:14-422`
-
-_(no documentation)_
-
-**Members**
-
-- `public void Rows_LayerThenObjectsTopmostFirst()` - _(no documentation)_
-- `public void Group_AfterGrouping_IsShownClosed()` - _(no documentation)_
-- `public void Rows_Group_IsCollapsedAtFirstAndOpensToShowItsChildren()` - _(no documentation)_
-- `public void Rows_CollapsingTheLayer_HidesEverythingBelow()` - _(no documentation)_
-- `public void Rows_NoName_ShowTheDefaultNameOfTheType()` - _(no documentation)_
-- `public void Rows_DefaultNames_AreTranslated_AndFollowALanguageChange()` - _(no documentation)_
-- `public void Update_FlagsAndNames_KeepTheRowInstances()` - _(no documentation)_
-- `public void Update_StructureChange_ReusesTheRowsOfTheSurvivingObjects()` - _(no documentation)_
-- `public void ChildOfAHiddenOrLockedGroup_IsMarkedEffectivelyHiddenOrLocked_KeepingItsOwnFlags()` - _(no documentation)_
-- `public void ExpandedState_SurvivesUndoAndRedoAsFarAsTheGroupExists()` - _(no documentation)_
-- `public void Selection_OnTheCanvas_MarksRowsAndOpensTheGroupsAroundThem()` - _(no documentation)_
-- `public void Select_RowOnTheTopLevel_SelectsTheObjectAndLeavesGroups()` - _(no documentation)_
-- `public void Select_RowInsideAGroup_EntersTheGroup()` - _(no documentation)_
-- `public void Select_WithExtend_AddsAndRemovesRowsOfTheSameParent_AndReplacesOtherwise()` - _(no documentation)_
-- `public void Select_LockedRow_OnlyMarksItAsCurrentAndKeepsTheCanvasSelection()` - _(no documentation)_
-- `public void Select_ThenTheCanvasSelectionChanges_ClearsTheCurrentMark()` - _(no documentation)_
-- `public void Toggles_OnALockedHiddenRow_StillWork()` - _(no documentation)_
-- `public void Toggles_VisibleRow_HidesAndLocksIt()` - _(no documentation)_
-- `public void Rename_CommitsAsOneStep_EmptyNameFallsBackToTheDefault()` - _(no documentation)_
-- `public void Rename_Cancelled_ChangesNothing()` - _(no documentation)_
-- `public void Rename_LayerRow_IsNotPossible()` - _(no documentation)_
-- `public void Reorder_WithinAParent_MovesTheObjectAboveTheTarget()` - _(no documentation)_
-- `public void Reorder_AnotherParentOrALayerRow_IsIgnored()` - _(no documentation)_
-- `public void Select_LayerRow_MakesTheLayerActive()` - _(no documentation)_
-- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
-
-## ObjectsViewTests (class)
-
-`public class ObjectsViewTests`
-
-Source: `tests/PressToShape.App.Tests/ObjectsViewTests.cs:24-172`
-
-_(no documentation)_
-
-**Members**
-
-- `public void View_ShowsTheLayerAndTheObjectsTopmostFirst()` - _(no documentation)_
-- `public void View_HideToggle_HidesTheObjectAndTheRowFollows()` - _(no documentation)_
-- `public void View_RowsFollowTheDocument_AGroupShowsAfterGroupingAndOpens()` - _(no documentation)_
-- `public void View_SelectingOnTheCanvas_MarksTheRowSelected()` - _(no documentation)_
-- `public void View_WithTheTouchSizes_EveryButtonIsAtLeast48()` - _(no documentation)_
-- `public void Inspector_ShowsTheObjectsTabThroughTheViewLocator()` - _(no documentation)_
-- `public void TabletPanel_ShowsTheObjectsListForTheObjectsTab()` - _(no documentation)_
 
 ## OverflowMenuViewModelTests (class)
 
@@ -2425,7 +2393,7 @@ _(no documentation)_
 - `public void DuplicateAndDelete_AreDisabledWithoutSelection_AndNamed()` - _(no documentation)_
 - `public void Duplicate_WithASelection_AddsACopyAndSelectsIt()` - _(no documentation)_
 - `public void Delete_WithASelection_RemovesItAsOneUndoStep()` - _(no documentation)_
-- `public void PanelButtons_AreProperties_Layers_Objects_History_InThatOrder()` - _(no documentation)_
+- `public void PanelButtons_AreProperties_Layers_History_InThatOrder()` - _(no documentation)_
 - `public void PanelButton_Toggle_OpensThePanel_AndMarksOnlyItActive()` - _(no documentation)_
 - `public void PanelButton_IsActive_NotifiesWhenThePanelChanges()` - _(no documentation)_
 - `public void ButtonNames_FollowTheLanguage()` - _(no documentation)_
@@ -2710,7 +2678,7 @@ _(no documentation)_
 
 `public class TouchSizesTests`
 
-Source: `tests/PressToShape.App.Tests/TouchSizesTests.cs:23-387`
+Source: `tests/PressToShape.App.Tests/TouchSizesTests.cs:23-390`
 
 _(no documentation)_
 

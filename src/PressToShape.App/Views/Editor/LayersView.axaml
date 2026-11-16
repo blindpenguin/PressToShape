@@ -4,63 +4,123 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:views="using:PressToShape.App.Views.Editor"
              xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="400"
              x:Class="PressToShape.App.Views.Editor.LayersView"
              x:DataType="vm:LayersViewModel">
 
+    <UserControl.Resources>
+        <views:ObjectIndentConverter x:Key="IndentConverter" />
+    </UserControl.Resources>
+
     <UserControl.Styles>
-        <Style Selector="ListBoxItem">
-            <Setter Property="MinHeight" Value="{DynamicResource LayerRowMinHeight}" />
-            <Setter Property="Padding" Value="4,0" />
-        </Style>
         <!-- The size is set in a style of this view, because a DynamicResource written on the button itself loses against the Button.icon style. -->
         <Style Selector="Button.rowButton">
             <Setter Property="MinWidth" Value="{DynamicResource RowButtonSize}" />
             <Setter Property="MinHeight" Value="{DynamicResource RowButtonSize}" />
         </Style>
+        <Style Selector="Border.objectRow">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0,2,0,0" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="Border.objectRow:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+        </Style>
+        <!-- The row of the last click: a locked or hidden object cannot be selected on the canvas, this is how the list shows which row was used. -->
+        <Style Selector="Border.objectRow.current">
+            <Setter Property="Background" Value="{DynamicResource ControlPressedBrush}" />
+        </Style>
+        <Style Selector="Border.objectRow.selected">
+            <Setter Property="Background" Value="{DynamicResource SelectedItemBrush}" />
+        </Style>
+        <!-- The active layer, the one new shapes go into, is bold. -->
+        <Style Selector="Border.objectRow.activeLayer TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="Border.objectRow.drop">
+            <Setter Property="BorderBrush" Value="{DynamicResource AppAccentBrush}" />
+        </Style>
+        <Style Selector="Border.objectRow.inactive TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
     </UserControl.Styles>
 
     <DockPanel Margin="{StaticResource PanelPadding}">
 
-        <!-- Header: title, add layer, more options -->
-        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto,Auto" Margin="0,0,0,6">
+        <!-- Header: title and add layer -->
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="0,0,0,6">
             <TextBlock Grid.Column="0" Classes="section-header" Text="{loc:T 'Layers'}" />
             <Button Grid.Column="1" Classes="icon" Command="{Binding AddLayerCommand}"
                     ToolTip.Tip="{loc:T 'Add layer'}" AutomationProperties.Name="{loc:T 'Add layer'}">
                 <materialIcons:MaterialIcon Kind="Plus" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
             </Button>
-            <Button Grid.Column="2" Classes="icon" IsEnabled="False"
-                    ToolTip.Tip="{loc:T 'More options'}" AutomationProperties.Name="{loc:T 'More layer options'}">
-                <materialIcons:MaterialIcon Kind="DotsHorizontal" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
-            </Button>
         </Grid>
 
-        <!-- Layer list, topmost layer first: layers icon, name, lock toggle, visibility toggle. The selected row is the active layer. -->
-        <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Background="Transparent">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="vm:LayerItemViewModel">
-                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" MinHeight="28">
-                        <materialIcons:MaterialIcon Grid.Column="0" Kind="LayersOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" Margin="0,0,8,0" />
-                        <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
-                        <Button Grid.Column="2" Classes="icon rowButton" Command="{Binding ToggleLockCommand}"
-                                ToolTip.Tip="{loc:T 'Toggle lock'}" AutomationProperties.Name="{loc:T 'Toggle lock'}">
-                            <Panel>
-                                <materialIcons:MaterialIcon Kind="LockOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsLocked}" />
-                                <materialIcons:MaterialIcon Kind="LockOpenVariantOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding !IsLocked}" />
+        <!-- Layers, and below each one its shapes and groups, topmost first. A click selects the object, a double-click renames it, a drag puts it above another object of the same group. -->
+        <ItemsControl x:Name="RowList" ItemsSource="{Binding Rows}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="vm:ObjectRowViewModel">
+                    <Border Classes="objectRow"
+                            Classes.selected="{Binding IsSelected}"
+                            Classes.current="{Binding IsCurrent}"
+                            Classes.activeLayer="{Binding IsActiveLayer}"
+                            Classes.drop="{Binding IsDropTarget}"
+                            Classes.inactive="{Binding IsEffectivelyHidden}"
+                            MinHeight="{DynamicResource LayerRowMinHeight}"
+                            AutomationProperties.Name="{Binding Name}">
+                        <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto">
+                            <Border Grid.Column="0" Width="{Binding Depth, Converter={StaticResource IndentConverter}}" />
+                            <Panel Grid.Column="1" MinWidth="{DynamicResource RowButtonSize}">
+                                <Button Classes="icon rowButton" IsVisible="{Binding HasChildren}" Command="{Binding ToggleExpandedCommand}"
+                                        ToolTip.Tip="{loc:T 'Show or hide the contents'}" AutomationProperties.Name="{loc:T 'Show or hide the contents'}">
+                                    <Panel>
+                                        <materialIcons:MaterialIcon Kind="ChevronDown" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsExpanded}" />
+                                        <materialIcons:MaterialIcon Kind="ChevronRight" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding !IsExpanded}" />
+                                    </Panel>
+                                </Button>
                             </Panel>
-                        </Button>
-                        <Button Grid.Column="3" Classes="icon rowButton" Command="{Binding ToggleVisibilityCommand}"
-                                ToolTip.Tip="{loc:T 'Toggle visibility'}" AutomationProperties.Name="{loc:T 'Toggle visibility'}">
-                            <Panel>
-                                <materialIcons:MaterialIcon Kind="EyeOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsVisible}" />
-                                <materialIcons:MaterialIcon Kind="EyeOffOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding !IsVisible}" />
+                            <Panel Grid.Column="2" Margin="0,0,8,0" VerticalAlignment="Center">
+                                <materialIcons:MaterialIcon Kind="LayersOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsLayer}" />
+                                <materialIcons:MaterialIcon Kind="RectangleOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsRectangle}" />
+                                <materialIcons:MaterialIcon Kind="EllipseOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsEllipse}" />
+                                <materialIcons:MaterialIcon Kind="SelectGroup" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsGroup}" />
                             </Panel>
-                        </Button>
-                    </Grid>
+                            <Panel Grid.Column="3" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Name}" IsVisible="{Binding !IsRenaming}" TextTrimming="CharacterEllipsis" />
+                                <TextBox Classes="field" Text="{Binding EditText, Mode=TwoWay}" IsVisible="{Binding IsRenaming}"
+                                         AutomationProperties.Name="{loc:T 'Object name'}">
+                                    <TextBox.KeyBindings>
+                                        <KeyBinding Gesture="Enter" Command="{Binding CommitRenameCommand}" />
+                                        <KeyBinding Gesture="Escape" Command="{Binding CancelRenameCommand}" />
+                                    </TextBox.KeyBindings>
+                                </TextBox>
+                            </Panel>
+                            <Button Grid.Column="4" Classes="icon rowButton" Command="{Binding ToggleLockCommand}"
+                                    ToolTip.Tip="{loc:T 'Toggle lock'}" AutomationProperties.Name="{loc:T 'Toggle lock'}">
+                                <Panel>
+                                    <materialIcons:MaterialIcon Kind="LockOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsLocked}" />
+                                    <materialIcons:MaterialIcon Kind="LockOpenVariantOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding !IsLocked}" />
+                                </Panel>
+                            </Button>
+                            <Button Grid.Column="5" Classes="icon rowButton" Command="{Binding ToggleVisibilityCommand}"
+                                    ToolTip.Tip="{loc:T 'Toggle visibility'}" AutomationProperties.Name="{loc:T 'Toggle visibility'}">
+                                <Panel>
+                                    <materialIcons:MaterialIcon Kind="EyeOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsVisible}" />
+                                    <materialIcons:MaterialIcon Kind="EyeOffOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding !IsVisible}" />
+                                </Panel>
+                            </Button>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
     </DockPanel>
 

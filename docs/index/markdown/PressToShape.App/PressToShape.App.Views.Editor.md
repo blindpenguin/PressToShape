@@ -96,14 +96,16 @@ _(no documentation)_
 
 `public partial class LayersView : UserControl`
 
-Source: `src/PressToShape.App/Views/Editor/LayersView.axaml.cs:5-11`
+Source: `src/PressToShape.App/Views/Editor/LayersView.axaml.cs:16-208`
 
-_(no documentation)_
+The Layers tab. The view only turns pointer input into calls of the view model: a press selects, a double-tap renames, and a drag (after a long press for a finger) drops an object above another one of the same group.
 
 **Members**
 
-- `public LayersView()` - _(no documentation)_
+- `internal ItemsControl RowList` _(generated)_ - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+- `public LayersView()` - _(no documentation)_
+- `protected void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)` - _(no documentation)_
 
 ## ObjectIndentConverter (class)
 
@@ -118,21 +120,6 @@ Turns the depth of a row of the object list into the width of the empty space in
 - `public double Indent { get; set; }` - The width for one level, in device-independent pixels.
 - `public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)` - _(no documentation)_
 - `public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)` - _(no documentation)_
-
-## ObjectsView (class)
-
-`public partial class ObjectsView : UserControl`
-
-Source: `src/PressToShape.App/Views/Editor/ObjectsView.axaml.cs:16-208`
-
-The Objects tab. The view only turns pointer input into calls of the view model: a press selects, a double-tap renames, and a drag (after a long press for a finger) drops an object above another one of the same group.
-
-**Members**
-
-- `internal ItemsControl RowList` _(generated)_ - _(no documentation)_
-- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
-- `public ObjectsView()` - _(no documentation)_
-- `protected void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)` - _(no documentation)_
 
 ## PlaceholderPanelView (class)
 

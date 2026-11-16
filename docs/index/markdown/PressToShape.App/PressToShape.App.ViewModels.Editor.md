@@ -251,7 +251,7 @@ State of the History tab: the start state and one row per step, oldest first. Th
 
 `internal partial sealed class InspectorViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:10-56`
+Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:10-53`
 
 State of the inspector: the selected tab and the view models of its tabs.
 
@@ -260,7 +260,6 @@ State of the inspector: the selected tab and the view models of its tabs.
 - `public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null)` - _(no documentation)_
 - `public PropertiesViewModel Properties { get; }` - _(no documentation)_
 - `public LayersViewModel Layers { get; }` - _(no documentation)_
-- `public ObjectsViewModel Objects { get; }` - _(no documentation)_
 - `public PlaceholderPanelViewModel Assets { get; }` - _(no documentation)_
 - `public HistoryViewModel History { get; }` - _(no documentation)_
 - `public InspectorTab SelectedTab { get; set; }` - _(no documentation)_
@@ -276,50 +275,36 @@ State of the inspector: the selected tab and the view models of its tabs.
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`
 
-## LayerItemViewModel (class)
-
-`internal partial sealed class LayerItemViewModel : ViewModelBase`
-
-Source: `src/PressToShape.App/ViewModels/Editor/LayerItemViewModel.cs:14-51`
-
-One row of the layer list. Name, visibility and lock are display values copied from the document by PressToShape.App.ViewModels.Editor.LayerItemViewModel.Update. The toggle commands edit the document through the editor state, they never change these values directly.
-
-**Members**
-
-- `public IRelayCommand ToggleLockCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.LayerItemViewModel.ToggleLock`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.LayerItemViewModel.ToggleLock.
-- `public IRelayCommand ToggleVisibilityCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.LayerItemViewModel.ToggleVisibility`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.LayerItemViewModel.ToggleVisibility.
-- `public LayerItemViewModel(EditorState state, Layer layer)` - _(no documentation)_
-- `public Guid LayerId { get; }` - _(no documentation)_
-- `public string Name { get; private set; }` - _(no documentation)_
-- `public bool IsVisible { get; private set; }` - _(no documentation)_
-- `public bool IsLocked { get; private set; }` - _(no documentation)_
-- `public void Update(Layer layer)` - Copies the display values from the layer. Called when the document changed.
-
-**Relationships**
-
-- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
-- Depends on (constructor) `PressToShape.Core.Documents.Layer`
-- Inherits `PressToShape.App.ViewModels.ViewModelBase`
-
 ## LayersViewModel (class)
 
-`internal partial sealed class LayersViewModel : ViewModelBase`
+`internal partial sealed class LayersViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:14-127`
+Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:22-381`
 
-State of the Layers tab: the layers of the current document, topmost first. The list follows the document. When only names, visibility or locks changed, the existing items are updated, so the list is not rebuilt under the user's click.
+State of the Layers tab: the layers of the document as header rows, and below each layer its shapes and groups as a tree, topmost first. PressToShape.App.ViewModels.Editor.LayersViewModel.Rows is the flat list that the view shows: the rows whose groups and layer are expanded. The list follows the document. When only names, flags or the selection changed, the existing rows are updated, so the list is not rebuilt under the user's click, and which groups are open survives undo and redo as far as the groups still exist.
 
 **Members**
 
 - `public IRelayCommand AddLayerCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.LayersViewModel.AddLayer`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.LayersViewModel.AddLayer.
-- `public LayersViewModel(EditorState state)` - _(no documentation)_
-- `public ObservableCollection<LayerItemViewModel> Items { get; }` - _(no documentation)_
-- `public LayerItemViewModel? SelectedItem { get; set; }` - The row of the active layer, the layer new shapes go into. Setting it changes the active layer. null is ignored: there is always an active layer, and the list control sends null while it is rebuilt.
+- `public LayersViewModel(EditorState state, ObjectEditor objects, ILocalizer localizer)` - _(no documentation)_
+- `public ObservableCollection<ObjectRowViewModel> Rows { get; }` - The rows to show, topmost first: a layer, then what is in it, and so on. Rows below a closed group or layer are not in it.
+- `public void Select(ObjectRowViewModel row, bool extend)` - A row was clicked. A layer row makes its layer the active one. A shape or group row selects the object on the canvas: the group around it is entered, so the object can be selected, and the selection becomes this row, or with extend grows by it when it has the same parent as the rest. A row that cannot be selected (locked or hidden) is only marked as the current row.
+- `public void SetExpanded(ObjectRowViewModel row, bool expanded)` - Shows or hides the rows below a layer or group.
+- `public void SetHidden(ObjectRowViewModel row, bool hidden)` - Hides or shows the object of the row, as one step.
+- `public void SetLocked(ObjectRowViewModel row, bool locked)` - Locks or unlocks the object of the row, as one step.
+- `public void Rename(ObjectRowViewModel row, string name)` - Gives the object of the row a name, as one step. An empty name removes the name.
+- `public bool CanReorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Whether the dragged row can be dropped on the target row: both are objects with the same parent.
+- `public void Reorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Puts the dragged object directly above the target in the stacking order, as one step. Does nothing if that is not possible.
+- `protected void OnLanguageRefreshed()` - _(no documentation)_
 
 **Relationships**
 
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
-- Inherits `PressToShape.App.ViewModels.ViewModelBase`
+- Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
+- Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+- Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
+- Injected into `PressToShape.App.ViewModels.Editor.ObjectRowViewModel`
 
 ## NumberFieldViewModel (class)
 
@@ -397,7 +382,7 @@ What a row of the object list stands for. It decides the icon and the default na
 
 Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowViewModel.cs:11-137`
 
-One row of the object list: a layer header, a shape or a group. The values are display values that PressToShape.App.ViewModels.Editor.ObjectsViewModel copies from the document. The commands ask the list to change the document, they never change these values themselves.
+One row of the object list: a layer header, a shape or a group. The values are display values that PressToShape.App.ViewModels.Editor.LayersViewModel copies from the document. The commands ask the list to change the document, they never change these values themselves.
 
 **Members**
 
@@ -407,7 +392,7 @@ One row of the object list: a layer header, a shape or a group. The values are d
 - `public IRelayCommand ToggleExpandedCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleExpanded`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleExpanded.
 - `public IRelayCommand ToggleLockCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleLock`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleLock.
 - `public IRelayCommand ToggleVisibilityCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleVisibility`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleVisibility.
-- `public ObjectRowViewModel(ObjectsViewModel owner, Guid id, ObjectRowType type, int depth, Guid parentId)` - _(no documentation)_
+- `public ObjectRowViewModel(LayersViewModel owner, Guid id, ObjectRowType type, int depth, Guid parentId)` - _(no documentation)_
 - `public Guid Id { get; }` - The id of the layer, shape or group.
 - `public ObjectRowType Type { get; }` - What the row stands for.
 - `public int Depth { get; }` - How deep the row is: 0 for a layer, 1 for what is on the top level of a layer, 2 below a group, and so on.
@@ -417,7 +402,6 @@ One row of the object list: a layer header, a shape or a group. The values are d
 - `public bool IsRectangle { get; }` - Whether the row is a rectangle.
 - `public bool IsEllipse { get; }` - Whether the row is an ellipse.
 - `public bool HasChildren { get; }` - Whether the row has an expander: layers and groups.
-- `public bool HasToggles { get; }` - Whether the row has the hide and lock toggles. A layer's flags are in the Layers tab.
 - `public bool CanRename { get; }` - Whether the row can be renamed in the list. A layer is renamed elsewhere.
 - `public string Name { get; private set; }` - _(no documentation)_
 - `public string StoredName { get; private set; }` - _(no documentation)_
@@ -425,6 +409,7 @@ One row of the object list: a layer header, a shape or a group. The values are d
 - `public bool IsLocked { get; private set; }` - _(no documentation)_
 - `public bool IsEffectivelyHidden { get; private set; }` - _(no documentation)_
 - `public bool IsEffectivelyLocked { get; private set; }` - _(no documentation)_
+- `public bool IsActiveLayer { get; internal set; }` - _(no documentation)_
 - `public bool IsSelected { get; internal set; }` - _(no documentation)_
 - `public bool IsCurrent { get; internal set; }` - _(no documentation)_
 - `public bool IsExpanded { get; internal set; }` - _(no documentation)_
@@ -438,38 +423,8 @@ One row of the object list: a layer header, a shape or a group. The values are d
 
 **Relationships**
 
-- Depends on (constructor) `PressToShape.App.ViewModels.Editor.ObjectsViewModel`
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.LayersViewModel`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
-
-## ObjectsViewModel (class)
-
-`internal sealed class ObjectsViewModel : LocalizedViewModel`
-
-Source: `src/PressToShape.App/ViewModels/Editor/ObjectsViewModel.cs:20-339`
-
-State of the Objects tab: the layers of the document as header rows, and below each layer its shapes and groups as a tree, topmost first. PressToShape.App.ViewModels.Editor.ObjectsViewModel.Rows is the flat list that the view shows: the rows whose groups and layer are expanded. The list follows the document. When only names, flags or the selection changed, the existing rows are updated, so the list is not rebuilt under the user's click, and which groups are open survives undo and redo as far as the groups still exist.
-
-**Members**
-
-- `public ObjectsViewModel(EditorState state, ObjectEditor objects, ILocalizer localizer)` - _(no documentation)_
-- `public ObservableCollection<ObjectRowViewModel> Rows { get; }` - The rows to show, topmost first: a layer, then what is in it, and so on. Rows below a closed group or layer are not in it.
-- `public void Select(ObjectRowViewModel row, bool extend)` - A row was clicked. A layer row makes its layer the active one. A shape or group row selects the object on the canvas: the group around it is entered, so the object can be selected, and the selection becomes this row, or with extend grows by it when it has the same parent as the rest. A row that cannot be selected (locked or hidden) is only marked as the current row.
-- `public void SetExpanded(ObjectRowViewModel row, bool expanded)` - Shows or hides the rows below a layer or group.
-- `public void SetHidden(ObjectRowViewModel row, bool hidden)` - Hides or shows the object of the row, as one step.
-- `public void SetLocked(ObjectRowViewModel row, bool locked)` - Locks or unlocks the object of the row, as one step.
-- `public void Rename(ObjectRowViewModel row, string name)` - Gives the object of the row a name, as one step. An empty name removes the name.
-- `public bool CanReorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Whether the dragged row can be dropped on the target row: both are objects with the same parent.
-- `public void Reorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Puts the dragged object directly above the target in the stacking order, as one step. Does nothing if that is not possible.
-- `protected void OnLanguageRefreshed()` - _(no documentation)_
-
-**Relationships**
-
-- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
-- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
-- Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
-- Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
-- Injected into `PressToShape.App.Tests.ObjectsViewModelTests.Fixture`
-- Injected into `PressToShape.App.ViewModels.Editor.ObjectRowViewModel`
 
 ## PaletteViewModel (class)
 

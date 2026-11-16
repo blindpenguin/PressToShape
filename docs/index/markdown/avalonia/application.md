@@ -23,8 +23,7 @@
 
 - `vm:ToolbarButtonViewModel` at src/PressToShape.App/Views/Desktop/ToolbarView.axaml:13
 - `vm:HistoryItemViewModel` at src/PressToShape.App/Views/Editor/HistoryView.axaml:33
-- `vm:LayerItemViewModel` at src/PressToShape.App/Views/Editor/LayersView.axaml:42
-- `vm:ObjectRowViewModel` at src/PressToShape.App/Views/Editor/ObjectsView.axaml:58
+- `vm:ObjectRowViewModel` at src/PressToShape.App/Views/Editor/LayersView.axaml:69
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:113
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:153
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:204
@@ -40,9 +39,8 @@ XAML places that show a view model through a content control, so the view is cho
 
 - src/PressToShape.App/Views/Editor/InspectorView.axaml:26 shows `PropertiesViewModel` as `PropertiesView` (inferred)
 - src/PressToShape.App/Views/Editor/InspectorView.axaml:29 shows `LayersViewModel` as `LayersView` (inferred)
-- src/PressToShape.App/Views/Editor/InspectorView.axaml:32 shows `ObjectsViewModel` as `ObjectsView` (inferred)
-- src/PressToShape.App/Views/Editor/InspectorView.axaml:35 shows `PlaceholderPanelViewModel` as `PlaceholderPanelView` (inferred)
-- src/PressToShape.App/Views/Editor/InspectorView.axaml:38 shows `HistoryViewModel` as `HistoryView` (inferred)
+- src/PressToShape.App/Views/Editor/InspectorView.axaml:32 shows `PlaceholderPanelViewModel` as `PlaceholderPanelView` (inferred)
+- src/PressToShape.App/Views/Editor/InspectorView.axaml:35 shows `HistoryViewModel` as `HistoryView` (inferred)
 
 ## Navigation
 

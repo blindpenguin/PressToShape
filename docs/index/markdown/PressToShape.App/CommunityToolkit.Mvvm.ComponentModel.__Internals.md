@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class __KnownINotifyPropertyChangedArgs`
 
-Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-225` (generated)
+Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-229` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangedEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -26,13 +26,14 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 - `public PropertyChangedEventArgs IsRedoable` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsRedoable" generated properties.
 - `public PropertyChangedEventArgs SelectedTab` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "SelectedTab" generated properties.
 - `public PropertyChangedEventArgs SelectedTabIndex` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "SelectedTabIndex" generated properties.
+- `public PropertyChangedEventArgs Text` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Text" generated properties.
 - `public PropertyChangedEventArgs Name` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Name" generated properties.
+- `public PropertyChangedEventArgs StoredName` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "StoredName" generated properties.
 - `public PropertyChangedEventArgs IsVisible` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsVisible" generated properties.
 - `public PropertyChangedEventArgs IsLocked` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsLocked" generated properties.
-- `public PropertyChangedEventArgs Text` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Text" generated properties.
-- `public PropertyChangedEventArgs StoredName` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "StoredName" generated properties.
 - `public PropertyChangedEventArgs IsEffectivelyHidden` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsEffectivelyHidden" generated properties.
 - `public PropertyChangedEventArgs IsEffectivelyLocked` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsEffectivelyLocked" generated properties.
+- `public PropertyChangedEventArgs IsActiveLayer` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsActiveLayer" generated properties.
 - `public PropertyChangedEventArgs IsSelected` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsSelected" generated properties.
 - `public PropertyChangedEventArgs IsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsExpanded" generated properties.
 - `public PropertyChangedEventArgs IsDropTarget` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsDropTarget" generated properties.
@@ -69,7 +70,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 
 `internal static class __KnownINotifyPropertyChangingArgs`
 
-Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-225` (generated)
+Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-229` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangingEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -89,13 +90,14 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 - `public PropertyChangingEventArgs IsRedoable` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsRedoable" generated properties.
 - `public PropertyChangingEventArgs SelectedTab` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "SelectedTab" generated properties.
 - `public PropertyChangingEventArgs SelectedTabIndex` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "SelectedTabIndex" generated properties.
+- `public PropertyChangingEventArgs Text` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Text" generated properties.
 - `public PropertyChangingEventArgs Name` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Name" generated properties.
+- `public PropertyChangingEventArgs StoredName` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "StoredName" generated properties.
 - `public PropertyChangingEventArgs IsVisible` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsVisible" generated properties.
 - `public PropertyChangingEventArgs IsLocked` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsLocked" generated properties.
-- `public PropertyChangingEventArgs Text` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Text" generated properties.
-- `public PropertyChangingEventArgs StoredName` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "StoredName" generated properties.
 - `public PropertyChangingEventArgs IsEffectivelyHidden` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsEffectivelyHidden" generated properties.
 - `public PropertyChangingEventArgs IsEffectivelyLocked` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsEffectivelyLocked" generated properties.
+- `public PropertyChangingEventArgs IsActiveLayer` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsActiveLayer" generated properties.
 - `public PropertyChangingEventArgs IsSelected` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsSelected" generated properties.
 - `public PropertyChangingEventArgs IsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsExpanded" generated properties.
 - `public PropertyChangingEventArgs IsDropTarget` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsDropTarget" generated properties.

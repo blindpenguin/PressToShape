@@ -8,7 +8,7 @@ using static PressToShape.App.Localization.Localizer;
 namespace PressToShape.App.ViewModels.Tablet;
 
 /// <summary>
-/// The panel of the tablet layout, which floats over the canvas and shows one of the inspector's tabs (Properties, Layers, Objects or History) while
+/// The panel of the tablet layout, which floats over the canvas and shows one of the inspector's tabs (Properties, Layers or History) while
 /// it is open. A toolbar icon toggles it. The shown tab is kept in <see cref="InspectorViewModel.SelectedTab"/>, as on the desktop. There is
 /// no Assets panel on the tablet until Assets has content.
 /// </summary>
@@ -36,7 +36,6 @@ internal sealed partial class TabletPanelViewModel : LocalizedViewModel
     {
         InspectorTab.Properties => Inspector.Properties,
         InspectorTab.Layers => Inspector.Layers,
-        InspectorTab.Objects => Inspector.Objects,
         InspectorTab.History => Inspector.History,
         _ => null,
     };
@@ -46,7 +45,6 @@ internal sealed partial class TabletPanelViewModel : LocalizedViewModel
     {
         InspectorTab.Properties => Localizer.T(N("Properties")),
         InspectorTab.Layers => Localizer.T(N("Layers")),
-        InspectorTab.Objects => Localizer.T(N("Objects")),
         InspectorTab.History => Localizer.T(N("History")),
         _ => string.Empty,
     };

@@ -124,7 +124,7 @@ public class TabletViewsTests
         var (view, window) = Show(new TabletToolbarView { DataContext = shell.Toolbar }, touch: true);
 
         var controls = InteractiveControls(view);
-        Assert.Equal(13, controls.Count); // undo, redo, duplicate, delete, four panel icons, zoom out, zoom drop-down, zoom in, fit, overflow
+        Assert.Equal(12, controls.Count); // undo, redo, duplicate, delete, three panel icons, zoom out, zoom drop-down, zoom in, fit, overflow
         var tooSmall = controls.Where(c => c.Bounds.Width < MinimumTouchTarget || c.Bounds.Height < MinimumTouchTarget).Select(Describe).ToList();
         Assert.True(tooSmall.Count == 0, "Controls under 48 dp: " + string.Join(", ", tooSmall));
 
