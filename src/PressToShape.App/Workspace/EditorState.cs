@@ -164,6 +164,7 @@ internal sealed partial class EditorState : ObservableObject
         Document = document;
         History.Reset(document);
         ResetPen();
+        ClearNodeSelection();
         RaiseHistoryChanged();
     }
 
@@ -372,6 +373,7 @@ internal sealed partial class EditorState : ObservableObject
         }
 
         SelectedShapeIds = ids;
+        ClearNodeSelection();
         OnPropertyChanged(nameof(SelectedShapeId));
         OnPropertyChanged(nameof(SelectedCount));
         OnPropertyChanged(nameof(HasSelection));
@@ -379,6 +381,7 @@ internal sealed partial class EditorState : ObservableObject
 
     partial void OnDocumentChanged(Document value)
     {
+        PruneNodeSelection(value);
         if (!SelectedShapeIds.IsEmpty)
         {
             // Shapes that are gone, or that are now hidden or locked (also through a layer or a group), leave the selection.

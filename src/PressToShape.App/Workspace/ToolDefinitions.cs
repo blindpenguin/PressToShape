@@ -17,8 +17,6 @@ internal static class ToolDefinitions
         new(Tool.Text, N("Text"), 'T', MaterialIconKind.FormatText),
         new(Tool.Rectangle, N("Rectangle"), 'M', MaterialIconKind.SquareRoundedOutline),
         new(Tool.Ellipse, N("Ellipse"), 'L', MaterialIconKind.EllipseOutline),
-        new(Tool.Star, N("Star"), null, MaterialIconKind.StarOutline),
-        new(Tool.Spiral, N("Spiral"), null, MaterialIconKind.Cyclone),
         new(Tool.Eyedropper, N("Eyedropper"), 'I', MaterialIconKind.Eyedropper),
         new(Tool.Hand, N("Hand"), 'H', MaterialIconKind.HandBackLeftOutline),
         new(Tool.Zoom, N("Zoom"), 'Z', MaterialIconKind.Magnify),

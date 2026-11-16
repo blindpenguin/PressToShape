@@ -24,6 +24,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public SelectionOverlay Overlay { get; }` - Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.
 - `public Guid? EnteredGroupId { get; }` - The group that was entered, or null. The canvas dims everything outside it.
 - `public ScreenPenOverlay? PenOverlay { get; }` - The nodes and handles of the path that the Pen is drawing, in screen pixels. null when the Pen is not drawing.
+- `public ScreenNodeOverlay? NodeOverlay { get; }` - The nodes and handles of the selected shapes for Direct Select and the Node tool, in screen pixels. null for other tools or when there is nothing to show.
 - `public Guid? HiddenShapeId { get; }` - The path that the Pen is continuing. The canvas leaves it out, because the draft shows it. null when none is.
 - `public CanvasCursorType CursorType { get; }` - The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle, otherwise the eyedropper while a pick is active, otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
 - `public double HorizontalScrollMinimum { get; }` - Smallest value of the horizontal scroll bar: minus the furthest the view offset may go.
@@ -47,7 +48,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. The tablet layout sets it from the theme.
 - `public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = Mouse)` - The primary button went down. The position is in screen pixels of the canvas area. With the Hand tool this starts dragging the view, with the Zoom tool it zooms one step in (with alt: out) around the position, with the other tools it is handled by the tool. inputType is the device: a finger grabs handles from a larger area.
 - `public bool OpenContextMenu(double screenX, double screenY, InputPointerType inputType = Mouse)` - Opens the ring menu at this position, in screen pixels of the canvas area (right-click, long press or the barrel button of a pen). First applies the selection rules of the menu (see PressToShape.App.Workspace.CanvasInteraction.SelectForContextMenu). Does nothing without a ring, with a tool other than Select, or while a drag, a pan, a pick from the canvas or a two-finger gesture is in progress.
-- `public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false)` - The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters a group or leaves the entered one (see PressToShape.App.Workspace.CanvasInteraction.DoubleClicked). With other tools it acts as a normal press.
+- `public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = Mouse)` - The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters a group or leaves the entered one (see PressToShape.App.Workspace.CanvasInteraction.DoubleClicked). With other tools it acts as a normal press.
 - `public void TouchPressed(int id, double screenX, double screenY)` - A finger went down. One finger acts with the active tool like the mouse. A second finger undoes that action (see PressToShape.App.Workspace.CanvasInteraction.Abort) and the two fingers then move and zoom the view. Mouse and pen use PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.PointerPressed. The id only has to be unique from this press to the release.
 - `public void TouchMoved(int id, double screenX, double screenY)` - A finger moved.
 - `public void TouchReleased(int id, double screenX, double screenY)` - A finger went up.
@@ -69,6 +70,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
+- Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
 
 ## ColorFieldViewModel (class)
 
@@ -288,7 +290,7 @@ State of the inspector: the selected tab and the view models of its tabs.
 
 `internal partial sealed class LayersViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:22-383`
+Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:22-384`
 
 State of the Layers tab: the layers of the document as header rows, and below each layer its shapes and groups as a tree, topmost first. PressToShape.App.ViewModels.Editor.LayersViewModel.Rows is the flat list that the view shows: the rows whose groups and layer are expanded. The list follows the document. When only names, flags or the selection changed, the existing rows are updated, so the list is not rebuilt under the user's click, and which groups are open survives undo and redo as far as the groups still exist.
 
@@ -484,7 +486,7 @@ An inspector tab that only shows an empty-state message (Assets). Title and mess
 
 `internal partial sealed class PropertiesViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.Path.cs:12-72`
+Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.Node.cs:10-90`
 
 The Properties tab: the position, size, rotation and appearance of the selected shapes, and the section expansion. The fields show the current values (updated in place while shapes are dragged or edited elsewhere) and every committed edit is one undo step.
 
@@ -492,17 +494,32 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 
 - `public IRelayCommand ClosePathCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ClosePath`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.ClosePath.
 - `public IRelayCommand GroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.Group`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.Group.
+- `public IRelayCommand MakeNodeCornerCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeNodeCorner`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeNodeCorner.
+- `public IRelayCommand MakeNodeSmoothCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeNodeSmooth`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeNodeSmooth.
+- `public IRelayCommand MakeNodeSymmetricCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeNodeSymmetric`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeNodeSymmetric.
+- `public IRelayCommand MakeSegmentCurvedCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeSegmentCurved`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeSegmentCurved.
+- `public IRelayCommand MakeSegmentStraightCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeSegmentStraight`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeSegmentStraight.
 - `public IRelayCommand OpenPathCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.OpenPath`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.OpenPath.
 - `public IRelayCommand ResetTransformCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ResetTransform`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.ResetTransform.
 - `public IRelayCommand UngroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.Ungroup`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.Ungroup.
 - `public IRelayCommand UseEvenOddFillCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseEvenOddFill`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseEvenOddFill.
 - `public IRelayCommand UseNonZeroFillCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseNonZeroFill`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseNonZeroFill.
 - `public bool HasPathSelected { get; }` - Whether the selection has at least one path (also inside a selected group).
+- `public bool IsNodeExpanded { get; set; }` - _(no documentation)_
 - `public bool IsPathClosed { get; }` - Whether every selected path is closed.
+- `public NumberFieldViewModel NodeX { get; }` - The X of the only selected node on the screen, in document units. Disabled without exactly one selected node.
 - `public bool IsPathOpen { get; }` - Whether every selected path is open.
+- `public NumberFieldViewModel NodeY { get; }` - The Y of the only selected node on the screen, in document units. Disabled without exactly one selected node.
 - `public bool IsFillRuleNonZero { get; }` - Whether every selected path uses the non-zero fill rule.
+- `public bool ShowNode { get; }` - Whether the Node section is shown: for Direct Select and the Node tool.
 - `public bool IsFillRuleEvenOdd { get; }` - Whether every selected path uses the even-odd fill rule.
+- `public bool ShowNodeTypeTools { get; }` - Whether the buttons for the node type and the segments are shown: only the Node tool changes them.
+- `public bool HasNodesSelected { get; }` - Whether at least one node that can be edited is selected.
+- `public bool IsNodeCorner { get; }` - Whether every selected node is a corner.
 - `public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null)` - _(no documentation)_
+- `public bool IsNodeSmooth { get; }` - Whether every selected node is smooth.
+- `public bool IsNodeSymmetric { get; }` - Whether every selected node is symmetric.
+- `public bool CanChangeSegment { get; }` - Whether exactly two neighboring nodes of one path are selected.
 - `public NumberFieldViewModel X { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Y { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Width { get; }` - _(no documentation)_

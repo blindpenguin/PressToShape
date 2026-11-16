@@ -50,7 +50,9 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 **Members**
 
 - `public RingMenuMode SelectForContextMenu(double x, double y, double grabSize = 10)` - Prepares the selection for the ring menu at this document position, with the same hit rules as a click. A selected object, or a handle of the selection, keeps the selection as it is. Another object that can be selected (a group counts as one object, and inside an entered group a member counts) becomes the only selected one. Empty canvas, and objects that are hidden or locked, clear the selection. Returns which slots the ring shows. The selection changes, but no history step is recorded.
-- `public void DoubleClicked(double x, double y)` - A double-click at this document position. With the Select tool on a group it enters the group and selects what is under the pointer; on a shape of an entered group that is a group itself it enters that group. On empty space it leaves the entered group by one level. Ends a drag that is in progress without a result.
+- `public void DoubleClicked(double x, double y, InputPointerType inputType = Mouse)` - A double-click at this document position. With the Node tool on a node it changes the type of the node (see PressToShape.App.Workspace.CanvasInteraction.NodeDoubleClicked). With the Select tool on a group it enters the group and selects what is under the pointer; on a shape of an entered group that is a group itself it enters that group. On empty space it leaves the entered group by one level. Ends a drag that is in progress without a result.
+- `internal NodeEditor Nodes { get; }` - The editor of the selected nodes (type, segments, delete, nudge, position). Shared with the keys of the canvas.
+- `public bool IsNodeDragging { get; }` - Whether a node, handle or bend drag is in progress.
 - `public bool IsPenDrawing { get; }` - Whether the Pen has an unfinished path.
 - `public bool FinishPen()` - Finishes the path of the Pen as an open path (the Enter key). A path with fewer than two nodes is dropped. Returns whether there was a path to finish.
 - `public CanvasInteraction(EditorState state)` - _(no documentation)_
@@ -59,11 +61,12 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 - `public HandleType? DraggedHandle { get; }` - The handle that is being dragged, or null if no resize or rotate drag is in progress.
 - `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. A press by mouse or pen uses PressToShape.App.Workspace.SelectionGeometry.GrabSize.
 - `public void PointerPressed(double x, double y, bool shift = false, InputPointerType inputType = Mouse)` - The primary button went down at this document position. shift adds to or removes from the selection. inputType is the device: a finger grabs a handle from a larger area than a mouse or a pen.
+- `public bool IsOverNodeTarget(double x, double y)` - Whether the position is over something the node tools can grab: a node, a shown handle or (Node tool) a segment of a selected shape. Always false during a drag and for the other tools. Used for the cursor.
 - `public void PointerMoved(double x, double y, bool shift = false, bool alt = false)` - The pointer moved to this document position. Does nothing without a drag.
 - `public void PointerReleased(double x, double y, bool shift = false, bool alt = false)` - The button went up at this document position. Ends the drag in every case.
 - `public void Cancel()` - Ends a drag without a result: the draft is dropped and a moved shape keeps the position it has, which then counts as one step if the shape moved.
 - `public void Abort()` - Ends a drag and undoes it: the draft and the selection box are dropped, and a move, resize or rotate puts the document back to the one from the press. Nothing is recorded in the history. Used when the drag was a mistake, for example when a second finger arrives. Does nothing without a drag. PressToShape.App.Workspace.CanvasInteraction.Cancel differs: it keeps what the drag reached.
-- `public void DeleteSelection()` - Removes all selected shapes from the document as one step. Does nothing without a selection.
+- `public void DeleteSelection()` - Removes all selected shapes from the document as one step. With Direct Select or the Node tool and selected nodes it removes the nodes instead (see PressToShape.App.Workspace.NodeEditor.DeleteSelected). Does nothing without a selection.
 - `public HandleType? HoverHandle(double x, double y)` - The handle under this document position, for the cursor. null during a drag, for other tools than Select, without a selection, or away from the handles.
 
 **Relationships**
@@ -211,6 +214,20 @@ Recognises a double-tap: two taps close in time and place. It holds no clock: th
 - `public bool Tap(long timeMilliseconds, double x, double y)` - A tap ended at this place and time. Returns whether it completes a double-tap. A completed double-tap uses up both taps, so a third tap right after does not count as another one.
 - `public void Reset()` - The last tap does not count any more: something else happened (a drag, two fingers, another tool).
 
+## EditablePath (class)
+
+`internal static class EditablePath`
+
+Source: `src/PressToShape.App/Workspace/EditablePath.cs:9-77`
+
+What the node tools and the Pen edit: a path, or a rectangle or an ellipse seen as the path it would become.
+
+**Members**
+
+- `public PathShape? For(Shape shape)` - The path of a shape: the path itself, the conversion of a rectangle or an ellipse (not stored, the shape is only replaced when it is edited), and null for every other shape.
+- `public IReadOnlyList<PathShape> OnScreenOfSelection(Document document, IEnumerable<Guid> selectedShapeIds)` - The editable paths of the selected shapes (the shapes below a selected group too) that are visible and not locked, each with its rotation applied (see PressToShape.App.Workspace.EditablePath.AsOnScreen), in drawing order.
+- `public PathShape AsOnScreen(PathShape path)` - The same path (same id) with its rotation applied to every node and handle point, so it has no rotation itself and its positions are the ones on the screen. For hit tests and drawing, not for storing.
+
 ## EditorState (class)
 
 `internal partial sealed class EditorState : ObservableObject`
@@ -224,10 +241,15 @@ State shared by all regions of the editor shell: the document, its undo history,
 - `public PenOverlay? PenOverlay { get; set; }` - _(no documentation)_
 - `public Guid? PenContinuedId { get; set; }` - _(no documentation)_
 - `public Guid? EnteredGroupId { get; private set; }` - _(no documentation)_
+- `public ImmutableHashSet<NodeRef> SelectedNodes { get; private set; }` - _(no documentation)_
+- `public bool HasSelectedNodes { get; }` - Whether at least one node is selected.
 - `public EditorState(Document? document = null)` - Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.
+- `public void SetNodeSelection(IEnumerable<NodeRef> nodes)` - Replaces the selected nodes. Repeated nodes count once.
 - `public bool EnterGroup(Guid groupId)` - Enters the group. Of the selection only the direct children of the group stay selected. Does nothing if the id is not a group that can be selected.
 - `public Action<ColorPickTarget, Color>? ColorPicked` - Raised when a pick from the canvas ended on a shape: the target that asked for it and the color that was taken.
+- `public void ToggleNode(NodeRef node)` - Adds the node to the selected nodes, or removes it if it is selected.
 - `public EventHandler? HistoryChanged` - Raised after the undo history changed: a step was recorded, undone or redone, or the history was reset.
+- `public void ClearNodeSelection()` - Clears the selected nodes.
 - `public DocumentHistory History { get; }` - The undo history of the current document.
 - `public bool IsDragInProgress { get; set; }` - _(no documentation)_
 - `public void LeaveGroup()` - Leaves the entered group by one level and selects it. If that group is inside another group, the other group is entered. Does nothing when no group is entered.
@@ -283,6 +305,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 
 - Depends on (constructor) `PressToShape.Core.Documents.Document`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
+- Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
 - Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
@@ -302,6 +325,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.Workspace.CanvasInteraction`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
 - Injected into `PressToShape.App.Workspace.DocumentSession`
+- Injected into `PressToShape.App.Workspace.NodeEditor`
 - Injected into `PressToShape.App.Workspace.ObjectEditor`
 - Injected into `PressToShape.App.Workspace.SelectionEditor`
 
@@ -329,7 +353,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-60`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-66`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -417,6 +441,124 @@ A value that is the same for every selected shape, or marked as mixed when the s
 **Relationships**
 
 - Injected into `PressToShape.App.Workspace.SelectionValues`
+
+## NodeEditor (class)
+
+`internal sealed class NodeEditor`
+
+Source: `src/PressToShape.App/Workspace/NodeEditor.cs:16-211`
+
+The edits of the selected nodes that need no mouse: change the type, make a segment straight or curved, delete, nudge and set the position. The properties, the keys and the Delete button of the tablet use it, and so does nothing else, so the rules exist once. A rectangle or an ellipse with selected nodes becomes a path in the same history step as the edit. Hidden and locked shapes are left alone. Every call that changes something is one history step.
+
+**Members**
+
+- `public NodeEditor(EditorState state)` - _(no documentation)_
+- `public bool HasEditableNodes { get; }` - Whether at least one selected node can be edited.
+- `public NodeRef? SingleNode { get; }` - The only selected node, or null when none or several nodes are selected.
+- `public bool CanChangeSegment { get; }` - Whether exactly two neighboring nodes of one path are selected, so a segment can be made straight or curved.
+- `public NodeType? TypeOfSelection { get; }` - The type of the selected nodes, or null when none are selected or their types differ.
+- `public (double X, double Y)? PositionOfSingleNode { get; }` - The position of the only selected node on the screen (the rotation applied), or null without exactly one node.
+- `public void SetType(NodeType type)` - Gives the selected nodes the type, and the handles that fit it (see PressToShape.Core.Shapes.PathNodeEditing.SetNodeType).
+- `public void StraightenSelectedSegment()` - Removes the handles of the segment between the two selected nodes. Does nothing unless PressToShape.App.Workspace.NodeEditor.CanChangeSegment.
+- `public void CurveSelectedSegment()` - Gives the straight segment between the two selected nodes handles. Does nothing unless PressToShape.App.Workspace.NodeEditor.CanChangeSegment.
+- `public void DeleteSelected()` - Removes the selected nodes, the neighbors connect. A path with fewer than two nodes left is deleted. The node selection is cleared afterwards, because the indices no longer fit.
+- `public void Nudge(double dx, double dy)` - Moves the selected nodes by the distance on the screen, in document units. Repeated nudges of the same nodes become one history step, as long as nothing else changed the document in between.
+- `public void SetPosition(double? x, double? y)` - Moves the only selected node to the position on the screen. A value that is null keeps that coordinate. Does nothing without exactly one node.
+- `internal bool IsSame(PathShape a, PathShape b)` - _(no documentation)_
+- `internal IReadOnlyList<NodeTarget> Targets()` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+
+## NodeHit (record)
+
+`internal readonly record NodeHit : IEquatable<NodeHit>`
+
+Source: `src/PressToShape.App/Workspace/NodeHit.cs:12-12`
+
+What is under the pointer for the node tools. The default value is a miss.
+
+**Members**
+
+- `public NodeHit(NodeHitType Type, Guid ShapeId = default(Guid), int Index = -1, NodeHandleSide Side = In, double T = 0)` - What is under the pointer for the node tools. The default value is a miss.
+- `public int Index { get; init; }` - The index of the node or handle, or of the segment (the node it starts at).
+- `public Guid ShapeId { get; init; }` - The shape of the node, handle or segment.
+- `public NodeHandleSide Side { get; init; }` - For a handle: which one.
+- `public double T { get; init; }` - For a segment: the parameter of the point of the curve that is nearest to the pointer, strictly between 0 and 1.
+- `public NodeHitType Type { get; init; }` - What was hit.
+
+## NodeHitType (enum)
+
+`internal enum NodeHitType`
+
+Source: `src/PressToShape.App/Workspace/NodeHitType.cs:4-17`
+
+What a PressToShape.App.Workspace.NodeHit found.
+
+**Members**
+
+- `public None` - Nothing.
+- `public Node` - The anchor of a node.
+- `public Handle` - The handle point of a selected node, or of a neighbor of one.
+- `public Segment` - A segment, between its nodes.
+
+## NodeHits (class)
+
+`internal static class NodeHits`
+
+Source: `src/PressToShape.App/Workspace/NodeHits.cs:10-142`
+
+Finds the node, handle or segment under a position, for Direct Select and the Node tool. Pure: it works on the positions on the screen.
+
+**Members**
+
+- `public IReadOnlyCollection<(int Index, NodeHandleSide Side)> VisibleHandles(PathShape path, IReadOnlySet<int> selected)` - The handle points that are shown for the selected nodes of a path: both handles of each selected node, and the handle of each neighbor that belongs to the segment between the neighbor and the selected node (the out handle of the previous node, the in handle of the next one).
+- `public NodeHit Find(IReadOnlyList<PathShape> paths, IReadOnlySet<NodeRef> selectedNodes, double x, double y, double tolerance, bool includeSegments)` - What the position hits. Handles that are shown come first, then nodes, then (if includeSegments) segments, so a handle on top of a node can still be grabbed. Within one kind the nearest one wins, on a tie the shape that is drawn later (above).
+
+## NodeOverlayBuilder (class)
+
+`internal static class NodeOverlayBuilder`
+
+Source: `src/PressToShape.App/Workspace/NodeOverlayBuilder.cs:11-63`
+
+Builds what the canvas shows for Direct Select and the Node tool. Pure: no Avalonia types.
+
+**Members**
+
+- `public ScreenNodeOverlay? Build(Document document, ImmutableArray<Guid> selectedShapeIds, IReadOnlySet<NodeRef> selectedNodes, Tool tool, double zoomPercent, double originX, double originY)` - The overlay for the node tools: every node of the selected shapes that can be edited (paths, and rectangles and ellipses with their four nodes), the selected ones marked. A handle is shown for a selected node, and for its neighbors the handle that belongs to the segment toward the selected node (see PressToShape.App.Workspace.NodeHits.VisibleHandles). Returns null for the other tools and when there is nothing to show. Hidden and locked shapes show nothing. A rotated shape is shown where it appears on the screen.
+
+## NodeRef (record)
+
+`internal readonly record NodeRef : IEquatable<NodeRef>`
+
+Source: `src/PressToShape.App/Workspace/NodeRef.cs:8-8`
+
+One node of a shape: the shape and the index of the node in it. Used for the selected nodes of the node tools.
+
+**Members**
+
+- `public NodeRef(Guid ShapeId, int Index)` - One node of a shape: the shape and the index of the node in it. Used for the selected nodes of the node tools.
+- `public int Index { get; init; }` - The index of the node. A rectangle and an ellipse have the nodes 0 to 3.
+- `public Guid ShapeId { get; init; }` - The id of the path, rectangle or ellipse.
+
+## NodeTarget (record)
+
+`internal sealed record NodeTarget : IEquatable<NodeTarget>`
+
+Source: `src/PressToShape.App/Workspace/NodeTarget.cs:9-9`
+
+A path with selected nodes: the editable path (a rectangle or ellipse already converted, not stored) and the indices of its selected nodes.
+
+**Members**
+
+- `public NodeTarget(PathShape Path, IReadOnlyList<int> Indices)` - A path with selected nodes: the editable path (a rectangle or ellipse already converted, not stored) and the indices of its selected nodes.
+- `public IReadOnlyList<int> Indices { get; init; }` - The selected nodes, sorted, each one existing.
+- `public PathShape Path { get; init; }` - The path before its rotation is applied, in the frame of PressToShape.Core.Shapes.PathNodeEditing.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.Core.Shapes.PathShape`
 
 ## ObjectEditor (class)
 
@@ -509,7 +651,7 @@ Turns a PressToShape.App.Workspace.ScreenPath into drawing steps, so the canvas 
 
 Source: `src/PressToShape.App/Workspace/PenDrawing.cs:13-171`
 
-The state of a path that the Pen is drawing: the nodes so far and the gesture in progress. It knows nothing about the document, the zoom or the pointer device, so it is tested alone. Distances are in document units, the caller converts them from screen pixels. A press adds a corner node, a drag after it pulls out the handles (smooth node), a press on the first node closes the path and a press on the last node finishes it.
+The state of a path that the Pen is drawing: the nodes so far and the gesture in progress. It knows nothing about the document, the zoom or the pointer device, so it is tested alone. Distances are in document units, the caller converts them from screen pixels. A press adds a corner node, a drag after it pulls out the handles (a symmetric node), a press on the first node closes the path and a press on the last node finishes it.
 
 **Members**
 
@@ -520,7 +662,7 @@ The state of a path that the Pen is drawing: the nodes so far and the gesture in
 - `public PenOverlay? Overlay { get; }` - What to show over the unfinished path, or null when nothing is drawn.
 - `public void Begin(IReadOnlyList<DocumentNode> existing)` - Starts from the nodes of an existing open path, to continue it. The last node is the one the new nodes follow.
 - `public PenPressResult Press(double x, double y, double lastNodeDistance, double closeDistance)` - The button went down at this position. A press within lastNodeDistance of the last node means finish (a double click or double tap). A press within closeDistance of the first node of a path with at least three nodes means close. Otherwise a corner node is added.
-- `public void Drag(double x, double y, double threshold)` - The pointer moved with the button down. Once it is farther than threshold from the node that was just added, the node becomes smooth: the out handle follows the pointer and the in handle is the mirror image on the other side. A shorter drag leaves a corner. Does nothing when no press added a node.
+- `public void Drag(double x, double y, double threshold)` - The pointer moved with the button down. Once it is farther than threshold from the node that was just added, the node becomes symmetric: the out handle follows the pointer and the in handle is the mirror image on the other side. A shorter drag leaves a corner. Does nothing when no press added a node.
 - `public void AbortPress()` - Takes back the node that the press in progress added, for a press that turns out to be a mistake. Does nothing when no press is in progress.
 - `public void Release()` - The button went up. The node that was added keeps the handles the drag gave it.
 - `public void Hover(double x, double y, double closeDistance)` - The pointer moved without a button. Remembers the position for the preview and checks whether a click would close the path.
@@ -559,7 +701,7 @@ What a press with the Pen did to the unfinished path.
 
 `internal enum PropertiesSection`
 
-Source: `src/PressToShape.App/Workspace/PropertiesSection.cs:6-15`
+Source: `src/PressToShape.App/Workspace/PropertiesSection.cs:6-18`
 
 The sections of the Properties tab. Combined as flags to say which ones a tool shows.
 
@@ -571,12 +713,13 @@ The sections of the Properties tab. Combined as flags to say which ones a tool s
 - `public Path` - _(no documentation)_
 - `public Align` - _(no documentation)_
 - `public QuickActions` - _(no documentation)_
+- `public Node` - The nodes of the selected paths: position of a node and, for the Node tool, the type and segment buttons.
 
 ## PropertiesSections (class)
 
 `internal static class PropertiesSections`
 
-Source: `src/PressToShape.App/Workspace/PropertiesSections.cs:6-21`
+Source: `src/PressToShape.App/Workspace/PropertiesSections.cs:6-25`
 
 Which sections of the Properties tab are relevant for a tool.
 
@@ -755,6 +898,40 @@ A line in screen pixels.
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Workspace.ScreenPoint`
+
+## ScreenNodeOverlay (record)
+
+`internal sealed record ScreenNodeOverlay : IEquatable<ScreenNodeOverlay>`
+
+Source: `src/PressToShape.App/Workspace/ScreenNodeOverlay.cs:7-7`
+
+What the canvas shows for the node tools, in screen pixels of the canvas area: every node of the selected shapes, with the handles that are shown.
+
+**Members**
+
+- `public ScreenNodeOverlay(IReadOnlyList<ScreenOverlayNode> Nodes)` - What the canvas shows for the node tools, in screen pixels of the canvas area: every node of the selected shapes, with the handles that are shown.
+- `public IReadOnlyList<ScreenOverlayNode> Nodes { get; init; }` - The nodes of all editable selected shapes, shape by shape in drawing order and in node order.
+
+## ScreenOverlayNode (record)
+
+`internal readonly record ScreenOverlayNode : IEquatable<ScreenOverlayNode>`
+
+Source: `src/PressToShape.App/Workspace/ScreenOverlayNode.cs:11-18`
+
+One node of the overlay of the node tools, in screen pixels of the canvas area.
+
+**Members**
+
+- `public ScreenOverlayNode(double X, double Y, bool IsSelected, double? InX = null, double? InY = null, double? OutX = null, double? OutY = null)` - One node of the overlay of the node tools, in screen pixels of the canvas area.
+- `public double? InX { get; init; }` - The shown in handle point, or null when there is none or it is not shown.
+- `public double? InY { get; init; }` - The shown in handle point, or null.
+- `public bool IsSelected { get; init; }` - Whether the node is one of the selected nodes.
+- `public double? OutX { get; init; }` - The shown out handle point, or null when there is none or it is not shown.
+- `public double? OutY { get; init; }` - The shown out handle point, or null.
+- `public double X { get; init; }` - Anchor x.
+- `public double Y { get; init; }` - Anchor y.
+- `public bool HasIn { get; }` - Whether the in handle is shown.
+- `public bool HasOut { get; }` - Whether the out handle is shown.
 
 ## ScreenPath (record)
 
@@ -1129,7 +1306,7 @@ _(no documentation)_
 
 `internal enum Tool`
 
-Source: `src/PressToShape.App/Workspace/Tool.cs:4-18`
+Source: `src/PressToShape.App/Workspace/Tool.cs:4-16`
 
 The drawing and editing tools shown in the tool column.
 
@@ -1142,8 +1319,6 @@ The drawing and editing tools shown in the tool column.
 - `public Text` - _(no documentation)_
 - `public Rectangle` - _(no documentation)_
 - `public Ellipse` - _(no documentation)_
-- `public Star` - _(no documentation)_
-- `public Spiral` - _(no documentation)_
 - `public Eyedropper` - _(no documentation)_
 - `public Hand` - _(no documentation)_
 - `public Zoom` - _(no documentation)_
@@ -1173,7 +1348,7 @@ Display data for one tool: name, optional single-key shortcut and icon.
 
 `internal static class ToolDefinitions`
 
-Source: `src/PressToShape.App/Workspace/ToolDefinitions.cs:9-35`
+Source: `src/PressToShape.App/Workspace/ToolDefinitions.cs:9-33`
 
 The ordered list of tools, in the order shown in the mockup, with Illustrator-style shortcuts.
 

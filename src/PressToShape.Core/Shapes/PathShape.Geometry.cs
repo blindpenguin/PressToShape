@@ -43,6 +43,34 @@ public sealed partial record PathShape
     }
 
     /// <summary>
+    /// Turns a position on the screen into the frame of the path before its rotation (the frame <see cref="Create"/> and
+    /// <see cref="ToDocumentNodes"/> use): the inverse of the turn around the center of the box.
+    /// </summary>
+    public (double X, double Y) ToLocal(double x, double y)
+    {
+        var (sin, cos) = SinCos(-Rotation);
+        var dx = x - CenterX;
+        var dy = y - CenterY;
+        return (CenterX + dx * cos - dy * sin, CenterY + dx * sin + dy * cos);
+    }
+
+    /// <summary>Turns a position in the frame of the path before its rotation into the position on the screen: the turn around the center of the box.</summary>
+    public (double X, double Y) FromLocal(double x, double y)
+    {
+        var (sin, cos) = SinCos(Rotation);
+        var dx = x - CenterX;
+        var dy = y - CenterY;
+        return (CenterX + dx * cos - dy * sin, CenterY + dx * sin + dy * cos);
+    }
+
+    /// <summary>Turns a distance on the screen into a distance in the frame of the path before its rotation.</summary>
+    public (double Dx, double Dy) ToLocalDelta(double dx, double dy)
+    {
+        var (sin, cos) = SinCos(-Rotation);
+        return (dx * cos - dy * sin, dx * sin + dy * cos);
+    }
+
+    /// <summary>
     /// Whether the point (before any rotation) hits the path. The inside counts for a closed path and for an open path with a fill,
     /// which is filled as if it were closed. A path that is open or has a stroke is also hit near its outline: within half the
     /// stroke width, but at least a few document units. The closing line of an open path is not part of the outline.

@@ -145,4 +145,9 @@ internal sealed class NodeDto
     [JsonPropertyName("outY")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public double? OutY { get; set; }
+
+    // Optional: written only when the type differs from the one that follows from the handles, and missing means that derived type.
+    [JsonPropertyName("type")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Type { get; set; }
 }

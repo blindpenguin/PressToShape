@@ -56,6 +56,7 @@
                                             Draft="{Binding Draft}"
                                             Overlay="{Binding Overlay}"
                                             PenOverlay="{Binding PenOverlay}"
+                                            NodeOverlay="{Binding NodeOverlay}"
                                             HiddenShapeId="{Binding HiddenShapeId}"
                                             EnteredGroupId="{Binding EnteredGroupId}"
                                             DimOpacity="{DynamicResource EnteredGroupDimOpacity}"

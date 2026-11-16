@@ -222,4 +222,92 @@ public class PathEditingTests
             Assert.Equal(before[i].Y, afterRemove[i].Y, 6);
         }
     }
+
+    [Fact]
+    public void InsertNode_OnACurve_GivesTheNewNodeTheSmoothType()
+    {
+        var result = PathEditing.InsertNode(Curve(), 0, 0.5);
+
+        Assert.Equal(NodeType.Smooth, result.Nodes[1].Type);
+    }
+
+    [Fact]
+    public void InsertNode_OnALine_GivesTheNewNodeTheCornerType()
+    {
+        var line = PathShape.Create([Corner(0, 0), Corner(100, 0), Corner(100, 100)]);
+
+        var result = PathEditing.InsertNode(line, 0, 0.5);
+
+        Assert.Equal(NodeType.Corner, result.Nodes[1].Type);
+    }
+
+    [Fact]
+    public void InsertNode_NewHandlesOnACurve_LieOnTheTangent()
+    {
+        var result = PathEditing.InsertNode(Curve(), 0, 0.4);
+
+        Assert.True(NodeTypes.Satisfies(result.Nodes[1]));
+    }
+
+    [Fact]
+    public void InsertNode_KeepsTheTypesOfTheNeighbors()
+    {
+        var path = PathShape.Create(
+            [
+                new DocumentNode(0, 100, outX: 0, outY: -40, type: NodeType.Corner),
+                new DocumentNode(100, 100, inX: 100, inY: -40, outX: 180, outY: 100, type: NodeType.Corner),
+                new DocumentNode(200, 150, type: NodeType.Corner),
+            ]);
+
+        var result = PathEditing.InsertNode(path, 0, 0.5);
+
+        Assert.Equal(NodeType.Corner, result.Nodes[0].Type);
+        Assert.Equal(NodeType.Corner, result.Nodes[2].Type);
+        Assert.Equal(NodeType.Corner, result.Nodes[3].Type);
+    }
+
+    [Fact]
+    public void InsertNode_NextToASymmetricNode_TheSymmetricNodeBecomesSmoothBecauseItsHandleIsShorter()
+    {
+        var path = PathShape.Create(
+            [
+                new DocumentNode(0, 0, inX: -50, inY: 0, outX: 50, outY: 0, type: NodeType.Symmetric),
+                new DocumentNode(100, 100, inX: 100, inY: 50, type: NodeType.Corner),
+            ]);
+
+        var result = PathEditing.InsertNode(path, 0, 0.5);
+
+        Assert.Equal(NodeType.Smooth, result.Nodes[0].Type);
+        Assert.True(NodeTypes.Satisfies(result.Nodes[0]));
+    }
+
+    [Fact]
+    public void Continue_AtTheStart_KeepsTheTypesOfTheReversedNodes()
+    {
+        var path = PathShape.Create(
+            [
+                new DocumentNode(0, 0, outX: 20, outY: 0, type: NodeType.Corner),
+                new DocumentNode(100, 0, inX: 80, inY: 0, outX: 120, outY: 0, type: NodeType.Symmetric),
+                new DocumentNode(200, 0, inX: 180, inY: 0, type: NodeType.Smooth),
+            ]);
+
+        var nodes = PathEditing.Continue(path, atStart: true);
+
+        Assert.Equal([NodeType.Smooth, NodeType.Symmetric, NodeType.Corner], nodes.Select(n => n.Type));
+    }
+
+    [Fact]
+    public void RemoveNode_KeepsTheTypesOfTheOtherNodes()
+    {
+        var path = PathShape.Create(
+            [
+                new DocumentNode(0, 0, type: NodeType.Corner),
+                new DocumentNode(50, 50, inX: 30, inY: 50, outX: 70, outY: 50, type: NodeType.Symmetric),
+                new DocumentNode(100, 0, inX: 80, inY: 0, outX: 130, outY: 0, type: NodeType.Smooth),
+            ]);
+
+        var result = PathEditing.RemoveNode(path, 0)!;
+
+        Assert.Equal([NodeType.Symmetric, NodeType.Smooth], result.Nodes.Select(n => n.Type));
+    }
 }

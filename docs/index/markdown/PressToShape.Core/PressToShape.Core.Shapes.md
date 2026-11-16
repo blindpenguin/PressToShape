@@ -39,20 +39,21 @@ An sRGB color with 8 bits per channel. Alpha 255 is fully opaque.
 
 `public readonly record DocumentNode : IEquatable<DocumentNode>`
 
-Source: `src/PressToShape.Core/Shapes/DocumentNode.cs:7-50`
+Source: `src/PressToShape.Core/Shapes/DocumentNode.cs:7-55`
 
 A point of a path in document units, in the frame of the path before its rotation. Used to build and edit a PressToShape.Core.Shapes.PathShape, which stores its nodes as fractions of its box (PressToShape.Core.Shapes.PathNode).
 
 **Members**
 
-- `public DocumentNode(double x, double y, double? inX = null, double? inY = null, double? outX = null, double? outY = null)` - Creates a node. Every number is finite, and a handle point is given with both numbers or with none.
+- `public DocumentNode(double x, double y, double? inX = null, double? inY = null, double? outX = null, double? outY = null, NodeType type = Corner)` - Creates a node. Every number is finite, and a handle point is given with both numbers or with none.
 - `public double X { get; }` - Anchor x in document units.
 - `public double Y { get; }` - Anchor y in document units.
 - `public double? InX { get; }` - In handle point x, or null together with PressToShape.Core.Shapes.DocumentNode.InY when there is no in handle.
 - `public double? InY { get; }` - In handle point y.
 - `public double? OutX { get; }` - Out handle point x, or null together with PressToShape.Core.Shapes.DocumentNode.OutY when there is no out handle.
 - `public double? OutY { get; }` - Out handle point y.
-- `public bool HasIn { get; }` - Whether the node has an in handle.
+- `public NodeType Type { get; }` - Whether the node has an in handle.
+- `public bool HasIn { get; }` - _(no documentation)_
 - `public bool HasOut { get; }` - Whether the node has an out handle.
 
 ## EllipseShape (record)
@@ -104,23 +105,65 @@ A group of shapes that is selected, moved and styled as one. Children keep their
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
 - Injected into `PressToShape.Core.Documents.ShapeLocation`
 
+## NodeHandleSide (enum)
+
+`public enum NodeHandleSide`
+
+Source: `src/PressToShape.Core/Shapes/NodeHandleSide.cs:4-11`
+
+Which of the two handles of a node: the one toward the previous node or the one toward the next node.
+
+**Members**
+
+- `public In` - The handle on the side of the previous node.
+- `public Out` - The handle on the side of the next node.
+
+## NodeType (enum)
+
+`public enum NodeType`
+
+Source: `src/PressToShape.Core/Shapes/NodeType.cs:7-17`
+
+How the two handles of a node relate when one of them is edited. The type is a rule for editing: a model value that does not match its type (for example after a non-uniform resize) is not an error, the next handle edit enforces the type again.
+
+**Members**
+
+- `public Corner` - The handles move independently, and the node may have none, one or two handles.
+- `public Smooth` - The two handles lie on one straight line through the anchor on opposite sides, each with its own length.
+- `public Symmetric` - The two handles lie on one straight line through the anchor on opposite sides and have the same length.
+
+## NodeTypes (class)
+
+`public static class NodeTypes`
+
+Source: `src/PressToShape.Core/Shapes/NodeTypes.cs:9-95`
+
+The rules that connect a PressToShape.Core.Shapes.NodeType with the handles of a node. A node counts as having its handles on one line when the sine of the angle between them is below 1e-6, and as equally long when the lengths differ by less than 1e-6 of the longer one.
+
+**Members**
+
+- `public NodeType Derive(PathNode node)` - The type that matches the handles of the node, whatever type it stores: fewer than two handles give a corner, two handles on one line on opposite sides give symmetric if they are equally long and smooth otherwise, every other case gives a corner.
+- `public NodeType Derive(DocumentNode node)` - The type that matches the handles of the node, whatever type it stores: fewer than two handles give a corner, two handles on one line on opposite sides give symmetric if they are equally long and smooth otherwise, every other case gives a corner.
+- `public bool Satisfies(PathNode node)` - Whether the handles of the node match the type it stores. A corner always does, so does a node with at most one handle. A smooth node needs its handles on one line on opposite sides, a symmetric node also needs them equally long.
+- `public bool Satisfies(DocumentNode node)` - Whether the handles of the node match the type it stores. A corner always does, so does a node with at most one handle. A smooth node needs its handles on one line on opposite sides, a symmetric node also needs them equally long.
+
 ## NodeValidation (class)
 
 `internal static class NodeValidation`
 
-Source: `src/PressToShape.Core/Shapes/NodeValidation.cs:6-30`
+Source: `src/PressToShape.Core/Shapes/NodeValidation.cs:6-34`
 
 The checks shared by PressToShape.Core.Shapes.PathNode and PressToShape.Core.Shapes.DocumentNode, so both refuse the same values.
 
 **Members**
 
-- `public void Check(double x, double y, double? inX, double? inY, double? outX, double? outY)` - Checks the anchor and the two optional handle points. A handle point is given with both numbers or with none.
+- `public void Check(double x, double y, double? inX, double? inY, double? outX, double? outY, NodeType type = Corner)` - Checks the anchor, the two optional handle points (each given with both numbers or with none) and the node type.
 
 ## PathEditing (class)
 
 `public static class PathEditing`
 
-Source: `src/PressToShape.Core/Shapes/PathEditing.cs:8-111`
+Source: `src/PressToShape.Core/Shapes/PathEditing.cs:8-118`
 
 Operations that change the nodes of a PressToShape.Core.Shapes.PathShape: add a point, delete a point, continue an open path. Every result is a new path, the input is never changed.
 
@@ -134,27 +177,47 @@ Operations that change the nodes of a PressToShape.Core.Shapes.PathShape: add a 
 
 `public readonly record PathNode : IEquatable<PathNode>`
 
-Source: `src/PressToShape.Core/Shapes/PathNode.cs:9-52`
+Source: `src/PressToShape.Core/Shapes/PathNode.cs:9-57`
 
 A point of a PressToShape.Core.Shapes.PathShape as it is stored: the anchor and the optional handle points are fractions of the path's box, so 0 is the left or top edge and 1 the right or bottom edge. Handle points may lie outside 0..1. Resizing the box scales the path without touching the nodes. A segment is a curve if the node it starts at has an out handle or the node it ends at has an in handle, otherwise it is a line.
 
 **Members**
 
-- `public PathNode(double x, double y, double? inX = null, double? inY = null, double? outX = null, double? outY = null)` - Creates a node. Every number is finite, and a handle point is given with both numbers or with none.
+- `public PathNode(double x, double y, double? inX = null, double? inY = null, double? outX = null, double? outY = null, NodeType type = Corner)` - Creates a node. Every number is finite, and a handle point is given with both numbers or with none.
 - `public double X { get; }` - Anchor, fraction of the box width.
 - `public double Y { get; }` - Anchor, fraction of the box height.
 - `public double? InX { get; }` - In handle point, fraction of the box width. Null together with PressToShape.Core.Shapes.PathNode.InY when there is no in handle.
 - `public double? InY { get; }` - In handle point, fraction of the box height.
 - `public double? OutX { get; }` - Out handle point, fraction of the box width. Null together with PressToShape.Core.Shapes.PathNode.OutY when there is no out handle.
 - `public double? OutY { get; }` - Out handle point, fraction of the box height.
-- `public bool HasIn { get; }` - Whether the node has an in handle.
+- `public NodeType Type { get; }` - Whether the node has an in handle.
+- `public bool HasIn { get; }` - _(no documentation)_
 - `public bool HasOut { get; }` - Whether the node has an out handle.
+
+## PathNodeEditing (class)
+
+`public partial static class PathNodeEditing`
+
+Source: `src/PressToShape.Core/Shapes/PathNodeEditing.Segments.cs:6-121`
+
+The rules for editing the nodes and handles of a PressToShape.Core.Shapes.PathShape. Every method takes the path and positions in the frame of the path before its rotation (see PressToShape.Core.Shapes.PathShape.ToLocal), changes nothing in place and returns a new path built with PressToShape.Core.Shapes.PathShape.Rebuilt, so every node that was not moved keeps its place on the screen, also for a rotated path.
+
+**Members**
+
+- `public PathShape SetNodeType(PathShape path, IReadOnlyCollection<int> indices, NodeType type)` - Gives the nodes the type. A corner only changes the type, the handles stay. A smooth or symmetric node first needs its handles on one line on opposite sides: if it has an out handle, the direction of that handle wins and the in handle turns to the opposite side (with its own length for smooth, with the length of the out handle for symmetric), and if it only has an in handle the out handle follows it in the same way. A node without handles gets handles on the line from its previous to its next neighbor, a third of the distance to the neighbor on each side (for symmetric both as long as the shorter one). An end node of an open path only gets the handle toward its one neighbor. No handle is created toward a neighbor on the same spot.
+- `public PathShape MoveNodes(PathShape path, IReadOnlyCollection<int> indices, double dx, double dy)` - Moves the nodes by the distance. Their handles move with them, so their types stay valid.
+- `public PathShape BendSegment(PathShape path, int segmentIndex, double t, double dx, double dy)` - Bends a segment so that its point at t moves by the distance, by changing only the two handle points of the segment. A straight segment becomes a curve this way. Afterwards a node whose handles no longer match its type becomes a corner. For t from 0.15 to 0.85 the point moves exactly by the distance, nearer to an end only approximately.
+- `public PathShape MoveHandle(PathShape path, int index, NodeHandleSide side, double x, double y, bool breakLink)` - Moves one handle to the position. The other handle follows the type of the node: a corner leaves it alone, a smooth node keeps it on the line through the anchor on the opposite side with its own length, a symmetric node mirrors it. With breakLink only this handle moves and the node becomes a corner. A handle moved onto its anchor is removed and the node becomes a corner.
+- `public PathShape StraightenSegment(PathShape path, int segmentIndex)` - Makes a segment straight: the handles that belong to it are removed. A node that lost a handle becomes a corner. A segment that is already straight leaves the path as it is.
+- `public PathShape CurveSegment(PathShape path, int segmentIndex)` - Makes a straight segment a curve with handles one third of its length from each end, on the line itself, so the picture does not change. A segment that is already curved (it has a handle) leaves the path as it is, and so does a segment of no length. A node whose handles no longer match its type becomes a corner.
+- `public PathShape? RemoveNodes(PathShape path, IReadOnlyCollection<int> indices)` - Removes the nodes. The neighbors connect, each keeping its own handle, so the curve changes a little. Returns null if fewer than two nodes would remain, in which case the caller deletes the shape.
+- `public (double X, double Y) NodePosition(PathShape path, int index)` - The position of the anchor of a node on the screen, with the rotation of the path applied.
 
 ## PathShape (record)
 
 `public partial sealed record PathShape : Shape, IEquatable<PathShape>`
 
-Source: `src/PressToShape.Core/Shapes/PathShape.Geometry.cs:7-132`
+Source: `src/PressToShape.Core/Shapes/PathShape.Geometry.cs:7-160`
 
 A path of line and cubic bezier segments, open or closed. The box (PressToShape.Core.Shapes.Shape.X, PressToShape.Core.Shapes.Shape.Y, PressToShape.Core.Shapes.Shape.Width, PressToShape.Core.Shapes.Shape.Height) is the tight bounds of the curve, and the nodes are stored as fractions of that box (see PressToShape.Core.Shapes.PathNode), so changing the box with with moves, resizes and (with the rotation) turns the whole path, like any other shape. Build one from document coordinates with PressToShape.Core.Shapes.PathShape.Create. Immutable: change it with with.
 
@@ -165,6 +228,9 @@ A path of line and cubic bezier segments, open or closed. The box (PressToShape.
 - `public bool IsClosed { get; init; }` - Whether the last node connects back to the first one.
 - `public FillRule FillRule { get; init; }` - How the inside is decided where the path crosses itself. The default is PressToShape.Core.Shapes.FillRule.NonZero.
 - `public PathShape Create(IReadOnlyList<DocumentNode> nodes, bool isClosed = false, FillRule fillRule = NonZero)` - Creates a path from nodes in document coordinates, in the frame before any rotation. The box becomes the tight bounds of the curve (the end points and the extremes of the curved segments, not the handle points). A handle point that no segment uses, such as the in handle of the first node of an open path, does not count. If one side of the box has size 0, every node stores 0 on that side.
+- `public (double X, double Y) ToLocal(double x, double y)` - Turns a position on the screen into the frame of the path before its rotation (the frame PressToShape.Core.Shapes.PathShape.Create and PressToShape.Core.Shapes.PathShape.ToDocumentNodes use): the inverse of the turn around the center of the box.
+- `public (double X, double Y) FromLocal(double x, double y)` - Turns a position in the frame of the path before its rotation into the position on the screen: the turn around the center of the box.
+- `public (double Dx, double Dy) ToLocalDelta(double dx, double dy)` - Turns a distance on the screen into a distance in the frame of the path before its rotation.
 - `protected bool ContainsLocal(double x, double y)` - Whether the point (before any rotation) hits the path. The inside counts for a closed path and for an open path with a fill, which is filled as if it were closed. A path that is open or has a stroke is also hit near its outline: within half the stroke width, but at least a few document units. The closing line of an open path is not part of the outline.
 - `public IReadOnlyList<DocumentNode> ToDocumentNodes()` - The nodes in document coordinates, in the frame before the rotation. The inverse of PressToShape.Core.Shapes.PathShape.Create for the current box.
 - `public IReadOnlyList<Cubic> Segments()` - The segments in document coordinates, in the frame before the rotation. A line is a cubic with its handles on its end points.
@@ -172,6 +238,8 @@ A path of line and cubic bezier segments, open or closed. The box (PressToShape.
 **Relationships**
 
 - Inherits `PressToShape.Core.Shapes.Shape`
+- Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
+- Injected into `PressToShape.App.Workspace.NodeTarget`
 
 ## RectangleShape (record)
 
@@ -231,3 +299,15 @@ A drawable shape with a position, a size and an appearance. Immutable: change it
 - Injected into `PressToShape.App.Workspace.SelectionQueries.Node`
 - Injected into `PressToShape.Core.Documents.ShapeLocation`
 - Injected into `PressToShape.Core.Documents.ShapeTree.Found`
+
+## ShapeConversion (class)
+
+`public static class ShapeConversion`
+
+Source: `src/PressToShape.Core/Shapes/ShapeConversion.cs:6-71`
+
+Turns shapes into paths without changing how they look, so they can be edited node by node.
+
+**Members**
+
+- `public PathShape? ToPath(Shape shape)` - A path that looks like the shape and keeps its id, name, flags, box, rotation and appearance. A rectangle becomes four corner nodes (closed), an ellipse four symmetric nodes at the top, right, bottom and left with handles of 0.2761 of the width or the height, the usual circle approximation. Returns null for a path, a group and every other type, which need no conversion.

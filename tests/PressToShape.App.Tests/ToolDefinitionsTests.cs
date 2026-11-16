@@ -12,7 +12,7 @@ public class ToolDefinitionsTests
         var expected = new[]
         {
             Tool.Select, Tool.DirectSelect, Tool.Pen, Tool.Node, Tool.Text, Tool.Rectangle,
-            Tool.Ellipse, Tool.Star, Tool.Spiral, Tool.Eyedropper, Tool.Hand, Tool.Zoom,
+            Tool.Ellipse, Tool.Eyedropper, Tool.Hand, Tool.Zoom,
         };
 
         Assert.Equal(expected, ToolDefinitions.All.Select(d => d.Tool));
@@ -62,20 +62,9 @@ public class ToolDefinitionsTests
         Assert.Null(ToolDefinitions.FindByShortcut(key));
     }
 
-    [Theory]
-    [InlineData("Star")]
-    [InlineData("Spiral")]
-    public void StarAndSpiral_HaveNoShortcut(string toolName)
-    {
-        var tool = System.Enum.Parse<Tool>(toolName);
-
-        Assert.Null(ToolDefinitions.Get(tool).ShortcutKey);
-    }
-
     [Fact]
     public void ToolTip_ShowsShortcutWhenPresent()
     {
         Assert.Equal("Select (V)", ToolDefinitions.Get(Tool.Select).ToolTip);
-        Assert.Equal("Star", ToolDefinitions.Get(Tool.Star).ToolTip);
     }
 }

@@ -23,7 +23,7 @@ internal sealed partial class CanvasInteraction
 
         var scale = _state.ZoomPercent / 100;
         var radius = (inputType == InputPointerType.Touch ? TouchGrabSize : SelectionGeometry.GrabSize) / 2 / scale;
-        var onScreen = AsOnScreen(path);
+        var onScreen = EditablePath.AsOnScreen(path);
 
         var nodes = onScreen.ToDocumentNodes();
         var nearest = -1;
@@ -87,35 +87,5 @@ internal sealed partial class CanvasInteraction
         _continued = path;
         _pen.Begin(PathEditing.Continue(onScreen, atStart));
         ShowPen();
-    }
-
-    // The same path with its rotation applied to every node and handle point, so it has no rotation itself.
-    private static PathShape AsOnScreen(PathShape path)
-    {
-        if (path.Rotation == 0)
-        {
-            return path;
-        }
-
-        var radians = path.Rotation * Math.PI / 180;
-        var sin = Math.Sin(radians);
-        var cos = Math.Cos(radians);
-        (double X, double Y) Turn(double x, double y)
-        {
-            var dx = x - path.CenterX;
-            var dy = y - path.CenterY;
-            return (path.CenterX + dx * cos - dy * sin, path.CenterY + dx * sin + dy * cos);
-        }
-
-        var turned = new List<DocumentNode>();
-        foreach (var node in path.ToDocumentNodes())
-        {
-            var anchor = Turn(node.X, node.Y);
-            var handleIn = node.HasIn ? Turn(node.InX!.Value, node.InY!.Value) : ((double X, double Y)?)null;
-            var handleOut = node.HasOut ? Turn(node.OutX!.Value, node.OutY!.Value) : ((double X, double Y)?)null;
-            turned.Add(new DocumentNode(anchor.X, anchor.Y, handleIn?.X, handleIn?.Y, handleOut?.X, handleOut?.Y));
-        }
-
-        return PathShape.Create(turned, path.IsClosed, path.FillRule);
     }
 }

@@ -106,11 +106,9 @@ public class ToolboxViewModelTests
         var localizer = FakeLocalizer.Create("en", new Dictionary<string, string>
         {
             ["Select"] = "Auswählen",
-            ["Star"] = "Stern",
         });
         var toolbox = new ToolboxViewModel(new EditorState(), localizer);
         var select = toolbox.Tools.Single(t => t.Definition.Tool == Tool.Select);
-        var star = toolbox.Tools.Single(t => t.Definition.Tool == Tool.Star);
         var raised = new List<string?>();
         select.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
         Assert.Equal("Select", select.Name);
@@ -120,7 +118,6 @@ public class ToolboxViewModelTests
 
         Assert.Equal("Auswählen", select.Name);
         Assert.Equal("Auswählen (V)", select.ToolTip);
-        Assert.Equal("Stern", star.ToolTip); // no shortcut key
         Assert.Contains(string.Empty, raised);
     }
 }

@@ -17,7 +17,7 @@ public class ToolGroupsTests
                 [Tool.Select, Tool.DirectSelect],
                 [Tool.Pen, Tool.Node],
                 [Tool.Text],
-                [Tool.Rectangle, Tool.Ellipse, Tool.Star, Tool.Spiral],
+                [Tool.Rectangle, Tool.Ellipse],
                 [Tool.Eyedropper],
                 [Tool.Hand, Tool.Zoom],
             ],
@@ -46,7 +46,7 @@ public class ToolGroupsTests
     public void DefaultTool_IsTheFirstToolOfTheGroup()
     {
         Assert.Equal(Tool.Select, ToolGroups.Of(Tool.DirectSelect).DefaultTool);
-        Assert.Equal(Tool.Rectangle, ToolGroups.Of(Tool.Spiral).DefaultTool);
+        Assert.Equal(Tool.Rectangle, ToolGroups.Of(Tool.Ellipse).DefaultTool);
         Assert.Equal(Tool.Hand, ToolGroups.Of(Tool.Zoom).DefaultTool);
     }
 

@@ -11,7 +11,7 @@ internal static class ToolGroups
         new([Tool.Select, Tool.DirectSelect]),
         new([Tool.Pen, Tool.Node]),
         new([Tool.Text]),
-        new([Tool.Rectangle, Tool.Ellipse, Tool.Star, Tool.Spiral]),
+        new([Tool.Rectangle, Tool.Ellipse]),
         new([Tool.Eyedropper]),
         new([Tool.Hand, Tool.Zoom]),
     ];

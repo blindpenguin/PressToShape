@@ -42,7 +42,8 @@ public static class PathEditing
         {
             nodes[segmentIndex] = WithOut(start, left.P1);
             nodes[endIndex] = WithIn(end, right.P2);
-            inserted = new DocumentNode(left.P3.X, left.P3.Y, left.P2.X, left.P2.Y, right.P1.X, right.P1.Y);
+            // On a curve the new node is smooth: both handles are on the tangent of the curve.
+            inserted = new DocumentNode(left.P3.X, left.P3.Y, left.P2.X, left.P2.Y, right.P1.X, right.P1.Y, NodeType.Smooth);
         }
 
         nodes.Insert(segmentIndex + 1, inserted);
@@ -92,20 +93,26 @@ public static class PathEditing
         for (var i = 0; i < nodes.Count; i++)
         {
             var node = nodes[i];
-            nodes[i] = new DocumentNode(node.X, node.Y, node.OutX, node.OutY, node.InX, node.InY);
+            nodes[i] = new DocumentNode(node.X, node.Y, node.OutX, node.OutY, node.InX, node.InY, node.Type);
         }
 
         return nodes;
     }
 
-    // A handle that lies exactly on its anchor is the same as no handle.
+    // A handle that lies exactly on its anchor is the same as no handle. Splitting a curve shortens the handle of the node next to the new
+    // node along its own direction, so a symmetric node stays on its line but is no longer equally long: it becomes smooth.
     private static DocumentNode WithOut(DocumentNode node, (double X, double Y) handle) =>
-        handle.X == node.X && handle.Y == node.Y
-            ? new DocumentNode(node.X, node.Y, node.InX, node.InY)
-            : new DocumentNode(node.X, node.Y, node.InX, node.InY, handle.X, handle.Y);
+        Fitted(handle.X == node.X && handle.Y == node.Y
+            ? new DocumentNode(node.X, node.Y, node.InX, node.InY, type: node.Type)
+            : new DocumentNode(node.X, node.Y, node.InX, node.InY, handle.X, handle.Y, node.Type));
 
     private static DocumentNode WithIn(DocumentNode node, (double X, double Y) handle) =>
-        handle.X == node.X && handle.Y == node.Y
-            ? new DocumentNode(node.X, node.Y, outX: node.OutX, outY: node.OutY)
-            : new DocumentNode(node.X, node.Y, handle.X, handle.Y, node.OutX, node.OutY);
+        Fitted(handle.X == node.X && handle.Y == node.Y
+            ? new DocumentNode(node.X, node.Y, outX: node.OutX, outY: node.OutY, type: node.Type)
+            : new DocumentNode(node.X, node.Y, handle.X, handle.Y, node.OutX, node.OutY, node.Type));
+
+    private static DocumentNode Fitted(DocumentNode node) =>
+        node.Type == NodeType.Symmetric && !NodeTypes.Satisfies(node)
+            ? new DocumentNode(node.X, node.Y, node.InX, node.InY, node.OutX, node.OutY, NodeType.Smooth)
+            : node;
 }

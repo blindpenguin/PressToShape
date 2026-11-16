@@ -11,30 +11,36 @@ public class PropertiesSectionsTests
         PropertiesSection.Transform | PropertiesSection.Appearance | PropertiesSection.Align | PropertiesSection.QuickActions;
 
     [Fact]
-    public void For_SelectionTool_ShowsTransformAppearanceAlignAndQuickActions()
+    public void For_SelectTool_ShowsTransformAppearanceAlignAndQuickActions()
     {
-        foreach (var tool in new[] { Tool.Select, Tool.DirectSelect })
-        {
-            Assert.Equal(Selection, PropertiesSections.For(tool));
-        }
+        Assert.Equal(Selection, PropertiesSections.For(Tool.Select));
+    }
+
+    [Fact]
+    public void For_DirectSelect_ShowsTheSelectionSectionsAndAlsoPathAndNode()
+    {
+        Assert.Equal(Selection | PropertiesSection.Path | PropertiesSection.Node, PropertiesSections.For(Tool.DirectSelect));
     }
 
     [Fact]
     public void For_ShapeOrTextTool_ShowsAppearanceOnly()
     {
-        foreach (var tool in new[] { Tool.Rectangle, Tool.Ellipse, Tool.Star, Tool.Spiral, Tool.Text })
+        foreach (var tool in new[] { Tool.Rectangle, Tool.Ellipse, Tool.Text })
         {
             Assert.Equal(PropertiesSection.Appearance, PropertiesSections.For(tool));
         }
     }
 
     [Fact]
-    public void For_PathTool_ShowsAppearanceAndPath()
+    public void For_Pen_ShowsAppearanceAndPath()
     {
-        foreach (var tool in new[] { Tool.Pen, Tool.Node })
-        {
-            Assert.Equal(PropertiesSection.Appearance | PropertiesSection.Path, PropertiesSections.For(tool));
-        }
+        Assert.Equal(PropertiesSection.Appearance | PropertiesSection.Path, PropertiesSections.For(Tool.Pen));
+    }
+
+    [Fact]
+    public void For_NodeTool_ShowsAppearancePathAndNode()
+    {
+        Assert.Equal(PropertiesSection.Appearance | PropertiesSection.Path | PropertiesSection.Node, PropertiesSections.For(Tool.Node));
     }
 
     [Fact]
@@ -47,13 +53,15 @@ public class PropertiesSectionsTests
     }
 
     [Fact]
-    public void For_EveryTool_IsDefinedAndShowsPathOnlyForPenAndNode()
+    public void For_EveryTool_IsDefinedAndShowsPathForPenDirectSelectAndNode_AndNodeForDirectSelectAndNode()
     {
         var tools = Enum.GetValues<Tool>();
 
         var withPath = tools.Where(tool => PropertiesSections.For(tool).HasFlag(PropertiesSection.Path)).ToArray();
+        var withNode = tools.Where(tool => PropertiesSections.For(tool).HasFlag(PropertiesSection.Node)).ToArray();
 
-        Assert.Equal([Tool.Pen, Tool.Node], withPath);
+        Assert.Equal([Tool.DirectSelect, Tool.Pen, Tool.Node], withPath);
+        Assert.Equal([Tool.DirectSelect, Tool.Node], withNode);
     }
 
     [Fact]

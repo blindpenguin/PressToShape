@@ -619,12 +619,12 @@ public class TabletViewsTests
         var shell = CreateShell();
         var (view, window) = Show(new TabletToolColumnView { DataContext = shell.Column }, touch: true, 120, 800);
 
-        shell.State.ActiveTool = PressToShape.App.Workspace.Tool.Spiral;
+        shell.State.ActiveTool = PressToShape.App.Workspace.Tool.Ellipse;
         Dispatcher.UIThread.RunJobs();
 
         var buttons = GroupButtons(view);
         Assert.Equal([false, false, false, true, false, false], buttons.Select(b => b.IsChecked == true));
-        Assert.Equal("Spiral", AutomationProperties.GetName(buttons[3]));
+        Assert.Equal("Ellipse", AutomationProperties.GetName(buttons[3]));
 
         window.Close();
     });
@@ -654,7 +654,7 @@ public class TabletViewsTests
 
         var popup = view.GetVisualDescendants().OfType<Popup>().Single(p => p.IsOpen);
         var entries = popup.Child!.GetVisualDescendants().OfType<ToggleButton>().ToList();
-        Assert.Equal(["Rectangle", "Ellipse", "Star", "Spiral"], entries.Select(AutomationProperties.GetName));
+        Assert.Equal(["Rectangle", "Ellipse"], entries.Select(AutomationProperties.GetName));
         Assert.True(shell.Column.Groups[3].IsFlyoutOpen);
 
         window.Close();
@@ -669,14 +669,14 @@ public class TabletViewsTests
         Dispatcher.UIThread.RunJobs();
         var popup = view.GetVisualDescendants().OfType<Popup>().Single(p => p.IsOpen);
 
-        var star = popup.Child!.GetVisualDescendants().OfType<ToggleButton>().Single(b => AutomationProperties.GetName(b) == "Star");
-        star.Command!.Execute(star.CommandParameter);
+        var ellipse = popup.Child!.GetVisualDescendants().OfType<ToggleButton>().Single(b => AutomationProperties.GetName(b) == "Ellipse");
+        ellipse.Command!.Execute(ellipse.CommandParameter);
         Dispatcher.UIThread.RunJobs();
 
-        Assert.Equal(PressToShape.App.Workspace.Tool.Star, shell.State.ActiveTool);
+        Assert.Equal(PressToShape.App.Workspace.Tool.Ellipse, shell.State.ActiveTool);
         Assert.False(shell.Column.Groups[3].IsFlyoutOpen);
         Assert.All(view.GetVisualDescendants().OfType<Popup>(), p => Assert.False(p.IsOpen));
-        Assert.Equal("Star", AutomationProperties.GetName(GroupButtons(view)[3]));
+        Assert.Equal("Ellipse", AutomationProperties.GetName(GroupButtons(view)[3]));
 
         window.Close();
     });

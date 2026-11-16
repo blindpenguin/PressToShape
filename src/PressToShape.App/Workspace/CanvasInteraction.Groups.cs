@@ -9,13 +9,19 @@ namespace PressToShape.App.Workspace;
 internal sealed partial class CanvasInteraction
 {
     /// <summary>
-    /// A double-click at this document position. With the Select tool on a group it enters the group and selects what is under the pointer;
+    /// A double-click at this document position. With the Node tool on a node it changes the type of the node (see <see cref="NodeDoubleClicked"/>). With the Select tool on a group it enters the group and selects what is under the pointer;
     /// on a shape of an entered group that is a group itself it enters that group. On empty space it leaves the entered group by one level.
     /// Ends a drag that is in progress without a result.
     /// </summary>
-    public void DoubleClicked(double x, double y)
+    public void DoubleClicked(double x, double y, InputPointerType inputType = InputPointerType.Mouse)
     {
         Cancel();
+        if (_state.ActiveTool == Tool.Node && _state.ColorPick == ColorPickTarget.None)
+        {
+            NodeDoubleClicked(x, y, inputType);
+            return;
+        }
+
         if (_state.ActiveTool != Tool.Select || _state.ColorPick != ColorPickTarget.None)
         {
             return;

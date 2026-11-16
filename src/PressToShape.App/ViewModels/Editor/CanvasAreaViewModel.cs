@@ -24,6 +24,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     private bool _touchMoved;
     private bool _touchGestureFlagged;
     private HandleType? _hoverHandle;
+    private bool _hoverNodeTarget;
 
     private bool _panning;
     private double _panStartScreenX;
@@ -80,6 +81,10 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     public ScreenPenOverlay? PenOverlay =>
         _state.PenOverlay is { } overlay ? ScreenPenOverlay.From(overlay, ZoomPercent, OriginX, OriginY) : null;
 
+    /// <summary>The nodes and handles of the selected shapes for Direct Select and the Node tool, in screen pixels. <c>null</c> for other tools or when there is nothing to show.</summary>
+    public ScreenNodeOverlay? NodeOverlay =>
+        NodeOverlayBuilder.Build(_state.Document, _state.SelectedShapeIds, _state.SelectedNodes, _state.ActiveTool, ZoomPercent, OriginX, OriginY);
+
     /// <summary>The path that the Pen is continuing. The canvas leaves it out, because the draft shows it. <c>null</c> when none is.</summary>
     public Guid? HiddenShapeId => _state.PenContinuedId;
 
@@ -104,6 +109,17 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             if (_state.ColorPick != ColorPickTarget.None)
             {
                 return CanvasCursorType.Eyedropper;
+            }
+
+            // The node tools: a closed hand while a node, handle or segment is dragged, an open hand over something that can be grabbed.
+            if (_interaction.IsNodeDragging)
+            {
+                return CanvasCursorType.ClosedHand;
+            }
+
+            if (_hoverNodeTarget)
+            {
+                return CanvasCursorType.OpenHand;
             }
 
             return _state.ActiveTool switch
@@ -214,6 +230,13 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             default:
                 _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift, inputType);
                 SetHover(null);
+                SetNodeHover(null);
+                if (_state.ActiveTool is Tool.DirectSelect or Tool.Node)
+                {
+                    // A node drag may have started: its cursor is the closed hand.
+                    OnPropertyChanged(nameof(CursorType));
+                }
+
                 break;
         }
     }
@@ -267,13 +290,14 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters
     /// a group or leaves the entered one (see <see cref="CanvasInteraction.DoubleClicked"/>). With other tools it acts as a normal press.
     /// </summary>
-    public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false)
+    public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = InputPointerType.Mouse)
     {
-        if (_state.ActiveTool == Tool.Select && _state.ColorPick == ColorPickTarget.None)
+        if (_state.ActiveTool is Tool.Select or Tool.Node && _state.ColorPick == ColorPickTarget.None)
         {
             IsAltHeld = alt;
-            _interaction.DoubleClicked(ToDocumentX(screenX), ToDocumentY(screenY));
+            _interaction.DoubleClicked(ToDocumentX(screenX), ToDocumentY(screenY), inputType);
             SetHover(null);
+            SetNodeHover(null);
         }
         else
         {
@@ -353,10 +377,11 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     }
 
     // A finger went up. A tap that did not move, right after another one at the same place, is a double-tap: like a double-click it enters
-    // a group or leaves the entered one. Only the Select tool has one, and a tap that dragged something is no tap.
+    // a group or leaves the entered one, and with the Node tool it changes the type of a node. Only these two tools have one, and a tap that
+    // dragged something is no tap.
     private void CountTap(double screenX, double screenY)
     {
-        if (_touchMoved || _state.ActiveTool != Tool.Select || _state.ColorPick != ColorPickTarget.None)
+        if (_touchMoved || _state.ActiveTool is not (Tool.Select or Tool.Node) || _state.ColorPick != ColorPickTarget.None)
         {
             _doubleTap.Reset();
             return;
@@ -364,7 +389,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
         if (_doubleTap.Tap(ElapsedMilliseconds, screenX, screenY))
         {
-            DoubleClick(screenX, screenY);
+            DoubleClick(screenX, screenY, inputType: InputPointerType.Touch);
         }
     }
 
@@ -418,6 +443,10 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
         _interaction.PointerReleased(ToDocumentX(screenX), ToDocumentY(screenY), shift, alt);
         PointerHover(screenX, screenY);
+        if (_state.ActiveTool is Tool.DirectSelect or Tool.Node)
+        {
+            OnPropertyChanged(nameof(CursorType));
+        }
     }
 
     /// <summary>The pointer moved over the canvas without a drag: the handle under it decides the cursor, and the Pen shows its next segment.</summary>
@@ -430,10 +459,15 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         }
 
         SetHover(_panning ? null : _interaction.HoverHandle(ToDocumentX(screenX), ToDocumentY(screenY)));
+        SetNodeHover(_panning ? null : _interaction.IsOverNodeTarget(ToDocumentX(screenX), ToDocumentY(screenY)));
     }
 
     /// <summary>The pointer left the canvas: no handle is hovered any more.</summary>
-    public void PointerLeft() => SetHover(null);
+    public void PointerLeft()
+    {
+        SetHover(null);
+        SetNodeHover(null);
+    }
 
     /// <summary>
     /// A key went down on the canvas. The arrow keys move the selection by 1 unit, with <paramref name="shift"/> by 10. Escape leaves the entered group, or clears
@@ -467,6 +501,33 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         if (key == CanvasKey.Escape && _state.EnteredGroupId is not null && !_state.IsDragInProgress)
         {
             _state.LeaveGroup();
+            return true;
+        }
+
+        // With a node tool and selected nodes the arrow keys move the nodes, not the shape.
+        if (_state.ActiveTool is Tool.DirectSelect or Tool.Node
+            && _state.HasSelectedNodes
+            && !_state.IsDragInProgress
+            && key is CanvasKey.Left or CanvasKey.Right or CanvasKey.Up or CanvasKey.Down)
+        {
+            var nodeStep = shift ? 10 : 1;
+            var nodes = _interaction.Nodes;
+            switch (key)
+            {
+                case CanvasKey.Left:
+                    nodes.Nudge(-nodeStep, 0);
+                    break;
+                case CanvasKey.Right:
+                    nodes.Nudge(nodeStep, 0);
+                    break;
+                case CanvasKey.Up:
+                    nodes.Nudge(0, -nodeStep);
+                    break;
+                default:
+                    nodes.Nudge(0, nodeStep);
+                    break;
+            }
+
             return true;
         }
 
@@ -580,6 +641,16 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         NotifyScrollChanged();
     }
 
+    private void SetNodeHover(bool? over)
+    {
+        var value = over ?? false;
+        if (_hoverNodeTarget != value)
+        {
+            _hoverNodeTarget = value;
+            OnPropertyChanged(nameof(CursorType));
+        }
+    }
+
     private void SetHover(HandleType? handle)
     {
         if (_hoverHandle != handle)
@@ -635,6 +706,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         OnPropertyChanged(nameof(Draft));
         OnPropertyChanged(nameof(Overlay));
         OnPropertyChanged(nameof(PenOverlay));
+        OnPropertyChanged(nameof(NodeOverlay));
     }
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
@@ -674,6 +746,9 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 break;
             case nameof(EditorState.PenOverlay):
                 OnPropertyChanged(nameof(PenOverlay));
+                break;
+            case nameof(EditorState.SelectedNodes):
+                OnPropertyChanged(nameof(NodeOverlay));
                 break;
             case nameof(EditorState.PenContinuedId):
                 OnPropertyChanged(nameof(HiddenShapeId));

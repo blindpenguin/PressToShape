@@ -23,18 +23,19 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 
 **Properties**
 
-- `DimOpacity` (Styled, `double`, default 0.35) at line 66
+- `DimOpacity` (Styled, `double`, default 0.35) at line 70
 - `Document` (Styled, `Document?`, default not set) at line 18
 - `Draft` (Styled, `ScreenShape?`, default not set) at line 34
-- `EnteredGroupId` (Styled, `Guid?`, default not set) at line 62
-- `HandleSize` (Styled, `double`, default SelectionOverlay.HandleSize) at line 58
-- `HiddenShapeId` (Styled, `Guid?`, default not set) at line 46
+- `EnteredGroupId` (Styled, `Guid?`, default not set) at line 66
+- `HandleSize` (Styled, `double`, default SelectionOverlay.HandleSize) at line 62
+- `HiddenShapeId` (Styled, `Guid?`, default not set) at line 50
+- `NodeOverlay` (Styled, `ScreenNodeOverlay?`, default not set) at line 46
 - `OriginX` (Styled, `double`, default not set) at line 26
 - `OriginY` (Styled, `double`, default not set) at line 30
 - `Overlay` (Styled, `SelectionOverlay?`, default not set) at line 38
 - `PenOverlay` (Styled, `ScreenPenOverlay?`, default not set) at line 42
-- `SelectionBrush` (Styled, `IBrush?`, default not set) at line 50
-- `SelectionHandleFillBrush` (Styled, `IBrush?`, default not set) at line 54
+- `SelectionBrush` (Styled, `IBrush?`, default not set) at line 54
+- `SelectionHandleFillBrush` (Styled, `IBrush?`, default not set) at line 58
 - `ZoomPercent` (Styled, `double`, default 100) at line 22
 
 **Events**

@@ -19,7 +19,7 @@ A titled section whose whole header row toggles the content. Used by the inspect
 
 `internal sealed class DocumentCanvasControl : Control`
 
-Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:16-462`
+Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:16-512`
 
 Draws the shapes of a document. It only draws: PressToShape.App.Workspace.CanvasScene decides what is drawn and where. Shape colors are document data, so this control uses no theme brushes. It does not handle pointer input.
 
@@ -32,6 +32,7 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `public StyledProperty<ScreenShape?> DraftProperty` - The shape that is being drawn, in screen space. It is not part of the document.
 - `public StyledProperty<SelectionOverlay?> OverlayProperty` - What is drawn for the selection, in screen space: outlines, frame, handles and the box being dragged.
 - `public StyledProperty<ScreenPenOverlay?> PenOverlayProperty` - The nodes and handles of the path that the Pen is drawing, in screen space. They are drawn over the shapes.
+- `public StyledProperty<ScreenNodeOverlay?> NodeOverlayProperty` - The nodes and handles of the selected shapes for Direct Select and the Node tool, in screen space. They are drawn over the shapes.
 - `public StyledProperty<Guid?> HiddenShapeIdProperty` - A shape that is not drawn because the draft takes its place (a path that is being continued). null hides nothing.
 - `public StyledProperty<IBrush?> SelectionBrushProperty` - The brush of the selection outlines, handle outlines and the selection box. It comes from the theme.
 - `public StyledProperty<IBrush?> SelectionHandleFillBrushProperty` - The fill of the handles. It comes from the theme.
@@ -46,6 +47,7 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `public ScreenShape? Draft { get; set; }` - _(no documentation)_
 - `public SelectionOverlay? Overlay { get; set; }` - _(no documentation)_
 - `public ScreenPenOverlay? PenOverlay { get; set; }` - _(no documentation)_
+- `public ScreenNodeOverlay? NodeOverlay { get; set; }` - _(no documentation)_
 - `public Guid? HiddenShapeId { get; set; }` - _(no documentation)_
 - `public IBrush? SelectionBrush { get; set; }` - _(no documentation)_
 - `public IBrush? SelectionHandleFillBrush { get; set; }` - _(no documentation)_

@@ -386,4 +386,75 @@ public class PenDrawingTests
 
         Assert.Null(pen.PreviewShape);
     }
+
+    [Fact]
+    public void Press_AddsACornerNode()
+    {
+        var pen = new PenDrawing();
+
+        pen.Press(10, 10, Near, Close);
+        pen.Release();
+
+        Assert.Equal(NodeType.Corner, pen.Nodes[0].Type);
+    }
+
+    [Fact]
+    public void Drag_BeyondTheThreshold_MakesASymmetricNode()
+    {
+        var pen = new PenDrawing();
+        pen.Press(50, 50, Near, Close);
+
+        pen.Drag(80, 50, threshold: 2);
+        pen.Release();
+
+        var node = pen.Nodes[0];
+        Assert.Equal(NodeType.Symmetric, node.Type);
+        Assert.True(NodeTypes.Satisfies(node));
+        Assert.Equal(NodeType.Symmetric, NodeTypes.Derive(node));
+    }
+
+    [Fact]
+    public void Drag_BackUnderTheThreshold_IsACornerAgain()
+    {
+        var pen = new PenDrawing();
+        pen.Press(50, 50, Near, Close);
+        pen.Drag(80, 50, threshold: 2);
+
+        pen.Drag(50, 51, threshold: 2);
+
+        Assert.Equal(NodeType.Corner, pen.Nodes[0].Type);
+        Assert.False(pen.Nodes[0].HasOut);
+    }
+
+    [Fact]
+    public void Finish_KeepsTheTypesOfTheNodes()
+    {
+        var pen = new PenDrawing();
+        pen.Press(0, 0, Near, Close);
+        pen.Drag(0, 40, threshold: 2);
+        pen.Release();
+        pen.Press(100, 100, Near, Close);
+        pen.Release();
+
+        var path = pen.Finish(close: false)!;
+
+        Assert.Equal([NodeType.Symmetric, NodeType.Corner], path.Nodes.Select(n => n.Type));
+    }
+
+    [Fact]
+    public void Begin_WithTypedNodes_KeepsTheirTypesThroughFinish()
+    {
+        var pen = new PenDrawing();
+        pen.Begin(
+            [
+                new DocumentNode(0, 0, outX: 20, outY: 0, type: NodeType.Corner),
+                new DocumentNode(100, 0, inX: 80, inY: 0, outX: 120, outY: 0, type: NodeType.Smooth),
+            ]);
+        pen.Press(100, 100, Near, Close);
+        pen.Release();
+
+        var path = pen.Finish(close: false)!;
+
+        Assert.Equal([NodeType.Corner, NodeType.Smooth, NodeType.Corner], path.Nodes.Select(n => n.Type));
+    }
 }

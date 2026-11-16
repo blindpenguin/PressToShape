@@ -81,11 +81,39 @@ _(no documentation)_
 - `public void MovedCopy_Group_GivesNewIdsAndMovesAllLeaves()` - _(no documentation)_
 - `public void Leaves_PlainShapeAndNestedGroups_ReturnTheNonGroupShapes()` - _(no documentation)_
 
+## NodeTypesTests (class)
+
+`public class NodeTypesTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/NodeTypesTests.cs:6-131`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Derive_NoHandles_IsCorner()` - _(no documentation)_
+- `public void Derive_OneHandle_IsCorner()` - _(no documentation)_
+- `public void Derive_OppositeAndEqual_IsSymmetric()` - _(no documentation)_
+- `public void Derive_OppositeAndUnequal_IsSmooth()` - _(no documentation)_
+- `public void Derive_SameSide_IsCorner()` - _(no documentation)_
+- `public void Derive_AtAnAngle_IsCorner()` - _(no documentation)_
+- `public void Derive_ZeroLengthHandle_IsCorner()` - _(no documentation)_
+- `public void Derive_FloatingPointNoise_StillCountsAsOnOneLine()` - _(no documentation)_
+- `public void Derive_SlightlyOffTheLine_IsCorner()` - _(no documentation)_
+- `public void Derive_NodeOfTheStoredKind_IgnoresTheStoredType()` - _(no documentation)_
+- `public void Derive_PathNode_GivesTheSameAnswer()` - _(no documentation)_
+- `public void Satisfies_NodesWithAtMostOneHandle_IsTrueForEveryType(NodeType type)` - _(no documentation)_
+- `public void Satisfies_Corner_IsAlwaysTrue()` - _(no documentation)_
+- `public void Satisfies_Smooth_NeedsOppositeHandlesOnOneLine()` - _(no documentation)_
+- `public void Satisfies_Symmetric_AlsoNeedsEqualLengths()` - _(no documentation)_
+- `public void Satisfies_ZeroLengthHandle_OnlyTheLengthsCanDisagree()` - _(no documentation)_
+- `public void Satisfies_PathNode_UsesItsStoredType()` - _(no documentation)_
+
 ## PathEditingTests (class)
 
 `public class PathEditingTests`
 
-Source: `tests/PressToShape.Core.Tests/Shapes/PathEditingTests.cs:10-225`
+Source: `tests/PressToShape.Core.Tests/Shapes/PathEditingTests.cs:10-313`
 
 _(no documentation)_
 
@@ -103,12 +131,119 @@ _(no documentation)_
 - `public void Continue_AtTheStart_ReversesTheOrderAndSwapsTheHandles()` - _(no documentation)_
 - `public void Continue_ClosedPath_Throws()` - _(no documentation)_
 - `public void InsertAndRemove_RotatedPath_KeepEveryOriginalNodeWhereItWas(double rotation)` - _(no documentation)_
+- `public void InsertNode_OnACurve_GivesTheNewNodeTheSmoothType()` - _(no documentation)_
+- `public void InsertNode_OnALine_GivesTheNewNodeTheCornerType()` - _(no documentation)_
+- `public void InsertNode_NewHandlesOnACurve_LieOnTheTangent()` - _(no documentation)_
+- `public void InsertNode_KeepsTheTypesOfTheNeighbors()` - _(no documentation)_
+- `public void InsertNode_NextToASymmetricNode_TheSymmetricNodeBecomesSmoothBecauseItsHandleIsShorter()` - _(no documentation)_
+- `public void Continue_AtTheStart_KeepsTheTypesOfTheReversedNodes()` - _(no documentation)_
+- `public void RemoveNode_KeepsTheTypesOfTheOtherNodes()` - _(no documentation)_
+
+## PathNodeEditingMoveTests (class)
+
+`public class PathNodeEditingMoveTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/PathNodeEditingMoveTests.cs:9-322`
+
+_(no documentation)_
+
+**Members**
+
+- `public void MoveNodes_OneNode_MovesTheAnchorAndBothHandles()` - _(no documentation)_
+- `public void MoveNodes_SeveralNodes_MoveByTheSameDistanceAndOthersStay()` - _(no documentation)_
+- `public void MoveNodes_NoIndicesOrZeroDistance_KeepsThePicture()` - _(no documentation)_
+- `public void MoveNodes_RepeatedIndex_MovesTheNodeOnce()` - _(no documentation)_
+- `public void MoveNodes_RotatedPath_NodesThatWereNotMovedStayWhereTheyAreOnTheScreen(double rotation)` - _(no documentation)_
+- `public void MoveNodes_BadIndex_Throws()` - _(no documentation)_
+- `public void MoveHandle_CornerNode_MovesOnlyThatHandle()` - _(no documentation)_
+- `public void MoveHandle_SmoothNode_TheOtherHandleStaysOppositeWithItsOwnLength()` - _(no documentation)_
+- `public void MoveHandle_SmoothNode_MovingTheInHandleTurnsTheOutHandle()` - _(no documentation)_
+- `public void MoveHandle_SymmetricNode_TheOtherHandleMirrorsIt()` - _(no documentation)_
+- `public void MoveHandle_WithBreakLink_MovesOnlyThatHandleAndMakesACorner()` - _(no documentation)_
+- `public void MoveHandle_OntoItsAnchor_RemovesTheHandleAndMakesACorner(NodeHandleSide side)` - _(no documentation)_
+- `public void MoveHandle_NodeWithOnlyOneHandle_DoesNotCreateTheOther()` - _(no documentation)_
+- `public void MoveHandle_NodeWithoutHandles_GetsTheHandleThatWasMoved()` - _(no documentation)_
+- `public void MoveHandle_SmoothNodeWhoseOtherHandleHasNoLength_StaysUsable()` - _(no documentation)_
+- `public void MoveHandle_RotatedPath_OtherNodesStayWhereTheyAreOnTheScreen(double rotation)` - _(no documentation)_
+- `public void MoveHandle_BadInput_Throws()` - _(no documentation)_
+- `public void RemoveNodes_Several_NeighborsConnect()` - _(no documentation)_
+- `public void RemoveNodes_DownToOneNode_ReturnsNull()` - _(no documentation)_
+- `public void RemoveNodes_DownToTwoNodes_KeepsThePath()` - _(no documentation)_
+- `public void RemoveNodes_NothingToRemove_ReturnsTheSamePath()` - _(no documentation)_
+- `public void RemoveNodes_ClosedPath_KeepsItClosed()` - _(no documentation)_
+- `public void RemoveNodes_RotatedPath_KeepsTheOtherNodesOnTheScreen(double rotation)` - _(no documentation)_
+- `public void RemoveNodes_BadIndex_Throws()` - _(no documentation)_
+- `public void NodePosition_RotatedPath_IsTheTurnedPosition(double rotation)` - _(no documentation)_
+- `public void FromLocal_IsTheInverseOfToLocal()` - _(no documentation)_
+
+## PathNodeEditingSegmentTests (class)
+
+`public class PathNodeEditingSegmentTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/PathNodeEditingSegmentTests.cs:9-321`
+
+_(no documentation)_
+
+**Members**
+
+- `public void BendSegment_PointOnTheCurve_MovesByTheDistance(double t)` - _(no documentation)_
+- `public void BendSegment_NodesDoNotMoveAndOtherSegmentsStay()` - _(no documentation)_
+- `public void BendSegment_StraightSegment_BecomesACurveThroughTheMovedPoint()` - _(no documentation)_
+- `public void BendSegment_ClosingSegmentOfAClosedPath_Works()` - _(no documentation)_
+- `public void BendSegment_SmoothAndSymmetricNodesAtTheEnds_BecomeCorners()` - _(no documentation)_
+- `public void BendSegment_NodeWhoseHandlesStillFitItsType_KeepsTheType()` - _(no documentation)_
+- `public void BendSegment_NearAnEnd_StaysFiniteAndGentle()` - _(no documentation)_
+- `public void BendSegment_NoDistance_ReturnsTheSamePath()` - _(no documentation)_
+- `public void BendSegment_ZeroLengthSegment_GivesNoNaN()` - _(no documentation)_
+- `public void BendSegment_RotatedPath_AnchorsStayWhereTheyAreOnTheScreen(double rotation)` - _(no documentation)_
+- `public void BendSegment_BadInput_Throws()` - _(no documentation)_
+- `public void StraightenSegment_RemovesBothHandlesAndMakesCornersOfTheNodesThatLostOne()` - _(no documentation)_
+- `public void StraightenSegment_NodeThatLostNothing_KeepsItsType()` - _(no documentation)_
+- `public void StraightenSegment_AlreadyStraight_ReturnsTheSamePath()` - _(no documentation)_
+- `public void StraightenSegment_ClosingSegment_RemovesItsHandles()` - _(no documentation)_
+- `public void CurveSegment_StraightSegment_GetsHandlesAtThirdsOnTheLine()` - _(no documentation)_
+- `public void CurveSegment_StraightSegment_DoesNotChangeThePicture()` - _(no documentation)_
+- `public void CurveSegment_AlreadyCurved_ReturnsTheSamePath()` - _(no documentation)_
+- `public void CurveSegment_SegmentWithOneHandle_CountsAsCurvedAndStaysAsItIs()` - _(no documentation)_
+- `public void CurveSegment_NodeWhoseOtherHandleNoLongerFits_BecomesACorner()` - _(no documentation)_
+- `public void CurveSegment_SegmentOfNoLength_ReturnsTheSamePath()` - _(no documentation)_
+- `public void StraightenAndCurve_RotatedPath_AnchorsStayWhereTheyAre(double rotation)` - _(no documentation)_
+- `public void SegmentMethods_BadIndex_Throw()` - _(no documentation)_
+
+## PathNodeEditingTypeTests (class)
+
+`public class PathNodeEditingTypeTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/PathNodeEditingTypeTests.cs:8-259`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SetNodeType_ToCorner_OnlyChangesTheType()` - _(no documentation)_
+- `public void SetNodeType_ToSmoothWithBothHandles_TheOutDirectionWinsAndTheInHandleKeepsItsLength()` - _(no documentation)_
+- `public void SetNodeType_ToSymmetricWithBothHandles_TheInHandleGetsTheOutLength()` - _(no documentation)_
+- `public void SetNodeType_NodeWithOnlyAnInHandle_TheOutHandleFollowsIt()` - _(no documentation)_
+- `public void SetNodeType_NodeWithOnlyAnOutHandle_TheInHandleIsACreatedThirdOfTheWayToThePreviousNodeForSmooth()` - _(no documentation)_
+- `public void SetNodeType_NodeWithoutHandles_GetsHandlesOnTheLineBetweenItsNeighbors(NodeType type)` - _(no documentation)_
+- `public void SetNodeType_SymmetricWithNeighborsAtDifferentDistances_BothHandlesGetTheShorterThird()` - _(no documentation)_
+- `public void SetNodeType_SmoothWithNeighborsAtDifferentDistances_HandlesKeepTheirOwnThird()` - _(no documentation)_
+- `public void SetNodeType_FirstNodeOfAnOpenPath_OnlyGetsTheOutHandle()` - _(no documentation)_
+- `public void SetNodeType_LastNodeOfAnOpenPath_OnlyGetsTheInHandle()` - _(no documentation)_
+- `public void SetNodeType_FirstNodeOfAClosedPath_UsesTheLastNodeAsItsPreviousNeighbor()` - _(no documentation)_
+- `public void SetNodeType_NeighborsOnTheSameSpot_CreatesNoHandleAndNoNaN()` - _(no documentation)_
+- `public void SetNodeType_NeighborOnTheSpotOfTheNode_OnlyTheOtherSideGetsAHandle()` - _(no documentation)_
+- `public void SetNodeType_SeveralNodes_ChangesAllOfThem()` - _(no documentation)_
+- `public void SetNodeType_NoIndices_ReturnsTheSamePath()` - _(no documentation)_
+- `public void SetNodeType_BadInput_Throws()` - _(no documentation)_
+- `public void SetNodeType_RotatedPath_EveryAnchorStaysWhereItIsOnTheScreen(double rotation)` - _(no documentation)_
+- `public void SetNodeType_NodesNotInTheList_AreUntouched()` - _(no documentation)_
 
 ## PathNodeTests (class)
 
 `public class PathNodeTests`
 
-Source: `tests/PressToShape.Core.Tests/Shapes/PathNodeTests.cs:7-78`
+Source: `tests/PressToShape.Core.Tests/Shapes/PathNodeTests.cs:7-116`
 
 _(no documentation)_
 
@@ -122,6 +257,10 @@ _(no documentation)_
 - `public void Equals_SameValues_AreEqual()` - _(no documentation)_
 - `public void DocumentNode_ValidAndInvalidValues_FollowTheSameRules()` - _(no documentation)_
 - `public void FillRule_Default_IsNonZero()` - _(no documentation)_
+- `public void Type_NotGiven_IsCorner()` - _(no documentation)_
+- `public void Type_Given_IsKept(NodeType type)` - _(no documentation)_
+- `public void Type_NotDefined_Throws()` - _(no documentation)_
+- `public void Equals_NodesThatDifferOnlyInType_AreNotEqual()` - _(no documentation)_
 
 ## PathShapeGeometryTests (class)
 
@@ -146,6 +285,25 @@ _(no documentation)_
 - `public void Contains_FilledOpenPath_IsFilledAcrossTheGapButTheClosingLineIsNotAnOutline()` - _(no documentation)_
 - `public void Contains_RotatedPath_UsesTheTurnedPath()` - _(no documentation)_
 - `public void Contains_CurvedClosedPath_FollowsTheCurve()` - _(no documentation)_
+
+## PathShapeNodeTypeTests (class)
+
+`public class PathShapeNodeTypeTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/PathShapeNodeTypeTests.cs:7-125`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Create_NodesWithTypes_StoresTheTypes()` - _(no documentation)_
+- `public void ToDocumentNodes_AfterCreate_ReturnsTheTypes()` - _(no documentation)_
+- `public void With_ResizedBox_KeepsTheTypes()` - _(no documentation)_
+- `public void Rebuilt_WithTypedNodes_KeepsTheTypesAndTheScreenPositions(double rotation)` - _(no documentation)_
+- `public void Rebuilt_ChangedNodeTypes_AreTheNewOnes()` - _(no documentation)_
+- `public void ToLocal_PositionOnTheScreen_IsTheInverseOfTheRotation(double rotation)` - _(no documentation)_
+- `public void ToLocal_WithoutRotation_ChangesNothing()` - _(no documentation)_
+- `public void ToLocalDelta_QuarterTurn_TurnsTheDistanceBack()` - _(no documentation)_
 
 ## PathShapeTests (class)
 
@@ -198,6 +356,25 @@ _(no documentation)_
 - `public void Id_Empty_Throws()` - _(no documentation)_
 - `public void Appearance_Null_Throws()` - _(no documentation)_
 - `public void Contains_Point_IncludesEdges(double x, double y, bool expected)` - _(no documentation)_
+
+## ShapeConversionTests (class)
+
+`public class ShapeConversionTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/ShapeConversionTests.cs:8-174`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ToPath_Rectangle_KeepsIdNameFlagsBoxRotationAndAppearance()` - _(no documentation)_
+- `public void ToPath_Ellipse_KeepsIdNameFlagsBoxRotationAndAppearance()` - _(no documentation)_
+- `public void ToPath_Rectangle_HasFourCornerNodesInOrder()` - _(no documentation)_
+- `public void ToPath_Ellipse_HasFourSymmetricNodesWithTheCircleHandles()` - _(no documentation)_
+- `public void ToPath_Rectangle_ContainsTheSamePointsAsTheRectangle(double rotation)` - _(no documentation)_
+- `public void ToPath_Ellipse_ContainsTheSamePointsAsTheEllipseWithinTheApproximation(double rotation)` - _(no documentation)_
+- `public void ToPath_ZeroSizeShapes_GiveNoNaN()` - _(no documentation)_
+- `public void ToPath_PathGroupAndNull_AreNotConverted()` - _(no documentation)_
 
 ## ShapeRotationTests (class)
 

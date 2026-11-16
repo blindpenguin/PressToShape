@@ -55,6 +55,12 @@ internal static class HistoryStepNames
         HistoryStepType.AddPathNode => N("Add path point"),
         HistoryStepType.DeletePathNode => N("Delete path point"),
         HistoryStepType.ChangePath => N("Change path"),
+        HistoryStepType.MovePathPoints => N("Move path points"),
+        HistoryStepType.MovePathHandle => N("Move handle"),
+        HistoryStepType.ChangeNodeType => N("Change node type"),
+        HistoryStepType.BendSegment => N("Bend segment"),
+        HistoryStepType.ChangeSegment => N("Change segment"),
+        HistoryStepType.DeletePathPoints => N("Delete path points"),
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown history step type."),
     };
 }

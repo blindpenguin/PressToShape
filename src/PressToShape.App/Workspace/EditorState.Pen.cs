@@ -11,10 +11,11 @@ internal sealed partial class EditorState
     /// <summary>The path that the Pen is continuing. The canvas leaves it out, because the draft shows it with its new nodes. <c>null</c> when none is.</summary>
     [ObservableProperty] public partial Guid? PenContinuedId { get; set; }
 
-    // What the Pen shows only makes sense for the Pen, so it goes when another tool is chosen.
+    // What the Pen shows only makes sense for the Pen, and the selected nodes for the node tools, so they go when another tool is chosen.
     partial void OnActiveToolChanged(Tool value)
     {
         ResetPen();
+        ClearNodeSelection();
     }
 
     private void ResetPen()

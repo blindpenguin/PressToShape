@@ -62,7 +62,8 @@ public sealed partial record PathShape : Shape
                 node.InX is { } inX ? Fraction(inX, box.X, box.Width) : null,
                 node.InY is { } inY ? Fraction(inY, box.Y, box.Height) : null,
                 node.OutX is { } outX ? Fraction(outX, box.X, box.Width) : null,
-                node.OutY is { } outY ? Fraction(outY, box.Y, box.Height) : null));
+                node.OutY is { } outY ? Fraction(outY, box.Y, box.Height) : null,
+                node.Type));
         }
 
         return new PathShape
@@ -89,7 +90,8 @@ public sealed partial record PathShape : Shape
                 node.InX is { } inX ? X + inX * Width : null,
                 node.InY is { } inY ? Y + inY * Height : null,
                 node.OutX is { } outX ? X + outX * Width : null,
-                node.OutY is { } outY ? Y + outY * Height : null));
+                node.OutY is { } outY ? Y + outY * Height : null,
+                node.Type));
         }
 
         return result;

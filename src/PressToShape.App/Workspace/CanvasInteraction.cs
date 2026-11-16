@@ -48,6 +48,9 @@ internal sealed partial class CanvasInteraction
         Marquee,
         Resizing,
         Rotating,
+        MovingNodes,
+        MovingHandle,
+        Bending,
     }
 
     /// <summary>Whether a drag is in progress.</summary>
@@ -94,6 +97,10 @@ internal sealed partial class CanvasInteraction
             case Tool.Pen:
                 PenPressed(x, y, inputType);
                 break;
+            case Tool.DirectSelect:
+            case Tool.Node:
+                PressWithNodeTool(x, y, shift, inputType);
+                break;
             case Tool.Select:
                 PressWithSelectTool(x, y, shift, inputType == InputPointerType.Touch ? TouchGrabSize : SelectionGeometry.GrabSize);
                 break;
@@ -122,6 +129,12 @@ internal sealed partial class CanvasInteraction
             case DragType.Marquee:
                 _state.SelectionBox = BoxTo(x, y);
                 break;
+            case DragType.MovingNodes:
+            case DragType.MovingHandle:
+            case DragType.Bending:
+                _nodeDragMoved |= x != _startX || y != _startY;
+                ShowNodeDrag(x, y, shift, alt);
+                break;
             default:
                 Show(TransformedShapes(x, y, shift, alt));
                 break;
@@ -137,8 +150,16 @@ internal sealed partial class CanvasInteraction
             return;
         }
 
+        NodeToolReleased();
         if (!ContinueDrag())
         {
+            return;
+        }
+
+        if (_drag is DragType.MovingNodes or DragType.MovingHandle or DragType.Bending)
+        {
+            ShowNodeDrag(x, y, shift, alt);
+            EndDrag();
             return;
         }
 
@@ -160,8 +181,17 @@ internal sealed partial class CanvasInteraction
         if (_drag == DragType.Marquee)
         {
             var box = BoxTo(x, y);
+            var nodeBox = _nodeMarquee;
             EndDrag();
-            SelectInBox(box);
+            if (nodeBox)
+            {
+                SelectNodesInBox(box);
+            }
+            else
+            {
+                SelectInBox(box);
+            }
+
             return;
         }
 
@@ -191,7 +221,7 @@ internal sealed partial class CanvasInteraction
     public void Abort()
     {
         AbortPenPress();
-        if (_drag is DragType.Moving or DragType.Resizing or DragType.Rotating
+        if (_drag is DragType.Moving or DragType.Resizing or DragType.Rotating or DragType.MovingNodes or DragType.MovingHandle or DragType.Bending
             && _startDocument is { } original
             && !ReferenceEquals(original, _state.Document))
         {
@@ -201,9 +231,20 @@ internal sealed partial class CanvasInteraction
         EndDrag();
     }
 
-    /// <summary>Removes all selected shapes from the document as one step. Does nothing without a selection.</summary>
+    /// <summary>
+    /// Removes all selected shapes from the document as one step. With Direct Select or the Node tool and selected nodes it removes the
+    /// nodes instead (see <see cref="NodeEditor.DeleteSelected"/>). Does nothing without a selection.
+    /// </summary>
     public void DeleteSelection()
     {
+        // With a node tool and selected nodes, Delete removes the nodes instead of the shape.
+        if (IsNodeTool && _state.HasSelectedNodes && Nodes.HasEditableNodes)
+        {
+            Cancel();
+            Nodes.DeleteSelected();
+            return;
+        }
+
         var shapes = SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds);
         if (shapes.Count == 0)
         {
@@ -340,9 +381,13 @@ internal sealed partial class CanvasInteraction
             DragType.Moving => HistoryStepType.MoveShape,
             DragType.Resizing => HistoryStepType.ResizeShapes,
             DragType.Rotating => HistoryStepType.RotateShapes,
+            DragType.MovingNodes => HistoryStepType.MovePathPoints,
+            DragType.MovingHandle => HistoryStepType.MovePathHandle,
+            DragType.Bending => HistoryStepType.BendSegment,
             _ => (HistoryStepType?)null,
         };
         _drag = DragType.None;
+        _nodeMarquee = false;
         _state.Draft = null;
         _state.SelectionBox = null;
         _startShapes = [];

@@ -128,4 +128,22 @@ public enum HistoryStepType
 
     /// <summary>A path was opened or closed, or its fill rule was changed.</summary>
     ChangePath,
+
+    /// <summary>Points of a path were moved, with a drag, the arrow keys or typed numbers.</summary>
+    MovePathPoints,
+
+    /// <summary>A handle of a path point was moved.</summary>
+    MovePathHandle,
+
+    /// <summary>The type of path points was changed (corner, smooth, symmetric).</summary>
+    ChangeNodeType,
+
+    /// <summary>A segment of a path was bent by dragging it.</summary>
+    BendSegment,
+
+    /// <summary>A segment of a path was made straight or curved.</summary>
+    ChangeSegment,
+
+    /// <summary>Points were deleted from a path.</summary>
+    DeletePathPoints,
 }

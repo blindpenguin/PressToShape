@@ -29,6 +29,27 @@ _(no documentation)_
 - `public void Read_NewerVersionThanKnown_Fails()` - _(no documentation)_
 - `public void Read_NullBytesOrArbitraryText_NeverThrows()` - _(no documentation)_
 
+## ProjectFileNodeTypeTests (class)
+
+`public class ProjectFileNodeTypeTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/ProjectFileNodeTypeTests.cs:10-161`
+
+_(no documentation)_
+
+**Members**
+
+- `public void WriteThenRead_EachType_IsKept()` - _(no documentation)_
+- `public void WriteThenRead_CornerWithHandlesOnOneLine_StaysACorner()` - _(no documentation)_
+- `public void WriteThenRead_SmoothNodeThatWouldDeriveAsSymmetric_StaysSmooth()` - _(no documentation)_
+- `public void Write_TypeThatEqualsTheDerivedType_IsNotWritten()` - _(no documentation)_
+- `public void Read_FileWithoutTypes_GetsTheTypesThatTheHandlesGive()` - _(no documentation)_
+- `public void Read_NodeWithAType_UsesIt(string text, NodeType expected)` - _(no documentation)_
+- `public void Read_UnknownType_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_TypeThatIsNotText_Fails(string entry)` - _(no documentation)_
+- `public void Read_UpperCaseType_IsUnknown()` - _(no documentation)_
+- `public void WriteThenRead_PathInsideAGroup_KeepsItsTypes()` - _(no documentation)_
+
 ## ProjectFilePaletteTests (class)
 
 `public class ProjectFilePaletteTests`

@@ -114,6 +114,39 @@ _(no documentation)_
 - `public void Tick_NothingWatched_DoesNothing()` - _(no documentation)_
 - `public void Tick_OnEmptyCanvas_OpensTheEmptyCanvasRing()` - _(no documentation)_
 
+## CanvasAreaViewModelNodeTests (class)
+
+`public class CanvasAreaViewModelNodeTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelNodeTests.cs:12-322`
+
+_(no documentation)_
+
+**Members**
+
+- `public void DoubleClick_OnACornerNodeWithTheNodeTool_MakesItSmooth()` - _(no documentation)_
+- `public void DoubleClick_AgainOnTheNode_MakesItACorner()` - _(no documentation)_
+- `public void DoubleClick_OnASymmetricNode_MakesItACorner()` - _(no documentation)_
+- `public void DoubleClick_AwayFromAnyNode_ChangesNothing()` - _(no documentation)_
+- `public void DoubleClick_WithDirectSelect_IsAPlainPressAndDoesNotConvert()` - _(no documentation)_
+- `public void DoubleClick_OnACornerOfARectangle_ConvertsItAndMakesTheNodeSmooth()` - _(no documentation)_
+- `public void DoubleTap_OnANodeWithTheNodeTool_ChangesItsType()` - _(no documentation)_
+- `public void Delete_WithSelectedNodes_RemovesTheNodesAsOneStep()` - _(no documentation)_
+- `public void Delete_AllNodes_DeletesTheShape()` - _(no documentation)_
+- `public void Delete_WithoutSelectedNodes_DeletesTheShapeAsBefore()` - _(no documentation)_
+- `public void Delete_WithTheSelectTool_StillDeletesTheShape()` - _(no documentation)_
+- `public void ArrowKeys_WithSelectedNodes_MoveTheNodesNotTheShape()` - _(no documentation)_
+- `public void ArrowKeys_Left_And_Up_MoveTheOtherWay()` - _(no documentation)_
+- `public void ArrowKeys_Repeated_AreOneStep()` - _(no documentation)_
+- `public void ArrowKeys_WithoutSelectedNodes_MoveTheShapeAsBefore()` - _(no documentation)_
+- `public void ArrowKeys_WithTheSelectTool_MoveTheShapeEvenIfNodesWereSelected()` - _(no documentation)_
+- `public void Cursor_OverANodeWithANodeTool_IsTheOpenHand()` - _(no documentation)_
+- `public void Cursor_AwayFromEverything_IsTheArrow()` - _(no documentation)_
+- `public void Cursor_OverASegmentIsAGrabTargetForTheNodeToolButNotForDirectSelect()` - _(no documentation)_
+- `public void Cursor_WhileDraggingANode_IsTheClosedHand_AndTheOpenHandAfterwards()` - _(no documentation)_
+- `public void Cursor_ForOtherTools_IsUnchanged()` - _(no documentation)_
+- `public void Cursor_WhenThePointerLeaves_IsTheArrowAgain()` - _(no documentation)_
+
 ## CanvasAreaViewModelPenTests (class)
 
 `public class CanvasAreaViewModelPenTests`
@@ -338,11 +371,87 @@ _(no documentation)_
 - `public void DeleteSelection_Group_RemovesTheWholeGroupAsOneStep()` - _(no documentation)_
 - `public void Escape_InAnEnteredGroup_LeavesIt()` - _(no documentation)_
 
+## CanvasInteractionNodeDragTests (class)
+
+`public class CanvasInteractionNodeDragTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionNodeDragTests.cs:12-519`
+
+_(no documentation)_
+
+**Members**
+
+- `public void DragANode_MovesItWithItsHandlesAsOneStep()` - _(no documentation)_
+- `public void DragANode_ThenUndo_PutsItBack()` - _(no documentation)_
+- `public void DragANode_ThatIsNotSelected_MakesItTheOnlySelectedNode()` - _(no documentation)_
+- `public void DragOneOfSeveralSelectedNodes_MovesAllOfThemByTheSameDistance()` - _(no documentation)_
+- `public void Shift_LimitsTheMoveToTheLargerAxis()` - _(no documentation)_
+- `public void DragBackToTheStart_MakesNoStep()` - _(no documentation)_
+- `public void ManySmallMoves_DoNotDrift()` - _(no documentation)_
+- `public void ShiftClickOnANode_DoesNotStartADrag()` - _(no documentation)_
+- `public void DragANode_OfARotatedPath_MovesItByTheDistanceOnTheScreen(double rotation)` - _(no documentation)_
+- `public void DragAHandle_OfASymmetricNode_MirrorsTheOtherHandle()` - _(no documentation)_
+- `public void DragAHandle_OfASmoothNode_TheOtherKeepsItsLength()` - _(no documentation)_
+- `public void DragAHandle_OfACornerNode_MovesOnlyThatHandle()` - _(no documentation)_
+- `public void DragAHandle_WithAlt_MovesOnlyThatHandleAndMakesACorner()` - _(no documentation)_
+- `public void DragAHandle_ToWithinTwoPixelsOfItsAnchor_RemovesIt()` - _(no documentation)_
+- `public void DragAHandle_KeepsTheDistanceBetweenThePointerAndTheHandle()` - _(no documentation)_
+- `public void DragTheHandleOfANeighborTowardASelectedNode_MovesIt()` - _(no documentation)_
+- `public void DragAHandle_OfARotatedPath_FollowsThePointerOnTheScreen()` - _(no documentation)_
+- `public void DragASegment_WithTheNodeTool_BendsItSoThePointFollows()` - _(no documentation)_
+- `public void DragASegment_SelectsItsTwoNodes()` - _(no documentation)_
+- `public void DragASegment_ClosingSegmentOfAClosedPath_Bends()` - _(no documentation)_
+- `public void DragASegment_WithDirectSelect_DoesNotBend()` - _(no documentation)_
+- `public void DragACornerOfARectangle_ConvertsItToAPathInTheSameStep()` - _(no documentation)_
+- `public void ClickingACornerOfARectangle_WithoutMoving_DoesNotConvertIt()` - _(no documentation)_
+- `public void DragANodeOfAnEllipse_ConvertsItAndMovesTheNode()` - _(no documentation)_
+- `public void Abort_DuringANodeDrag_PutsTheDocumentBackAndMakesNoStep()` - _(no documentation)_
+- `public void Abort_DuringAHandleDragAndABend_PutsTheDocumentBack()` - _(no documentation)_
+- `public void ChangingTheToolDuringADrag_EndsItWithoutAnException()` - _(no documentation)_
+- `public void LockedPath_CannotBeDragged()` - _(no documentation)_
+- `public void ClickingOneOfSeveralSelectedNodes_WithoutMoving_StillReducesTheSelection()` - _(no documentation)_
+- `public void DraggingOneOfSeveralSelectedNodes_KeepsTheSelectionAfterTheRelease()` - _(no documentation)_
+
+## CanvasInteractionNodeSelectTests (class)
+
+`public class CanvasInteractionNodeSelectTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionNodeSelectTests.cs:11-365`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Click_OnANode_SelectsOnlyThatNode(bool nodeTool)` - _(no documentation)_
+- `public void Click_OnAnotherNode_ReplacesTheSelection()` - _(no documentation)_
+- `public void ShiftClick_AddsAndRemovesNodes()` - _(no documentation)_
+- `public void Click_OnOneOfSeveralSelectedNodesWithoutAMove_SelectsOnlyThatNode()` - _(no documentation)_
+- `public void Press_OnOneOfSeveralSelectedNodes_KeepsTheSelectionUntilTheButtonGoesUp()` - _(no documentation)_
+- `public void Click_OnANodeOfAnUnselectedPath_DoesNotSelectNodes()` - _(no documentation)_
+- `public void Click_InsideAShape_PicksItAndClearsTheNodes()` - _(no documentation)_
+- `public void Click_OnAShapeInsideAGroup_PicksTheShapeWithoutEnteringTheGroup(bool nodeTool)` - _(no documentation)_
+- `public void Click_OnAShapeInsideALockedGroup_DoesNothing()` - _(no documentation)_
+- `public void ShiftClick_OnAnotherShape_AddsItToTheSelection()` - _(no documentation)_
+- `public void Drag_OnAShape_DoesNotMoveIt()` - _(no documentation)_
+- `public void RubberBand_AroundNodesOfTheSelectedPath_SelectsThem()` - _(no documentation)_
+- `public void RubberBand_WithShift_AddsToTheSelectedNodes()` - _(no documentation)_
+- `public void RubberBand_ThatStaysTiny_ClearsTheNodeSelection()` - _(no documentation)_
+- `public void RubberBand_WithNothingSelected_SelectsShapes()` - _(no documentation)_
+- `public void SelectingNodes_OfSeveralSelectedPaths_WorksForBoth()` - _(no documentation)_
+- `public void HiddenOrLockedPath_ShowsAndSelectsNoNodes()` - _(no documentation)_
+- `public void Rectangle_ShowsItsFourCornersAsNodes_AndStaysARectangle()` - _(no documentation)_
+- `public void Ellipse_ShowsItsFourNodes()` - _(no documentation)_
+- `public void PathInsideASelectedGroup_ShowsItsNodes()` - _(no documentation)_
+- `public void Touch_UsesTheLargerGrabArea()` - _(no documentation)_
+- `public void Zoom_ChangesTheGrabDistanceInDocumentUnits()` - _(no documentation)_
+- `public void SelectTool_AndPen_AreNotAffected()` - _(no documentation)_
+- `public void ChangingTheShapeSelection_ClearsTheNodeSelection()` - _(no documentation)_
+
 ## CanvasInteractionPenEditTests (class)
 
 `public class CanvasInteractionPenEditTests`
 
-Source: `tests/PressToShape.App.Tests/CanvasInteractionPenEditTests.cs:11-358`
+Source: `tests/PressToShape.App.Tests/CanvasInteractionPenEditTests.cs:11-378`
 
 _(no documentation)_
 
@@ -370,6 +479,7 @@ _(no documentation)_
 - `public void Continue_RotatedPath_BakesTheRotationIntoTheNodesAndKeepsThemOnScreen()` - _(no documentation)_
 - `public void Add_OnARotatedPath_KeepsTheRotation()` - _(no documentation)_
 - `public void Add_ThenUndo_RestoresThePath()` - _(no documentation)_
+- `public void Continue_RotatedPathWithTypedNodes_KeepsTheTypes()` - _(no documentation)_
 
 ## CanvasInteractionPenTests (class)
 
@@ -788,6 +898,22 @@ _(no documentation)_
 - `public void CutDuplicateDeleteAndSelectCommands_DoTheirWork()` - _(no documentation)_
 - `public void TheEditMenuItems_UseTheShellCommands()` - _(no documentation)_
 
+## DocumentCanvasControlNodeTests (class)
+
+`public class DocumentCanvasControlNodeTests`
+
+Source: `tests/PressToShape.App.Tests/DocumentCanvasControlNodeTests.cs:18-112`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Render_OverlayWithSelectedAndUnselectedNodesAndHandles_DoesNotThrow()` - _(no documentation)_
+- `public void Render_TouchSizedHandles_DoesNotThrow()` - _(no documentation)_
+- `public void Render_EmptyOrMissingOverlay_DoesNotThrow()` - _(no documentation)_
+- `public void Render_OverlayWithoutBrushes_DoesNotThrow()` - _(no documentation)_
+- `public void Binding_DeliversTheNodeOverlayOfTheViewModelToTheControl()` - _(no documentation)_
+
 ## DocumentCanvasControlPathTests (class)
 
 `public class DocumentCanvasControlPathTests`
@@ -978,6 +1104,33 @@ _(no documentation)_
 - `public void Selection_GroupGetsHidden_LeavesTheSelection()` - _(no documentation)_
 - `public void Selection_ChildSelectedThenGroupLocked_LeavesTheSelection()` - _(no documentation)_
 - `public void Selection_AllMembersRemoved_GroupDisappearsFromTheSelection()` - _(no documentation)_
+
+## EditorStateNodeTests (class)
+
+`public class EditorStateNodeTests`
+
+Source: `tests/PressToShape.App.Tests/EditorStateNodeTests.cs:11-218`
+
+_(no documentation)_
+
+**Members**
+
+- `public void NewState_HasNoSelectedNodes()` - _(no documentation)_
+- `public void SetNodeSelection_Nodes_AreSelectedOnceEach()` - _(no documentation)_
+- `public void ToggleNode_TwiceAddsThenRemoves()` - _(no documentation)_
+- `public void ClearNodeSelection_RemovesEveryNode()` - _(no documentation)_
+- `public void Changes_RaisePropertyChanged()` - _(no documentation)_
+- `public void SetNodeSelection_SameNodes_RaisesNothing()` - _(no documentation)_
+- `public void ChangingTheShapeSelection_ClearsTheNodes()` - _(no documentation)_
+- `public void SelectingAnotherShape_ClearsTheNodes()` - _(no documentation)_
+- `public void ChangingTheTool_ClearsTheNodes()` - _(no documentation)_
+- `public void SettingTheSameTool_KeepsTheNodes()` - _(no documentation)_
+- `public void ReplaceDocument_ClearsTheNodes()` - _(no documentation)_
+- `public void AnOrdinaryEdit_KeepsTheNodes()` - _(no documentation)_
+- `public void UndoOfADeletedNode_DropsTheReferenceToTheNodeThatIsGone()` - _(no documentation)_
+- `public void UndoOfADeletedShape_DropsTheReferenceToTheShape()` - _(no documentation)_
+- `public void ARectangleAllowsTheFourCornerIndices()` - _(no documentation)_
+- `public void ANodeIndexBeyondThePathIsDroppedWhenTheDocumentChanges()` - _(no documentation)_
 
 ## EditorStatePenTests (class)
 
@@ -1321,7 +1474,7 @@ The application of the headless UI tests: the real theme and control styles, but
 
 `public class HistoryViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-239`
+Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-240`
 
 _(no documentation)_
 
@@ -1418,7 +1571,7 @@ _(no documentation)_
 
 `public class LayersViewModelPathTests`
 
-Source: `tests/PressToShape.App.Tests/LayersViewModelPathTests.cs:12-90`
+Source: `tests/PressToShape.App.Tests/LayersViewModelPathTests.cs:13-123`
 
 _(no documentation)_
 
@@ -1430,6 +1583,8 @@ _(no documentation)_
 - `public void Rows_PathName_IsTranslatedAndFollowsALanguageChange()` - _(no documentation)_
 - `public void Rows_PathInsideAGroup_IsListedBelowTheGroup()` - _(no documentation)_
 - `public void Rows_RectangleAndEllipse_AreNotMistakenForPaths()` - _(no documentation)_
+- `public void Rows_ARectangleOrEllipseThatBecomesAPath_GetsThePathTypeAndIcon(bool ellipse)` - _(no documentation)_
+- `public void Rows_APathThatIsUndoneToARectangle_GetsTheRectangleTypeAgain()` - _(no documentation)_
 
 ## LayersViewModelTests (class)
 
@@ -1580,6 +1735,7 @@ A clock that only moves when a test says so. One timestamp tick is one milliseco
 **Relationships**
 
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
+- Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
 
 ## MemorySettingsStore (class)
 
@@ -1701,6 +1857,116 @@ _(no documentation)_
 - `public void ForError_HasASingleDefaultAndCancelOkButton()` - _(no documentation)_
 - `public void ForError_ChoosingOk_RaisesCloseRequested()` - _(no documentation)_
 - `public void Factories_NullArguments_Throw()` - _(no documentation)_
+
+## NodeEditorTests (class)
+
+`public class NodeEditorTests`
+
+Source: `tests/PressToShape.App.Tests/NodeEditorTests.cs:12-532`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SetType_SelectedNode_ChangesItAsOneStep()` - _(no documentation)_
+- `public void SetType_KeepsTheNodeSelection()` - _(no documentation)_
+- `public void SetType_OnARectangleCorner_ConvertsItToAPathInTheSameStep()` - _(no documentation)_
+- `public void SetType_ThatChangesNothingOnARectangle_DoesNotConvertIt()` - _(no documentation)_
+- `public void SetType_OnSeveralPaths_ChangesAllOfThemInOneStep()` - _(no documentation)_
+- `public void SetType_RotatedPath_KeepsEveryAnchorOnTheScreen(double rotation)` - _(no documentation)_
+- `public void SetType_ThenUndo_RestoresThePath()` - _(no documentation)_
+- `public void CanChangeSegment_TwoNeighboringNodes_IsTrue()` - _(no documentation)_
+- `public void CanChangeSegment_OneNodeNonNeighborsOrThreeNodes_IsFalse()` - _(no documentation)_
+- `public void CanChangeSegment_FirstAndLastNodeOfAClosedPath_IsTrue()` - _(no documentation)_
+- `public void StraightenSelectedSegment_RemovesItsHandlesAsOneStep()` - _(no documentation)_
+- `public void CurveSelectedSegment_GivesAStraightSegmentHandlesAsOneStep()` - _(no documentation)_
+- `public void SegmentCommands_WithoutASelectedSegment_DoNothing()` - _(no documentation)_
+- `public void CurveSelectedSegment_OnAStraightRectangleSide_ConvertsAndCurvesInOneStep()` - _(no documentation)_
+- `public void DeleteSelected_RemovesTheNodesAsOneStepAndClearsTheNodeSelection()` - _(no documentation)_
+- `public void DeleteSelected_DownToOneNode_DeletesTheShape()` - _(no documentation)_
+- `public void DeleteSelected_OnARectangleCorner_LeavesATrianglePath()` - _(no documentation)_
+- `public void DeleteSelected_ThenUndo_BringsTheNodesBack()` - _(no documentation)_
+- `public void Nudge_MovesTheSelectedNodesOnTheScreen()` - _(no documentation)_
+- `public void Nudge_RotatedPath_MovesTheNodeByTheDistanceOnTheScreen(double rotation)` - _(no documentation)_
+- `public void Nudge_Repeated_IsOneStep()` - _(no documentation)_
+- `public void Nudge_AfterAnotherEdit_StartsANewStep()` - _(no documentation)_
+- `public void Nudge_NothingSelectedOrNoDistance_DoesNothing()` - _(no documentation)_
+- `public void Nudge_OnAnEllipse_ConvertsItAndMovesTheNode()` - _(no documentation)_
+- `public void SetPosition_OneNode_MovesItToThePositionOnTheScreen()` - _(no documentation)_
+- `public void SetPosition_OneCoordinateOnly_KeepsTheOther()` - _(no documentation)_
+- `public void SetPosition_NoneOrSeveralNodes_DoesNothing()` - _(no documentation)_
+- `public void LockedOrHiddenShapes_AreNotEdited()` - _(no documentation)_
+- `public void Operations_WithoutSelectedNodes_DoNothing()` - _(no documentation)_
+- `public void TypeOfSelection_SameMixedAndNone()` - _(no documentation)_
+- `public void SingleNodeAndItsPosition_OnlyForExactlyOneNode()` - _(no documentation)_
+- `public void SelectedNodeIndicesBeyondThePath_AreIgnored()` - _(no documentation)_
+
+## NodeHitsTests (class)
+
+`public class NodeHitsTests`
+
+Source: `tests/PressToShape.App.Tests/NodeHitsTests.cs:11-334`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Find_NearANode_HitsTheNode()` - _(no documentation)_
+- `public void Find_TooFarFromEverything_IsAMiss()` - _(no documentation)_
+- `public void Find_HandleOfAnUnselectedNode_IsNotHit()` - _(no documentation)_
+- `public void Find_HandleOfASelectedNode_IsHitWithItsSide()` - _(no documentation)_
+- `public void Find_HandleOfANeighborTowardASelectedNode_IsHit()` - _(no documentation)_
+- `public void Find_HandleOfANeighborAwayFromTheSelectedNode_IsNotHit()` - _(no documentation)_
+- `public void Find_HandleOnTopOfANode_WinsOverTheNode()` - _(no documentation)_
+- `public void Find_HandlesOutrankNodesEvenWhenTheNodeIsNearer()` - _(no documentation)_
+- `public void Find_Segments_AreOnlyHitWhenAsked()` - _(no documentation)_
+- `public void Find_SegmentHit_GivesTheCurveParameter()` - _(no documentation)_
+- `public void Find_NodeBeatsASegmentNearIt()` - _(no documentation)_
+- `public void Find_CurvedSegment_IsHitOnTheCurve()` - _(no documentation)_
+- `public void Find_Tolerance_DecidesTheDistance(double distance, bool expected)` - _(no documentation)_
+- `public void Find_ToleranceIsInDocumentUnits_SoAZoomedOutViewReachesFarther()` - _(no documentation)_
+- `public void Find_FingerRadius_IsLargerThanTheMouseRadius()` - _(no documentation)_
+- `public void Find_RotatedPathAsOnScreen_HitsWhereTheNodeIsOnTheScreen()` - _(no documentation)_
+- `public void Find_SeveralPaths_TheTopmostWinsATie()` - _(no documentation)_
+- `public void Find_SeveralPaths_TheNearestNodeWinsOverTheTopmost()` - _(no documentation)_
+- `public void Find_SelectedNodesOfAnotherShape_ShowNoHandlesHere()` - _(no documentation)_
+- `public void Find_RectangleAsEditablePath_HasFourCornerNodes()` - _(no documentation)_
+- `public void Find_NothingGiven_IsAMiss()` - _(no documentation)_
+- `public void VisibleHandles_OfASelectedNode_AreItsOwnAndTheNeighborsTowardIt()` - _(no documentation)_
+- `public void VisibleHandles_OfTheFirstNodeOfAnOpenPath_HaveNoPreviousNeighbor()` - _(no documentation)_
+- `public void VisibleHandles_OfAClosedPath_WrapAround()` - _(no documentation)_
+- `public void VisibleHandles_NothingSelected_IsEmpty()` - _(no documentation)_
+- `public void AsOnScreen_KeepsIdAndTypes_AndReturnsTheSamePathWithoutRotation()` - _(no documentation)_
+- `public void EditablePath_For_PathRectangleEllipseAndOthers()` - _(no documentation)_
+
+## NodeOverlayBuilderTests (class)
+
+`public class NodeOverlayBuilderTests`
+
+Source: `tests/PressToShape.App.Tests/NodeOverlayBuilderTests.cs:14-269`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Build_OtherTools_ReturnsNull(string toolName)` - _(no documentation)_
+- `public void Build_NothingSelected_ReturnsNull()` - _(no documentation)_
+- `public void Build_SelectedPath_ShowsEveryNodeAndNoHandlesWithoutSelectedNodes(string toolName)` - _(no documentation)_
+- `public void Build_SelectedNode_IsMarkedAndShowsItsHandlesAndTheNeighborHandlesTowardIt()` - _(no documentation)_
+- `public void Build_SelectedEndNode_ShowsOnlyTheHandlesOfItsSegment()` - _(no documentation)_
+- `public void Build_RotatedPath_IsInScreenPixelsWhereItAppears()` - _(no documentation)_
+- `public void Build_ZoomAndOrigin_ConvertDocumentUnitsToScreenPixels()` - _(no documentation)_
+- `public void Build_Handles_FollowZoomAndOriginToo()` - _(no documentation)_
+- `public void Build_Rectangle_HasFourCornerNodes()` - _(no documentation)_
+- `public void Build_Ellipse_HasFourNodesAndShowsHandlesWhenSelected()` - _(no documentation)_
+- `public void Build_SeveralSelectedShapes_ListsTheNodesShapeByShape()` - _(no documentation)_
+- `public void Build_PathInsideASelectedGroup_IsShown()` - _(no documentation)_
+- `public void Build_HiddenAndLockedShapes_ShowNothing()` - _(no documentation)_
+- `public void Build_GroupWithOnlyARectangle_ShowsItsFourCorners()` - _(no documentation)_
+- `public void Build_NodesOfAnotherShape_DoNotMarkTheseNodes()` - _(no documentation)_
+- `public void NodeOverlay_NodeTool_ShowsTheNodes_AndOtherToolsNothing()` - _(no documentation)_
+- `public void NodeOverlay_RaisesPropertyChanged_OnNodeSelectionToolDocumentAndZoom()` - _(no documentation)_
+- `public void NodeOverlay_InScreenPixelsOfTheCanvas_UsesTheViewModelOrigin()` - _(no documentation)_
 
 ## NumberFieldViewModelTests (class)
 
@@ -1901,7 +2167,7 @@ _(no documentation)_
 
 `public class PenDrawingTests`
 
-Source: `tests/PressToShape.App.Tests/PenDrawingTests.cs:8-389`
+Source: `tests/PressToShape.App.Tests/PenDrawingTests.cs:8-460`
 
 _(no documentation)_
 
@@ -1936,6 +2202,11 @@ _(no documentation)_
 - `public void AbortPress_AfterAPress_TakesBackTheNodeThatWasAdded()` - _(no documentation)_
 - `public void AbortPress_WithoutAPress_DoesNothing()` - _(no documentation)_
 - `public void PreviewShape_PointerExactlyOnTheLastNode_IsNull()` - _(no documentation)_
+- `public void Press_AddsACornerNode()` - _(no documentation)_
+- `public void Drag_BeyondTheThreshold_MakesASymmetricNode()` - _(no documentation)_
+- `public void Drag_BackUnderTheThreshold_IsACornerAgain()` - _(no documentation)_
+- `public void Finish_KeepsTheTypesOfTheNodes()` - _(no documentation)_
+- `public void Begin_WithTypedNodes_KeepsTheirTypesThroughFinish()` - _(no documentation)_
 
 ## PoEntry (record)
 
@@ -2002,17 +2273,19 @@ _(no documentation)_
 
 `public class PropertiesSectionsTests`
 
-Source: `tests/PressToShape.App.Tests/PropertiesSectionsTests.cs:8-64`
+Source: `tests/PressToShape.App.Tests/PropertiesSectionsTests.cs:8-72`
 
 _(no documentation)_
 
 **Members**
 
-- `public void For_SelectionTool_ShowsTransformAppearanceAlignAndQuickActions()` - _(no documentation)_
+- `public void For_SelectTool_ShowsTransformAppearanceAlignAndQuickActions()` - _(no documentation)_
+- `public void For_DirectSelect_ShowsTheSelectionSectionsAndAlsoPathAndNode()` - _(no documentation)_
 - `public void For_ShapeOrTextTool_ShowsAppearanceOnly()` - _(no documentation)_
-- `public void For_PathTool_ShowsAppearanceAndPath()` - _(no documentation)_
+- `public void For_Pen_ShowsAppearanceAndPath()` - _(no documentation)_
+- `public void For_NodeTool_ShowsAppearancePathAndNode()` - _(no documentation)_
 - `public void For_ToolWithoutProperties_ShowsNothing()` - _(no documentation)_
-- `public void For_EveryTool_IsDefinedAndShowsPathOnlyForPenAndNode()` - _(no documentation)_
+- `public void For_EveryTool_IsDefinedAndShowsPathForPenDirectSelectAndNode_AndNodeForDirectSelectAndNode()` - _(no documentation)_
 - `public void For_UndefinedTool_Throws()` - _(no documentation)_
 
 ## PropertiesViewColorTests (class)
@@ -2029,6 +2302,35 @@ _(no documentation)_
 - `public void ShiftClickOnASwatch_AppliesItToTheStroke_AndAPlainClickToTheFill()` - _(no documentation)_
 - `public void TheApp_IncludesTheColorPickerTheme()` - _(no documentation)_
 - `public void TheColorPicker_WithTheAppsStyles_HasASize()` - _(no documentation)_
+
+## PropertiesViewModelNodeTests (class)
+
+`public class PropertiesViewModelNodeTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewModelNodeTests.cs:14-313`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ShowNode_AndTheTypeTools_FollowTheTool(string tool, bool showNode, bool showTypeTools)` - _(no documentation)_
+- `public void ShowNode_ChangingTheTool_RaisesPropertyChanged()` - _(no documentation)_
+- `public void NodeFields_OneSelectedNode_ShowItsPosition()` - _(no documentation)_
+- `public void NodeFields_NoneOrSeveralSelectedNodes_AreDisabled()` - _(no documentation)_
+- `public void NodeX_Typed_MovesTheNodeAsOneStep()` - _(no documentation)_
+- `public void NodeY_Typed_MovesTheNodeAndTheFieldShowsTheNewValue()` - _(no documentation)_
+- `public void NodeFields_TwoTypedEdits_AreTwoSteps()` - _(no documentation)_
+- `public void NodeFields_RotatedPath_ShowAndSetThePositionOnTheScreen()` - _(no documentation)_
+- `public void TypeFlags_OneNode_MarkItsType()` - _(no documentation)_
+- `public void TypeFlags_SeveralNodesOfTheSameType_MarkIt_AndMixedNodesMarkNone()` - _(no documentation)_
+- `public void TypeCommands_EachChangesTheTypeAsOneStep()` - _(no documentation)_
+- `public void TypeCommands_AreDisabledWithoutSelectedNodes()` - _(no documentation)_
+- `public void SegmentCommands_AreEnabledOnlyForTwoNeighboringNodes()` - _(no documentation)_
+- `public void SegmentCommands_ChangeTheSegmentAsOneStep()` - _(no documentation)_
+- `public void Values_AfterUndo_FollowTheDocument()` - _(no documentation)_
+- `public void Properties_RaisePropertyChanged_WhenTheNodeSelectionChanges()` - _(no documentation)_
+- `public void CommitPendingEdits_AppliesATypedNodeValue()` - _(no documentation)_
+- `public void TypeCommand_OnARectangleCorner_ConvertsItInOneStep()` - _(no documentation)_
 
 ## PropertiesViewModelPathTests (class)
 
@@ -2117,6 +2419,26 @@ _(no documentation)_
 - `public void Sections_PenTool_ShowsAppearanceAndPathOnly()` - _(no documentation)_
 - `public void Sections_ToolWithoutProperties_HidesEverythingAndShowsTheHint()` - _(no documentation)_
 - `public void ActiveTool_Switched_KeepsExpansionAndFieldValues()` - _(no documentation)_
+
+## PropertiesViewNodeTests (class)
+
+`public class PropertiesViewNodeTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewNodeTests.cs:17-205`
+
+_(no documentation)_
+
+**Members**
+
+- `public void NodeSection_WithTheNodeTool_ShowsPositionTypeAndSegmentControls()` - _(no documentation)_
+- `public void NodeSection_WithDirectSelect_ShowsThePositionButNotTheTypeAndSegmentButtons()` - _(no documentation)_
+- `public void NodeSection_WithOtherTools_IsNotShown(string tool)` - _(no documentation)_
+- `public void NodeSection_TheTypeButtonMarksTheTypeAndClickingSetsIt()` - _(no documentation)_
+- `public void NodeSection_TheFieldsShowThePositionOfTheNode()` - _(no documentation)_
+- `public void NodeSection_TheSegmentButtonsFollowTheSelectedNeighbors()` - _(no documentation)_
+- `public void NodeSection_InTheTouchLayout_HasButtonsOfAtLeast48()` - _(no documentation)_
+- `public void NodeSection_CanBeCollapsed()` - _(no documentation)_
+- `public void NodeSection_InANarrowPanel_WrapsTheButtonsInsteadOfOverflowing()` - _(no documentation)_
 
 ## PropertiesViewPathTests (class)
 
@@ -3040,7 +3362,7 @@ _(no documentation)_
 
 `public class ToolDefinitionsTests`
 
-Source: `tests/PressToShape.App.Tests/ToolDefinitionsTests.cs:7-81`
+Source: `tests/PressToShape.App.Tests/ToolDefinitionsTests.cs:7-70`
 
 _(no documentation)_
 
@@ -3051,7 +3373,6 @@ _(no documentation)_
 - `public void ShortcutKeys_AreUnique()` - _(no documentation)_
 - `public void FindByShortcut_KnownKey_ReturnsTool(char key, string expectedTool)` - _(no documentation)_
 - `public void FindByShortcut_UnknownKey_ReturnsNull(char key)` - _(no documentation)_
-- `public void StarAndSpiral_HaveNoShortcut(string toolName)` - _(no documentation)_
 - `public void ToolTip_ShowsShortcutWhenPresent()` - _(no documentation)_
 
 ## ToolGroupButtonTests (class)
@@ -3134,7 +3455,7 @@ _(no documentation)_
 
 `public class ToolboxViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/ToolboxViewModelTests.cs:9-126`
+Source: `tests/PressToShape.App.Tests/ToolboxViewModelTests.cs:9-123`
 
 _(no documentation)_
 

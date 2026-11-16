@@ -11,10 +11,14 @@ internal static class PropertiesSections
     /// </summary>
     public static PropertiesSection For(Tool tool) => tool switch
     {
-        Tool.Select or Tool.DirectSelect =>
+        Tool.Select =>
             PropertiesSection.Transform | PropertiesSection.Appearance | PropertiesSection.Align | PropertiesSection.QuickActions,
-        Tool.Rectangle or Tool.Ellipse or Tool.Star or Tool.Spiral or Tool.Text => PropertiesSection.Appearance,
-        Tool.Pen or Tool.Node => PropertiesSection.Appearance | PropertiesSection.Path,
+        Tool.DirectSelect =>
+            PropertiesSection.Transform | PropertiesSection.Appearance | PropertiesSection.Path | PropertiesSection.Node
+            | PropertiesSection.Align | PropertiesSection.QuickActions,
+        Tool.Rectangle or Tool.Ellipse or Tool.Text => PropertiesSection.Appearance,
+        Tool.Pen => PropertiesSection.Appearance | PropertiesSection.Path,
+        Tool.Node => PropertiesSection.Appearance | PropertiesSection.Path | PropertiesSection.Node,
         Tool.Eyedropper or Tool.Hand or Tool.Zoom => PropertiesSection.None,
         _ => throw new ArgumentOutOfRangeException(nameof(tool), tool, null),
     };

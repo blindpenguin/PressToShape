@@ -51,7 +51,7 @@ _(no documentation)_
 
 `internal sealed class NodeDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:123-148`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:123-153`
 
 _(no documentation)_
 
@@ -63,12 +63,13 @@ _(no documentation)_
 - `public double? InY { get; set; }` - _(no documentation)_
 - `public double? OutX { get; set; }` - _(no documentation)_
 - `public double? OutY { get; set; }` - _(no documentation)_
+- `public string? Type { get; set; }` - _(no documentation)_
 
 ## ProjectFile (class)
 
 `public partial static class ProjectFile`
 
-Source: `src/PressToShape.Core/IO/ProjectFile.Path.cs:9-82`
+Source: `src/PressToShape.Core/IO/ProjectFile.Path.cs:9-119`
 
 PressToShape's own project format: UTF-8 JSON with a format name and a version number. Reading treats the content as untrusted: it is size-checked, parsed with a depth limit and validated by the document model itself. PressToShape.Core.IO.ProjectFile.Read never throws for bad content, it returns an error.
 

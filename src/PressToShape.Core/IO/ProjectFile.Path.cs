@@ -44,7 +44,14 @@ public static partial class ProjectFile
             }
 
             // A half handle or a number that is not finite makes the node constructor throw, which Read turns into InvalidValue.
-            nodes.Add(new PathNode(x, y, nodeDto.InX, nodeDto.InY, nodeDto.OutX, nodeDto.OutY));
+            var plain = new PathNode(x, y, nodeDto.InX, nodeDto.InY, nodeDto.OutX, nodeDto.OutY);
+            if (!TryReadNodeType(nodeDto.Type, plain, out var type))
+            {
+                failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, "A path node has an unknown type: " + nodeDto.Type);
+                return null;
+            }
+
+            nodes.Add(new PathNode(x, y, nodeDto.InX, nodeDto.InY, nodeDto.OutX, nodeDto.OutY, type));
         }
 
         return new PathShape
@@ -75,8 +82,38 @@ public static partial class ProjectFile
             InY = node.InY,
             OutX = node.OutX,
             OutY = node.OutY,
+            Type = node.Type == NodeTypes.Derive(node) ? null : NodeTypeText(node.Type),
         }));
         dto.Closed = path.IsClosed ? true : null;
         dto.FillRule = path.FillRule == FillRule.EvenOdd ? EvenOddText : null;
     }
+
+    // A missing type is the one the handles give (files from before the node types have none). Any other text must be a known type.
+    private static bool TryReadNodeType(string? text, PathNode plain, out NodeType type)
+    {
+        type = NodeTypes.Derive(plain);
+        switch (text)
+        {
+            case null:
+                return true;
+            case "corner":
+                type = NodeType.Corner;
+                return true;
+            case "smooth":
+                type = NodeType.Smooth;
+                return true;
+            case "symmetric":
+                type = NodeType.Symmetric;
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private static string NodeTypeText(NodeType type) => type switch
+    {
+        NodeType.Smooth => "smooth",
+        NodeType.Symmetric => "symmetric",
+        _ => "corner",
+    };
 }

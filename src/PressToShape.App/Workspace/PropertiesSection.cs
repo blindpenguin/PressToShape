@@ -12,4 +12,7 @@ internal enum PropertiesSection
     Path = 4,
     Align = 8,
     QuickActions = 16,
+
+    /// <summary>The nodes of the selected paths: position of a node and, for the Node tool, the type and segment buttons.</summary>
+    Node = 32,
 }

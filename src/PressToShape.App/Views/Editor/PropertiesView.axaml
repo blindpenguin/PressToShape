@@ -252,6 +252,41 @@
                     </StackPanel>
                 </controls:CollapsibleSection>
 
+                <controls:CollapsibleSection Header="{loc:T 'Node'}" IsExpanded="{Binding IsNodeExpanded}" IsVisible="{Binding ShowNode}">
+                    <StackPanel Margin="12,4,12,12" Spacing="8">
+                        <Grid ColumnDefinitions="Auto,*,Auto,*">
+                            <TextBlock Grid.Column="0" Classes="label" Text="X" Margin="0,0,6,0" />
+                            <TextBox Grid.Column="1" Classes="field" Text="{Binding NodeX.Text}" IsEnabled="{Binding NodeX.IsEnabled}" Tag="{Binding NodeX}"
+                                     AutomationProperties.Name="{loc:T 'Node X position'}">
+                                <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                            </TextBox>
+                            <TextBlock Grid.Column="2" Classes="label" Text="Y" Margin="8,0,6,0" />
+                            <TextBox Grid.Column="3" Classes="field" Text="{Binding NodeY.Text}" IsEnabled="{Binding NodeY.IsEnabled}" Tag="{Binding NodeY}"
+                                     AutomationProperties.Name="{loc:T 'Node Y position'}">
+                                <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                            </TextBox>
+                        </Grid>
+                        <StackPanel Spacing="8" IsVisible="{Binding ShowNodeTypeTools}">
+                            <TextBlock Classes="label" Text="{loc:T 'Node type'}" />
+                            <WrapPanel Orientation="Horizontal" ItemSpacing="4" LineSpacing="4">
+                                <Button Classes="choice" Classes.selected="{Binding IsNodeCorner}" Command="{Binding MakeNodeCornerCommand}"
+                                        Content="{loc:T 'Corner'}" AutomationProperties.Name="{loc:T 'Corner'}" />
+                                <Button Classes="choice" Classes.selected="{Binding IsNodeSmooth}" Command="{Binding MakeNodeSmoothCommand}"
+                                        Content="{loc:T 'Smooth'}" AutomationProperties.Name="{loc:T 'Smooth'}" />
+                                <Button Classes="choice" Classes.selected="{Binding IsNodeSymmetric}" Command="{Binding MakeNodeSymmetricCommand}"
+                                        Content="{loc:T 'Symmetric'}" AutomationProperties.Name="{loc:T 'Symmetric'}" />
+                            </WrapPanel>
+                            <TextBlock Classes="label" Text="{loc:T 'Segment'}" />
+                            <WrapPanel Orientation="Horizontal" ItemSpacing="4" LineSpacing="4">
+                                <Button Classes="choice" Command="{Binding MakeSegmentStraightCommand}"
+                                        Content="{loc:T 'Straight segment'}" AutomationProperties.Name="{loc:T 'Straight segment'}" />
+                                <Button Classes="choice" Command="{Binding MakeSegmentCurvedCommand}"
+                                        Content="{loc:T 'Curved segment'}" AutomationProperties.Name="{loc:T 'Curved segment'}" />
+                            </WrapPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </controls:CollapsibleSection>
+
                 <controls:CollapsibleSection Header="{loc:T 'Align &amp; Distribute'}" IsExpanded="{Binding IsAlignExpanded}" IsVisible="{Binding ShowAlign}">
                     <StackPanel Orientation="Horizontal" Spacing="2" Margin="12,4,12,12" IsEnabled="{Binding HasSelection}">
                         <Button Classes="icon" ToolTip.Tip="{loc:T 'Align Left'}" AutomationProperties.Name="{loc:T 'Align Left'}">

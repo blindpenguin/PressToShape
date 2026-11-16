@@ -42,6 +42,10 @@ internal sealed class DocumentCanvasControl : Control
     public static readonly StyledProperty<ScreenPenOverlay?> PenOverlayProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, ScreenPenOverlay?>(nameof(PenOverlay));
 
+    /// <summary>The nodes and handles of the selected shapes for Direct Select and the Node tool, in screen space. They are drawn over the shapes.</summary>
+    public static readonly StyledProperty<ScreenNodeOverlay?> NodeOverlayProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, ScreenNodeOverlay?>(nameof(NodeOverlay));
+
     /// <summary>A shape that is not drawn because the draft takes its place (a path that is being continued). <c>null</c> hides nothing.</summary>
     public static readonly StyledProperty<System.Guid?> HiddenShapeIdProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, System.Guid?>(nameof(HiddenShapeId));
@@ -82,6 +86,7 @@ internal sealed class DocumentCanvasControl : Control
             DraftProperty,
             OverlayProperty,
             PenOverlayProperty,
+            NodeOverlayProperty,
             HiddenShapeIdProperty,
             SelectionBrushProperty,
             SelectionHandleFillBrushProperty,
@@ -135,6 +140,12 @@ internal sealed class DocumentCanvasControl : Control
     {
         get => GetValue(PenOverlayProperty);
         set => SetValue(PenOverlayProperty, value);
+    }
+
+    public ScreenNodeOverlay? NodeOverlay
+    {
+        get => GetValue(NodeOverlayProperty);
+        set => SetValue(NodeOverlayProperty, value);
     }
 
     public System.Guid? HiddenShapeId
@@ -209,6 +220,45 @@ internal sealed class DocumentCanvasControl : Control
         if (PenOverlay is { } penOverlay && SelectionBrush is { } penBrush)
         {
             DrawPenOverlay(context, penOverlay, penBrush);
+        }
+
+        if (NodeOverlay is { } nodeOverlay && SelectionBrush is { } nodeBrush)
+        {
+            DrawNodeOverlay(context, nodeOverlay, nodeBrush);
+        }
+    }
+
+    // The nodes of the selected shapes as squares (the selected ones filled with the selection color) and the shown handles as lines ending
+    // in dots. Handles are drawn first so a node is never hidden by one. Sizes follow the handle size, so touch layouts get larger ones.
+    private void DrawNodeOverlay(DrawingContext context, ScreenNodeOverlay overlay, IBrush brush)
+    {
+        var pen = new Pen(brush, OutlineThickness);
+        var size = double.IsFinite(HandleSize) && HandleSize > 0 ? HandleSize : SelectionOverlay.HandleSize;
+        var dot = size * 0.375;
+
+        foreach (var node in overlay.Nodes)
+        {
+            var anchor = new Point(node.X, node.Y);
+            if (node.HasIn)
+            {
+                var end = new Point(node.InX!.Value, node.InY!.Value);
+                context.DrawLine(pen, anchor, end);
+                context.DrawEllipse(SelectionHandleFillBrush, pen, end, dot, dot);
+            }
+
+            if (node.HasOut)
+            {
+                var end = new Point(node.OutX!.Value, node.OutY!.Value);
+                context.DrawLine(pen, anchor, end);
+                context.DrawEllipse(SelectionHandleFillBrush, pen, end, dot, dot);
+            }
+        }
+
+        foreach (var node in overlay.Nodes)
+        {
+            var half = size / 2;
+            var area = new Rect(node.X - half, node.Y - half, size, size);
+            context.DrawRectangle(node.IsSelected ? brush : SelectionHandleFillBrush, pen, area);
         }
     }
 

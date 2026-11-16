@@ -48,6 +48,9 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
         StrokeWidth = new NumberFieldViewModel(localizer, 0, MaxStrokeWidth, value => _editor.Apply(HistoryStepType.ChangeStrokeWidth, shape => shape with { Appearance = shape.Appearance with { StrokeWidth = value } }));
         OpacityPercent = new NumberFieldViewModel(localizer, 0, 100, value => _editor.Apply(HistoryStepType.ChangeOpacity, shape => shape with { Appearance = shape.Appearance with { Opacity = value / 100 } }));
 
+        NodeX = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Nodes.SetPosition(value, null));
+        NodeY = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Nodes.SetPosition(null, value));
+
         Fill = new ColorFieldViewModel(
             color => PreviewColor(appearance => appearance with { Fill = color }),
             () => CommitColor(HistoryStepType.ChangeFill, ColorPickTarget.Fill),
@@ -96,7 +99,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     /// </summary>
     public void CommitPendingEdits()
     {
-        foreach (var field in new[] { X, Y, Width, Height, Rotation, StrokeWidth, OpacityPercent })
+        foreach (var field in new[] { X, Y, Width, Height, Rotation, StrokeWidth, OpacityPercent, NodeX, NodeY })
         {
             if (field.IsEditing)
             {
@@ -295,6 +298,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     private void RefreshValues()
     {
         RefreshPathValues();
+        RefreshNodeValues();
         var shapes = SelectedShapes();
         var values = SelectionValues.From(shapes);
         if (values is null)
@@ -349,6 +353,9 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
                 _previewBase = null;
                 RefreshValues();
                 break;
+            case nameof(EditorState.SelectedNodes):
+                RefreshNodeValues();
+                break;
             case nameof(EditorState.HasSelection):
                 OnPropertyChanged(nameof(HasSelection));
                 OnPropertyChanged(nameof(ShowNothingSelectedHint));
@@ -357,6 +364,8 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
                 OnPropertyChanged(nameof(ShowTransform));
                 OnPropertyChanged(nameof(ShowAppearance));
                 OnPropertyChanged(nameof(ShowPath));
+                OnPropertyChanged(nameof(ShowNode));
+                OnPropertyChanged(nameof(ShowNodeTypeTools));
                 OnPropertyChanged(nameof(ShowAlign));
                 OnPropertyChanged(nameof(ShowQuickActions));
                 OnPropertyChanged(nameof(ShowHeader));

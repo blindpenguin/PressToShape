@@ -4,6 +4,7 @@ using PressToShape.App.Localization;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.History;
 using PressToShape.Core.Shapes;
 using Xunit;
 
@@ -86,5 +87,37 @@ public class LayersViewModelPathTests
         var (_, list) = Create(null, new RectangleShape { Width = 1, Height = 1 }, new EllipseShape { Width = 1, Height = 1 });
 
         Assert.All(list.Rows, row => Assert.False(row.IsPath));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Rows_ARectangleOrEllipseThatBecomesAPath_GetsThePathTypeAndIcon(bool ellipse)
+    {
+        Shape original = ellipse ? new EllipseShape { Width = 50, Height = 40 } : new RectangleShape { Width = 50, Height = 40 };
+        var (state, list) = Create(null, original);
+        Assert.Equal(ellipse ? ObjectRowType.Ellipse : ObjectRowType.Rectangle, list.Rows.Single(r => r.Id == original.Id).Type);
+
+        var converted = ShapeConversion.ToPath(original)!;
+        state.Edit(HistoryStepType.MovePathPoints, d => d.UpdateShapes(new Dictionary<System.Guid, Shape> { [original.Id] = converted }));
+
+        var row = list.Rows.Single(r => r.Id == original.Id);
+        Assert.Equal(ObjectRowType.Path, row.Type);
+        Assert.True(row.IsPath);
+        Assert.False(row.IsRectangle);
+        Assert.False(row.IsEllipse);
+        Assert.Equal("Path", row.Name);
+    }
+
+    [Fact]
+    public void Rows_APathThatIsUndoneToARectangle_GetsTheRectangleTypeAgain()
+    {
+        var rectangle = new RectangleShape { Width = 50, Height = 40 };
+        var (state, list) = Create(null, rectangle);
+        state.Edit(HistoryStepType.MovePathPoints, d => d.UpdateShapes(new Dictionary<System.Guid, Shape> { [rectangle.Id] = ShapeConversion.ToPath(rectangle)! }));
+
+        state.Undo();
+
+        Assert.Equal(ObjectRowType.Rectangle, list.Rows.Single(r => r.Id == rectangle.Id).Type);
     }
 }

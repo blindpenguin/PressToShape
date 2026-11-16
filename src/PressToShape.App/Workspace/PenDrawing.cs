@@ -7,7 +7,7 @@ namespace PressToShape.App.Workspace;
 /// <summary>
 /// The state of a path that the Pen is drawing: the nodes so far and the gesture in progress. It knows nothing about the document,
 /// the zoom or the pointer device, so it is tested alone. Distances are in document units, the caller converts them from screen pixels.
-/// A press adds a corner node, a drag after it pulls out the handles (smooth node), a press on the first node closes the path
+/// A press adds a corner node, a drag after it pulls out the handles (a symmetric node), a press on the first node closes the path
 /// and a press on the last node finishes it.
 /// </summary>
 internal sealed class PenDrawing
@@ -95,7 +95,7 @@ internal sealed class PenDrawing
 
     /// <summary>
     /// The pointer moved with the button down. Once it is farther than <paramref name="threshold"/> from the node that was just
-    /// added, the node becomes smooth: the out handle follows the pointer and the in handle is the mirror image on the other side.
+    /// added, the node becomes symmetric: the out handle follows the pointer and the in handle is the mirror image on the other side.
     /// A shorter drag leaves a corner. Does nothing when no press added a node.
     /// </summary>
     public void Drag(double x, double y, double threshold)
@@ -112,7 +112,7 @@ internal sealed class PenDrawing
             return;
         }
 
-        _nodes[^1] = new DocumentNode(node.X, node.Y, 2 * node.X - x, 2 * node.Y - y, x, y);
+        _nodes[^1] = new DocumentNode(node.X, node.Y, 2 * node.X - x, 2 * node.Y - y, x, y, NodeType.Symmetric);
     }
 
     /// <summary>Takes back the node that the press in progress added, for a press that turns out to be a mistake. Does nothing when no press is in progress.</summary>

@@ -10,8 +10,6 @@ internal enum Tool
     Text,
     Rectangle,
     Ellipse,
-    Star,
-    Spiral,
     Eyedropper,
     Hand,
     Zoom,

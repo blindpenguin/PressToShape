@@ -355,4 +355,24 @@ public class CanvasInteractionPenEditTests
 
         Assert.Equal(path, Only(state));
     }
+
+    [Fact]
+    public void Continue_RotatedPathWithTypedNodes_KeepsTheTypes()
+    {
+        var rotated = PathShape.Create(
+            [
+                new DocumentNode(0, 0, outX: 30, outY: 0, type: NodeType.Corner),
+                new DocumentNode(100, 0, inX: 70, inY: 0, outX: 130, outY: 0, type: NodeType.Smooth),
+            ]);
+        rotated = rotated with { Rotation = 90 };
+        var (state, interaction, _) = Create(rotated);
+
+        // The last node is at (100, 0) before the turn, so it appears at (50, 50) after turning 90 degrees around (50, 0).
+        Click(interaction, 50, 50);
+        Click(interaction, 150, 50);
+        interaction.FinishPen();
+
+        var nodes = Only(state).Nodes;
+        Assert.Equal([NodeType.Corner, NodeType.Smooth, NodeType.Corner], nodes.Select(n => n.Type));
+    }
 }

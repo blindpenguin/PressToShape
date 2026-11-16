@@ -18,11 +18,11 @@ public class ToolGroupViewModelTests
     [Fact]
     public void New_StartsWithTheFirstToolOfTheGroup()
     {
-        var (group, _) = Make(Tool.Spiral);
+        var (group, _) = Make(Tool.Ellipse);
 
         Assert.Equal(Tool.Rectangle, group.Current.Definition.Tool);
         Assert.Equal("Rectangle", group.Name);
-        Assert.Equal(4, group.Members.Count);
+        Assert.Equal(2, group.Members.Count);
     }
 
     [Fact]
@@ -54,12 +54,12 @@ public class ToolGroupViewModelTests
         var (group, shell) = Make(Tool.Rectangle);
         group.OpenFlyoutCommand.Execute(null);
 
-        group.SelectMemberCommand.Execute(group.Members[2]);
+        group.SelectMemberCommand.Execute(group.Members[1]);
 
-        Assert.Equal(Tool.Star, shell.State.ActiveTool);
-        Assert.Equal(Tool.Star, group.Current.Definition.Tool);
+        Assert.Equal(Tool.Ellipse, shell.State.ActiveTool);
+        Assert.Equal(Tool.Ellipse, group.Current.Definition.Tool);
         Assert.False(group.IsFlyoutOpen);
-        Assert.Equal("Star", group.Name);
+        Assert.Equal("Ellipse", group.Name);
     }
 
     [Fact]
@@ -82,10 +82,10 @@ public class ToolGroupViewModelTests
         group.PropertyChanged += (_, e) => changed.Add(e.PropertyName);
 
         shell.Toolbox.TrySelectByKey('N');
-        shell.State.ActiveTool = Tool.Spiral;
+        shell.State.ActiveTool = Tool.Ellipse;
 
         Assert.True(group.IsActive);
-        Assert.Equal(Tool.Spiral, group.Current.Definition.Tool);
+        Assert.Equal(Tool.Ellipse, group.Current.Definition.Tool);
         Assert.Contains(nameof(ToolGroupViewModel.Icon), changed);
         Assert.Contains(nameof(ToolGroupViewModel.Name), changed);
     }

@@ -15,15 +15,17 @@ public readonly record struct PathNode
     /// <param name="inY">Handle point on the side of the previous node, fraction of the box height, or null for no handle.</param>
     /// <param name="outX">Handle point on the side of the next node, fraction of the box width, or null for no handle.</param>
     /// <param name="outY">Handle point on the side of the next node, fraction of the box height, or null for no handle.</param>
-    public PathNode(double x, double y, double? inX = null, double? inY = null, double? outX = null, double? outY = null)
+    /// <param name="type">The node type.</param>
+    public PathNode(double x, double y, double? inX = null, double? inY = null, double? outX = null, double? outY = null, NodeType type = NodeType.Corner)
     {
-        NodeValidation.Check(x, y, inX, inY, outX, outY);
+        NodeValidation.Check(x, y, inX, inY, outX, outY, type);
         X = x;
         Y = y;
         InX = inX;
         InY = inY;
         OutX = outX;
         OutY = outY;
+        Type = type;
     }
 
     /// <summary>Anchor, fraction of the box width.</summary>
@@ -45,6 +47,9 @@ public readonly record struct PathNode
     public double? OutY { get; }
 
     /// <summary>Whether the node has an in handle.</summary>
+    /// <summary>How the two handles relate when one of them is edited. The default is <see cref="NodeType.Corner"/>.</summary>
+    public NodeType Type { get; }
+
     public bool HasIn => InX.HasValue;
 
     /// <summary>Whether the node has an out handle.</summary>

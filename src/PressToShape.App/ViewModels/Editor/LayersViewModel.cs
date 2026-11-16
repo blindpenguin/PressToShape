@@ -258,11 +258,12 @@ internal sealed partial class LayersViewModel : LocalizedViewModel
     {
         var wanted = Describe(_state.Document);
         var sameStructure = _all.Count == wanted.Count
-            && _all.Zip(wanted).All(pair => pair.First.Id == pair.Second.Id && pair.First.Depth == pair.Second.Depth && pair.First.ParentId == pair.Second.ParentId);
+            && _all.Zip(wanted).All(pair => pair.First.Id == pair.Second.Id && pair.First.Type == pair.Second.Type && pair.First.Depth == pair.Second.Depth && pair.First.ParentId == pair.Second.ParentId);
 
         if (!sameStructure)
         {
-            // A row keeps its place in the tree for life, so a shape that moved into a group gets a new row.
+            // A row keeps its place in the tree and its type for life, so a shape that moved into a group, or became a path (a rectangle
+            // that was edited node by node), gets a new row.
             var existing = _all.ToDictionary(r => r.Id);
             _all = wanted
                 .Select(w => existing.TryGetValue(w.Id, out var row) && row.Type == w.Type && row.Depth == w.Depth && row.ParentId == w.ParentId

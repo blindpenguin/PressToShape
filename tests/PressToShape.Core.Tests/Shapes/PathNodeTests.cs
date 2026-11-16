@@ -75,4 +75,42 @@ public class PathNodeTests
     {
         Assert.Equal(FillRule.NonZero, default(FillRule));
     }
+
+    [Fact]
+    public void Type_NotGiven_IsCorner()
+    {
+        Assert.Equal(NodeType.Corner, new PathNode(0, 0).Type);
+        Assert.Equal(NodeType.Corner, new DocumentNode(0, 0).Type);
+        Assert.Equal(NodeType.Corner, default(PathNode).Type);
+    }
+
+    [Theory]
+    [InlineData(NodeType.Corner)]
+    [InlineData(NodeType.Smooth)]
+    [InlineData(NodeType.Symmetric)]
+    public void Type_Given_IsKept(NodeType type)
+    {
+        var node = new PathNode(0.5, 0.5, 0.25, 0.5, 0.75, 0.5, type);
+        var documentNode = new DocumentNode(5, 5, 2.5, 5, 7.5, 5, type);
+
+        Assert.Equal(type, node.Type);
+        Assert.Equal(type, documentNode.Type);
+    }
+
+    [Fact]
+    public void Type_NotDefined_Throws()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => new PathNode(0, 0, type: (NodeType)99));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new DocumentNode(0, 0, type: (NodeType)(-1)));
+    }
+
+    [Fact]
+    public void Equals_NodesThatDifferOnlyInType_AreNotEqual()
+    {
+        var corner = new PathNode(0.1, 0.2, 0.0, 0.2, 0.2, 0.2);
+        var smooth = new PathNode(0.1, 0.2, 0.0, 0.2, 0.2, 0.2, NodeType.Smooth);
+
+        Assert.NotEqual(corner, smooth);
+        Assert.Equal(smooth, new PathNode(0.1, 0.2, 0.0, 0.2, 0.2, 0.2, NodeType.Smooth));
+    }
 }

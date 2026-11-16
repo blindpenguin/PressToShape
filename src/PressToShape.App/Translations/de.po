@@ -318,12 +318,6 @@ msgstr "Rechteck"
 msgid "Ellipse"
 msgstr "Ellipse"
 
-msgid "Star"
-msgstr "Stern"
-
-msgid "Spiral"
-msgstr "Spirale"
-
 msgid "Eyedropper"
 msgstr "Pipette"
 
@@ -470,6 +464,36 @@ msgstr "Nicht-null"
 
 msgid "Even-odd"
 msgstr "Gerade-ungerade"
+
+msgid "Node"
+msgstr "Knoten"
+
+msgid "Node X position"
+msgstr "X-Position des Knotens"
+
+msgid "Node Y position"
+msgstr "Y-Position des Knotens"
+
+msgid "Node type"
+msgstr "Knotentyp"
+
+msgid "Corner"
+msgstr "Ecke"
+
+msgid "Smooth"
+msgstr "Glatt"
+
+msgid "Symmetric"
+msgstr "Symmetrisch"
+
+msgid "Segment"
+msgstr "Segment"
+
+msgid "Straight segment"
+msgstr "Gerades Segment"
+
+msgid "Curved segment"
+msgstr "Gebogenes Segment"
 
 msgid "Align & Distribute"
 msgstr "Ausrichten & Verteilen"
@@ -713,6 +737,24 @@ msgstr "Pfadpunkt löschen"
 
 msgid "Change path"
 msgstr "Pfad ändern"
+
+msgid "Move path points"
+msgstr "Pfadpunkte verschieben"
+
+msgid "Move handle"
+msgstr "Griff verschieben"
+
+msgid "Change node type"
+msgstr "Knotentyp ändern"
+
+msgid "Bend segment"
+msgstr "Segment biegen"
+
+msgid "Change segment"
+msgstr "Segment ändern"
+
+msgid "Delete path points"
+msgstr "Pfadpunkte löschen"
 
 msgctxt "object name"
 msgid "Group"

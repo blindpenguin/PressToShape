@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, the object list, the ring context menu, and the path model with the Pen tool. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, and the Node and Direct Select tools. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -10,9 +10,9 @@ Columns:
 
 ## Summary
 
-The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, appearance, undo and redo, groups and arrange, lock and hide, the object list, and file save, load and SVG export work. The big gaps are node editing (moving nodes and handles), the shapes that need a path (star, spiral), layer management, snapping, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
+The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, appearance, undo and redo, groups and arrange, lock and hide, the object list, and file save, load and SVG export work. The big gaps are node editing (moving nodes and handles), layer management, snapping, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
 
-The structural base is in place: **`PathShape`** (line and cubic bezier segments, open or closed, non-zero or even-odd fill) keeps the box and rotation of every other shape and stores its nodes as fractions of the box, so move, resize, rotate, groups and arrange work on it unchanged. Node editing, star, spiral, text, boolean operations, masks and SVG import build on it (a path has one sub-path only, no compound paths yet).
+The structural base is in place: **`PathShape`** (line and cubic bezier segments, open or closed, non-zero or even-odd fill) keeps the box and rotation of every other shape and stores its nodes as fractions of the box, so move, resize, rotate, groups and arrange work on it unchanged. Text, boolean operations, masks and SVG import build on it (a path has one sub-path only, no compound paths yet).
 
 ## 1. Drawing tools
 
@@ -20,9 +20,9 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 |---|---|---|
 | Rectangle, ellipse | Done | MVP |
 | Pen / bezier (click, drag, preview, close, continue, add and delete points) | Done | MVP |
-| Node / curve tool, Direct Select | UI only | MVP |
-| Star | UI only | MVP |
-| Spiral | UI only | Unplanned |
+| Node / curve tool, Direct Select | Done: select and move nodes and handles, bend segments, node types, pick shapes inside groups | MVP |
+| Star | Out: not planned, the tool was removed | Out of scope |
+| Spiral | Out: not planned, the tool was removed | Out of scope |
 | Freehand pencil / brush with pen pressure | Missing | Unplanned |
 | Line and polyline | Done (an open path of the Pen) | Unplanned |
 | Rounded corners on rectangles | Missing | Unplanned |
@@ -40,7 +40,7 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 | Nudge with arrow keys | Done | MVP |
 | Cut, copy, paste, paste in place, duplicate, delete | Done | MVP |
 | Rotate 90° and flip (menu) | UI only | MVP |
-| Edit path nodes, handles, add and delete nodes | Partly: add and delete points and continue a path with the Pen, moving nodes and handles is missing | MVP |
+| Edit path nodes, handles, add and delete nodes | Done: Pen adds and continues, the node tools move, convert (corner, smooth, symmetric) and delete nodes, rectangles and ellipses become paths on the first edit | MVP |
 | Skew / shear | Missing | Unplanned |
 | Scale and rotate around a chosen origin | Missing | Unplanned |
 | Select same fill or stroke, select by type | Missing | Unplanned |
