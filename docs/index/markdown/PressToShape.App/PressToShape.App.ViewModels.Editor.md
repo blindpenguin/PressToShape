@@ -6,19 +6,20 @@ Project: PressToShape.App
 
 `internal partial sealed class CanvasAreaViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:13-547`
+Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:13-608`
 
 Geometry of the canvas area: where the artboard is drawn and where the ruler zero points are. The view only reports the viewport size, everything else is derived here.
 
 **Members**
 
-- `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null)` - _(no documentation)_
+- `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null)` - _(no documentation)_
 - `public double ViewportWidth { get; set; }` - _(no documentation)_
 - `public double ViewportHeight { get; set; }` - _(no documentation)_
 - `public bool IsAltHeld { get; set; }` - _(no documentation)_
 - `public Document Document { get; }` - The document the canvas draws.
 - `public ScreenShape? Draft { get; }` - The shape that is being drawn, in screen space, or null.
 - `public SelectionOverlay Overlay { get; }` - Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.
+- `public Guid? EnteredGroupId { get; }` - The group that was entered, or null. The canvas dims everything outside it.
 - `public CanvasCursorType CursorType { get; }` - The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle, otherwise the eyedropper while a pick is active, otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
 - `public double HorizontalScrollMinimum { get; }` - Smallest value of the horizontal scroll bar: minus the furthest the view offset may go.
 - `public double HorizontalScrollMaximum { get; }` - Largest value of the horizontal scroll bar: the furthest the view offset may go.
@@ -40,6 +41,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public double OriginY { get; }` - Vertical screen position of the artboard's top edge. The vertical ruler's zero is here.
 - `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. The tablet layout sets it from the theme.
 - `public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = Mouse)` - The primary button went down. The position is in screen pixels of the canvas area. With the Hand tool this starts dragging the view, with the Zoom tool it zooms one step in (with alt: out) around the position, with the other tools it is handled by the tool. inputType is the device: a finger grabs handles from a larger area.
+- `public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false)` - The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters a group or leaves the entered one (see PressToShape.App.Workspace.CanvasInteraction.DoubleClicked). With other tools it acts as a normal press.
 - `public void TouchPressed(int id, double screenX, double screenY)` - A finger went down. One finger acts with the active tool like the mouse. A second finger undoes that action (see PressToShape.App.Workspace.CanvasInteraction.Abort) and the two fingers then move and zoom the view. Mouse and pen use PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.PointerPressed. The id only has to be unique from this press to the release.
 - `public void TouchMoved(int id, double screenX, double screenY)` - A finger moved.
 - `public void TouchReleased(int id, double screenX, double screenY)` - A finger went up.
@@ -49,7 +51,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)` - The button went up. The position is in screen pixels of the canvas area.
 - `public void PointerHover(double screenX, double screenY)` - The pointer moved over the canvas without a drag: the handle under it decides the cursor.
 - `public void PointerLeft()` - The pointer left the canvas: no handle is hovered any more.
-- `public bool KeyPressed(CanvasKey key, bool shift)` - A key went down on the canvas. The arrow keys move the selection by 1 unit, with shift by 10. Escape clears the selection, or ends a pick from the canvas. Nothing else happens during a drag.
+- `public bool KeyPressed(CanvasKey key, bool shift)` - A key went down on the canvas. The arrow keys move the selection by 1 unit, with shift by 10. Escape leaves the entered group, or clears the selection, or ends a pick from the canvas. Nothing else happens during a drag.
 - `public void Cancel()` - Ends a drag without a result, for example when the pointer capture is lost.
 - `public bool Wheel(double deltaX, double deltaY, bool control, bool shift, double screenX, double screenY)` - The wheel (or a touchpad scroll) turned over the canvas. With Ctrl it zooms around the pointer, otherwise it moves the view, Shift moving it horizontally. A positive delta moves the view toward the top or the left.
 - `public void DeleteSelection()` - Removes the selected shapes. Does nothing without a selection.
@@ -59,6 +61,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
+- Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
 
 ## ColorFieldViewModel (class)
 
@@ -120,18 +123,23 @@ What the clipboard, delete and selection items of the Edit menu do. Undo and Red
 
 `internal abstract partial class EditorShellViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:17-215`
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:17-303`
 
 What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
 
 **Members**
 
+- `public IRelayCommand BringForwardCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringForward`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringForward.
+- `public IRelayCommand BringToFrontCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringToFront`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringToFront.
 - `public IRelayCommand CopyCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy.
 - `public IRelayCommand CutCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut.
 - `public IRelayCommand DeleteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete.
 - `public IRelayCommand DeselectCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Deselect`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Deselect.
 - `public IRelayCommand DuplicateCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Duplicate`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Duplicate.
 - `public IAsyncRelayCommand ExportSvgCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ExportSvgAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ExportSvgAsync.
+- `public IRelayCommand GroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Group`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Group.
+- `public IRelayCommand HideCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Hide`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Hide.
+- `public IRelayCommand LockCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Lock`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Lock.
 - `public IAsyncRelayCommand NewCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.NewAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.NewAsync.
 - `public IAsyncRelayCommand OpenCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenAsync.
 - `public IRelayCommand PasteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Paste`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Paste.
@@ -140,11 +148,17 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public IAsyncRelayCommand SaveAsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsAsync.
 - `public IAsyncRelayCommand SaveCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsync.
 - `public IRelayCommand SelectAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SelectAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SelectAll.
+- `public IRelayCommand SendBackwardCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SendBackward`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SendBackward.
+- `public IRelayCommand SendToBackCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SendToBack`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SendToBack.
+- `public IRelayCommand ShowAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ShowAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ShowAll.
 - `public IRelayCommand UndoCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Undo`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Undo.
+- `public IRelayCommand UngroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Ungroup`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Ungroup.
+- `public IRelayCommand UnlockAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll.
 - `protected EditorShellViewModel(ILocalizer localizer, FileServices services)` - _(no documentation)_
 - `public EditorState State { get; }` - _(no documentation)_
 - `public ToolboxViewModel Toolbox { get; }` - _(no documentation)_
 - `public SelectionEditor Editor { get; }` - The selection edits (copy, paste, nudge, property changes). One instance, shared by the canvas, the inspector and the menus.
+- `public ObjectEditor Objects { get; }` - The edits of the structure: group, arrange, lock, hide, rename. One instance, shared by the menus and the object list.
 - `public CanvasAreaViewModel Canvas { get; }` - _(no documentation)_
 - `public InspectorViewModel Inspector { get; }` - _(no documentation)_
 - `public string DocumentName { get; }` - The file name of the document, or the translated word for "Untitled" while it has none.
@@ -153,6 +167,7 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `protected RecentFiles Recent { get; }` - The recently used files, for layouts that list them.
 - `protected FileMenuCommands FileCommands { get; }` - The commands behind the file items of a menu.
 - `protected EditMenuCommands EditCommands { get; }` - The commands behind the edit items of a menu.
+- `public ObjectMenuCommands ObjectCommands { get; }` - The commands behind the group, arrange, lock and hide items of a menu.
 - `public Task<bool> ConfirmCloseAsync()` - Asks about unsaved changes before the window closes. Returns whether closing may go on.
 - `public void FitToWindow()` - Zooms so the artboard fits the canvas area. Does nothing until the canvas has a size.
 
@@ -236,15 +251,16 @@ State of the History tab: the start state and one row per step, oldest first. Th
 
 `internal partial sealed class InspectorViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:10-52`
+Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:10-56`
 
 State of the inspector: the selected tab and the view models of its tabs.
 
 **Members**
 
-- `public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null)` - _(no documentation)_
+- `public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null)` - _(no documentation)_
 - `public PropertiesViewModel Properties { get; }` - _(no documentation)_
 - `public LayersViewModel Layers { get; }` - _(no documentation)_
+- `public ObjectsViewModel Objects { get; }` - _(no documentation)_
 - `public PlaceholderPanelViewModel Assets { get; }` - _(no documentation)_
 - `public HistoryViewModel History { get; }` - _(no documentation)_
 - `public InspectorTab SelectedTab { get; set; }` - _(no documentation)_
@@ -255,6 +271,7 @@ State of the inspector: the selected tab and the view models of its tabs.
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`
@@ -332,6 +349,128 @@ A number text box of the Properties tab. The text is typed by the user and appli
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
 
+## ObjectMenuCommands (record)
+
+`internal sealed record ObjectMenuCommands : IEquatable<ObjectMenuCommands>`
+
+Source: `src/PressToShape.App/ViewModels/Editor/ObjectMenuCommands.cs:6-16`
+
+What the Group, Arrange, Lock and Hide items of the Object menu do. A command is disabled while it would change nothing.
+
+**Members**
+
+- `public ObjectMenuCommands(ICommand Group, ICommand Ungroup, ICommand BringToFront, ICommand BringForward, ICommand SendBackward, ICommand SendToBack, ICommand Lock, ICommand UnlockAll, ICommand Hide, ICommand ShowAll)` - What the Group, Arrange, Lock and Hide items of the Object menu do. A command is disabled while it would change nothing.
+- `public ICommand Group { get; init; }` - _(no documentation)_
+- `public ICommand Ungroup { get; init; }` - _(no documentation)_
+- `public ICommand BringToFront { get; init; }` - _(no documentation)_
+- `public ICommand BringForward { get; init; }` - _(no documentation)_
+- `public ICommand SendBackward { get; init; }` - _(no documentation)_
+- `public ICommand SendToBack { get; init; }` - _(no documentation)_
+- `public ICommand Lock { get; init; }` - _(no documentation)_
+- `public ICommand UnlockAll { get; init; }` - _(no documentation)_
+- `public ICommand Hide { get; init; }` - _(no documentation)_
+- `public ICommand ShowAll { get; init; }` - _(no documentation)_
+
+**Relationships**
+
+- Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
+
+## ObjectRowType (enum)
+
+`internal enum ObjectRowType`
+
+Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowType.cs:4-17`
+
+What a row of the object list stands for. It decides the icon and the default name.
+
+**Members**
+
+- `public Layer` - A layer. The row is a header with the layer's name, and has no toggles.
+- `public Rectangle` - A rectangle.
+- `public Ellipse` - An ellipse.
+- `public Group` - A group, which has rows of its own below it.
+
+## ObjectRowViewModel (class)
+
+`internal partial sealed class ObjectRowViewModel : ViewModelBase`
+
+Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowViewModel.cs:11-137`
+
+One row of the object list: a layer header, a shape or a group. The values are display values that PressToShape.App.ViewModels.Editor.ObjectsViewModel copies from the document. The commands ask the list to change the document, they never change these values themselves.
+
+**Members**
+
+- `public IRelayCommand BeginRenameCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.BeginRename`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ObjectRowViewModel.BeginRename.
+- `public IRelayCommand CancelRenameCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.CancelRename`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ObjectRowViewModel.CancelRename.
+- `public IRelayCommand CommitRenameCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.CommitRename`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ObjectRowViewModel.CommitRename.
+- `public IRelayCommand ToggleExpandedCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleExpanded`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleExpanded.
+- `public IRelayCommand ToggleLockCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleLock`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleLock.
+- `public IRelayCommand ToggleVisibilityCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleVisibility`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.ObjectRowViewModel.ToggleVisibility.
+- `public ObjectRowViewModel(ObjectsViewModel owner, Guid id, ObjectRowType type, int depth, Guid parentId)` - _(no documentation)_
+- `public Guid Id { get; }` - The id of the layer, shape or group.
+- `public ObjectRowType Type { get; }` - What the row stands for.
+- `public int Depth { get; }` - How deep the row is: 0 for a layer, 1 for what is on the top level of a layer, 2 below a group, and so on.
+- `public Guid ParentId { get; }` - The id of the layer or group that holds this row. The layer's own row has its own id here.
+- `public bool IsLayer { get; }` - Whether the row is a layer header.
+- `public bool IsGroup { get; }` - Whether the row is a group, so it can be opened and closed.
+- `public bool IsRectangle { get; }` - Whether the row is a rectangle.
+- `public bool IsEllipse { get; }` - Whether the row is an ellipse.
+- `public bool HasChildren { get; }` - Whether the row has an expander: layers and groups.
+- `public bool HasToggles { get; }` - Whether the row has the hide and lock toggles. A layer's flags are in the Layers tab.
+- `public bool CanRename { get; }` - Whether the row can be renamed in the list. A layer is renamed elsewhere.
+- `public string Name { get; private set; }` - _(no documentation)_
+- `public string StoredName { get; private set; }` - _(no documentation)_
+- `public bool IsVisible { get; private set; }` - _(no documentation)_
+- `public bool IsLocked { get; private set; }` - _(no documentation)_
+- `public bool IsEffectivelyHidden { get; private set; }` - _(no documentation)_
+- `public bool IsEffectivelyLocked { get; private set; }` - _(no documentation)_
+- `public bool IsSelected { get; internal set; }` - _(no documentation)_
+- `public bool IsCurrent { get; internal set; }` - _(no documentation)_
+- `public bool IsExpanded { get; internal set; }` - _(no documentation)_
+- `public bool IsDropTarget { get; internal set; }` - _(no documentation)_
+- `public bool IsRenaming { get; private set; }` - _(no documentation)_
+- `public string EditText { get; set; }` - _(no documentation)_
+- `public void Update(string name, string storedName, bool isVisible, bool isLocked, bool effectivelyHidden, bool effectivelyLocked)` - Copies the display values. Called when the document changed.
+- `public void BeginRename()` - Starts editing the name.
+- `public void CommitRename()` - Gives the object the typed name as one step and ends the editing. An empty name removes the name.
+- `public void CancelRename()` - Ends the editing and keeps the old name.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.ObjectsViewModel`
+- Inherits `PressToShape.App.ViewModels.ViewModelBase`
+
+## ObjectsViewModel (class)
+
+`internal sealed class ObjectsViewModel : LocalizedViewModel`
+
+Source: `src/PressToShape.App/ViewModels/Editor/ObjectsViewModel.cs:20-339`
+
+State of the Objects tab: the layers of the document as header rows, and below each layer its shapes and groups as a tree, topmost first. PressToShape.App.ViewModels.Editor.ObjectsViewModel.Rows is the flat list that the view shows: the rows whose groups and layer are expanded. The list follows the document. When only names, flags or the selection changed, the existing rows are updated, so the list is not rebuilt under the user's click, and which groups are open survives undo and redo as far as the groups still exist.
+
+**Members**
+
+- `public ObjectsViewModel(EditorState state, ObjectEditor objects, ILocalizer localizer)` - _(no documentation)_
+- `public ObservableCollection<ObjectRowViewModel> Rows { get; }` - The rows to show, topmost first: a layer, then what is in it, and so on. Rows below a closed group or layer are not in it.
+- `public void Select(ObjectRowViewModel row, bool extend)` - A row was clicked. A layer row makes its layer the active one. A shape or group row selects the object on the canvas: the group around it is entered, so the object can be selected, and the selection becomes this row, or with extend grows by it when it has the same parent as the rest. A row that cannot be selected (locked or hidden) is only marked as the current row.
+- `public void SetExpanded(ObjectRowViewModel row, bool expanded)` - Shows or hides the rows below a layer or group.
+- `public void SetHidden(ObjectRowViewModel row, bool hidden)` - Hides or shows the object of the row, as one step.
+- `public void SetLocked(ObjectRowViewModel row, bool locked)` - Locks or unlocks the object of the row, as one step.
+- `public void Rename(ObjectRowViewModel row, string name)` - Gives the object of the row a name, as one step. An empty name removes the name.
+- `public bool CanReorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Whether the dragged row can be dropped on the target row: both are objects with the same parent.
+- `public void Reorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Puts the dragged object directly above the target in the stacking order, as one step. Does nothing if that is not possible.
+- `protected void OnLanguageRefreshed()` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
+- Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+- Injected into `PressToShape.App.Tests.ObjectsViewModelTests.Fixture`
+- Injected into `PressToShape.App.ViewModels.Editor.ObjectRowViewModel`
+
 ## PaletteViewModel (class)
 
 `internal sealed class PaletteViewModel : ViewModelBase`
@@ -379,14 +518,16 @@ An inspector tab that only shows an empty-state message (Assets). Title and mess
 
 `internal partial sealed class PropertiesViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:21-354`
+Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:21-376`
 
 The Properties tab: the position, size, rotation and appearance of the selected shapes, and the section expansion. The fields show the current values (updated in place while shapes are dragged or edited elsewhere) and every committed edit is one undo step.
 
 **Members**
 
+- `public IRelayCommand GroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.Group`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.Group.
 - `public IRelayCommand ResetTransformCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ResetTransform`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.ResetTransform.
-- `public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer)` - _(no documentation)_
+- `public IRelayCommand UngroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.Ungroup`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.Ungroup.
+- `public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null)` - _(no documentation)_
 - `public NumberFieldViewModel X { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Y { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Width { get; }` - _(no documentation)_
@@ -425,6 +566,7 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletColorSwatchViewModel`

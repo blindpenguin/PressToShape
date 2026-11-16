@@ -54,6 +54,33 @@ _(no documentation)_
 - `public void Contains_ZeroWidthAndHeight_ContainsOnlyItsOwnPoint(double x, double y, bool expected)` - _(no documentation)_
 - `public void Contains_FarAwayPoint_IsFalse()` - _(no documentation)_
 
+## GroupShapeTests (class)
+
+`public class GroupShapeTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/GroupShapeTests.cs:9-160`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Bounds_OneChild_EqualsChildBounds()` - _(no documentation)_
+- `public void Bounds_TwoChildren_IsUnion()` - _(no documentation)_
+- `public void Bounds_RotatedChild_UsesRotatedBounds()` - _(no documentation)_
+- `public void Bounds_NestedGroups_IncludesInnerGroup()` - _(no documentation)_
+- `public void Children_AnyOrder_KeepsOrder()` - _(no documentation)_
+- `public void Children_Empty_Throws()` - _(no documentation)_
+- `public void Children_DefaultArray_Throws()` - _(no documentation)_
+- `public void Children_ContainsNull_Throws()` - _(no documentation)_
+- `public void With_NewChildren_RecomputesBox()` - _(no documentation)_
+- `public void Name_Null_Throws()` - _(no documentation)_
+- `public void Flags_NewShape_VisibleUnlockedWithoutName()` - _(no documentation)_
+- `public void Contains_PointOnChild_True()` - _(no documentation)_
+- `public void Contains_PointOnHiddenChild_False()` - _(no documentation)_
+- `public void Constructor_NoId_GetsUniqueIds()` - _(no documentation)_
+- `public void MovedCopy_Group_GivesNewIdsAndMovesAllLeaves()` - _(no documentation)_
+- `public void Leaves_PlainShapeAndNestedGroups_ReturnTheNonGroupShapes()` - _(no documentation)_
+
 ## RectangleShapeTests (class)
 
 `public class RectangleShapeTests`

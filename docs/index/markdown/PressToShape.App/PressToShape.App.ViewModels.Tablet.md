@@ -27,13 +27,13 @@ Shows message dialogs inside the layout, for a platform without windows. The lay
 
 `internal sealed class OverflowMenuViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/OverflowMenuViewModel.cs:17-50`
+Source: `src/PressToShape.App/ViewModels/Tablet/OverflowMenuViewModel.cs:17-65`
 
-The "..." menu of the tablet toolbar: the file actions, the edit actions and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
+The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, lock and hide, and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
 
 **Members**
 
-- `public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit)` - _(no documentation)_
+- `public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects)` - _(no documentation)_
 - `public IReadOnlyList<MenuItemViewModel> Items { get; }` - The items in the order they are shown, with separators between the groups.
 
 **Relationships**
@@ -41,6 +41,7 @@ The "..." menu of the tablet toolbar: the file actions, the edit actions and the
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.EditMenuCommands`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.FileMenuCommands`
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.ObjectMenuCommands`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`
 
@@ -97,9 +98,9 @@ The small color swatch at the bottom of the tablet tool column: the fill in the 
 
 `internal partial sealed class TabletPanelViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/TabletPanelViewModel.cs:15-95`
+Source: `src/PressToShape.App/ViewModels/Tablet/TabletPanelViewModel.cs:15-97`
 
-The panel of the tablet layout, which floats over the canvas and shows one of the inspector's tabs (Properties, Layers or History) while it is open. A toolbar icon toggles it. The shown tab is kept in PressToShape.App.ViewModels.Editor.InspectorViewModel.SelectedTab, as on the desktop. There is no Assets panel on the tablet until Assets has content.
+The panel of the tablet layout, which floats over the canvas and shows one of the inspector's tabs (Properties, Layers, Objects or History) while it is open. A toolbar icon toggles it. The shown tab is kept in PressToShape.App.ViewModels.Editor.InspectorViewModel.SelectedTab, as on the desktop. There is no Assets panel on the tablet until Assets has content.
 
 **Members**
 
@@ -177,7 +178,7 @@ The tool column of the tablet layout: one icon per tool group (see PressToShape.
 
 `internal sealed class TabletToolbarViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/TabletToolbarViewModel.cs:19-82`
+Source: `src/PressToShape.App/ViewModels/Tablet/TabletToolbarViewModel.cs:19-83`
 
 The compact toolbar of the tablet layout: the name of the document (with a star while it has unsaved changes), undo and redo, Duplicate and Delete, the icons that open the panel, the zoom, and the overflow menu. Everything else of the desktop toolbar and menu bar is in the overflow menu.
 
@@ -189,7 +190,7 @@ The compact toolbar of the tablet layout: the name of the document (with a star 
 - `public ToolbarButtonViewModel RedoButton { get; }` - _(no documentation)_
 - `public ToolbarButtonViewModel DuplicateButton { get; }` - Duplicates the selection. Enabled only while something is selected.
 - `public ToolbarButtonViewModel DeleteButton { get; }` - Deletes the selection (one undo step). Enabled only while something is selected.
-- `public IReadOnlyList<PanelButtonViewModel> PanelButtons { get; }` - The icons that open the panel: Properties, Layers, History.
+- `public IReadOnlyList<PanelButtonViewModel> PanelButtons { get; }` - The icons that open the panel: Properties, Layers, Objects, History.
 - `public ZoomViewModel Zoom { get; }` - _(no documentation)_
 - `public OverflowMenuViewModel OverflowMenu { get; }` - _(no documentation)_
 

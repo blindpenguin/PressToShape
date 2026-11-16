@@ -19,7 +19,7 @@ Maps the view model flag IsCheckable to a radio toggle for menu items. Other ite
 
 `public partial class DesktopShellView : UserControl`
 
-Source: `src/PressToShape.App/Views/Desktop/DesktopShellView.axaml.cs:8-72`
+Source: `src/PressToShape.App/Views/Desktop/DesktopShellView.axaml.cs:8-82`
 
 _(no documentation)_
 

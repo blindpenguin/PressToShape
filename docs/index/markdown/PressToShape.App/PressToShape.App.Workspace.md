@@ -41,14 +41,15 @@ The pointer shape the canvas should show. The view turns it into a real cursor.
 
 ## CanvasInteraction (class)
 
-`internal sealed class CanvasInteraction`
+`internal partial sealed class CanvasInteraction`
 
-Source: `src/PressToShape.App/Workspace/CanvasInteraction.cs:15-422`
+Source: `src/PressToShape.App/Workspace/CanvasInteraction.Groups.cs:9-77`
 
 What the mouse does on the canvas: draw rectangles and ellipses, select, move and delete shapes. Works on document positions and edits the document through PressToShape.App.Workspace.EditorState. It has no UI types. A drag that is in progress ends with PressToShape.App.Workspace.CanvasInteraction.PointerReleased or PressToShape.App.Workspace.CanvasInteraction.Cancel.
 
 **Members**
 
+- `public void DoubleClicked(double x, double y)` - A double-click at this document position. With the Select tool on a group it enters the group and selects what is under the pointer; on a shape of an entered group that is a group itself it enters that group. On empty space it leaves the entered group by one level. Ends a drag that is in progress without a result.
 - `public CanvasInteraction(EditorState state)` - _(no documentation)_
 - `public bool IsDragging { get; }` - Whether a drag is in progress.
 - `public HandleType? DraggedHandle { get; }` - The handle that is being dragged, or null if no resize or rotate drag is in progress.
@@ -64,6 +65,7 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
 
 ## CanvasKey (enum)
 
@@ -98,13 +100,13 @@ The one mapping between screen pixels and document units. Drawing and picking bo
 
 `internal static class CanvasScene`
 
-Source: `src/PressToShape.App/Workspace/CanvasScene.cs:11-70`
+Source: `src/PressToShape.App/Workspace/CanvasScene.cs:11-95`
 
 Turns a document into the shapes to draw on the canvas, so the drawing control needs no geometry rules.
 
 **Members**
 
-- `public IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY)` - Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones. Hidden layers are left out. Locked layers are drawn like any other.
+- `public IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY, Guid? enteredGroupId = null)` - Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones. Groups are flattened: only the shapes in them are drawn, in order. Hidden layers, hidden shapes and the shapes of hidden groups are left out. Locked shapes are drawn like any other.
 - `public ScreenShape BuildShape(Shape shape, double zoomPercent, double originX, double originY)` - Converts one shape, for example a shape that is still being drawn and is not in a document.
 
 ## ColorPickTarget (enum)
@@ -187,25 +189,44 @@ Which file the open document belongs to and whether it has unsaved changes. Docu
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
 
+## DoubleTapDetector (class)
+
+`internal sealed class DoubleTapDetector`
+
+Source: `src/PressToShape.App/Workspace/DoubleTapDetector.cs:9-48`
+
+Recognises a double-tap: two taps close in time and place. It holds no clock: the caller says when a tap happened, so a test can say it with plain numbers. A tap that moved too far, or any other input in between, is not a tap and starts the count again.
+
+**Members**
+
+- `public long MaxIntervalMilliseconds` - The most time between two taps of a double-tap, in milliseconds.
+- `public double MaxDistance` - The most distance, in screen pixels, between two taps of a double-tap, and the most a finger may move during one tap.
+- `public bool Tap(long timeMilliseconds, double x, double y)` - A tap ended at this place and time. Returns whether it completes a double-tap. A completed double-tap uses up both taps, so a third tap right after does not count as another one.
+- `public void Reset()` - The last tap does not count any more: something else happened (a drag, two fingers, another tool).
+
 ## EditorState (class)
 
 `internal partial sealed class EditorState : ObservableObject`
 
-Source: `src/PressToShape.App/Workspace/EditorState.cs:18-429`
+Source: `src/PressToShape.App/Workspace/EditorState.Groups.cs:11-63`
 
 State shared by all regions of the editor shell: the document, its undo history, active tool, zoom and selection summary. View models observe it through PropertyChanged, so every route that changes a value stays in sync. This class is the only place that changes the document: edits go through PressToShape.App.Workspace.EditorState.Edit, a drag through PressToShape.App.Workspace.EditorState.Preview and PressToShape.App.Workspace.EditorState.Commit, and a new or opened document through PressToShape.App.Workspace.EditorState.ReplaceDocument.
 
 **Members**
 
+- `public Guid? EnteredGroupId { get; private set; }` - _(no documentation)_
 - `public EditorState(Document? document = null)` - Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.
+- `public bool EnterGroup(Guid groupId)` - Enters the group. Of the selection only the direct children of the group stay selected. Does nothing if the id is not a group that can be selected.
 - `public Action<ColorPickTarget, Color>? ColorPicked` - Raised when a pick from the canvas ended on a shape: the target that asked for it and the color that was taken.
 - `public EventHandler? HistoryChanged` - Raised after the undo history changed: a step was recorded, undone or redone, or the history was reset.
 - `public DocumentHistory History { get; }` - The undo history of the current document.
 - `public bool IsDragInProgress { get; set; }` - _(no documentation)_
+- `public void LeaveGroup()` - Leaves the entered group by one level and selects it. If that group is inside another group, the other group is entered. Does nothing when no group is entered.
 - `public bool CanUndo { get; }` - Whether a step can be undone right now.
 - `public bool CanRedo { get; }` - Whether a step can be redone right now.
 - `public Document Document { get; set; }` - _(no documentation)_
 - `public Guid ActiveLayerId { get; set; }` - _(no documentation)_
+- `public void LeaveAllGroups()` - Leaves every entered group at once, so the top level of the drawing is selectable again. The selection stays.
 - `public ImmutableArray<Guid> SelectedShapeIds { get; private set; }` - _(no documentation)_
 - `public Guid? SelectedShapeId { get; }` - The id of the selected shape if exactly one shape is selected, otherwise null.
 - `public int SelectedCount { get; }` - How many shapes are selected.
@@ -240,7 +261,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - `public void ZoomAround(double percent, double anchorX, double anchorY)` - Changes the zoom so that the point of the drawing under the screen position (anchorX, anchorY) of the canvas area stays under it. The zoom stays in its range, and the view offset stays limited.
 - `public void Select(Guid? shapeId)` - Selects a shape, or clears the selection with null.
 - `public void SelectOnly(Guid shapeId)` - Makes this shape the only selected shape. Does nothing useful for an id that cannot be selected: the selection is then cleared.
-- `public void SetSelection(IEnumerable<Guid> shapeIds)` - Replaces the selection by these shapes, keeping their order. Ids that are unknown, repeated, or in a hidden or locked layer are left out.
+- `public void SetSelection(IEnumerable<Guid> shapeIds)` - Replaces the selection by these shapes or groups, keeping their order. Ids that are unknown, repeated, hidden or locked (also through their layer or a group around them) are left out. A selection holds only shapes with the same parent, the same group or the top level of the layers: of ids with different parents, the ones with the parent of the first valid id stay.
 - `public void ToggleSelected(Guid shapeId)` - Adds the shape to the selection, or removes it if it is selected. A shape that cannot be selected is ignored.
 - `public void ClearSelection()` - Clears the selection.
 - `public void SetZoom(double percent)` - _(no documentation)_
@@ -252,6 +273,9 @@ State shared by all regions of the editor shell: the document, its undo history,
 **Relationships**
 
 - Depends on (constructor) `PressToShape.Core.Documents.Document`
+- Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
+- Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
+- Injected into `PressToShape.App.Tests.ObjectsViewModelTests.Fixture`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.StatusBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.ToolbarViewModel`
@@ -260,6 +284,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.LayerItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.LayersViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.ObjectsViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PaletteViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
@@ -269,6 +294,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.Workspace.CanvasInteraction`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
 - Injected into `PressToShape.App.Workspace.DocumentSession`
+- Injected into `PressToShape.App.Workspace.ObjectEditor`
 - Injected into `PressToShape.App.Workspace.SelectionEditor`
 
 ## HandleType (enum)
@@ -295,7 +321,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-42`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-56`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -322,7 +348,7 @@ The device that made a pointer event.
 
 `internal enum InspectorTab`
 
-Source: `src/PressToShape.App/Workspace/InspectorTab.cs:4-10`
+Source: `src/PressToShape.App/Workspace/InspectorTab.cs:4-11`
 
 The tabs of the inspector panel.
 
@@ -330,6 +356,7 @@ The tabs of the inspector panel.
 
 - `public Properties` - _(no documentation)_
 - `public Layers` - _(no documentation)_
+- `public Objects` - _(no documentation)_
 - `public Assets` - _(no documentation)_
 - `public History` - _(no documentation)_
 
@@ -383,6 +410,45 @@ A value that is the same for every selected shape, or marked as mixed when the s
 **Relationships**
 
 - Injected into `PressToShape.App.Workspace.SelectionValues`
+
+## ObjectEditor (class)
+
+`internal sealed class ObjectEditor`
+
+Source: `src/PressToShape.App/Workspace/ObjectEditor.cs:14-169`
+
+Edits of the structure of the drawing: group and ungroup, arrange, lock and hide single objects, and names. Each change of the document is one history step. A command that would change nothing records no step, and its Can... property is false.
+
+**Members**
+
+- `public ObjectEditor(EditorState state, Func<Guid>? idSource = null)` - _(no documentation)_
+- `public bool CanGroup { get; }` - Whether at least two shapes with the same layer and the same group are selected.
+- `public bool CanUngroup { get; }` - Whether a group is selected.
+- `public bool CanHideSelection { get; }` - Whether the selection has something to hide.
+- `public bool CanLockSelection { get; }` - Whether the selection has something to lock.
+- `public bool CanShowAll { get; }` - Whether any shape or group of the document, nested ones included, is hidden.
+- `public bool CanUnlockAll { get; }` - Whether any shape or group of the document, nested ones included, is locked.
+- `public bool CanArrange(ArrangeType type)` - Whether arranging the selection changes the order of anything.
+- `public bool CanMoveAbove(Guid id, Guid targetId)` - Whether the shape can be moved directly above the target: both exist, are different and have the same layer and group.
+- `public void Group()` - Replaces the selected shapes by a new group, which becomes the selection. Does nothing if PressToShape.App.Workspace.ObjectEditor.CanGroup is false.
+- `public void Ungroup()` - Replaces the selected groups by their shapes, which become the selection together with the other selected shapes.
+- `public void Arrange(ArrangeType type)` - Moves the selected shapes in the stacking order of their layer or group. The selection stays.
+- `public void MoveAbove(Guid id, Guid targetId)` - Puts a shape directly above another one that has the same layer and group, as one step. Does nothing if that is not possible.
+- `public void LockSelection()` - Locks the selected shapes. They leave the selection, because locked shapes cannot be selected.
+- `public void HideSelection()` - Hides the selected shapes. They leave the selection, because hidden shapes cannot be selected.
+- `public void SetLocked(IEnumerable<Guid> ids, bool locked)` - Locks or unlocks the shapes with these ids, as one step. Unknown ids are ignored.
+- `public void SetHidden(IEnumerable<Guid> ids, bool hidden)` - Hides or shows the shapes with these ids, as one step. Unknown ids are ignored.
+- `public void ShowAll()` - Shows every shape and group of the document, nested ones included, as one step.
+- `public void UnlockAll()` - Unlocks every shape and group of the document, nested ones included, as one step.
+- `public void Rename(Guid id, string name)` - Gives a shape or group a name, as one step. An empty or blank name removes the name. Does nothing for an unknown id.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Injected into `PressToShape.App.Tests.ObjectsViewModelTests.Fixture`
+- Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.ObjectsViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 
 ## PropertiesSection (enum)
 
@@ -573,13 +639,13 @@ A rectangle in screen pixels, for example the outline of the selected shape.
 
 `internal readonly record ScreenShape : IEquatable<ScreenShape>`
 
-Source: `src/PressToShape.App/Workspace/ScreenShape.cs:19-29`
+Source: `src/PressToShape.App/Workspace/ScreenShape.cs:20-31`
 
 A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
 
 **Members**
 
-- `public ScreenShape(ScreenShapeType Type, double X, double Y, double Width, double Height, Color? Fill, Color? Stroke, double StrokeWidth, double Opacity, double RotationDegrees = 0)` - A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
+- `public ScreenShape(ScreenShapeType Type, double X, double Y, double Width, double Height, Color? Fill, Color? Stroke, double StrokeWidth, double Opacity, double RotationDegrees = 0, bool IsDimmed = false)` - A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
 - `public ScreenShapeType Type { get; init; }` - Rectangle or ellipse.
 - `public double X { get; init; }` - Left edge in screen pixels.
 - `public double Y { get; init; }` - Top edge in screen pixels.
@@ -590,6 +656,7 @@ A shape ready to draw: position, size and stroke width are already in screen pix
 - `public double StrokeWidth { get; init; }` - Stroke width in screen pixels. Zero when there is no stroke.
 - `public double Opacity { get; init; }` - Opacity of the whole shape, 0 to 1.
 - `public double RotationDegrees { get; init; }` - Rotation in degrees, clockwise, around the center of the box. 0 for an upright shape.
+- `public bool IsDimmed { get; init; }` - Whether the shape is drawn faded because a group is entered and the shape is not inside it.
 
 ## ScreenShapeType (enum)
 
@@ -624,7 +691,7 @@ A rectangle in document units. Used for the selection box that is dragged on emp
 
 `internal sealed class SelectionEditor`
 
-Source: `src/PressToShape.App/Workspace/SelectionEditor.cs:14-188`
+Source: `src/PressToShape.App/Workspace/SelectionEditor.cs:14-217`
 
 Edits that work on the selected shapes and do not need the mouse: select all, deselect, copy, cut, paste, duplicate (and, in the same class, nudging and property edits). Every change of the document is one history step.
 
@@ -640,10 +707,11 @@ Edits that work on the selected shapes and do not need the mouse: select all, de
 - `public void Copy()` - Puts the selected shapes on the clipboard. The document stays unchanged.
 - `public void Cut()` - Copies the selected shapes and removes them from the document, as one step.
 - `public void Paste(bool inPlace)` - Adds copies of the clipboard shapes to the top of the active layer, as one step, and selects them. Each paste moves the copies 10 units further right and down, unless inPlace is true.
-- `public void Duplicate()` - Adds copies of the selected shapes, each at the top of its own layer, 10 units right and down, as one step, and selects them. The clipboard is not touched.
+- `public void Duplicate()` - Adds copies of the selected shapes and groups, each at the top of its own layer or group, 10 units right and down, as one step, and selects them. The clipboard is not touched.
 - `public void Nudge(double dx, double dy)` - Moves the selected shapes by the distance in document units, not limited to the artboard. Repeated nudges of the same selection become one history step, as long as the document was not changed by anything else in between.
-- `public void Apply(HistoryStepType type, Func<Shape, Shape> change)` - Applies the change to every selected shape as one step. No step if no shape changed.
-- `public void ApplyTransform(HistoryStepType type, Func<IReadOnlyList<Shape>, IReadOnlyList<Shape>> change)` - Replaces the selected shapes by the returned list, which must have the same shapes (same ids) in the same order, as one step. For changes that need all shapes together. No step if nothing changed.
+- `public void Apply(HistoryStepType type, Func<Shape, Shape> change)` - Applies the change to every selected shape as one step. A selected group is not changed itself: the change is applied to the shapes below it. No step if no shape changed.
+- `public void ApplyTransform(HistoryStepType type, Func<IReadOnlyList<Shape>, IReadOnlyList<Shape>> change)` - Replaces the shapes of the selection by the returned list, which must have the same shapes (same ids) in the same order, as one step. For changes that need all shapes together. The shapes are those below the selected groups. No step if nothing changed.
+- `public void ApplyTransformWithFrame(HistoryStepType type, Func<IReadOnlyList<Shape>, SelectionFrame, IReadOnlyList<Shape>> change)` - Like PressToShape.App.Workspace.SelectionEditor.ApplyTransform, and the change also gets the frame of the selection. A selected group makes the frame upright and around all its shapes, as for several shapes.
 
 **Relationships**
 
@@ -674,7 +742,7 @@ The box around the selection, in document units: one shape gives its own (possib
 
 `internal static class SelectionGeometry`
 
-Source: `src/PressToShape.App/Workspace/SelectionGeometry.cs:8-157`
+Source: `src/PressToShape.App/Workspace/SelectionGeometry.cs:8-158`
 
 Where the selection frame and its handles are, and which handle a point hits. Pure functions, document units.
 
@@ -693,21 +761,22 @@ Where the selection frame and its handles are, and which handle a point hits. Pu
 
 `internal sealed record SelectionOverlay : IEquatable<SelectionOverlay>`
 
-Source: `src/PressToShape.App/Workspace/SelectionOverlay.cs:17-101`
+Source: `src/PressToShape.App/Workspace/SelectionOverlay.cs:19-115`
 
 Everything the canvas draws for the selection, in screen pixels: an outline for every selected shape, the box and handles around the selection, the line to the rotate handle, and the box that is being dragged on empty space.
 
 **Members**
 
-- `public SelectionOverlay(IReadOnlyList<ScreenPolygon> Outlines, ScreenPolygon? Box, IReadOnlyList<ScreenHandle> Handles, ScreenLine? RotateLink, ScreenRect? SelectionBox)` - Everything the canvas draws for the selection, in screen pixels: an outline for every selected shape, the box and handles around the selection, the line to the rotate handle, and the box that is being dragged on empty space.
+- `public SelectionOverlay(IReadOnlyList<ScreenPolygon> Outlines, ScreenPolygon? Box, IReadOnlyList<ScreenHandle> Handles, ScreenLine? RotateLink, ScreenRect? SelectionBox, ScreenPolygon? EnteredGroup = null)` - Everything the canvas draws for the selection, in screen pixels: an outline for every selected shape, the box and handles around the selection, the line to the rotate handle, and the box that is being dragged on empty space.
 - `public IReadOnlyList<ScreenPolygon> Outlines { get; init; }` - One turned outline per selected shape. For every tool.
 - `public ScreenPolygon? Box { get; init; }` - The frame around the selection (Select tool only).
 - `public IReadOnlyList<ScreenHandle> Handles { get; init; }` - The eight resize handles and the rotate handle (Select tool only).
 - `public ScreenLine? RotateLink { get; init; }` - The line from the middle of the top edge to the rotate handle (Select tool only).
 - `public ScreenRect? SelectionBox { get; init; }` - The box being dragged, if any (Select tool only).
+- `public ScreenPolygon? EnteredGroup { get; init; }` - The outline of the entered group, if one is entered. Drawn for every tool.
 - `public double HandleSize` - The side of a handle in screen pixels.
 - `public SelectionOverlay Empty { get; }` - An overlay without anything to draw.
-- `public SelectionOverlay Build(Document document, IEnumerable<Guid> selectedIds, Tool tool, double zoomPercent, double originX, double originY, SelectionBox? selectionBox = null)` - Builds the overlay. Shapes of hidden or locked layers are not part of it, even if their ids are in the selection. Handles, the box, the link and the dragged box exist only for the Select tool; outlines exist for every tool.
+- `public SelectionOverlay Build(Document document, IEnumerable<Guid> selectedIds, Tool tool, double zoomPercent, double originX, double originY, SelectionBox? selectionBox = null, Guid? enteredGroupId = null)` - Builds the overlay. Shapes of hidden or locked layers are not part of it, even if their ids are in the selection. Handles, the box, the link and the dragged box exist only for the Select tool; outlines exist for every tool.
 
 **Relationships**
 
@@ -717,17 +786,20 @@ Everything the canvas draws for the selection, in screen pixels: an outline for 
 
 `internal static class SelectionQueries`
 
-Source: `src/PressToShape.App/Workspace/SelectionQueries.cs:14-83`
+Source: `src/PressToShape.App/Workspace/SelectionQueries.cs:15-194`
 
-Questions about which shapes can be selected and which shapes a selection box touches. A shape can be selected when it is in a visible, unlocked layer. Results are in document order: bottom layer first, and within a layer bottom shape first.
+Questions about which shapes can be selected and which shapes a selection box touches. A shape can be selected when its layer and every group around it are visible and not locked, and it is visible and not locked itself. Results are in document order: bottom layer first, and within a layer or group bottom shape first, a group before its children. Groups are shapes too: a click selects the group, and only after the group was entered (see PressToShape.App.Workspace.EditorState.EnteredGroupId) its children.
 
 **Members**
 
-- `public bool IsSelectable(Document document, Guid shapeId)` - Whether the document has a shape with this id in a visible, unlocked layer.
-- `public IReadOnlyList<Shape> Selectable(Document document)` - All shapes that can be selected.
-- `public IReadOnlyList<Shape> ShapesTouching(Document document, double x, double y, double width, double height)` - The selectable shapes whose axis-aligned bounds, after rotation, overlap the rectangle. Touching edges count.
-- `public IReadOnlyList<Shape> SelectedShapes(Document document, IEnumerable<Guid> shapeIds)` - The shapes with these ids, in document order. Unknown ids are ignored.
-- `public IReadOnlyList<Shape> SelectedSelectable(Document document, IEnumerable<Guid> shapeIds)` - The shapes with these ids that can be selected, in document order. One pass, however many ids.
+- `public bool IsSelectable(Document document, Guid shapeId)` - Whether the document has a shape or group with this id that can be selected.
+- `public IReadOnlyList<Shape> Selectable(Document document, Guid? enteredGroupId = null)` - The shapes and groups a click or a box can select: the direct children of the entered group, or, without one, the top-level shapes of every layer. Hidden and locked ones, and the ones in hidden or locked layers or groups, are left out.
+- `public IReadOnlyList<Shape> ShapesTouching(Document document, double x, double y, double width, double height, Guid? enteredGroupId = null)` - The selectable shapes (see PressToShape.App.Workspace.SelectionQueries.Selectable) whose axis-aligned bounds, after rotation, overlap the rectangle. Touching edges count.
+- `public Shape? TargetFor(Document document, Shape hit, Guid? enteredGroupId = null)` - The shape or group that a hit on hit selects. Without an entered group it is the outermost group around the hit shape, or the shape itself. With one it is the direct child of the entered group that holds the hit shape, and null when the hit shape is not inside the entered group.
+- `public IReadOnlyList<Shape> SelectedShapes(Document document, IEnumerable<Guid> shapeIds)` - The shapes and groups with these ids, in document order. Unknown ids are ignored.
+- `public IReadOnlyList<Shape> SelectedSelectable(Document document, IEnumerable<Guid> shapeIds)` - The shapes and groups with these ids that can be selected, in document order. One pass, however many ids.
+- `public IReadOnlyList<Shape> SelectedLeaves(Document document, IEnumerable<Guid> shapeIds)` - The shapes below the selected shapes and groups that are not groups, in document order: what move, resize, rotate and the appearance work on. A selected plain shape is its own leaf. Each leaf appears once.
+- `public IReadOnlyDictionary<Guid, Guid?> SelectableWithParents(Document document, IReadOnlySet<Guid> wanted)` - Of the wanted ids, the ones that can be selected, each with the id of its closest group (null on the top level of a layer). One pass over the document.
 
 ## SelectionSummaryText (class)
 
@@ -764,13 +836,13 @@ The math of resizing, rotating and moving the selection and of the Properties fi
 
 `internal sealed record SelectionValues : IEquatable<SelectionValues>`
 
-Source: `src/PressToShape.App/Workspace/SelectionValues.cs:53-87`
+Source: `src/PressToShape.App/Workspace/SelectionValues.cs:54-90`
 
-The values the Properties tab shows for a selection. Position and size are those of the selection frame (one shape: its own box, several: the box around all of them, with rotation 0). Appearance values are mixed when the shapes differ.
+The values the Properties tab shows for a selection. Position and size are those of the selection frame (one shape: its own box, several or a group: the box around all of them, with rotation 0). Appearance values are those of the shapes below the groups and are mixed when they differ.
 
 **Members**
 
-- `public SelectionValues(double X, double Y, double Width, double Height, double Rotation, bool IsSingle, Mixed<Color?> Fill, Mixed<Color?> Stroke, Mixed<double> StrokeWidth, Mixed<double> Opacity)` - The values the Properties tab shows for a selection. Position and size are those of the selection frame (one shape: its own box, several: the box around all of them, with rotation 0). Appearance values are mixed when the shapes differ.
+- `public SelectionValues(double X, double Y, double Width, double Height, double Rotation, bool IsSingle, Mixed<Color?> Fill, Mixed<Color?> Stroke, Mixed<double> StrokeWidth, Mixed<double> Opacity)` - The values the Properties tab shows for a selection. Position and size are those of the selection frame (one shape: its own box, several or a group: the box around all of them, with rotation 0). Appearance values are those of the shapes below the groups and are mixed when they differ.
 - `public double X { get; init; }` - Left edge of the frame.
 - `public double Y { get; init; }` - Top edge of the frame.
 - `public double Width { get; init; }` - Width of the frame.

@@ -23,8 +23,10 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 
 **Properties**
 
+- `DimOpacity` (Styled, `double`, default 0.35) at line 57
 - `Document` (Styled, `Document?`, default not set) at line 17
 - `Draft` (Styled, `ScreenShape?`, default not set) at line 33
+- `EnteredGroupId` (Styled, `Guid?`, default not set) at line 53
 - `HandleSize` (Styled, `double`, default SelectionOverlay.HandleSize) at line 49
 - `OriginX` (Styled, `double`, default not set) at line 25
 - `OriginY` (Styled, `double`, default not set) at line 29

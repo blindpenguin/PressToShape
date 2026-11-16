@@ -70,6 +70,26 @@ _(no documentation)_
 - `public void ConsumeIfSamePress_AfterTheWindow_IsFalse()` - _(no documentation)_
 - `public void NoteClosed_Again_StartsANewWindow()` - _(no documentation)_
 
+## CanvasAreaViewModelDoubleTapTests (class)
+
+`public class CanvasAreaViewModelDoubleTapTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelDoubleTapTests.cs:12-160`
+
+_(no documentation)_
+
+**Members**
+
+- `public void DoubleTap_OnAGroup_EntersItAndSelectsTheChildUnderTheFinger()` - _(no documentation)_
+- `public void SingleTap_OnAGroup_OnlySelectsIt()` - _(no documentation)_
+- `public void TwoTaps_TooFarApartInTime_DoNotEnter()` - _(no documentation)_
+- `public void TwoTaps_OnDifferentSpots_DoNotEnter()` - _(no documentation)_
+- `public void DoubleTap_OnEmptySpaceInsideAnEnteredGroup_LeavesIt()` - _(no documentation)_
+- `public void TapBesideTheEnteredGroup_LeavesItWithoutADoubleTap()` - _(no documentation)_
+- `public void TapThenADragOfTheSameShape_StillDragsAndIsNoDoubleTap()` - _(no documentation)_
+- `public void DoubleTap_WithAnotherTool_DoesNothing()` - _(no documentation)_
+- `public void TwoFingerGesture_BetweenTaps_BreaksTheDoubleTap()` - _(no documentation)_
+
 ## CanvasAreaViewModelTests (class)
 
 `public class CanvasAreaViewModelTests`
@@ -188,6 +208,38 @@ _(no documentation)_
 - `public void Finger_FifteenPixelsFromAHandle_GrabsIt_ButTheMouseDoesNot()` - _(no documentation)_
 - `public void TouchGrabSize_CanBeChanged()` - _(no documentation)_
 - `public void Mouse_StillDrawsWithTheExistingMethods()` - _(no documentation)_
+
+## CanvasInteractionGroupTests (class)
+
+`public class CanvasInteractionGroupTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionGroupTests.cs:13-327`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Click_OnAMember_SelectsTheOutermostGroup()` - _(no documentation)_
+- `public void Click_InTheGapOfAGroup_SelectsNothing()` - _(no documentation)_
+- `public void ShiftClick_OnAMemberAndAPlainShape_TogglesTheGroupAndTheShape()` - _(no documentation)_
+- `public void DoubleClick_OnAGroup_EntersItAndSelectsTheChildUnderThePointer()` - _(no documentation)_
+- `public void Click_AfterEntering_SelectsChildrenAndIgnoresShapesOutsideTheGroup()` - _(no documentation)_
+- `public void DoubleClick_OnAPlainShape_DoesNothing()` - _(no documentation)_
+- `public void DoubleClick_OnANestedGroupInsideTheEnteredGroup_EntersTheInnerGroup()` - _(no documentation)_
+- `public void DoubleClick_OnEmptySpaceInsideAnEnteredGroup_LeavesIt()` - _(no documentation)_
+- `public void Click_OnEmptySpaceBesideTheEnteredGroup_LeavesIt()` - _(no documentation)_
+- `public void Click_OnEmptySpaceInsideTheBoxOfTheEnteredGroup_OnlyClearsTheSelection()` - _(no documentation)_
+- `public void DoubleClick_WithAnotherTool_DoesNothing()` - _(no documentation)_
+- `public void Move_Group_IsOneStepAndMovesAllLeaves()` - _(no documentation)_
+- `public void Move_Group_UndoRestoresTheDocument()` - _(no documentation)_
+- `public void Resize_Group_IsOneStepAndKeepsTheLayout()` - _(no documentation)_
+- `public void Rotate_Group_IsOneStepAndTheGroupStaysUpright()` - _(no documentation)_
+- `public void Rubberband_AtTopLevel_SelectsGroupsNotMembers()` - _(no documentation)_
+- `public void Rubberband_InsideAnEnteredGroup_SelectsItsChildren()` - _(no documentation)_
+- `public void Click_OnALockedOrHiddenShape_SelectsWhatIsBelow()` - _(no documentation)_
+- `public void Click_OnAMemberOfALockedGroup_SelectsNothing()` - _(no documentation)_
+- `public void DeleteSelection_Group_RemovesTheWholeGroupAsOneStep()` - _(no documentation)_
+- `public void Escape_InAnEnteredGroup_LeavesIt()` - _(no documentation)_
 
 ## CanvasInteractionTests (class)
 
@@ -315,6 +367,26 @@ _(no documentation)_
 - `public void ToDocument_KnownValues_ReturnsDocumentPosition(double screen, double origin, double zoom, double expected)` - _(no documentation)_
 - `public void ToScreen_KnownValues_ReturnsScreenPosition(double value, double origin, double zoom, double expected)` - _(no documentation)_
 - `public void ToScreenThenToDocument_AnyZoomAndOrigin_ReturnsTheStart(double zoom, double origin)` - _(no documentation)_
+
+## CanvasSceneGroupTests (class)
+
+`public class CanvasSceneGroupTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasSceneGroupTests.cs:10-115`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Build_Groups_AreFlattenedInDrawingOrder()` - _(no documentation)_
+- `public void Build_HiddenShapeHiddenGroupAndItsChildren_AreLeftOut()` - _(no documentation)_
+- `public void Build_HiddenGroupFlagDoesNotChangeTheChildrensOwnFlag_ButTheyAreStillLeftOut()` - _(no documentation)_
+- `public void Build_LockedShapesAndGroups_AreDrawn()` - _(no documentation)_
+- `public void Build_NoEnteredGroup_DimsNothing()` - _(no documentation)_
+- `public void Build_EnteredGroup_DimsEverythingOutsideIt()` - _(no documentation)_
+- `public void Build_EnteredNestedGroup_DimsSiblingsOfItsParentsToo()` - _(no documentation)_
+- `public void Build_EnteredOuterGroup_DimsNothingInsideIt()` - _(no documentation)_
+- `public void Build_RotatedLeafInGroup_KeepsItsRotationAndPosition()` - _(no documentation)_
 
 ## CanvasSceneTests (class)
 
@@ -623,6 +695,24 @@ _(no documentation)_
 - `public void Save_ThenUndo_IsDirty_AndRedoIsCleanAgain()` - _(no documentation)_
 - `public void Save_DoesNotTouchTheHistory()` - _(no documentation)_
 
+## DoubleTapDetectorTests (class)
+
+`public class DoubleTapDetectorTests`
+
+Source: `tests/PressToShape.App.Tests/DoubleTapDetectorTests.cs:6-73`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Tap_FirstTap_IsNotADoubleTap()` - _(no documentation)_
+- `public void Tap_SecondTapSoonAndNear_IsADoubleTap()` - _(no documentation)_
+- `public void Tap_SecondTapTooLate_StartsANewCount()` - _(no documentation)_
+- `public void Tap_SecondTapTooFar_StartsANewCount()` - _(no documentation)_
+- `public void Tap_ThirdTapRightAfterADoubleTap_IsNotAnotherDoubleTap()` - _(no documentation)_
+- `public void Reset_ForgetsTheLastTap()` - _(no documentation)_
+- `public void Tap_TimeGoingBackwards_IsNotADoubleTap()` - _(no documentation)_
+
 ## EditorShellViewModelTests (class)
 
 `public class EditorShellViewModelTests`
@@ -642,6 +732,36 @@ _(no documentation)_
 - `public Task ConfirmClose_WithoutChanges_AllowsClosingWithoutAQuestion()` - _(no documentation)_
 - `public Task ConfirmClose_WithChanges_AsksAndFollowsTheAnswer()` - _(no documentation)_
 - `public void FitToWindow_UsesTheCanvasViewport()` - _(no documentation)_
+
+## EditorStateGroupTests (class)
+
+`public class EditorStateGroupTests`
+
+Source: `tests/PressToShape.App.Tests/EditorStateGroupTests.cs:12-274`
+
+_(no documentation)_
+
+**Members**
+
+- `public void EnterGroup_Group_SetsEnteredGroup()` - _(no documentation)_
+- `public void EnterGroup_PlainShapeUnknownIdHiddenOrLockedGroup_DoesNothing()` - _(no documentation)_
+- `public void EnterGroup_SelectedGroup_ClearsTheSelectionOfTheGroupItself()` - _(no documentation)_
+- `public void EnterGroup_SelectedChildren_StaySelected()` - _(no documentation)_
+- `public void LeaveGroup_EnteredGroup_LeavesAndSelectsIt()` - _(no documentation)_
+- `public void LeaveGroup_NestedGroup_EntersTheOuterGroup()` - _(no documentation)_
+- `public void LeaveGroup_NothingEntered_DoesNothing()` - _(no documentation)_
+- `public void EnteredGroup_Undo_ClearedWhenGroupIsGone()` - _(no documentation)_
+- `public void EnteredGroup_Delete_Clears()` - _(no documentation)_
+- `public void EnteredGroup_Ungroup_Clears()` - _(no documentation)_
+- `public void EnteredGroup_HiddenOrLocked_Clears()` - _(no documentation)_
+- `public void EnteredGroup_ChangeInsideTheGroup_StaysEntered()` - _(no documentation)_
+- `public void ReplaceDocument_NewDocument_ClearsTheEnteredGroup()` - _(no documentation)_
+- `public void SetSelection_IdsWithDifferentParents_KeepsTheFirstParentsIds()` - _(no documentation)_
+- `public void SetSelection_GroupAndPlainShapeOnTopLevel_BothSelected()` - _(no documentation)_
+- `public void SetSelection_ChildOfHiddenGroup_IsLeftOut()` - _(no documentation)_
+- `public void Selection_GroupGetsHidden_LeavesTheSelection()` - _(no documentation)_
+- `public void Selection_ChildSelectedThenGroupLocked_LeavesTheSelection()` - _(no documentation)_
+- `public void Selection_AllMembersRemoved_GroupDisappearsFromTheSelection()` - _(no documentation)_
 
 ## EditorStateTests (class)
 
@@ -965,7 +1085,7 @@ The application of the headless UI tests: the real theme and control styles, but
 
 `public class HistoryViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-236`
+Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-238`
 
 _(no documentation)_
 
@@ -1168,6 +1288,24 @@ _(no documentation)_
 - `public void Press_AfterAFiredPress_ResetsTheFiredFlag()` - _(no documentation)_
 - `public void IsWatching_IsTrueOnlyWhileWaiting()` - _(no documentation)_
 
+## ManualTimeProvider (class)
+
+`internal sealed class ManualTimeProvider : TimeProvider`
+
+Source: `tests/PressToShape.App.Tests/ManualTimeProvider.cs:6-15`
+
+A clock that only moves when a test says so. One timestamp tick is one millisecond.
+
+**Members**
+
+- `public long TimestampFrequency { get; }` - _(no documentation)_
+- `public long GetTimestamp()` - _(no documentation)_
+- `public void Advance(long milliseconds)` - _(no documentation)_
+
+**Relationships**
+
+- Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
+
 ## MemorySettingsStore (class)
 
 `internal sealed class MemorySettingsStore : ISettingsStore`
@@ -1190,7 +1328,7 @@ Settings kept in memory.
 
 `public class MenuBarViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-566`
+Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-584`
 
 _(no documentation)_
 
@@ -1315,17 +1453,130 @@ _(no documentation)_
 - `public void WhileEditing_NewValuesDoNotReplaceTheTypedText_UntilRevertedOrCommitted()` - _(no documentation)_
 - `public void Constructor_RejectsBadArguments()` - _(no documentation)_
 
-## OverflowMenuViewModelTests (class)
+## ObjectCommandsTests (class)
 
-`public class OverflowMenuViewModelTests`
+`public class ObjectCommandsTests`
 
-Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-161`
+Source: `tests/PressToShape.App.Tests/ObjectCommandsTests.cs:13-232`
 
 _(no documentation)_
 
 **Members**
 
-- `public void Items_AreTheFileActions_TheEditActions_AndTheLanguage_InOrder()` - _(no documentation)_
+- `public void Commands_NothingSelected_AreDisabled()` - _(no documentation)_
+- `public void Group_TwoSelectedShapes_GroupsThemAsOneStepAndUngroupBringsThemBack()` - _(no documentation)_
+- `public void Group_OneSelectedShape_IsDisabled()` - _(no documentation)_
+- `public void Arrange_BottomShape_BringToFrontAndForwardAreEnabledSendBackwardIsNot()` - _(no documentation)_
+- `public void Arrange_SelectionChange_RaisesCanExecuteChanged()` - _(no documentation)_
+- `public void Lock_SelectedShape_LocksItAndEnablesUnlockAll()` - _(no documentation)_
+- `public void Hide_SelectedShape_HidesItAndEnablesShowAll()` - _(no documentation)_
+- `public void ObjectMenu_Item_IsBoundToItsCommandAndShowsTheShortcut(string header, string gesture)` - _(no documentation)_
+- `public void ObjectMenu_ItemsFollowTheCommands()` - _(no documentation)_
+- `public void UndoOfGroup_ReenablesGroupAndDisablesUngroup()` - _(no documentation)_
+- `public void QuickActions_GroupAndUngroupButtons_FollowTheSelection()` - _(no documentation)_
+
+## ObjectEditorTests (class)
+
+`public class ObjectEditorTests`
+
+Source: `tests/PressToShape.App.Tests/ObjectEditorTests.cs:11-389`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Group_TwoShapes_IsOneStepAndSelectsTheGroup()` - _(no documentation)_
+- `public void Group_UndoAndRedo_RestoreDocumentAndSelection()` - _(no documentation)_
+- `public void CanGroup_OneShapeNothingOrDifferentParents_IsFalse()` - _(no documentation)_
+- `public void CanGroup_ShapesOfDifferentLayers_IsFalse()` - _(no documentation)_
+- `public void Ungroup_Group_IsOneStepAndSelectsTheMembers()` - _(no documentation)_
+- `public void Ungroup_GroupAndPlainShape_KeepsThePlainShapeSelected()` - _(no documentation)_
+- `public void Ungroup_UndoRestoresTheGroupSelection()` - _(no documentation)_
+- `public void CanUngroup_NoGroupSelected_IsFalseAndNothingHappens()` - _(no documentation)_
+- `public void Arrange_BottomShape_IsOneStepWithTheRightTypeAndKeepsTheSelection(ArrangeType type, HistoryStepType step, string expected)` - _(no documentation)_
+- `public void Arrange_TopShape_IsOneStepWithTheRightType(ArrangeType type, HistoryStepType step, string expected)` - _(no documentation)_
+- `public void Arrange_NothingWouldMove_IsDisabledAndRecordsNoStep()` - _(no documentation)_
+- `public void CanArrange_NothingSelected_IsFalse()` - _(no documentation)_
+- `public void Arrange_InsideAnEnteredGroup_StaysInTheGroup()` - _(no documentation)_
+- `public void LockSelection_LocksAndRemovesTheShapeFromTheSelection()` - _(no documentation)_
+- `public void HideSelection_HidesAndRemovesTheShapeFromTheSelection()` - _(no documentation)_
+- `public void LockAndHideSelection_NothingSelected_AreDisabled()` - _(no documentation)_
+- `public void SetLockedAndSetHidden_ById_UnlockAndShowShapesThatCannotBeSelected()` - _(no documentation)_
+- `public void SetLocked_UnknownIdOrNoChange_RecordsNothing()` - _(no documentation)_
+- `public void ShowAllAndUnlockAll_ReachNestedObjects()` - _(no documentation)_
+- `public void ShowAllAndUnlockAll_NothingToChange_RecordNoStep()` - _(no documentation)_
+- `public void Rename_Shape_IsOneStep_EmptyNameClears()` - _(no documentation)_
+- `public void Rename_UnknownIdOrSameName_RecordsNothing()` - _(no documentation)_
+- `public void MoveAbove_SameParent_IsOneReorderStep()` - _(no documentation)_
+- `public void MoveAbove_DifferentParentsOrSameShape_DoesNothing()` - _(no documentation)_
+- `public void Constructor_NullState_Throws()` - _(no documentation)_
+
+## ObjectsViewModelTests (class)
+
+`public class ObjectsViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/ObjectsViewModelTests.cs:14-422`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Rows_LayerThenObjectsTopmostFirst()` - _(no documentation)_
+- `public void Group_AfterGrouping_IsShownClosed()` - _(no documentation)_
+- `public void Rows_Group_IsCollapsedAtFirstAndOpensToShowItsChildren()` - _(no documentation)_
+- `public void Rows_CollapsingTheLayer_HidesEverythingBelow()` - _(no documentation)_
+- `public void Rows_NoName_ShowTheDefaultNameOfTheType()` - _(no documentation)_
+- `public void Rows_DefaultNames_AreTranslated_AndFollowALanguageChange()` - _(no documentation)_
+- `public void Update_FlagsAndNames_KeepTheRowInstances()` - _(no documentation)_
+- `public void Update_StructureChange_ReusesTheRowsOfTheSurvivingObjects()` - _(no documentation)_
+- `public void ChildOfAHiddenOrLockedGroup_IsMarkedEffectivelyHiddenOrLocked_KeepingItsOwnFlags()` - _(no documentation)_
+- `public void ExpandedState_SurvivesUndoAndRedoAsFarAsTheGroupExists()` - _(no documentation)_
+- `public void Selection_OnTheCanvas_MarksRowsAndOpensTheGroupsAroundThem()` - _(no documentation)_
+- `public void Select_RowOnTheTopLevel_SelectsTheObjectAndLeavesGroups()` - _(no documentation)_
+- `public void Select_RowInsideAGroup_EntersTheGroup()` - _(no documentation)_
+- `public void Select_WithExtend_AddsAndRemovesRowsOfTheSameParent_AndReplacesOtherwise()` - _(no documentation)_
+- `public void Select_LockedRow_OnlyMarksItAsCurrentAndKeepsTheCanvasSelection()` - _(no documentation)_
+- `public void Select_ThenTheCanvasSelectionChanges_ClearsTheCurrentMark()` - _(no documentation)_
+- `public void Toggles_OnALockedHiddenRow_StillWork()` - _(no documentation)_
+- `public void Toggles_VisibleRow_HidesAndLocksIt()` - _(no documentation)_
+- `public void Rename_CommitsAsOneStep_EmptyNameFallsBackToTheDefault()` - _(no documentation)_
+- `public void Rename_Cancelled_ChangesNothing()` - _(no documentation)_
+- `public void Rename_LayerRow_IsNotPossible()` - _(no documentation)_
+- `public void Reorder_WithinAParent_MovesTheObjectAboveTheTarget()` - _(no documentation)_
+- `public void Reorder_AnotherParentOrALayerRow_IsIgnored()` - _(no documentation)_
+- `public void Select_LayerRow_MakesTheLayerActive()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+
+## ObjectsViewTests (class)
+
+`public class ObjectsViewTests`
+
+Source: `tests/PressToShape.App.Tests/ObjectsViewTests.cs:24-172`
+
+_(no documentation)_
+
+**Members**
+
+- `public void View_ShowsTheLayerAndTheObjectsTopmostFirst()` - _(no documentation)_
+- `public void View_HideToggle_HidesTheObjectAndTheRowFollows()` - _(no documentation)_
+- `public void View_RowsFollowTheDocument_AGroupShowsAfterGroupingAndOpens()` - _(no documentation)_
+- `public void View_SelectingOnTheCanvas_MarksTheRowSelected()` - _(no documentation)_
+- `public void View_WithTheTouchSizes_EveryButtonIsAtLeast48()` - _(no documentation)_
+- `public void Inspector_ShowsTheObjectsTabThroughTheViewLocator()` - _(no documentation)_
+- `public void TabletPanel_ShowsTheObjectsListForTheObjectsTab()` - _(no documentation)_
+
+## OverflowMenuViewModelTests (class)
+
+`public class OverflowMenuViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-201`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Items_AreTheFileActions_TheEditActions_TheObjectActions_AndTheLanguage_InOrder()` - _(no documentation)_
+- `public void TheArrangeSubmenu_HasTheFourArrangeCommands()` - _(no documentation)_
 - `public void Items_HaveNoQuitAndNoRecentFiles()` - _(no documentation)_
 - `public void Items_ShowNoShortcutTexts()` - _(no documentation)_
 - `public void Items_RunTheMatchingCommand()` - _(no documentation)_
@@ -1679,6 +1930,33 @@ _(no documentation)_
 - `public void ApplyTransform_WrongShapes_Throws()` - _(no documentation)_
 - `public void NullDelegates_Throw()` - _(no documentation)_
 
+## SelectionEditorGroupTests (class)
+
+`public class SelectionEditorGroupTests`
+
+Source: `tests/PressToShape.App.Tests/SelectionEditorGroupTests.cs:13-274`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Nudge_Group_MovesAllLeavesAsOneStep()` - _(no documentation)_
+- `public void Apply_Group_ChangesTheShapesBelowAndNotTheGroup()` - _(no documentation)_
+- `public void Apply_GroupAndPlainShape_ChangesAllLeaves()` - _(no documentation)_
+- `public void ApplyTransformWithFrame_ResizeGroup_ScalesLeavesAndKeepsTheLayout()` - _(no documentation)_
+- `public void ApplyTransformWithFrame_ResizeGroupWithTurnedLeaf_ScalesUniformly()` - _(no documentation)_
+- `public void ApplyTransformWithFrame_RotateGroup_TurnsTheLeavesAndTheGroupStaysUpright()` - _(no documentation)_
+- `public void ApplyTransform_ReturningOtherShapes_Throws()` - _(no documentation)_
+- `public void FrameOf_GroupWithOneTurnedLeaf_IsUprightAndNotSingle()` - _(no documentation)_
+- `public void FrameOf_SinglePlainTurnedShape_StaysSingle()` - _(no documentation)_
+- `public void SelectionValues_Group_GivesFrameAndMixedAppearanceOfTheLeaves()` - _(no documentation)_
+- `public void Paste_CopiedGroup_GetsNewIdsForTheWholeSubtree()` - _(no documentation)_
+- `public void Paste_InPlace_KeepsPosition()` - _(no documentation)_
+- `public void Duplicate_Group_AddsAMovedCopyWithNewIds()` - _(no documentation)_
+- `public void Duplicate_MemberOfAnEnteredGroup_LandsInTheSameGroup()` - _(no documentation)_
+- `public void Cut_GroupMembers_RemovesTheGroupWhenItBecomesEmpty()` - _(no documentation)_
+- `public void Cut_Group_PutsTheWholeGroupOnTheClipboard()` - _(no documentation)_
+
 ## SelectionGeometryTests (class)
 
 `public class SelectionGeometryTests`
@@ -1709,6 +1987,22 @@ _(no documentation)_
 - `public void HandleDirectionDegrees_IsTheTurnedDirection()` - _(no documentation)_
 - `public void NullArguments_Throw()` - _(no documentation)_
 
+## SelectionOverlayGroupTests (class)
+
+`public class SelectionOverlayGroupTests`
+
+Source: `tests/PressToShape.App.Tests/SelectionOverlayGroupTests.cs:10-70`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SelectedGroup_HasOneUprightOutlineAndAnUprightFrameWithHandles()` - _(no documentation)_
+- `public void HiddenSelectedGroup_IsNotPartOfTheOverlay()` - _(no documentation)_
+- `public void EnteredGroup_HasAnOutlineEvenWithoutSelection()` - _(no documentation)_
+- `public void EnteredGroup_IsPartOfTheOverlayForOtherToolsToo()` - _(no documentation)_
+- `public void NoEnteredGroupOrUnknownId_HasNoEnteredOutline()` - _(no documentation)_
+
 ## SelectionOverlayTests (class)
 
 `public class SelectionOverlayTests`
@@ -1731,6 +2025,33 @@ _(no documentation)_
 - `public void TheDraggedBox_IsMappedToScreenPixels_EvenWithoutASelection()` - _(no documentation)_
 - `public void HiddenOrLockedShapes_AndUnknownIds_GiveNothing()` - _(no documentation)_
 - `public void NullArguments_Throw()` - _(no documentation)_
+
+## SelectionQueriesGroupTests (class)
+
+`public class SelectionQueriesGroupTests`
+
+Source: `tests/PressToShape.App.Tests/SelectionQueriesGroupTests.cs:10-201`
+
+_(no documentation)_
+
+**Members**
+
+- `public void TargetFor_TopLevelHit_IsTheOutermostGroup()` - _(no documentation)_
+- `public void TargetFor_PlainShape_IsTheShapeItself()` - _(no documentation)_
+- `public void TargetFor_EnteredOuterGroup_IsTheDirectChild()` - _(no documentation)_
+- `public void TargetFor_EnteredDirectParent_IsTheLeaf()` - _(no documentation)_
+- `public void TargetFor_LeafOutsideTheEnteredGroup_IsNull()` - _(no documentation)_
+- `public void Selectable_TopLevel_ListsGroupsNotTheirMembers()` - _(no documentation)_
+- `public void Selectable_EnteredGroup_ListsOnlyItsChildren()` - _(no documentation)_
+- `public void Selectable_HiddenAndLockedObjects_AreLeftOut()` - _(no documentation)_
+- `public void Selectable_EnteredGroupThatIsHiddenOrLocked_IsEmpty()` - _(no documentation)_
+- `public void ShapesTouching_Box_ReturnsGroupsAtTopLevelAndChildrenInside()` - _(no documentation)_
+- `public void IsSelectable_ChildOfHiddenOrLockedGroup_IsFalse()` - _(no documentation)_
+- `public void IsSelectable_GroupAndChildInPlainGroup_IsTrue()` - _(no documentation)_
+- `public void SelectedLeaves_Group_ReturnsItsLeavesInOrder()` - _(no documentation)_
+- `public void SelectedLeaves_GroupAndItsChild_ListsTheChildOnce()` - _(no documentation)_
+- `public void SelectedShapes_NestedIds_AreFoundInDocumentOrder()` - _(no documentation)_
+- `public void SelectableWithParents_ReportsTheClosestGroup()` - _(no documentation)_
 
 ## SelectionQueriesTests (class)
 
@@ -2104,7 +2425,7 @@ _(no documentation)_
 - `public void DuplicateAndDelete_AreDisabledWithoutSelection_AndNamed()` - _(no documentation)_
 - `public void Duplicate_WithASelection_AddsACopyAndSelectsIt()` - _(no documentation)_
 - `public void Delete_WithASelection_RemovesItAsOneUndoStep()` - _(no documentation)_
-- `public void PanelButtons_AreProperties_Layers_History_InThatOrder()` - _(no documentation)_
+- `public void PanelButtons_AreProperties_Layers_Objects_History_InThatOrder()` - _(no documentation)_
 - `public void PanelButton_Toggle_OpensThePanel_AndMarksOnlyItActive()` - _(no documentation)_
 - `public void PanelButton_IsActive_NotifiesWhenThePanelChanges()` - _(no documentation)_
 - `public void ButtonNames_FollowTheLanguage()` - _(no documentation)_
@@ -2194,7 +2515,7 @@ Helpers that put shapes into the editor state and select them, the way tools wou
 
 `internal sealed class TestShell : EditorShellViewModel`
 
-Source: `tests/PressToShape.App.Tests/TestShell.cs:10-56`
+Source: `tests/PressToShape.App.Tests/TestShell.cs:10-58`
 
 The smallest shell: only what the base class gives every layout, with fake files, dialogs and settings. For testing the parts of a layout.
 
@@ -2204,6 +2525,7 @@ The smallest shell: only what the base class gives every layout, with fake files
 - `public ILocalizer LocalizerForTests { get; }` - The localizer the shell was made with.
 - `public FileMenuCommands FileCommandsForTests { get; }` - The commands behind the file items of a menu, which the base class keeps protected.
 - `public EditMenuCommands EditCommandsForTests { get; }` - The commands behind the edit items of a menu, which the base class keeps protected.
+- `public ObjectMenuCommands ObjectCommandsForTests { get; }` - _(no documentation)_
 - `public FakeFileStore Files { get; }` - _(no documentation)_
 - `public FakeFileDialogs Dialogs { get; }` - _(no documentation)_
 - `public FakeMessageDialogs Messages { get; }` - _(no documentation)_
@@ -2417,7 +2739,7 @@ _(no documentation)_
 
 `public class TranslationConsistencyTests`
 
-Source: `tests/PressToShape.App.Tests/TranslationConsistencyTests.cs:14-153`
+Source: `tests/PressToShape.App.Tests/TranslationConsistencyTests.cs:14-159`
 
 Guards the German catalog against the texts in the code. These tests read de.po directly and do not need msgfmt.
 

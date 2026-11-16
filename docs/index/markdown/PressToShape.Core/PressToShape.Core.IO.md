@@ -2,11 +2,56 @@
 
 Project: PressToShape.Core
 
+## ArtboardDto (class)
+
+`internal sealed class ArtboardDto`
+
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:23-32`
+
+_(no documentation)_
+
+**Members**
+
+- `public double? Width { get; set; }` - _(no documentation)_
+- `public double? Height { get; set; }` - _(no documentation)_
+
+## FileDto (class)
+
+`internal sealed class FileDto`
+
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:7-21`
+
+_(no documentation)_
+
+**Members**
+
+- `public string? Format { get; set; }` - _(no documentation)_
+- `public int? Version { get; set; }` - _(no documentation)_
+- `public ArtboardDto? Artboard { get; set; }` - _(no documentation)_
+- `public List<LayerDto?>? Layers { get; set; }` - _(no documentation)_
+- `public List<string?>? Palette { get; set; }` - _(no documentation)_
+
+## LayerDto (class)
+
+`internal sealed class LayerDto`
+
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:34-45`
+
+_(no documentation)_
+
+**Members**
+
+- `public string? Id { get; set; }` - _(no documentation)_
+- `public string? Name { get; set; }` - _(no documentation)_
+- `public bool? Visible { get; set; }` - _(no documentation)_
+- `public bool? Locked { get; set; }` - _(no documentation)_
+- `public List<ShapeDto?>? Shapes { get; set; }` - _(no documentation)_
+
 ## ProjectFile (class)
 
 `public static class ProjectFile`
 
-Source: `src/PressToShape.Core/IO/ProjectFile.cs:19-336`
+Source: `src/PressToShape.Core/IO/ProjectFile.cs:18-338`
 
 PressToShape's own project format: UTF-8 JSON with a format name and a version number. Reading treats the content as untrusted: it is size-checked, parsed with a depth limit and validated by the document model itself. PressToShape.Core.IO.ProjectFile.Read never throws for bad content, it returns an error.
 
@@ -55,13 +100,39 @@ The outcome of reading a project file: either a document or an error.
 
 - Depends on (constructor) `PressToShape.Core.Documents.Document`
 
+## ShapeDto (class)
+
+`internal sealed class ShapeDto`
+
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:47-105`
+
+_(no documentation)_
+
+**Members**
+
+- `public string? Type { get; set; }` - _(no documentation)_
+- `public string? Id { get; set; }` - _(no documentation)_
+- `public double? X { get; set; }` - _(no documentation)_
+- `public double? Y { get; set; }` - _(no documentation)_
+- `public double? Width { get; set; }` - _(no documentation)_
+- `public double? Height { get; set; }` - _(no documentation)_
+- `public string? Fill { get; set; }` - _(no documentation)_
+- `public string? Stroke { get; set; }` - _(no documentation)_
+- `public double? StrokeWidth { get; set; }` - _(no documentation)_
+- `public double? Opacity { get; set; }` - _(no documentation)_
+- `public double? Rotation { get; set; }` - _(no documentation)_
+- `public string? Name { get; set; }` - _(no documentation)_
+- `public bool? Visible { get; set; }` - _(no documentation)_
+- `public bool? Locked { get; set; }` - _(no documentation)_
+- `public List<ShapeDto?>? Children { get; set; }` - _(no documentation)_
+
 ## SvgExport (class)
 
 `public static class SvgExport`
 
-Source: `src/PressToShape.Core/IO/SvgExport.cs:16-172`
+Source: `src/PressToShape.Core/IO/SvgExport.cs:17-199`
 
-Exports a document as SVG 1.1. The artboard becomes the viewport, every visible layer one group (marked as an Inkscape layer), and every shape a rect or ellipse. There is no background and the output holds no scripts, links or external references.
+Exports a document as SVG 1.1. The artboard becomes the viewport, every visible layer one group (marked as an Inkscape layer), every shape a rect or ellipse and every group a g around its children. Hidden shapes and the shapes below hidden groups are left out. There is no background and the output holds no scripts, links or external references.
 
 **Members**
 

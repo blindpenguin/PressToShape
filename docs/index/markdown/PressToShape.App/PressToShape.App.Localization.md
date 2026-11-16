@@ -97,6 +97,7 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.ViewModels.Editor.HistoryViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.NumberFieldViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.ObjectsViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolItemViewModel`
@@ -231,6 +232,7 @@ Holds the current language and translates texts through the catalog of that lang
 - Implements `PressToShape.App.Localization.ILocalizer`
 - Injected into `PressToShape.App.Tests.DesktopShellViewModelTests.FileShell`
 - Injected into `PressToShape.App.Tests.DocumentFileServiceTests.Setup`
+- Injected into `PressToShape.App.Tests.ObjectsViewModelTests.Fixture`
 
 ## SupportedLanguages (class)
 

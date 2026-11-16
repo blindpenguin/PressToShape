@@ -35,7 +35,7 @@ The undo and redo history of a document, kept as snapshots. Documents are immuta
 
 `public enum HistoryStepType`
 
-Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-76`
+Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-119`
 
 What a step of the history did. The app turns each value into a translated name.
 
@@ -65,3 +65,17 @@ What a step of the history did. The app turns each value into a translated name.
 - `public ChangeOpacity` - The opacity of shapes was changed.
 - `public AddSwatch` - A colour was added to the palette.
 - `public RemoveSwatch` - A colour was removed from the palette.
+- `public GroupShapes` - Shapes were grouped.
+- `public UngroupShapes` - Groups were ungrouped.
+- `public BringToFront` - Shapes were brought to the front.
+- `public BringForward` - Shapes were brought forward.
+- `public SendBackward` - Shapes were sent backward.
+- `public SendToBack` - Shapes were sent to the back.
+- `public ReorderShape` - A shape was moved to another place in the stacking order, for example by dragging it in the object list.
+- `public LockShapes` - Shapes were locked.
+- `public UnlockShapes` - Shapes were unlocked.
+- `public HideShapes` - Shapes were hidden.
+- `public ShowShapes` - Shapes were shown.
+- `public UnlockAll` - Every shape was unlocked.
+- `public ShowAll` - Every shape was shown.
+- `public RenameShape` - A shape was renamed.

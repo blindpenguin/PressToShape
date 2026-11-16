@@ -42,7 +42,7 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 
 ### src/PressToShape.App/Styles/Theme.axaml
 
-- 101 resources, 0 styles, variants Dark, Light
+- 103 resources, 0 styles, variants Dark, Light
 
 ### src/PressToShape.App/Views/Desktop/MenuBarView.axaml
 
@@ -75,6 +75,17 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - 0 resources, 2 styles
 - style `ListBoxItem` at line 13, 2 setters
 - style `Button.rowButton` at line 18, 2 setters
+
+### src/PressToShape.App/Views/Editor/ObjectsView.axaml
+
+- 1 resources, 7 styles
+- style `Button.rowButton` at line 19, 2 setters
+- style `Border.objectRow` at line 23, 3 setters
+- style `Border.objectRow:pointerover` at line 28, 1 setters
+- style `Border.objectRow.current` at line 32, 1 setters
+- style `Border.objectRow.selected` at line 35, 1 setters
+- style `Border.objectRow.drop` at line 38, 1 setters
+- style `Border.objectRow.inactive TextBlock` at line 41, 1 setters
 
 ### src/PressToShape.App/Views/Editor/PropertiesView.axaml
 
@@ -129,7 +140,6 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - `SystemAccentColorDark1` (Color, Dark) at src/PressToShape.App/Styles/Theme.axaml:17
 - `SystemAccentColorDark2` (Color, Dark) at src/PressToShape.App/Styles/Theme.axaml:18
 - `SystemAccentColorDark3` (Color, Dark) at src/PressToShape.App/Styles/Theme.axaml:19
-- `SelectedItemBrush` (SolidColorBrush, Dark) at src/PressToShape.App/Styles/Theme.axaml:22
 - `RulerTickBrush` (SolidColorBrush, Dark) at src/PressToShape.App/Styles/Theme.axaml:51
 - `RulerTextBrush` (SolidColorBrush, Dark) at src/PressToShape.App/Styles/Theme.axaml:52
 - `SystemAccentColor` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:60
@@ -139,12 +149,13 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - `SystemAccentColorDark1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:64
 - `SystemAccentColorDark2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:65
 - `SystemAccentColorDark3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:66
-- `SelectedItemBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:69
 - `RulerTickBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:98
 - `RulerTextBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:99
 - `PanelSpacing` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:114
-- `TouchHandleGrabSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:153
-- `TouchSizes` (ResourceDictionary) at src/PressToShape.App/Styles/Theme.axaml:169
+- `RowIndentSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:152
+- `TouchHandleGrabSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:156
+- `TouchSizes` (ResourceDictionary) at src/PressToShape.App/Styles/Theme.axaml:175
 - `GestureTextConverter` (views:GestureTextConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:12
 - `CheckableToggleTypeConverter` (views:CheckableToggleTypeConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:13
+- `IndentConverter` (views:ObjectIndentConverter) at src/PressToShape.App/Views/Editor/ObjectsView.axaml:14
 - `CheckableToggleTypeConverter` (desktopViews:CheckableToggleTypeConverter) at src/PressToShape.App/Views/Tablet/TabletToolbarView.axaml:24

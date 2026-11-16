@@ -74,6 +74,8 @@ Class: `PressToShape.App.Views.Editor.PropertiesView`.
 - line 265: controls:CollapsibleSection.IsExpanded = Binding `IsQuickActionsExpanded` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.IsQuickActionsExpanded` (verified)
 - line 265: controls:CollapsibleSection.IsVisible = Binding `ShowQuickActions` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ShowQuickActions` (verified)
 - line 266: WrapPanel.IsEnabled = Binding `HasSelection` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.HasSelection` (verified)
+- line 267: Button.Command = Binding `GroupCommand` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.GroupCommand` (verified), command
+- line 268: Button.Command = Binding `UngroupCommand` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UngroupCommand` (verified), command
 
 ## Resource references
 

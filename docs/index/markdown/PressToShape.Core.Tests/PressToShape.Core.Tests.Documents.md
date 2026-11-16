@@ -2,6 +2,37 @@
 
 Project: PressToShape.Core.Tests
 
+## ArrangeOperationsTests (class)
+
+`public class ArrangeOperationsTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/ArrangeOperationsTests.cs:10-250`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Arrange_BottomShape_MovesUp(ArrangeType type, string expected)` - _(no documentation)_
+- `public void Arrange_TopShape_MovesDown(ArrangeType type, string expected)` - _(no documentation)_
+- `public void Arrange_SeveralSelected_KeepRelativeOrder(ArrangeType type, string expected)` - _(no documentation)_
+- `public void Arrange_Forward_EachSelectedMovesOnePlace()` - _(no documentation)_
+- `public void Arrange_Backward_EachSelectedMovesOnePlace()` - _(no documentation)_
+- `public void Arrange_AdjacentSelected_MoveTogetherPastOneSibling()` - _(no documentation)_
+- `public void Arrange_SelectedAlreadyAtTheEnd_Stays()` - _(no documentation)_
+- `public void Arrange_EverythingSelected_ReturnsSameDocument()` - _(no documentation)_
+- `public void Arrange_NoIds_ReturnsSameDocument()` - _(no documentation)_
+- `public void Arrange_UnknownId_Throws()` - _(no documentation)_
+- `public void Arrange_InsideGroup_MovesOnlyAmongTheGroupsChildren()` - _(no documentation)_
+- `public void Arrange_ChildAndTopLevelShape_AreArrangedAmongTheirOwnSiblings()` - _(no documentation)_
+- `public void Arrange_TwoNestedLevels_BothChange()` - _(no documentation)_
+- `public void Arrange_KeepsShapesInTheirLayer()` - _(no documentation)_
+- `public void Arrange_Result_LeavesOriginalUnchanged()` - _(no documentation)_
+- `public void MoveAbove_ShapeBelowTarget_LandsDirectlyAboveIt()` - _(no documentation)_
+- `public void MoveAbove_ShapeAboveTarget_LandsDirectlyAboveIt()` - _(no documentation)_
+- `public void MoveAbove_AlreadyThere_ReturnsSameDocument()` - _(no documentation)_
+- `public void MoveAbove_InsideGroup_Works()` - _(no documentation)_
+- `public void MoveAbove_DifferentParentsOrSameShape_Throws()` - _(no documentation)_
+
 ## DocumentBatchShapeTests (class)
 
 `public class DocumentBatchShapeTests`
@@ -18,6 +49,36 @@ _(no documentation)_
 - `public void RemoveShapes_RemovesSeveral_AcrossLayers()` - _(no documentation)_
 - `public void RemoveShapes_EmptyAndUnknown()` - _(no documentation)_
 - `public void AddShapes_AddsOnTopInOrder_AndRejectsDuplicateIdsAndUnknownLayers()` - _(no documentation)_
+
+## DocumentGroupTests (class)
+
+`public class DocumentGroupTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/DocumentGroupTests.cs:10-239`
+
+_(no documentation)_
+
+**Members**
+
+- `public void FindShape_InNestedGroup_ReturnsParentAndFlags()` - _(no documentation)_
+- `public void FindShape_Group_ReturnsGroupWithoutParent()` - _(no documentation)_
+- `public void FindShape_HiddenLayerOrGroup_IsNotEffectivelyVisible()` - _(no documentation)_
+- `public void UpdateShapes_Leaf_RebuildsGroupBoxes()` - _(no documentation)_
+- `public void UpdateShape_LeafInGroup_Changes()` - _(no documentation)_
+- `public void UpdateShapes_GroupWithItsOwnBoxChanged_IsRejected()` - _(no documentation)_
+- `public void RemoveShapes_LastChild_RemovesGroup()` - _(no documentation)_
+- `public void RemoveShape_OneOfTwoChildren_ShrinksGroup()` - _(no documentation)_
+- `public void RemoveShapes_UnknownId_Throws()` - _(no documentation)_
+- `public void HitTest_GroupMembers_ReturnsLeavesTopmostFirst()` - _(no documentation)_
+- `public void HitTest_HiddenShapeAndHiddenGroup_AreSkipped()` - _(no documentation)_
+- `public void HitTest_LockedShape_IsStillReported()` - _(no documentation)_
+- `public void AddShapes_ToGroup_AppendsAndGrowsBox()` - _(no documentation)_
+- `public void AddShapes_UnknownContainer_Throws()` - _(no documentation)_
+- `public void AddShapes_ContainerIsPlainShape_Throws()` - _(no documentation)_
+- `public void Layers_DuplicateIdInsideGroup_IsRejected()` - _(no documentation)_
+- `public void Layers_GroupWithWrongBox_IsRejected()` - _(no documentation)_
+- `public void Layers_GroupsNested65Levels_AreRejected()` - _(no documentation)_
+- `public void Layers_GroupsNested64Levels_AreAccepted()` - _(no documentation)_
 
 ## DocumentHitTestTests (class)
 
@@ -116,6 +177,66 @@ _(no documentation)_
 - `public void FindShape_UnknownId_ReturnsNullWithoutThrowing()` - _(no documentation)_
 - `public void FindShape_AfterRemove_ReturnsNull()` - _(no documentation)_
 
+## FlagOperationsTests (class)
+
+`public class FlagOperationsTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/FlagOperationsTests.cs:10-243`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SetHidden_Leaf_HidesOnlyThatLeaf()` - _(no documentation)_
+- `public void SetHidden_False_ShowsAgain()` - _(no documentation)_
+- `public void SetHidden_Group_ChangesOnlyTheGroupsOwnFlag()` - _(no documentation)_
+- `public void SetHidden_GroupAndItsChildTogether_ChangesBoth()` - _(no documentation)_
+- `public void SetHidden_KeepsIdsAndBoxOfGroups()` - _(no documentation)_
+- `public void SetLocked_AndUnlock_Work()` - _(no documentation)_
+- `public void SetLocked_Group_ChildIsEffectivelyLockedButKeepsItsFlag()` - _(no documentation)_
+- `public void SetHiddenAndLocked_NoChange_ReturnSameDocument()` - _(no documentation)_
+- `public void SetHiddenAndLocked_UnknownId_Throws()` - _(no documentation)_
+- `public void ShowAll_NestedHiddenShapes_AreShown()` - _(no documentation)_
+- `public void UnlockAll_NestedLockedShapes_AreUnlocked()` - _(no documentation)_
+- `public void ShowAllAndUnlockAll_NothingToChange_ReturnSameDocument()` - _(no documentation)_
+- `public void ShowAllAndUnlockAll_DoNotTouchLayers()` - _(no documentation)_
+- `public void Rename_Shape_SetsTrimmedName()` - _(no documentation)_
+- `public void Rename_EmptyOrBlank_ClearsTheName(string name)` - _(no documentation)_
+- `public void Rename_SameName_ReturnsSameDocument()` - _(no documentation)_
+- `public void Rename_GroupInsideGroup_Works()` - _(no documentation)_
+- `public void Rename_UnknownIdOrNullName_Throws()` - _(no documentation)_
+- `public void FlagOperations_Result_LeaveOriginalUnchanged()` - _(no documentation)_
+
+## GroupOperationsTests (class)
+
+`public class GroupOperationsTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/GroupOperationsTests.cs:11-247`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Group_TwoOfThree_ReplacesAtTopmostPositionKeepingOrder()` - _(no documentation)_
+- `public void Group_TopMembersFirst_GroupStaysOnTop()` - _(no documentation)_
+- `public void Group_GroupAndShape_NestsGroup()` - _(no documentation)_
+- `public void Group_MembersOfOneGroup_GroupsInsideThatGroup()` - _(no documentation)_
+- `public void Group_DifferentLayers_Throws()` - _(no documentation)_
+- `public void Group_DifferentParents_Throws()` - _(no documentation)_
+- `public void Group_OneIdOrRepeatedId_Throws()` - _(no documentation)_
+- `public void Group_UnknownId_Throws()` - _(no documentation)_
+- `public void Group_GroupIdAlreadyUsed_Throws()` - _(no documentation)_
+- `public void Group_Result_LeavesOriginalUnchanged()` - _(no documentation)_
+- `public void Ungroup_Group_ReplacesByChildrenInPlace()` - _(no documentation)_
+- `public void Ungroup_ChildrenKeepTheirOwnFlagsAndGroupFlagsAreDropped()` - _(no documentation)_
+- `public void Ungroup_SeveralGroups_UngroupsEach()` - _(no documentation)_
+- `public void Ungroup_OuterGroup_KeepsInnerGroup()` - _(no documentation)_
+- `public void Ungroup_InnerGroup_StaysInsideOuter()` - _(no documentation)_
+- `public void Ungroup_PlainShape_Throws()` - _(no documentation)_
+- `public void Ungroup_UnknownId_Throws()` - _(no documentation)_
+- `public void Ungroup_NoIds_ReturnsSameDocument()` - _(no documentation)_
+- `public void Ungroup_AfterGroup_MembersMoveToTheTopmostPosition()` - _(no documentation)_
+
 ## LayerTests (class)
 
 `public class LayerTests`
@@ -135,3 +256,32 @@ _(no documentation)_
 - `public void With_NameVisibilityAndLock_ChangesCopyAndLeavesOriginalUnchanged()` - _(no documentation)_
 - `public void With_Shapes_KeepsGivenShapesInOrder()` - _(no documentation)_
 - `public void ShapeLocation_LayerAndShape_AreKept()` - _(no documentation)_
+
+## ShapeTreeTests (class)
+
+`public class ShapeTreeTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/ShapeTreeTests.cs:12-249`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Leaves_PlainShape_ReturnsItself()` - _(no documentation)_
+- `public void Leaves_NestedGroups_ReturnsLeavesBottomFirst()` - _(no documentation)_
+- `public void Find_ShapeInNestedGroup_ReturnsParentChain()` - _(no documentation)_
+- `public void Find_TopLevelShape_HasNoParent()` - _(no documentation)_
+- `public void Find_UnknownId_ReturnsNull()` - _(no documentation)_
+- `public void Replace_Leaf_RebuildsAncestorBoxes()` - _(no documentation)_
+- `public void Replace_NoMatch_ReturnsSameArray()` - _(no documentation)_
+- `public void Remove_OneOfTwoChildren_UpdatesGroupBox()` - _(no documentation)_
+- `public void Remove_LastChild_RemovesGroupAndEmptyAncestors()` - _(no documentation)_
+- `public void Remove_GroupAndItsChild_CountsBoth()` - _(no documentation)_
+- `public void Remove_UnknownId_MatchesNothing()` - _(no documentation)_
+- `public void Reidentify_NestedGroup_GivesFreshUniqueIds()` - _(no documentation)_
+- `public void Translate_Group_MovesAllLeavesAndBox()` - _(no documentation)_
+- `public void EffectiveState_HiddenGroup_HidesChild()` - _(no documentation)_
+- `public void EffectiveState_LockedGroup_LocksChildButChildFlagStays()` - _(no documentation)_
+- `public void Depth_NestedGroups_CountsLevels()` - _(no documentation)_
+- `public void Walks_64Levels_Work()` - _(no documentation)_
+- `public void Walks_65Levels_Throw()` - _(no documentation)_

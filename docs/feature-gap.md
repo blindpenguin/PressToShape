@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15). Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, and the object list. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -10,9 +10,9 @@ Columns:
 
 ## Summary
 
-The shell, the canvas, rectangles and ellipses, selection and transform, appearance, undo and redo, and file save, load and SVG export work. The big gaps are everything that is not a rectangle or an ellipse: the pen and path model, node editing, groups, layer management, snapping, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
+The shell, the canvas, rectangles and ellipses, selection and transform, appearance, undo and redo, groups and arrange, lock and hide, the object list, and file save, load and SVG export work. The big gaps are everything that is not a rectangle, an ellipse or a group: the pen and path model, node editing, layer management, snapping, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
 
-The most important structural gap: **Core has only `RectangleShape` and `EllipseShape`**, each defined by a box and a rotation. There is no path or group type. Pen, node editing, star, spiral, text, boolean operations, masks and SVG import all depend on adding one.
+The most important structural gap: **Core has only `RectangleShape`, `EllipseShape` and `GroupShape`**. The first two are defined by a box and a rotation, a group has a box that follows its members. There is no path type. Pen, node editing, star, spiral, text, boolean operations, masks and SVG import all depend on adding one.
 
 ## 1. Drawing tools
 
@@ -69,10 +69,10 @@ The most important structural gap: **Core has only `RectangleShape` and `Ellipse
 | Layers: show, hide, lock | Done | MVP |
 | Add layer | UI only (command cannot execute) | MVP |
 | Delete, rename, reorder, duplicate, merge layers | Missing | MVP |
-| Groups: group, ungroup, nested groups | UI only | MVP |
-| Arrange: bring to front, send to back | UI only | MVP |
-| Lock and hide single objects | UI only | MVP |
-| Object names, an object list / outline | Missing | Unplanned |
+| Groups: group, ungroup, nested groups, enter a group with a double-click or double-tap | Done | MVP |
+| Arrange: bring to front, forward, backward, send to back (within one layer or group) | Done | MVP |
+| Lock and hide single objects, Show All and Unlock All | Done | MVP |
+| Object names, an object list / outline (rename, expand, drag to reorder within a group) | Done | Unplanned |
 | Move objects between layers | Missing | Unplanned |
 | Clipping masks, opacity masks | UI only | After MVP |
 | Symbols and reusable assets | UI only (empty Assets panel) | After MVP |
@@ -123,7 +123,7 @@ The most important structural gap: **Core has only `RectangleShape` and `Ellipse
 | Undo, redo, named history panel | Done | MVP |
 | New, open, save, save as, recent files | Done | MVP |
 | Unsaved-changes prompt | Done | MVP |
-| Export as SVG | Done (rect and ellipse only) | MVP |
+| Export as SVG | Done (rect, ellipse and groups) | MVP |
 | Autosave and crash recovery | Missing | Unplanned (principle 5: "no lost work") |
 | SVG import | Missing | After MVP |
 | PNG export, export of a selection or area | Missing | Out of scope for now |
@@ -148,6 +148,6 @@ The most important structural gap: **Core has only `RectangleShape` and `Ellipse
 
 | Feature | State | Stage |
 |---|---|---|
-| SVG 1.1 export of rect and ellipse | Done | MVP |
+| SVG 1.1 export of rect, ellipse and groups | Done | MVP |
 | W3C SVG conformity as a goal | Idea, see [svg-conformity.md](svg-conformity.md) | Not decided |
 | Accessibility (keyboard navigation, screen reader names) | Partly: accessible names exist | Unplanned |

@@ -2,6 +2,33 @@
 
 Project: PressToShape.Core.Tests
 
+## ProjectFileGroupTests (class)
+
+`public class ProjectFileGroupTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/ProjectFileGroupTests.cs:13-239`
+
+_(no documentation)_
+
+**Members**
+
+- `public void WriteThenRead_NestedGroupsNamesAndFlags_AreKept()` - _(no documentation)_
+- `public void Write_Group_HasNoBoxAndOptionalEntriesOnlyWhenSet()` - _(no documentation)_
+- `public void Write_HiddenLockedNamedShape_WritesTheEntries()` - _(no documentation)_
+- `public void Read_FileFromBeforeGroups_LoadsWithDefaults()` - _(no documentation)_
+- `public void Read_GroupInFile_BoxIsDerivedFromChildren()` - _(no documentation)_
+- `public void Read_64NestedGroups_Loads()` - _(no documentation)_
+- `public void Read_65NestedGroups_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_EmptyGroup_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_GroupWithoutChildren_FailsWithNotProjectFile()` - _(no documentation)_
+- `public void Read_GroupWithNullChild_FailsWithNotProjectFile()` - _(no documentation)_
+- `public void Read_DuplicateIdInsideGroup_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_GroupIdSameAsChild_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_UnknownTypeInsideGroup_FailsWithUnknownShapeType()` - _(no documentation)_
+- `public void Read_FlagsAndNameInFile_AreRead()` - _(no documentation)_
+- `public void Read_NewerVersionThanKnown_Fails()` - _(no documentation)_
+- `public void Read_NullBytesOrArbitraryText_NeverThrows()` - _(no documentation)_
+
 ## ProjectFilePaletteTests (class)
 
 `public class ProjectFilePaletteTests`
@@ -84,6 +111,26 @@ _(no documentation)_
 - `public void Read_ByteOrderMark_IsNotAccepted()` - _(no documentation)_
 - `public void Read_EveryTruncationOfAValidFile_NeverThrows()` - _(no documentation)_
 - `public void Read_SingleByteCorruptions_NeverThrow()` - _(no documentation)_
+
+## SvgExportGroupTests (class)
+
+`public class SvgExportGroupTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/SvgExportGroupTests.cs:11-116`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ToUtf8_Group_BecomesGWithChildrenInOrder()` - _(no documentation)_
+- `public void ToUtf8_NestedGroups_Nest()` - _(no documentation)_
+- `public void ToUtf8_NamedGroup_HasInkscapeLabel_UnnamedHasNone()` - _(no documentation)_
+- `public void ToUtf8_HiddenLeaf_IsLeftOut()` - _(no documentation)_
+- `public void ToUtf8_HiddenGroup_IsLeftOutWithItsChildren()` - _(no documentation)_
+- `public void ToUtf8_HiddenChildInVisibleGroup_IsLeftOutOnly()` - _(no documentation)_
+- `public void ToUtf8_LockedShapes_AreExported()` - _(no documentation)_
+- `public void ToUtf8_RotatedChildInGroup_KeepsItsOwnTransform()` - _(no documentation)_
+- `public void ToUtf8_GroupWithOnlyHiddenChildren_IsAnEmptyG()` - _(no documentation)_
 
 ## SvgExportTests (class)
 
