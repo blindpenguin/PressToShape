@@ -12,7 +12,7 @@ namespace PressToShape.App.Workspace;
 /// Works on document positions and edits the document through <see cref="EditorState"/>. It has no UI types.
 /// A drag that is in progress ends with <see cref="PointerReleased"/> or <see cref="Cancel"/>.
 /// </summary>
-internal sealed class CanvasInteraction
+internal sealed partial class CanvasInteraction
 {
     /// <summary>A new shape needs at least this many screen pixels in x and in y.</summary>
     private const double MinimumDragPixels = 2;
@@ -232,26 +232,21 @@ internal sealed class CanvasInteraction
             return;
         }
 
-        foreach (var hit in document.HitTest(x, y))
+        if (SelectableTargetAt(document, x, y) is { } target)
         {
-            if (!SelectionQueries.IsSelectable(document, hit.Id))
-            {
-                continue;
-            }
-
             if (shift)
             {
                 // Shift only changes the selection: nothing moves.
-                _state.ToggleSelected(hit.Id);
+                _state.ToggleSelected(target.Id);
                 return;
             }
 
-            if (!_state.SelectedShapeIds.Contains(hit.Id))
+            if (!_state.SelectedShapeIds.Contains(target.Id))
             {
-                _state.SelectOnly(hit.Id);
+                _state.SelectOnly(target.Id);
             }
 
-            _startShapes = SelectionQueries.SelectedShapes(document, _state.SelectedShapeIds);
+            _startShapes = SelectionQueries.SelectedLeaves(document, _state.SelectedShapeIds);
             _startDocument = document;
             BeginDrag(DragType.Moving, x, y);
             return;
@@ -264,7 +259,7 @@ internal sealed class CanvasInteraction
 
     private void BeginHandleDrag(SelectionFrame frame, HandleType handle, double x, double y)
     {
-        _startShapes = SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds);
+        _startShapes = SelectionQueries.SelectedLeaves(_state.Document, _state.SelectedShapeIds);
         _startDocument = _state.Document;
         _startFrame = frame;
         _handle = handle;
@@ -284,15 +279,11 @@ internal sealed class CanvasInteraction
         var scale = _state.ZoomPercent / 100;
         if (box.Width * scale < ClickPixels && box.Height * scale < ClickPixels)
         {
-            if (!_startShift)
-            {
-                _state.ClearSelection();
-            }
-
+            ClickOnEmptySpace();
             return;
         }
 
-        var touched = SelectionQueries.ShapesTouching(_state.Document, box.X, box.Y, box.Width, box.Height).Select(s => s.Id);
+        var touched = SelectionQueries.ShapesTouching(_state.Document, box.X, box.Y, box.Width, box.Height, _state.EnteredGroupId).Select(s => s.Id);
         _state.SetSelection(_startShift ? _state.SelectedShapeIds.Concat(touched) : touched);
     }
 

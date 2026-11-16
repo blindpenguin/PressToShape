@@ -25,17 +25,20 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
 
     private readonly EditorState _state;
     private readonly SelectionEditor _editor;
+    private readonly ObjectEditor _objects;
     private readonly RecentColors _recentColors = new();
 
     // While a color or the opacity slider is previewed, the preview is built on this document so every update starts from the same shapes.
     private Document? _previewBase;
     private bool _opacityDragging;
 
-    public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer)
+    /// <param name="objects">The editor behind the Group and Ungroup buttons. Without one the view model makes its own.</param>
+    public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null)
         : base(localizer)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _editor = editor ?? throw new ArgumentNullException(nameof(editor));
+        _objects = objects ?? new ObjectEditor(_state);
 
         X = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Transform(HistoryStepType.ChangePosition, (shapes, frame) => SelectionTransforms.SetPosition(shapes, frame, value, null)));
         Y = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Transform(HistoryStepType.ChangePosition, (shapes, frame) => SelectionTransforms.SetPosition(shapes, frame, null, value)));
@@ -149,6 +152,18 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
 
     [ObservableProperty] public partial bool IsQuickActionsExpanded { get; set; } = true;
 
+    /// <summary>Groups the selected shapes (Quick Actions).</summary>
+    [RelayCommand(CanExecute = nameof(CanGroup))]
+    private void Group() => _objects.Group();
+
+    /// <summary>Ungroups the selected groups (Quick Actions).</summary>
+    [RelayCommand(CanExecute = nameof(CanUngroup))]
+    private void Ungroup() => _objects.Ungroup();
+
+    private bool CanGroup() => _objects.CanGroup;
+
+    private bool CanUngroup() => _objects.CanUngroup;
+
     /// <summary>Sets the rotation of every selected shape to 0 as one step.</summary>
     [RelayCommand(CanExecute = nameof(CanResetTransform))]
     private void ResetTransform() => _editor.ApplyTransform(HistoryStepType.ResetTransform, SelectionTransforms.ResetRotation);
@@ -197,12 +212,13 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
         field.EndEdit();
     }
 
-    private bool CanResetTransform() => SelectedShapes().Any(shape => shape.Rotation != 0);
+    // A group has no rotation of its own, and resetting would turn the shapes inside it, so a selection with a group cannot be reset.
+    private bool CanResetTransform() => SelectedShapes() is var shapes && shapes.All(shape => shape is not GroupShape) && shapes.Any(shape => shape.Rotation != 0);
 
     private IReadOnlyList<Shape> SelectedShapes() => SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds);
 
     private void Transform(HistoryStepType type, Func<IReadOnlyList<Shape>, SelectionFrame, IReadOnlyList<Shape>> change) =>
-        _editor.ApplyTransform(type, shapes => SelectionGeometry.FrameOf(shapes) is { } frame ? change(shapes, frame) : shapes);
+        _editor.ApplyTransformWithFrame(type, change);
 
     // With nothing selected, the color is the default for the next shapes: it changes no document and makes no history step.
     private void PreviewColor(Func<Appearance, Appearance> change)
@@ -256,7 +272,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     {
         _previewBase ??= _state.Document;
         var changed = new Dictionary<Guid, Shape>();
-        foreach (var shape in SelectionQueries.SelectedShapes(_previewBase, _state.SelectedShapeIds))
+        foreach (var shape in SelectionQueries.SelectedLeaves(_previewBase, _state.SelectedShapeIds))
         {
             var replacement = change(shape);
             if (!Equals(replacement, shape))
@@ -317,6 +333,12 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
     {
+        if (e.PropertyName is nameof(EditorState.Document) or nameof(EditorState.SelectedShapeIds))
+        {
+            GroupCommand.NotifyCanExecuteChanged();
+            UngroupCommand.NotifyCanExecuteChanged();
+        }
+
         switch (e.PropertyName)
         {
             case nameof(EditorState.Document):

@@ -38,7 +38,8 @@ internal readonly record struct Mixed<T>(T Value, bool IsMixed)
 
 /// <summary>
 /// The values the Properties tab shows for a selection. Position and size are those of the selection frame (one shape: its own box,
-/// several: the box around all of them, with rotation 0). Appearance values are mixed when the shapes differ.
+/// several or a group: the box around all of them, with rotation 0). Appearance values are those of the shapes below the groups and
+/// are mixed when they differ.
 /// </summary>
 /// <param name="X">Left edge of the frame.</param>
 /// <param name="Y">Top edge of the frame.</param>
@@ -72,6 +73,8 @@ internal sealed record SelectionValues(
             return null;
         }
 
+        // Position and size are those of the frame, which holds groups as a whole. The appearance is that of the shapes below the groups.
+        var leaves = shapes.SelectMany(shape => shape.Leaves()).ToList();
         return new SelectionValues(
             frame.CenterX - frame.Width / 2,
             frame.CenterY - frame.Height / 2,
@@ -79,9 +82,9 @@ internal sealed record SelectionValues(
             frame.Height,
             frame.Rotation,
             frame.IsSingle,
-            Mixed<Color?>.Of(shapes.Select(s => s.Appearance.Fill)),
-            Mixed<Color?>.Of(shapes.Select(s => s.Appearance.Stroke)),
-            Mixed<double>.Of(shapes.Select(s => s.Appearance.StrokeWidth)),
-            Mixed<double>.Of(shapes.Select(s => s.Appearance.Opacity)));
+            Mixed<Color?>.Of(leaves.Select(s => s.Appearance.Fill)),
+            Mixed<Color?>.Of(leaves.Select(s => s.Appearance.Stroke)),
+            Mixed<double>.Of(leaves.Select(s => s.Appearance.StrokeWidth)),
+            Mixed<double>.Of(leaves.Select(s => s.Appearance.Opacity)));
     }
 }

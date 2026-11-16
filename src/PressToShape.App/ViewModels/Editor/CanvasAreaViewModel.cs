@@ -16,6 +16,12 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     private readonly CanvasInteraction _interaction;
     private readonly SelectionEditor _editor;
     private readonly TouchGestureTracker _touch = new();
+    private readonly DoubleTapDetector _doubleTap = new();
+    private readonly TimeProvider _time;
+    private readonly long _clockStart;
+    private double _touchPressX;
+    private double _touchPressY;
+    private bool _touchMoved;
     private bool _touchGestureFlagged;
     private HandleType? _hoverHandle;
 
@@ -27,8 +33,11 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
     /// <param name="state">The editor state.</param>
     /// <param name="editor">The editor for keyboard edits. The shell passes the one it shares with the menus. Without one the view model makes its own.</param>
-    public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null)
+    /// <param name="time">The clock for the double-tap of a finger. Defaults to the system clock, tests pass their own.</param>
+    public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null)
     {
+        _time = time ?? TimeProvider.System;
+        _clockStart = _time.GetTimestamp();
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _editor = editor ?? new SelectionEditor(_state);
         _interaction = new CanvasInteraction(_state);
@@ -57,7 +66,10 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
     /// <summary>Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.</summary>
     public SelectionOverlay Overlay =>
-        SelectionOverlay.Build(_state.Document, _state.SelectedShapeIds, _state.ActiveTool, ZoomPercent, OriginX, OriginY, _state.SelectionBox);
+        SelectionOverlay.Build(_state.Document, _state.SelectedShapeIds, _state.ActiveTool, ZoomPercent, OriginX, OriginY, _state.SelectionBox, _state.EnteredGroupId);
+
+    /// <summary>The group that was entered, or <c>null</c>. The canvas dims everything outside it.</summary>
+    public Guid? EnteredGroupId => _state.EnteredGroupId;
 
     /// <summary>
     /// The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle,
@@ -194,6 +206,24 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters
+    /// a group or leaves the entered one (see <see cref="CanvasInteraction.DoubleClicked"/>). With other tools it acts as a normal press.
+    /// </summary>
+    public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false)
+    {
+        if (_state.ActiveTool == Tool.Select && _state.ColorPick == ColorPickTarget.None)
+        {
+            IsAltHeld = alt;
+            _interaction.DoubleClicked(ToDocumentX(screenX), ToDocumentY(screenY));
+            SetHover(null);
+        }
+        else
+        {
+            PointerPressed(screenX, screenY, alt, shift);
+        }
+    }
+
+    /// <summary>
     /// A finger went down. One finger acts with the active tool like the mouse. A second finger undoes that action (see
     /// <see cref="CanvasInteraction.Abort"/>) and the two fingers then move and zoom the view. Mouse and pen use <see cref="PointerPressed"/>.
     /// The id only has to be unique from this press to the release.
@@ -218,18 +248,23 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         switch (step.Type)
         {
             case TouchGestureStepType.Press:
+                (_touchPressX, _touchPressY, _touchMoved) = (step.X, step.Y, false);
                 PointerPressed(step.X, step.Y, inputType: InputPointerType.Touch);
                 break;
             case TouchGestureStepType.Move:
+                _touchMoved |= Math.Abs(step.X - _touchPressX) > DoubleTapDetector.MaxDistance || Math.Abs(step.Y - _touchPressY) > DoubleTapDetector.MaxDistance;
                 PointerMoved(step.X, step.Y);
                 break;
             case TouchGestureStepType.Release:
                 PointerReleased(step.X, step.Y);
+                CountTap(step.X, step.Y);
                 break;
             case TouchGestureStepType.CancelPress:
+                _doubleTap.Reset();
                 AbortAction();
                 break;
             case TouchGestureStepType.Gesture:
+                _doubleTap.Reset();
                 _state.ZoomAround(step.TargetZoom, step.PreviousMidX, step.PreviousMidY);
                 _state.PanBy(step.X - step.PreviousMidX, step.Y - step.PreviousMidY);
                 break;
@@ -245,6 +280,22 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         {
             _touchGestureFlagged = false;
             _state.IsDragInProgress = false;
+        }
+    }
+
+    // A finger went up. A tap that did not move, right after another one at the same place, is a double-tap: like a double-click it enters
+    // a group or leaves the entered one. Only the Select tool has one, and a tap that dragged something is no tap.
+    private void CountTap(double screenX, double screenY)
+    {
+        if (_touchMoved || _state.ActiveTool != Tool.Select || _state.ColorPick != ColorPickTarget.None)
+        {
+            _doubleTap.Reset();
+            return;
+        }
+
+        if (_doubleTap.Tap((long)_time.GetElapsedTime(_clockStart).TotalMilliseconds, screenX, screenY))
+        {
+            DoubleClick(screenX, screenY);
         }
     }
 
@@ -308,7 +359,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     public void PointerLeft() => SetHover(null);
 
     /// <summary>
-    /// A key went down on the canvas. The arrow keys move the selection by 1 unit, with <paramref name="shift"/> by 10. Escape clears
+    /// A key went down on the canvas. The arrow keys move the selection by 1 unit, with <paramref name="shift"/> by 10. Escape leaves the entered group, or clears
     /// the selection, or ends a pick from the canvas. Nothing else happens during a drag.
     /// </summary>
     /// <returns>Whether the key did something, so the caller marks it as handled.</returns>
@@ -317,6 +368,12 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         if (key == CanvasKey.Escape && _state.ColorPick != ColorPickTarget.None)
         {
             _state.CancelColorPick();
+            return true;
+        }
+
+        if (key == CanvasKey.Escape && _state.EnteredGroupId is not null && !_state.IsDragInProgress)
+        {
+            _state.LeaveGroup();
             return true;
         }
 
@@ -514,6 +571,10 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 break;
             case nameof(EditorState.ColorPick):
                 OnPropertyChanged(nameof(CursorType));
+                break;
+            case nameof(EditorState.EnteredGroupId):
+                OnPropertyChanged(nameof(EnteredGroupId));
+                NotifyOverlayChanged();
                 break;
             case nameof(EditorState.ZoomPercent):
                 OnPropertyChanged(nameof(ZoomPercent));

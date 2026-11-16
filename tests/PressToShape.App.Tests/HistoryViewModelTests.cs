@@ -66,6 +66,8 @@ public class HistoryViewModelTests
             "Start", "Draw rectangle", "Draw ellipse", "Move shape", "Delete shape", "Hide layer", "Show layer", "Lock layer", "Unlock layer",
             "Resize shapes", "Rotate shapes", "Nudge shapes", "Paste shapes", "Cut shapes", "Duplicate shapes", "Reset transform",
             "Change position", "Change size", "Change rotation", "Change fill", "Change stroke", "Change stroke width", "Change opacity", "Add swatch", "Remove swatch",
+            "Group shapes", "Ungroup shapes", "Bring to front", "Bring forward", "Send backward", "Send to back", "Reorder shape",
+            "Lock shapes", "Unlock shapes", "Hide shapes", "Show shapes", "Unlock all", "Show all", "Rename shape",
         };
         Assert.Equal(expected, Names(history));
         Assert.Equal(Enum.GetValues<HistoryStepType>().Length + 1, expected.Length);

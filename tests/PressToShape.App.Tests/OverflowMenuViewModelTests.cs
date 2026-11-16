@@ -41,15 +41,37 @@ public class OverflowMenuViewModelTests
         public FileMenuCommands File => new(New, Open, Save, SaveAs, ExportSvg, _ => new SwitchableCommand(true));
 
         public EditMenuCommands Edit => new(Cut, Copy, Paste, PasteInPlace, Duplicate, Delete, SelectAll, Deselect);
+
+        public SwitchableCommand Group { get; } = new(true);
+
+        public SwitchableCommand Ungroup { get; } = new(true);
+
+        public SwitchableCommand Front { get; } = new(true);
+
+        public SwitchableCommand Forward { get; } = new(true);
+
+        public SwitchableCommand Backward { get; } = new(true);
+
+        public SwitchableCommand Back { get; } = new(true);
+
+        public SwitchableCommand Lock { get; } = new(true);
+
+        public SwitchableCommand UnlockAll { get; } = new(true);
+
+        public SwitchableCommand Hide { get; } = new(true);
+
+        public SwitchableCommand ShowAll { get; } = new(true);
+
+        public ObjectMenuCommands Objects => new(Group, Ungroup, Front, Forward, Backward, Back, Lock, UnlockAll, Hide, ShowAll);
     }
 
     private static OverflowMenuViewModel Create(Commands commands, ILocalizer? localizer = null) =>
-        new(localizer ?? FakeLocalizer.Create(), commands.File, commands.Edit);
+        new(localizer ?? FakeLocalizer.Create(), commands.File, commands.Edit, commands.Objects);
 
     private static MenuItemViewModel Find(OverflowMenuViewModel menu, string plainHeader) => menu.Items.Single(i => i.PlainHeader == plainHeader);
 
     [Fact]
-    public void Items_AreTheFileActions_TheEditActions_AndTheLanguage_InOrder()
+    public void Items_AreTheFileActions_TheEditActions_TheObjectActions_AndTheLanguage_InOrder()
     {
         var menu = Create(new Commands());
 
@@ -58,9 +80,24 @@ public class OverflowMenuViewModelTests
             {
                 "New", "Open…", "Save", "Save As…", "Export as SVG…", "-",
                 "Cut", "Copy", "Paste", "Paste in Place", "Duplicate", "Delete", "Select All", "Deselect", "-",
+                "Group", "Ungroup", "Arrange", "Lock", "Unlock All", "Hide", "Show All", "-",
                 "Language",
             },
             menu.Items.Select(i => i.PlainHeader));
+    }
+
+    [Fact]
+    public void TheArrangeSubmenu_HasTheFourArrangeCommands()
+    {
+        var commands = new Commands();
+        var arrange = Find(Create(commands), "Arrange");
+
+        Assert.Equal(["Bring to Front", "Bring Forward", "Send Backward", "Send to Back"], arrange.Children.Select(c => c.PlainHeader));
+        arrange.Children[0].Command!.Execute(null);
+        arrange.Children[3].Command!.Execute(null);
+        Assert.Equal(1, commands.Front.Executions);
+        Assert.Equal(1, commands.Back.Executions);
+        Assert.True(arrange.IsEnabled);
     }
 
     [Fact]
@@ -92,6 +129,8 @@ public class OverflowMenuViewModelTests
             ("Export as SVG…", commands.ExportSvg), ("Cut", commands.Cut), ("Copy", commands.Copy), ("Paste", commands.Paste),
             ("Paste in Place", commands.PasteInPlace), ("Duplicate", commands.Duplicate), ("Delete", commands.Delete),
             ("Select All", commands.SelectAll), ("Deselect", commands.Deselect),
+            ("Group", commands.Group), ("Ungroup", commands.Ungroup), ("Lock", commands.Lock), ("Unlock All", commands.UnlockAll),
+            ("Hide", commands.Hide), ("Show All", commands.ShowAll),
         };
 
         foreach (var (header, command) in expected)
@@ -154,8 +193,9 @@ public class OverflowMenuViewModelTests
     {
         var commands = new Commands();
 
-        Assert.Throws<System.ArgumentNullException>(() => new OverflowMenuViewModel(null!, commands.File, commands.Edit));
-        Assert.Throws<System.ArgumentNullException>(() => new OverflowMenuViewModel(FakeLocalizer.Create(), null!, commands.Edit));
-        Assert.Throws<System.ArgumentNullException>(() => new OverflowMenuViewModel(FakeLocalizer.Create(), commands.File, null!));
+        Assert.Throws<System.ArgumentNullException>(() => new OverflowMenuViewModel(null!, commands.File, commands.Edit, commands.Objects));
+        Assert.Throws<System.ArgumentNullException>(() => new OverflowMenuViewModel(FakeLocalizer.Create(), null!, commands.Edit, commands.Objects));
+        Assert.Throws<System.ArgumentNullException>(() => new OverflowMenuViewModel(FakeLocalizer.Create(), commands.File, null!, commands.Objects));
+        Assert.Throws<System.ArgumentNullException>(() => new OverflowMenuViewModel(FakeLocalizer.Create(), commands.File, commands.Edit, null!));
     }
 }

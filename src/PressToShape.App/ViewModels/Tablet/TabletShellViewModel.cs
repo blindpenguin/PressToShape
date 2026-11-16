@@ -25,7 +25,7 @@ internal sealed class TabletShellViewModel : EditorShellViewModel
         _shutdown = shutdown ?? throw new ArgumentNullException(nameof(shutdown));
         Dialogs = dialogs ?? throw new ArgumentNullException(nameof(dialogs));
 
-        OverflowMenu = new OverflowMenuViewModel(localizer, FileCommands, EditCommands);
+        OverflowMenu = new OverflowMenuViewModel(localizer, FileCommands, EditCommands, ObjectCommands);
         Panel = new TabletPanelViewModel(Inspector, localizer);
         Column = new TabletToolColumnViewModel(Toolbox, State, localizer, new TabletColorSwatchViewModel(Inspector.Properties, Panel, localizer));
         Toolbar = new TabletToolbarViewModel(localizer, this, UndoCommand, RedoCommand, new ZoomViewModel(State, localizer, FitToWindow), OverflowMenu, Panel);

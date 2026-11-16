@@ -25,7 +25,7 @@ public class InspectorViewModelTests
         inspector.ShowTab(InspectorTab.History);
 
         Assert.Equal(InspectorTab.History, inspector.SelectedTab);
-        Assert.Equal(3, inspector.SelectedTabIndex);
+        Assert.Equal(4, inspector.SelectedTabIndex);
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public class InspectorViewModelTests
 
     [Theory]
     [InlineData(-1)]
-    [InlineData(4)]
+    [InlineData(5)]
     [InlineData(99)]
     public void OutOfRangeIndex_IsIgnored(int index)
     {

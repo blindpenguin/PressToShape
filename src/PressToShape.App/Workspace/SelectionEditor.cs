@@ -86,7 +86,8 @@ internal sealed class SelectionEditor
     }
 
     /// <summary>
-    /// Adds copies of the selected shapes, each at the top of its own layer, 10 units right and down, as one step, and selects them.
+    /// Adds copies of the selected shapes and groups, each at the top of its own layer or group, 10 units right and down, as one step, and
+    /// selects them.
     /// The clipboard is not touched.
     /// </summary>
     public void Duplicate()
@@ -97,13 +98,17 @@ internal sealed class SelectionEditor
         }
 
         var originals = SelectedShapes();
-        var layerOf = _state.Document.Layers.SelectMany(layer => layer.Shapes.Select(shape => (shape.Id, LayerId: layer.Id))).ToDictionary(x => x.Id, x => x.LayerId);
+        var containerOf = originals.ToDictionary(shape => shape.Id, shape =>
+        {
+            var location = _state.Document.FindShape(shape.Id)!;
+            return location.Parent?.Id ?? location.Layer.Id;
+        });
         var copies = originals
-            .Select(shape => (LayerId: layerOf[shape.Id], Copy: Moved(shape, ShapeClipboard.PasteStep)))
+            .Select(shape => (ContainerId: containerOf[shape.Id], Copy: Moved(shape, ShapeClipboard.PasteStep)))
             .ToList();
         _state.Edit(
             HistoryStepType.DuplicateShapes,
-            document => copies.GroupBy(c => c.LayerId).Aggregate(document, (d, group) => d.AddShapes(group.Key, group.Select(c => c.Copy))));
+            document => copies.GroupBy(c => c.ContainerId).Aggregate(document, (d, group) => d.AddShapes(group.Key, group.Select(c => c.Copy))));
         _state.SetSelection(copies.Select(c => c.Copy.Id));
     }
 
@@ -129,7 +134,10 @@ internal sealed class SelectionEditor
         }
     }
 
-    /// <summary>Applies the change to every selected shape as one step. No step if no shape changed.</summary>
+    /// <summary>
+    /// Applies the change to every selected shape as one step. A selected group is not changed itself: the change is applied to the
+    /// shapes below it. No step if no shape changed.
+    /// </summary>
     public void Apply(HistoryStepType type, Func<Shape, Shape> change)
     {
         ArgumentNullException.ThrowIfNull(change);
@@ -138,14 +146,33 @@ internal sealed class SelectionEditor
     }
 
     /// <summary>
-    /// Replaces the selected shapes by the returned list, which must have the same shapes (same ids) in the same order, as one step.
-    /// For changes that need all shapes together. No step if nothing changed.
+    /// Replaces the shapes of the selection by the returned list, which must have the same shapes (same ids) in the same order, as one step.
+    /// For changes that need all shapes together. The shapes are those below the selected groups. No step if nothing changed.
     /// </summary>
     public void ApplyTransform(HistoryStepType type, Func<IReadOnlyList<Shape>, IReadOnlyList<Shape>> change)
     {
         ArgumentNullException.ThrowIfNull(change);
 
-        var current = SelectedShapes();
+        ApplyToLeaves(type, change);
+    }
+
+    /// <summary>
+    /// Like <see cref="ApplyTransform"/>, and the change also gets the frame
+    /// of the selection. A selected group makes the frame upright and around all its shapes, as for several shapes.
+    /// </summary>
+    public void ApplyTransformWithFrame(HistoryStepType type, Func<IReadOnlyList<Shape>, SelectionFrame, IReadOnlyList<Shape>> change)
+    {
+        ArgumentNullException.ThrowIfNull(change);
+
+        if (SelectionGeometry.FrameOf(SelectedShapes()) is { } frame)
+        {
+            ApplyToLeaves(type, leaves => change(leaves, frame));
+        }
+    }
+
+    private void ApplyToLeaves(HistoryStepType type, Func<IReadOnlyList<Shape>, IReadOnlyList<Shape>> change)
+    {
+        var current = SelectedLeaves();
         if (current.Count == 0)
         {
             return;
@@ -163,7 +190,7 @@ internal sealed class SelectionEditor
 
     private void Edit(HistoryStepType type, Func<Shape, Shape> change, bool extend)
     {
-        var current = SelectedShapes();
+        var current = SelectedLeaves();
         if (current.Count == 0)
         {
             return;
@@ -179,9 +206,11 @@ internal sealed class SelectionEditor
         return document.UpdateShapes(changed);
     }
 
-    private Shape Moved(Shape shape, double offset) => shape with { Id = _newId(), X = shape.X + offset, Y = shape.Y + offset };
+    private Shape Moved(Shape shape, double offset) => shape.MovedCopy(_newId, offset, offset);
 
     private IReadOnlyList<Shape> SelectedShapes() => SelectionQueries.SelectedShapes(_state.Document, _state.SelectedShapeIds);
+
+    private IReadOnlyList<Shape> SelectedLeaves() => SelectionQueries.SelectedLeaves(_state.Document, _state.SelectedShapeIds);
 
     private bool ActiveLayerAcceptsShapes() =>
         _state.Document.Layers.FirstOrDefault(l => l.Id == _state.ActiveLayerId) is { IsVisible: true, IsLocked: false };

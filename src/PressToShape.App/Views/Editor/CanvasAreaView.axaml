@@ -55,6 +55,8 @@
                                             OriginY="{Binding OriginY}"
                                             Draft="{Binding Draft}"
                                             Overlay="{Binding Overlay}"
+                                            EnteredGroupId="{Binding EnteredGroupId}"
+                                            DimOpacity="{DynamicResource EnteredGroupDimOpacity}"
                                             HandleSize="{DynamicResource SelectionHandleSize}"
                                             SelectionBrush="{DynamicResource SelectionOutlineBrush}"
                                             SelectionHandleFillBrush="{DynamicResource SelectionHandleFillBrush}" />

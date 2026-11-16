@@ -20,7 +20,7 @@ internal sealed partial class DesktopShellViewModel : EditorShellViewModel
 
         Toolbar = new ToolbarViewModel(State, localizer, UndoCommand, RedoCommand);
         StatusBar = new StatusBarViewModel(State, localizer, FitToWindow);
-        MenuBar = new MenuBarViewModel(State, shutdown, localizer, Inspector.ShowTab, FitToWindow, FileCommands, EditCommands, Recent, UndoCommand, RedoCommand);
+        MenuBar = new MenuBarViewModel(State, shutdown, localizer, Inspector.ShowTab, FitToWindow, FileCommands, EditCommands, ObjectCommands, Recent, UndoCommand, RedoCommand);
     }
 
     public MenuBarViewModel MenuBar { get; }

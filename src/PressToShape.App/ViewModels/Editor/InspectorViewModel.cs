@@ -12,13 +12,15 @@ internal sealed partial class InspectorViewModel : ViewModelBase
     /// <param name="state">The editor state.</param>
     /// <param name="localizer">The translator.</param>
     /// <param name="editor">The editor for the Properties tab. The shell passes the one it shares with the menus and the canvas.</param>
-    public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null)
+    /// <param name="objects">The editor for the Objects tab. The shell passes the one it shares with the menus.</param>
+    public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null)
     {
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(localizer);
 
-        Properties = new PropertiesViewModel(state, editor ?? new SelectionEditor(state), localizer);
+        Properties = new PropertiesViewModel(state, editor ?? new SelectionEditor(state), localizer, objects);
         Layers = new LayersViewModel(state);
+        Objects = new ObjectsViewModel(state, objects ?? new ObjectEditor(state), localizer);
         Assets = new PlaceholderPanelViewModel(localizer, N("Assets"), N("No assets yet"));
         History = new HistoryViewModel(state, localizer);
     }
@@ -26,6 +28,8 @@ internal sealed partial class InspectorViewModel : ViewModelBase
     public PropertiesViewModel Properties { get; }
 
     public LayersViewModel Layers { get; }
+
+    public ObjectsViewModel Objects { get; }
 
     public PlaceholderPanelViewModel Assets { get; }
 

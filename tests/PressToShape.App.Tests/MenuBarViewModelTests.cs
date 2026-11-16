@@ -44,6 +44,24 @@ public class MenuBarViewModelTests
         public Dictionary<string, SwitchableCommand> EditCommandsByName { get; } = new[] { "cut", "copy", "paste", "paste in place", "duplicate", "delete", "select all", "deselect" }
             .ToDictionary(name => name, _ => new SwitchableCommand(false));
 
+        public Dictionary<string, SwitchableCommand> ObjectCommandsByName { get; } = new[]
+            {
+                "group", "ungroup", "front", "forward", "backward", "back", "lock", "unlock all", "hide", "show all",
+            }
+            .ToDictionary(name => name, _ => new SwitchableCommand(false));
+
+        private ObjectMenuCommands ObjectCommands() => new(
+            ObjectCommandsByName["group"],
+            ObjectCommandsByName["ungroup"],
+            ObjectCommandsByName["front"],
+            ObjectCommandsByName["forward"],
+            ObjectCommandsByName["backward"],
+            ObjectCommandsByName["back"],
+            ObjectCommandsByName["lock"],
+            ObjectCommandsByName["unlock all"],
+            ObjectCommandsByName["hide"],
+            ObjectCommandsByName["show all"]);
+
         private EditMenuCommands EditCommands() => new(
             EditCommandsByName["cut"],
             EditCommandsByName["copy"],
@@ -70,7 +88,7 @@ public class MenuBarViewModelTests
                 new RelayCommand(() => FileCalls.Add("save as")),
                 new RelayCommand(() => FileCalls.Add("export")),
                 path => new RelayCommand(() => FileCalls.Add("recent " + path)));
-            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, EditCommands(), Recent, Undo, Redo);
+            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, EditCommands(), ObjectCommands(), Recent, Undo, Redo);
         }
     }
 
@@ -107,7 +125,7 @@ public class MenuBarViewModelTests
         {
             "New", "Open…", "Save", "Save As…", "Export as SVG…",
             "Quit", "Zoom In", "Zoom Out", "Fit Artboard in Window", "Actual Size (100%)",
-            "Properties", "Layers", "Assets", "History",
+            "Properties", "Layers", "Objects", "Assets", "History",
             "English", "Deutsch",
         }.OrderBy(h => h);
 

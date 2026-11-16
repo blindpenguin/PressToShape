@@ -14,7 +14,7 @@ using static PressToShape.App.Localization.Localizer;
 namespace PressToShape.App.ViewModels.Desktop;
 
 /// <summary>
-/// The complete menu structure. The File actions, the Edit actions, Quit, the zoom items, the Window items and the languages have behavior.
+/// The complete menu structure. The File actions, the Edit actions, the group, arrange, lock and hide items, Quit, the zoom items, the Window items and the languages have behavior.
 /// Everything else has no command and is therefore disabled until its feature exists.
 /// </summary>
 internal sealed class MenuBarViewModel : ViewModelBase
@@ -27,6 +27,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
         Action fitToWindow,
         FileMenuCommands files,
         EditMenuCommands edit,
+        ObjectMenuCommands objects,
         RecentFiles recent,
         ICommand undo,
         ICommand redo)
@@ -38,6 +39,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(fitToWindow);
         ArgumentNullException.ThrowIfNull(files);
         ArgumentNullException.ThrowIfNull(edit);
+        ArgumentNullException.ThrowIfNull(objects);
         ArgumentNullException.ThrowIfNull(recent);
         ArgumentNullException.ThrowIfNull(undo);
         ArgumentNullException.ThrowIfNull(redo);
@@ -110,18 +112,18 @@ internal sealed class MenuBarViewModel : ViewModelBase
                     Item(N("Flip _Horizontal")),
                     Item(N("Flip _Vertical"))),
                 Submenu(N("_Arrange"),
-                    Item(N("Bring to _Front")),
-                    Item(N("Bring F_orward")),
-                    Item(N("Send _Backward")),
-                    Item(N("Send to Bac_k"))),
+                    Item(N("Bring to _Front"), "Home", objects.BringToFront),
+                    Item(N("Bring F_orward"), "PageUp", objects.BringForward),
+                    Item(N("Send _Backward"), "PageDown", objects.SendBackward),
+                    Item(N("Send to Bac_k"), "End", objects.SendToBack)),
                 Separator(),
-                Item(N("_Group"), "Ctrl+G"),
-                Item(N("_Ungroup"), "Ctrl+Shift+G"),
+                Item(N("_Group"), "Ctrl+G", objects.Group),
+                Item(N("_Ungroup"), "Ctrl+Shift+G", objects.Ungroup),
                 Separator(),
-                Item(N("_Lock")),
-                Item(N("Unloc_k All")),
-                Item(N("_Hide")),
-                Item(N("_Show All")),
+                Item(N("_Lock"), "Ctrl+2", objects.Lock),
+                Item(N("Unloc_k All"), "Ctrl+Alt+2", objects.UnlockAll),
+                Item(N("_Hide"), "Ctrl+3", objects.Hide),
+                Item(N("_Show All"), "Ctrl+Alt+3", objects.ShowAll),
                 Separator(),
                 Submenu(N("Clipping _Mask"),
                     Item(N("_Make")),
@@ -160,6 +162,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
             Submenu(N("_Window"),
                 Item(N("_Properties"), command: ShowTab(InspectorTab.Properties)),
                 Item(N("_Layers"), command: ShowTab(InspectorTab.Layers)),
+                Item(N("_Objects"), command: ShowTab(InspectorTab.Objects)),
                 Item(N("_Assets"), command: ShowTab(InspectorTab.Assets)),
                 Item(N("_History"), command: ShowTab(InspectorTab.History))),
             Submenu(N("_Help"),

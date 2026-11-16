@@ -66,7 +66,7 @@ public class TabletShellViewModelTests
         Assert.Same(f.Host, f.Shell.Dialogs);
         Assert.Same(f.Shell.OverflowMenu, f.Shell.Toolbar.OverflowMenu);
         Assert.Same(f.Shell.Inspector, f.Shell.Panel.Inspector);
-        Assert.Equal(3, f.Shell.Toolbar.PanelButtons.Count);
+        Assert.Equal(4, f.Shell.Toolbar.PanelButtons.Count);
     }
 
     [Fact]

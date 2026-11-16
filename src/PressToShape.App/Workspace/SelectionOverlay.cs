@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PressToShape.Core.Documents;
+using PressToShape.Core.Shapes;
 
 namespace PressToShape.App.Workspace;
 
@@ -14,12 +15,14 @@ namespace PressToShape.App.Workspace;
 /// <param name="Handles">The eight resize handles and the rotate handle (Select tool only).</param>
 /// <param name="RotateLink">The line from the middle of the top edge to the rotate handle (Select tool only).</param>
 /// <param name="SelectionBox">The box being dragged, if any (Select tool only).</param>
+/// <param name="EnteredGroup">The outline of the entered group, if one is entered. Drawn for every tool.</param>
 internal sealed record SelectionOverlay(
     IReadOnlyList<ScreenPolygon> Outlines,
     ScreenPolygon? Box,
     IReadOnlyList<ScreenHandle> Handles,
     ScreenLine? RotateLink,
-    ScreenRect? SelectionBox)
+    ScreenRect? SelectionBox,
+    ScreenPolygon? EnteredGroup = null)
 {
     /// <summary>The side of a handle in screen pixels.</summary>
     public const double HandleSize = 8;
@@ -38,6 +41,7 @@ internal sealed record SelectionOverlay(
     /// <param name="originX">Screen position of the artboard's left edge.</param>
     /// <param name="originY">Screen position of the artboard's top edge.</param>
     /// <param name="selectionBox">The box being dragged, in document units, or <c>null</c>.</param>
+    /// <param name="enteredGroupId">The entered group, whose outline is part of the overlay, or <c>null</c>.</param>
     public static SelectionOverlay Build(
         Document document,
         IEnumerable<Guid> selectedIds,
@@ -45,7 +49,8 @@ internal sealed record SelectionOverlay(
         double zoomPercent,
         double originX,
         double originY,
-        SelectionBox? selectionBox = null)
+        SelectionBox? selectionBox = null,
+        Guid? enteredGroupId = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(selectedIds);
@@ -60,10 +65,19 @@ internal sealed record SelectionOverlay(
                 dragged.Height * scale)
             : (ScreenRect?)null;
 
+        var entered = enteredGroupId is { } groupId && document.FindShape(groupId) is { Shape: GroupShape group }
+            ? ScreenPolygon.FromBox(
+                CanvasMapping.ToScreen(group.CenterX, originX, zoomPercent),
+                CanvasMapping.ToScreen(group.CenterY, originY, zoomPercent),
+                group.Width * scale,
+                group.Height * scale,
+                0)
+            : null;
+
         var shapes = SelectionQueries.SelectedSelectable(document, selectedIds);
         if (shapes.Count == 0)
         {
-            return box is null ? Empty : Empty with { SelectionBox = box };
+            return Empty with { SelectionBox = box, EnteredGroup = entered };
         }
 
         var outlines = shapes
@@ -76,7 +90,7 @@ internal sealed record SelectionOverlay(
             .ToList();
         if (!isSelect)
         {
-            return Empty with { Outlines = outlines };
+            return Empty with { Outlines = outlines, EnteredGroup = entered };
         }
 
         var frame = SelectionGeometry.FrameOf(shapes)!;
@@ -96,6 +110,6 @@ internal sealed record SelectionOverlay(
             ToScreen(SelectionGeometry.HandlePosition(frame, HandleType.Top, zoomPercent)),
             ToScreen(SelectionGeometry.HandlePosition(frame, HandleType.Rotate, zoomPercent)));
 
-        return new SelectionOverlay(outlines, frameBox, handles, link, box);
+        return new SelectionOverlay(outlines, frameBox, handles, link, box, entered);
     }
 }

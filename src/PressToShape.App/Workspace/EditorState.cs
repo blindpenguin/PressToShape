@@ -128,6 +128,7 @@ internal sealed partial class EditorState : ObservableObject
             return;
         }
 
+        RememberSelection();
         Document = after;
         if (extend ? History.RecordOrExtend(type, after) : History.Record(type, after))
         {
@@ -168,18 +169,20 @@ internal sealed partial class EditorState : ObservableObject
     /// <summary>Goes one step back. Does nothing if there is no step or a drag is in progress.</summary>
     public void Undo()
     {
+        var from = History.CurrentIndex;
         if (CanUndo && History.Undo() is { } document)
         {
-            ApplyFromHistory(document);
+            ApplyFromHistory(document, from);
         }
     }
 
     /// <summary>Goes one step forward. Does nothing if there is no step or a drag is in progress.</summary>
     public void Redo()
     {
+        var from = History.CurrentIndex;
         if (CanRedo && History.Redo() is { } document)
         {
-            ApplyFromHistory(document);
+            ApplyFromHistory(document, from);
         }
     }
 
@@ -189,15 +192,27 @@ internal sealed partial class EditorState : ObservableObject
     /// </summary>
     public void JumpToStep(int index)
     {
+        var from = History.CurrentIndex;
         if (!IsDragInProgress && History.JumpTo(index) is { } document)
         {
-            ApplyFromHistory(document);
+            ApplyFromHistory(document, from);
         }
     }
 
-    private void ApplyFromHistory(Document document)
+    private void ApplyFromHistory(Document document, int fromIndex)
     {
+        RememberSelection();
         Document = document;
+
+        // Group and Ungroup replace what is selected, so going over them brings back the selection of the state that is reached.
+        // Every other step keeps the selection as far as its shapes still exist.
+        var low = Math.Min(fromIndex, History.CurrentIndex);
+        var high = Math.Max(fromIndex, History.CurrentIndex);
+        if (Enumerable.Range(low, high - low).Any(i => History.Steps[i] is HistoryStepType.GroupShapes or HistoryStepType.UngroupShapes))
+        {
+            RestoreSelection(document);
+        }
+
         RaiseHistoryChanged();
     }
 
@@ -311,17 +326,25 @@ internal sealed partial class EditorState : ObservableObject
     public void SelectOnly(Guid shapeId) => SetSelection([shapeId]);
 
     /// <summary>
-    /// Replaces the selection by these shapes, keeping their order. Ids that are unknown, repeated, or in a hidden or locked layer
-    /// are left out.
+    /// Replaces the selection by these shapes or groups, keeping their order. Ids that are unknown, repeated, hidden or locked (also through
+    /// their layer or a group around them) are left out. A selection holds only shapes with the same parent, the same group or the top
+    /// level of the layers: of ids with different parents, the ones with the parent of the first valid id stay.
     /// </summary>
     public void SetSelection(IEnumerable<Guid> shapeIds)
     {
         ArgumentNullException.ThrowIfNull(shapeIds);
 
         var wanted = shapeIds.ToHashSet();
-        var selectable = SelectableIds(Document, wanted);
+        var selectable = SelectionQueries.SelectableWithParents(Document, wanted);
         var seen = new HashSet<Guid>();
-        SetSelectionCore(shapeIds.Where(id => selectable.Contains(id) && seen.Add(id)).ToImmutableArray());
+        var ids = shapeIds.Where(id => selectable.ContainsKey(id) && seen.Add(id)).ToImmutableArray();
+        if (ids.Length > 1)
+        {
+            var parent = selectable[ids[0]];
+            ids = ids.Where(id => selectable[id] == parent).ToImmutableArray();
+        }
+
+        SetSelectionCore(ids);
     }
 
     /// <summary>Adds the shape to the selection, or removes it if it is selected. A shape that cannot be selected is ignored.</summary>
@@ -353,42 +376,16 @@ internal sealed partial class EditorState : ObservableObject
         OnPropertyChanged(nameof(HasSelection));
     }
 
-    // The ids from the wanted set that belong to shapes of visible, unlocked layers. One pass over the document.
-    private static HashSet<Guid> SelectableIds(Document document, HashSet<Guid> wanted)
-    {
-        var found = new HashSet<Guid>();
-        if (wanted.Count == 0)
-        {
-            return found;
-        }
-
-        foreach (var layer in document.Layers)
-        {
-            if (!layer.IsVisible || layer.IsLocked)
-            {
-                continue;
-            }
-
-            foreach (var shape in layer.Shapes)
-            {
-                if (wanted.Contains(shape.Id))
-                {
-                    found.Add(shape.Id);
-                }
-            }
-        }
-
-        return found;
-    }
-
     partial void OnDocumentChanged(Document value)
     {
         if (!SelectedShapeIds.IsEmpty)
         {
-            // Shapes that are gone, or whose layer is now hidden or locked, leave the selection.
-            var selectable = SelectableIds(value, SelectedShapeIds.ToHashSet());
-            SetSelectionCore(SelectedShapeIds.Where(selectable.Contains).ToImmutableArray());
+            // Shapes that are gone, or that are now hidden or locked (also through a layer or a group), leave the selection.
+            var selectable = SelectionQueries.SelectableWithParents(value, SelectedShapeIds.ToHashSet());
+            SetSelectionCore(SelectedShapeIds.Where(selectable.ContainsKey).ToImmutableArray());
         }
+
+        LeaveEnteredGroupIfGone(value);
 
         if (value.Layers.All(l => l.Id != ActiveLayerId))
         {

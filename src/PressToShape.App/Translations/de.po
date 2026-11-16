@@ -222,6 +222,9 @@ msgstr "_Eigenschaften"
 msgid "_Layers"
 msgstr "E_benen"
 
+msgid "_Objects"
+msgstr "_Objekte"
+
 msgid "_Assets"
 msgstr "_Assets"
 
@@ -383,6 +386,18 @@ msgstr "Ebenen"
 
 msgid "Layers tab"
 msgstr "Reiter Ebenen"
+
+msgid "Objects"
+msgstr "Objekte"
+
+msgid "Objects tab"
+msgstr "Reiter Objekte"
+
+msgid "Show or hide the contents"
+msgstr "Inhalt ein- oder ausblenden"
+
+msgid "Object name"
+msgstr "Objektname"
 
 msgid "Assets tab"
 msgstr "Reiter Assets"
@@ -641,6 +656,52 @@ msgstr "Farbfeld hinzufügen"
 
 msgid "Remove swatch"
 msgstr "Farbfeld entfernen"
+
+msgid "Group shapes"
+msgstr "Gruppen bilden"
+
+msgid "Ungroup shapes"
+msgstr "Gruppierung aufheben"
+
+msgid "Bring to front"
+msgstr "In den Vordergrund"
+
+msgid "Bring forward"
+msgstr "Eine Ebene nach vorn"
+
+msgid "Send backward"
+msgstr "Eine Ebene nach hinten"
+
+msgid "Send to back"
+msgstr "In den Hintergrund"
+
+msgid "Reorder shape"
+msgstr "Form umsortieren"
+
+msgid "Lock shapes"
+msgstr "Formen sperren"
+
+msgid "Unlock shapes"
+msgstr "Formen entsperren"
+
+msgid "Hide shapes"
+msgstr "Formen ausblenden"
+
+msgid "Show shapes"
+msgstr "Formen einblenden"
+
+msgid "Unlock all"
+msgstr "Alles entsperren"
+
+msgid "Show all"
+msgstr "Alles einblenden"
+
+msgid "Rename shape"
+msgstr "Form umbenennen"
+
+msgctxt "object name"
+msgid "Group"
+msgstr "Gruppe"
 
 msgid "{0} selected"
 msgstr "{0} ausgewählt"

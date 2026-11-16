@@ -5,6 +5,7 @@ internal enum InspectorTab
 {
     Properties,
     Layers,
+    Objects,
     Assets,
     History,
 }

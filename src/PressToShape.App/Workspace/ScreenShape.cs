@@ -16,6 +16,7 @@ namespace PressToShape.App.Workspace;
 /// <param name="StrokeWidth">Stroke width in screen pixels. Zero when there is no stroke.</param>
 /// <param name="Opacity">Opacity of the whole shape, 0 to 1.</param>
 /// <param name="RotationDegrees">Rotation in degrees, clockwise, around the center of the box. 0 for an upright shape.</param>
+/// <param name="IsDimmed">Whether the shape is drawn faded because a group is entered and the shape is not inside it.</param>
 internal readonly record struct ScreenShape(
     ScreenShapeType Type,
     double X,
@@ -26,4 +27,5 @@ internal readonly record struct ScreenShape(
     Color? Stroke,
     double StrokeWidth,
     double Opacity,
-    double RotationDegrees = 0);
+    double RotationDegrees = 0,
+    bool IsDimmed = false);

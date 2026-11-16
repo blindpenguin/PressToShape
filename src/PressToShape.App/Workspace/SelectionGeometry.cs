@@ -34,7 +34,8 @@ internal static class SelectionGeometry
             return null;
         }
 
-        if (shapes.Count == 1)
+        // A group is framed like several shapes: upright, around its leaves, and scaled uniformly if one of them is turned.
+        if (shapes.Count == 1 && shapes[0] is not GroupShape)
         {
             var shape = shapes[0];
             return new SelectionFrame(shape.CenterX, shape.CenterY, shape.Width, shape.Height, shape.Rotation, true);

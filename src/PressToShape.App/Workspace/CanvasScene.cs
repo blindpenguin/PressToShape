@@ -11,32 +11,57 @@ namespace PressToShape.App.Workspace;
 internal static class CanvasScene
 {
     /// <summary>
-    /// Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones.
-    /// Hidden layers are left out. Locked layers are drawn like any other.
+    /// Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones. Groups are
+    /// flattened: only the shapes in them are drawn, in order. Hidden layers, hidden shapes and the shapes of hidden groups are left out.
+    /// Locked shapes are drawn like any other.
     /// </summary>
     /// <param name="document">The document to draw.</param>
     /// <param name="zoomPercent">Zoom in percent. 100 means one document unit per screen pixel.</param>
     /// <param name="originX">Screen position of the artboard's left edge.</param>
     /// <param name="originY">Screen position of the artboard's top edge.</param>
-    public static IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY)
+    /// <param name="enteredGroupId">The group that was entered. Shapes that are not inside it are marked as dimmed. <c>null</c> dims nothing.</param>
+    public static IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY, Guid? enteredGroupId = null)
     {
         ArgumentNullException.ThrowIfNull(document);
 
         var shapes = new List<ScreenShape>();
         foreach (var layer in document.Layers)
         {
-            if (!layer.IsVisible)
+            if (layer.IsVisible)
             {
-                continue;
-            }
-
-            foreach (var shape in layer.Shapes)
-            {
-                shapes.Add(BuildShape(shape, zoomPercent, originX, originY));
+                AddShapes(layer.Shapes, shapes, zoomPercent, originX, originY, dimmed: enteredGroupId is not null, enteredGroupId);
             }
         }
 
         return shapes;
+    }
+
+    private static void AddShapes(
+        IEnumerable<Shape> source,
+        List<ScreenShape> target,
+        double zoomPercent,
+        double originX,
+        double originY,
+        bool dimmed,
+        Guid? enteredGroupId)
+    {
+        foreach (var shape in source)
+        {
+            if (!shape.IsVisible)
+            {
+                continue;
+            }
+
+            if (shape is GroupShape group)
+            {
+                // Inside the entered group nothing is dimmed, also not in the groups below it.
+                AddShapes(group.Children, target, zoomPercent, originX, originY, dimmed && group.Id != enteredGroupId, enteredGroupId);
+            }
+            else
+            {
+                target.Add(BuildShape(shape, zoomPercent, originX, originY) with { IsDimmed = dimmed });
+            }
+        }
     }
 
     /// <summary>Converts one shape, for example a shape that is still being drawn and is not in a document.</summary>

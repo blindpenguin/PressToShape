@@ -32,6 +32,8 @@ internal sealed class TestShell : EditorShellViewModel
     /// <summary>The commands behind the edit items of a menu, which the base class keeps protected.</summary>
     public EditMenuCommands EditCommandsForTests => EditCommands;
 
+    public ObjectMenuCommands ObjectCommandsForTests => ObjectCommands;
+
     public FakeFileStore Files { get; }
 
     public FakeFileDialogs Dialogs { get; }

@@ -108,7 +108,16 @@ public partial class CanvasAreaView : UserControl
         else
         {
             _activeButton = MouseButton.Left;
-            viewModel.PointerPressed(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
+            var alt = e.KeyModifiers.HasFlag(KeyModifiers.Alt);
+            var shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
+            if (e.ClickCount == 2)
+            {
+                viewModel.DoubleClick(position.X, position.Y, alt, shift);
+            }
+            else
+            {
+                viewModel.PointerPressed(position.X, position.Y, alt, shift);
+            }
         }
 
         e.Handled = true;

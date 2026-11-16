@@ -264,8 +264,8 @@
 
                 <controls:CollapsibleSection Header="{loc:T 'Quick Actions'}" IsExpanded="{Binding IsQuickActionsExpanded}" IsVisible="{Binding ShowQuickActions}">
                     <WrapPanel Margin="12,4,12,12" ItemSpacing="6" LineSpacing="6" IsEnabled="{Binding HasSelection}">
-                        <Button Content="{loc:T 'Group'}" MinWidth="80" HorizontalContentAlignment="Center" />
-                        <Button Content="{loc:T 'Ungroup'}" MinWidth="80" HorizontalContentAlignment="Center" />
+                        <Button Content="{loc:T 'Group'}" Command="{Binding GroupCommand}" MinWidth="80" HorizontalContentAlignment="Center" />
+                        <Button Content="{loc:T 'Ungroup'}" Command="{Binding UngroupCommand}" MinWidth="80" HorizontalContentAlignment="Center" />
                         <Button Content="{loc:T 'Mask'}" MinWidth="80" HorizontalContentAlignment="Center" />
                     </WrapPanel>
                 </controls:CollapsibleSection>

@@ -12,7 +12,7 @@ public class TabletToolbarViewModelTests
     private static (TestShell Shell, TabletToolbarViewModel Toolbar) Create(TestShell? shell = null)
     {
         shell ??= new TestShell();
-        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests);
+        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests, shell.ObjectCommandsForTests);
         var zoom = new PressToShape.App.ViewModels.Editor.ZoomViewModel(shell.State, shell.LocalizerForTests, shell.FitToWindow);
         var panel = new TabletPanelViewModel(shell.Inspector, shell.LocalizerForTests);
         return (shell, new TabletToolbarViewModel(shell.LocalizerForTests, shell, shell.UndoCommand, shell.RedoCommand, zoom, menu, panel));
@@ -164,12 +164,12 @@ public class TabletToolbarViewModelTests
     }
 
     [Fact]
-    public void PanelButtons_AreProperties_Layers_History_InThatOrder()
+    public void PanelButtons_AreProperties_Layers_Objects_History_InThatOrder()
     {
         var (_, toolbar) = Create();
 
-        Assert.Equal([InspectorTab.Properties, InspectorTab.Layers, InspectorTab.History], toolbar.PanelButtons.Select(b => b.Tab));
-        Assert.Equal(["Properties", "Layers", "History"], toolbar.PanelButtons.Select(b => b.Name));
+        Assert.Equal([InspectorTab.Properties, InspectorTab.Layers, InspectorTab.Objects, InspectorTab.History], toolbar.PanelButtons.Select(b => b.Tab));
+        Assert.Equal(["Properties", "Layers", "Objects", "History"], toolbar.PanelButtons.Select(b => b.Name));
     }
 
     [Fact]
@@ -182,10 +182,10 @@ public class TabletToolbarViewModelTests
         toolbar.PanelButtons[1].ToggleCommand.Execute(null);
 
         Assert.True(panel.IsOpen);
-        Assert.Equal([false, true, false], toolbar.PanelButtons.Select(b => b.IsActive));
+        Assert.Equal([false, true, false, false], toolbar.PanelButtons.Select(b => b.IsActive));
 
         toolbar.PanelButtons[2].ToggleCommand.Execute(null);
-        Assert.Equal([false, false, true], toolbar.PanelButtons.Select(b => b.IsActive));
+        Assert.Equal([false, false, true, false], toolbar.PanelButtons.Select(b => b.IsActive));
 
         toolbar.PanelButtons[2].ToggleCommand.Execute(null);
         Assert.False(panel.IsOpen);
@@ -220,7 +220,7 @@ public class TabletToolbarViewModelTests
 
     private static TabletToolbarViewModel CreateWith(TestShell shell, TabletPanelViewModel panel)
     {
-        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests);
+        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests, shell.ObjectCommandsForTests);
         var zoom = new PressToShape.App.ViewModels.Editor.ZoomViewModel(shell.State, shell.LocalizerForTests, shell.FitToWindow);
         return new TabletToolbarViewModel(shell.LocalizerForTests, shell, shell.UndoCommand, shell.RedoCommand, zoom, menu, panel);
     }
@@ -229,7 +229,7 @@ public class TabletToolbarViewModelTests
     public void Constructor_NullArguments_Throw()
     {
         var shell = new TestShell();
-        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests);
+        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests, shell.ObjectCommandsForTests);
         var zoom = new PressToShape.App.ViewModels.Editor.ZoomViewModel(shell.State, shell.LocalizerForTests, shell.FitToWindow);
         var panel = new TabletPanelViewModel(shell.Inspector, shell.LocalizerForTests);
         var localizer = shell.LocalizerForTests;

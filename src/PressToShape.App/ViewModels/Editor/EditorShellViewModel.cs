@@ -32,8 +32,9 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         _files = new DocumentFileService(State, _session, Recent, services.Files, services.Dialogs, services.Messages, localizer, FitToWindow);
         Toolbox = new ToolboxViewModel(State, localizer);
         Editor = new SelectionEditor(State);
+        Objects = new ObjectEditor(State);
         Canvas = new CanvasAreaViewModel(State, Editor);
-        Inspector = new InspectorViewModel(State, localizer, Editor);
+        Inspector = new InspectorViewModel(State, localizer, Editor, Objects);
         FileCommands = new FileMenuCommands(
             NewCommand,
             OpenCommand,
@@ -51,6 +52,18 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
             SelectAllCommand,
             DeselectCommand);
 
+        ObjectCommands = new ObjectMenuCommands(
+            GroupCommand,
+            UngroupCommand,
+            BringToFrontCommand,
+            BringForwardCommand,
+            SendBackwardCommand,
+            SendToBackCommand,
+            LockCommand,
+            UnlockAllCommand,
+            HideCommand,
+            ShowAllCommand);
+
         Canvas.PropertyChanged += OnCanvasPropertyChanged;
         _session.PropertyChanged += (_, _) => NotifyDocumentNameChanged();
         State.PropertyChanged += OnStateHistoryAvailabilityChanged;
@@ -64,6 +77,9 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
 
     /// <summary>The selection edits (copy, paste, nudge, property changes). One instance, shared by the canvas, the inspector and the menus.</summary>
     public SelectionEditor Editor { get; }
+
+    /// <summary>The edits of the structure: group, arrange, lock, hide, rename. One instance, shared by the menus and the object list.</summary>
+    public ObjectEditor Objects { get; }
 
     public CanvasAreaViewModel Canvas { get; }
 
@@ -86,6 +102,9 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
 
     /// <summary>The commands behind the edit items of a menu.</summary>
     protected EditMenuCommands EditCommands { get; }
+
+    /// <summary>The commands behind the group, arrange, lock and hide items of a menu.</summary>
+    public ObjectMenuCommands ObjectCommands { get; }
 
     /// <summary>Asks about unsaved changes before the window closes. Returns whether closing may go on.</summary>
     public Task<bool> ConfirmCloseAsync() => _files.ConfirmDiscardAsync();
@@ -163,11 +182,29 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
                 // A layer may have been locked or hidden, and shapes may have come or gone.
                 NotifyPasteCommands();
                 SelectAllCommand.NotifyCanExecuteChanged();
+                NotifyObjectCommands();
+                break;
+            case nameof(EditorState.SelectedShapeIds):
+                NotifyObjectCommands();
                 break;
             case nameof(EditorState.ActiveLayerId):
                 NotifyPasteCommands();
                 break;
         }
+    }
+
+    private void NotifyObjectCommands()
+    {
+        GroupCommand.NotifyCanExecuteChanged();
+        UngroupCommand.NotifyCanExecuteChanged();
+        BringToFrontCommand.NotifyCanExecuteChanged();
+        BringForwardCommand.NotifyCanExecuteChanged();
+        SendBackwardCommand.NotifyCanExecuteChanged();
+        SendToBackCommand.NotifyCanExecuteChanged();
+        LockCommand.NotifyCanExecuteChanged();
+        UnlockAllCommand.NotifyCanExecuteChanged();
+        HideCommand.NotifyCanExecuteChanged();
+        ShowAllCommand.NotifyCanExecuteChanged();
     }
 
     private void NotifyPasteCommands()
@@ -212,4 +249,55 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
     private bool HasSelection() => State.HasSelection;
 
     private bool HasSelectableShapes() => SelectionQueries.Selectable(State.Document).Count > 0;
+
+    // Group, arrange, lock and hide. The Object menu items, the keyboard shortcuts and the tablet menu use these commands.
+    [RelayCommand(CanExecute = nameof(CanGroup))]
+    private void Group() => Objects.Group();
+
+    [RelayCommand(CanExecute = nameof(CanUngroup))]
+    private void Ungroup() => Objects.Ungroup();
+
+    [RelayCommand(CanExecute = nameof(CanBringToFront))]
+    private void BringToFront() => Objects.Arrange(ArrangeType.ToFront);
+
+    [RelayCommand(CanExecute = nameof(CanBringForward))]
+    private void BringForward() => Objects.Arrange(ArrangeType.Forward);
+
+    [RelayCommand(CanExecute = nameof(CanSendBackward))]
+    private void SendBackward() => Objects.Arrange(ArrangeType.Backward);
+
+    [RelayCommand(CanExecute = nameof(CanSendToBack))]
+    private void SendToBack() => Objects.Arrange(ArrangeType.ToBack);
+
+    [RelayCommand(CanExecute = nameof(CanLock))]
+    private void Lock() => Objects.LockSelection();
+
+    [RelayCommand(CanExecute = nameof(CanUnlockAll))]
+    private void UnlockAll() => Objects.UnlockAll();
+
+    [RelayCommand(CanExecute = nameof(CanHide))]
+    private void Hide() => Objects.HideSelection();
+
+    [RelayCommand(CanExecute = nameof(CanShowAll))]
+    private void ShowAll() => Objects.ShowAll();
+
+    private bool CanGroup() => Objects.CanGroup;
+
+    private bool CanUngroup() => Objects.CanUngroup;
+
+    private bool CanBringToFront() => Objects.CanArrange(ArrangeType.ToFront);
+
+    private bool CanBringForward() => Objects.CanArrange(ArrangeType.Forward);
+
+    private bool CanSendBackward() => Objects.CanArrange(ArrangeType.Backward);
+
+    private bool CanSendToBack() => Objects.CanArrange(ArrangeType.ToBack);
+
+    private bool CanLock() => Objects.CanLockSelection;
+
+    private bool CanUnlockAll() => Objects.CanUnlockAll;
+
+    private bool CanHide() => Objects.CanHideSelection;
+
+    private bool CanShowAll() => Objects.CanShowAll;
 }

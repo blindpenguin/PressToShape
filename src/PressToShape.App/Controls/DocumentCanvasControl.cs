@@ -49,6 +49,14 @@ internal sealed class DocumentCanvasControl : Control
     public static readonly StyledProperty<double> HandleSizeProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, double>(nameof(HandleSize), defaultValue: SelectionOverlay.HandleSize);
 
+    /// <summary>The entered group. Shapes outside it are drawn faded (see <see cref="CanvasScene"/>). <c>null</c> when no group is entered.</summary>
+    public static readonly StyledProperty<System.Guid?> EnteredGroupIdProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, System.Guid?>(nameof(EnteredGroupId));
+
+    /// <summary>The opacity of the shapes outside the entered group, 0 to 1. It comes from the theme.</summary>
+    public static readonly StyledProperty<double> DimOpacityProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, double>(nameof(DimOpacity), defaultValue: 0.35);
+
     // The outlines keep this width at every zoom.
     private const double OutlineThickness = 1;
 
@@ -66,7 +74,9 @@ internal sealed class DocumentCanvasControl : Control
             OverlayProperty,
             SelectionBrushProperty,
             SelectionHandleFillBrushProperty,
-            HandleSizeProperty);
+            HandleSizeProperty,
+            EnteredGroupIdProperty,
+            DimOpacityProperty);
     }
 
     public DocumentCanvasControl()
@@ -122,6 +132,18 @@ internal sealed class DocumentCanvasControl : Control
         set => SetValue(SelectionHandleFillBrushProperty, value);
     }
 
+    public System.Guid? EnteredGroupId
+    {
+        get => GetValue(EnteredGroupIdProperty);
+        set => SetValue(EnteredGroupIdProperty, value);
+    }
+
+    public double DimOpacity
+    {
+        get => GetValue(DimOpacityProperty);
+        set => SetValue(DimOpacityProperty, value);
+    }
+
     public double HandleSize
     {
         get => GetValue(HandleSizeProperty);
@@ -135,9 +157,20 @@ internal sealed class DocumentCanvasControl : Control
             return;
         }
 
-        foreach (var shape in CanvasScene.Build(document, ZoomPercent, OriginX, OriginY))
+        var dim = double.IsFinite(DimOpacity) ? System.Math.Clamp(DimOpacity, 0, 1) : 1;
+        foreach (var shape in CanvasScene.Build(document, ZoomPercent, OriginX, OriginY, EnteredGroupId))
         {
-            DrawWithOpacity(context, shape);
+            if (shape.IsDimmed)
+            {
+                using (context.PushOpacity(dim))
+                {
+                    DrawWithOpacity(context, shape);
+                }
+            }
+            else
+            {
+                DrawWithOpacity(context, shape);
+            }
         }
 
         if (Draft is { } draft)
@@ -155,6 +188,13 @@ internal sealed class DocumentCanvasControl : Control
     private void DrawOverlay(DrawingContext context, SelectionOverlay overlay, IBrush brush)
     {
         var pen = new Pen(brush, OutlineThickness);
+
+        if (overlay.EnteredGroup is { } entered)
+        {
+            // Dashed, so it cannot be mistaken for the outline of a selected shape.
+            var dashed = new Pen(brush, OutlineThickness, new DashStyle([4, 3], 0));
+            context.DrawGeometry(null, dashed, ToGeometry(entered));
+        }
 
         foreach (var outline in overlay.Outlines)
         {

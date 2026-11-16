@@ -53,7 +53,7 @@ public partial class DesktopShellView : UserControl
         }
     }
 
-    // Undo, redo, clipboard and selection shortcuts. They are handled here and not as key bindings, because a key binding would
+    // Undo, redo, clipboard, selection, group, arrange, lock and hide shortcuts. They are handled here and not as key bindings, because a key binding would
     // also run while a text box has focus and take the key from it.
     private static ICommand? EditShortcut(DesktopShellViewModel shell, Key key, KeyModifiers modifiers) => (modifiers, key) switch
     {
@@ -67,6 +67,16 @@ public partial class DesktopShellView : UserControl
         (KeyModifiers.Control, Key.D) => shell.DuplicateCommand,
         (KeyModifiers.Control, Key.A) => shell.SelectAllCommand,
         (KeyModifiers.Control | KeyModifiers.Shift, Key.A) => shell.DeselectCommand,
+        (KeyModifiers.Control, Key.G) => shell.GroupCommand,
+        (KeyModifiers.Control | KeyModifiers.Shift, Key.G) => shell.UngroupCommand,
+        (KeyModifiers.None, Key.Home) => shell.BringToFrontCommand,
+        (KeyModifiers.None, Key.PageUp) => shell.BringForwardCommand,
+        (KeyModifiers.None, Key.PageDown) => shell.SendBackwardCommand,
+        (KeyModifiers.None, Key.End) => shell.SendToBackCommand,
+        (KeyModifiers.Control, Key.D2) => shell.LockCommand,
+        (KeyModifiers.Control | KeyModifiers.Alt, Key.D2) => shell.UnlockAllCommand,
+        (KeyModifiers.Control, Key.D3) => shell.HideCommand,
+        (KeyModifiers.Control | KeyModifiers.Alt, Key.D3) => shell.ShowAllCommand,
         _ => null,
     };
 }
