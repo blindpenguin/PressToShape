@@ -140,7 +140,7 @@ public class ProjectFileTests
         using var json = JsonDocument.Parse(ProjectFile.Write(Sample()));
 
         Assert.Equal("PressToShape", json.RootElement.GetProperty("format").GetString());
-        Assert.Equal(1, json.RootElement.GetProperty("version").GetInt32());
+        Assert.Equal(2, json.RootElement.GetProperty("version").GetInt32());
         Assert.Equal(ProjectFile.FormatVersion, json.RootElement.GetProperty("version").GetInt32());
     }
 
@@ -249,7 +249,7 @@ public class ProjectFileTests
         Assert.Equal(33.25, shapes[0].GetProperty("rotation").GetDouble());
         Assert.Equal(359.999, shapes[1].GetProperty("rotation").GetDouble());
         Assert.False(shapes[2].TryGetProperty("rotation", out _));
-        Assert.Equal(1, json.RootElement.GetProperty("version").GetInt32());
+        Assert.Equal(ProjectFile.FormatVersion, json.RootElement.GetProperty("version").GetInt32());
     }
 
     [Fact]

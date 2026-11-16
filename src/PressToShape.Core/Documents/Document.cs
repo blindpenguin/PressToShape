@@ -42,7 +42,7 @@ public sealed record Document
     public ImmutableArray<Layer> Layers
     {
         get => _layers;
-        init => _layers = Validated(value);
+        init => _layers = DocumentValidation.Validated(value);
     }
 
     /// <summary>The swatches saved with the document, in the order the user added them. No colour appears twice.</summary>
@@ -139,33 +139,52 @@ public sealed record Document
     {
         ArgumentNullException.ThrowIfNull(change);
 
-        var (layerIndex, shapeIndex) = IndexOfShape(shapeId);
-        var layer = Layers[layerIndex];
-        var changed = change(layer.Shapes[shapeIndex]) ?? throw new InvalidOperationException("The change must return a shape.");
+        var found = ShapeTree.Find(Layers, shapeId) ?? throw new KeyNotFoundException($"No shape with id {shapeId}.");
+        var changed = change(found.Shape) ?? throw new InvalidOperationException("The change must return a shape.");
         if (changed.Id != shapeId)
         {
             throw new InvalidOperationException("A shape's id cannot be changed.");
         }
 
-        return this with { Layers = Layers.SetItem(layerIndex, layer with { Shapes = layer.Shapes.SetItem(shapeIndex, changed) }) };
-    }
-
-    /// <summary>Returns a document with the shapes added above the existing shapes of the layer, in the given order. One pass, however many shapes.</summary>
-    /// <exception cref="KeyNotFoundException">No layer has this id.</exception>
-    /// <exception cref="ArgumentException">A shape has an id that already exists in the document.</exception>
-    public Document AddShapes(Guid layerId, IEnumerable<Shape> shapes)
-    {
-        ArgumentNullException.ThrowIfNull(shapes);
-
-        var index = IndexOfLayer(layerId);
-        var layer = Layers[index];
-        var added = layer.Shapes.AddRange(shapes);
-        return added.Length == layer.Shapes.Length ? this : this with { Layers = Layers.SetItem(index, layer with { Shapes = added }) };
+        return UpdateShapes(new Dictionary<Guid, Shape> { [shapeId] = changed });
     }
 
     /// <summary>
-    /// Returns a document in which every shape whose id is a key of <paramref name="replacements"/> is replaced by its value.
-    /// Their places in the stack stay. One pass over the document, however many shapes change.
+    /// Returns a document with the shapes added above the existing shapes of a layer or of a group, in the given order.
+    /// The box of a group and of its enclosing groups follows. One pass, however many shapes.
+    /// </summary>
+    /// <param name="containerId">The id of a layer or of a group.</param>
+    /// <param name="shapes">The shapes to add.</param>
+    /// <exception cref="KeyNotFoundException">No layer or group has this id.</exception>
+    /// <exception cref="ArgumentException">A shape has an id that already exists in the document.</exception>
+    public Document AddShapes(Guid containerId, IEnumerable<Shape> shapes)
+    {
+        ArgumentNullException.ThrowIfNull(shapes);
+
+        var layerIndex = FindLayerIndex(containerId);
+        if (layerIndex >= 0)
+        {
+            var layer = Layers[layerIndex];
+            var added = layer.Shapes.AddRange(shapes);
+            return added.Length == layer.Shapes.Length ? this : this with { Layers = Layers.SetItem(layerIndex, layer with { Shapes = added }) };
+        }
+
+        var found = ShapeTree.Find(Layers, containerId);
+        if (found?.Shape is not GroupShape group)
+        {
+            throw new KeyNotFoundException($"No layer or group with id {containerId}.");
+        }
+
+        var children = group.Children.AddRange(shapes);
+        return children.Length == group.Children.Length
+            ? this
+            : UpdateShapes(new Dictionary<Guid, Shape> { [containerId] = group with { Children = children } });
+    }
+
+    /// <summary>
+    /// Returns a document in which every shape or group whose id is a key of <paramref name="replacements"/> is replaced by its value.
+    /// Their places in the stack stay, and the boxes of the groups around them follow. One pass over the document, however many
+    /// shapes change.
     /// </summary>
     /// <exception cref="KeyNotFoundException">A key is not the id of a shape.</exception>
     /// <exception cref="InvalidOperationException">A replacement has another id than its key.</exception>
@@ -182,28 +201,10 @@ public sealed record Document
         var layers = Layers.ToBuilder();
         for (var layerIndex = 0; layerIndex < layers.Count; layerIndex++)
         {
-            var shapes = layers[layerIndex].Shapes;
-            ImmutableArray<Shape>.Builder? builder = null;
-            for (var i = 0; i < shapes.Length; i++)
+            var shapes = ShapeTree.Replace(layers[layerIndex].Shapes, replacements, ref found);
+            if (shapes != layers[layerIndex].Shapes)
             {
-                if (!replacements.TryGetValue(shapes[i].Id, out var replacement))
-                {
-                    continue;
-                }
-
-                if (replacement is null || replacement.Id != shapes[i].Id)
-                {
-                    throw new InvalidOperationException("A replacement must be a shape with the same id.");
-                }
-
-                builder ??= shapes.ToBuilder();
-                builder[i] = replacement;
-                found++;
-            }
-
-            if (builder is not null)
-            {
-                layers[layerIndex] = layers[layerIndex] with { Shapes = builder.MoveToImmutable() };
+                layers[layerIndex] = layers[layerIndex] with { Shapes = shapes };
             }
         }
 
@@ -212,10 +213,21 @@ public sealed record Document
             throw new KeyNotFoundException("Some ids are not shapes of the document.");
         }
 
+        foreach (var (id, replacement) in replacements)
+        {
+            if (replacement is null || replacement.Id != id)
+            {
+                throw new InvalidOperationException("A replacement must be a shape with the same id.");
+            }
+        }
+
         return this with { Layers = layers.MoveToImmutable() };
     }
 
-    /// <summary>Returns a document without the shapes with these ids. One pass over the document.</summary>
+    /// <summary>
+    /// Returns a document without the shapes with these ids, wherever they are. A group that loses its last child goes with it.
+    /// One pass over the document.
+    /// </summary>
     /// <exception cref="KeyNotFoundException">An id is not the id of a shape.</exception>
     public Document RemoveShapes(IReadOnlySet<Guid> shapeIds)
     {
@@ -226,19 +238,18 @@ public sealed record Document
             return this;
         }
 
-        var removed = 0;
+        var matched = 0;
         var layers = Layers.ToBuilder();
         for (var layerIndex = 0; layerIndex < layers.Count; layerIndex++)
         {
-            var kept = layers[layerIndex].Shapes.Where(shape => !shapeIds.Contains(shape.Id)).ToImmutableArray();
-            if (kept.Length != layers[layerIndex].Shapes.Length)
+            var shapes = ShapeTree.Remove(layers[layerIndex].Shapes, shapeIds, ref matched);
+            if (shapes != layers[layerIndex].Shapes)
             {
-                removed += layers[layerIndex].Shapes.Length - kept.Length;
-                layers[layerIndex] = layers[layerIndex] with { Shapes = kept };
+                layers[layerIndex] = layers[layerIndex] with { Shapes = shapes };
             }
         }
 
-        if (removed != shapeIds.Count)
+        if (matched != shapeIds.Count)
         {
             throw new KeyNotFoundException("Some ids are not shapes of the document.");
         }
@@ -248,76 +259,98 @@ public sealed record Document
 
     /// <summary>Returns a document without the shape.</summary>
     /// <exception cref="KeyNotFoundException">No shape has this id.</exception>
-    public Document RemoveShape(Guid shapeId)
-    {
-        var (layerIndex, shapeIndex) = IndexOfShape(shapeId);
-        var layer = Layers[layerIndex];
+    public Document RemoveShape(Guid shapeId) => RemoveShapes(new HashSet<Guid> { shapeId });
 
-        return this with { Layers = Layers.SetItem(layerIndex, layer with { Shapes = layer.Shapes.RemoveAt(shapeIndex) }) };
-    }
-
-    /// <summary>Finds a shape and the layer that holds it. Returns <c>null</c> if no shape has this id.</summary>
+    /// <summary>Finds a shape or group, wherever it is, with its layer and its closest group. Returns <c>null</c> if no shape has this id.</summary>
     public ShapeLocation? FindShape(Guid shapeId)
     {
-        foreach (var layer in Layers)
+        if (ShapeTree.Find(Layers, shapeId) is not { } found)
         {
-            foreach (var shape in layer.Shapes)
-            {
-                if (shape.Id == shapeId)
-                {
-                    return new ShapeLocation(layer, shape);
-                }
-            }
+            return null;
         }
 
-        return null;
+        var layer = Layers[found.LayerIndex];
+        var (visible, locked) = ShapeTree.EffectiveState(found);
+        return new ShapeLocation(layer, found.Shape, found.Parent, visible && layer.IsVisible, locked || layer.IsLocked);
     }
 
     /// <summary>
-    /// Returns the shapes whose geometry contains the point, topmost first. Shapes of hidden layers are skipped.
-    /// Shapes of locked layers are included, tools decide what to do with them. The stroke width is ignored.
+    /// Returns the shapes whose geometry contains the point, topmost first. A group is never returned, its shapes are. Shapes of hidden
+    /// layers, hidden shapes and the shapes of hidden groups are skipped. Locked shapes and the shapes of locked layers and groups are
+    /// included, tools decide what to do with them. The stroke width is ignored.
     /// </summary>
     public IReadOnlyList<Shape> HitTest(double x, double y)
     {
         var hits = new List<Shape>();
         for (var i = Layers.Length - 1; i >= 0; i--)
         {
-            var layer = Layers[i];
-            if (!layer.IsVisible)
+            if (Layers[i].IsVisible)
             {
-                continue;
-            }
-
-            for (var j = layer.Shapes.Length - 1; j >= 0; j--)
-            {
-                if (layer.Shapes[j].Contains(x, y))
-                {
-                    hits.Add(layer.Shapes[j]);
-                }
+                ShapeTree.HitTest(Layers[i].Shapes, x, y, hits);
             }
         }
 
         return hits;
     }
 
-    private (int LayerIndex, int ShapeIndex) IndexOfShape(Guid shapeId)
-    {
-        for (var layerIndex = 0; layerIndex < Layers.Length; layerIndex++)
-        {
-            var shapes = Layers[layerIndex].Shapes;
-            for (var shapeIndex = 0; shapeIndex < shapes.Length; shapeIndex++)
-            {
-                if (shapes[shapeIndex].Id == shapeId)
-                {
-                    return (layerIndex, shapeIndex);
-                }
-            }
-        }
+    /// <summary>
+    /// Returns a document in which the shapes are replaced by one new group with the id <paramref name="groupId"/>. The group takes the stack
+    /// position of the topmost shape, and the shapes keep their order.
+    /// </summary>
+    /// <exception cref="ArgumentException">Fewer than two ids, or an id twice, or <paramref name="groupId"/> is used already.</exception>
+    /// <exception cref="KeyNotFoundException">An id is not the id of a shape.</exception>
+    /// <exception cref="InvalidOperationException">The shapes are not in the same layer and group.</exception>
+    public Document Group(IReadOnlyList<Guid> ids, Guid groupId) => GroupOperations.Group(this, ids, groupId);
 
-        throw new KeyNotFoundException($"No shape with id {shapeId}.");
-    }
+    /// <summary>
+    /// Returns a document in which each group is replaced by its children, in place, one level. The group's own name and flags are dropped.
+    /// </summary>
+    /// <exception cref="ArgumentException">An id is the id of a shape that is not a group.</exception>
+    /// <exception cref="KeyNotFoundException">An id is not the id of a shape.</exception>
+    public Document Ungroup(IReadOnlySet<Guid> groupIds) => GroupOperations.Ungroup(this, groupIds);
+
+    /// <summary>
+    /// Returns a document in which the shapes are moved in the stacking order of their siblings (the shapes of the same layer or group).
+    /// Shapes with different parents are arranged each among their own siblings, and the moved shapes keep their order. No shape changes its
+    /// parent. Returns this document if nothing changes.
+    /// </summary>
+    /// <exception cref="KeyNotFoundException">An id is not the id of a shape.</exception>
+    public Document Arrange(IReadOnlySet<Guid> ids, ArrangeType type) => ArrangeOperations.Arrange(this, ids, type);
+
+    /// <summary>Returns a document in which the shape is directly above <paramref name="targetId"/>. Returns this document if it is there already.</summary>
+    /// <exception cref="KeyNotFoundException">An id is not the id of a shape.</exception>
+    /// <exception cref="InvalidOperationException">The shapes have different parents, or are the same shape.</exception>
+    public Document MoveAbove(Guid id, Guid targetId) => ArrangeOperations.MoveAbove(this, id, targetId);
+
+    /// <summary>
+    /// Returns a document in which the shapes are hidden (<paramref name="hidden"/> true) or shown. A group's flag is its own, its children
+    /// keep theirs. Returns this document if nothing changes.
+    /// </summary>
+    /// <exception cref="KeyNotFoundException">An id is not the id of a shape.</exception>
+    public Document SetHidden(IReadOnlySet<Guid> ids, bool hidden) => FlagOperations.SetHidden(this, ids, hidden);
+
+    /// <summary>Returns a document in which the shapes are locked or unlocked. A group's flag is its own. Returns this document if nothing changes.</summary>
+    /// <exception cref="KeyNotFoundException">An id is not the id of a shape.</exception>
+    public Document SetLocked(IReadOnlySet<Guid> ids, bool locked) => FlagOperations.SetLocked(this, ids, locked);
+
+    /// <summary>Returns a document in which every shape and group, nested ones included, is shown. Layers are not changed.</summary>
+    public Document ShowAll() => FlagOperations.ShowAll(this);
+
+    /// <summary>Returns a document in which every shape and group, nested ones included, is unlocked. Layers are not changed.</summary>
+    public Document UnlockAll() => FlagOperations.UnlockAll(this);
+
+    /// <summary>Returns a document in which the shape has this name. An empty or blank name means "no name". Returns this document if the name is the same.</summary>
+    /// <exception cref="KeyNotFoundException">No shape has this id.</exception>
+    public Document Rename(Guid id, string name) => FlagOperations.Rename(this, id, name);
 
     private int IndexOfLayer(Guid layerId)
+    {
+        var index = FindLayerIndex(layerId);
+        return index >= 0 ? index : throw new KeyNotFoundException($"No layer with id {layerId}.");
+    }
+
+    // The index of the layer, or -1 if no layer has this id.
+    private int FindLayerIndex(Guid layerId)
     {
         for (var i = 0; i < Layers.Length; i++)
         {
@@ -327,44 +360,6 @@ public sealed record Document
             }
         }
 
-        throw new KeyNotFoundException($"No layer with id {layerId}.");
-    }
-
-    private static ImmutableArray<Layer> Validated(ImmutableArray<Layer> layers)
-    {
-        if (layers.IsDefaultOrEmpty)
-        {
-            throw new ArgumentException("A document needs at least one layer.", nameof(Layers));
-        }
-
-        var layerIds = new HashSet<Guid>();
-        var shapeIds = new HashSet<Guid>();
-        foreach (var layer in layers)
-        {
-            if (layer is null)
-            {
-                throw new ArgumentException("A layer must not be null.", nameof(Layers));
-            }
-
-            if (!layerIds.Add(layer.Id))
-            {
-                throw new ArgumentException($"Layer id {layer.Id} is used more than once.", nameof(Layers));
-            }
-
-            foreach (var shape in layer.Shapes)
-            {
-                if (shape is null)
-                {
-                    throw new ArgumentException("A shape must not be null.", nameof(Layers));
-                }
-
-                if (!shapeIds.Add(shape.Id))
-                {
-                    throw new ArgumentException($"Shape id {shape.Id} is used more than once.", nameof(Layers));
-                }
-            }
-        }
-
-        return layers;
+        return -1;
     }
 }

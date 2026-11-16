@@ -10,7 +10,8 @@ namespace PressToShape.Core.IO;
 
 /// <summary>
 /// Exports a document as SVG 1.1. The artboard becomes the viewport, every visible layer one group
-/// (marked as an Inkscape layer), and every shape a <c>rect</c> or <c>ellipse</c>. There is no background and
+/// (marked as an Inkscape layer), every shape a <c>rect</c> or <c>ellipse</c> and every group a <c>g</c> around its children.
+/// Hidden shapes and the shapes below hidden groups are left out. There is no background and
 /// the output holds no scripts, links or external references.
 /// </summary>
 public static class SvgExport
@@ -76,8 +77,17 @@ public static class SvgExport
 
     private static void WriteShape(XmlWriter writer, Shape shape)
     {
+        // A hidden shape is left out with everything below it. Locked shapes are exported like any other.
+        if (!shape.IsVisible)
+        {
+            return;
+        }
+
         switch (shape)
         {
+            case GroupShape group:
+                WriteGroup(writer, group);
+                return;
             case RectangleShape:
                 writer.WriteStartElement("rect", SvgNamespace);
                 writer.WriteAttributeString("x", Number(shape.X));
@@ -123,6 +133,23 @@ public static class SvgExport
         {
             // The box center is the turning point, like in the editor.
             writer.WriteAttributeString("transform", $"rotate({Number(shape.Rotation)} {Number(shape.CenterX)} {Number(shape.CenterY)})");
+        }
+
+        writer.WriteEndElement();
+    }
+
+    // The children keep their document coordinates, so the group needs no transform.
+    private static void WriteGroup(XmlWriter writer, GroupShape group)
+    {
+        writer.WriteStartElement("g", SvgNamespace);
+        if (group.Name.Length > 0)
+        {
+            writer.WriteAttributeString("inkscape", "label", InkscapeNamespace, XmlSafe(group.Name));
+        }
+
+        foreach (var child in group.Children)
+        {
+            WriteShape(writer, child);
         }
 
         writer.WriteEndElement();

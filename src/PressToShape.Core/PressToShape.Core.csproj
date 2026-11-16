@@ -3,4 +3,7 @@
         <TargetFramework>net10.0</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="PressToShape.Core.Tests"/>
+    </ItemGroup>
 </Project>

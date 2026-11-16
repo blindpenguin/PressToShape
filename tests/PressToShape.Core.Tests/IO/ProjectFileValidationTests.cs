@@ -80,7 +80,7 @@ public class ProjectFileValidationTests
     }
 
     [Theory]
-    [InlineData("\"version\":1", "\"version\":2")]
+    [InlineData("\"version\":1", "\"version\":3")]
     [InlineData("\"version\":1", "\"version\":1000")]
     public void Read_NewerVersion_ReturnsNewerVersion(string from, string to)
     {
@@ -259,7 +259,7 @@ public class ProjectFileValidationTests
     [Fact]
     public void Read_NestingDeeperThanTheLimit_ReturnsNotProjectFile()
     {
-        var deep = new string('[', 40) + new string(']', 40);
+        var deep = new string('[', 300) + new string(']', 300);
 
         AssertFails(ReadText(Mutate("\"version\":1", "\"version\":1,\"deep\":" + deep)), ProjectFileError.NotProjectFile);
     }

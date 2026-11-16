@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using PressToShape.Core.Documents;
 using PressToShape.Core.Geometry;
 
 namespace PressToShape.Core.Shapes;
@@ -16,6 +18,7 @@ public abstract record Shape
     private readonly double _height;
     private readonly Appearance _appearance = Appearance.Default;
     private readonly double _rotation;
+    private readonly string _name = string.Empty;
 
     // Private protected, so only shape types inside Core exist.
     private protected Shape()
@@ -74,6 +77,33 @@ public abstract record Shape
     {
         get => _appearance;
         init => _appearance = value ?? throw new ArgumentNullException(nameof(Appearance));
+    }
+
+    /// <summary>The name the user gave the object. Not null. Empty means the object has no name of its own, and the app shows a default text.</summary>
+    public string Name
+    {
+        get => _name;
+        init => _name = value ?? throw new ArgumentNullException(nameof(Name));
+    }
+
+    /// <summary>Whether the object is shown. A hidden object is not drawn, not hit and not exported, and neither are the objects inside a hidden group.</summary>
+    public bool IsVisible { get; init; } = true;
+
+    /// <summary>Whether the object is locked. Tools decide what a lock means, the model still reports hits.</summary>
+    public bool IsLocked { get; init; }
+
+    /// <summary>The shape itself if it is not a group, otherwise all shapes below the group that are not groups, bottom first.</summary>
+    public IReadOnlyList<Shape> Leaves() => ShapeTree.Leaves(this);
+
+    /// <summary>
+    /// A copy of the shape, and of everything below it if it is a group, each with a new id from <paramref name="newId"/> and moved by the
+    /// distance. For a group the children get their ids first, then the group.
+    /// </summary>
+    public Shape MovedCopy(Func<Guid> newId, double dx, double dy)
+    {
+        ArgumentNullException.ThrowIfNull(newId);
+
+        return ShapeTree.Reidentify(ShapeTree.Translate(this, dx, dy), newId);
     }
 
     /// <summary>The unturned box of the shape. The stroke width and the rotation are not included.</summary>

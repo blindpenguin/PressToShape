@@ -68,9 +68,52 @@ public enum HistoryStepType
 
     /// <summary>The opacity of shapes was changed.</summary>
     ChangeOpacity,
+
     /// <summary>A colour was added to the palette.</summary>
     AddSwatch,
 
     /// <summary>A colour was removed from the palette.</summary>
     RemoveSwatch,
+
+    /// <summary>Shapes were grouped.</summary>
+    GroupShapes,
+
+    /// <summary>Groups were ungrouped.</summary>
+    UngroupShapes,
+
+    /// <summary>Shapes were brought to the front.</summary>
+    BringToFront,
+
+    /// <summary>Shapes were brought forward.</summary>
+    BringForward,
+
+    /// <summary>Shapes were sent backward.</summary>
+    SendBackward,
+
+    /// <summary>Shapes were sent to the back.</summary>
+    SendToBack,
+
+    /// <summary>A shape was moved to another place in the stacking order, for example by dragging it in the object list.</summary>
+    ReorderShape,
+
+    /// <summary>Shapes were locked.</summary>
+    LockShapes,
+
+    /// <summary>Shapes were unlocked.</summary>
+    UnlockShapes,
+
+    /// <summary>Shapes were hidden.</summary>
+    HideShapes,
+
+    /// <summary>Shapes were shown.</summary>
+    ShowShapes,
+
+    /// <summary>Every shape was unlocked.</summary>
+    UnlockAll,
+
+    /// <summary>Every shape was shown.</summary>
+    ShowAll,
+
+    /// <summary>A shape was renamed.</summary>
+    RenameShape,
 }

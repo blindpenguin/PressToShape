@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using PressToShape.Core.Documents;
 using PressToShape.Core.Shapes;
 
@@ -19,7 +18,7 @@ namespace PressToShape.Core.IO;
 public static class ProjectFile
 {
     /// <summary>The format version this code writes and reads.</summary>
-    public const int FormatVersion = 1;
+    public const int FormatVersion = 2;
 
     /// <summary>The largest content <see cref="Read"/> accepts, in bytes.</summary>
     public const long MaxBytes = 64L * 1024 * 1024;
@@ -27,11 +26,12 @@ public static class ProjectFile
     private const string FormatName = "PressToShape";
     private const string RectangleType = "rectangle";
     private const string EllipseType = "ellipse";
+    private const string GroupType = "group";
 
     private static readonly JsonSerializerOptions Options = new()
     {
         WriteIndented = true,
-        MaxDepth = 16,
+        MaxDepth = 256,
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         ReadCommentHandling = JsonCommentHandling.Disallow,
         AllowTrailingCommas = false,
@@ -118,7 +118,7 @@ public static class ProjectFile
             var shapes = ImmutableArray.CreateBuilder<Shape>();
             foreach (var shapeDto in layerDto.Shapes)
             {
-                var shape = BuildShape(shapeDto, out var failure);
+                var shape = BuildShape(shapeDto, 0, out var failure);
                 if (shape is null)
                 {
                     return failure!;
@@ -159,11 +159,10 @@ public static class ProjectFile
         return ProjectFileResult.Success(document);
     }
 
-    private static Shape? BuildShape(ShapeDto? dto, out ProjectFileResult? failure)
+    private static Shape? BuildShape(ShapeDto? dto, int groupDepth, out ProjectFileResult? failure)
     {
         failure = null;
-        if (dto is null || dto.Type is null || dto.X is null || dto.Y is null || dto.Width is null || dto.Height is null
-            || dto.StrokeWidth is null || dto.Opacity is null)
+        if (dto is null || dto.Type is null)
         {
             failure = ProjectFileResult.Failure(ProjectFileError.NotProjectFile, "A shape misses an entry.");
             return null;
@@ -175,6 +174,55 @@ public static class ProjectFile
             return null;
         }
 
+        return dto.Type == GroupType ? BuildGroup(dto, id, groupDepth, out failure) : BuildPlainShape(dto, id, out failure);
+    }
+
+    private static GroupShape? BuildGroup(ShapeDto dto, Guid id, int groupDepth, out ProjectFileResult? failure)
+    {
+        failure = null;
+        if (dto.Children is null)
+        {
+            failure = ProjectFileResult.Failure(ProjectFileError.NotProjectFile, "A group misses its children.");
+            return null;
+        }
+
+        if (groupDepth + 1 > ShapeTree.MaxDepth)
+        {
+            failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, $"Groups are nested deeper than {ShapeTree.MaxDepth} levels.");
+            return null;
+        }
+
+        if (dto.Children.Count == 0)
+        {
+            failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, "A group has no children.");
+            return null;
+        }
+
+        var children = ImmutableArray.CreateBuilder<Shape>(dto.Children.Count);
+        foreach (var childDto in dto.Children)
+        {
+            var child = BuildShape(childDto, groupDepth + 1, out failure);
+            if (child is null)
+            {
+                return null;
+            }
+
+            children.Add(child);
+        }
+
+        // The box of a group follows from its children, so the file has none.
+        return new GroupShape { Id = id, Children = children.MoveToImmutable(), Name = dto.Name ?? string.Empty, IsVisible = dto.Visible ?? true, IsLocked = dto.Locked ?? false };
+    }
+
+    private static Shape? BuildPlainShape(ShapeDto dto, Guid id, out ProjectFileResult? failure)
+    {
+        failure = null;
+        if (dto.X is null || dto.Y is null || dto.Width is null || dto.Height is null || dto.StrokeWidth is null || dto.Opacity is null)
+        {
+            failure = ProjectFileResult.Failure(ProjectFileError.NotProjectFile, "A shape misses an entry.");
+            return null;
+        }
+
         if (!TryParseColor(dto.Fill, out var fill) || !TryParseColor(dto.Stroke, out var stroke))
         {
             failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, "A shape has an invalid color.");
@@ -182,12 +230,15 @@ public static class ProjectFile
         }
 
         var appearance = new Appearance { Fill = fill, Stroke = stroke, StrokeWidth = dto.StrokeWidth.Value, Opacity = dto.Opacity.Value };
+        var name = dto.Name ?? string.Empty;
+        var visible = dto.Visible ?? true;
+        var locked = dto.Locked ?? false;
         switch (dto.Type)
         {
             case RectangleType:
-                return new RectangleShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0 };
+                return new RectangleShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0, Name = name, IsVisible = visible, IsLocked = locked };
             case EllipseType:
-                return new EllipseShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0 };
+                return new EllipseShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0, Name = name, IsVisible = visible, IsLocked = locked };
             default:
                 failure = ProjectFileResult.Failure(ProjectFileError.UnknownShapeType, "Unknown shape type: " + dto.Type);
                 return null;
@@ -203,25 +254,40 @@ public static class ProjectFile
         Shapes = new List<ShapeDto?>(layer.Shapes.Select(ToDto)),
     };
 
-    private static ShapeDto ToDto(Shape shape) => new()
+    private static ShapeDto ToDto(Shape shape)
     {
-        Type = shape switch
+        var dto = new ShapeDto
+        {
+            Id = shape.Id.ToString("D", CultureInfo.InvariantCulture),
+            Name = shape.Name.Length == 0 ? null : ReplaceLoneSurrogates(shape.Name),
+            Visible = shape.IsVisible ? null : false,
+            Locked = shape.IsLocked ? true : null,
+        };
+
+        if (shape is GroupShape group)
+        {
+            dto.Type = GroupType;
+            dto.Children = new List<ShapeDto?>(group.Children.Select(ToDto));
+            return dto;
+        }
+
+        dto.Type = shape switch
         {
             RectangleShape => RectangleType,
             EllipseShape => EllipseType,
             _ => throw new NotSupportedException($"Shape type {shape.GetType().Name} cannot be saved."),
-        },
-        Id = shape.Id.ToString("D", CultureInfo.InvariantCulture),
-        X = shape.X,
-        Y = shape.Y,
-        Width = shape.Width,
-        Height = shape.Height,
-        Fill = ToText(shape.Appearance.Fill),
-        Stroke = ToText(shape.Appearance.Stroke),
-        StrokeWidth = shape.Appearance.StrokeWidth,
-        Opacity = shape.Appearance.Opacity,
-        Rotation = shape.Rotation == 0 ? null : shape.Rotation,
-    };
+        };
+        dto.X = shape.X;
+        dto.Y = shape.Y;
+        dto.Width = shape.Width;
+        dto.Height = shape.Height;
+        dto.Fill = ToText(shape.Appearance.Fill);
+        dto.Stroke = ToText(shape.Appearance.Stroke);
+        dto.StrokeWidth = shape.Appearance.StrokeWidth;
+        dto.Opacity = shape.Appearance.Opacity;
+        dto.Rotation = shape.Rotation == 0 ? null : shape.Rotation;
+        return dto;
+    }
 
     // A lone surrogate cannot be written as UTF-8 JSON. It is replaced, like text encoders do.
     private static string ReplaceLoneSurrogates(string text)
@@ -268,69 +334,5 @@ public static class ProjectFile
         byte Channel(int index) => byte.Parse(text.AsSpan(1 + index * 2, 2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture);
         color = new Color(Channel(0), Channel(1), Channel(2), Channel(3));
         return true;
-    }
-
-    private sealed class FileDto
-    {
-        [JsonPropertyName("format")] public string? Format { get; set; }
-
-        [JsonPropertyName("version")] public int? Version { get; set; }
-
-        [JsonPropertyName("artboard")] public ArtboardDto? Artboard { get; set; }
-
-        [JsonPropertyName("layers")] public List<LayerDto?>? Layers { get; set; }
-
-        // Optional: written only for a document with swatches, and missing means an empty palette.
-        [JsonPropertyName("palette")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public List<string?>? Palette { get; set; }
-    }
-
-    private sealed class ArtboardDto
-    {
-        [JsonPropertyName("width")] public double? Width { get; set; }
-
-        [JsonPropertyName("height")] public double? Height { get; set; }
-    }
-
-    private sealed class LayerDto
-    {
-        [JsonPropertyName("id")] public string? Id { get; set; }
-
-        [JsonPropertyName("name")] public string? Name { get; set; }
-
-        [JsonPropertyName("visible")] public bool? Visible { get; set; }
-
-        [JsonPropertyName("locked")] public bool? Locked { get; set; }
-
-        [JsonPropertyName("shapes")] public List<ShapeDto?>? Shapes { get; set; }
-    }
-
-    private sealed class ShapeDto
-    {
-        [JsonPropertyName("type")] public string? Type { get; set; }
-
-        [JsonPropertyName("id")] public string? Id { get; set; }
-
-        [JsonPropertyName("x")] public double? X { get; set; }
-
-        [JsonPropertyName("y")] public double? Y { get; set; }
-
-        [JsonPropertyName("width")] public double? Width { get; set; }
-
-        [JsonPropertyName("height")] public double? Height { get; set; }
-
-        [JsonPropertyName("fill")] public string? Fill { get; set; }
-
-        [JsonPropertyName("stroke")] public string? Stroke { get; set; }
-
-        [JsonPropertyName("strokeWidth")] public double? StrokeWidth { get; set; }
-
-        [JsonPropertyName("opacity")] public double? Opacity { get; set; }
-
-        // Optional: written only for a rotated shape, and missing means no rotation.
-        [JsonPropertyName("rotation")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public double? Rotation { get; set; }
     }
 }
