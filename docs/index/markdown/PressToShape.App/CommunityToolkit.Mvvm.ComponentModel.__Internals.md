@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class __KnownINotifyPropertyChangedArgs`
 
-Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-229` (generated)
+Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-257` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangedEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -46,9 +46,16 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 - `public PropertyChangedEventArgs IsPathExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsPathExpanded" generated properties.
 - `public PropertyChangedEventArgs IsAlignExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsAlignExpanded" generated properties.
 - `public PropertyChangedEventArgs IsQuickActionsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsQuickActionsExpanded" generated properties.
+- `public PropertyChangedEventArgs IsOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsOpen" generated properties.
+- `public PropertyChangedEventArgs CenterX` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "CenterX" generated properties.
+- `public PropertyChangedEventArgs CenterY` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "CenterY" generated properties.
+- `public PropertyChangedEventArgs Slots` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Slots" generated properties.
+- `public PropertyChangedEventArgs HoveredIndex` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "HoveredIndex" generated properties.
+- `public PropertyChangedEventArgs CenterText` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "CenterText" generated properties.
+- `public PropertyChangedEventArgs FocusedIndex` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "FocusedIndex" generated properties.
+- `public PropertyChangedEventArgs IsAvailable` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsAvailable" generated properties.
 - `public PropertyChangedEventArgs IsActive` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsActive" generated properties.
 - `public PropertyChangedEventArgs Current` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Current" generated properties.
-- `public PropertyChangedEventArgs IsOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsOpen" generated properties.
 - `public PropertyChangedEventArgs OpenTab` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "OpenTab" generated properties.
 - `public PropertyChangedEventArgs Content` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Content" generated properties.
 - `public PropertyChangedEventArgs Title` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "Title" generated properties.
@@ -70,7 +77,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 
 `internal static class __KnownINotifyPropertyChangingArgs`
 
-Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-229` (generated)
+Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-257` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangingEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -110,9 +117,16 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 - `public PropertyChangingEventArgs IsPathExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsPathExpanded" generated properties.
 - `public PropertyChangingEventArgs IsAlignExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsAlignExpanded" generated properties.
 - `public PropertyChangingEventArgs IsQuickActionsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsQuickActionsExpanded" generated properties.
+- `public PropertyChangingEventArgs IsOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsOpen" generated properties.
+- `public PropertyChangingEventArgs CenterX` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "CenterX" generated properties.
+- `public PropertyChangingEventArgs CenterY` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "CenterY" generated properties.
+- `public PropertyChangingEventArgs Slots` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Slots" generated properties.
+- `public PropertyChangingEventArgs HoveredIndex` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "HoveredIndex" generated properties.
+- `public PropertyChangingEventArgs CenterText` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "CenterText" generated properties.
+- `public PropertyChangingEventArgs FocusedIndex` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "FocusedIndex" generated properties.
+- `public PropertyChangingEventArgs IsAvailable` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsAvailable" generated properties.
 - `public PropertyChangingEventArgs IsActive` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsActive" generated properties.
 - `public PropertyChangingEventArgs Current` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Current" generated properties.
-- `public PropertyChangingEventArgs IsOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsOpen" generated properties.
 - `public PropertyChangingEventArgs OpenTab` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "OpenTab" generated properties.
 - `public PropertyChangingEventArgs Content` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Content" generated properties.
 - `public PropertyChangingEventArgs Title` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "Title" generated properties.

@@ -90,6 +90,56 @@ _(no documentation)_
 - `public void DoubleTap_WithAnotherTool_DoesNothing()` - _(no documentation)_
 - `public void TwoFingerGesture_BetweenTaps_BreaksTheDoubleTap()` - _(no documentation)_
 
+## CanvasAreaViewModelLongPressTests (class)
+
+`public class CanvasAreaViewModelLongPressTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelLongPressTests.cs:12-226`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Tick_FingerHeldStill_OpensTheRingAtThePressAfterTheDelay()` - _(no documentation)_
+- `public void Tick_BeforeTheDelay_DoesNothing()` - _(no documentation)_
+- `public void Tick_FingerMovedPastTheSlop_DoesNotOpen()` - _(no documentation)_
+- `public void Tick_FingerReleasedBeforeTheDelay_DoesNotOpen()` - _(no documentation)_
+- `public void Tick_FingerTwitchedWithinTheSlop_UndoesTheMoveItStarted()` - _(no documentation)_
+- `public void Release_AfterTheLongPress_KeepsTheRingOpenAndIsNoTap()` - _(no documentation)_
+- `public void Tick_SecondFingerArrives_CancelsTheLongPress()` - _(no documentation)_
+- `public void Tick_WithAnotherTool_DoesNotWatch()` - _(no documentation)_
+- `public void Tick_Mouse_NeverLongPresses()` - _(no documentation)_
+- `public void Tick_Pen_LongPressesLikeAFinger()` - _(no documentation)_
+- `public void Tick_PenMovedPastTheSlop_DoesNotOpen()` - _(no documentation)_
+- `public void Tick_NothingWatched_DoesNothing()` - _(no documentation)_
+- `public void Tick_OnEmptyCanvas_OpensTheEmptyCanvasRing()` - _(no documentation)_
+
+## CanvasAreaViewModelRingTests (class)
+
+`public class CanvasAreaViewModelRingTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelRingTests.cs:13-243`
+
+_(no documentation)_
+
+**Members**
+
+- `public void OpenContextMenu_OnASelectedShape_OpensTheSelectionRingAndKeepsTheSelection()` - _(no documentation)_
+- `public void OpenContextMenu_OnAnUnselectedShape_SelectsItFirst()` - _(no documentation)_
+- `public void OpenContextMenu_OnEmptyCanvas_ClearsTheSelectionAndOpensTheEmptyCanvasRing()` - _(no documentation)_
+- `public void OpenContextMenu_WhileOpen_MovesTheRingToTheNewPoint()` - _(no documentation)_
+- `public void OpenContextMenu_WithAnotherTool_DoesNothing()` - _(no documentation)_
+- `public void OpenContextMenu_DuringADrag_DoesNothing()` - _(no documentation)_
+- `public void OpenContextMenu_DuringAPan_DoesNothing()` - _(no documentation)_
+- `public void OpenContextMenu_DuringAColorPick_DoesNothing()` - _(no documentation)_
+- `public void OpenContextMenu_WithoutARing_DoesNothing()` - _(no documentation)_
+- `public void KeyPressed_ContextMenuWithASelection_OpensInTheMiddleOfTheSelectionWithTheFirstSlotFocused()` - _(no documentation)_
+- `public void KeyPressed_ContextMenuWithoutASelection_OpensTheEmptyCanvasRingInTheMiddleOfTheViewport()` - _(no documentation)_
+- `public void KeyPressed_ContextMenuWithAnotherTool_IsNotHandled()` - _(no documentation)_
+- `public void SelectionChange_WhileOpen_ClosesTheRing()` - _(no documentation)_
+- `public void DocumentChange_WhileOpen_ClosesTheRing()` - _(no documentation)_
+- `public void OpenContextMenu_AddsNoHistoryStep()` - _(no documentation)_
+
 ## CanvasAreaViewModelTests (class)
 
 `public class CanvasAreaViewModelTests`
@@ -208,6 +258,25 @@ _(no documentation)_
 - `public void Finger_FifteenPixelsFromAHandle_GrabsIt_ButTheMouseDoesNot()` - _(no documentation)_
 - `public void TouchGrabSize_CanBeChanged()` - _(no documentation)_
 - `public void Mouse_StillDrawsWithTheExistingMethods()` - _(no documentation)_
+
+## CanvasInteractionContextMenuTests (class)
+
+`public class CanvasInteractionContextMenuTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionContextMenuTests.cs:9-129`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SelectForContextMenu_OnASelectedObject_KeepsTheWholeSelection()` - _(no documentation)_
+- `public void SelectForContextMenu_OnAnotherObject_SelectsOnlyIt()` - _(no documentation)_
+- `public void SelectForContextMenu_OnAMemberOfAGroup_SelectsTheGroup()` - _(no documentation)_
+- `public void SelectForContextMenu_InAnEnteredGroup_SelectsTheMember()` - _(no documentation)_
+- `public void SelectForContextMenu_OnEmptyCanvas_ClearsTheSelection()` - _(no documentation)_
+- `public void SelectForContextMenu_OnAHiddenOrLockedObject_CountsAsEmptyCanvas(double x)` - _(no documentation)_
+- `public void SelectForContextMenu_OnAHandleOfTheSelection_KeepsTheSelection()` - _(no documentation)_
+- `public void SelectForContextMenu_AddsNoHistoryStep()` - _(no documentation)_
 
 ## CanvasInteractionGroupTests (class)
 
@@ -712,6 +781,25 @@ _(no documentation)_
 - `public void Tap_ThirdTapRightAfterADoubleTap_IsNotAnotherDoubleTap()` - _(no documentation)_
 - `public void Reset_ForgetsTheLastTap()` - _(no documentation)_
 - `public void Tap_TimeGoingBackwards_IsNotADoubleTap()` - _(no documentation)_
+
+## EditorShellViewModelRingTests (class)
+
+`public class EditorShellViewModelRingTests`
+
+Source: `tests/PressToShape.App.Tests/EditorShellViewModelRingTests.cs:16-207`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Slot_RunsTheSameCommandAsTheMenu_WithTheSameHistoryEntry(string key, string? submenu)` - _(no documentation)_
+- `public void Group_ThroughTheRing_CanBeUndoneInOneStep()` - _(no documentation)_
+- `public void Group_WithOneObjectSelected_DoesNothingAndAddsNoHistoryEntry()` - _(no documentation)_
+- `public void EmptyCanvas_PasteRunsWhenTheClipboardHasShapes()` - _(no documentation)_
+- `public void EmptyCanvas_PasteWithNothingCopied_IsUnavailable()` - _(no documentation)_
+- `public void EmptyCanvas_SelectAllSelectsEveryShape()` - _(no documentation)_
+- `public void DesktopShell_HasTheRingWithItsContent()` - _(no documentation)_
+- `public void TabletShell_HasTheRingWithItsContent()` - _(no documentation)_
 
 ## EditorShellViewModelTests (class)
 
@@ -1808,6 +1896,136 @@ Finds files in the repository, relative to the solution root, without hardcoded 
 
 - `public string Root { get; }` - _(no documentation)_
 - `public string Combine(string relativePath)` - _(no documentation)_
+
+## RingGeometryTests (class)
+
+`public class RingGeometryTests`
+
+Source: `tests/PressToShape.App.Tests/RingGeometryTests.cs:7-148`
+
+_(no documentation)_
+
+**Members**
+
+- `public void WedgeAngles_EvenCounts_AreCenteredAtTheTopAndClockwise(int count, int index, double start, double sweep)` - _(no documentation)_
+- `public void WedgeAngles_SevenSlots_AllWedgesTogetherFillTheCircle()` - _(no documentation)_
+- `public void WedgeAngles_NoSlots_IsEmpty()` - _(no documentation)_
+- `public void HitTest_FourSlots_PointInsideAWedge_HitsIt(double dx, double dy, int expected)` - _(no documentation)_
+- `public void HitTest_SevenSlots_EveryWedgeCenterHitsItsOwnWedge()` - _(no documentation)_
+- `public void HitTest_OnTheLineBetweenTwoWedges_TakesTheNextOneClockwise()` - _(no documentation)_
+- `public void HitTest_JustLeftOfTheTop_StillHitsTheFirstWedge()` - _(no documentation)_
+- `public void HitTest_CloserThanTheInnerRadius_HitsTheCenter()` - _(no documentation)_
+- `public void HitTest_ExactlyOnTheRadii_BelongsToTheWedge()` - _(no documentation)_
+- `public void HitTest_FartherThanTheOuterRadius_IsOutside()` - _(no documentation)_
+- `public void HitTest_NoSlots_HitsNothingExceptTheCenter()` - _(no documentation)_
+- `public void HitTest_NotANumber_IsOutside()` - _(no documentation)_
+- `public void SlotCenter_FirstSlot_IsAboveTheCenterAtTheMiddleRadius()` - _(no documentation)_
+- `public void SlotCenter_SecondOfFour_IsRightOfTheCenter()` - _(no documentation)_
+- `public void ClampCenter_InsideTheArea_IsUnchanged()` - _(no documentation)_
+- `public void ClampCenter_NearAnEdge_MovesTheRingInside(double x, double y, double expectedX, double expectedY)` - _(no documentation)_
+- `public void ClampCenter_AreaSmallerThanTheRing_CentersTheRing()` - _(no documentation)_
+
+## RingMenuContentTests (class)
+
+`public class RingMenuContentTests`
+
+Source: `tests/PressToShape.App.Tests/RingMenuContentTests.cs:12-112`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Selection_HasTheSevenSlotsInOrder()` - _(no documentation)_
+- `public void Selection_Slots_RunTheCommandsOfTheMenus()` - _(no documentation)_
+- `public void Selection_ArrangeSlot_IsASubmenuWithTheFourArrangeCommands()` - _(no documentation)_
+- `public void EmptyCanvas_HasPasteAndSelectAll()` - _(no documentation)_
+- `public void Slots_AreTheSameOnEveryCall()` - _(no documentation)_
+- `public void EveryLevel_HasUniqueNonEmptyNamesAndDefinedIcons()` - _(no documentation)_
+- `public void Create_WithoutCommands_Throws()` - _(no documentation)_
+
+## RingMenuControlTests (class)
+
+`public class RingMenuControlTests`
+
+Source: `tests/PressToShape.App.Tests/RingMenuControlTests.cs:25-343`
+
+_(no documentation)_
+
+**Members**
+
+- `public void RightClickOnAShape_ShowsTheSevenWedgesOfASelection()` - _(no documentation)_
+- `public void RightClickOnEmptyCanvas_ShowsTheTwoWedgesOfTheEmptyCanvas()` - _(no documentation)_
+- `public void ClickOnAWedge_RunsItsCommandAndClosesTheRing()` - _(no documentation)_
+- `public void ClickOnAnUnavailableWedge_DoesNothingAndKeepsTheRingOpen()` - _(no documentation)_
+- `public void ArrangeWedge_SwapsToFourWedges_AndTheCenterGoesBack()` - _(no documentation)_
+- `public void Escape_InASubmenuGoesBack_ThenCloses()` - _(no documentation)_
+- `public void PressOutsideTheRing_ClosesItWithoutChangingTheDocument()` - _(no documentation)_
+- `public void MenuKey_OpensTheRingAndTheArrowKeysAndEnterUseASlot()` - _(no documentation)_
+- `public void Wedges_CarryTheirTranslatedNameAndTheirDisabledState()` - _(no documentation)_
+- `public void LanguageChange_WhileOpen_RefreshesTheCenterText()` - _(no documentation)_
+- `public void RingOpenedNearTheCorner_StaysInsideTheCanvasArea()` - _(no documentation)_
+- `public void RingRadii_AreLargerInTheTabletLayout()` - _(no documentation)_
+- `public void CanvasBelowTheRing_DoesNotReactToThePointerWhileItIsOpen()` - _(no documentation)_
+
+## RingMenuViewModelTests (class)
+
+`public class RingMenuViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/RingMenuViewModelTests.cs:12-384`
+
+_(no documentation)_
+
+**Members**
+
+- `public RingMenuViewModelTests()` - _(no documentation)_
+- `public void Open_WithContent_ShowsTheSlotsAtThePoint()` - _(no documentation)_
+- `public void Open_EmptyCanvasMode_ShowsTheOtherSlots()` - _(no documentation)_
+- `public void Open_WithoutContent_DoesNothing()` - _(no documentation)_
+- `public void Open_ContentWithNoSlots_DoesNothing()` - _(no documentation)_
+- `public void Close_ClearsTheSlots_AndTheNextOpeningStartsAtTheTop()` - _(no documentation)_
+- `public void Close_WhenClosed_DoesNothing()` - _(no documentation)_
+- `public void Activate_CommandSlot_ClosesFirstAndRunsOnce()` - _(no documentation)_
+- `public void Activate_UnavailableSlot_DoesNothingAndStaysOpen()` - _(no documentation)_
+- `public void Activate_SlotThatBecameUnavailable_DoesNothingAndStaysOpen()` - _(no documentation)_
+- `public void Activate_SlotThatBecameUnavailableWithoutNotice_DoesNotRunTheCommand()` - _(no documentation)_
+- `public void Activate_IndexOutsideTheSlots_DoesNothing()` - _(no documentation)_
+- `public void Activate_WhenClosed_DoesNothing()` - _(no documentation)_
+- `public void Activate_SubmenuSlot_ShowsTheChildrenAndCanGoBack()` - _(no documentation)_
+- `public void Activate_SlotOfASubmenu_RunsItAndCloses()` - _(no documentation)_
+- `public void ActivateCenter_InASubmenu_GoesBackOneLevel()` - _(no documentation)_
+- `public void Back_AtTheTop_Closes()` - _(no documentation)_
+- `public void Back_TwiceFromASubmenu_GoesBackThenCloses()` - _(no documentation)_
+- `public void MoveFocus_FirstMove_LandsOnTheFirstOrTheLastSlot()` - _(no documentation)_
+- `public void MoveFocus_AtTheEnds_Wraps()` - _(no documentation)_
+- `public void MoveFocus_WhenClosed_DoesNothing()` - _(no documentation)_
+- `public void ShowLevel_WithKeyboardFocus_FocusesTheFirstSlotOfTheSubmenu()` - _(no documentation)_
+- `public void CenterText_HoverWinsOverFocus_AndIsEmptyOtherwise()` - _(no documentation)_
+- `public void Hover_IndexOutsideTheSlots_CountsAsNone()` - _(no documentation)_
+- `public void LanguageChange_WhileOpen_RefreshesTheNames()` - _(no documentation)_
+- `public void Open_WhileOpen_ReplacesTheRing()` - _(no documentation)_
+- `public void CenterActionName_IsCloseAtTheTopAndBackInASubmenu_AndFollowsTheLanguage()` - _(no documentation)_
+
+## RingSlotViewModelTests (class)
+
+`public class RingSlotViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/RingSlotViewModelTests.cs:11-153`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Name_AfterALanguageChangeAndRefresh_IsTranslated()` - _(no documentation)_
+- `public void IsAvailable_FollowsCanExecuteChanged()` - _(no documentation)_
+- `public void IsAvailable_OfASubmenu_IsTrueWhenOneChildCanRun()` - _(no documentation)_
+- `public void Execute_AvailableCommand_RunsItOnce()` - _(no documentation)_
+- `public void Execute_UnavailableCommand_DoesNotRun()` - _(no documentation)_
+- `public void Execute_CommandThatBecameUnavailableWithoutNotice_DoesNotRun()` - _(no documentation)_
+- `public void Execute_SubmenuSlot_RunsNothing()` - _(no documentation)_
+- `public void Dispose_StopsListeningToTheCommand()` - _(no documentation)_
+- `public void WithCommand_InvalidInput_IsRejected()` - _(no documentation)_
+- `public void WithChildren_InvalidInput_IsRejected()` - _(no documentation)_
+- `public void Commands_OfNestedSubmenus_ListsEveryCommand()` - _(no documentation)_
 
 ## RulerTicksTests (class)
 

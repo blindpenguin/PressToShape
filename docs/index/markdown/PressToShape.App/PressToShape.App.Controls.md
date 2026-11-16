@@ -62,6 +62,34 @@ What a number text box does with focus and keys, for every view that shows Press
 
 - `public void Attach(Interactive view)` - Lets the number fields below view commit and revert.
 
+## RingMenuControl (class)
+
+`internal sealed class RingMenuControl : Panel`
+
+Source: `src/PressToShape.App/Controls/RingMenuControl.cs:23-435`
+
+The ring context menu. It fills the canvas area (so a press beside the ring is caught here and closes it), and draws the wedges, their icons and the center around the point where the ring was opened. It draws what PressToShape.App.ViewModels.Editor.RingMenuViewModel holds and forwards pointer and key input to it; PressToShape.App.Workspace.RingGeometry does the math. The colors and sizes come from the theme (see the styles of the classes ringWedge, ringIcon, ringCenter and ringCenterText).
+
+**Members**
+
+- `public StyledProperty<double> InnerRadiusProperty` - _(no documentation)_
+- `public StyledProperty<double> OuterRadiusProperty` - _(no documentation)_
+- `public RingMenuControl()` - _(no documentation)_
+- `public double InnerRadius { get; set; }` - The radius of the center disc. Wedges start here.
+- `public double OuterRadius { get; set; }` - The outer radius of the wedges.
+- `public void AdoptPointer(IPointer pointer)` - Takes over a pointer that is already down, for the long press of a finger or a pen: the ring opened under it. Its release then uses the slot it is on, and does nothing on the center (where it started) or beside the ring.
+- `protected void OnDataContextChanged(EventArgs e)` - _(no documentation)_
+- `protected void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)` - _(no documentation)_
+- `protected Size MeasureOverride(Size availableSize)` - _(no documentation)_
+- `protected Size ArrangeOverride(Size finalSize)` - _(no documentation)_
+- `protected void OnPointerMoved(PointerEventArgs e)` - _(no documentation)_
+- `protected void OnPointerExited(PointerEventArgs e)` - _(no documentation)_
+- `protected void OnPointerPressed(PointerPressedEventArgs e)` - _(no documentation)_
+- `protected void OnPointerReleased(PointerReleasedEventArgs e)` - _(no documentation)_
+- `protected void OnPointerCaptureLost(PointerCaptureLostEventArgs e)` - _(no documentation)_
+- `protected void OnPointerWheelChanged(PointerWheelEventArgs e)` - _(no documentation)_
+- `protected void OnKeyDown(KeyEventArgs e)` - _(no documentation)_
+
 ## RulerControl (class)
 
 `internal sealed class RulerControl : Control`

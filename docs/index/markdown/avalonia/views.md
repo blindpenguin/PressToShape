@@ -4,12 +4,19 @@ Links come from `x:DataType`, DataContext bindings and assignments, and the View
 
 ## Views
 
+### RingMenuControl
+
+`T:PressToShape.App.Controls.RingMenuControl` at src/PressToShape.App/Controls/RingMenuControl.cs:23. No XAML file.
+The ring context menu. It fills the canvas area (so a press beside the ring is caught here and closes it), and draws the wedges, their icons and the center around the point where the ring was opened. It draws what PressToShape.App.ViewModels.Editor.RingMenuViewModel holds and forwards pointer and key input to it; PressToShape.App.Workspace.RingGeometry does the math. The colors and sizes come from the theme (see the styles of the classes ringWedge, ringIcon, ringCenter and ringCenterText).
+
+- view model `RingMenuViewModel` (`T:PressToShape.App.ViewModels.Editor.RingMenuViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:64 (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:64); 0 commands, 5 test classes
+
 ### DesktopShellView
 
 `T:PressToShape.App.Views.Desktop.DesktopShellView` at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml.cs:8. XAML: `src/PressToShape.App/Views/Desktop/DesktopShellView.axaml`, 20 bindings.
 _(no documentation)_
 
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:1); 5 commands, 4 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:1); 5 commands, 5 test classes
 
 ### MenuBarView
 
@@ -37,13 +44,14 @@ _(no documentation)_
 
 ### CanvasAreaView
 
-`T:PressToShape.App.Views.Editor.CanvasAreaView` at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:11. XAML: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml`, 30 bindings.
+`T:PressToShape.App.Views.Editor.CanvasAreaView` at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:12. XAML: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml`, 31 bindings.
 _(no documentation)_
 
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42); 0 commands, 10 test classes
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:1); 0 commands, 10 test classes
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28); 0 commands, 10 test classes
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:327); 0 commands, 10 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42); 0 commands, 14 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:1); 0 commands, 14 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28); 0 commands, 14 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/RingMenuControlTests.cs:43); 0 commands, 14 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:327); 0 commands, 14 test classes
 
 ### HistoryView
 
@@ -112,8 +120,8 @@ _(no documentation)_
 `T:PressToShape.App.Views.MainWindow` at src/PressToShape.App/Views/MainWindow.axaml.cs:6. XAML: `src/PressToShape.App/Views/MainWindow.axaml`, 1 bindings.
 _(no documentation)_
 
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:40); 5 commands, 4 test classes
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1); 5 commands, 4 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:40); 5 commands, 5 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1); 5 commands, 5 test classes
 
 ### MessageDialogView
 
@@ -153,9 +161,9 @@ The tabbed panel of the tablet layout, with an icon for each tab. All state is i
 `T:PressToShape.App.Views.Tablet.TabletShellView` at src/PressToShape.App/Views/Tablet/TabletShellView.axaml.cs:19. XAML: `src/PressToShape.App/Views/Tablet/TabletShellView.axaml`, 7 bindings.
 The root of the tablet layout. The code-behind has three view-only jobs that need the platform or the pointer: it hands the Back button to the view model (after closing an open toolbar menu, which only the view knows about), it closes the panel when the canvas is touched, and it keeps the layout above the on-screen keyboard. Avalonia already keeps the content out from under the system bars, and the keyboard does not resize the view but only reports the area it covers (found on the device), so the bottom margin is set here.
 
-- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:72); 0 commands, 4 test classes
-- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:1); 0 commands, 4 test classes
-- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:370); 0 commands, 4 test classes
+- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:72); 0 commands, 5 test classes
+- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:1); 0 commands, 5 test classes
+- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:370); 0 commands, 5 test classes
 
 ### TabletToolColumnView
 
@@ -206,7 +214,9 @@ The compact toolbar of the tablet layout. All behavior is in PressToShape.App.Vi
 
 Types that derive from a base class of a linked view model but that no view links to. A view may still create them in code.
 
+- `BareShell` (`T:PressToShape.App.Tests.EditorShellViewModelRingTests.BareShell`) at tests/PressToShape.App.Tests/EditorShellViewModelRingTests.cs:18
 - `BareShell` (`T:PressToShape.App.Tests.EditorShellViewModelTests.BareShell`) at tests/PressToShape.App.Tests/EditorShellViewModelTests.cs:17
+- `BareShell` (`T:PressToShape.App.Tests.RingMenuControlTests.BareShell`) at tests/PressToShape.App.Tests/RingMenuControlTests.cs:28
 - `TestShell` (`T:PressToShape.App.Tests.TestShell`) at tests/PressToShape.App.Tests/TestShell.cs:10
 - `MenuItemViewModel` (`T:PressToShape.App.ViewModels.Desktop.MenuItemViewModel`) at src/PressToShape.App/ViewModels/Desktop/MenuItemViewModel.cs:15
 - `ToolbarButtonViewModel` (`T:PressToShape.App.ViewModels.Desktop.ToolbarButtonViewModel`) at src/PressToShape.App/ViewModels/Desktop/ToolbarButtonViewModel.cs:8
@@ -215,6 +225,7 @@ Types that derive from a base class of a linked view model but that no view link
 - `NumberFieldViewModel` (`T:PressToShape.App.ViewModels.Editor.NumberFieldViewModel`) at src/PressToShape.App/ViewModels/Editor/NumberFieldViewModel.cs:13
 - `ObjectRowViewModel` (`T:PressToShape.App.ViewModels.Editor.ObjectRowViewModel`) at src/PressToShape.App/ViewModels/Editor/ObjectRowViewModel.cs:11
 - `PaletteViewModel` (`T:PressToShape.App.ViewModels.Editor.PaletteViewModel`) at src/PressToShape.App/ViewModels/Editor/PaletteViewModel.cs:15
+- `RingSlotViewModel` (`T:PressToShape.App.ViewModels.Editor.RingSlotViewModel`) at src/PressToShape.App/ViewModels/Editor/RingSlotViewModel.cs:16
 - `ToolItemViewModel` (`T:PressToShape.App.ViewModels.Editor.ToolItemViewModel`) at src/PressToShape.App/ViewModels/Editor/ToolItemViewModel.cs:10
 - `ZoomViewModel` (`T:PressToShape.App.ViewModels.Editor.ZoomViewModel`) at src/PressToShape.App/ViewModels/Editor/ZoomViewModel.cs:13
 - `MessageDialogHost` (`T:PressToShape.App.ViewModels.Tablet.MessageDialogHost`) at src/PressToShape.App/ViewModels/Tablet/MessageDialogHost.cs:12

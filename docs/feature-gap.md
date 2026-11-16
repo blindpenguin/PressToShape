@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, and the object list. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, the object list, and the ring context menu. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -141,7 +141,9 @@ The most important structural gap: **Core has only `RectangleShape`, `EllipseSha
 | Pinch zoom, two-finger pan, long press | Done | MVP |
 | Pen pressure and tilt | Missing | Unplanned |
 | Palm rejection | Shelved, see [palm-detection.md](palm-detection.md) | Unplanned |
-| Stylus-button actions, eraser end | Missing | Unplanned |
+| Ring context menu (right-click, long press, Menu key): group, ungroup, duplicate, delete, lock, hide, arrange; paste and select all on empty canvas | Done (fixed slots; the barrel button of a pen is not checked on a device yet) | Unplanned |
+| Customizable ring slots | Missing (waits for the settings dialog) | Unplanned |
+| Other stylus-button actions, eraser end | Missing | Unplanned |
 | On-screen modifier keys (shift, ctrl) | Missing | Unplanned |
 
 ## 10. Standards and interoperability

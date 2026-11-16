@@ -40,6 +40,21 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 none found
 
 
+## RingMenuControl
+
+`T:PressToShape.App.Controls.RingMenuControl` at src/PressToShape.App/Controls/RingMenuControl.cs:23, base `Panel`.
+The ring context menu. It fills the canvas area (so a press beside the ring is caught here and closes it), and draws the wedges, their icons and the center around the point where the ring was opened. It draws what PressToShape.App.ViewModels.Editor.RingMenuViewModel holds and forwards pointer and key input to it; PressToShape.App.Workspace.RingGeometry does the math. The colors and sizes come from the theme (see the styles of the classes ringWedge, ringIcon, ringCenter and ringCenterText).
+
+**Properties**
+
+- `InnerRadius` (Styled, `double`, default 34) at line 25
+- `OuterRadius` (Styled, `double`, default 110) at line 28
+
+**Events**
+
+none found
+
+
 ## RulerControl
 
 `T:PressToShape.App.Controls.RulerControl` at src/PressToShape.App/Controls/RulerControl.cs:14, base `Control`.

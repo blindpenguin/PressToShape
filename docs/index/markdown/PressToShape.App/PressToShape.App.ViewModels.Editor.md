@@ -6,16 +6,19 @@ Project: PressToShape.App
 
 `internal partial sealed class CanvasAreaViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:13-608`
+Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.LongPress.cs:8-51`
 
 Geometry of the canvas area: where the artboard is drawn and where the ruler zero points are. The view only reports the viewport size, everything else is derived here.
 
 **Members**
 
-- `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null)` - _(no documentation)_
+- `public bool IsWatchingLongPress { get; }` - Whether a press may still become a long press, so the view keeps calling PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.Tick.
+- `public void Tick()` - Time passed. When a finger or a pen has stayed down long enough without moving, the action the press started is undone and the ring menu opens at the press. The release that follows is no tap.
+- `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null)` - _(no documentation)_
 - `public double ViewportWidth { get; set; }` - _(no documentation)_
 - `public double ViewportHeight { get; set; }` - _(no documentation)_
 - `public bool IsAltHeld { get; set; }` - _(no documentation)_
+- `public RingMenuViewModel? Ring { get; }` - The ring context menu, or null when the canvas was made without one.
 - `public Document Document { get; }` - The document the canvas draws.
 - `public ScreenShape? Draft { get; }` - The shape that is being drawn, in screen space, or null.
 - `public SelectionOverlay Overlay { get; }` - Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.
@@ -41,6 +44,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public double OriginY { get; }` - Vertical screen position of the artboard's top edge. The vertical ruler's zero is here.
 - `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. The tablet layout sets it from the theme.
 - `public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = Mouse)` - The primary button went down. The position is in screen pixels of the canvas area. With the Hand tool this starts dragging the view, with the Zoom tool it zooms one step in (with alt: out) around the position, with the other tools it is handled by the tool. inputType is the device: a finger grabs handles from a larger area.
+- `public bool OpenContextMenu(double screenX, double screenY, InputPointerType inputType = Mouse)` - Opens the ring menu at this position, in screen pixels of the canvas area (right-click, long press or the barrel button of a pen). First applies the selection rules of the menu (see PressToShape.App.Workspace.CanvasInteraction.SelectForContextMenu). Does nothing without a ring, with a tool other than Select, or while a drag, a pan, a pick from the canvas or a two-finger gesture is in progress.
 - `public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false)` - The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters a group or leaves the entered one (see PressToShape.App.Workspace.CanvasInteraction.DoubleClicked). With other tools it acts as a normal press.
 - `public void TouchPressed(int id, double screenX, double screenY)` - A finger went down. One finger acts with the active tool like the mouse. A second finger undoes that action (see PressToShape.App.Workspace.CanvasInteraction.Abort) and the two fingers then move and zoom the view. Mouse and pen use PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.PointerPressed. The id only has to be unique from this press to the release.
 - `public void TouchMoved(int id, double screenX, double screenY)` - A finger moved.
@@ -58,6 +62,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 
 **Relationships**
 
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.RingMenuViewModel`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
@@ -123,7 +128,7 @@ What the clipboard, delete and selection items of the Edit menu do. Undo and Red
 
 `internal abstract partial class EditorShellViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:17-303`
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:17-306`
 
 What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
 
@@ -175,7 +180,9 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Services.FileServices`
+- Inherited by `PressToShape.App.Tests.EditorShellViewModelRingTests.BareShell`
 - Inherited by `PressToShape.App.Tests.EditorShellViewModelTests.BareShell`
+- Inherited by `PressToShape.App.Tests.RingMenuControlTests.BareShell`
 - Inherited by `PressToShape.App.Tests.TestShell`
 - Inherited by `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
 - Inherited by `PressToShape.App.ViewModels.Tablet.TabletShellViewModel`
@@ -525,6 +532,80 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletColorSwatchViewModel`
+
+## RingMenuContent (class)
+
+`internal static class RingMenuContent`
+
+Source: `src/PressToShape.App/ViewModels/Editor/RingMenuContent.cs:13-48`
+
+The fixed slot tables of the ring menu. Every slot runs a command that the menus already have, so the history entries and the rules for when a command is available are the same. The order and the place of the slots never change, so users can learn them.
+
+**Members**
+
+- `public Func<RingMenuMode, IReadOnlyList<RingSlotDefinition>> Create(ObjectMenuCommands objects, EditMenuCommands edit)` - Gives the slots for a mode: the actions for a selection, or for the empty canvas.
+
+## RingMenuViewModel (class)
+
+`internal partial sealed class RingMenuViewModel : LocalizedViewModel`
+
+Source: `src/PressToShape.App/ViewModels/Editor/RingMenuViewModel.cs:14-180`
+
+The state of the ring menu: whether it is open, where, which level of slots it shows, and which slot the pointer or the keyboard is on. The content comes from PressToShape.App.ViewModels.Editor.RingMenuViewModel.Content, so this class knows no commands. It lives as long as the canvas area.
+
+**Members**
+
+- `public RingMenuViewModel(ILocalizer localizer)` - _(no documentation)_
+- `public Func<RingMenuMode, IReadOnlyList<RingSlotDefinition>>? Content { get; set; }` - Gives the slots for a mode. Until it is set, the ring does not open.
+- `public bool IsOpen { get; private set; }` - _(no documentation)_
+- `public double CenterX { get; private set; }` - _(no documentation)_
+- `public double CenterY { get; private set; }` - _(no documentation)_
+- `public IReadOnlyList<RingSlotViewModel> Slots { get; private set; }` - _(no documentation)_
+- `public int? HoveredIndex { get; private set; }` - _(no documentation)_
+- `public int? FocusedIndex { get; private set; }` - _(no documentation)_
+- `public bool CanGoBack { get; }` - Whether the center goes back one level instead of closing the ring.
+- `public string CenterActionName { get; }` - What the center does, translated: "Back" in a submenu, "Close" at the top. For the accessible name of the center.
+- `public string CenterText { get; }` - The translated name of the slot under the pointer, else of the focused slot, else empty.
+- `public void Open(RingMenuMode mode, double x, double y)` - Opens the ring at a point. Does nothing without content, or when the content has no slots for the mode.
+- `public void Close()` - Closes the ring and forgets the levels, so the next opening starts at the top.
+- `public void Activate(int index)` - Uses a slot. A submenu slot swaps the level. A command slot closes the ring first and then runs, so a command that changes the selection never meets an open ring. An unavailable slot does nothing.
+- `public void ActivateCenter()` - The center was used: goes back one level, or closes at the top.
+- `public void Back()` - Goes back one level, or closes at the top.
+- `public void Hover(int? index)` - Sets the slot the pointer is over, or none. An index outside the slots counts as none.
+- `public void MoveFocus(int step)` - Moves the keyboard focus by steps around the slots, wrapping at both ends. The first move lands on the first or the last slot.
+- `protected void OnLanguageRefreshed()` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`
+
+## RingSlotViewModel (class)
+
+`internal partial sealed class RingSlotViewModel : ViewModelBase, IDisposable`
+
+Source: `src/PressToShape.App/ViewModels/Editor/RingSlotViewModel.cs:16-77`
+
+One wedge of the ring menu. Slots are made again for every level that is shown, so this is not a PressToShape.App.ViewModels.LocalizedViewModel (that one never unsubscribes from the localizer): the name is translated when it is read, and the ring calls PressToShape.App.ViewModels.Editor.RingSlotViewModel.Refresh on a language change. The slot listens to its command, or to all commands of its submenu, and must be disposed when it is no longer shown.
+
+**Members**
+
+- `public RingSlotViewModel(ILocalizer localizer, RingSlotDefinition definition)` - _(no documentation)_
+- `public string Name { get; }` - The translated name.
+- `public MaterialIconKind Icon { get; }` - _(no documentation)_
+- `public bool HasChildren { get; }` - Whether the slot opens a submenu instead of running a command.
+- `public IReadOnlyList<RingSlotDefinition> Children { get; }` - The entries of the submenu, or an empty list for a slot that runs a command.
+- `public bool IsAvailable { get; private set; }` - _(no documentation)_
+- `public bool Execute()` - Runs the command of the slot if it can run now. Returns whether it ran. A submenu slot runs nothing.
+- `public void Refresh()` - Raises the change of the translated name, after a language change.
+- `public void Dispose()` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Workspace.RingSlotDefinition`
+- Inherits `PressToShape.App.ViewModels.ViewModelBase`
 
 ## ToolItemViewModel (class)
 

@@ -6,13 +6,14 @@ Project: PressToShape.App
 
 `public partial class CanvasAreaView : UserControl`
 
-Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:11-318`
+Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:12-412`
 
 _(no documentation)_
 
 **Members**
 
 - `internal Panel Viewport` _(generated)_ - _(no documentation)_
+- `internal RingMenuControl RingMenu` _(generated)_ - _(no documentation)_
 - `public StyledProperty<bool> ShowRulersProperty` - Whether the rulers (and the corner between them) are shown. The desktop layout shows them, the tablet layout does not.
 - `internal ScrollBar VerticalBar` _(generated)_ - _(no documentation)_
 - `internal ScrollBar HorizontalBar` _(generated)_ - _(no documentation)_

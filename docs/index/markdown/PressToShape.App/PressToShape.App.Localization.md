@@ -83,8 +83,11 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.Services.AvaloniaFileDialogs`
 - Injected into `PressToShape.App.Services.AvaloniaMessageDialogs`
 - Injected into `PressToShape.App.Services.OverlayMessageDialogs`
+- Injected into `PressToShape.App.Tests.EditorShellViewModelRingTests.BareShell`
 - Injected into `PressToShape.App.Tests.EditorShellViewModelTests.BareShell`
 - Injected into `PressToShape.App.Tests.EditorShellViewModelTests.Fixture`
+- Injected into `PressToShape.App.Tests.RingMenuControlTests.BareShell`
+- Injected into `PressToShape.App.Tests.RingMenuControlTests.Scene`
 - Injected into `PressToShape.App.Tests.TestShell`
 - Injected into `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
@@ -100,6 +103,8 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.ViewModels.Editor.NumberFieldViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.RingMenuViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.RingSlotViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ZoomViewModel`

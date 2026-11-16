@@ -67,6 +67,7 @@ A group of shapes that is selected, moved and styled as one. Children keep their
 **Relationships**
 
 - Inherits `PressToShape.Core.Shapes.Shape`
+- Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
 - Injected into `PressToShape.Core.Documents.ShapeLocation`
 
@@ -85,6 +86,7 @@ An axis-aligned rectangle.
 **Relationships**
 
 - Inherits `PressToShape.Core.Shapes.Shape`
+- Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
 
 ## Shape (record)

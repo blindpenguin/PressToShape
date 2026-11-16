@@ -100,6 +100,7 @@ What the file actions need from the outside: settings, files, file pickers and m
 - Depends on (constructor) `PressToShape.App.Services.IFileStore`
 - Depends on (constructor) `PressToShape.App.Services.IMessageDialogs`
 - Depends on (constructor) `PressToShape.App.Settings.ISettingsStore`
+- Injected into `PressToShape.App.Tests.EditorShellViewModelRingTests.BareShell`
 - Injected into `PressToShape.App.Tests.EditorShellViewModelTests.BareShell`
 - Injected into `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
@@ -122,6 +123,7 @@ Lets view models close the application without referencing Avalonia types.
 - Implemented by `PressToShape.App.Services.DelegateAppShutdown`
 - Implemented by `PressToShape.App.Services.DesktopAppShutdown`
 - Implemented by `PressToShape.App.Tests.DesktopShellViewModelTests.FakeShutdown`
+- Implemented by `PressToShape.App.Tests.EditorShellViewModelRingTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.LayersViewTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.MenuBarViewModelTests.FakeShutdown`
 - Implemented by `PressToShape.App.Tests.ObjectCommandsTests.FakeShutdown`

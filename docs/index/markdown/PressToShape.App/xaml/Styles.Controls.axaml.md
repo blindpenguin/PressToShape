@@ -63,6 +63,20 @@ No `x:Class`.
 - line 190: Setter.CornerRadius = StaticResource `ControlCornerRadius` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ControlCornerRadius` (verified)
 - line 191: Setter.FontSize = DynamicResource `UiFontSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/UiFontSize` (verified)
 - line 199: Setter.MinHeight = DynamicResource `TouchTargetSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/TouchTargetSize` (verified)
+- line 207: Setter.Fill = DynamicResource `RingWedgeBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeBrush@Light` (verified)
+- line 208: Setter.Stroke = DynamicResource `RingWedgeOutlineBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeOutlineBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeOutlineBrush@Light` (verified)
+- line 212: Setter.Fill = DynamicResource `RingWedgeHoverBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeHoverBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeHoverBrush@Light` (verified)
+- line 215: Setter.Fill = DynamicResource `RingWedgeFocusBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeFocusBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeFocusBrush@Light` (verified)
+- line 216: Setter.Stroke = DynamicResource `SelectionOutlineBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionOutlineBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionOutlineBrush@Light` (verified)
+- line 220: Setter.Fill = DynamicResource `RingWedgeBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeBrush@Light` (verified)
+- line 223: Setter.Foreground = DynamicResource `RingIconBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingIconBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingIconBrush@Light` (verified)
+- line 224: Setter.Width = DynamicResource `RingIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingIconSize` (verified)
+- line 225: Setter.Height = DynamicResource `RingIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingIconSize` (verified)
+- line 228: Setter.Foreground = DynamicResource `RingIconUnavailableBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingIconUnavailableBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingIconUnavailableBrush@Light` (verified)
+- line 231: Setter.Fill = DynamicResource `RingCenterBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingCenterBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingCenterBrush@Light` (verified)
+- line 232: Setter.Stroke = DynamicResource `RingWedgeOutlineBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeOutlineBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingWedgeOutlineBrush@Light` (verified)
+- line 236: Setter.Foreground = DynamicResource `RingIconBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingIconBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingIconBrush@Light` (verified)
+- line 237: Setter.FontSize = DynamicResource `UiFontSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/UiFontSize` (verified)
 
 ## Resources defined
 
@@ -97,6 +111,14 @@ No `x:Class`.
 - line 178: `TextBlock.unit`, sets Foreground, Margin, VerticalAlignment, uses TextSecondaryBrush
 - line 183: `TextBox.field`, sets Background, BorderBrush, CornerRadius, FontSize, Height, MinHeight, Padding, VerticalContentAlignment, uses BorderSubtleBrush, ControlBackgroundBrush, ControlCornerRadius, FieldHeight, UiFontSize
 - line 198: `.touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider`, sets MinHeight, uses TouchTargetSize
+- line 206: `Path.ringWedge`, sets Fill, Stroke, StrokeThickness, uses RingWedgeBrush, RingWedgeOutlineBrush
+- line 211: `Path.ringWedge.hovered`, sets Fill, uses RingWedgeHoverBrush
+- line 214: `Path.ringWedge.focused`, sets Fill, Stroke, StrokeThickness, uses RingWedgeFocusBrush, SelectionOutlineBrush
+- line 219: `Path.ringWedge.unavailable.hovered`, sets Fill, uses RingWedgeBrush
+- line 222: `materialIcons|MaterialIcon.ringIcon`, sets Foreground, Height, Width, uses RingIconBrush, RingIconSize
+- line 227: `materialIcons|MaterialIcon.ringIcon.unavailable`, sets Foreground, uses RingIconUnavailableBrush
+- line 230: `Ellipse.ringCenter`, sets Fill, Stroke, StrokeThickness, uses RingCenterBrush, RingWedgeOutlineBrush
+- line 235: `TextBlock.ringCenterText`, sets FontSize, Foreground, TextAlignment, TextWrapping, uses RingIconBrush, UiFontSize
 
 ## Templates
 

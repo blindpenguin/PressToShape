@@ -43,12 +43,13 @@ The pointer shape the canvas should show. The view turns it into a real cursor.
 
 `internal partial sealed class CanvasInteraction`
 
-Source: `src/PressToShape.App/Workspace/CanvasInteraction.Groups.cs:9-77`
+Source: `src/PressToShape.App/Workspace/CanvasInteraction.ContextMenu.cs:4-32`
 
 What the mouse does on the canvas: draw rectangles and ellipses, select, move and delete shapes. Works on document positions and edits the document through PressToShape.App.Workspace.EditorState. It has no UI types. A drag that is in progress ends with PressToShape.App.Workspace.CanvasInteraction.PointerReleased or PressToShape.App.Workspace.CanvasInteraction.Cancel.
 
 **Members**
 
+- `public RingMenuMode SelectForContextMenu(double x, double y, double grabSize = 10)` - Prepares the selection for the ring menu at this document position, with the same hit rules as a click. A selected object, or a handle of the selection, keeps the selection as it is. Another object that can be selected (a group counts as one object, and inside an entered group a member counts) becomes the only selected one. Empty canvas, and objects that are hidden or locked, clear the selection. Returns which slots the ring shows. The selection changes, but no history step is recorded.
 - `public void DoubleClicked(double x, double y)` - A double-click at this document position. With the Select tool on a group it enters the group and selects what is under the pointer; on a shape of an entered group that is a group itself it enters that group. On empty space it leaves the entered group by one level. Ends a drag that is in progress without a result.
 - `public CanvasInteraction(EditorState state)` - _(no documentation)_
 - `public bool IsDragging { get; }` - Whether a drag is in progress.
@@ -65,13 +66,14 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
 
 ## CanvasKey (enum)
 
 `internal enum CanvasKey`
 
-Source: `src/PressToShape.App/Workspace/CanvasKey.cs:4-11`
+Source: `src/PressToShape.App/Workspace/CanvasKey.cs:4-12`
 
 The keys the canvas reacts to. The view turns real key events into these, so the view model needs no UI types.
 
@@ -82,6 +84,7 @@ The keys the canvas reacts to. The view turns real key events into these, so the
 - `public Up` - _(no documentation)_
 - `public Down` - _(no documentation)_
 - `public Escape` - _(no documentation)_
+- `public ContextMenu` - _(no documentation)_
 
 ## CanvasMapping (class)
 
@@ -274,6 +277,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 
 - Depends on (constructor) `PressToShape.Core.Documents.Document`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
+- Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
 - Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
@@ -512,6 +516,75 @@ The list of recently used files, most recent first, kept in the settings file. I
 - Depends on (constructor) `PressToShape.App.Settings.ISettingsStore`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
+
+## RingGeometry (class)
+
+`internal static class RingGeometry`
+
+Source: `src/PressToShape.App/Workspace/RingGeometry.cs:10-83`
+
+The wedge math of the ring menu, on plain numbers in screen pixels. The ring is cut into count equal wedges. Wedge 0 is centered at the top and the others follow clockwise. Angles are in degrees, measured clockwise from the top. Points are given relative to the center of the ring, with y pointing down. Non-finite input never produces a hit.
+
+**Members**
+
+- `public (double Start, double Sweep) WedgeAngles(int index, int count)` - The start angle and the size of a wedge. The start may be negative (wedge 0 starts left of the top).
+- `public RingHit HitTest(double dx, double dy, int count, double innerRadius, double outerRadius)` - What the point hits. Closer than innerRadius is the center, farther than outerRadius is outside, and both radii themselves belong to the wedges. A point exactly on the line between two wedges belongs to the next one clockwise.
+- `public (double X, double Y) SlotCenter(int index, int count, double innerRadius, double outerRadius)` - The middle of a wedge, between the two radii, as an offset from the center of the ring. This is where the icon goes.
+- `public (double X, double Y) ClampCenter(double x, double y, double outerRadius, double width, double height)` - Moves the center so the whole ring stays inside an area of the given size. An area smaller than the ring gets the ring centered in it, so no side is favored.
+
+## RingHit (record)
+
+`internal readonly record RingHit : IEquatable<RingHit>`
+
+Source: `src/PressToShape.App/Workspace/RingHit.cs:4-19`
+
+What a point of the ring menu hits: one wedge (by index), the center disc, or nothing of the ring.
+
+**Members**
+
+- `public RingHit(int Index)` - What a point of the ring menu hits: one wedge (by index), the center disc, or nothing of the ring.
+- `public int Index { get; init; }` - _(no documentation)_
+- `public RingHit Center { get; }` - The point is inside the center disc.
+- `public RingHit Outside { get; }` - The point is outside the ring, or the ring has no wedge there.
+- `public bool IsSlot { get; }` - _(no documentation)_
+- `public bool IsCenter { get; }` - _(no documentation)_
+- `public bool IsOutside { get; }` - _(no documentation)_
+- `public RingHit Slot(int index)` - _(no documentation)_
+
+## RingMenuMode (enum)
+
+`internal enum RingMenuMode`
+
+Source: `src/PressToShape.App/Workspace/RingMenuMode.cs:4-11`
+
+Which slots the ring menu shows, decided by what the pointer opened it on.
+
+**Members**
+
+- `public Selection` - Something is selected: the actions for the selection.
+- `public EmptyCanvas` - Nothing is selected: the actions for the empty canvas.
+
+## RingSlotDefinition (record)
+
+`internal sealed record RingSlotDefinition : IEquatable<RingSlotDefinition>`
+
+Source: `src/PressToShape.App/Workspace/RingSlotDefinition.cs:13-65`
+
+One entry of the table that describes a ring menu level: the English name (marked with Localizer.N, translated when shown), the icon, and either a command to run or the entries of a submenu. Exactly one of PressToShape.App.Workspace.RingSlotDefinition.Command and PressToShape.App.Workspace.RingSlotDefinition.Children is set.
+
+**Members**
+
+- `public string Name { get; }` - _(no documentation)_
+- `public MaterialIconKind Icon { get; }` - _(no documentation)_
+- `public ICommand? Command { get; }` - The command a slot runs, or null for a submenu.
+- `public IReadOnlyList<RingSlotDefinition>? Children { get; }` - The entries of a submenu, or null for a slot that runs a command.
+- `public RingSlotDefinition WithCommand(string name, MaterialIconKind icon, ICommand command)` - Creates a slot that runs a command.
+- `public RingSlotDefinition WithChildren(string name, MaterialIconKind icon, IReadOnlyList<RingSlotDefinition> children)` - Creates a slot that opens a submenu.
+- `public IEnumerable<ICommand> Commands()` - Every command below this slot: the slot's own, or those of all entries of its submenu, at any depth.
+
+**Relationships**
+
+- Injected into `PressToShape.App.ViewModels.Editor.RingSlotViewModel`
 
 ## RulerTick (record)
 

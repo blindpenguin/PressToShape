@@ -12,7 +12,7 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 
 ### src/PressToShape.App/Styles/Controls.axaml
 
-- 2 resources, 26 styles
+- 2 resources, 34 styles
 - style `^:pointerover /template/ Border#PART_LayoutRoot` at line 37, 1 setters
 - style `^:pointerover` at line 40, 1 setters
 - style `^:selected` at line 43, 1 setters
@@ -39,10 +39,18 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - style `TextBlock.unit` at line 178, 3 setters
 - style `TextBox.field` at line 183, 8 setters
 - style `.touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider` at line 198, 1 setters
+- style `Path.ringWedge` at line 206, 3 setters
+- style `Path.ringWedge.hovered` at line 211, 1 setters
+- style `Path.ringWedge.focused` at line 214, 3 setters
+- style `Path.ringWedge.unavailable.hovered` at line 219, 1 setters
+- style `materialIcons|MaterialIcon.ringIcon` at line 222, 3 setters
+- style `materialIcons|MaterialIcon.ringIcon.unavailable` at line 227, 1 setters
+- style `Ellipse.ringCenter` at line 230, 3 setters
+- style `TextBlock.ringCenterText` at line 235, 4 setters
 
 ### src/PressToShape.App/Styles/Theme.axaml
 
-- 103 resources, 0 styles, variants Dark, Light
+- 120 resources, 0 styles, variants Dark, Light
 
 ### src/PressToShape.App/Views/Desktop/MenuBarView.axaml
 
@@ -137,19 +145,19 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - `SystemAccentColorDark3` (Color, Dark) at src/PressToShape.App/Styles/Theme.axaml:19
 - `RulerTickBrush` (SolidColorBrush, Dark) at src/PressToShape.App/Styles/Theme.axaml:51
 - `RulerTextBrush` (SolidColorBrush, Dark) at src/PressToShape.App/Styles/Theme.axaml:52
-- `SystemAccentColor` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:60
-- `SystemAccentColorLight1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:61
-- `SystemAccentColorLight2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:62
-- `SystemAccentColorLight3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:63
-- `SystemAccentColorDark1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:64
-- `SystemAccentColorDark2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:65
-- `SystemAccentColorDark3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:66
-- `RulerTickBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:98
-- `RulerTextBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:99
-- `PanelSpacing` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:114
-- `RowIndentSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:152
-- `TouchHandleGrabSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:156
-- `TouchSizes` (ResourceDictionary) at src/PressToShape.App/Styles/Theme.axaml:175
+- `SystemAccentColor` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:69
+- `SystemAccentColorLight1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:70
+- `SystemAccentColorLight2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:71
+- `SystemAccentColorLight3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:72
+- `SystemAccentColorDark1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:73
+- `SystemAccentColorDark2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:74
+- `SystemAccentColorDark3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:75
+- `RulerTickBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:107
+- `RulerTextBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:108
+- `PanelSpacing` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:132
+- `RowIndentSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:170
+- `TouchHandleGrabSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:174
+- `TouchSizes` (ResourceDictionary) at src/PressToShape.App/Styles/Theme.axaml:197
 - `GestureTextConverter` (views:GestureTextConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:12
 - `CheckableToggleTypeConverter` (views:CheckableToggleTypeConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:13
 - `IndentConverter` (views:ObjectIndentConverter) at src/PressToShape.App/Views/Editor/LayersView.axaml:14
