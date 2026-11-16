@@ -51,6 +51,10 @@ internal static class HistoryStepNames
         HistoryStepType.UnlockAll => N("Unlock all"),
         HistoryStepType.ShowAll => N("Show all"),
         HistoryStepType.RenameShape => N("Rename shape"),
+        HistoryStepType.DrawPath => N("Draw path"),
+        HistoryStepType.AddPathNode => N("Add path point"),
+        HistoryStepType.DeletePathNode => N("Delete path point"),
+        HistoryStepType.ChangePath => N("Change path"),
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown history step type."),
     };
 }

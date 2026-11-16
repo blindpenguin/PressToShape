@@ -294,6 +294,7 @@ public partial class CanvasAreaView : UserControl
             Key.Up => CanvasKey.Up,
             Key.Down => CanvasKey.Down,
             Key.Escape => CanvasKey.Escape,
+            Key.Enter => CanvasKey.Enter,
             Key.Apps => CanvasKey.ContextMenu,
             Key.F10 when e.KeyModifiers.HasFlag(KeyModifiers.Shift) => CanvasKey.ContextMenu,
             _ => (CanvasKey?)null,

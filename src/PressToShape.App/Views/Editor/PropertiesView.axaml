@@ -231,8 +231,25 @@
                 </controls:CollapsibleSection>
 
                 <controls:CollapsibleSection Header="{loc:T 'Path'}" IsExpanded="{Binding IsPathExpanded}" IsVisible="{Binding ShowPath}">
-                    <TextBlock Classes="secondary" Text="{loc:T 'Path options appear when a path is selected.'}"
-                               Margin="12,4,12,12" TextWrapping="Wrap" />
+                    <StackPanel Margin="12,4,12,12" Spacing="8">
+                        <TextBlock Classes="secondary" Text="{loc:T 'Path options appear when a path is selected.'}"
+                                   TextWrapping="Wrap" IsVisible="{Binding !HasPathSelected}" />
+                        <StackPanel Spacing="8" IsVisible="{Binding HasPathSelected}">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <Button Classes="choice" Classes.selected="{Binding IsPathOpen}" Command="{Binding OpenPathCommand}"
+                                        Content="{loc:T 'Open path'}" AutomationProperties.Name="{loc:T 'Open path'}" />
+                                <Button Classes="choice" Classes.selected="{Binding IsPathClosed}" Command="{Binding ClosePathCommand}"
+                                        Content="{loc:T 'Closed path'}" AutomationProperties.Name="{loc:T 'Closed path'}" />
+                            </StackPanel>
+                            <TextBlock Classes="label" Text="{loc:T 'Fill rule'}" />
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <Button Classes="choice" Classes.selected="{Binding IsFillRuleNonZero}" Command="{Binding UseNonZeroFillCommand}"
+                                        Content="{loc:T 'Non-zero'}" AutomationProperties.Name="{loc:T 'Non-zero'}" />
+                                <Button Classes="choice" Classes.selected="{Binding IsFillRuleEvenOdd}" Command="{Binding UseEvenOddFillCommand}"
+                                        Content="{loc:T 'Even-odd'}" AutomationProperties.Name="{loc:T 'Even-odd'}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
                 </controls:CollapsibleSection>
 
                 <controls:CollapsibleSection Header="{loc:T 'Align &amp; Distribute'}" IsExpanded="{Binding IsAlignExpanded}" IsVisible="{Binding ShowAlign}">

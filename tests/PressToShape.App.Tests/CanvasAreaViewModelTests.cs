@@ -639,7 +639,7 @@ public class CanvasAreaViewModelTests
             [Tool.Ellipse] = CanvasCursorType.Crosshair,
             [Tool.Hand] = CanvasCursorType.OpenHand,
             [Tool.Zoom] = CanvasCursorType.Magnifier,
-            [Tool.Pen] = CanvasCursorType.Arrow,
+            [Tool.Pen] = CanvasCursorType.Crosshair,
         };
         var (state, canvas) = Create(2000, 1200);
         var raised = new List<string?>();

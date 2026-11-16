@@ -68,6 +68,7 @@ public class HistoryViewModelTests
             "Change position", "Change size", "Change rotation", "Change fill", "Change stroke", "Change stroke width", "Change opacity", "Add swatch", "Remove swatch",
             "Group shapes", "Ungroup shapes", "Bring to front", "Bring forward", "Send backward", "Send to back", "Reorder shape",
             "Lock shapes", "Unlock shapes", "Hide shapes", "Show shapes", "Unlock all", "Show all", "Rename shape",
+            "Draw path", "Add path point", "Delete path point", "Change path",
         };
         Assert.Equal(expected, Names(history));
         Assert.Equal(Enum.GetValues<HistoryStepType>().Length + 1, expected.Length);

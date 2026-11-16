@@ -361,6 +361,7 @@ internal sealed partial class LayersViewModel : LocalizedViewModel
             {
                 GroupShape => ObjectRowType.Group,
                 EllipseShape => ObjectRowType.Ellipse,
+                PathShape => ObjectRowType.Path,
                 _ => ObjectRowType.Rectangle,
             };
             rows.Add(new Described(shape.Id, type, depth, parentId, shape.Name.Length > 0 ? shape.Name : DefaultName(type), shape.Name, shape.IsVisible, shape.IsLocked, hidden, locked));
@@ -375,6 +376,7 @@ internal sealed partial class LayersViewModel : LocalizedViewModel
     private string DefaultName(ObjectRowType type) => type switch
     {
         ObjectRowType.Ellipse => Localizer.T(N("Ellipse")),
+        ObjectRowType.Path => Localizer.T(N("Path")),
         ObjectRowType.Group => Localizer.TC("object name", "Group"),
         _ => Localizer.T(N("Rectangle")),
     };

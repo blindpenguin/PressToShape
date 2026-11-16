@@ -456,6 +456,21 @@ msgstr "Dieses Werkzeug hat keine Eigenschaften."
 msgid "Path options appear when a path is selected."
 msgstr "Pfadoptionen erscheinen, wenn ein Pfad ausgewählt ist."
 
+msgid "Open path"
+msgstr "Offener Pfad"
+
+msgid "Closed path"
+msgstr "Geschlossener Pfad"
+
+msgid "Fill rule"
+msgstr "Füllregel"
+
+msgid "Non-zero"
+msgstr "Nicht-null"
+
+msgid "Even-odd"
+msgstr "Gerade-ungerade"
+
 msgid "Align & Distribute"
 msgstr "Ausrichten & Verteilen"
 
@@ -686,6 +701,18 @@ msgstr "Alles einblenden"
 
 msgid "Rename shape"
 msgstr "Form umbenennen"
+
+msgid "Draw path"
+msgstr "Pfad zeichnen"
+
+msgid "Add path point"
+msgstr "Pfadpunkt hinzufügen"
+
+msgid "Delete path point"
+msgstr "Pfadpunkt löschen"
+
+msgid "Change path"
+msgstr "Pfad ändern"
 
 msgctxt "object name"
 msgid "Group"

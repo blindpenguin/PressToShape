@@ -126,6 +126,19 @@
         <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}" />
     </Style>
 
+    <!-- Choice button: one of a row of buttons that stands for a setting. The one that is set has the accent background -->
+    <Style Selector="Button.choice">
+        <Setter Property="Padding" Value="12,4" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+    </Style>
+    <Style Selector="Button.choice.selected /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppAccentForegroundBrush}" />
+    </Style>
+    <Style Selector="Button.choice.selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+    </Style>
+
     <!-- Collapsible section: the whole header row is a toggle button -->
     <Style Selector="ToggleButton.section-toggle">
         <Setter Property="Background" Value="Transparent" />

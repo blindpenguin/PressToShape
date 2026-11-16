@@ -8,5 +8,6 @@ internal enum CanvasKey
     Up,
     Down,
     Escape,
+    Enter,
     ContextMenu,
 }

@@ -5,6 +5,7 @@ using Avalonia.Media.Immutable;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
 using CoreColor = PressToShape.Core.Shapes.Color;
+using CoreFillRule = PressToShape.Core.Shapes.FillRule;
 
 namespace PressToShape.App.Controls;
 
@@ -36,6 +37,14 @@ internal sealed class DocumentCanvasControl : Control
     /// <summary>What is drawn for the selection, in screen space: outlines, frame, handles and the box being dragged.</summary>
     public static readonly StyledProperty<SelectionOverlay?> OverlayProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, SelectionOverlay?>(nameof(Overlay));
+
+    /// <summary>The nodes and handles of the path that the Pen is drawing, in screen space. They are drawn over the shapes.</summary>
+    public static readonly StyledProperty<ScreenPenOverlay?> PenOverlayProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, ScreenPenOverlay?>(nameof(PenOverlay));
+
+    /// <summary>A shape that is not drawn because the draft takes its place (a path that is being continued). <c>null</c> hides nothing.</summary>
+    public static readonly StyledProperty<System.Guid?> HiddenShapeIdProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, System.Guid?>(nameof(HiddenShapeId));
 
     /// <summary>The brush of the selection outlines, handle outlines and the selection box. It comes from the theme.</summary>
     public static readonly StyledProperty<IBrush?> SelectionBrushProperty =
@@ -72,6 +81,8 @@ internal sealed class DocumentCanvasControl : Control
             OriginYProperty,
             DraftProperty,
             OverlayProperty,
+            PenOverlayProperty,
+            HiddenShapeIdProperty,
             SelectionBrushProperty,
             SelectionHandleFillBrushProperty,
             HandleSizeProperty,
@@ -120,6 +131,18 @@ internal sealed class DocumentCanvasControl : Control
         set => SetValue(OverlayProperty, value);
     }
 
+    public ScreenPenOverlay? PenOverlay
+    {
+        get => GetValue(PenOverlayProperty);
+        set => SetValue(PenOverlayProperty, value);
+    }
+
+    public System.Guid? HiddenShapeId
+    {
+        get => GetValue(HiddenShapeIdProperty);
+        set => SetValue(HiddenShapeIdProperty, value);
+    }
+
     public IBrush? SelectionBrush
     {
         get => GetValue(SelectionBrushProperty);
@@ -158,7 +181,7 @@ internal sealed class DocumentCanvasControl : Control
         }
 
         var dim = double.IsFinite(DimOpacity) ? System.Math.Clamp(DimOpacity, 0, 1) : 1;
-        foreach (var shape in CanvasScene.Build(document, ZoomPercent, OriginX, OriginY, EnteredGroupId))
+        foreach (var shape in CanvasScene.Build(document, ZoomPercent, OriginX, OriginY, EnteredGroupId, HiddenShapeId))
         {
             if (shape.IsDimmed)
             {
@@ -181,6 +204,47 @@ internal sealed class DocumentCanvasControl : Control
         if (Overlay is { } overlay && SelectionBrush is { } brush)
         {
             DrawOverlay(context, overlay, brush);
+        }
+
+        if (PenOverlay is { } penOverlay && SelectionBrush is { } penBrush)
+        {
+            DrawPenOverlay(context, penOverlay, penBrush);
+        }
+    }
+
+    // The nodes of an unfinished path as squares and their handles as lines ending in dots, in the colors of the selection. The
+    // first node is filled solid while a click would close the path. Sizes follow the handle size, so touch layouts get larger ones.
+    private void DrawPenOverlay(DrawingContext context, ScreenPenOverlay overlay, IBrush brush)
+    {
+        var pen = new Pen(brush, OutlineThickness);
+        var size = double.IsFinite(HandleSize) && HandleSize > 0 ? HandleSize : SelectionOverlay.HandleSize;
+        var dot = size * 0.375;
+
+        foreach (var node in overlay.Nodes)
+        {
+            var anchor = new Point(node.X, node.Y);
+            if (node.HasIn)
+            {
+                var end = new Point(node.InX!.Value, node.InY!.Value);
+                context.DrawLine(pen, anchor, end);
+                context.DrawEllipse(SelectionHandleFillBrush, pen, end, dot, dot);
+            }
+
+            if (node.HasOut)
+            {
+                var end = new Point(node.OutX!.Value, node.OutY!.Value);
+                context.DrawLine(pen, anchor, end);
+                context.DrawEllipse(SelectionHandleFillBrush, pen, end, dot, dot);
+            }
+        }
+
+        for (var i = 0; i < overlay.Nodes.Count; i++)
+        {
+            var node = overlay.Nodes[i];
+            var highlighted = i == 0 && overlay.HighlightFirst;
+            var half = highlighted ? size * 0.75 : size / 2;
+            var area = new Rect(node.X - half, node.Y - half, half * 2, half * 2);
+            context.DrawRectangle(highlighted ? brush : SelectionHandleFillBrush, pen, area);
         }
     }
 
@@ -288,6 +352,12 @@ internal sealed class DocumentCanvasControl : Control
 
     private static void DrawShape(DrawingContext context, ScreenShape shape)
     {
+        if (shape.Type == ScreenShapeType.Path)
+        {
+            DrawPath(context, shape);
+            return;
+        }
+
         if (shape.Width == 0 || shape.Height == 0)
         {
             DrawDegenerateShape(context, shape);
@@ -308,6 +378,62 @@ internal sealed class DocumentCanvasControl : Control
         {
             context.DrawRectangle(fill, pen, bounds);
         }
+    }
+
+    // The fill and the stroke are two geometries. An open path is filled as if it were closed, as SVG does, but its stroke does not
+    // include the closing line. A path without area (a straight line) still gets its stroke.
+    private static void DrawPath(DrawingContext context, ScreenShape shape)
+    {
+        if (shape.Path is not { } outline)
+        {
+            return;
+        }
+
+        if (shape.Fill is { } fillColor)
+        {
+            context.DrawGeometry(new ImmutableSolidColorBrush(ToAvalonia(fillColor)), null, ToGeometry(outline, shape, closeFigure: true));
+        }
+
+        if (shape.Stroke is { } strokeColor)
+        {
+            var pen = new ImmutablePen(new ImmutableSolidColorBrush(ToAvalonia(strokeColor)), shape.StrokeWidth);
+            context.DrawGeometry(null, pen, ToGeometry(outline, shape, closeFigure: outline.IsClosed));
+        }
+    }
+
+    private static StreamGeometry ToGeometry(ScreenPath outline, ScreenShape shape, bool closeFigure)
+    {
+        var geometry = new StreamGeometry();
+        using (var context = geometry.Open())
+        {
+            context.SetFillRule(outline.FillRule == CoreFillRule.EvenOdd ? FillRule.EvenOdd : FillRule.NonZero);
+            var open = false;
+            foreach (var command in PathOutline.Commands(outline, shape.X, shape.Y))
+            {
+                switch (command.Type)
+                {
+                    case PathCommandType.Move:
+                        context.BeginFigure(new Point(command.X, command.Y), closeFigure);
+                        open = true;
+                        break;
+                    case PathCommandType.Line:
+                        context.LineTo(new Point(command.X, command.Y));
+                        break;
+                    case PathCommandType.Cubic:
+                        context.CubicBezierTo(new Point(command.Control1X, command.Control1Y), new Point(command.Control2X, command.Control2Y), new Point(command.X, command.Y));
+                        break;
+                    case PathCommandType.Close:
+                        break;
+                }
+            }
+
+            if (open)
+            {
+                context.EndFigure(closeFigure);
+            }
+        }
+
+        return geometry;
     }
 
     // Skia draws nothing for a rectangle or ellipse without area, even with a stroke. A shape without area has no fill,

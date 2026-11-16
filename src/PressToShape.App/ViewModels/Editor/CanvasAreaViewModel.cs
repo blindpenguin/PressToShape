@@ -76,6 +76,13 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <summary>The group that was entered, or <c>null</c>. The canvas dims everything outside it.</summary>
     public Guid? EnteredGroupId => _state.EnteredGroupId;
 
+    /// <summary>The nodes and handles of the path that the Pen is drawing, in screen pixels. <c>null</c> when the Pen is not drawing.</summary>
+    public ScreenPenOverlay? PenOverlay =>
+        _state.PenOverlay is { } overlay ? ScreenPenOverlay.From(overlay, ZoomPercent, OriginX, OriginY) : null;
+
+    /// <summary>The path that the Pen is continuing. The canvas leaves it out, because the draft shows it. <c>null</c> when none is.</summary>
+    public Guid? HiddenShapeId => _state.PenContinuedId;
+
     /// <summary>
     /// The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle,
     /// otherwise the eyedropper while a pick is active, otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
@@ -101,7 +108,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
             return _state.ActiveTool switch
             {
-                Tool.Rectangle or Tool.Ellipse => CanvasCursorType.Crosshair,
+                Tool.Rectangle or Tool.Ellipse or Tool.Pen => CanvasCursorType.Crosshair,
                 Tool.Eyedropper => CanvasCursorType.Eyedropper,
                 Tool.Hand => CanvasCursorType.OpenHand,
                 Tool.Zoom => IsAltHeld ? CanvasCursorType.MagnifierMinus : CanvasCursorType.Magnifier,
@@ -413,9 +420,15 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         PointerHover(screenX, screenY);
     }
 
-    /// <summary>The pointer moved over the canvas without a drag: the handle under it decides the cursor.</summary>
+    /// <summary>The pointer moved over the canvas without a drag: the handle under it decides the cursor, and the Pen shows its next segment.</summary>
     public void PointerHover(double screenX, double screenY)
     {
+        if (_state.ActiveTool == Tool.Pen && !_panning)
+        {
+            // The Pen shows the next segment up to the pointer while no button is down.
+            _interaction.PointerMoved(ToDocumentX(screenX), ToDocumentY(screenY));
+        }
+
         SetHover(_panning ? null : _interaction.HoverHandle(ToDocumentX(screenX), ToDocumentY(screenY)));
     }
 
@@ -437,6 +450,17 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         if (key == CanvasKey.Escape && _state.ColorPick != ColorPickTarget.None)
         {
             _state.CancelColorPick();
+            return true;
+        }
+
+        // The Pen has its own use of these two keys while it draws: Enter finishes the path, Escape drops it.
+        if (key == CanvasKey.Enter)
+        {
+            return _interaction.FinishPen();
+        }
+
+        if (key == CanvasKey.Escape && _interaction.DiscardPen())
+        {
             return true;
         }
 
@@ -610,6 +634,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     {
         OnPropertyChanged(nameof(Draft));
         OnPropertyChanged(nameof(Overlay));
+        OnPropertyChanged(nameof(PenOverlay));
     }
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
@@ -646,6 +671,12 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 break;
             case nameof(EditorState.ColorPick):
                 OnPropertyChanged(nameof(CursorType));
+                break;
+            case nameof(EditorState.PenOverlay):
+                OnPropertyChanged(nameof(PenOverlay));
+                break;
+            case nameof(EditorState.PenContinuedId):
+                OnPropertyChanged(nameof(HiddenShapeId));
                 break;
             case nameof(EditorState.EnteredGroupId):
                 OnPropertyChanged(nameof(EnteredGroupId));

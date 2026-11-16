@@ -114,7 +114,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
 
     public bool ShowAppearance => Sections.HasFlag(PropertiesSection.Appearance);
 
-    public bool ShowPath => Sections.HasFlag(PropertiesSection.Path);
+    public bool ShowPath => Sections != PropertiesSection.None && (Sections.HasFlag(PropertiesSection.Path) || HasPathSelected);
 
     public bool ShowAlign => Sections.HasFlag(PropertiesSection.Align);
 
@@ -294,6 +294,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
 
     private void RefreshValues()
     {
+        RefreshPathValues();
         var shapes = SelectedShapes();
         var values = SelectionValues.From(shapes);
         if (values is null)

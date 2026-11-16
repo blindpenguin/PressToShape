@@ -37,6 +37,7 @@ internal sealed partial class CanvasInteraction
     public CanvasInteraction(EditorState state)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
+        _state.PropertyChanged += OnStatePropertyChanged;
     }
 
     private enum DragType
@@ -90,6 +91,9 @@ internal sealed partial class CanvasInteraction
                 }
 
                 break;
+            case Tool.Pen:
+                PenPressed(x, y, inputType);
+                break;
             case Tool.Select:
                 PressWithSelectTool(x, y, shift, inputType == InputPointerType.Touch ? TouchGrabSize : SelectionGeometry.GrabSize);
                 break;
@@ -99,6 +103,12 @@ internal sealed partial class CanvasInteraction
     /// <summary>The pointer moved to this document position. Does nothing without a drag.</summary>
     public void PointerMoved(double x, double y, bool shift = false, bool alt = false)
     {
+        if (_state.ActiveTool == Tool.Pen)
+        {
+            PenMoved(x, y);
+            return;
+        }
+
         if (!ContinueDrag())
         {
             return;
@@ -121,6 +131,12 @@ internal sealed partial class CanvasInteraction
     /// <summary>The button went up at this document position. Ends the drag in every case.</summary>
     public void PointerReleased(double x, double y, bool shift = false, bool alt = false)
     {
+        if (_state.ActiveTool == Tool.Pen)
+        {
+            PenReleased();
+            return;
+        }
+
         if (!ContinueDrag())
         {
             return;
@@ -174,6 +190,7 @@ internal sealed partial class CanvasInteraction
     /// </summary>
     public void Abort()
     {
+        AbortPenPress();
         if (_drag is DragType.Moving or DragType.Resizing or DragType.Rotating
             && _startDocument is { } original
             && !ReferenceEquals(original, _state.Document))

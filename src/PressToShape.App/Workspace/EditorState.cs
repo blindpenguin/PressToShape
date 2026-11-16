@@ -163,6 +163,7 @@ internal sealed partial class EditorState : ObservableObject
 
         Document = document;
         History.Reset(document);
+        ResetPen();
         RaiseHistoryChanged();
     }
 

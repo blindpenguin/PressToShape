@@ -5,4 +5,7 @@ internal enum ScreenShapeType
 {
     Rectangle,
     Ellipse,
+
+    /// <summary>A path of lines and curves. The shape's <see cref="ScreenShape.Path"/> holds its outline.</summary>
+    Path,
 }

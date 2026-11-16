@@ -91,6 +91,7 @@
                                 <materialIcons:MaterialIcon Kind="RectangleOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsRectangle}" />
                                 <materialIcons:MaterialIcon Kind="EllipseOutline" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsEllipse}" />
                                 <materialIcons:MaterialIcon Kind="SelectGroup" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsGroup}" />
+                                <materialIcons:MaterialIcon Kind="VectorCurve" Width="{DynamicResource RowIconSize}" Height="{DynamicResource RowIconSize}" IsVisible="{Binding IsPath}" />
                             </Panel>
                             <Panel Grid.Column="3" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding Name}" IsVisible="{Binding !IsRenaming}" TextTrimming="CharacterEllipsis" />

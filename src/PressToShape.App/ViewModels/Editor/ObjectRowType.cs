@@ -14,4 +14,7 @@ internal enum ObjectRowType
 
     /// <summary>A group, which has rows of its own below it.</summary>
     Group,
+
+    /// <summary>A path.</summary>
+    Path,
 }
