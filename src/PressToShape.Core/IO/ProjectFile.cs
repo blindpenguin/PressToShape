@@ -15,7 +15,7 @@ namespace PressToShape.Core.IO;
 /// Reading treats the content as untrusted: it is size-checked, parsed with a depth limit and validated
 /// by the document model itself. <see cref="Read"/> never throws for bad content, it returns an error.
 /// </summary>
-public static class ProjectFile
+public static partial class ProjectFile
 {
     /// <summary>The format version this code writes and reads.</summary>
     public const int FormatVersion = 2;
@@ -27,6 +27,7 @@ public static class ProjectFile
     private const string RectangleType = "rectangle";
     private const string EllipseType = "ellipse";
     private const string GroupType = "group";
+    private const string PathType = "path";
 
     private static readonly JsonSerializerOptions Options = new()
     {
@@ -239,6 +240,8 @@ public static class ProjectFile
                 return new RectangleShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0, Name = name, IsVisible = visible, IsLocked = locked };
             case EllipseType:
                 return new EllipseShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0, Name = name, IsVisible = visible, IsLocked = locked };
+            case PathType:
+                return BuildPath(dto, id, appearance, name, visible, locked, out failure);
             default:
                 failure = ProjectFileResult.Failure(ProjectFileError.UnknownShapeType, "Unknown shape type: " + dto.Type);
                 return null;
@@ -275,6 +278,7 @@ public static class ProjectFile
         {
             RectangleShape => RectangleType,
             EllipseShape => EllipseType,
+            PathShape => PathType,
             _ => throw new NotSupportedException($"Shape type {shape.GetType().Name} cannot be saved."),
         };
         dto.X = shape.X;
@@ -286,6 +290,11 @@ public static class ProjectFile
         dto.StrokeWidth = shape.Appearance.StrokeWidth;
         dto.Opacity = shape.Appearance.Opacity;
         dto.Rotation = shape.Rotation == 0 ? null : shape.Rotation;
+        if (shape is PathShape path)
+        {
+            AddPathData(dto, path);
+        }
+
         return dto;
     }
 

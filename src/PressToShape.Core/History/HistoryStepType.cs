@@ -116,4 +116,16 @@ public enum HistoryStepType
 
     /// <summary>A shape was renamed.</summary>
     RenameShape,
+
+    /// <summary>A path was drawn with the Pen.</summary>
+    DrawPath,
+
+    /// <summary>A point was added to a path.</summary>
+    AddPathNode,
+
+    /// <summary>A point was deleted from a path.</summary>
+    DeletePathNode,
+
+    /// <summary>A path was opened or closed, or its fill rule was changed.</summary>
+    ChangePath,
 }

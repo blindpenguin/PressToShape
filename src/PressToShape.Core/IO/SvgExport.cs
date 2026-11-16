@@ -10,7 +10,7 @@ namespace PressToShape.Core.IO;
 
 /// <summary>
 /// Exports a document as SVG 1.1. The artboard becomes the viewport, every visible layer one group
-/// (marked as an Inkscape layer), every shape a <c>rect</c> or <c>ellipse</c> and every group a <c>g</c> around its children.
+/// (marked as an Inkscape layer), every shape a <c>rect</c>, <c>ellipse</c> or <c>path</c> and every group a <c>g</c> around its children.
 /// Hidden shapes and the shapes below hidden groups are left out. There is no background and
 /// the output holds no scripts, links or external references.
 /// </summary>
@@ -102,6 +102,15 @@ public static class SvgExport
                 writer.WriteAttributeString("rx", Number(shape.Width / 2));
                 writer.WriteAttributeString("ry", Number(shape.Height / 2));
                 break;
+            case PathShape path:
+                writer.WriteStartElement("path", SvgNamespace);
+                writer.WriteAttributeString("d", PathData(path));
+                if (path.FillRule == FillRule.EvenOdd)
+                {
+                    writer.WriteAttributeString("fill-rule", "evenodd");
+                }
+
+                break;
             default:
                 throw new NotSupportedException($"Shape type {shape.GetType().Name} cannot be exported.");
         }
@@ -136,6 +145,45 @@ public static class SvgExport
         }
 
         writer.WriteEndElement();
+    }
+
+    // Absolute coordinates in the frame before the rotation, which the transform of the element turns. A segment without handles is a
+    // line. An open path gets no Z, so SVG fills it as if closed but draws no stroke on the closing line.
+    private static string PathData(PathShape path)
+    {
+        var nodes = path.ToDocumentNodes();
+        var data = new StringBuilder();
+        data.Append("M ").Append(Number(nodes[0].X)).Append(' ').Append(Number(nodes[0].Y));
+
+        var segmentCount = path.IsClosed ? nodes.Count : nodes.Count - 1;
+        for (var i = 0; i < segmentCount; i++)
+        {
+            var from = nodes[i];
+            var to = nodes[(i + 1) % nodes.Count];
+            var isLastOfClosed = path.IsClosed && i == nodes.Count - 1;
+            if (!from.HasOut && !to.HasIn)
+            {
+                // The closing line of a closed path is drawn by Z.
+                if (!isLastOfClosed)
+                {
+                    data.Append(" L ").Append(Number(to.X)).Append(' ').Append(Number(to.Y));
+                }
+
+                continue;
+            }
+
+            data.Append(" C ")
+                .Append(Number(from.OutX ?? from.X)).Append(' ').Append(Number(from.OutY ?? from.Y)).Append(' ')
+                .Append(Number(to.InX ?? to.X)).Append(' ').Append(Number(to.InY ?? to.Y)).Append(' ')
+                .Append(Number(to.X)).Append(' ').Append(Number(to.Y));
+        }
+
+        if (path.IsClosed)
+        {
+            data.Append(" Z");
+        }
+
+        return data.ToString();
     }
 
     // The children keep their document coordinates, so the group needs no transform.

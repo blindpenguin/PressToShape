@@ -98,8 +98,51 @@ internal sealed class ShapeDto
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? Locked { get; set; }
 
+    // Only for a path: its nodes, as fractions of the box (see PathNode).
+    [JsonPropertyName("nodes")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public List<NodeDto?>? Nodes { get; set; }
+
+    // Only for a path: written only when the path is closed, and missing means open.
+    [JsonPropertyName("closed")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? Closed { get; set; }
+
+    // Only for a path: written only as "evenodd", and missing means the non-zero rule.
+    [JsonPropertyName("fillRule")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? FillRule { get; set; }
+
     // Only for a group: its children, bottom first. A group has no box, no rotation and no appearance of its own in the file.
     [JsonPropertyName("children")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<ShapeDto?>? Children { get; set; }
+}
+
+// A node of a path. The handle points are written only for a node that has them, and then in pairs.
+internal sealed class NodeDto
+{
+    [JsonPropertyName("x")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? X { get; set; }
+
+    [JsonPropertyName("y")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? Y { get; set; }
+
+    [JsonPropertyName("inX")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? InX { get; set; }
+
+    [JsonPropertyName("inY")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? InY { get; set; }
+
+    [JsonPropertyName("outX")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? OutX { get; set; }
+
+    [JsonPropertyName("outY")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? OutY { get; set; }
 }

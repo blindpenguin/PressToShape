@@ -156,7 +156,7 @@ public abstract record Shape
     protected abstract bool ContainsLocal(double x, double y);
 
     // Sine and cosine of an angle in degrees, exact for multiples of 90 so quarter turns have no rounding noise.
-    private static (double Sin, double Cos) SinCos(double degrees)
+    private protected static (double Sin, double Cos) SinCos(double degrees)
     {
         var quarter = degrees / 90;
         if (quarter == Math.Floor(quarter))
