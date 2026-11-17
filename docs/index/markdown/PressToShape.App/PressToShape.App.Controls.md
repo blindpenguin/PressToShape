@@ -19,7 +19,7 @@ A titled section whose whole header row toggles the content. Used by the inspect
 
 `internal sealed class DocumentCanvasControl : Control`
 
-Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:16-524`
+Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:16-533`
 
 Draws the shapes of a document. It only draws: PressToShape.App.Workspace.CanvasScene decides what is drawn and where. Shape colors are document data, so this control uses no theme brushes. It does not handle pointer input.
 
@@ -67,6 +67,20 @@ What a number text box does with focus and keys, for every view that shows Press
 **Members**
 
 - `public void Attach(Interactive view)` - Lets the number fields below view commit and revert.
+
+## OpenFlyoutTracker (class)
+
+`internal sealed class OpenFlyoutTracker`
+
+Source: `src/PressToShape.App/Controls/OpenFlyoutTracker.cs:12-46`
+
+Knows which of some flyouts are open, so the Back button can close the last one that was opened before anything else happens. A menu is not part of a view model, so this is a view-only helper. Used by the tablet toolbar (overflow menu) and the tablet status bar (zoom list).
+
+**Members**
+
+- `public EventHandler? Closed` - Raised when a tracked flyout closed, however it was closed.
+- `public void Track(params FlyoutBase?[] flyouts)` - Starts to watch the flyouts. Flyouts that are null are skipped.
+- `public bool TryCloseLast()` - Closes the flyout that was opened last and is still open, if there is one.
 
 ## RingMenuControl (class)
 

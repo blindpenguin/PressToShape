@@ -129,6 +129,7 @@ Lets view models close the application without referencing Avalonia types.
 - Implemented by `PressToShape.App.Tests.ObjectCommandsTests.FakeShutdown`
 - Implemented by `PressToShape.App.Tests.SelectionAndPropertiesIntegrationTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.TabletShellViewModelTests.FakeShutdown`
+- Implemented by `PressToShape.App.Tests.TabletStatusBarViewTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.TabletViewsTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.TranslationConsistencyTests.NoShutdown`
 - Injected into `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
@@ -198,6 +199,7 @@ The questions and messages shown to the user. The texts are translated by the ca
 - Implemented by `PressToShape.App.Tests.FakeMessageDialogs`
 - Injected into `PressToShape.App.Services.FileServices`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
+- Injected into `PressToShape.App.Workspace.PathEditor`
 
 ## IPickedFile (interface)
 

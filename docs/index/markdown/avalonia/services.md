@@ -15,7 +15,7 @@ Types that other types take as constructor parameters, and where they are provid
 
 `T:PressToShape.Core.Documents.Document`. A drawing: an artboard and a stack of layers. Immutable: every edit method returns a new document and leaves this one unchanged. Unchanged layers are shared between the two. A document always has at least one layer.
 
-- used by: `DocumentHistory`, `EditorState`, `ProjectFileResult`
+- used by: `DocumentHistory`, `EditorState`, `PathOperationResult`, `ProjectFileResult`
 - created at `Document.Create` (src/PressToShape.Core/Documents/Document.cs:61)
 
 ### DocumentSession (class)
@@ -23,14 +23,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.DocumentSession`. Which file the open document belongs to and whether it has unsaved changes. Documents are immutable, so "unsaved" means: the editor's document is no longer the instance that was last saved or opened. A change that is changed back still counts as unsaved.
 
 - used by: `DocumentFileService`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:30)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:31)
 
 ### EditMenuCommands (class)
 
 `T:PressToShape.App.ViewModels.Editor.EditMenuCommands`. What the clipboard, delete and selection items of the Edit menu do. Undo and Redo are passed on their own.
 
 - used by: `MenuBarViewModel`, `OverflowMenuViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:47)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:49)
 
 ### EditorShellViewModel (class)
 
@@ -43,15 +43,15 @@ Types that other types take as constructor parameters, and where they are provid
 
 `T:PressToShape.App.Workspace.EditorState`. State shared by all regions of the editor shell: the document, its undo history, active tool, zoom and selection summary. View models observe it through PropertyChanged, so every route that changes a value stays in sync. This class is the only place that changes the document: edits go through PressToShape.App.Workspace.EditorState.Edit, a drag through PressToShape.App.Workspace.EditorState.Preview and PressToShape.App.Workspace.EditorState.Commit, and a new or opened document through PressToShape.App.Workspace.EditorState.ReplaceDocument.
 
-- used by: `CanvasAreaViewModel`, `CanvasInteraction`, `DocumentFileService`, `DocumentSession`, `HistoryViewModel`, `InspectorViewModel`, `LayerEditor`, `LayersViewModel`, `MenuBarViewModel`, `NodeEditor`, `ObjectEditor`, `PaletteViewModel`, `PropertiesViewModel`, `SelectionEditor`, `StatusBarViewModel`, `TabletToolColumnViewModel`, `ToolGroupViewModel`, `ToolbarViewModel`, `ToolboxViewModel`, `ZoomViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:29), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:44)
+- used by: `CanvasAreaViewModel`, `CanvasInteraction`, `DocumentFileService`, `DocumentSession`, `HistoryViewModel`, `InspectorViewModel`, `LayerEditor`, `LayersViewModel`, `MenuBarViewModel`, `NodeEditor`, `ObjectEditor`, `PaletteViewModel`, `PathEditor`, `PropertiesViewModel`, `SelectionEditor`, `StatusBarViewModel`, `TabletToolColumnViewModel`, `ToolGroupViewModel`, `ToolbarViewModel`, `ToolboxViewModel`, `ZoomViewModel`
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:30), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:44)
 
 ### FileMenuCommands (class)
 
 `T:PressToShape.App.ViewModels.Editor.FileMenuCommands`. What the File menu items do. OpenRecent creates the command for one entry of the recent list.
 
 - used by: `MenuBarViewModel`, `OverflowMenuViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:40)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:42)
 
 ### FileServices (class)
 
@@ -59,6 +59,13 @@ Types that other types take as constructor parameters, and where they are provid
 
 - used by: `DesktopShellViewModel`, `EditorShellViewModel`, `TabletShellViewModel`
 - created at `AppLayout.Choose` (src/PressToShape.App/AppLayout.cs:33), `AppLayout.CreateTabletShell` (src/PressToShape.App/AppLayout.cs:66)
+
+### Found (class)
+
+`T:PressToShape.Core.Documents.ShapeTree.Found`. Where a shape was found: the layer, the enclosing groups from the outermost to the innermost, and the shape.
+
+- used by: `Operand`
+- created at `ShapeTree.Find` (src/PressToShape.Core/Documents/ShapeTree.cs:47)
 
 ### GroupShape (class)
 
@@ -102,14 +109,14 @@ Types that other types take as constructor parameters, and where they are provid
 
 `T:PressToShape.App.Localization.ILocalizer`. Translates user-visible texts. The English source text is the message id.
 
-- used by: `AvaloniaFileDialogs`, `AvaloniaMessageDialogs`, `DesktopShellViewModel`, `DocumentFileService`, `EditorShellViewModel`, `HistoryItemViewModel`, `HistoryViewModel`, `InspectorViewModel`, `LanguagePreference`, `LayerEditor`, `LayersViewModel`, `LocalizedTextObservable`, `LocalizedViewModel`, `MenuBarViewModel`, `MenuItemViewModel`, `NumberFieldViewModel`, `OverflowMenuViewModel`, `OverlayMessageDialogs`, `PanelButtonViewModel`, `PlaceholderPanelViewModel`, `PropertiesViewModel`, `RingMenuViewModel`, `RingSlotViewModel`, `StatusBarViewModel`, `TabletColorSwatchViewModel`, `TabletPanelViewModel`, `TabletShellViewModel`, `TabletToolColumnViewModel`, `TabletToolbarViewModel`, `ToolGroupViewModel`, `ToolItemViewModel`, `ToolbarButtonViewModel`, `ToolbarViewModel`, `ToolboxViewModel`, `ZoomViewModel`
+- used by: `AvaloniaFileDialogs`, `AvaloniaMessageDialogs`, `DesktopShellViewModel`, `DocumentFileService`, `EditorShellViewModel`, `HistoryItemViewModel`, `HistoryViewModel`, `InspectorViewModel`, `LanguagePreference`, `LayerEditor`, `LayersViewModel`, `LocalizedTextObservable`, `LocalizedViewModel`, `MenuBarViewModel`, `MenuItemViewModel`, `NumberFieldViewModel`, `OverflowMenuViewModel`, `OverlayMessageDialogs`, `PanelButtonViewModel`, `PathEditor`, `PlaceholderPanelViewModel`, `PropertiesViewModel`, `RingMenuViewModel`, `RingSlotViewModel`, `StatusBarViewModel`, `TabletColorSwatchViewModel`, `TabletPanelViewModel`, `TabletShellViewModel`, `TabletToolColumnViewModel`, `TabletToolbarViewModel`, `ToolGroupViewModel`, `ToolItemViewModel`, `ToolbarButtonViewModel`, `ToolbarViewModel`, `ToolboxViewModel`, `ZoomViewModel`
 - implemented by `Localizer`, created at `LocalizationHost.Localizer` (src/PressToShape.App/Localization/LocalizationHost.cs:14), `PressToShapeApp.Initialize` (src/PressToShape.App/PressToShapeApp.axaml.cs:26)
 
 ### IMessageDialogs (interface)
 
 `T:PressToShape.App.Services.IMessageDialogs`. The questions and messages shown to the user. The texts are translated by the caller.
 
-- used by: `DocumentFileService`, `FileServices`
+- used by: `DocumentFileService`, `FileServices`, `PathEditor`
 - implemented by `AvaloniaMessageDialogs`, created at `AppLayout.Choose` (src/PressToShape.App/AppLayout.cs:37)
 - implemented by `OverlayMessageDialogs`, created at `AppLayout.CreateTabletShell` (src/PressToShape.App/AppLayout.cs:70)
 
@@ -125,7 +132,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.ViewModels.Editor.InspectorViewModel`. State of the inspector: the selected tab and the view models of its tabs.
 
 - used by: `TabletPanelViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:39)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:41)
 
 ### Layer (class)
 
@@ -139,14 +146,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.LayerEditor`. Edits of the layers: add, delete, rename, reorder, duplicate, merge, and moving the selected objects to another layer. Each change of the document is one history step. A command that would change nothing records no step, and its Can... property is false. The commands without a layer id work on the active layer.
 
 - used by: `InspectorViewModel`, `LayerMenuCommands`, `LayersViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:36), `LayersViewModel.LayersViewModel` (src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:40)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:38), `LayersViewModel.LayersViewModel` (src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:40)
 
 ### LayerMenuCommands (class)
 
 `T:PressToShape.App.ViewModels.Editor.LayerMenuCommands`. What the items of the Layer menu do. Each command runs a PressToShape.App.Workspace.LayerEditor command and is disabled while that would change nothing. Call PressToShape.App.ViewModels.Editor.LayerMenuCommands.NotifyCanExecuteChanged when the document, the active layer or the selection changed.
 
 - used by: `MenuBarViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:69)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:79)
 
 ### LayersViewModel (class)
 
@@ -174,28 +181,49 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.ObjectEditor`. Edits of the structure of the drawing: group and ungroup, arrange, lock and hide single objects, and names. Each change of the document is one history step. A command that would change nothing records no step, and its Can... property is false.
 
 - used by: `InspectorViewModel`, `LayersViewModel`, `PropertiesViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:35), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:23), `PropertiesViewModel.PropertiesViewModel` (src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:41)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:36), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:23), `PropertiesViewModel.PropertiesViewModel` (src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:41)
 
 ### ObjectMenuCommands (class)
 
 `T:PressToShape.App.ViewModels.Editor.ObjectMenuCommands`. What the Group, Arrange, Lock and Hide items of the Object menu do. A command is disabled while it would change nothing.
 
 - used by: `MenuBarViewModel`, `OverflowMenuViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:57)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:59)
+
+### Outline (class)
+
+`T:PressToShape.Core.PathOperations.Outline`. The outline of one operand of a boolean operation: its sub-paths in document coordinates, with the rotation already applied, and the fill rule that tells what is inside. An open sub-path counts as closed by a straight line. Plain geometry, no shape or document.
+
+- used by: `Operand`
+- created at `PathShapeOperations.Operands` (src/PressToShape.Core/Documents/PathShapeOperations.cs:125), `PathOperationBenchmarks.Wavy` (tests/PressToShape.Benchmarks/PathOperationBenchmarks.cs:64)
 
 ### OverflowMenuViewModel (class)
 
-`T:PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`. The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, lock and hide, and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
+`T:PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`. The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, the path operations, lock and hide, and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
 
 - used by: `TabletToolbarViewModel`
 - created at `TabletShellViewModel.TabletShellViewModel` (src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:28)
 
+### PathEditor (class)
+
+`T:PressToShape.App.Workspace.PathEditor`. The path operations on the selection: the boolean operations, Combine and Break Apart. Each success is one history step and the new shapes become the selection. A result that is empty or an operation that fails changes nothing and tells the user why. A command that cannot run has its Can... property false.
+
+- used by: `StatusBarViewModel`
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:37)
+
+### PathMenuCommands (class)
+
+`T:PressToShape.App.ViewModels.Editor.PathMenuCommands`. What the boolean, Combine and Break Apart items of the Path menu do. A command is disabled while it cannot run.
+
+- used by: `MenuBarViewModel`, `OverflowMenuViewModel`
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:71)
+
 ### PathShape (class)
 
-`T:PressToShape.Core.Shapes.PathShape`. A path of line and cubic bezier segments, open or closed. The box (PressToShape.Core.Shapes.Shape.X, PressToShape.Core.Shapes.Shape.Y, PressToShape.Core.Shapes.Shape.Width, PressToShape.Core.Shapes.Shape.Height) is the tight bounds of the curve, and the nodes are stored as fractions of that box (see PressToShape.Core.Shapes.PathNode), so changing the box with with moves, resizes and (with the rotation) turns the whole path, like any other shape. Build one from document coordinates with PressToShape.Core.Shapes.PathShape.Create. Immutable: change it with with.
+`T:PressToShape.Core.Shapes.PathShape`. A path of line and cubic bezier segments made of one or more sub-paths, each open or closed. The box (PressToShape.Core.Shapes.Shape.X, PressToShape.Core.Shapes.Shape.Y, PressToShape.Core.Shapes.Shape.Width, PressToShape.Core.Shapes.Shape.Height) is the tight bounds of all the curves, and the nodes are stored as fractions of that box (see PressToShape.Core.Shapes.PathNode), so changing the box with with moves, resizes and (with the rotation) turns the whole path, like any other shape. Build one from document coordinates with PressToShape.Core.Shapes.PathShape.Create. A node or a segment is addressed by one flat index that counts across the sub-paths, the first sub-path first (see PressToShape.Core.Shapes.PathShape.Locate). Immutable: change it with with.
 
-- used by: `NodeTarget`
-- created at `ProjectFile.BuildPath` (src/PressToShape.Core/IO/ProjectFile.Path.cs:57), `PathShape.Create` (src/PressToShape.Core/Shapes/PathShape.cs:69)
+- used by: `NodeTarget`, `PathBuffer`
+- created at `ProjectFile.BuildPath` (src/PressToShape.Core/IO/ProjectFile.Path.cs:93), `PathShape.Create` (src/PressToShape.Core/Shapes/PathShape.cs:94)
 
 ### PropertiesViewModel (class)
 
@@ -209,14 +237,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.RecentFiles`. The list of recently used files, most recent first, kept in the settings file. It holds each path once and at most PressToShape.App.Workspace.RecentFiles.MaxCount paths. The stored value is untrusted: anything that is not a list of paths is ignored. A list that does not persist stays empty: the paths of a platform whose file references do not survive a restart are of no use later.
 
 - used by: `DocumentFileService`, `MenuBarViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:31)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:32)
 
 ### RingMenuViewModel (class)
 
 `T:PressToShape.App.ViewModels.Editor.RingMenuViewModel`. The state of the ring menu: whether it is open, where, which level of slots it shows, and which slot the pointer or the keyboard is on. The content comes from PressToShape.App.ViewModels.Editor.RingMenuViewModel.Content, so this class knows no commands. It lives as long as the canvas area.
 
 - used by: `CanvasAreaViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:37)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:39)
 
 ### RingSlotDefinition (class)
 
@@ -230,7 +258,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.ScreenPath`. The outline of a path ready to draw: every node is already in screen pixels, relative to the top left corner of the PressToShape.App.Workspace.ScreenShape that holds it. A segment is a curve if the node it starts at has an out handle or the node it ends at has an in handle, otherwise a line.
 
 - used by: `ScreenShape`
-- created at `CanvasScene.BuildPath` (src/PressToShape.App/Workspace/CanvasScene.cs:122)
+- created at `CanvasScene.BuildPath` (src/PressToShape.App/Workspace/CanvasScene.cs:128)
 
 ### ScreenPoint (class)
 
@@ -251,7 +279,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.SelectionEditor`. Edits that work on the selected shapes and do not need the mouse: select all, deselect, copy, cut, paste, duplicate (and, in the same class, nudging and property edits). Every change of the document is one history step.
 
 - used by: `CanvasAreaViewModel`, `InspectorViewModel`, `PropertiesViewModel`
-- created at `CanvasAreaViewModel.CanvasAreaViewModel` (src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:45), `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:34), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:22), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:46)
+- created at `CanvasAreaViewModel.CanvasAreaViewModel` (src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:45), `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:35), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:22), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:46)
 
 ### Shape (class)
 
@@ -300,15 +328,8 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.ViewModels.Editor.ToolboxViewModel`. State of the tool column: tool list, active tool, shortcut lookup, and the (not yet usable) color swatch commands.
 
 - used by: `TabletToolColumnViewModel`, `ToolGroupViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:33)
-
-### ZoomViewModel (class)
-
-`T:PressToShape.App.ViewModels.Editor.ZoomViewModel`. The zoom as the user sees it: the text, the preset list and the commands. Shared by the desktop status bar and the tablet toolbar.
-
-- used by: `TabletToolbarViewModel`
-- created at `StatusBarViewModel.StatusBarViewModel` (src/PressToShape.App/ViewModels/Desktop/StatusBarViewModel.cs:22), `TabletShellViewModel.TabletShellViewModel` (src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:31)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:34)
 
 ## Container registrations
 
-no container registrations found; services are created by hand in `AppLayout.Choose`, `AppLayout.CreateTabletShell`, `CanvasAreaViewModel.CanvasAreaViewModel`, `CanvasScene.BuildPath`, `DesktopShellViewModel.DesktopShellViewModel`, `Document.Create`, `EditorShellViewModel.EditorShellViewModel`, `EmbeddedCatalogSource.EmbeddedCatalogSource`, `GroupOperations.Group`, `InspectorViewModel.InspectorViewModel`, `LayerEditor.Add`, `LayersViewModel.LayersViewModel`, `LocalizationHost.Localizer`, `Mixed.Of`, `PathShape.Create`, `PressToShapeApp.Initialize`, `ProjectFile.Build`, `ProjectFile.BuildGroup`, `ProjectFile.BuildPath`, `PropertiesViewModel.PropertiesViewModel`, `RingSlotDefinition.WithChildren`, `RingSlotDefinition.WithCommand`, `ScreenPolygon.FromBox`, `SelectionOverlay.Build`, `SelectionOverlay.BuildRadiusHandles`, `ShapeOperationBenchmarks.Setup`, `StatusBarViewModel.StatusBarViewModel`, `TabletShellViewModel.TabletShellViewModel`, `ToolDefinitions.All`, `ToolGroups.All`.
+no container registrations found; services are created by hand in `AppLayout.Choose`, `AppLayout.CreateTabletShell`, `CanvasAreaViewModel.CanvasAreaViewModel`, `CanvasScene.BuildPath`, `DesktopShellViewModel.DesktopShellViewModel`, `Document.Create`, `EditorShellViewModel.EditorShellViewModel`, `EmbeddedCatalogSource.EmbeddedCatalogSource`, `GroupOperations.Group`, `InspectorViewModel.InspectorViewModel`, `LayerEditor.Add`, `LayersViewModel.LayersViewModel`, `LocalizationHost.Localizer`, `Mixed.Of`, `PathOperationBenchmarks.Wavy`, `PathShape.Create`, `PathShapeOperations.Operands`, `PressToShapeApp.Initialize`, `ProjectFile.Build`, `ProjectFile.BuildGroup`, `ProjectFile.BuildPath`, `PropertiesViewModel.PropertiesViewModel`, `RingSlotDefinition.WithChildren`, `RingSlotDefinition.WithCommand`, `ScreenPolygon.FromBox`, `SelectionOverlay.Build`, `SelectionOverlay.BuildRadiusHandles`, `ShapeOperationBenchmarks.Setup`, `ShapeTree.Find`, `TabletShellViewModel.TabletShellViewModel`, `ToolDefinitions.All`, `ToolGroups.All`.

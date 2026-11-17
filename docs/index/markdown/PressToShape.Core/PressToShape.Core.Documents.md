@@ -78,6 +78,7 @@ A drawing: an artboard and a stack of layers. Immutable: every edit method retur
 **Relationships**
 
 - Injected into `PressToShape.App.Workspace.EditorState`
+- Injected into `PressToShape.Core.Documents.PathOperationResult`
 - Injected into `PressToShape.Core.History.DocumentHistory`
 - Injected into `PressToShape.Core.IO.ProjectFileResult`
 - Injected into `PressToShape.Core.Tests.Documents.LayerOperationsTests.Fixture`
@@ -162,6 +163,54 @@ Changes to the list of layers of a document: insert and reorder. Layers are list
 - `public Document MergeDown(Document document, Guid layerId)` - Moves the shapes of the layer onto the top of the layer below and removes the layer. The lower layer keeps its id, name and flags.
 - `public Document MoveShapesToLayer(Document document, IReadOnlySet<Guid> ids, Guid layerId)` - Moves the shapes onto the top of the layer. Shapes inside groups leave their group, and a group that loses its last child goes with it. The shapes keep their order in the document: lower layers first, then stack order. A shape and its own group move together.
 
+## PathOperationFailure (enum)
+
+`public enum PathOperationFailure`
+
+Source: `src/PressToShape.Core/Documents/PathOperationResult.cs:7-14`
+
+Why a path operation did nothing.
+
+**Members**
+
+- `public Invalid` - The shapes cannot be used: fewer than needed, a shape of the wrong type, a group, an open path, a hidden or locked shape, or too many sub-paths.
+- `public Empty` - The result covers no area, so nothing would be left.
+
+## PathOperationResult (record)
+
+`public sealed record PathOperationResult : IEquatable<PathOperationResult>`
+
+Source: `src/PressToShape.Core/Documents/PathOperationResult.cs:17-48`
+
+The result of a path operation on a document: the new document and the shapes it made, or the reason it did nothing.
+
+**Members**
+
+- `public Document? Document { get; }` - The new document, or null if the operation failed.
+- `public IReadOnlyList<Guid> NewShapeIds { get; }` - The ids of the shapes the operation made, in stacking order. Empty if it failed.
+- `public PathOperationFailure? Failure { get; }` - Why the operation did nothing, or null if it worked.
+- `public bool Succeeded { get; }` - Whether the operation worked.
+- `public PathOperationResult Success(Document document, IReadOnlyList<Guid> newShapeIds)` - A result of an operation that worked.
+- `public PathOperationResult Fail(PathOperationFailure failure)` - A result of an operation that did nothing.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.Core.Documents.Document`
+
+## PathShapeOperations (class)
+
+`public static class PathShapeOperations`
+
+Source: `src/PressToShape.Core/Documents/PathShapeOperations.cs:15-193`
+
+The path operations on a document: the boolean operations, Combine and Break Apart. Every method checks the shapes first and returns a failure without changing anything if they cannot be used. The result is a new document, the input is never changed.
+
+**Members**
+
+- `public PathOperationResult Boolean(Document document, IReadOnlyList<Guid> ids, PathOperationType type, Guid newId, CancellationToken cancellationToken = default(CancellationToken))` - Replaces the shapes with one path that is the result of the operation. The operands are rectangles, ellipses and closed paths that are visible and not locked (a group, an open path or a hidden or locked shape makes the operation PressToShape.Core.Documents.PathOperationFailure.Invalid), at least two. They are combined from the lowest in the document upward (see PressToShape.Core.PathOperations.BooleanEngine.Compute). The result sits where the lowest operand was (same layer and group, same place in the stack) and takes its fill, stroke, opacity, name and flags. It has no rotation and the even-odd fill rule, so holes show. If nothing is left the failure is PressToShape.Core.Documents.PathOperationFailure.Empty.
+- `public PathOperationResult Combine(Document document, IReadOnlyList<Guid> ids, Guid newId)` - Replaces the shapes with one path that holds all their sub-paths unchanged, in document coordinates. The operands are rectangles, ellipses and paths (open ones too) that are visible and not locked, at least two. The result sits where the lowest operand was, takes its fill, stroke, opacity, name and flags, has no rotation and the even-odd fill rule, so a small circle inside a big one becomes a hole.
+- `public PathOperationResult BreakApart(Document document, Guid id, Func<Guid> newId)` - Replaces a path that has several sub-paths with one path for each of them, in the same place, in the original order. Each keeps the appearance, name, flags, rotation and fill rule of the original and stays where it was on the screen. A hole becomes a separate filled path. A path with one sub-path, another type of shape, or a hidden or locked path is PressToShape.Core.Documents.PathOperationFailure.Invalid.
+
 ## ShapeLocation (record)
 
 `public sealed record ShapeLocation : IEquatable<ShapeLocation>`
@@ -226,3 +275,4 @@ Where a shape was found: the layer, the enclosing groups from the outermost to t
 **Relationships**
 
 - Depends on (constructor) `PressToShape.Core.Shapes.Shape`
+- Injected into `PressToShape.Core.Documents.PathShapeOperations.Operand`

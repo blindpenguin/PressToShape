@@ -310,6 +310,59 @@ _(no documentation)_
 - `public void With_Shapes_KeepsGivenShapesInOrder()` - _(no documentation)_
 - `public void ShapeLocation_LayerAndShape_AreKept()` - _(no documentation)_
 
+## PathShapeOperationsBooleanTests (class)
+
+`public class PathShapeOperationsBooleanTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/PathShapeOperationsBooleanTests.cs:12-297`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Boolean_TwoRectangles_ReplacesThemWithOnePath()` - _(no documentation)_
+- `public void Boolean_TakesTheAppearanceNameAndFlagsOfTheBottomOperand()` - _(no documentation)_
+- `public void Boolean_OperandsGivenInAnyOrder_BottomOneIsTheLowestInTheDocument()` - _(no documentation)_
+- `public void Boolean_ResultTakesThePlaceOfTheBottomOperandInTheStack()` - _(no documentation)_
+- `public void Boolean_OperandsInDifferentLayers_ResultIsInTheLayerOfTheBottomOperand()` - _(no documentation)_
+- `public void Boolean_BottomOperandInAGroup_ResultStaysInThatGroup()` - _(no documentation)_
+- `public void Boolean_OtherOperandWasTheOnlyChildOfAGroup_TheEmptyGroupGoes()` - _(no documentation)_
+- `public void Boolean_RotatedAndRoundedOperands_UseWhatYouSee()` - _(no documentation)_
+- `public void Boolean_EllipseAndRectangle_KeepsTheCurve()` - _(no documentation)_
+- `public void Boolean_EmptyResult_FailsWithEmptyAndLeavesTheDocument()` - _(no documentation)_
+- `public void Boolean_Difference_CutsUpperOperandsFromTheBottomOne()` - _(no documentation)_
+- `public void Boolean_Undo_RestoresTheOperandsAndTheirOrder()` - _(no documentation)_
+- `public void Boolean_DoesNotChangeTheInputDocument()` - _(no documentation)_
+- `public void Boolean_FewerThanTwoOrRepeatedIds_IsInvalid()` - _(no documentation)_
+- `public void Boolean_Group_IsInvalid()` - _(no documentation)_
+- `public void Boolean_OpenPath_IsInvalid()` - _(no documentation)_
+- `public void Boolean_ClosedPathOperand_IsAccepted()` - _(no documentation)_
+- `public void Boolean_LockedOrHiddenOperand_IsInvalid()` - _(no documentation)_
+- `public void Boolean_OperandOfALockedLayerOrGroup_IsInvalid()` - _(no documentation)_
+- `public void Boolean_CancelledToken_Throws()` - _(no documentation)_
+
+## PathShapeOperationsCombineTests (class)
+
+`public class PathShapeOperationsCombineTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/PathShapeOperationsCombineTests.cs:10-210`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Combine_BigAndSmallCircle_ShowsAHoleInTheMiddle()` - _(no documentation)_
+- `public void Combine_KeepsTheNodesInDocumentCoordinatesAndTakesTheBottomAppearance()` - _(no documentation)_
+- `public void Combine_RotatedOperand_IsCombinedAsItLooks()` - _(no documentation)_
+- `public void Combine_GroupHiddenOrFewerThanTwo_IsInvalid()` - _(no documentation)_
+- `public void BreakApart_CompoundPath_GivesOnePathPerSubPathInOrder()` - _(no documentation)_
+- `public void BreakApart_KeepsAppearanceNameFillRuleAndRotation()` - _(no documentation)_
+- `public void BreakApart_RotatedPath_EveryNodeStaysWhereItWasOnTheScreen()` - _(no documentation)_
+- `public void BreakApart_PathInAGroup_PiecesStayInTheGroup()` - _(no documentation)_
+- `public void BreakApart_OneSubPathOtherShapeOrLockedOrUnknown_IsInvalid()` - _(no documentation)_
+- `public void CombineThenBreakApart_GivesBackTheShapesAsPaths()` - _(no documentation)_
+- `public void Operations_NullArguments_Throw()` - _(no documentation)_
+
 ## ShapeTreeTests (class)
 
 `public class ShapeTreeTests`

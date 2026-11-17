@@ -146,7 +146,8 @@
 {"Id":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]/x:Double[19]","ParentId":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]","Type":"x:Double","Line":218},
 {"Id":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]/x:Double[20]","ParentId":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]","Type":"x:Double","Line":219},
 {"Id":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]/x:Double[21]","ParentId":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]","Type":"x:Double","Line":220},
-{"Id":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]/x:Double[22]","ParentId":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]","Type":"x:Double","Line":221}
+{"Id":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]/x:Double[22]","ParentId":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]","Type":"x:Double","Line":221},
+{"Id":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]/x:Double[23]","ParentId":"X:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ResourceDictionary[1]","Type":"x:Double","Line":222}
 ],"Bindings":[],"Resources":[
 {"Id":"R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SystemAccentColor@Dark","Key":"SystemAccentColor","Type":"Color","Variant":"Dark","Line":13},
 {"Id":"R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SystemAccentColorLight1@Dark","Key":"SystemAccentColorLight1","Type":"Color","Variant":"Dark","Line":14},

@@ -51,7 +51,7 @@ _(no documentation)_
 
 `internal sealed class NodeDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:129-159`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:146-176`
 
 _(no documentation)_
 
@@ -69,13 +69,13 @@ _(no documentation)_
 
 `public partial static class ProjectFile`
 
-Source: `src/PressToShape.Core/IO/ProjectFile.Path.cs:9-119`
+Source: `src/PressToShape.Core/IO/ProjectFile.Path.cs:9-170`
 
 PressToShape's own project format: UTF-8 JSON with a format name and a version number. Reading treats the content as untrusted: it is size-checked, parsed with a depth limit and validated by the document model itself. PressToShape.Core.IO.ProjectFile.Read never throws for bad content, it returns an error.
 
 **Members**
 
-- `public int MaxPathNodes` - The most nodes one path in a file may have.
+- `public int MaxPathNodes` - The most nodes one path in a file may have, over all its sub-paths together.
 - `public int FormatVersion` - The format version this code writes and reads.
 - `public long MaxBytes` - The largest content PressToShape.Core.IO.ProjectFile.Read accepts, in bytes.
 - `public byte[] Write(Document document)` - Writes the document as UTF-8 JSON without a byte order mark.
@@ -123,7 +123,7 @@ The outcome of reading a project file: either a document or an error.
 
 `internal sealed class ShapeDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:47-126`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:47-131`
 
 _(no documentation)_
 
@@ -145,15 +145,29 @@ _(no documentation)_
 - `public bool? Locked { get; set; }` - _(no documentation)_
 - `public List<double?>? Radii { get; set; }` - _(no documentation)_
 - `public List<NodeDto?>? Nodes { get; set; }` - _(no documentation)_
+- `public List<SubPathDto?>? SubPaths { get; set; }` - _(no documentation)_
 - `public bool? Closed { get; set; }` - _(no documentation)_
 - `public string? FillRule { get; set; }` - _(no documentation)_
 - `public List<ShapeDto?>? Children { get; set; }` - _(no documentation)_
+
+## SubPathDto (class)
+
+`internal sealed class SubPathDto`
+
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:134-143`
+
+_(no documentation)_
+
+**Members**
+
+- `public List<NodeDto?>? Nodes { get; set; }` - _(no documentation)_
+- `public bool? Closed { get; set; }` - _(no documentation)_
 
 ## SvgExport (class)
 
 `public static class SvgExport`
 
-Source: `src/PressToShape.Core/IO/SvgExport.cs:17-279`
+Source: `src/PressToShape.Core/IO/SvgExport.cs:18-284`
 
 Exports a document as SVG 1.1. The artboard becomes the viewport, every visible layer one group (marked as an Inkscape layer), every shape a rect, ellipse or path and every group a g around its children. Hidden shapes and the shapes below hidden groups are left out. There is no background and the output holds no scripts, links or external references.
 

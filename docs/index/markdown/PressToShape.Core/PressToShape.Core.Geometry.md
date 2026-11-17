@@ -49,3 +49,32 @@ A cubic bezier segment in document units: from P0 to P3, shaped by two handle po
 - `public (double X, double Y) P1 { get; init; }` - Handle point of the start.
 - `public (double X, double Y) P2 { get; init; }` - Handle point of the end.
 - `public (double X, double Y) P3 { get; init; }` - End point.
+
+## FlatPoint (record)
+
+`public readonly record FlatPoint : IEquatable<FlatPoint>`
+
+Source: `src/PressToShape.Core/Geometry/FlatPoint.cs:12-12`
+
+A point of a flattened outline together with where it came from: the curve point at T of a segment. The tags let a later step (the boolean operations) find out which pieces of the result are unchanged pieces of an original curve.
+
+**Members**
+
+- `public FlatPoint(double X, double Y, int Operand, int Segment, double T)` - A point of a flattened outline together with where it came from: the curve point at T of a segment. The tags let a later step (the boolean operations) find out which pieces of the result are unchanged pieces of an original curve.
+- `public int Operand { get; init; }` - The index of the operand (the shape) the point comes from.
+- `public int Segment { get; init; }` - The index of the segment, counted across all sub-paths of the operand.
+- `public double T { get; init; }` - The position on the segment, from 0 (its start) to 1 (its end).
+- `public double X { get; init; }` - The x position in document units.
+- `public double Y { get; init; }` - The y position in document units.
+
+## Flattening (class)
+
+`public static class Flattening`
+
+Source: `src/PressToShape.Core/Geometry/Flattening.cs:7-77`
+
+Turns the cubic segments of a sub-path into a polyline whose points know where on which segment they lie. Deterministic.
+
+**Members**
+
+- `public IReadOnlyList<FlatPoint> Flatten(IReadOnlyList<Cubic> segments, bool isClosed, int operand, int firstSegment, double tolerance)` - The points of one sub-path as a polyline. A straight segment (a cubic whose handle points lie on its end points) gives only its start point. A curve is cut into equal steps of t, as many as keep the curve within tolerance of the polyline. Every segment gives its points from t = 0 up to, but not including, the end, because the end is the start of the next segment. Only the last segment of an open sub-path also gives its end point, so a closed sub-path does not repeat its first point.

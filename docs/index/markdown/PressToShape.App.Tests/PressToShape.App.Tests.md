@@ -835,6 +835,29 @@ _(no documentation)_
 - `public void ConvertBack_SixDigits_IsOpaque()` - _(no documentation)_
 - `public void ConvertBack_InvalidText_IsNotAColor(string text)` - _(no documentation)_
 
+## CompoundPathNodeToolTests (class)
+
+`public class CompoundPathNodeToolTests`
+
+Source: `tests/PressToShape.App.Tests/CompoundPathNodeToolTests.cs:10-204`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SetType_NodesOfTwoSubPaths_ChangesBothInOneStep()` - _(no documentation)_
+- `public void Nudge_NodeOfSecondSubPath_MovesOnlyThatNode()` - _(no documentation)_
+- `public void DeleteSelected_NodeOfFirstSubPath_KeepsBothSubPaths()` - _(no documentation)_
+- `public void DeleteSelected_NodeOfATwoNodeSubPath_RemovesThatSubPath()` - _(no documentation)_
+- `public void DeleteSelected_ThenUndo_BringsTheSubPathBack()` - _(no documentation)_
+- `public void CanChangeSegment_NeighborsInOneSubPath_IsTrue()` - _(no documentation)_
+- `public void CanChangeSegment_LastNodeOfOneSubPathAndFirstOfTheNext_IsFalse()` - _(no documentation)_
+- `public void CanChangeSegment_ClosingSegmentOfAClosedSubPath_IsTrue()` - _(no documentation)_
+- `public void CurveSelectedSegment_SegmentOfSecondSubPath_GivesThatSegmentHandles()` - _(no documentation)_
+- `public void VisibleHandles_NodeAtTheEndOfFirstSubPath_DoesNotReachIntoTheNext()` - _(no documentation)_
+- `public void PenContinue_OnTheEndOfSecondSubPath_AppendsThereAndKeepsTheFirstSubPath()` - _(no documentation)_
+- `public void BuildShape_Ring_HasTwoSubPathsAndTheFillRule()` - _(no documentation)_
+
 ## CoreColorConverterTests (class)
 
 `public class CoreColorConverterTests`
@@ -1620,7 +1643,7 @@ The application of the headless UI tests: the real theme and control styles, but
 
 `public class HistoryViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-241`
+Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-242`
 
 _(no documentation)_
 
@@ -1992,7 +2015,7 @@ Settings kept in memory.
 
 `public class MenuBarViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-627`
+Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-662`
 
 _(no documentation)_
 
@@ -2000,6 +2023,7 @@ _(no documentation)_
 
 - `public void TopLevelMenus_AreInMockupOrder()` - _(no documentation)_
 - `public void OnlyTheImplementedItems_AreEnabledLeafItems()` - _(no documentation)_
+- `public void PathMenu_BooleanCombineAndBreakApartItems_FollowTheirCommands()` - _(no documentation)_
 - `public void LayerMenu_HasTheLayerCommandsInOrder()` - _(no documentation)_
 - `public void LayerMenu_InOneLayerDocument_OnlyAddAndDuplicateAreEnabled()` - _(no documentation)_
 - `public void LayerMenu_AddLayer_RunsTheCommandAndEnablesTheOthers()` - _(no documentation)_
@@ -2292,14 +2316,16 @@ _(no documentation)_
 
 `public class OverflowMenuViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-201`
+Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-246`
 
 _(no documentation)_
 
 **Members**
 
-- `public void Items_AreTheFileActions_TheEditActions_TheObjectActions_AndTheLanguage_InOrder()` - _(no documentation)_
+- `public void Items_AreTheFileActions_TheEditActions_TheObjectAndPathActions_AndTheLanguage_InOrder()` - _(no documentation)_
 - `public void TheArrangeSubmenu_HasTheFourArrangeCommands()` - _(no documentation)_
+- `public void ThePathSubmenu_HasTheSixPathCommandsAndRunsThem()` - _(no documentation)_
+- `public void ThePathSubmenu_ItemsFollowTheirCommands()` - _(no documentation)_
 - `public void Items_HaveNoQuitAndNoRecentFiles()` - _(no documentation)_
 - `public void Items_ShowNoShortcutTexts()` - _(no documentation)_
 - `public void Items_RunTheMatchingCommand()` - _(no documentation)_
@@ -2379,6 +2405,52 @@ _(no documentation)_
 - `public void Eyedropper_OnAPath_TakesItsFill()` - _(no documentation)_
 - `public void PenToSaveAndExport_ADrawnPath_SurvivesTheFileAndShowsInTheSvg()` - _(no documentation)_
 - `public void UndoAndRedo_OfEveryPenStep_RestoreThePath()` - _(no documentation)_
+
+## PathEditorBackgroundTests (class)
+
+`public class PathEditorBackgroundTests`
+
+Source: `tests/PressToShape.App.Tests/PathEditorBackgroundTests.cs:15-206`
+
+_(no documentation)_
+
+**Members**
+
+- `public Task BooleanAsync_AboveTheLimit_IsBusyUntilTheWorkEndsThenAppliesOnce()` - _(no documentation)_
+- `public Task BooleanAsync_BelowTheLimit_RunsInlineWithoutBusyState()` - _(no documentation)_
+- `public Task BooleanAsync_DocumentChangedWhileRunning_DropsTheResult()` - _(no documentation)_
+- `public Task BooleanAsync_EmptyResultInTheBackground_ShowsTheMessageAndIsNoLongerBusy()` - _(no documentation)_
+- `public Task BooleanAsync_RunnerThrows_IsNoLongerBusyAndTheExceptionReachesTheCaller()` - _(no documentation)_
+- `public Task BooleanAsync_WithTheDefaultBackgroundRunner_ProducesTheSameResult()` - _(no documentation)_
+- `public void CanBoolean_WhileADragIsInProgress_IsFalse()` - _(no documentation)_
+- `public Task StatusBar_WhileAnOperationRuns_ShowsTheBusyTextAndRaisesChanges()` - _(no documentation)_
+- `public void StatusBar_WithoutPathEditing_IsNeverBusy()` - _(no documentation)_
+
+## PathEditorTests (class)
+
+`public class PathEditorTests`
+
+Source: `tests/PressToShape.App.Tests/PathEditorTests.cs:14-270`
+
+_(no documentation)_
+
+**Members**
+
+- `public void CanBoolean_TwoRectanglesSelected_IsTrue()` - _(no documentation)_
+- `public void CanBoolean_NothingOrOneShapeSelected_IsFalseForEveryCommand()` - _(no documentation)_
+- `public void CanBoolean_GroupInTheSelection_IsFalse()` - _(no documentation)_
+- `public void CanBoolean_OpenPath_IsFalseButCombineIsTrue()` - _(no documentation)_
+- `public void CanBoolean_HiddenOrLockedShape_IsFalse()` - _(no documentation)_
+- `public void CanBreakApart_CompoundPathSelected_IsTrueAndSinglePathIsFalse()` - _(no documentation)_
+- `public Task BooleanAsync_Success_IsOneStepWithTheMatchingNameAndSelectsTheResult(PathOperationType type, HistoryStepType step)` - _(no documentation)_
+- `public Task BooleanAsync_ThenUndo_RestoresOperandsAndSelection()` - _(no documentation)_
+- `public Task BooleanAsync_ThenUndoAndRedo_ReselectsTheResult()` - _(no documentation)_
+- `public Task BooleanAsync_EmptyResult_ChangesNothingAndShowsTheMessage()` - _(no documentation)_
+- `public Task BooleanAsync_WhenItCannotRun_DoesNothingAndShowsNoMessage()` - _(no documentation)_
+- `public Task CombineAsync_TwoShapes_IsOneCombineStepAndSelectsTheResult()` - _(no documentation)_
+- `public Task BreakApartAsync_CompoundPath_IsOneStepAndSelectsThePieces()` - _(no documentation)_
+- `public Task BreakApartAsync_TwoCompoundPathsAndAPlainOne_SplitsOnlyTheCompoundOnes()` - _(no documentation)_
+- `public void Constructor_NullArguments_Throw()` - _(no documentation)_
 
 ## PathOutlineTests (class)
 
@@ -3499,7 +3571,7 @@ _(no documentation)_
 
 `public class TabletShellViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/TabletShellViewModelTests.cs:13-438`
+Source: `tests/PressToShape.App.Tests/TabletShellViewModelTests.cs:13-450`
 
 _(no documentation)_
 
@@ -3510,7 +3582,8 @@ _(no documentation)_
 - `public void ATool_ChosenInTheToolColumn_IsTheActiveToolOfTheEditor()` - _(no documentation)_
 - `public void AnEdit_ShowsInTheToolbar_TheTitle_AndTheCanvas()` - _(no documentation)_
 - `public void ASelection_ShowsInThePropertiesTab()` - _(no documentation)_
-- `public void TheZoomOfTheToolbar_IsTheZoomOfTheEditor()` - _(no documentation)_
+- `public void TheZoomOfTheStatusBar_IsTheZoomOfTheEditor()` - _(no documentation)_
+- `public void TheToolbar_HasNoZoom_AndTheStatusBarIsMadeWithThePathEditor()` - _(no documentation)_
 - `public Task Leave_WithoutChanges_EndsTheAppWithoutAQuestion()` - _(no documentation)_
 - `public Task Leave_WithChanges_Save_SavesAndEndsTheApp()` - _(no documentation)_
 - `public Task Leave_WithChanges_DontSave_EndsTheAppWithoutSaving()` - _(no documentation)_
@@ -3532,6 +3605,24 @@ _(no documentation)_
 - `public void TheOverflowMenu_HasNoRecentFilesList()` - _(no documentation)_
 - `public void Constructor_NullArguments_Throw()` - _(no documentation)_
 
+## TabletStatusBarViewTests (class)
+
+`public class TabletStatusBarViewTests`
+
+Source: `tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:26-242`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Shell_TheStatusBar_IsUnderTheToolColumnAndTheCanvas_AcrossTheWholeWidth()` - _(no documentation)_
+- `public void Bar_ShowsTheSelectionSummaryAndTheZoom_AndTheZoomControlsWork()` - _(no documentation)_
+- `public void Bar_TheControlsHaveAccessibleNames()` - _(no documentation)_
+- `public void Bar_WithTheTouchSizes_EveryControlIsAtLeast48()` - _(no documentation)_
+- `public void Bar_AfterALanguageChange_ShowsTheGermanTexts()` - _(no documentation)_
+- `public void Bar_TheZoomList_IsClosedByTryCloseMenu_AndSaysSo()` - _(no documentation)_
+- `public void Bar_WhileAnOperationRuns_ShowsWorkingOnTheTabletAndOnTheDesktop()` - _(no documentation)_
+
 ## TabletToolColumnViewModelTests (class)
 
 `public class TabletToolColumnViewModelTests`
@@ -3552,7 +3643,7 @@ _(no documentation)_
 
 `public class TabletToolbarViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/TabletToolbarViewModelTests.cs:10-245`
+Source: `tests/PressToShape.App.Tests/TabletToolbarViewModelTests.cs:10-228`
 
 _(no documentation)_
 
@@ -3565,7 +3656,6 @@ _(no documentation)_
 - `public void UndoAndRedoButtons_AreNamed_AndDisabledWithoutHistory()` - _(no documentation)_
 - `public void UndoAndRedoButtons_FollowTheHistory_AndChangeTheDocument()` - _(no documentation)_
 - `public void UndoButtonChangesNotify_WhenTheHistoryChanges()` - _(no documentation)_
-- `public void Zoom_ShowsTheZoomOfTheEditor_AndItsCommandsWork()` - _(no documentation)_
 - `public void TheOverflowMenu_IsTheOneThatWasGiven()` - _(no documentation)_
 - `public void DuplicateAndDelete_AreDisabledWithoutSelection_AndNamed()` - _(no documentation)_
 - `public void Duplicate_WithASelection_AddsACopyAndSelectsIt()` - _(no documentation)_
@@ -3580,14 +3670,14 @@ _(no documentation)_
 
 `public class TabletViewsTests`
 
-Source: `tests/PressToShape.App.Tests/TabletViewsTests.cs:20-915`
+Source: `tests/PressToShape.App.Tests/TabletViewsTests.cs:20-916`
 
 _(no documentation)_
 
 **Members**
 
-- `public void Toolbar_BuildsAndShowsTheTitleAndTheZoom()` - _(no documentation)_
-- `public void Toolbar_FollowsTheDocument_StarUndoAndZoom()` - _(no documentation)_
+- `public void Toolbar_BuildsAndShowsTheTitle_AndHasNoZoom()` - _(no documentation)_
+- `public void Toolbar_FollowsTheDocument_StarAndUndo()` - _(no documentation)_
 - `public void Toolbar_TheButtonsHaveAccessibleNames()` - _(no documentation)_
 - `public void Toolbar_WithTheTouchSizes_EveryControlIsAtLeast48()` - _(no documentation)_
 - `public void Toolbar_TheOverflowButton_HasTheMenuOfTheViewModel()` - _(no documentation)_
@@ -3604,7 +3694,7 @@ _(no documentation)_
 - `public void Panel_HasTheWidthOfTheTheme()` - _(no documentation)_
 - `public void Panel_WithTheTouchSizes_TheContentIsTouchSized()` - _(no documentation)_
 - `public void Shell_ShowsEveryRegion_WithItsViewModel()` - _(no documentation)_
-- `public void Shell_HasNoRulers_NoMenuBar_NoStatusBar_AndNoBarUnderTheCanvas()` - _(no documentation)_
+- `public void Shell_HasNoRulers_NoMenuBar_AndNoDesktopStatusBar()` - _(no documentation)_
 - `public void Shell_IsTouchSized_WithoutAnyHelp()` - _(no documentation)_
 - `public void Shell_Layout_ToolbarOnTop_ToolColumnLeft_CanvasFillsTheRest()` - _(no documentation)_
 - `public void Shell_TheCanvas_IsAsWideAsTheLayoutMinusTheNarrowColumn()` - _(no documentation)_
@@ -3660,7 +3750,7 @@ Helpers that put shapes into the editor state and select them, the way tools wou
 
 `internal sealed class TestShell : EditorShellViewModel`
 
-Source: `tests/PressToShape.App.Tests/TestShell.cs:10-58`
+Source: `tests/PressToShape.App.Tests/TestShell.cs:10-60`
 
 The smallest shell: only what the base class gives every layout, with fake files, dialogs and settings. For testing the parts of a layout.
 
@@ -3671,6 +3761,7 @@ The smallest shell: only what the base class gives every layout, with fake files
 - `public FileMenuCommands FileCommandsForTests { get; }` - The commands behind the file items of a menu, which the base class keeps protected.
 - `public EditMenuCommands EditCommandsForTests { get; }` - The commands behind the edit items of a menu, which the base class keeps protected.
 - `public ObjectMenuCommands ObjectCommandsForTests { get; }` - _(no documentation)_
+- `public PathMenuCommands PathCommandsForTests { get; }` - _(no documentation)_
 - `public FakeFileStore Files { get; }` - _(no documentation)_
 - `public FakeFileDialogs Dialogs { get; }` - _(no documentation)_
 - `public FakeMessageDialogs Messages { get; }` - _(no documentation)_
@@ -3883,7 +3974,7 @@ _(no documentation)_
 
 `public class TranslationConsistencyTests`
 
-Source: `tests/PressToShape.App.Tests/TranslationConsistencyTests.cs:14-159`
+Source: `tests/PressToShape.App.Tests/TranslationConsistencyTests.cs:14-165`
 
 Guards the German catalog against the texts in the code. These tests read de.po directly and do not need msgfmt.
 

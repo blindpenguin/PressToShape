@@ -35,7 +35,7 @@ The undo and redo history of a document, kept as snapshots. Documents are immuta
 
 `public enum HistoryStepType`
 
-Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-173`
+Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-191`
 
 What a step of the history did. The app turns each value into a translated name.
 
@@ -97,3 +97,9 @@ What a step of the history did. The app turns each value into a translated name.
 - `public DuplicateLayer` - A layer was duplicated.
 - `public MergeLayers` - A layer was merged into the layer below it.
 - `public MoveToLayer` - Shapes were moved to another layer.
+- `public Union` - Shapes were combined with the union operation into one path.
+- `public Difference` - Shapes were combined with the difference operation into one path.
+- `public Intersection` - Shapes were combined with the intersection operation into one path.
+- `public Exclusion` - Shapes were combined with the exclusion operation into one path.
+- `public Combine` - Paths were joined into one compound path.
+- `public BreakApart` - A compound path was split into one path for each sub-path.

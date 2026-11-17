@@ -33,13 +33,13 @@ Root of the desktop layout. Adds the menu bar, the toolbar and the status bar to
 
 `internal sealed class MenuBarViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:20-192`
+Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:20-194`
 
 The complete menu structure. The File actions, the Edit actions, the group, arrange, lock and hide items, the Layer menu, Quit, the zoom items, the Window items and the languages have behavior. Everything else has no command and is therefore disabled until its feature exists.
 
 **Members**
 
-- `public MenuBarViewModel(EditorState state, IAppShutdown shutdown, ILocalizer localizer, Action<InspectorTab> showTab, Action fitToWindow, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, LayerMenuCommands layers, RecentFiles recent, ICommand undo, ICommand redo)` - _(no documentation)_
+- `public MenuBarViewModel(EditorState state, IAppShutdown shutdown, ILocalizer localizer, Action<InspectorTab> showTab, Action fitToWindow, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, LayerMenuCommands layers, PathMenuCommands paths, RecentFiles recent, ICommand undo, ICommand redo)` - _(no documentation)_
 - `public IReadOnlyList<MenuItemViewModel> Menus { get; }` - _(no documentation)_
 
 **Relationships**
@@ -50,6 +50,7 @@ The complete menu structure. The File actions, the Edit actions, the group, arra
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.FileMenuCommands`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.LayerMenuCommands`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.ObjectMenuCommands`
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.PathMenuCommands`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.RecentFiles`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
@@ -88,36 +89,6 @@ One entry of the menu bar. The header is translated and refreshes when the langu
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
-- Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
-
-## StatusBarViewModel (class)
-
-`internal partial sealed class StatusBarViewModel : LocalizedViewModel`
-
-Source: `src/PressToShape.App/ViewModels/Desktop/StatusBarViewModel.cs:13-74`
-
-Status bar: selection summary on the left, zoom controls on the right.
-
-**Members**
-
-- `public IRelayCommand ActivateHandToolCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Desktop.StatusBarViewModel.ActivateHandTool`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Desktop.StatusBarViewModel.ActivateHandTool.
-- `public StatusBarViewModel(EditorState state, ILocalizer localizer, Action fitToWindow)` - _(no documentation)_
-- `public string SelectionSummary { get; }` - The translated selection text: "Nothing selected", "1 selected" or "N selected".
-- `public string PathLengthText { get; }` - Path length of the selection, for example "Path length: 2,480.6 px". Empty until selections exist.
-- `public bool ShowPathLength { get; }` - _(no documentation)_
-- `public double ZoomPercent { get; }` - _(no documentation)_
-- `public string ZoomText { get; }` - The zoom as shown in the status bar, for example "100%" or "133.33%".
-- `public IReadOnlyList<ZoomPresetViewModel> ZoomPresets { get; }` - The zoom values offered in the drop-down. Each entry carries its own command.
-- `public IRelayCommand ZoomInCommand { get; }` - _(no documentation)_
-- `public IRelayCommand ZoomOutCommand { get; }` - _(no documentation)_
-- `public IRelayCommand FitToWindowCommand { get; }` - _(no documentation)_
-- `public IRelayCommand<double> SetZoomCommand { get; }` - _(no documentation)_
-- `public string FormatZoom(double percent, CultureInfo culture)` - Formats a zoom value with the decimal separator of the given culture, for example "80.75%" or "80,75%".
-
-**Relationships**
-
-- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
-- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
 
 ## ToolbarButtonViewModel (class)

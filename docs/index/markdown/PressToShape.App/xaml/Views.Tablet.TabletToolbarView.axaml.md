@@ -5,17 +5,17 @@ Class: `PressToShape.App.Views.Tablet.TabletToolbarView`.
 
 ## View model links
 
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:108)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:124)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:138)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:157)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:171)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:192)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:216)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:233)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:252)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:104)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:120)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:134)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:153)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:167)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:188)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:212)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:229)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:248)
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:72)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:745)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:746)
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:85)
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:21 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:21)
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): x:DataType (src/PressToShape.App/Views/Tablet/TabletToolbarView.axaml:1)
@@ -55,14 +55,7 @@ Class: `PressToShape.App.Views.Tablet.TabletToolbarView`.
 - line 87: controls:ToolToggleButton.AutomationProperties.Name = Binding `Name` -> `P:PressToShape.App.ViewModels.Tablet.PanelButtonViewModel.Name` (verified)
 - line 87: controls:ToolToggleButton.ToolTip.Tip = Binding `Name` -> `P:PressToShape.App.ViewModels.Tablet.PanelButtonViewModel.Name` (verified)
 - line 88: materialIcons:MaterialIcon.Kind = Binding `Icon` -> `P:PressToShape.App.ViewModels.Tablet.PanelButtonViewModel.Icon` (verified)
-- line 98: Button.Command = Binding `Zoom.ZoomOutCommand` -> `P:PressToShape.App.ViewModels.Editor.ZoomViewModel.ZoomOutCommand` (verified), command
-- line 102: ZoomButton.Content = Binding `Zoom.ZoomText` -> `P:PressToShape.App.ViewModels.Editor.ZoomViewModel.ZoomText` (verified)
-- line 106: MenuFlyout.ItemsSource = Binding `Zoom.ZoomPresets` -> `P:PressToShape.App.ViewModels.Editor.ZoomViewModel.ZoomPresets` (verified)
-- line 111: Setter.Header = Binding `Text` -> `P:PressToShape.App.ViewModels.Editor.ZoomPresetViewModel.Text` (verified)
-- line 112: Setter.Command = Binding `SelectCommand` -> `P:PressToShape.App.ViewModels.Editor.ZoomPresetViewModel.SelectCommand` (verified), command
-- line 118: Button.Command = Binding `Zoom.ZoomInCommand` -> `P:PressToShape.App.ViewModels.Editor.ZoomViewModel.ZoomInCommand` (verified), command
-- line 122: Button.Command = Binding `Zoom.FitToWindowCommand` -> `P:PressToShape.App.ViewModels.Editor.ZoomViewModel.FitToWindowCommand` (verified), command
-- line 134: MenuFlyout.ItemsSource = Binding `OverflowMenu.Items` -> `P:PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel.Items` (verified)
+- line 100: MenuFlyout.ItemsSource = Binding `OverflowMenu.Items` -> `P:PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel.Items` (verified)
 
 ## Resource references
 
@@ -85,18 +78,9 @@ Class: `PressToShape.App.Views.Tablet.TabletToolbarView`.
 - line 75: Border.Background = DynamicResource `BorderSubtleBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderSubtleBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderSubtleBrush@Light` (verified)
 - line 88: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
 - line 88: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
-- line 94: Border.Background = DynamicResource `BorderSubtleBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderSubtleBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderSubtleBrush@Light` (verified)
-- line 100: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
-- line 100: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
-- line 103: ZoomButton.FontSize = DynamicResource `UiFontSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/UiFontSize` (verified)
-- line 109: ControlTheme.BasedOn = StaticResource `{x:Type MenuItem}` -> unresolved: not defined in this solution (may come from the Avalonia theme)
-- line 120: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
-- line 120: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
-- line 124: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
-- line 124: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
-- line 131: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
-- line 131: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
-- line 135: MenuFlyout.ItemContainerTheme = StaticResource `TabletMenuItemTheme` -> `R:src/PressToShape.App/Views/Tablet/TabletToolbarView.axaml#/UserControl/UserControl.Resources[1]/TabletMenuItemTheme` (verified)
+- line 97: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 97: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 101: MenuFlyout.ItemContainerTheme = StaticResource `TabletMenuItemTheme` -> `R:src/PressToShape.App/Views/Tablet/TabletToolbarView.axaml#/UserControl/UserControl.Resources[1]/TabletMenuItemTheme` (verified)
 
 ## Resources defined
 

@@ -111,7 +111,7 @@ The one mapping between screen pixels and document units. Drawing and picking bo
 
 `internal static class CanvasScene`
 
-Source: `src/PressToShape.App/Workspace/CanvasScene.cs:12-124`
+Source: `src/PressToShape.App/Workspace/CanvasScene.cs:12-130`
 
 Turns a document into the shapes to draw on the canvas, so the drawing control needs no geometry rules.
 
@@ -219,7 +219,7 @@ Recognises a double-tap: two taps close in time and place. It holds no clock: th
 
 `internal static class EditablePath`
 
-Source: `src/PressToShape.App/Workspace/EditablePath.cs:9-77`
+Source: `src/PressToShape.App/Workspace/EditablePath.cs:9-53`
 
 What the node tools and the Pen edit: a path, or a rectangle or an ellipse seen as the path it would become.
 
@@ -314,7 +314,6 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.Tests.LayersViewModelLayerTests.Fixture`
 - Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
-- Injected into `PressToShape.App.ViewModels.Desktop.StatusBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.ToolbarViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.HistoryViewModel`
@@ -322,6 +321,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.ViewModels.Editor.LayersViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PaletteViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.StatusBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ZoomViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`
@@ -332,6 +332,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.Workspace.LayerEditor`
 - Injected into `PressToShape.App.Workspace.NodeEditor`
 - Injected into `PressToShape.App.Workspace.ObjectEditor`
+- Injected into `PressToShape.App.Workspace.PathEditor`
 - Injected into `PressToShape.App.Workspace.SelectionEditor`
 
 ## HandleType (enum)
@@ -358,7 +359,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-74`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-80`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -492,7 +493,7 @@ A value that is the same for every selected shape, or marked as mixed when the s
 
 `internal sealed class NodeEditor`
 
-Source: `src/PressToShape.App/Workspace/NodeEditor.cs:16-211`
+Source: `src/PressToShape.App/Workspace/NodeEditor.cs:16-223`
 
 The edits of the selected nodes that need no mouse: change the type, make a segment straight or curved, delete, nudge and set the position. The properties, the keys and the Delete button of the tablet use it, and so does nothing else, so the rules exist once. A rectangle or an ellipse with selected nodes becomes a path in the same history step as the edit. Hidden and locked shapes are left alone. Every call that changes something is one history step.
 
@@ -553,7 +554,7 @@ What a PressToShape.App.Workspace.NodeHit found.
 
 `internal static class NodeHits`
 
-Source: `src/PressToShape.App/Workspace/NodeHits.cs:10-142`
+Source: `src/PressToShape.App/Workspace/NodeHits.cs:10-148`
 
 Finds the node, handle or segment under a position, for Direct Select and the Node tool. Pure: it works on the positions on the screen.
 
@@ -679,17 +680,44 @@ What a PressToShape.App.Workspace.PathCommand does.
 - `public Cubic` - A cubic bezier curve to a point, with two handle points.
 - `public Close` - Ends a closed outline.
 
+## PathEditor (class)
+
+`internal sealed class PathEditor`
+
+Source: `src/PressToShape.App/Workspace/PathEditor.cs:19-208`
+
+The path operations on the selection: the boolean operations, Combine and Break Apart. Each success is one history step and the new shapes become the selection. A result that is empty or an operation that fails changes nothing and tells the user why. A command that cannot run has its Can... property false.
+
+**Members**
+
+- `public PathEditor(EditorState state, IMessageDialogs messages, ILocalizer localizer, Func<Guid>? idSource = null, int backgroundNodeLimit = 70000, Func<Func<PathOperationResult>, Task<PathOperationResult>>? background = null)` - _(no documentation)_
+- `public EventHandler? BusyChanged` - Raised when PressToShape.App.Workspace.PathEditor.IsBusy changes.
+- `public bool IsBusy { get; private set; }` - Whether a boolean operation is running off the UI thread. While it is, the path commands cannot run, and neither can undo, redo and the other edits that wait for a drag to end (the editor state counts it as a drag in progress).
+- `public bool CanBoolean { get; }` - Whether at least two rectangles, ellipses or closed paths that are shown and not locked are selected, and nothing else. False while busy or while a drag is going on.
+- `public bool CanCombine { get; }` - Whether at least two rectangles, ellipses or paths (open ones too) that are shown and not locked are selected, and nothing else.
+- `public bool CanBreakApart { get; }` - Whether a path with several sub-paths that is shown and not locked is selected.
+- `public Task BooleanAsync(PathOperationType type)` - Combines the selected shapes with the operation into one path, as one step.
+- `public Task CombineAsync()` - Joins the selected shapes into one compound path, as one step.
+- `public Task BreakApartAsync()` - Splits every selected compound path into one path for each sub-path, as one step.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Services.IMessageDialogs`
+- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Injected into `PressToShape.App.ViewModels.Editor.StatusBarViewModel`
+
 ## PathOutline (class)
 
 `internal static class PathOutline`
 
-Source: `src/PressToShape.App/Workspace/PathOutline.cs:7-57`
+Source: `src/PressToShape.App/Workspace/PathOutline.cs:7-63`
 
 Turns a PressToShape.App.Workspace.ScreenPath into drawing steps, so the canvas control only replays them and the rules are tested without a UI.
 
 **Members**
 
-- `public IReadOnlyList<PathCommand> Commands(ScreenPath path, double originX, double originY)` - The steps that draw the path, moved by the origin (the top left corner of the shape's box on the screen). A segment without handles is a line. A closed path ends with the segment from the last node back to the first (a line or a curve) and a PressToShape.App.Workspace.PathCommandType.Close. An open path has no close step.
+- `public IReadOnlyList<PathCommand> Commands(ScreenPath path, double originX, double originY)` - The steps that draw the path, moved by the origin (the top left corner of the shape's box on the screen). Every sub-path starts with a PressToShape.App.Workspace.PathCommandType.Move. A segment without handles is a line. A closed sub-path ends with the segment from the last node back to the first (a line or a curve) and a PressToShape.App.Workspace.PathCommandType.Close. An open sub-path has no close step.
 
 ## PenDrawing (class)
 
@@ -1004,16 +1032,15 @@ One node of the overlay of the node tools, in screen pixels of the canvas area.
 
 `internal sealed record ScreenPath : IEquatable<ScreenPath>`
 
-Source: `src/PressToShape.App/Workspace/ScreenPath.cs:14-14`
+Source: `src/PressToShape.App/Workspace/ScreenPath.cs:13-13`
 
 The outline of a path ready to draw: every node is already in screen pixels, relative to the top left corner of the PressToShape.App.Workspace.ScreenShape that holds it. A segment is a curve if the node it starts at has an out handle or the node it ends at has an in handle, otherwise a line.
 
 **Members**
 
-- `public ScreenPath(ImmutableArray<ScreenPathNode> Nodes, bool IsClosed, FillRule FillRule)` - The outline of a path ready to draw: every node is already in screen pixels, relative to the top left corner of the PressToShape.App.Workspace.ScreenShape that holds it. A segment is a curve if the node it starts at has an out handle or the node it ends at has an in handle, otherwise a line.
-- `public FillRule FillRule { get; init; }` - How the inside is decided where the path crosses itself.
-- `public bool IsClosed { get; init; }` - Whether the last node connects back to the first one.
-- `public ImmutableArray<ScreenPathNode> Nodes { get; init; }` - The nodes in drawing order, at least two.
+- `public ScreenPath(ImmutableArray<ScreenSubPath> SubPaths, FillRule FillRule)` - The outline of a path ready to draw: every node is already in screen pixels, relative to the top left corner of the PressToShape.App.Workspace.ScreenShape that holds it. A segment is a curve if the node it starts at has an out handle or the node it ends at has an in handle, otherwise a line.
+- `public FillRule FillRule { get; init; }` - How the inside is decided where the path crosses itself and across the sub-paths.
+- `public ImmutableArray<ScreenSubPath> SubPaths { get; init; }` - The sub-paths in drawing order, at least one. They are drawn as one geometry, so the fill rule makes a sub-path inside another one a hole.
 
 **Relationships**
 
@@ -1169,6 +1196,20 @@ The geometry a PressToShape.App.Workspace.ScreenShape is drawn with.
 - `public Rectangle` - _(no documentation)_
 - `public Ellipse` - _(no documentation)_
 - `public Path` - A path of lines and curves. The shape's PressToShape.App.Workspace.ScreenShape.Path holds its outline.
+
+## ScreenSubPath (record)
+
+`internal sealed record ScreenSubPath : IEquatable<ScreenSubPath>`
+
+Source: `src/PressToShape.App/Workspace/ScreenSubPath.cs:8-8`
+
+One sub-path of a PressToShape.App.Workspace.ScreenPath, with its nodes already in screen pixels.
+
+**Members**
+
+- `public ScreenSubPath(ImmutableArray<ScreenPathNode> Nodes, bool IsClosed)` - One sub-path of a PressToShape.App.Workspace.ScreenPath, with its nodes already in screen pixels.
+- `public bool IsClosed { get; init; }` - Whether the last node connects back to the first one.
+- `public ImmutableArray<ScreenPathNode> Nodes { get; init; }` - The nodes in drawing order, at least two.
 
 ## SelectionBox (record)
 

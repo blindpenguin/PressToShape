@@ -98,6 +98,20 @@ A point of a path in document units, in the frame of the path before its rotatio
 - `public bool HasIn { get; }` - _(no documentation)_
 - `public bool HasOut { get; }` - Whether the node has an out handle.
 
+## DocumentSubPath (record)
+
+`public sealed record DocumentSubPath : IEquatable<DocumentSubPath>`
+
+Source: `src/PressToShape.Core/Shapes/DocumentSubPath.cs:10-33`
+
+One run of connected nodes in document units, in the frame of the path before its rotation. Used to build and edit a PressToShape.Core.Shapes.PathShape, which stores its sub-paths as fractions of its box (PressToShape.Core.Shapes.SubPath). Immutable by convention: the list is not changed.
+
+**Members**
+
+- `public DocumentSubPath(IReadOnlyList<DocumentNode> nodes, bool isClosed = false)` - Creates a sub-path.
+- `public IReadOnlyList<DocumentNode> Nodes { get; }` - The nodes in drawing order, at least two.
+- `public bool IsClosed { get; }` - Whether the last node connects back to the first one.
+
 ## EllipseShape (record)
 
 `public sealed record EllipseShape : Shape, IEquatable<EllipseShape>`
@@ -202,19 +216,41 @@ The checks shared by PressToShape.Core.Shapes.PathNode and PressToShape.Core.Sha
 
 - `public void Check(double x, double y, double? inX, double? inY, double? outX, double? outY, NodeType type = Corner)` - Checks the anchor, the two optional handle points (each given with both numbers or with none) and the node type.
 
+## PathBuffer (class)
+
+`internal sealed class PathBuffer`
+
+Source: `src/PressToShape.Core/Shapes/PathBuffer.cs:11-74`
+
+The nodes of a PressToShape.Core.Shapes.PathShape in document coordinates as lists that an edit can change, one list per sub-path. A node is addressed by its flat index (see PressToShape.Core.Shapes.PathShape.Locate). PressToShape.Core.Shapes.PathBuffer.Build makes the edited path.
+
+**Members**
+
+- `public int SubPathCount { get; }` - The number of sub-paths.
+- `public PathBuffer From(PathShape path)` - A buffer with the nodes of the path.
+- `public List<DocumentNode> Nodes(int subPath)` - The nodes of a sub-path. The list can be changed.
+- `public bool IsClosed(int subPath)` - Whether a sub-path is closed.
+- `public DocumentNode this[int flatIndex] { get; set; }` - The node with the flat index.
+- `public PathShape? Build()` - The edited path, built from the current nodes with PressToShape.Core.Shapes.PathShape.Rebuilt. A sub-path with fewer than two nodes is dropped. Returns null if no sub-path is left.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.Core.Shapes.PathShape`
+
 ## PathEditing (class)
 
 `public static class PathEditing`
 
-Source: `src/PressToShape.Core/Shapes/PathEditing.cs:8-118`
+Source: `src/PressToShape.Core/Shapes/PathEditing.cs:8-147`
 
-Operations that change the nodes of a PressToShape.Core.Shapes.PathShape: add a point, delete a point, continue an open path. Every result is a new path, the input is never changed.
+Operations that change the nodes of a PressToShape.Core.Shapes.PathShape: add a point, delete a point, continue an open sub-path. Nodes and segments are addressed by their flat index across the sub-paths. Every result is a new path, the input is never changed.
 
 **Members**
 
-- `public PathShape InsertNode(PathShape path, int segmentIndex, double t)` - Adds a node on a segment without changing the curve. A segment is the stretch from node segmentIndex to the next node (the first node again for the last segment of a closed path).
-- `public PathShape? RemoveNode(PathShape path, int index)` - Removes a node. The neighbors connect, each keeping its own handle, so the curve changes a little. Returns null if fewer than two nodes would be left, in which case the caller should delete the shape.
-- `public IReadOnlyList<DocumentNode> Continue(PathShape path, bool atStart)` - The nodes of an open path in document coordinates, ordered so that the end to continue from is the last one: as they are for the end of the path, reversed for its start. Reversing swaps the in and out handle of every node.
+- `public PathShape InsertNode(PathShape path, int segmentIndex, double t)` - Adds a node on a segment without changing the curve. A segment is the stretch from node segmentIndex to the next node of its sub-path (the first node again for the last segment of a closed sub-path).
+- `public PathShape? RemoveNode(PathShape path, int index)` - Removes a node. The neighbors connect, each keeping its own handle, so the curve changes a little. A sub-path that is left with fewer than two nodes is removed. Returns null if no sub-path is left, in which case the caller should delete the shape.
+- `public IReadOnlyList<DocumentNode> Continue(PathShape path, int endIndex)` - The nodes of the open sub-path that has the node as one of its ends, in document coordinates, ordered so that the end to continue from is the last one: as they are for the last node of the sub-path, reversed for its first node. Reversing swaps the in and out handle of every node. Write the continued nodes back with PressToShape.Core.Shapes.PathEditing.ReplaceSubPath.
+- `public PathShape ReplaceSubPath(PathShape path, int subPathIndex, IReadOnlyList<DocumentNode> nodes, bool isClosed)` - The path with one sub-path replaced by the nodes, for example the result of continuing it. The other sub-paths keep their place on the screen (see PressToShape.Core.Shapes.PathShape.Rebuilt).
 
 ## PathNode (record)
 
@@ -241,9 +277,9 @@ A point of a PressToShape.Core.Shapes.PathShape as it is stored: the anchor and 
 
 `public partial static class PathNodeEditing`
 
-Source: `src/PressToShape.Core/Shapes/PathNodeEditing.Segments.cs:6-121`
+Source: `src/PressToShape.Core/Shapes/PathNodeEditing.Segments.cs:6-127`
 
-The rules for editing the nodes and handles of a PressToShape.Core.Shapes.PathShape. Every method takes the path and positions in the frame of the path before its rotation (see PressToShape.Core.Shapes.PathShape.ToLocal), changes nothing in place and returns a new path built with PressToShape.Core.Shapes.PathShape.Rebuilt, so every node that was not moved keeps its place on the screen, also for a rotated path.
+The rules for editing the nodes and handles of a PressToShape.Core.Shapes.PathShape. A node is addressed by its flat index across the sub-paths (see PressToShape.Core.Shapes.PathShape.Locate) and an edit changes only the sub-path that holds it. Every method takes the path and positions in the frame of the path before its rotation (see PressToShape.Core.Shapes.PathShape.ToLocal), changes nothing in place and returns a new path built with PressToShape.Core.Shapes.PathShape.Rebuilt, so every node that was not moved keeps its place on the screen, also for a rotated path.
 
 **Members**
 
@@ -253,36 +289,49 @@ The rules for editing the nodes and handles of a PressToShape.Core.Shapes.PathSh
 - `public PathShape MoveHandle(PathShape path, int index, NodeHandleSide side, double x, double y, bool breakLink)` - Moves one handle to the position. The other handle follows the type of the node: a corner leaves it alone, a smooth node keeps it on the line through the anchor on the opposite side with its own length, a symmetric node mirrors it. With breakLink only this handle moves and the node becomes a corner. A handle moved onto its anchor is removed and the node becomes a corner.
 - `public PathShape StraightenSegment(PathShape path, int segmentIndex)` - Makes a segment straight: the handles that belong to it are removed. A node that lost a handle becomes a corner. A segment that is already straight leaves the path as it is.
 - `public PathShape CurveSegment(PathShape path, int segmentIndex)` - Makes a straight segment a curve with handles one third of its length from each end, on the line itself, so the picture does not change. A segment that is already curved (it has a handle) leaves the path as it is, and so does a segment of no length. A node whose handles no longer match its type becomes a corner.
-- `public PathShape? RemoveNodes(PathShape path, IReadOnlyCollection<int> indices)` - Removes the nodes. The neighbors connect, each keeping its own handle, so the curve changes a little. Returns null if fewer than two nodes would remain, in which case the caller deletes the shape.
+- `public PathShape? RemoveNodes(PathShape path, IReadOnlyCollection<int> indices)` - Removes the nodes. The neighbors connect, each keeping its own handle, so the curve changes a little. A sub-path that would be left with fewer than two nodes is removed with them. Returns null if no sub-path would remain, in which case the caller deletes the shape.
 - `public (double X, double Y) NodePosition(PathShape path, int index)` - The position of the anchor of a node on the screen, with the rotation of the path applied.
 
 ## PathShape (record)
 
 `public partial sealed record PathShape : Shape, IEquatable<PathShape>`
 
-Source: `src/PressToShape.Core/Shapes/PathShape.Geometry.cs:7-160`
+Source: `src/PressToShape.Core/Shapes/PathShape.Geometry.cs:8-181`
 
-A path of line and cubic bezier segments, open or closed. The box (PressToShape.Core.Shapes.Shape.X, PressToShape.Core.Shapes.Shape.Y, PressToShape.Core.Shapes.Shape.Width, PressToShape.Core.Shapes.Shape.Height) is the tight bounds of the curve, and the nodes are stored as fractions of that box (see PressToShape.Core.Shapes.PathNode), so changing the box with with moves, resizes and (with the rotation) turns the whole path, like any other shape. Build one from document coordinates with PressToShape.Core.Shapes.PathShape.Create. Immutable: change it with with.
+A path of line and cubic bezier segments made of one or more sub-paths, each open or closed. The box (PressToShape.Core.Shapes.Shape.X, PressToShape.Core.Shapes.Shape.Y, PressToShape.Core.Shapes.Shape.Width, PressToShape.Core.Shapes.Shape.Height) is the tight bounds of all the curves, and the nodes are stored as fractions of that box (see PressToShape.Core.Shapes.PathNode), so changing the box with with moves, resizes and (with the rotation) turns the whole path, like any other shape. Build one from document coordinates with PressToShape.Core.Shapes.PathShape.Create. A node or a segment is addressed by one flat index that counts across the sub-paths, the first sub-path first (see PressToShape.Core.Shapes.PathShape.Locate). Immutable: change it with with.
 
 **Members**
 
-- `public ImmutableArray<PathNode> Nodes { get; init; }` - The nodes in drawing order, at least two. The segment from the last node back to the first exists only if PressToShape.Core.Shapes.PathShape.IsClosed.
-- `public PathShape Rebuilt(IReadOnlyList<DocumentNode> nodes, bool isClosed, FillRule fillRule)` - A path with the given nodes (document coordinates, in the frame of this path before the rotation) that keeps the id, the appearance, the name, the flags and the rotation. The box is recomputed from the nodes. Because the rotation turns the shape around the center of its box and the center moves when the box changes, the path is shifted so that every node stays at the same place on the screen as if the old box had been kept.
-- `public bool IsClosed { get; init; }` - Whether the last node connects back to the first one.
-- `public FillRule FillRule { get; init; }` - How the inside is decided where the path crosses itself. The default is PressToShape.Core.Shapes.FillRule.NonZero.
-- `public PathShape Create(IReadOnlyList<DocumentNode> nodes, bool isClosed = false, FillRule fillRule = NonZero)` - Creates a path from nodes in document coordinates, in the frame before any rotation. The box becomes the tight bounds of the curve (the end points and the extremes of the curved segments, not the handle points). A handle point that no segment uses, such as the in handle of the first node of an open path, does not count. If one side of the box has size 0, every node stores 0 on that side.
+- `public int MaxSubPaths` - The most sub-paths one path may have.
+- `public PathShape Rebuilt(IReadOnlyList<DocumentNode> nodes, bool isClosed, FillRule fillRule)` - A path with one sub-path of the given nodes (document coordinates, in the frame of this path before the rotation) that keeps the id, the appearance, the name, the flags and the rotation. See PressToShape.Core.Shapes.PathShape.Rebuilt.
+- `public ImmutableArray<SubPath> SubPaths { get; init; }` - The sub-paths in drawing order, from 1 to PressToShape.Core.Shapes.PathShape.MaxSubPaths.
+- `public PathShape Rebuilt(IReadOnlyList<DocumentSubPath> subPaths, FillRule fillRule)` - A path with the given sub-paths (document coordinates, in the frame of this path before the rotation) that keeps the id, the appearance, the name, the flags and the rotation. The box is recomputed from the nodes. Because the rotation turns the shape around the center of its box and the center moves when the box changes, the path is shifted so that every node stays at the same place on the screen as if the old box had been kept.
+- `public FillRule FillRule { get; init; }` - How the inside is decided where the path crosses itself and across the sub-paths. The default is PressToShape.Core.Shapes.FillRule.NonZero.
+- `public int NodeCount { get; }` - The number of nodes in all sub-paths together.
+- `public int SegmentCount { get; }` - The number of segments in all sub-paths together.
+- `public PathShape Create(IReadOnlyList<DocumentNode> nodes, bool isClosed = false, FillRule fillRule = NonZero)` - Creates a path from one sub-path of nodes in document coordinates, in the frame before any rotation. See PressToShape.Core.Shapes.PathShape.Create.
 - `public (double X, double Y) ToLocal(double x, double y)` - Turns a position on the screen into the frame of the path before its rotation (the frame PressToShape.Core.Shapes.PathShape.Create and PressToShape.Core.Shapes.PathShape.ToDocumentNodes use): the inverse of the turn around the center of the box.
 - `public (double X, double Y) FromLocal(double x, double y)` - Turns a position in the frame of the path before its rotation into the position on the screen: the turn around the center of the box.
+- `public PathShape Create(IReadOnlyList<DocumentSubPath> subPaths, FillRule fillRule = NonZero)` - Creates a path from sub-paths in document coordinates, in the frame before any rotation. The box becomes the tight bounds of the curves (the end points and the extremes of the curved segments, not the handle points). A handle point that no segment uses, such as the in handle of the first node of an open sub-path, does not count. If one side of the box has size 0, every node stores 0 on that side.
 - `public (double Dx, double Dy) ToLocalDelta(double dx, double dy)` - Turns a distance on the screen into a distance in the frame of the path before its rotation.
-- `protected bool ContainsLocal(double x, double y)` - Whether the point (before any rotation) hits the path. The inside counts for a closed path and for an open path with a fill, which is filled as if it were closed. A path that is open or has a stroke is also hit near its outline: within half the stroke width, but at least a few document units. The closing line of an open path is not part of the outline.
-- `public IReadOnlyList<DocumentNode> ToDocumentNodes()` - The nodes in document coordinates, in the frame before the rotation. The inverse of PressToShape.Core.Shapes.PathShape.Create for the current box.
-- `public IReadOnlyList<Cubic> Segments()` - The segments in document coordinates, in the frame before the rotation. A line is a cubic with its handles on its end points.
+- `protected bool ContainsLocal(double x, double y)` - Whether the point (before any rotation) hits the path. The inside counts for the closed sub-paths, and for all sub-paths if the path has a fill (an open sub-path with a fill is filled as if it were closed). The sub-paths are counted together with the fill rule, so a sub-path inside another one is a hole. An open sub-path, or any sub-path of a path with a stroke, is also hit near its outline: within half the stroke width, but at least a few document units. The closing line of an open sub-path is not part of the outline.
+- `public IReadOnlyList<DocumentSubPath> ToDocumentSubPaths()` - The sub-paths in document coordinates, in the frame before the rotation. The inverse of PressToShape.Core.Shapes.PathShape.Create for the current box.
+- `public IReadOnlyList<DocumentNode> ToDocumentNodes()` - The nodes of all sub-paths in document coordinates, in the frame before the rotation, as one list in flat index order (see PressToShape.Core.Shapes.PathShape.Locate).
+- `public IReadOnlyList<Cubic> Segments()` - The segments of all sub-paths in document coordinates, in the frame before the rotation, in flat segment index order. A line is a cubic with its handles on its end points.
+- `public (int SubPath, int Node) Locate(int flatIndex)` - Turns a flat node index into the sub-path that holds the node and the index of the node inside it.
+- `public PathNode NodeAt(int flatIndex)` - The node with the flat index, as stored (fractions of the box).
+- `public int FirstNodeIndex(int subPathIndex)` - The flat index of the first node of a sub-path.
+- `public (int SubPath, int Segment) LocateSegment(int flatIndex)` - Turns a flat segment index into the sub-path that holds the segment and the index of the segment inside it (the segment starts at the node with that index).
+- `public int FirstSegmentIndex(int subPathIndex)` - The flat index of the first segment of a sub-path.
+- `public PathShape WithRotationApplied()` - The same shape (same id, appearance, name and flags) with its rotation applied to every node and handle point, so it has no rotation itself and its positions are the ones on the screen. For hit tests, drawing and the boolean operations, not for storing as the edited shape.
+- `internal List<Cubic> BuildSegments(IReadOnlyList<DocumentNode> nodes, bool isClosed)` - _(no documentation)_
 
 **Relationships**
 
 - Inherits `PressToShape.Core.Shapes.Shape`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
 - Injected into `PressToShape.App.Workspace.NodeTarget`
+- Injected into `PressToShape.Core.Shapes.PathBuffer`
 
 ## RectangleShape (record)
 
@@ -387,3 +436,18 @@ Turns shapes into paths without changing how they look, so they can be edited no
 **Members**
 
 - `public PathShape? ToPath(Shape shape)` - A path that looks like the shape and keeps its id, name, flags, box, rotation and appearance. A rectangle becomes four corner nodes (closed), plus one more node for each rounded corner, which is two nodes joined by a curve. An ellipse becomes four symmetric nodes at the top, right, bottom and left with handles of 0.2761 of the width or the height, the usual circle approximation. Returns null for a path, a group and every other type, which need no conversion.
+
+## SubPath (record)
+
+`public sealed record SubPath : IEquatable<SubPath>`
+
+Source: `src/PressToShape.Core/Shapes/SubPath.cs:10-35`
+
+One run of connected nodes of a PressToShape.Core.Shapes.PathShape, open or closed. The nodes are stored the way the path stores them, as fractions of the box of the whole path (see PressToShape.Core.Shapes.PathNode). Immutable.
+
+**Members**
+
+- `public SubPath(ImmutableArray<PathNode> nodes, bool isClosed = false)` - Creates a sub-path.
+- `public ImmutableArray<PathNode> Nodes { get; }` - The nodes in drawing order, at least two.
+- `public bool IsClosed { get; }` - Whether the last node connects back to the first one.
+- `public int SegmentCount { get; }` - The number of segments: the nodes minus 1 when open, the nodes when closed.

@@ -2,6 +2,21 @@
 
 Project: PressToShape.Benchmarks
 
+## PathOperationBenchmarks (class)
+
+`public class PathOperationBenchmarks`
+
+Source: `tests/PressToShape.Benchmarks/PathOperationBenchmarks.cs:15-66`
+
+How long a boolean operation takes for two overlapping outlines with the same number of curved nodes each. The 200 node case is the budget of the requirements (under 200 ms); the larger sizes show where the work should leave the UI thread (PressToShape.Core.PathOperations.BooleanEngine.BackgroundNodeLimit). Total nodes are twice the parameter.
+
+**Members**
+
+- `public int NodesPerOperand { get; set; }` - _(no documentation)_
+- `public void Setup()` - _(no documentation)_
+- `public int Union()` - _(no documentation)_
+- `public int Difference()` - _(no documentation)_
+
 ## Program (class)
 
 `internal static class Program`

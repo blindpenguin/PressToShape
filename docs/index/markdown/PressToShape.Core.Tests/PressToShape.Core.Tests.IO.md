@@ -2,6 +2,26 @@
 
 Project: PressToShape.Core.Tests
 
+## CompoundPathFileTests (class)
+
+`public class CompoundPathFileTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/CompoundPathFileTests.cs:11-162`
+
+_(no documentation)_
+
+**Members**
+
+- `public void WriteThenRead_CompoundPath_KeepsEverySubPath()` - _(no documentation)_
+- `public void Write_CompoundPath_UsesSubPathsAndNoNodesOfItsOwn()` - _(no documentation)_
+- `public void Write_PathWithOneSubPath_WritesNodesAsBefore()` - _(no documentation)_
+- `public void Read_FileWithoutSubPaths_StillLoadsAsOneSubPath()` - _(no documentation)_
+- `public void Read_SubPaths_Succeeds()` - _(no documentation)_
+- `public void Read_InvalidSubPaths_FailsWithInvalidValue(string body)` - _(no documentation)_
+- `public void Read_SubPathWithMissingParts_FailsWithNotProjectFile(string body)` - _(no documentation)_
+- `public void Read_MoreNodesInAllSubPathsThanTheLimit_FailsWithInvalidValue()` - _(no documentation)_
+- `public void ToUtf8_CompoundPath_WritesOneMRunPerSubPathInOnePathElement()` - _(no documentation)_
+
 ## LayerRoundTripTests (class)
 
 `public class LayerRoundTripTests`

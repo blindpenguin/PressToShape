@@ -27,13 +27,13 @@ Shows message dialogs inside the layout, for a platform without windows. The lay
 
 `internal sealed class OverflowMenuViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/OverflowMenuViewModel.cs:17-65`
+Source: `src/PressToShape.App/ViewModels/Tablet/OverflowMenuViewModel.cs:17-76`
 
-The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, lock and hide, and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
+The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, the path operations, lock and hide, and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
 
 **Members**
 
-- `public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects)` - _(no documentation)_
+- `public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, PathMenuCommands paths)` - _(no documentation)_
 - `public IReadOnlyList<MenuItemViewModel> Items { get; }` - The items in the order they are shown, with separators between the groups.
 
 **Relationships**
@@ -42,6 +42,7 @@ The "..." menu of the tablet toolbar: the file actions, the edit actions, group,
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.EditMenuCommands`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.FileMenuCommands`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.ObjectMenuCommands`
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.PathMenuCommands`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`
 
@@ -127,7 +128,7 @@ The panel of the tablet layout, which floats over the canvas and shows one of th
 
 `internal sealed class TabletShellViewModel : EditorShellViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:14-98`
+Source: `src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:14-102`
 
 Root of the tablet layout. Adds the compact toolbar with its overflow menu, the tool column, the floating panel and the in-layout message dialog to what every shell has (see PressToShape.App.ViewModels.Editor.EditorShellViewModel). The Back button goes through PressToShape.App.ViewModels.Tablet.TabletShellViewModel.RequestBackAsync.
 
@@ -135,6 +136,7 @@ Root of the tablet layout. Adds the compact toolbar with its overflow menu, the 
 
 - `public TabletShellViewModel(IAppShutdown shutdown, ILocalizer localizer, FileServices services, MessageDialogHost dialogs)` - _(no documentation)_
 - `public TabletToolbarViewModel Toolbar { get; }` - _(no documentation)_
+- `public StatusBarViewModel StatusBar { get; }` - The status bar under the canvas: selection summary, the busy text and the zoom controls.
 - `public OverflowMenuViewModel OverflowMenu { get; }` - The "..." menu. It is also reachable as PressToShape.App.ViewModels.Tablet.TabletShellViewModel.Toolbar.OverflowMenu.
 - `public TabletPanelViewModel Panel { get; }` - _(no documentation)_
 - `public TabletToolColumnViewModel Column { get; }` - The tool column with its tool groups and the swatches.
@@ -178,27 +180,25 @@ The tool column of the tablet layout: one icon per tool group (see PressToShape.
 
 `internal sealed class TabletToolbarViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/TabletToolbarViewModel.cs:19-82`
+Source: `src/PressToShape.App/ViewModels/Tablet/TabletToolbarViewModel.cs:19-78`
 
 The compact toolbar of the tablet layout: the name of the document (with a star while it has unsaved changes), undo and redo, Duplicate and Delete, the icons that open the panel, the zoom, and the overflow menu. Everything else of the desktop toolbar and menu bar is in the overflow menu.
 
 **Members**
 
-- `public TabletToolbarViewModel(ILocalizer localizer, EditorShellViewModel shell, ICommand undo, ICommand redo, ZoomViewModel zoom, OverflowMenuViewModel overflowMenu, TabletPanelViewModel panel)` - _(no documentation)_
+- `public TabletToolbarViewModel(ILocalizer localizer, EditorShellViewModel shell, ICommand undo, ICommand redo, OverflowMenuViewModel overflowMenu, TabletPanelViewModel panel)` - _(no documentation)_
 - `public string DocumentTitle { get; }` - The document name, with "* " in front while the document has unsaved changes.
 - `public ToolbarButtonViewModel UndoButton { get; }` - _(no documentation)_
 - `public ToolbarButtonViewModel RedoButton { get; }` - _(no documentation)_
 - `public ToolbarButtonViewModel DuplicateButton { get; }` - Duplicates the selection. Enabled only while something is selected.
 - `public ToolbarButtonViewModel DeleteButton { get; }` - Deletes the selection (one undo step). Enabled only while something is selected.
 - `public IReadOnlyList<PanelButtonViewModel> PanelButtons { get; }` - The icons that open the panel: Properties, Layers, History.
-- `public ZoomViewModel Zoom { get; }` - _(no documentation)_
 - `public OverflowMenuViewModel OverflowMenu { get; }` - _(no documentation)_
 
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
-- Depends on (constructor) `PressToShape.App.ViewModels.Editor.ZoomViewModel`
 - Depends on (constructor) `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
 - Depends on (constructor) `PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`

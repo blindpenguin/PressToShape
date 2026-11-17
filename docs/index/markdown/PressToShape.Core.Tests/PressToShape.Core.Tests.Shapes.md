@@ -37,6 +37,66 @@ _(no documentation)_
 - `public void Equals_SameChannels_IsEqual()` - _(no documentation)_
 - `public void Equals_DifferentAlpha_IsNotEqual()` - _(no documentation)_
 
+## CompoundPathEditingTests (class)
+
+`public class CompoundPathEditingTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/CompoundPathEditingTests.cs:8-227`
+
+_(no documentation)_
+
+**Members**
+
+- `public void MoveNodes_NodeOfSecondSubPath_MovesOnlyThatNode()` - _(no documentation)_
+- `public void MoveNodes_NodesOfTwoSubPaths_MovesBoth()` - _(no documentation)_
+- `public void MoveNodes_RotatedCompoundPath_KeepsTheOthersOnTheScreen()` - _(no documentation)_
+- `public void MoveNodes_IndexOutOfRange_Throws()` - _(no documentation)_
+- `public void InsertNode_OnSegmentOfSecondSubPath_AddsThereAndLeavesTheFirstAlone()` - _(no documentation)_
+- `public void InsertNode_OnClosingSegmentOfFirstSubPath_AppendsToIt()` - _(no documentation)_
+- `public void InsertNode_SegmentOutOfRange_Throws()` - _(no documentation)_
+- `public void BendSegment_SegmentOfSecondSubPath_BendsThatSegment()` - _(no documentation)_
+- `public void StraightenAndCurveSegment_SecondSubPath_Work()` - _(no documentation)_
+- `public void SetNodeType_NodeOfSecondSubPath_AlignsUsingItsOwnNeighbors()` - _(no documentation)_
+- `public void RemoveNode_NodeOfFirstSubPath_KeepsTheSecond()` - _(no documentation)_
+- `public void RemoveNode_LeavesASubPathWithOneNode_DropsThatSubPath()` - _(no documentation)_
+- `public void RemoveNodes_OneNodeOfTwoNodeSubPaths_DropsThatSubPathAndNullWhenNoneLeft()` - _(no documentation)_
+- `public void RemoveNodes_SomeNodesOfTwoSubPaths_RemovesEach()` - _(no documentation)_
+- `public void Continue_LastNodeOfSecondSubPath_ReturnsItsNodesAsTheyAre()` - _(no documentation)_
+- `public void Continue_FirstNodeOfSecondSubPath_ReturnsThemReversed()` - _(no documentation)_
+- `public void Continue_NotAnEndOfAnOpenSubPath_Throws(int flatIndex)` - _(no documentation)_
+- `public void ReplaceSubPath_ContinuedSecondSubPath_LeavesTheFirstOnScreen()` - _(no documentation)_
+
+## CompoundPathShapeTests (class)
+
+`public class CompoundPathShapeTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/CompoundPathShapeTests.cs:10-251`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Create_TwoSubPaths_BoxIsTheBoundsOfBoth()` - _(no documentation)_
+- `public void Create_TwoSubPaths_StoresFractionsOfTheCommonBox()` - _(no documentation)_
+- `public void Create_EachSubPathKeepsItsOwnClosedFlag()` - _(no documentation)_
+- `public void Create_NoSubPaths_Throws()` - _(no documentation)_
+- `public void SubPaths_TooMany_Throws()` - _(no documentation)_
+- `public void SubPath_OneNode_Throws()` - _(no documentation)_
+- `public void ToDocumentSubPaths_AfterCreate_GivesTheSameNodes()` - _(no documentation)_
+- `public void NodeCountAndSegmentCount_CountAllSubPaths()` - _(no documentation)_
+- `public void Locate_FlatIndex_GivesSubPathAndNode(int flat, int subPath, int node)` - _(no documentation)_
+- `public void Locate_OutOfRange_Throws()` - _(no documentation)_
+- `public void LocateSegment_FlatIndex_GivesSubPathAndSegment(int flat, int subPath, int segment)` - _(no documentation)_
+- `public void FirstNodeIndexAndFirstSegmentIndex_OfSecondSubPath_SkipTheFirst()` - _(no documentation)_
+- `public void Contains_RingWithEvenOdd_HoleIsNotHit()` - _(no documentation)_
+- `public void Contains_TwoSquaresWithNonZeroSameWinding_InnerIsHit()` - _(no documentation)_
+- `public void Contains_OpenSubPathOfFilledPath_IsFilledLikeClosed()` - _(no documentation)_
+- `public void Contains_ClosedWithoutFillAndStroke_InsideIsHitButOutlineSubPathNeedsAStroke()` - _(no documentation)_
+- `public void Rebuilt_RotatedCompoundPath_KeepsUnmovedNodesOnTheScreen()` - _(no documentation)_
+- `public void Rebuilt_OneSubPathOverload_KeepsTheOtherData()` - _(no documentation)_
+- `public void WithRotationApplied_NoRotation_ReturnsTheSameInstance()` - _(no documentation)_
+- `public void WithRotationApplied_Rotated_KeepsIdAppearanceAndPlacesNodesOnScreen()` - _(no documentation)_
+
 ## CornerRadiiTests (class)
 
 `public class CornerRadiiTests`
@@ -343,7 +403,7 @@ _(no documentation)_
 - `public void Create_CurveThatOvershootsItsAnchors_BoxReachesTheCurveNotTheHandles()` - _(no documentation)_
 - `public void Create_ClosedPathWithACurvedClosingSegment_BoxIncludesTheClosingCurve()` - _(no documentation)_
 - `public void Create_FewerThanTwoNodes_Throws()` - _(no documentation)_
-- `public void Nodes_FewerThanTwoOrDefault_Throws()` - _(no documentation)_
+- `public void SubPaths_FewerThanTwoNodesOrDefault_Throws()` - _(no documentation)_
 - `public void Create_HorizontalLine_HasZeroHeightAndKeepsItsPosition()` - _(no documentation)_
 - `public void Create_VerticalLine_HasZeroWidthAndKeepsItsPosition()` - _(no documentation)_
 - `public void Create_TwoEqualPoints_HasZeroSizeWithoutNaN()` - _(no documentation)_

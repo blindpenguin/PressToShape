@@ -20,7 +20,6 @@ Base class for view models that show translated text. When the language changes 
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Inherited by `PressToShape.App.ViewModels.Desktop.MenuItemViewModel`
-- Inherited by `PressToShape.App.ViewModels.Desktop.StatusBarViewModel`
 - Inherited by `PressToShape.App.ViewModels.Desktop.ToolbarButtonViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.HistoryItemViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.LayersViewModel`
@@ -28,6 +27,7 @@ Base class for view models that show translated text. When the language changes 
 - Inherited by `PressToShape.App.ViewModels.Editor.PlaceholderPanelViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.RingMenuViewModel`
+- Inherited by `PressToShape.App.ViewModels.Editor.StatusBarViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.ToolItemViewModel`
 - Inherited by `PressToShape.App.ViewModels.Editor.ZoomViewModel`
 - Inherited by `PressToShape.App.ViewModels.Tablet.PanelButtonViewModel`

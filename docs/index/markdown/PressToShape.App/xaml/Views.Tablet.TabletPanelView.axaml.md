@@ -5,7 +5,7 @@ Class: `PressToShape.App.Views.Tablet.TabletPanelView`.
 
 ## View model links
 
-- `T:PressToShape.App.ViewModels.Tablet.TabletPanelViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:271)
+- `T:PressToShape.App.ViewModels.Tablet.TabletPanelViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:267)
 - `T:PressToShape.App.ViewModels.Tablet.TabletPanelViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:29 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:29)
 - `T:PressToShape.App.ViewModels.Tablet.TabletPanelViewModel` (verified): x:DataType (src/PressToShape.App/Views/Tablet/TabletPanelView.axaml:1)
 

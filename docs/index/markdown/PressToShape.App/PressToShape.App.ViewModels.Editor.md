@@ -132,22 +132,27 @@ What the clipboard, delete and selection items of the Edit menu do. Undo and Red
 
 `internal abstract partial class EditorShellViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:17-318`
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:18-367`
 
 What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
 
 **Members**
 
+- `public IAsyncRelayCommand BreakApartPathCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.BreakApartPath`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.BreakApartPath.
 - `public IRelayCommand BringForwardCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringForward`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringForward.
 - `public IRelayCommand BringToFrontCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringToFront`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringToFront.
+- `public IAsyncRelayCommand CombinePathsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.CombinePaths`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.CombinePaths.
 - `public IRelayCommand CopyCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy.
 - `public IRelayCommand CutCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut.
 - `public IRelayCommand DeleteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete.
 - `public IRelayCommand DeselectCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Deselect`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Deselect.
+- `public IAsyncRelayCommand DifferenceShapesCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.DifferenceShapes`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.DifferenceShapes.
 - `public IRelayCommand DuplicateCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Duplicate`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Duplicate.
+- `public IAsyncRelayCommand ExcludeShapesCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ExcludeShapes`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ExcludeShapes.
 - `public IAsyncRelayCommand ExportSvgCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ExportSvgAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ExportSvgAsync.
 - `public IRelayCommand GroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Group`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Group.
 - `public IRelayCommand HideCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Hide`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Hide.
+- `public IAsyncRelayCommand IntersectShapesCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.IntersectShapes`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.IntersectShapes.
 - `public IRelayCommand LockCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Lock`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Lock.
 - `public IAsyncRelayCommand NewCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.NewAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.NewAsync.
 - `public IAsyncRelayCommand OpenCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenAsync.
@@ -162,13 +167,16 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public IRelayCommand ShowAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ShowAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ShowAll.
 - `public IRelayCommand UndoCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Undo`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Undo.
 - `public IRelayCommand UngroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Ungroup`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Ungroup.
+- `public IAsyncRelayCommand UnionShapesCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnionShapes`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnionShapes.
 - `public IRelayCommand UnlockAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll.
 - `protected EditorShellViewModel(ILocalizer localizer, FileServices services)` - _(no documentation)_
 - `public EditorState State { get; }` - _(no documentation)_
 - `public ToolboxViewModel Toolbox { get; }` - _(no documentation)_
 - `public SelectionEditor Editor { get; }` - The selection edits (copy, paste, nudge, property changes). One instance, shared by the canvas, the inspector and the menus.
 - `public ObjectEditor Objects { get; }` - The edits of the structure: group, arrange, lock, hide, rename. One instance, shared by the menus and the object list.
+- `public PathEditor PathEditing { get; }` - The path operations (boolean operations, Combine, Break Apart) on the selection. One instance, shared by the menus.
 - `public LayerEditor LayerEditing { get; }` - The editor for the layers. The Layers panel and the Layer menu share it.
+- `public PathMenuCommands PathCommands { get; }` - The commands of the boolean, Combine and Break Apart items of the Path menu.
 - `public LayerMenuCommands LayerCommands { get; }` - The commands of the Layer menu.
 - `public CanvasAreaViewModel Canvas { get; }` - _(no documentation)_
 - `public InspectorViewModel Inspector { get; }` - _(no documentation)_
@@ -499,6 +507,29 @@ The swatches saved with the document, shown in the Appearance section. Adding an
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 
+## PathMenuCommands (record)
+
+`internal sealed record PathMenuCommands : IEquatable<PathMenuCommands>`
+
+Source: `src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:6-12`
+
+What the boolean, Combine and Break Apart items of the Path menu do. A command is disabled while it cannot run.
+
+**Members**
+
+- `public PathMenuCommands(ICommand Union, ICommand Difference, ICommand Intersection, ICommand Exclusion, ICommand Combine, ICommand BreakApart)` - What the boolean, Combine and Break Apart items of the Path menu do. A command is disabled while it cannot run.
+- `public ICommand Union { get; init; }` - _(no documentation)_
+- `public ICommand Difference { get; init; }` - _(no documentation)_
+- `public ICommand Intersection { get; init; }` - _(no documentation)_
+- `public ICommand Exclusion { get; init; }` - _(no documentation)_
+- `public ICommand Combine { get; init; }` - _(no documentation)_
+- `public ICommand BreakApart { get; init; }` - _(no documentation)_
+
+**Relationships**
+
+- Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
+- Injected into `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
+
 ## PlaceholderPanelViewModel (class)
 
 `internal sealed class PlaceholderPanelViewModel : LocalizedViewModel`
@@ -543,10 +574,10 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public bool HasPathSelected { get; }` - Whether the selection has at least one path (also inside a selected group).
 - `public bool IsNodeExpanded { get; set; }` - _(no documentation)_
 - `public NumberFieldViewModel LinkedRadius { get; }` - The radius of all four corners. Empty when the four differ. An entry sets all four radii.
-- `public bool IsPathClosed { get; }` - Whether every selected path is closed.
+- `public bool IsPathClosed { get; }` - Whether every sub-path of every selected path is closed.
 - `public NumberFieldViewModel NodeX { get; }` - The X of the only selected node on the screen, in document units. Disabled without exactly one selected node.
 - `public NumberFieldViewModel TopLeftRadius { get; }` - The radius of the top left corner.
-- `public bool IsPathOpen { get; }` - Whether every selected path is open.
+- `public bool IsPathOpen { get; }` - Whether every sub-path of every selected path is open.
 - `public NumberFieldViewModel NodeY { get; }` - The Y of the only selected node on the screen, in document units. Disabled without exactly one selected node.
 - `public NumberFieldViewModel TopRightRadius { get; }` - The radius of the top right corner.
 - `public NumberFieldViewModel BottomRightRadius { get; }` - The radius of the bottom right corner.
@@ -682,6 +713,39 @@ One wedge of the ring menu. Slots are made again for every level that is shown, 
 - Depends on (constructor) `PressToShape.App.Workspace.RingSlotDefinition`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 
+## StatusBarViewModel (class)
+
+`internal partial sealed class StatusBarViewModel : LocalizedViewModel`
+
+Source: `src/PressToShape.App/ViewModels/Editor/StatusBarViewModel.cs:12-94`
+
+Status bar of both layouts: selection summary and the busy text on the left, zoom controls on the right.
+
+**Members**
+
+- `public IRelayCommand ActivateHandToolCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ActivateHandTool`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.StatusBarViewModel.ActivateHandTool.
+- `public StatusBarViewModel(EditorState state, ILocalizer localizer, Action fitToWindow, PathEditor? pathEditing = null)` - _(no documentation)_
+- `public bool IsBusy { get; }` - Whether a path operation is running in the background.
+- `public string BusyText { get; }` - The translated text shown while PressToShape.App.ViewModels.Editor.StatusBarViewModel.IsBusy.
+- `public string SelectionSummary { get; }` - The translated selection text: "Nothing selected", "1 selected" or "N selected".
+- `public string PathLengthText { get; }` - Path length of the selection, for example "Path length: 2,480.6 px". Empty until selections exist.
+- `public bool ShowPathLength { get; }` - _(no documentation)_
+- `public double ZoomPercent { get; }` - _(no documentation)_
+- `public string ZoomText { get; }` - The zoom as shown in the status bar, for example "100%" or "133.33%".
+- `public IReadOnlyList<ZoomPresetViewModel> ZoomPresets { get; }` - The zoom values offered in the drop-down. Each entry carries its own command.
+- `public IRelayCommand ZoomInCommand { get; }` - _(no documentation)_
+- `public IRelayCommand ZoomOutCommand { get; }` - _(no documentation)_
+- `public IRelayCommand FitToWindowCommand { get; }` - _(no documentation)_
+- `public IRelayCommand<double> SetZoomCommand { get; }` - _(no documentation)_
+- `public string FormatZoom(double percent, CultureInfo culture)` - Formats a zoom value with the decimal separator of the given culture, for example "80.75%" or "80,75%".
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Depends on (constructor) `PressToShape.App.Workspace.PathEditor`
+- Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+
 ## ToolItemViewModel (class)
 
 `internal partial sealed class ToolItemViewModel : LocalizedViewModel`
@@ -772,4 +836,3 @@ The zoom as the user sees it: the text, the preset list and the commands. Shared
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
-- Injected into `PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`

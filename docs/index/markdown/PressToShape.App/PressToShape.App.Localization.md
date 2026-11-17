@@ -92,7 +92,6 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuItemViewModel`
-- Injected into `PressToShape.App.ViewModels.Desktop.StatusBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.ToolbarButtonViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.ToolbarViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
@@ -105,6 +104,7 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.RingMenuViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.RingSlotViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.StatusBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ZoomViewModel`
@@ -119,6 +119,7 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.ViewModels.Tablet.ToolGroupViewModel`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
 - Injected into `PressToShape.App.Workspace.LayerEditor`
+- Injected into `PressToShape.App.Workspace.PathEditor`
 
 ## ITranslationCatalog (interface)
 
