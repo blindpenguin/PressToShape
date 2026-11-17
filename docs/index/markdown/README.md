@@ -20,7 +20,7 @@ Project file: `src/PressToShape.Android/PressToShape.Android.csproj`. 8 symbols,
 
 ## PressToShape.App
 
-Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2813 symbols, 10156 relationships.
+Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2827 symbols, 10213 relationships.
 
 - [CommunityToolkit.Mvvm.ComponentModel.__Internals](PressToShape.App/CommunityToolkit.Mvvm.ComponentModel.__Internals.md) (2 types)
 - [PressToShape.App](PressToShape.App/PressToShape.App.md) (3 types)
@@ -40,7 +40,7 @@ Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2813 symbols, 1015
 - [PressToShapeApp.axaml](PressToShape.App/xaml/PressToShapeApp.axaml.md) (XAML, 0 bindings)
 - [Controls.axaml](PressToShape.App/xaml/Styles.Controls.axaml.md) (XAML, 9 bindings)
 - [Theme.axaml](PressToShape.App/xaml/Styles.Theme.axaml.md) (XAML, 0 bindings)
-- [DesktopShellView.axaml](PressToShape.App/xaml/Views.Desktop.DesktopShellView.axaml.md) (XAML, 20 bindings)
+- [DesktopShellView.axaml](PressToShape.App/xaml/Views.Desktop.DesktopShellView.axaml.md) (XAML, 21 bindings)
 - [MenuBarView.axaml](PressToShape.App/xaml/Views.Desktop.MenuBarView.axaml.md) (XAML, 13 bindings)
 - [StatusBarView.axaml](PressToShape.App/xaml/Views.Desktop.StatusBarView.axaml.md) (XAML, 13 bindings)
 - [ToolbarView.axaml](PressToShape.App/xaml/Views.Desktop.ToolbarView.axaml.md) (XAML, 13 bindings)
@@ -64,10 +64,10 @@ Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2813 symbols, 1015
 
 ## PressToShape.App.Tests
 
-Project file: `tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj`. 3186 symbols, 29893 relationships.
+Project file: `tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj`. 3210 symbols, 30211 relationships.
 
 - [<global namespace>](PressToShape.App.Tests/_global_namespace_.md) (1 types)
-- [PressToShape.App.Tests](PressToShape.App.Tests/PressToShape.App.Tests.md) (165 types)
+- [PressToShape.App.Tests](PressToShape.App.Tests/PressToShape.App.Tests.md) (167 types)
 
 ## PressToShape.Benchmarks
 
@@ -84,7 +84,7 @@ Project file: `tests/PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.c
 
 ## PressToShape.Core
 
-Project file: `src/PressToShape.Core/PressToShape.Core.csproj`. 665 symbols, 2662 relationships.
+Project file: `src/PressToShape.Core/PressToShape.Core.csproj`. 679 symbols, 2728 relationships.
 
 - [PressToShape.Core](PressToShape.Core/PressToShape.Core.md) (1 types)
 - [PressToShape.Core.Documents](PressToShape.Core/PressToShape.Core.Documents.md) (14 types)
@@ -92,20 +92,20 @@ Project file: `src/PressToShape.Core/PressToShape.Core.csproj`. 665 symbols, 266
 - [PressToShape.Core.History](PressToShape.Core/PressToShape.Core.History.md) (2 types)
 - [PressToShape.Core.IO](PressToShape.Core/PressToShape.Core.IO.md) (10 types)
 - [PressToShape.Core.PathOperations](PressToShape.Core/PressToShape.Core.PathOperations.md) (5 types)
-- [PressToShape.Core.Shapes](PressToShape.Core/PressToShape.Core.Shapes.md) (24 types)
+- [PressToShape.Core.Shapes](PressToShape.Core/PressToShape.Core.Shapes.md) (25 types)
 
 ## PressToShape.Core.Tests
 
-Project file: `tests/PressToShape.Core.Tests/PressToShape.Core.Tests.csproj`. 1082 symbols, 8382 relationships.
+Project file: `tests/PressToShape.Core.Tests/PressToShape.Core.Tests.csproj`. 1119 symbols, 8838 relationships.
 
 - [<global namespace>](PressToShape.Core.Tests/_global_namespace_.md) (1 types)
 - [PressToShape.Core.Tests](PressToShape.Core.Tests/PressToShape.Core.Tests.md) (1 types)
-- [PressToShape.Core.Tests.Documents](PressToShape.Core.Tests/PressToShape.Core.Tests.Documents.md) (15 types)
+- [PressToShape.Core.Tests.Documents](PressToShape.Core.Tests/PressToShape.Core.Tests.Documents.md) (17 types)
 - [PressToShape.Core.Tests.Geometry](PressToShape.Core.Tests/PressToShape.Core.Tests.Geometry.md) (2 types)
 - [PressToShape.Core.Tests.History](PressToShape.Core.Tests/PressToShape.Core.Tests.History.md) (1 types)
 - [PressToShape.Core.Tests.IO](PressToShape.Core.Tests/PressToShape.Core.Tests.IO.md) (13 types)
 - [PressToShape.Core.Tests.PathOperations](PressToShape.Core.Tests/PressToShape.Core.Tests.PathOperations.md) (3 types)
-- [PressToShape.Core.Tests.Shapes](PressToShape.Core.Tests/PressToShape.Core.Tests.Shapes.md) (21 types)
+- [PressToShape.Core.Tests.Shapes](PressToShape.Core.Tests/PressToShape.Core.Tests.Shapes.md) (22 types)
 
 ## PressToShape.CursorImages.Tests
 

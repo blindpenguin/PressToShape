@@ -35,7 +35,7 @@ The undo and redo history of a document, kept as snapshots. Documents are immuta
 
 `public enum HistoryStepType`
 
-Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-191`
+Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-197`
 
 What a step of the history did. The app turns each value into a translated name.
 
@@ -103,3 +103,5 @@ What a step of the history did. The app turns each value into a translated name.
 - `public Exclusion` - Shapes were combined with the exclusion operation into one path.
 - `public Combine` - Paths were joined into one compound path.
 - `public BreakApart` - A compound path was split into one path for each sub-path.
+- `public ConvertToPath` - Rectangles and ellipses were converted to paths.
+- `public ReverseDirection` - The direction of paths was reversed.

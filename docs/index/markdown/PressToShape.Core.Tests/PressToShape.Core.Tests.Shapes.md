@@ -345,6 +345,26 @@ _(no documentation)_
 - `public void Type_NotDefined_Throws()` - _(no documentation)_
 - `public void Equals_NodesThatDifferOnlyInType_AreNotEqual()` - _(no documentation)_
 
+## PathReversalTests (class)
+
+`public class PathReversalTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/PathReversalTests.cs:8-182`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Reverse_OpenPath_ReversesTheOrderAndSwapsTheHandles()` - _(no documentation)_
+- `public void Reverse_ClosedPath_KeepsTheFirstNodeFirst()` - _(no documentation)_
+- `public void Reverse_CompoundPath_ReversesEachSubPathInPlaceAndKeepsTheirOrder()` - _(no documentation)_
+- `public void Reverse_NodeTypes_StayValid()` - _(no documentation)_
+- `public void Reverse_RotatedPath_KeepsEveryNodeAtTheSamePlaceOnTheScreen()` - _(no documentation)_
+- `public void Reverse_LooksTheSame_HitTestsAgree()` - _(no documentation)_
+- `public void Reverse_KeepsIdAppearanceNameFlagsAndFillRule()` - _(no documentation)_
+- `public void Reverse_Twice_GivesTheSameNodes(bool closed)` - _(no documentation)_
+- `public void Reverse_DoesNotChangeTheInput_AndNullThrows()` - _(no documentation)_
+
 ## PathShapeGeometryTests (class)
 
 `public class PathShapeGeometryTests`

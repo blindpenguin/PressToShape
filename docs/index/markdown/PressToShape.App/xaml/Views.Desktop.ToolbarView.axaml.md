@@ -5,7 +5,7 @@ Class: `PressToShape.App.Views.Desktop.ToolbarView`.
 
 ## View model links
 
-- `T:PressToShape.App.ViewModels.Desktop.ToolbarViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:38 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:38)
+- `T:PressToShape.App.ViewModels.Desktop.ToolbarViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:39 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:39)
 - `T:PressToShape.App.ViewModels.Desktop.ToolbarViewModel` (verified): x:DataType (src/PressToShape.App/Views/Desktop/ToolbarView.axaml:1)
 
 ## Bindings

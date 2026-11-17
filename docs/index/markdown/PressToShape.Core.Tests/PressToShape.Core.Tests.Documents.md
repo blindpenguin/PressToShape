@@ -363,6 +363,43 @@ _(no documentation)_
 - `public void CombineThenBreakApart_GivesBackTheShapesAsPaths()` - _(no documentation)_
 - `public void Operations_NullArguments_Throw()` - _(no documentation)_
 
+## PathShapeOperationsConvertTests (class)
+
+`public class PathShapeOperationsConvertTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/PathShapeOperationsConvertTests.cs:9-155`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ConvertToPaths_RectangleAndEllipse_BecomePathsWithTheSameIdsAndPlaces()` - _(no documentation)_
+- `public void ConvertToPaths_RoundedRectangle_LooksTheSame()` - _(no documentation)_
+- `public void ConvertToPaths_SelectedGroup_ConvertsItsShapesAndKeepsTheGroup()` - _(no documentation)_
+- `public void ConvertToPaths_NestedGroups_AreReached()` - _(no documentation)_
+- `public void ConvertToPaths_LockedAndHiddenShapes_AreSkipped()` - _(no documentation)_
+- `public void ConvertToPaths_ShapesInALockedGroupOrLayer_AreSkipped()` - _(no documentation)_
+- `public void ConvertToPaths_PathsGroupsWithoutShapesAndUnknownIds_AreIgnored_AndTheSameDocumentComesBack()` - _(no documentation)_
+- `public void ConvertibleShapeIds_ListsEachConvertibleShapeOnce()` - _(no documentation)_
+- `public void ConvertToPaths_DoesNotChangeTheInput_AndNullsThrow()` - _(no documentation)_
+
+## PathShapeOperationsReverseTests (class)
+
+`public class PathShapeOperationsReverseTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/PathShapeOperationsReverseTests.cs:9-103`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ReverseDirections_Path_IsReversedWithTheSameIdAndPlace()` - _(no documentation)_
+- `public void ReverseDirections_PathInASelectedGroup_IsReversed()` - _(no documentation)_
+- `public void ReverseDirections_RectanglesEllipsesLockedAndHidden_AreIgnored_AndTheSameDocumentComesBack()` - _(no documentation)_
+- `public void ReversibleShapeIds_ListsEachPathOnce_AndSelectedGroupsGiveTheirPaths()` - _(no documentation)_
+- `public void ReverseDirections_Twice_GivesTheOriginalFirstNode()` - _(no documentation)_
+- `public void ReverseDirections_DoesNotChangeTheInput_AndNullsThrow()` - _(no documentation)_
+
 ## ShapeTreeTests (class)
 
 `public class ShapeTreeTests`

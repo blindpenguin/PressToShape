@@ -132,7 +132,7 @@ What the clipboard, delete and selection items of the Edit menu do. Undo and Red
 
 `internal abstract partial class EditorShellViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:18-366`
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:18-380`
 
 What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
 
@@ -142,6 +142,7 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public IRelayCommand BringForwardCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringForward`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringForward.
 - `public IRelayCommand BringToFrontCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringToFront`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringToFront.
 - `public IAsyncRelayCommand CombinePathsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.CombinePaths`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.CombinePaths.
+- `public IRelayCommand ConvertShapesToPathsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ConvertShapesToPaths`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ConvertShapesToPaths.
 - `public IRelayCommand CopyCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy.
 - `public IRelayCommand CutCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut.
 - `public IRelayCommand DeleteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete.
@@ -159,6 +160,7 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public IRelayCommand PasteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Paste`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Paste.
 - `public IRelayCommand PasteInPlaceCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.PasteInPlace`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.PasteInPlace.
 - `public IRelayCommand RedoCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Redo`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Redo.
+- `public IRelayCommand ReversePathDirectionCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ReversePathDirection`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ReversePathDirection.
 - `public IAsyncRelayCommand SaveAsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsAsync.
 - `public IAsyncRelayCommand SaveCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SaveAsync.
 - `public IRelayCommand SelectAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.SelectAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.SelectAll.
@@ -512,19 +514,21 @@ The swatches saved with the document, shown in the Appearance section. Adding an
 
 `internal sealed record PathMenuCommands : IEquatable<PathMenuCommands>`
 
-Source: `src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:7-23`
+Source: `src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:10-28`
 
-What the boolean, Combine and Break Apart items of the Path menu do. A command is disabled while it cannot run.
+What the items of the Path menu do. A command is disabled while it cannot run. ConvertToPath and ReverseDirection are optional: a caller without them gets disabled items.
 
 **Members**
 
-- `public PathMenuCommands(ICommand Union, ICommand Difference, ICommand Intersection, ICommand Exclusion, ICommand Combine, ICommand BreakApart)` - What the boolean, Combine and Break Apart items of the Path menu do. A command is disabled while it cannot run.
+- `public PathMenuCommands(ICommand Union, ICommand Difference, ICommand Intersection, ICommand Exclusion, ICommand Combine, ICommand BreakApart, ICommand? ConvertToPath = null, ICommand? ReverseDirection = null)` - What the items of the Path menu do. A command is disabled while it cannot run. ConvertToPath and ReverseDirection are optional: a caller without them gets disabled items.
 - `public ICommand Union { get; init; }` - _(no documentation)_
 - `public ICommand Difference { get; init; }` - _(no documentation)_
 - `public ICommand Intersection { get; init; }` - _(no documentation)_
 - `public ICommand Exclusion { get; init; }` - _(no documentation)_
 - `public ICommand Combine { get; init; }` - _(no documentation)_
 - `public ICommand BreakApart { get; init; }` - _(no documentation)_
+- `public ICommand? ConvertToPath { get; init; }` - _(no documentation)_
+- `public ICommand? ReverseDirection { get; init; }` - _(no documentation)_
 - `public PathMenuCommands Disabled { get; }` - Six commands that can never run, for a view that has no real ones (a test, or a caller that does not offer the path operations).
 
 **Relationships**

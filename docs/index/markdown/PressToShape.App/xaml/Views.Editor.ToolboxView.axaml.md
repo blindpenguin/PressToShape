@@ -6,7 +6,7 @@ Class: `PressToShape.App.Views.Editor.ToolboxView`.
 ## View model links
 
 - `T:PressToShape.App.ViewModels.Editor.ToolboxViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:67)
-- `T:PressToShape.App.ViewModels.Editor.ToolboxViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:41 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:41)
+- `T:PressToShape.App.ViewModels.Editor.ToolboxViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42)
 - `T:PressToShape.App.ViewModels.Editor.ToolboxViewModel` (verified): x:DataType (src/PressToShape.App/Views/Editor/ToolboxView.axaml:1)
 
 ## Bindings

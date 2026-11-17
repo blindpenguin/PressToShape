@@ -292,6 +292,18 @@ The rules for editing the nodes and handles of a PressToShape.Core.Shapes.PathSh
 - `public PathShape? RemoveNodes(PathShape path, IReadOnlyCollection<int> indices)` - Removes the nodes. The neighbors connect, each keeping its own handle, so the curve changes a little. A sub-path that would be left with fewer than two nodes is removed with them. Returns null if no sub-path would remain, in which case the caller deletes the shape.
 - `public (double X, double Y) NodePosition(PathShape path, int index)` - The position of the anchor of a node on the screen, with the rotation of the path applied.
 
+## PathReversal (class)
+
+`public static class PathReversal`
+
+Source: `src/PressToShape.Core/Shapes/PathReversal.cs:7-53`
+
+Reverses the direction of a PressToShape.Core.Shapes.PathShape without changing how it looks.
+
+**Members**
+
+- `public PathShape Reverse(PathShape path)` - The path with every sub-path running the other way. An open sub-path gets its node order reversed. A closed sub-path keeps its first node first and the other nodes run backwards, so the start point does not move. In both cases the in and out handle of every node are swapped. Each sub-path stays at its place in the list. The shape is the same, every node stays at the same place on the screen (also for a rotated path), and id, appearance, name, flags, rotation and fill rule are kept. Reversing twice gives the same nodes. The input is not changed.
+
 ## PathShape (record)
 
 `public partial sealed record PathShape : Shape, IEquatable<PathShape>`

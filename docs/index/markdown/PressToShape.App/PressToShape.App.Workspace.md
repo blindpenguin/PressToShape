@@ -359,7 +359,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-80`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-82`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -684,7 +684,7 @@ What a PressToShape.App.Workspace.PathCommand does.
 
 `internal sealed class PathEditor`
 
-Source: `src/PressToShape.App/Workspace/PathEditor.cs:19-208`
+Source: `src/PressToShape.App/Workspace/PathEditor.cs:19-238`
 
 The path operations on the selection: the boolean operations, Combine and Break Apart. Each success is one history step and the new shapes become the selection. A result that is empty or an operation that fails changes nothing and tells the user why. A command that cannot run has its Can... property false.
 
@@ -696,6 +696,10 @@ The path operations on the selection: the boolean operations, Combine and Break 
 - `public bool CanBoolean { get; }` - Whether at least two rectangles, ellipses or closed paths that are shown and not locked are selected, and nothing else. False while busy or while a drag is going on.
 - `public bool CanCombine { get; }` - Whether at least two rectangles, ellipses or paths (open ones too) that are shown and not locked are selected, and nothing else.
 - `public bool CanBreakApart { get; }` - Whether a path with several sub-paths that is shown and not locked is selected.
+- `public bool CanConvert { get; }` - Whether a rectangle or an ellipse is selected, also inside a selected group, that is shown and not locked. False while busy or while a drag is going on.
+- `public bool CanReverse { get; }` - Whether a path is selected, also inside a selected group, that is shown and not locked. False while busy or while a drag is going on.
+- `public void ConvertToPath()` - Converts the selected rectangles and ellipses to paths, as one step. The selection stays.
+- `public void ReverseDirection()` - Reverses the direction of the selected paths, as one step. The selection stays.
 - `public Task BooleanAsync(PathOperationType type)` - Combines the selected shapes with the operation into one path, as one step.
 - `public Task CombineAsync()` - Joins the selected shapes into one compound path, as one step.
 - `public Task BreakApartAsync()` - Splits every selected compound path into one path for each sub-path, as one step.

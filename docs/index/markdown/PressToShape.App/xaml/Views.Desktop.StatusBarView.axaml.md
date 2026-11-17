@@ -6,7 +6,7 @@ Class: `PressToShape.App.Views.Desktop.StatusBarView`.
 ## View model links
 
 - `T:PressToShape.App.ViewModels.Editor.StatusBarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:216)
-- `T:PressToShape.App.ViewModels.Editor.StatusBarViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:49 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:49)
+- `T:PressToShape.App.ViewModels.Editor.StatusBarViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:50 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:50)
 - `T:PressToShape.App.ViewModels.Editor.StatusBarViewModel` (verified): x:DataType (src/PressToShape.App/Views/Desktop/StatusBarView.axaml:1)
 
 ## Bindings

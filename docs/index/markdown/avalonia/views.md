@@ -13,17 +13,18 @@ The ring context menu. It fills the canvas area (so a press beside the ring is c
 
 ### DesktopShellView
 
-`T:PressToShape.App.Views.Desktop.DesktopShellView` at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml.cs:8. XAML: `src/PressToShape.App/Views/Desktop/DesktopShellView.axaml`, 20 bindings.
+`T:PressToShape.App.Views.Desktop.DesktopShellView` at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml.cs:8. XAML: `src/PressToShape.App/Views/Desktop/DesktopShellView.axaml`, 21 bindings.
 _(no documentation)_
 
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:1); 5 commands, 5 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:1); 5 commands, 6 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DesktopShellKeyBindingTests.cs:29); 5 commands, 6 test classes
 
 ### MenuBarView
 
 `T:PressToShape.App.Views.Desktop.MenuBarView` at src/PressToShape.App/Views/Desktop/MenuBarView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Desktop/MenuBarView.axaml`, 13 bindings.
 _(no documentation)_
 
-- view model `MenuBarViewModel` (`T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:35 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:35); 0 commands, 4 test classes
+- view model `MenuBarViewModel` (`T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:36 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:36); 0 commands, 4 test classes
 - view model `MenuBarViewModel` (`T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/MenuBarView.axaml:1); 0 commands, 4 test classes
 
 ### StatusBarView
@@ -31,7 +32,7 @@ _(no documentation)_
 `T:PressToShape.App.Views.Desktop.StatusBarView` at src/PressToShape.App/Views/Desktop/StatusBarView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Desktop/StatusBarView.axaml`, 13 bindings.
 _(no documentation)_
 
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:49 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:49); 4 commands, 6 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:50 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:50); 4 commands, 6 test classes
 - view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/StatusBarView.axaml:1); 4 commands, 6 test classes
 - view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:216); 4 commands, 6 test classes
 
@@ -40,7 +41,7 @@ _(no documentation)_
 `T:PressToShape.App.Views.Desktop.ToolbarView` at src/PressToShape.App/Views/Desktop/ToolbarView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Desktop/ToolbarView.axaml`, 13 bindings.
 _(no documentation)_
 
-- view model `ToolbarViewModel` (`T:PressToShape.App.ViewModels.Desktop.ToolbarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:38 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:38); 0 commands, 2 test classes
+- view model `ToolbarViewModel` (`T:PressToShape.App.ViewModels.Desktop.ToolbarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:39 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:39); 0 commands, 2 test classes
 - view model `ToolbarViewModel` (`T:PressToShape.App.ViewModels.Desktop.ToolbarViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/ToolbarView.axaml:1); 0 commands, 2 test classes
 
 ### CanvasAreaView
@@ -48,7 +49,7 @@ _(no documentation)_
 `T:PressToShape.App.Views.Editor.CanvasAreaView` at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:12. XAML: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml`, 34 bindings.
 _(no documentation)_
 
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42); 0 commands, 19 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:43 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:43); 0 commands, 19 test classes
 - view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:1); 0 commands, 19 test classes
 - view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28); 0 commands, 19 test classes
 - view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DocumentCanvasControlNodeTests.cs:97); 0 commands, 19 test classes
@@ -69,7 +70,7 @@ _(no documentation)_
 `T:PressToShape.App.Views.Editor.InspectorView` at src/PressToShape.App/Views/Editor/InspectorView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Editor/InspectorView.axaml`, 5 bindings.
 _(no documentation)_
 
-- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46); 0 commands, 12 test classes
+- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:47 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:47); 0 commands, 12 test classes
 - view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/InspectorView.axaml:1); 0 commands, 12 test classes
 - view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/LayersViewTests.cs:152); 0 commands, 12 test classes
 
@@ -119,7 +120,7 @@ The fill and stroke swatches with the swap and reset buttons. Used by the deskto
 `T:PressToShape.App.Views.Editor.ToolboxView` at src/PressToShape.App/Views/Editor/ToolboxView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Editor/ToolboxView.axaml`, 6 bindings.
 _(no documentation)_
 
-- view model `ToolboxViewModel` (`T:PressToShape.App.ViewModels.Editor.ToolboxViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:41 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:41); 3 commands, 6 test classes
+- view model `ToolboxViewModel` (`T:PressToShape.App.ViewModels.Editor.ToolboxViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:42); 3 commands, 6 test classes
 - view model `ToolboxViewModel` (`T:PressToShape.App.ViewModels.Editor.ToolboxViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/ToolboxView.axaml:1); 3 commands, 6 test classes
 - view model `ToolboxViewModel` (`T:PressToShape.App.ViewModels.Editor.ToolboxViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:67); 3 commands, 6 test classes
 
@@ -128,8 +129,8 @@ _(no documentation)_
 `T:PressToShape.App.Views.MainWindow` at src/PressToShape.App/Views/MainWindow.axaml.cs:6. XAML: `src/PressToShape.App/Views/MainWindow.axaml`, 1 bindings.
 _(no documentation)_
 
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:40); 5 commands, 5 test classes
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1); 5 commands, 5 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:40); 5 commands, 6 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1); 5 commands, 6 test classes
 
 ### MessageDialogView
 

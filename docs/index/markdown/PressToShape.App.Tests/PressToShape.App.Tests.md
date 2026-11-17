@@ -941,6 +941,19 @@ _(no documentation)_
 - `public void Shutdown_ReadsTheTargetWhenCalled_SoALateAssignmentWorks()` - _(no documentation)_
 - `public void Constructor_NullDelegate_Throws()` - _(no documentation)_
 
+## DesktopShellKeyBindingTests (class)
+
+`public class DesktopShellKeyBindingTests`
+
+Source: `tests/PressToShape.App.Tests/DesktopShellKeyBindingTests.cs:16-68`
+
+_(no documentation)_
+
+**Members**
+
+- `public void TheShell_HasAKeyBindingForCtrlShiftO_ThatIsTheConvertCommand()` - _(no documentation)_
+- `public void CtrlShiftO_WithARectangleSelected_ConvertsItToAPathAsOneStep()` - _(no documentation)_
+
 ## DesktopShellViewModelTests (class)
 
 `public class DesktopShellViewModelTests`
@@ -2015,7 +2028,7 @@ Settings kept in memory.
 
 `public class MenuBarViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-662`
+Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-695`
 
 _(no documentation)_
 
@@ -2024,6 +2037,8 @@ _(no documentation)_
 - `public void TopLevelMenus_AreInMockupOrder()` - _(no documentation)_
 - `public void OnlyTheImplementedItems_AreEnabledLeafItems()` - _(no documentation)_
 - `public void PathMenu_BooleanCombineAndBreakApartItems_FollowTheirCommands()` - _(no documentation)_
+- `public void PathMenu_ConvertAndReverse_FollowTheirCommands_AndConvertShowsItsShortcut()` - _(no documentation)_
+- `public void PathMenu_StrokeToPathAndSimplify_StayDisabledPlaceholders()` - _(no documentation)_
 - `public void LayerMenu_HasTheLayerCommandsInOrder()` - _(no documentation)_
 - `public void LayerMenu_InOneLayerDocument_OnlyAddAndDuplicateAreEnabled()` - _(no documentation)_
 - `public void LayerMenu_AddLayer_RunsTheCommandAndEnablesTheOthers()` - _(no documentation)_
@@ -2316,7 +2331,7 @@ _(no documentation)_
 
 `public class OverflowMenuViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-246`
+Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-274`
 
 _(no documentation)_
 
@@ -2324,7 +2339,8 @@ _(no documentation)_
 
 - `public void Items_AreTheFileActions_TheEditActions_TheObjectAndPathActions_AndTheLanguage_InOrder()` - _(no documentation)_
 - `public void TheArrangeSubmenu_HasTheFourArrangeCommands()` - _(no documentation)_
-- `public void ThePathSubmenu_HasTheSixPathCommandsAndRunsThem()` - _(no documentation)_
+- `public void ThePathSubmenu_HasTheEightPathCommandsInOrderAndRunsThem()` - _(no documentation)_
+- `public void ThePathSubmenu_ConvertAndReverseItems_FollowTheirCommands_AndAreDisabledWithoutCommands()` - _(no documentation)_
 - `public void ThePathSubmenu_ItemsFollowTheirCommands()` - _(no documentation)_
 - `public void Items_HaveNoQuitAndNoRecentFiles()` - _(no documentation)_
 - `public void Items_ShowNoShortcutTexts()` - _(no documentation)_
@@ -2425,6 +2441,26 @@ _(no documentation)_
 - `public void CanBoolean_WhileADragIsInProgress_IsFalse()` - _(no documentation)_
 - `public Task StatusBar_WhileAnOperationRuns_ShowsTheBusyTextAndRaisesChanges()` - _(no documentation)_
 - `public void StatusBar_WithoutPathEditing_IsNeverBusy()` - _(no documentation)_
+
+## PathEditorConvertReverseTests (class)
+
+`public class PathEditorConvertReverseTests`
+
+Source: `tests/PressToShape.App.Tests/PathEditorConvertReverseTests.cs:11-188`
+
+_(no documentation)_
+
+**Members**
+
+- `public void CanConvert_RectangleSelected_IsTrue_AndNothingOrOnlyAPathIsFalse()` - _(no documentation)_
+- `public void CanConvert_SelectedGroupWithAnEllipse_IsTrue_AndLockedOrHiddenShapesAreFalse()` - _(no documentation)_
+- `public void CanConvertAndCanReverse_WhileADragIsInProgress_AreFalse()` - _(no documentation)_
+- `public void CanReverse_PathSelected_IsTrue_AndRectangleOrNothingIsFalse()` - _(no documentation)_
+- `public void ConvertToPath_IsOneNamedStep_KeepsTheSelection_AndUndoBringsTheRectangleBack()` - _(no documentation)_
+- `public void ConvertToPath_WhenItCannotRun_RecordsNoStep()` - _(no documentation)_
+- `public void ReverseDirection_IsOneNamedStep_KeepsTheSelection_AndUndoRestoresThePath()` - _(no documentation)_
+- `public void ReverseDirection_WhenItCannotRun_RecordsNoStep()` - _(no documentation)_
+- `public void Shell_TheMenuCommands_AreTheShellCommands_AndRunTheOperations()` - _(no documentation)_
 
 ## PathEditorTests (class)
 

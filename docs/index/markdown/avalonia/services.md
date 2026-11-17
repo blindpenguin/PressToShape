@@ -30,7 +30,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.ViewModels.Editor.EditMenuCommands`. What the clipboard, delete and selection items of the Edit menu do. Undo and Redo are passed on their own.
 
 - used by: `MenuBarViewModel`, `OverflowMenuViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:56)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:58)
 
 ### EditorShellViewModel (class)
 
@@ -51,7 +51,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.ViewModels.Editor.FileMenuCommands`. What the File menu items do. OpenRecent creates the command for one entry of the recent list.
 
 - used by: `MenuBarViewModel`, `OverflowMenuViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:49)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:51)
 
 ### FileServices (class)
 
@@ -132,7 +132,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.ViewModels.Editor.InspectorViewModel`. State of the inspector: the selected tab and the view models of its tabs.
 
 - used by: `TabletPanelViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:48)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:50)
 
 ### Layer (class)
 
@@ -153,7 +153,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.ViewModels.Editor.LayerMenuCommands`. What the items of the Layer menu do. Each command runs a PressToShape.App.Workspace.LayerEditor command and is disabled while that would change nothing. Call PressToShape.App.ViewModels.Editor.LayerMenuCommands.NotifyCanExecuteChanged when the document, the active layer or the selection changed.
 
 - used by: `MenuBarViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:78)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:80)
 
 ### LayersViewModel (class)
 
@@ -188,14 +188,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.ViewModels.Editor.ObjectMenuCommands`. What the Group, Arrange, Lock and Hide items of the Object menu do. A command is disabled while it would change nothing.
 
 - used by: `MenuBarViewModel`, `OverflowMenuViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:66)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:68)
 
 ### Outline (class)
 
 `T:PressToShape.Core.PathOperations.Outline`. The outline of one operand of a boolean operation: its sub-paths in document coordinates, with the rotation already applied, and the fill rule that tells what is inside. An open sub-path counts as closed by a straight line. Plain geometry, no shape or document.
 
 - used by: `Operand`
-- created at `PathShapeOperations.Operands` (src/PressToShape.Core/Documents/PathShapeOperations.cs:125), `PathOperationBenchmarks.Wavy` (tests/PressToShape.Benchmarks/PathOperationBenchmarks.cs:64)
+- created at `PathShapeOperations.Operands` (src/PressToShape.Core/Documents/PathShapeOperations.cs:192), `PathOperationBenchmarks.Wavy` (tests/PressToShape.Benchmarks/PathOperationBenchmarks.cs:64)
 
 ### OverflowMenuViewModel (class)
 
@@ -213,10 +213,10 @@ Types that other types take as constructor parameters, and where they are provid
 
 ### PathMenuCommands (class)
 
-`T:PressToShape.App.ViewModels.Editor.PathMenuCommands`. What the boolean, Combine and Break Apart items of the Path menu do. A command is disabled while it cannot run.
+`T:PressToShape.App.ViewModels.Editor.PathMenuCommands`. What the items of the Path menu do. A command is disabled while it cannot run. ConvertToPath and ReverseDirection are optional: a caller without them gets disabled items.
 
 - used by: `InspectorViewModel`, `MenuBarViewModel`, `OverflowMenuViewModel`, `PropertiesViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:41), `PathMenuCommands.CreateDisabled` (src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:21)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:41), `PathMenuCommands.CreateDisabled` (src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:26)
 
 ### PathShape (class)
 

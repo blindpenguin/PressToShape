@@ -5,7 +5,7 @@ Class: `PressToShape.App.Views.Desktop.MenuBarView`.
 
 ## View model links
 
-- `T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:35 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:35)
+- `T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:36 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:36)
 - `T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel` (verified): x:DataType (src/PressToShape.App/Views/Desktop/MenuBarView.axaml:1)
 
 ## Bindings

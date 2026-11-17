@@ -6,7 +6,7 @@ Class: `PressToShape.App.Views.Editor.InspectorView`.
 ## View model links
 
 - `T:PressToShape.App.ViewModels.Editor.InspectorViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/LayersViewTests.cs:152)
-- `T:PressToShape.App.ViewModels.Editor.InspectorViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46)
+- `T:PressToShape.App.ViewModels.Editor.InspectorViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:47 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:47)
 - `T:PressToShape.App.ViewModels.Editor.InspectorViewModel` (verified): x:DataType (src/PressToShape.App/Views/Editor/InspectorView.axaml:1)
 
 ## Bindings
