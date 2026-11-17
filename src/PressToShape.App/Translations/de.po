@@ -901,6 +901,9 @@ msgstr "Die Operation konnte nicht ausgeführt werden."
 msgid "Working…"
 msgstr "Arbeite…"
 
+msgid "Path Operations"
+msgstr "Pfadoperationen"
+
 msgid "Layer {0}"
 msgstr "Ebene {0}"
 

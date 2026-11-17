@@ -38,7 +38,14 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         LayerEditing = new LayerEditor(State, localizer);
         var ring = new RingMenuViewModel(localizer);
         Canvas = new CanvasAreaViewModel(State, Editor, ring: ring);
-        Inspector = new InspectorViewModel(State, localizer, Editor, Objects, LayerEditing);
+        PathCommands = new PathMenuCommands(
+            UnionShapesCommand,
+            DifferenceShapesCommand,
+            IntersectShapesCommand,
+            ExcludeShapesCommand,
+            CombinePathsCommand,
+            BreakApartPathCommand);
+        Inspector = new InspectorViewModel(State, localizer, Editor, Objects, LayerEditing, PathCommands);
         FileCommands = new FileMenuCommands(
             NewCommand,
             OpenCommand,
@@ -67,14 +74,6 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
             UnlockAllCommand,
             HideCommand,
             ShowAllCommand);
-
-        PathCommands = new PathMenuCommands(
-            UnionShapesCommand,
-            DifferenceShapesCommand,
-            IntersectShapesCommand,
-            ExcludeShapesCommand,
-            CombinePathsCommand,
-            BreakApartPathCommand);
 
         LayerCommands = new LayerMenuCommands(LayerEditing);
 

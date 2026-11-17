@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace PressToShape.App.ViewModels.Editor;
 
@@ -9,4 +10,14 @@ internal sealed record PathMenuCommands(
     ICommand Intersection,
     ICommand Exclusion,
     ICommand Combine,
-    ICommand BreakApart);
+    ICommand BreakApart)
+{
+    /// <summary>Six commands that can never run, for a view that has no real ones (a test, or a caller that does not offer the path operations).</summary>
+    public static PathMenuCommands Disabled { get; } = CreateDisabled();
+
+    private static PathMenuCommands CreateDisabled()
+    {
+        ICommand None() => new RelayCommand(() => { }, () => false);
+        return new PathMenuCommands(None(), None(), None(), None(), None(), None());
+    }
+}

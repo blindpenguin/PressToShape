@@ -9,10 +9,10 @@ public class PropertiesSectionsTests
 {
     private const PropertiesSection Selection =
         PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Align
-        | PropertiesSection.QuickActions;
+        | PropertiesSection.PathOperations | PropertiesSection.QuickActions;
 
     [Fact]
-    public void For_SelectTool_ShowsTransformAppearanceAlignAndQuickActions()
+    public void For_SelectTool_ShowsTransformAppearanceAlignPathOperationsAndQuickActions()
     {
         Assert.Equal(Selection, PropertiesSections.For(Tool.Select));
     }
@@ -71,6 +71,14 @@ public class PropertiesSectionsTests
         var withCorners = Enum.GetValues<Tool>().Where(tool => PropertiesSections.For(tool).HasFlag(PropertiesSection.Corners)).ToArray();
 
         Assert.Equal([Tool.Select, Tool.DirectSelect], withCorners);
+    }
+
+    [Fact]
+    public void For_EveryTool_ShowsThePathOperationsSectionOnlyForSelectAndDirectSelect()
+    {
+        var withPathOperations = Enum.GetValues<Tool>().Where(tool => PropertiesSections.For(tool).HasFlag(PropertiesSection.PathOperations)).ToArray();
+
+        Assert.Equal([Tool.Select, Tool.DirectSelect], withPathOperations);
     }
 
     [Fact]

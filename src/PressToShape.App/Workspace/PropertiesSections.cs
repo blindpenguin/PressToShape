@@ -13,10 +13,10 @@ internal static class PropertiesSections
     {
         Tool.Select =>
             PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Align
-            | PropertiesSection.QuickActions,
+            | PropertiesSection.PathOperations | PropertiesSection.QuickActions,
         Tool.DirectSelect =>
             PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Path
-            | PropertiesSection.Node | PropertiesSection.Align | PropertiesSection.QuickActions,
+            | PropertiesSection.Node | PropertiesSection.Align | PropertiesSection.PathOperations | PropertiesSection.QuickActions,
         Tool.Rectangle or Tool.Ellipse or Tool.Text => PropertiesSection.Appearance,
         Tool.Pen => PropertiesSection.Appearance | PropertiesSection.Path,
         Tool.Node => PropertiesSection.Appearance | PropertiesSection.Path | PropertiesSection.Node,

@@ -346,12 +346,46 @@
                     </StackPanel>
                 </controls:CollapsibleSection>
 
+                <controls:CollapsibleSection Header="{loc:T 'Path Operations'}" IsExpanded="{Binding IsPathOperationsExpanded}" IsVisible="{Binding ShowPathOperations}">
+                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="12,4,12,12">
+                        <Button Classes="icon" Command="{Binding PathOperations.Union}"
+                                ToolTip.Tip="{loc:T 'Union'}" AutomationProperties.Name="{loc:T 'Union'}">
+                            <materialIcons:MaterialIcon Kind="VectorUnion" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                        </Button>
+                        <Button Classes="icon" Command="{Binding PathOperations.Difference}"
+                                ToolTip.Tip="{loc:T 'Difference'}" AutomationProperties.Name="{loc:T 'Difference'}">
+                            <materialIcons:MaterialIcon Kind="VectorDifference" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                        </Button>
+                        <Button Classes="icon" Command="{Binding PathOperations.Intersection}"
+                                ToolTip.Tip="{loc:T 'Intersection'}" AutomationProperties.Name="{loc:T 'Intersection'}">
+                            <materialIcons:MaterialIcon Kind="VectorIntersection" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                        </Button>
+                        <Button Classes="icon" Command="{Binding PathOperations.Exclusion}"
+                                ToolTip.Tip="{loc:T 'Exclusion'}" AutomationProperties.Name="{loc:T 'Exclusion'}">
+                            <materialIcons:MaterialIcon Kind="SetNone" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                        </Button>
+                        <Button Classes="icon" Command="{Binding PathOperations.Combine}"
+                                ToolTip.Tip="{loc:T 'Combine'}" AutomationProperties.Name="{loc:T 'Combine'}">
+                            <materialIcons:MaterialIcon Kind="VectorCombine" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                        </Button>
+                    </StackPanel>
+                </controls:CollapsibleSection>
+
                 <controls:CollapsibleSection Header="{loc:T 'Quick Actions'}" IsExpanded="{Binding IsQuickActionsExpanded}" IsVisible="{Binding ShowQuickActions}">
-                    <WrapPanel Margin="12,4,12,12" ItemSpacing="6" LineSpacing="6" IsEnabled="{Binding HasSelection}">
-                        <Button Content="{loc:T 'Group'}" Command="{Binding GroupCommand}" MinWidth="80" HorizontalContentAlignment="Center" />
-                        <Button Content="{loc:T 'Ungroup'}" Command="{Binding UngroupCommand}" MinWidth="80" HorizontalContentAlignment="Center" />
-                        <Button Content="{loc:T 'Mask'}" MinWidth="80" HorizontalContentAlignment="Center" />
-                    </WrapPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="12,4,12,12" IsEnabled="{Binding HasSelection}">
+                        <Button Classes="icon" Command="{Binding GroupCommand}"
+                                ToolTip.Tip="{loc:T 'Group'}" AutomationProperties.Name="{loc:T 'Group'}">
+                            <materialIcons:MaterialIcon Kind="SelectGroup" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                        </Button>
+                        <Button Classes="icon" Command="{Binding UngroupCommand}"
+                                ToolTip.Tip="{loc:T 'Ungroup'}" AutomationProperties.Name="{loc:T 'Ungroup'}">
+                            <materialIcons:MaterialIcon Kind="Ungroup" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                        </Button>
+                        <Button Classes="icon"
+                                ToolTip.Tip="{loc:T 'Mask'}" AutomationProperties.Name="{loc:T 'Mask'}">
+                            <materialIcons:MaterialIcon Kind="DramaMasks" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                        </Button>
+                    </StackPanel>
                 </controls:CollapsibleSection>
 
             </StackPanel>

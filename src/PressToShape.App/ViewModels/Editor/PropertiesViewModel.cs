@@ -26,6 +26,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     private readonly EditorState _state;
     private readonly SelectionEditor _editor;
     private readonly ObjectEditor _objects;
+    private readonly PathMenuCommands _paths;
     private readonly RecentColors _recentColors = new();
 
     // While a color or the opacity slider is previewed, the preview is built on this document so every update starts from the same shapes.
@@ -33,12 +34,14 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     private bool _opacityDragging;
 
     /// <param name="objects">The editor behind the Group and Ungroup buttons. Without one the view model makes its own.</param>
-    public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null)
+    /// <param name="paths">The commands behind the buttons of the Path Operations section. The shell passes the ones it shares with the menus. Without them the buttons cannot run.</param>
+    public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null, PathMenuCommands? paths = null)
         : base(localizer)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _editor = editor ?? throw new ArgumentNullException(nameof(editor));
         _objects = objects ?? new ObjectEditor(_state);
+        _paths = paths ?? PathMenuCommands.Disabled;
 
         X = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Transform(HistoryStepType.ChangePosition, (shapes, frame) => SelectionTransforms.SetPosition(shapes, frame, value, null)));
         Y = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Transform(HistoryStepType.ChangePosition, (shapes, frame) => SelectionTransforms.SetPosition(shapes, frame, null, value)));
@@ -129,6 +132,12 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
 
     public bool ShowQuickActions => Sections.HasFlag(PropertiesSection.QuickActions);
 
+    /// <summary>Whether the Path Operations section is shown: the tool has it and two or more objects are selected.</summary>
+    public bool ShowPathOperations => Sections.HasFlag(PropertiesSection.PathOperations) && _state.SelectedCount >= 2;
+
+    /// <summary>The commands of the buttons of the Path Operations section. Each can run only when the same item of the Path menu can.</summary>
+    public PathMenuCommands PathOperations => _paths;
+
     /// <summary>Whether the selection header is shown: any tool that has at least one section.</summary>
     public bool ShowHeader => Sections != PropertiesSection.None;
 
@@ -160,6 +169,8 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     [ObservableProperty] public partial bool IsAlignExpanded { get; set; } = true;
 
     [ObservableProperty] public partial bool IsQuickActionsExpanded { get; set; } = true;
+
+    [ObservableProperty] public partial bool IsPathOperationsExpanded { get; set; } = true;
 
     /// <summary>Groups the selected shapes (Quick Actions).</summary>
     [RelayCommand(CanExecute = nameof(CanGroup))]
@@ -376,6 +387,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
                 OnPropertyChanged(nameof(ShowNodeTypeTools));
                 OnPropertyChanged(nameof(ShowAlign));
                 OnPropertyChanged(nameof(ShowQuickActions));
+                OnPropertyChanged(nameof(ShowPathOperations));
                 OnPropertyChanged(nameof(ShowHeader));
                 OnPropertyChanged(nameof(ShowNoPropertiesHint));
                 break;
@@ -388,6 +400,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
                 break;
             case nameof(EditorState.SelectedCount):
                 OnPropertyChanged(nameof(Header));
+                OnPropertyChanged(nameof(ShowPathOperations));
                 break;
             case nameof(EditorState.LinkCornerRadii):
                 OnPropertyChanged(nameof(LinkCorners));

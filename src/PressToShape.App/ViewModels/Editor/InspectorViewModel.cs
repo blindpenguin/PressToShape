@@ -14,12 +14,13 @@ internal sealed partial class InspectorViewModel : ViewModelBase
     /// <param name="editor">The editor for the Properties tab. The shell passes the one it shares with the menus and the canvas.</param>
     /// <param name="objects">The editor for the objects of the Layers tab. The shell passes the one it shares with the menus.</param>
     /// <param name="layers">The editor for the layers of the Layers tab. The shell passes the one it shares with the menus.</param>
-    public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null, LayerEditor? layers = null)
+    /// <param name="paths">The commands behind the Path Operations buttons of the Properties tab. The shell passes the ones it shares with the menus.</param>
+    public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null, LayerEditor? layers = null, PathMenuCommands? paths = null)
     {
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(localizer);
 
-        Properties = new PropertiesViewModel(state, editor ?? new SelectionEditor(state), localizer, objects);
+        Properties = new PropertiesViewModel(state, editor ?? new SelectionEditor(state), localizer, objects, paths);
         Layers = new LayersViewModel(state, objects ?? new ObjectEditor(state), localizer, layers);
         Assets = new PlaceholderPanelViewModel(localizer, N("Assets"), N("No assets yet"));
         History = new HistoryViewModel(state, localizer);

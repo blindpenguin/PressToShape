@@ -18,4 +18,7 @@ internal enum PropertiesSection
 
     /// <summary>The corner radii of the one selected rectangle. Shown by the tools that show the radius handles.</summary>
     Corners = 64,
+
+    /// <summary>The boolean operations and Combine as icon buttons. Shown by the tools that select several objects, and only while two or more are selected.</summary>
+    PathOperations = 128,
 }
