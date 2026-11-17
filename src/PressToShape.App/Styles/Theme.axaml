@@ -216,6 +216,7 @@
         <x:Double x:Key="RowIndentSize">24</x:Double>
         <x:Double x:Key="SelectionHandleSize">18</x:Double>
         <x:Double x:Key="ToolbarHeight">56</x:Double>
+        <x:Double x:Key="StatusBarHeight">48</x:Double>
         <x:Double x:Key="RingOuterRadius">150</x:Double>
         <x:Double x:Key="RingInnerRadius">44</x:Double>
         <x:Double x:Key="RingIconSize">30</x:Double>

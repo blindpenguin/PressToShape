@@ -12,7 +12,7 @@ namespace PressToShape.App.Views.Tablet;
 
 /// <summary>
 /// The root of the tablet layout. The code-behind has three view-only jobs that need the platform or the pointer: it hands the Back button to the
-/// view model (after closing an open toolbar menu, which only the view knows about), it closes the panel when the canvas is touched, and it keeps
+/// view model (after closing an open menu of the toolbar or the status bar, which only the view knows about), it closes the panel when the canvas is touched, and it keeps
 /// the layout above the on-screen keyboard. Avalonia already keeps the content out from under the system bars, and the keyboard
 /// does not resize the view but only reports the area it covers (found on the device), so the bottom margin is set here.
 /// </summary>
@@ -34,6 +34,7 @@ public partial class TabletShellView : UserControl
 
         // A menu or a flyout that closed a moment ago was closed by the Escape half of a Back key press, see BackRequestGuard.
         ToolbarView.MenuClosed += (_, _) => _backGuard.NoteClosed(Environment.TickCount64);
+        StatusBarView.MenuClosed += (_, _) => _backGuard.NoteClosed(Environment.TickCount64);
     }
 
     protected override void OnDataContextChanged(EventArgs e)
@@ -106,7 +107,7 @@ public partial class TabletShellView : UserControl
                 return;
             }
 
-            if (ToolbarView.TryCloseMenu())
+            if (ToolbarView.TryCloseMenu() || StatusBarView.TryCloseMenu())
             {
                 return;
             }

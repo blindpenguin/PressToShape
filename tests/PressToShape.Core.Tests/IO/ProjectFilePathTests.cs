@@ -49,8 +49,8 @@ public class ProjectFilePathTests
     {
         Assert.Equal(expected.Id, actual.Id);
         Assert.Equal(expected.Bounds, actual.Bounds);
-        Assert.Equal(expected.Nodes.AsSpan().ToArray(), actual.Nodes.AsSpan().ToArray());
-        Assert.Equal(expected.IsClosed, actual.IsClosed);
+        Assert.Equal(expected.SubPaths[0].Nodes.AsSpan().ToArray(), actual.SubPaths[0].Nodes.AsSpan().ToArray());
+        Assert.Equal(expected.SubPaths[0].IsClosed, actual.SubPaths[0].IsClosed);
         Assert.Equal(expected.FillRule, actual.FillRule);
         Assert.Equal(expected.Rotation, actual.Rotation);
         Assert.Equal(expected.Appearance, actual.Appearance);
@@ -80,7 +80,7 @@ public class ProjectFilePathTests
         Assert.DoesNotContain("\"closed\"", json);
         Assert.DoesNotContain("\"fillRule\"", json);
         Assert.DoesNotContain("\"inX\"", json);
-        Assert.False(loaded.IsClosed);
+        Assert.False(loaded.SubPaths[0].IsClosed);
         Assert.Equal(FillRule.NonZero, loaded.FillRule);
     }
 
@@ -102,8 +102,8 @@ public class ProjectFilePathTests
 
         Assert.True(result.Succeeded, result.Detail);
         var path = Assert.IsType<PathShape>(result.Document!.Layers[0].Shapes[0]);
-        Assert.Equal(2, path.Nodes.Length);
-        Assert.False(path.IsClosed);
+        Assert.Equal(2, path.SubPaths[0].Nodes.Length);
+        Assert.False(path.SubPaths[0].IsClosed);
     }
 
     [Fact]

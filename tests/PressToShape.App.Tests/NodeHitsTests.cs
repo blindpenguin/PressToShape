@@ -318,7 +318,7 @@ public class NodeHitsTests
         var onScreen = EditablePath.AsOnScreen(rotated);
         Assert.Equal(rotated.Id, onScreen.Id);
         Assert.Equal(0, onScreen.Rotation);
-        Assert.Equal(NodeType.Smooth, onScreen.Nodes[1].Type);
+        Assert.Equal(NodeType.Smooth, onScreen.SubPaths[0].Nodes[1].Type);
     }
 
     [Fact]
@@ -327,8 +327,8 @@ public class NodeHitsTests
         var path = Row();
 
         Assert.Same(path, EditablePath.For(path));
-        Assert.Equal(4, EditablePath.For(new RectangleShape { Width = 1, Height = 1 })!.Nodes.Length);
-        Assert.Equal(4, EditablePath.For(new EllipseShape { Width = 1, Height = 1 })!.Nodes.Length);
+        Assert.Equal(4, EditablePath.For(new RectangleShape { Width = 1, Height = 1 })!.SubPaths[0].Nodes.Length);
+        Assert.Equal(4, EditablePath.For(new EllipseShape { Width = 1, Height = 1 })!.SubPaths[0].Nodes.Length);
         Assert.Null(EditablePath.For(new GroupShape { Children = [new RectangleShape { Width = 1, Height = 1 }] }));
     }
 }

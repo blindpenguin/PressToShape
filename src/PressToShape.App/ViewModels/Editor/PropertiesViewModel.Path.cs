@@ -16,11 +16,11 @@ internal sealed partial class PropertiesViewModel
     /// <summary>Whether the selection has at least one path (also inside a selected group).</summary>
     public bool HasPathSelected => _selectedPaths.Count > 0;
 
-    /// <summary>Whether every selected path is closed.</summary>
-    public bool IsPathClosed => _selectedPaths.Count > 0 && _selectedPaths.All(path => path.IsClosed);
+    /// <summary>Whether every sub-path of every selected path is closed.</summary>
+    public bool IsPathClosed => _selectedPaths.Count > 0 && _selectedPaths.All(path => path.SubPaths.All(subPath => subPath.IsClosed));
 
-    /// <summary>Whether every selected path is open.</summary>
-    public bool IsPathOpen => _selectedPaths.Count > 0 && _selectedPaths.All(path => !path.IsClosed);
+    /// <summary>Whether every sub-path of every selected path is open.</summary>
+    public bool IsPathOpen => _selectedPaths.Count > 0 && _selectedPaths.All(path => path.SubPaths.All(subPath => !subPath.IsClosed));
 
     /// <summary>Whether every selected path uses the non-zero fill rule.</summary>
     public bool IsFillRuleNonZero => _selectedPaths.Count > 0 && _selectedPaths.All(path => path.FillRule == FillRule.NonZero);
@@ -44,11 +44,13 @@ internal sealed partial class PropertiesViewModel
     [RelayCommand(CanExecute = nameof(HasPathSelected))]
     private void UseEvenOddFill() => SetFillRule(FillRule.EvenOdd);
 
-    // Closing or opening can change the box (a curved closing segment), so the path is rebuilt, which also keeps a rotated path in place.
+    // Closing or opening changes every sub-path and can change the box (a curved closing segment), so the path is rebuilt, which also keeps a rotated path in place.
     private void SetClosed(bool closed) =>
         _editor.Apply(
             HistoryStepType.ChangePath,
-            shape => shape is PathShape path && path.IsClosed != closed ? path.Rebuilt(path.ToDocumentNodes(), closed, path.FillRule) : shape);
+            shape => shape is PathShape path && path.SubPaths.Any(subPath => subPath.IsClosed != closed)
+                ? path.Rebuilt([.. path.ToDocumentSubPaths().Select(subPath => new DocumentSubPath(subPath.Nodes, closed))], path.FillRule)
+                : shape);
 
     private void SetFillRule(FillRule rule) =>
         _editor.Apply(

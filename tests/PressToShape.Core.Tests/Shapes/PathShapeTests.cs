@@ -20,7 +20,7 @@ public class PathShapeTests
         var path = PathShape.Create([Corner(10, 20), Corner(40, 5)]);
 
         Assert.Equal(new Bounds(10, 5, 30, 15), path.Bounds);
-        Assert.False(path.IsClosed);
+        Assert.False(path.SubPaths[0].IsClosed);
         Assert.Equal(FillRule.NonZero, path.FillRule);
     }
 
@@ -30,10 +30,10 @@ public class PathShapeTests
         var path = Triangle();
 
         Assert.Equal(new Bounds(10, 20, 100, 100), path.Bounds);
-        Assert.Equal(new PathNode(0, 0), path.Nodes[0]);
-        Assert.Equal(new PathNode(1, 0), path.Nodes[1]);
-        Assert.Equal(new PathNode(0.5, 1), path.Nodes[2]);
-        Assert.True(path.IsClosed);
+        Assert.Equal(new PathNode(0, 0), path.SubPaths[0].Nodes[0]);
+        Assert.Equal(new PathNode(1, 0), path.SubPaths[0].Nodes[1]);
+        Assert.Equal(new PathNode(0.5, 1), path.SubPaths[0].Nodes[2]);
+        Assert.True(path.SubPaths[0].IsClosed);
     }
 
     [Fact]
@@ -70,16 +70,16 @@ public class PathShapeTests
     [Fact]
     public void Create_FewerThanTwoNodes_Throws()
     {
-        Assert.Throws<ArgumentException>(() => PathShape.Create([]));
+        Assert.Throws<ArgumentException>(() => PathShape.Create(Array.Empty<DocumentNode>()));
         Assert.Throws<ArgumentException>(() => PathShape.Create([Corner(1, 1)]));
-        Assert.Throws<ArgumentNullException>(() => PathShape.Create(null!));
+        Assert.Throws<ArgumentNullException>(() => PathShape.Create((IReadOnlyList<DocumentNode>)null!));
     }
 
     [Fact]
-    public void Nodes_FewerThanTwoOrDefault_Throws()
+    public void SubPaths_FewerThanTwoNodesOrDefault_Throws()
     {
-        Assert.Throws<ArgumentException>(() => new PathShape { Nodes = [new PathNode(0, 0)] });
-        Assert.Throws<ArgumentException>(() => new PathShape { Nodes = default });
+        Assert.Throws<ArgumentException>(() => new PathShape { SubPaths = [new SubPath([new PathNode(0, 0)])] });
+        Assert.Throws<ArgumentException>(() => new PathShape { SubPaths = default });
     }
 
     [Fact]
@@ -88,7 +88,7 @@ public class PathShapeTests
         var path = PathShape.Create([Corner(10, 50), Corner(110, 50)]);
 
         Assert.Equal(new Bounds(10, 50, 100, 0), path.Bounds);
-        Assert.All(path.Nodes, node => Assert.Equal(0, node.Y));
+        Assert.All(path.SubPaths[0].Nodes, node => Assert.Equal(0, node.Y));
         Assert.Equal(50, path.ToDocumentNodes()[1].Y);
     }
 
@@ -161,7 +161,7 @@ public class PathShapeTests
 
         var restored = (path with { Width = 0 }) with { Width = path.Width };
 
-        Assert.Equal(path.Nodes, restored.Nodes);
+        Assert.Equal(path.SubPaths[0].Nodes, restored.SubPaths[0].Nodes);
         Assert.Equal(60, restored.ToDocumentNodes()[2].X, 9);
     }
 
@@ -176,7 +176,7 @@ public class PathShapeTests
         Assert.NotEqual(path.Id, moved.Id);
         Assert.Equal(15, moved.X);
         Assert.Equal(15, moved.Y);
-        Assert.Equal(path.Nodes, moved.Nodes);
+        Assert.Equal(path.SubPaths[0].Nodes, moved.SubPaths[0].Nodes);
     }
 
     [Fact]

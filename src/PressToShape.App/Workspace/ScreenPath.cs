@@ -8,7 +8,6 @@ namespace PressToShape.App.Workspace;
 /// <see cref="ScreenShape"/> that holds it. A segment is a curve if the node it starts at has an out handle or the node it ends at
 /// has an in handle, otherwise a line.
 /// </summary>
-/// <param name="Nodes">The nodes in drawing order, at least two.</param>
-/// <param name="IsClosed">Whether the last node connects back to the first one.</param>
-/// <param name="FillRule">How the inside is decided where the path crosses itself.</param>
-internal sealed record ScreenPath(ImmutableArray<ScreenPathNode> Nodes, bool IsClosed, FillRule FillRule);
+/// <param name="SubPaths">The sub-paths in drawing order, at least one. They are drawn as one geometry, so the fill rule makes a sub-path inside another one a hole.</param>
+/// <param name="FillRule">How the inside is decided where the path crosses itself and across the sub-paths.</param>
+internal sealed record ScreenPath(ImmutableArray<ScreenSubPath> SubPaths, FillRule FillRule);

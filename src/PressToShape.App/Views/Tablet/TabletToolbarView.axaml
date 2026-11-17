@@ -91,40 +91,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <Border Width="1" Height="24" Margin="6,0" Background="{DynamicResource BorderSubtleBrush}" />
-
-            <!-- Zoom: zoom out, the value with the preset list, zoom in, fit -->
-            <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
-                <Button Classes="icon" Command="{Binding Zoom.ZoomOutCommand}"
-                        ToolTip.Tip="{loc:T 'Zoom out'}" AutomationProperties.Name="{loc:T 'Zoom out'}">
-                    <materialIcons:MaterialIcon Kind="MinusThick" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
-                </Button>
-                <DropDownButton x:Name="ZoomButton" Content="{Binding Zoom.ZoomText}" MinWidth="96" Padding="12,0"
-                                FontSize="{DynamicResource UiFontSize}"
-                                ToolTip.Tip="{loc:T 'Zoom'}" AutomationProperties.Name="{loc:T 'Zoom level'}">
-                    <DropDownButton.Flyout>
-                        <MenuFlyout ItemsSource="{Binding Zoom.ZoomPresets}">
-                            <MenuFlyout.ItemContainerTheme>
-                                <ControlTheme TargetType="MenuItem"
-                                              BasedOn="{StaticResource {x:Type MenuItem}}"
-                                              x:DataType="editorVm:ZoomPresetViewModel">
-                                    <Setter Property="Header" Value="{Binding Text}" />
-                                    <Setter Property="Command" Value="{Binding SelectCommand}" />
-                                </ControlTheme>
-                            </MenuFlyout.ItemContainerTheme>
-                        </MenuFlyout>
-                    </DropDownButton.Flyout>
-                </DropDownButton>
-                <Button Classes="icon" Command="{Binding Zoom.ZoomInCommand}"
-                        ToolTip.Tip="{loc:T 'Zoom in'}" AutomationProperties.Name="{loc:T 'Zoom in'}">
-                    <materialIcons:MaterialIcon Kind="Plus" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
-                </Button>
-                <Button Classes="icon" Command="{Binding Zoom.FitToWindowCommand}"
-                        ToolTip.Tip="{loc:T 'Fit artboard in window'}" AutomationProperties.Name="{loc:T 'Fit artboard in window'}">
-                    <materialIcons:MaterialIcon Kind="FitToScreen" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
-                </Button>
-            </StackPanel>
-
             <!-- The overflow menu: file and edit actions and the language -->
             <Button x:Name="OverflowButton" Classes="icon" Margin="8,0,0,0"
                     ToolTip.Tip="{loc:T 'More options'}" AutomationProperties.Name="{loc:T 'More options'}">

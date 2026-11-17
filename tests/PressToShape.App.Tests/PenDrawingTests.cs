@@ -144,7 +144,7 @@ public class PenDrawingTests
         pen.Hover(60, 40, Close);
 
         var preview = pen.PreviewShape!;
-        Assert.Equal(2, preview.Nodes.Length);
+        Assert.Equal(2, preview.SubPaths[0].Nodes.Length);
         Assert.False(preview.ToDocumentNodes()[0].HasOut);
         Assert.Equal(new[] { 0.0, 60.0 }, preview.ToDocumentNodes().Select(n => n.X));
     }
@@ -173,7 +173,7 @@ public class PenDrawingTests
 
         var preview = pen.PreviewShape!;
 
-        Assert.Equal(2, preview.Nodes.Length);
+        Assert.Equal(2, preview.SubPaths[0].Nodes.Length);
         Assert.Equal(100, preview.ToDocumentNodes()[1].X);
     }
 
@@ -259,8 +259,8 @@ public class PenDrawingTests
         var path = pen.Finish(close: false);
 
         Assert.NotNull(path);
-        Assert.Equal(3, path.Nodes.Length);
-        Assert.False(path.IsClosed);
+        Assert.Equal(3, path.SubPaths[0].Nodes.Length);
+        Assert.False(path.SubPaths[0].IsClosed);
         Assert.False(pen.IsDrawing);
         Assert.Null(pen.Overlay);
     }
@@ -272,7 +272,7 @@ public class PenDrawingTests
 
         var path = pen.Finish(close: true);
 
-        Assert.True(path!.IsClosed);
+        Assert.True(path!.SubPaths[0].IsClosed);
     }
 
     [Fact]
@@ -326,7 +326,7 @@ public class PenDrawingTests
         var result = pen.Press(100, 0, Near, Close);
 
         Assert.Equal(PenPressResult.FinishedPath, result);
-        Assert.Equal(2, pen.Finish(close: false)!.Nodes.Length);
+        Assert.Equal(2, pen.Finish(close: false)!.SubPaths[0].Nodes.Length);
     }
 
     [Fact]
@@ -438,7 +438,7 @@ public class PenDrawingTests
 
         var path = pen.Finish(close: false)!;
 
-        Assert.Equal([NodeType.Symmetric, NodeType.Corner], path.Nodes.Select(n => n.Type));
+        Assert.Equal([NodeType.Symmetric, NodeType.Corner], path.SubPaths[0].Nodes.Select(n => n.Type));
     }
 
     [Fact]
@@ -455,6 +455,6 @@ public class PenDrawingTests
 
         var path = pen.Finish(close: false)!;
 
-        Assert.Equal([NodeType.Corner, NodeType.Smooth, NodeType.Corner], path.Nodes.Select(n => n.Type));
+        Assert.Equal([NodeType.Corner, NodeType.Smooth, NodeType.Corner], path.SubPaths[0].Nodes.Select(n => n.Type));
     }
 }

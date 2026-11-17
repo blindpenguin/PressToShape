@@ -20,20 +20,26 @@ internal static class NodeHits
         ArgumentNullException.ThrowIfNull(path);
         ArgumentNullException.ThrowIfNull(selected);
 
-        var count = path.Nodes.Length;
+        var count = path.NodeCount;
         var handles = new HashSet<(int Index, NodeHandleSide Side)>();
         foreach (var index in selected.Where(i => i >= 0 && i < count))
         {
+            // The neighbors are the neighbors inside the sub-path of the node, and a closed sub-path wraps around.
+            var (subPath, local) = path.Locate(index);
+            var first = path.FirstNodeIndex(subPath);
+            var length = path.SubPaths[subPath].Nodes.Length;
+            var closed = path.SubPaths[subPath].IsClosed;
+
             AddIfPresent(handles, path, index, NodeHandleSide.In);
             AddIfPresent(handles, path, index, NodeHandleSide.Out);
-            if (index > 0 || path.IsClosed)
+            if (local > 0 || closed)
             {
-                AddIfPresent(handles, path, (index - 1 + count) % count, NodeHandleSide.Out);
+                AddIfPresent(handles, path, first + (local - 1 + length) % length, NodeHandleSide.Out);
             }
 
-            if (index < count - 1 || path.IsClosed)
+            if (local < length - 1 || closed)
             {
-                AddIfPresent(handles, path, (index + 1) % count, NodeHandleSide.In);
+                AddIfPresent(handles, path, first + (local + 1) % length, NodeHandleSide.In);
             }
         }
 
@@ -126,7 +132,7 @@ internal static class NodeHits
 
     private static void AddIfPresent(HashSet<(int Index, NodeHandleSide Side)> handles, PathShape path, int index, NodeHandleSide side)
     {
-        var node = path.Nodes[index];
+        var node = path.NodeAt(index);
         if (side == NodeHandleSide.In ? node.HasIn : node.HasOut)
         {
             handles.Add((index, side));

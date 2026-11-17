@@ -265,8 +265,8 @@ public class PathNodeEditingMoveTests
 
         var result = PathNodeEditing.RemoveNodes(path, [3])!;
 
-        Assert.True(result.IsClosed);
-        Assert.Equal(3, result.Nodes.Length);
+        Assert.True(result.SubPaths[0].IsClosed);
+        Assert.Equal(3, result.SubPaths[0].Nodes.Length);
     }
 
     [Theory]

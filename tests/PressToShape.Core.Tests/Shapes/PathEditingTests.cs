@@ -62,7 +62,7 @@ public class PathEditingTests
 
         var result = PathEditing.InsertNode(line, 0, 0.25);
 
-        Assert.Equal(4, result.Nodes.Length);
+        Assert.Equal(4, result.SubPaths[0].Nodes.Length);
         var nodes = result.ToDocumentNodes();
         // t is the parameter of the cubic, in which a line is not evenly spaced: 100 * (3t^2 - 2t^3) at t = 0.25.
         Assert.Equal(15.625, nodes[1].X, 9);
@@ -81,7 +81,7 @@ public class PathEditingTests
 
         var result = PathEditing.InsertNode(path, segment, t);
 
-        Assert.Equal(path.Nodes.Length + 1, result.Nodes.Length);
+        Assert.Equal(path.SubPaths[0].Nodes.Length + 1, result.SubPaths[0].Nodes.Length);
         Assert.True(MaxDistance(path, result) < 1e-6, "the curve must not change");
         Assert.True(MaxDistance(result, path) < 1e-6, "and must not grow either");
     }
@@ -93,8 +93,8 @@ public class PathEditingTests
 
         var result = PathEditing.InsertNode(path, 2, 0.5);
 
-        Assert.Equal(4, result.Nodes.Length);
-        Assert.True(result.IsClosed);
+        Assert.Equal(4, result.SubPaths[0].Nodes.Length);
+        Assert.True(result.SubPaths[0].IsClosed);
         Assert.True(MaxDistance(path, result) < 1e-6);
     }
 
@@ -119,7 +119,7 @@ public class PathEditingTests
         var result = PathEditing.RemoveNode(path, 1);
 
         Assert.NotNull(result);
-        Assert.Equal(3, result.Nodes.Length);
+        Assert.Equal(3, result.SubPaths[0].Nodes.Length);
         var nodes = result.ToDocumentNodes();
         Assert.Equal(100, nodes[1].X, 9);
         Assert.Equal(0, nodes[1].Y, 9);
@@ -161,7 +161,7 @@ public class PathEditingTests
     {
         var path = Curve();
 
-        var nodes = PathEditing.Continue(path, atStart: false);
+        var nodes = PathEditing.Continue(path, path.NodeCount - 1);
 
         Assert.Equal(3, nodes.Count);
         Assert.Equal(200, nodes[2].X, 9);
@@ -173,7 +173,7 @@ public class PathEditingTests
     {
         var path = Curve();
 
-        var nodes = PathEditing.Continue(path, atStart: true);
+        var nodes = PathEditing.Continue(path, 0);
 
         Assert.Equal(3, nodes.Count);
         Assert.Equal(0, nodes[2].X, 9);
@@ -190,7 +190,7 @@ public class PathEditingTests
     [Fact]
     public void Continue_ClosedPath_Throws()
     {
-        Assert.Throws<ArgumentException>(() => PathEditing.Continue(Curve(closed: true), atStart: false));
+        Assert.Throws<ArgumentException>(() => PathEditing.Continue(Curve(closed: true), 0));
     }
 
     [Theory]
@@ -228,7 +228,7 @@ public class PathEditingTests
     {
         var result = PathEditing.InsertNode(Curve(), 0, 0.5);
 
-        Assert.Equal(NodeType.Smooth, result.Nodes[1].Type);
+        Assert.Equal(NodeType.Smooth, result.SubPaths[0].Nodes[1].Type);
     }
 
     [Fact]
@@ -238,7 +238,7 @@ public class PathEditingTests
 
         var result = PathEditing.InsertNode(line, 0, 0.5);
 
-        Assert.Equal(NodeType.Corner, result.Nodes[1].Type);
+        Assert.Equal(NodeType.Corner, result.SubPaths[0].Nodes[1].Type);
     }
 
     [Fact]
@@ -246,7 +246,7 @@ public class PathEditingTests
     {
         var result = PathEditing.InsertNode(Curve(), 0, 0.4);
 
-        Assert.True(NodeTypes.Satisfies(result.Nodes[1]));
+        Assert.True(NodeTypes.Satisfies(result.SubPaths[0].Nodes[1]));
     }
 
     [Fact]
@@ -261,9 +261,9 @@ public class PathEditingTests
 
         var result = PathEditing.InsertNode(path, 0, 0.5);
 
-        Assert.Equal(NodeType.Corner, result.Nodes[0].Type);
-        Assert.Equal(NodeType.Corner, result.Nodes[2].Type);
-        Assert.Equal(NodeType.Corner, result.Nodes[3].Type);
+        Assert.Equal(NodeType.Corner, result.SubPaths[0].Nodes[0].Type);
+        Assert.Equal(NodeType.Corner, result.SubPaths[0].Nodes[2].Type);
+        Assert.Equal(NodeType.Corner, result.SubPaths[0].Nodes[3].Type);
     }
 
     [Fact]
@@ -277,8 +277,8 @@ public class PathEditingTests
 
         var result = PathEditing.InsertNode(path, 0, 0.5);
 
-        Assert.Equal(NodeType.Smooth, result.Nodes[0].Type);
-        Assert.True(NodeTypes.Satisfies(result.Nodes[0]));
+        Assert.Equal(NodeType.Smooth, result.SubPaths[0].Nodes[0].Type);
+        Assert.True(NodeTypes.Satisfies(result.SubPaths[0].Nodes[0]));
     }
 
     [Fact]
@@ -291,7 +291,7 @@ public class PathEditingTests
                 new DocumentNode(200, 0, inX: 180, inY: 0, type: NodeType.Smooth),
             ]);
 
-        var nodes = PathEditing.Continue(path, atStart: true);
+        var nodes = PathEditing.Continue(path, 0);
 
         Assert.Equal([NodeType.Smooth, NodeType.Symmetric, NodeType.Corner], nodes.Select(n => n.Type));
     }
@@ -308,6 +308,6 @@ public class PathEditingTests
 
         var result = PathEditing.RemoveNode(path, 0)!;
 
-        Assert.Equal([NodeType.Symmetric, NodeType.Smooth], result.Nodes.Select(n => n.Type));
+        Assert.Equal([NodeType.Symmetric, NodeType.Smooth], result.SubPaths[0].Nodes.Select(n => n.Type));
     }
 }

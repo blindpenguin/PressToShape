@@ -170,4 +170,22 @@ public enum HistoryStepType
 
     /// <summary>Shapes were moved to another layer.</summary>
     MoveToLayer,
+
+    /// <summary>Shapes were combined with the union operation into one path.</summary>
+    Union,
+
+    /// <summary>Shapes were combined with the difference operation into one path.</summary>
+    Difference,
+
+    /// <summary>Shapes were combined with the intersection operation into one path.</summary>
+    Intersection,
+
+    /// <summary>Shapes were combined with the exclusion operation into one path.</summary>
+    Exclusion,
+
+    /// <summary>Paths were joined into one compound path.</summary>
+    Combine,
+
+    /// <summary>A compound path was split into one path for each sub-path.</summary>
+    BreakApart,
 }

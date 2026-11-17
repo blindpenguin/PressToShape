@@ -69,6 +69,12 @@ internal static class HistoryStepNames
         HistoryStepType.DuplicateLayer => N("Duplicate layer"),
         HistoryStepType.MergeLayers => N("Merge layers"),
         HistoryStepType.MoveToLayer => N("Move to layer"),
+        HistoryStepType.Union => N("Union"),
+        HistoryStepType.Difference => N("Difference"),
+        HistoryStepType.Intersection => N("Intersection"),
+        HistoryStepType.Exclusion => N("Exclusion"),
+        HistoryStepType.Combine => N("Combine"),
+        HistoryStepType.BreakApart => N("Break apart"),
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown history step type."),
     };
 }

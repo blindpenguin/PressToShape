@@ -103,8 +103,8 @@ public class CanvasInteractionRadiusDirectSelectTests
         Drag(interaction, 100, 70, 90, 70);
 
         var path = Assert.IsType<PathShape>(state.Document.FindShape(rectangle.Id)!.Shape);
-        Assert.Equal(expected.Nodes.Length, path.Nodes.Length);
-        Assert.Equal(8, path.Nodes.Length);
+        Assert.Equal(expected.SubPaths[0].Nodes.Length, path.SubPaths[0].Nodes.Length);
+        Assert.Equal(8, path.SubPaths[0].Nodes.Length);
         Assert.Equal(steps + 1, state.History.Steps.Count);
         Assert.Equal(HistoryStepType.MovePathPoints, state.History.Steps[^1]);
         Assert.Equal(rectangle.Id, path.Id);

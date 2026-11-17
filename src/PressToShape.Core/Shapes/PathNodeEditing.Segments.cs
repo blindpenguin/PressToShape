@@ -16,7 +16,7 @@ public static partial class PathNodeEditing
     /// For <paramref name="t"/> from 0.15 to 0.85 the point moves exactly by the distance, nearer to an end only approximately.
     /// </summary>
     /// <param name="path">The path.</param>
-    /// <param name="segmentIndex">The segment, from the node of that index to the next one (see <see cref="PathEditing.InsertNode"/>).</param>
+    /// <param name="segmentIndex">The segment, from the node of that index to the next one (see <see cref="PathEditing.InsertNode"/>), counted across the sub-paths.</param>
     /// <param name="t">Where on the segment, from 0 to 1.</param>
     /// <param name="dx">The distance in x, in the frame before the rotation.</param>
     /// <param name="dy">The distance in y, in the frame before the rotation.</param>
@@ -33,9 +33,8 @@ public static partial class PathNodeEditing
             return path;
         }
 
-        var nodes = new List<DocumentNode>(path.ToDocumentNodes());
-        var endIndex = (segmentIndex + 1) % nodes.Count;
-        var start = nodes[segmentIndex];
+        var (nodes, startIndex, endIndex, buffer) = SegmentNodes(path, segmentIndex);
+        var start = nodes[startIndex];
         var end = nodes[endIndex];
 
         var weighted = Math.Clamp(t, MinimumBendParameter, MaximumBendParameter);
@@ -48,9 +47,9 @@ public static partial class PathNodeEditing
         var inX = (end.InX ?? end.X) + dx * endWeight;
         var inY = (end.InY ?? end.Y) + dy * endWeight;
 
-        nodes[segmentIndex] = Fitted(new DocumentNode(start.X, start.Y, start.InX, start.InY, outX, outY, start.Type));
+        nodes[startIndex] = Fitted(new DocumentNode(start.X, start.Y, start.InX, start.InY, outX, outY, start.Type));
         nodes[endIndex] = Fitted(new DocumentNode(end.X, end.Y, inX, inY, end.OutX, end.OutY, end.Type));
-        return path.Rebuilt(nodes, path.IsClosed, path.FillRule);
+        return buffer.Build()!;
     }
 
     /// <summary>
@@ -63,22 +62,21 @@ public static partial class PathNodeEditing
         ArgumentNullException.ThrowIfNull(path);
         CheckSegment(path, segmentIndex);
 
-        var nodes = new List<DocumentNode>(path.ToDocumentNodes());
-        var endIndex = (segmentIndex + 1) % nodes.Count;
-        var start = nodes[segmentIndex];
+        var (nodes, startIndex, endIndex, buffer) = SegmentNodes(path, segmentIndex);
+        var start = nodes[startIndex];
         var end = nodes[endIndex];
         if (!start.HasOut && !end.HasIn)
         {
             return path;
         }
 
-        nodes[segmentIndex] = start.HasOut
+        nodes[startIndex] = start.HasOut
             ? new DocumentNode(start.X, start.Y, start.InX, start.InY, type: NodeType.Corner)
             : start;
         nodes[endIndex] = end.HasIn
             ? new DocumentNode(end.X, end.Y, outX: end.OutX, outY: end.OutY, type: NodeType.Corner)
             : end;
-        return path.Rebuilt(nodes, path.IsClosed, path.FillRule);
+        return buffer.Build()!;
     }
 
     /// <summary>
@@ -92,9 +90,8 @@ public static partial class PathNodeEditing
         ArgumentNullException.ThrowIfNull(path);
         CheckSegment(path, segmentIndex);
 
-        var nodes = new List<DocumentNode>(path.ToDocumentNodes());
-        var endIndex = (segmentIndex + 1) % nodes.Count;
-        var start = nodes[segmentIndex];
+        var (nodes, startIndex, endIndex, buffer) = SegmentNodes(path, segmentIndex);
+        var start = nodes[startIndex];
         var end = nodes[endIndex];
         var lengthX = end.X - start.X;
         var lengthY = end.Y - start.Y;
@@ -103,9 +100,9 @@ public static partial class PathNodeEditing
             return path;
         }
 
-        nodes[segmentIndex] = Fitted(new DocumentNode(start.X, start.Y, start.InX, start.InY, start.X + lengthX / 3, start.Y + lengthY / 3, start.Type));
+        nodes[startIndex] = Fitted(new DocumentNode(start.X, start.Y, start.InX, start.InY, start.X + lengthX / 3, start.Y + lengthY / 3, start.Type));
         nodes[endIndex] = Fitted(new DocumentNode(end.X, end.Y, end.X - lengthX / 3, end.Y - lengthY / 3, end.OutX, end.OutY, end.Type));
-        return path.Rebuilt(nodes, path.IsClosed, path.FillRule);
+        return buffer.Build()!;
     }
 
     // A node whose handles no longer match its type becomes a corner.
@@ -114,8 +111,17 @@ public static partial class PathNodeEditing
 
     private static void CheckSegment(PathShape path, int segmentIndex)
     {
-        var segmentCount = path.IsClosed ? path.Nodes.Length : path.Nodes.Length - 1;
         ArgumentOutOfRangeException.ThrowIfNegative(segmentIndex);
-        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(segmentIndex, segmentCount);
+        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(segmentIndex, path.SegmentCount);
+    }
+
+    // The nodes of the sub-path that holds the segment, the indices of its start and end node in them (the end wraps to the first node
+    // of a closed sub-path), and the buffer to build the edited path from.
+    private static (List<DocumentNode> Nodes, int Start, int End, PathBuffer Buffer) SegmentNodes(PathShape path, int segmentIndex)
+    {
+        var (subPath, start) = path.LocateSegment(segmentIndex);
+        var buffer = PathBuffer.From(path);
+        var nodes = buffer.Nodes(subPath);
+        return (nodes, start, (start + 1) % nodes.Count, buffer);
     }
 }

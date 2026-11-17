@@ -121,14 +121,26 @@ public class TabletShellViewModelTests
     }
 
     [Fact]
-    public void TheZoomOfTheToolbar_IsTheZoomOfTheEditor()
+    public void TheZoomOfTheStatusBar_IsTheZoomOfTheEditor()
     {
         var f = new Fixture();
+        Assert.Equal("100%", f.Shell.StatusBar.ZoomText);
 
-        f.Shell.Toolbar.Zoom.ZoomInCommand.Execute(null);
+        f.Shell.StatusBar.ZoomInCommand.Execute(null);
 
         Assert.Equal(150, f.Shell.State.ZoomPercent);
         Assert.Equal(150, f.Shell.Canvas.ZoomPercent);
+        Assert.Equal("150%", f.Shell.StatusBar.ZoomText);
+        Assert.Equal(PressToShape.App.Workspace.ZoomLevels.Presets, f.Shell.StatusBar.ZoomPresets.Select(p => p.Percent));
+    }
+
+    [Fact]
+    public void TheToolbar_HasNoZoom_AndTheStatusBarIsMadeWithThePathEditor()
+    {
+        var f = new Fixture();
+
+        Assert.Null(typeof(PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel).GetProperty("Zoom"));
+        Assert.False(f.Shell.StatusBar.IsBusy);
     }
 
     // ---- leaving the app ----

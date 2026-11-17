@@ -98,7 +98,7 @@ public class PropertiesViewNodeTests
         Choice(view, "Smooth")!.Command!.Execute(null);
         Dispatcher.UIThread.RunJobs();
 
-        Assert.Equal(NodeType.Smooth, ((PathShape)state.Document.FindShape(path.Id)!.Shape).Nodes[2].Type);
+        Assert.Equal(NodeType.Smooth, ((PathShape)state.Document.FindShape(path.Id)!.Shape).SubPaths[0].Nodes[2].Type);
         Assert.Contains("selected", Choice(view, "Smooth")!.Classes);
         Assert.DoesNotContain("selected", Choice(view, "Corner")!.Classes);
 

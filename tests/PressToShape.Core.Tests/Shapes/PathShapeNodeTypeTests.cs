@@ -29,7 +29,7 @@ public class PathShapeNodeTypeTests
     {
         var path = Typed();
 
-        Assert.Equal([NodeType.Corner, NodeType.Smooth, NodeType.Symmetric], [path.Nodes[0].Type, path.Nodes[1].Type, path.Nodes[2].Type]);
+        Assert.Equal([NodeType.Corner, NodeType.Smooth, NodeType.Symmetric], [path.SubPaths[0].Nodes[0].Type, path.SubPaths[0].Nodes[1].Type, path.SubPaths[0].Nodes[2].Type]);
     }
 
     [Fact]
@@ -47,8 +47,8 @@ public class PathShapeNodeTypeTests
 
         var wider = path with { Width = path.Width * 3 };
 
-        Assert.Equal(path.Nodes[1].Type, wider.Nodes[1].Type);
-        Assert.Equal(path.Nodes[2].Type, wider.Nodes[2].Type);
+        Assert.Equal(path.SubPaths[0].Nodes[1].Type, wider.SubPaths[0].Nodes[1].Type);
+        Assert.Equal(path.SubPaths[0].Nodes[2].Type, wider.SubPaths[0].Nodes[2].Type);
     }
 
     [Theory]
@@ -83,7 +83,7 @@ public class PathShapeNodeTypeTests
 
         var rebuilt = path.Rebuilt([changed, nodes[1], nodes[2]], isClosed: false, FillRule.NonZero);
 
-        Assert.Equal(NodeType.Smooth, rebuilt.Nodes[0].Type);
+        Assert.Equal(NodeType.Smooth, rebuilt.SubPaths[0].Nodes[0].Type);
     }
 
     [Theory]

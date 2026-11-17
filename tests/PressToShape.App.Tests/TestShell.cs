@@ -34,6 +34,8 @@ internal sealed class TestShell : EditorShellViewModel
 
     public ObjectMenuCommands ObjectCommandsForTests => ObjectCommands;
 
+    public PathMenuCommands PathCommandsForTests => PathCommands;
+
     public FakeFileStore Files { get; }
 
     public FakeFileDialogs Dialogs { get; }

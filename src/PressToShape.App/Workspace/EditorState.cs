@@ -218,17 +218,27 @@ internal sealed partial class EditorState : ObservableObject
         RememberSelection();
         Document = document;
 
-        // Group and Ungroup replace what is selected, so going over them brings back the selection of the state that is reached.
-        // Every other step keeps the selection as far as its shapes still exist.
+        // Group, Ungroup and the path operations replace what is selected, so going over them brings back the selection of the state that is
+        // reached. Every other step keeps the selection as far as its shapes still exist.
         var low = Math.Min(fromIndex, History.CurrentIndex);
         var high = Math.Max(fromIndex, History.CurrentIndex);
-        if (Enumerable.Range(low, high - low).Any(i => History.Steps[i] is HistoryStepType.GroupShapes or HistoryStepType.UngroupShapes))
+        if (Enumerable.Range(low, high - low).Any(i => ReplacesSelection(History.Steps[i])))
         {
             RestoreSelection(document);
         }
 
         RaiseHistoryChanged();
     }
+
+    private static bool ReplacesSelection(HistoryStepType step) =>
+        step is HistoryStepType.GroupShapes
+            or HistoryStepType.UngroupShapes
+            or HistoryStepType.Union
+            or HistoryStepType.Difference
+            or HistoryStepType.Intersection
+            or HistoryStepType.Exclusion
+            or HistoryStepType.Combine
+            or HistoryStepType.BreakApart;
 
     private void RaiseHistoryChanged()
     {

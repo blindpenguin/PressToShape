@@ -60,5 +60,5 @@ internal sealed partial class EditorState
     // A path has its nodes. A rectangle and an ellipse have the nodes of the path they would become: four, and a rectangle one more for
     // each rounded corner. Everything else has none.
     private static int NodeCountOf(Document document, System.Guid shapeId) =>
-        document.FindShape(shapeId)?.Shape is { } shape ? EditablePath.For(shape)?.Nodes.Length ?? 0 : 0;
+        document.FindShape(shapeId)?.Shape is { } shape ? EditablePath.For(shape)?.NodeCount ?? 0 : 0;
 }

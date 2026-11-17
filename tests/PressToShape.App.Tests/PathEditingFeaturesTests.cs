@@ -77,7 +77,7 @@ public class PathEditingFeaturesTests
 
         var moved = Current(state, path.Id);
         Assert.Equal((path.X + 40, path.Y + 30), (moved.X, moved.Y));
-        Assert.Equal(path.Nodes, moved.Nodes);
+        Assert.Equal(path.SubPaths[0].Nodes, moved.SubPaths[0].Nodes);
         Assert.Equal(steps + 1, state.History.Steps.Count);
     }
 
@@ -98,7 +98,7 @@ public class PathEditingFeaturesTests
         var scaled = Current(state, path.Id);
         Assert.Equal(path.Width + 100, scaled.Width, 6);
         Assert.Equal(path.Height + 100, scaled.Height, 6);
-        Assert.Equal(path.Nodes, scaled.Nodes);
+        Assert.Equal(path.SubPaths[0].Nodes, scaled.SubPaths[0].Nodes);
     }
 
     [Fact]
@@ -111,9 +111,9 @@ public class PathEditingFeaturesTests
         var rotated = (PathShape)SelectionTransforms.SetRotation([path], frame, 45)[0];
 
         Assert.Equal(200, resized.Width, 6);
-        Assert.Equal(path.Nodes, resized.Nodes);
+        Assert.Equal(path.SubPaths[0].Nodes, resized.SubPaths[0].Nodes);
         Assert.Equal(45, rotated.Rotation, 6);
-        Assert.Equal(path.Nodes, rotated.Nodes);
+        Assert.Equal(path.SubPaths[0].Nodes, rotated.SubPaths[0].Nodes);
     }
 
     [Fact]
@@ -129,7 +129,7 @@ public class PathEditingFeaturesTests
         var paths = state.Document.Layers[0].Shapes.OfType<PathShape>().ToList();
         Assert.Equal(2, paths.Count);
         var copy = paths.Single(p => p.Id != path.Id);
-        Assert.Equal(path.Nodes, copy.Nodes);
+        Assert.Equal(path.SubPaths[0].Nodes, copy.SubPaths[0].Nodes);
         Assert.Equal(path.X + 10, copy.X);
         Assert.Equal(copy.Id, state.SelectedShapeId);
     }
@@ -187,7 +187,7 @@ public class PathEditingFeaturesTests
         objects.Ungroup();
 
         Assert.Equal(2, state.Document.Layers[0].Shapes.Count());
-        Assert.Equal(path.Nodes, Current(state, path.Id).Nodes);
+        Assert.Equal(path.SubPaths[0].Nodes, Current(state, path.Id).SubPaths[0].Nodes);
     }
 
     [Fact]
@@ -249,7 +249,7 @@ public class PathEditingFeaturesTests
         var loaded = ProjectFile.Read(ProjectFile.Write(state.Document));
         Assert.True(loaded.Succeeded, loaded.Detail);
         var path = Assert.IsType<PathShape>(Assert.Single(loaded.Document!.Layers.SelectMany(l => l.Shapes)));
-        Assert.Equal(3, path.Nodes.Length);
+        Assert.Equal(3, path.SubPaths[0].Nodes.Length);
         var svg = Encoding.UTF8.GetString(SvgExport.ToUtf8(state.Document));
         Assert.Contains("<path", svg);
         Assert.Contains("d=\"M 0 0 L 100 0 L 100 100\"", svg);

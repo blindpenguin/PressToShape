@@ -19,8 +19,8 @@ internal sealed partial class DesktopShellViewModel : EditorShellViewModel
         _shutdown = shutdown ?? throw new ArgumentNullException(nameof(shutdown));
 
         Toolbar = new ToolbarViewModel(State, localizer, UndoCommand, RedoCommand);
-        StatusBar = new StatusBarViewModel(State, localizer, FitToWindow);
-        MenuBar = new MenuBarViewModel(State, shutdown, localizer, Inspector.ShowTab, FitToWindow, FileCommands, EditCommands, ObjectCommands, LayerCommands, Recent, UndoCommand, RedoCommand);
+        StatusBar = new StatusBarViewModel(State, localizer, FitToWindow, PathEditing);
+        MenuBar = new MenuBarViewModel(State, shutdown, localizer, Inspector.ShowTab, FitToWindow, FileCommands, EditCommands, ObjectCommands, LayerCommands, PathCommands, Recent, UndoCommand, RedoCommand);
     }
 
     public MenuBarViewModel MenuBar { get; }

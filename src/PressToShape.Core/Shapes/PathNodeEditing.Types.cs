@@ -30,16 +30,18 @@ public static partial class PathNodeEditing
             return path;
         }
 
-        var original = path.ToDocumentNodes();
-        var nodes = new List<DocumentNode>(original);
+        var original = path.ToDocumentSubPaths();
+        var buffer = PathBuffer.From(path);
         foreach (var index in indices.Distinct())
         {
-            nodes[index] = type == NodeType.Corner
-                ? WithType(original[index], NodeType.Corner)
-                : Aligned(original, index, path.IsClosed, type);
+            var (subPath, local) = path.Locate(index);
+            var before = original[subPath];
+            buffer.Nodes(subPath)[local] = type == NodeType.Corner
+                ? WithType(before.Nodes[local], NodeType.Corner)
+                : Aligned(before.Nodes, local, before.IsClosed, type);
         }
 
-        return path.Rebuilt(nodes, path.IsClosed, path.FillRule);
+        return buffer.Build()!;
     }
 
     private static DocumentNode WithType(DocumentNode node, NodeType type) =>

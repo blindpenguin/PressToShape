@@ -7,7 +7,7 @@ namespace PressToShape.App.Tests;
 
 public class PathOutlineTests
 {
-    private static ScreenPath Path(bool closed, params ScreenPathNode[] nodes) => new([.. nodes], closed, FillRule.NonZero);
+    private static ScreenPath Path(bool closed, params ScreenPathNode[] nodes) => new([new ScreenSubPath([.. nodes], closed)], FillRule.NonZero);
 
     [Fact]
     public void Commands_OpenLines_MoveThenLinesAndNoClose()

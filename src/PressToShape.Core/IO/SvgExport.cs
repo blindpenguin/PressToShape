@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using PressToShape.Core.Documents;
@@ -181,21 +182,25 @@ public static class SvgExport
         return data.Append(" Z").ToString();
     }
 
-    private static string PathData(PathShape path)
+    // One "M ..." run for every sub-path, so a compound path is one path element.
+    private static string PathData(PathShape path) =>
+        string.Join(' ', path.ToDocumentSubPaths().Select(SubPathData));
+
+    private static string SubPathData(DocumentSubPath subPath)
     {
-        var nodes = path.ToDocumentNodes();
+        var nodes = subPath.Nodes;
         var data = new StringBuilder();
         data.Append("M ").Append(Number(nodes[0].X)).Append(' ').Append(Number(nodes[0].Y));
 
-        var segmentCount = path.IsClosed ? nodes.Count : nodes.Count - 1;
+        var segmentCount = subPath.IsClosed ? nodes.Count : nodes.Count - 1;
         for (var i = 0; i < segmentCount; i++)
         {
             var from = nodes[i];
             var to = nodes[(i + 1) % nodes.Count];
-            var isLastOfClosed = path.IsClosed && i == nodes.Count - 1;
+            var isLastOfClosed = subPath.IsClosed && i == nodes.Count - 1;
             if (!from.HasOut && !to.HasIn)
             {
-                // The closing line of a closed path is drawn by Z.
+                // The closing line of a closed sub-path is drawn by Z.
                 if (!isLastOfClosed)
                 {
                     data.Append(" L ").Append(Number(to.X)).Append(' ').Append(Number(to.Y));
@@ -210,7 +215,7 @@ public static class SvgExport
                 .Append(Number(to.X)).Append(' ').Append(Number(to.Y));
         }
 
-        if (path.IsClosed)
+        if (subPath.IsClosed)
         {
             data.Append(" Z");
         }

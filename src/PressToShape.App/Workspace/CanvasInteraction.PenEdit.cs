@@ -40,9 +40,11 @@ internal sealed partial class CanvasInteraction
 
         if (nearest >= 0)
         {
-            if (!path.IsClosed && (nearest == 0 || nearest == nodes.Count - 1))
+            var (subPath, local) = onScreen.Locate(nearest);
+            var ends = onScreen.SubPaths[subPath];
+            if (!ends.IsClosed && (local == 0 || local == ends.Nodes.Length - 1))
             {
-                BeginContinue(path, onScreen, atStart: nearest == 0);
+                BeginContinue(path, onScreen, nearest);
             }
             else
             {
@@ -82,10 +84,11 @@ internal sealed partial class CanvasInteraction
     }
 
     // The pen works with the positions the user sees, so the rotation of the old path is baked into the nodes it continues from.
-    private void BeginContinue(PathShape path, PathShape onScreen, bool atStart)
+    private void BeginContinue(PathShape path, PathShape onScreen, int endIndex)
     {
         _continued = path;
-        _pen.Begin(PathEditing.Continue(onScreen, atStart));
+        _continuedSubPath = onScreen.Locate(endIndex).SubPath;
+        _pen.Begin(PathEditing.Continue(onScreen, endIndex));
         ShowPen();
     }
 }

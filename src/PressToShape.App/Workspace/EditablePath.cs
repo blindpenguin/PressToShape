@@ -48,30 +48,6 @@ internal static class EditablePath
     {
         ArgumentNullException.ThrowIfNull(path);
 
-        if (path.Rotation == 0)
-        {
-            return path;
-        }
-
-        var radians = path.Rotation * Math.PI / 180;
-        var sin = Math.Sin(radians);
-        var cos = Math.Cos(radians);
-        (double X, double Y) Turn(double x, double y)
-        {
-            var dx = x - path.CenterX;
-            var dy = y - path.CenterY;
-            return (path.CenterX + dx * cos - dy * sin, path.CenterY + dx * sin + dy * cos);
-        }
-
-        var turned = new List<DocumentNode>();
-        foreach (var node in path.ToDocumentNodes())
-        {
-            var anchor = Turn(node.X, node.Y);
-            var handleIn = node.HasIn ? Turn(node.InX!.Value, node.InY!.Value) : ((double X, double Y)?)null;
-            var handleOut = node.HasOut ? Turn(node.OutX!.Value, node.OutY!.Value) : ((double X, double Y)?)null;
-            turned.Add(new DocumentNode(anchor.X, anchor.Y, handleIn?.X, handleIn?.Y, handleOut?.X, handleOut?.Y, node.Type));
-        }
-
-        return PathShape.Create(turned, path.IsClosed, path.FillRule) with { Id = path.Id };
+        return path.WithRotationApplied();
     }
 }

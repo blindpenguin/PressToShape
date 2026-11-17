@@ -21,6 +21,8 @@
 
         <PackageVersion Include="GetText.NET" Version="10.0.1" />
 
+        <PackageVersion Include="Clipper2" Version="1.5.4" />
+
         <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.15" />
 
         <!-- Developer tooling (tools/PressToShape.CodeIndex only) -->

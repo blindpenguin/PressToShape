@@ -25,7 +25,6 @@ internal sealed class TabletToolbarViewModel : ViewModelBase
         EditorShellViewModel shell,
         ICommand undo,
         ICommand redo,
-        ZoomViewModel zoom,
         OverflowMenuViewModel overflowMenu,
         TabletPanelViewModel panel)
     {
@@ -33,7 +32,6 @@ internal sealed class TabletToolbarViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(undo);
         ArgumentNullException.ThrowIfNull(redo);
         _shell = shell ?? throw new ArgumentNullException(nameof(shell));
-        Zoom = zoom ?? throw new ArgumentNullException(nameof(zoom));
         OverflowMenu = overflowMenu ?? throw new ArgumentNullException(nameof(overflowMenu));
         ArgumentNullException.ThrowIfNull(panel);
 
@@ -67,8 +65,6 @@ internal sealed class TabletToolbarViewModel : ViewModelBase
 
     /// <summary>The icons that open the panel: Properties, Layers, History.</summary>
     public IReadOnlyList<PanelButtonViewModel> PanelButtons { get; }
-
-    public ZoomViewModel Zoom { get; }
 
     public OverflowMenuViewModel OverflowMenu { get; }
 

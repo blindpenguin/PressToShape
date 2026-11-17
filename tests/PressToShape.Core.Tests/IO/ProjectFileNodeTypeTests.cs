@@ -48,8 +48,8 @@ public class ProjectFileNodeTypeTests
 
         var loaded = RoundTrip(path);
 
-        Assert.Equal(path.Nodes.Select(n => n.Type), loaded.Nodes.Select(n => n.Type));
-        Assert.Equal(path.Nodes.AsSpan().ToArray(), loaded.Nodes.AsSpan().ToArray());
+        Assert.Equal(path.SubPaths[0].Nodes.Select(n => n.Type), loaded.SubPaths[0].Nodes.Select(n => n.Type));
+        Assert.Equal(path.SubPaths[0].Nodes.AsSpan().ToArray(), loaded.SubPaths[0].Nodes.AsSpan().ToArray());
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class ProjectFileNodeTypeTests
 
         var loaded = RoundTrip(path);
 
-        Assert.Equal(NodeType.Corner, loaded.Nodes[1].Type);
+        Assert.Equal(NodeType.Corner, loaded.SubPaths[0].Nodes[1].Type);
         Assert.Contains("\"type\": \"corner\"", Json(path));
     }
 
@@ -71,7 +71,7 @@ public class ProjectFileNodeTypeTests
         var path = PathShape.Create(
             [new DocumentNode(0, 50), new DocumentNode(50, 50, inX: 30, inY: 50, outX: 70, outY: 50, type: NodeType.Smooth), new DocumentNode(100, 50)]);
 
-        Assert.Equal(NodeType.Smooth, RoundTrip(path).Nodes[1].Type);
+        Assert.Equal(NodeType.Smooth, RoundTrip(path).SubPaths[0].Nodes[1].Type);
     }
 
     [Fact]
@@ -100,7 +100,7 @@ public class ProjectFileNodeTypeTests
 
         Assert.True(result.Succeeded, result.Detail);
         var path = Assert.IsType<PathShape>(result.Document!.Layers[0].Shapes[0]);
-        Assert.Equal([NodeType.Corner, NodeType.Symmetric, NodeType.Smooth, NodeType.Corner], path.Nodes.Select(n => n.Type));
+        Assert.Equal([NodeType.Corner, NodeType.Symmetric, NodeType.Smooth, NodeType.Corner], path.SubPaths[0].Nodes.Select(n => n.Type));
     }
 
     [Theory]
@@ -114,7 +114,7 @@ public class ProjectFileNodeTypeTests
         var result = ReadShape(PathJson(nodes));
 
         Assert.True(result.Succeeded, result.Detail);
-        Assert.Equal(expected, ((PathShape)result.Document!.Layers[0].Shapes[0]).Nodes[0].Type);
+        Assert.Equal(expected, ((PathShape)result.Document!.Layers[0].Shapes[0]).SubPaths[0].Nodes[0].Type);
     }
 
     [Fact]
@@ -156,6 +156,6 @@ public class ProjectFileNodeTypeTests
 
         Assert.True(result.Succeeded, result.Detail);
         var loaded = Assert.IsType<GroupShape>(result.Document!.Layers[0].Shapes[0]);
-        Assert.Equal(NodeType.Corner, Assert.IsType<PathShape>(loaded.Children[0]).Nodes[1].Type);
+        Assert.Equal(NodeType.Corner, Assert.IsType<PathShape>(loaded.Children[0]).SubPaths[0].Nodes[1].Type);
     }
 }

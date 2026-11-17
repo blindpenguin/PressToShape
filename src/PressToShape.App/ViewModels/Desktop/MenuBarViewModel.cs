@@ -29,6 +29,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
         EditMenuCommands edit,
         ObjectMenuCommands objects,
         LayerMenuCommands layers,
+        PathMenuCommands paths,
         RecentFiles recent,
         ICommand undo,
         ICommand redo)
@@ -42,6 +43,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(edit);
         ArgumentNullException.ThrowIfNull(objects);
         ArgumentNullException.ThrowIfNull(layers);
+        ArgumentNullException.ThrowIfNull(paths);
         ArgumentNullException.ThrowIfNull(recent);
         ArgumentNullException.ThrowIfNull(undo);
         ArgumentNullException.ThrowIfNull(redo);
@@ -147,13 +149,13 @@ internal sealed class MenuBarViewModel : ViewModelBase
                 Item(N("_Convert Object to Path"), "Ctrl+Shift+O"),
                 Item(N("_Stroke to Path")),
                 Separator(),
-                Item(N("Com_bine")),
-                Item(N("Break _Apart")),
+                Item(N("Com_bine"), command: paths.Combine),
+                Item(N("Break _Apart"), command: paths.BreakApart),
                 Separator(),
-                Item(N("_Union")),
-                Item(N("_Difference")),
-                Item(N("_Intersection")),
-                Item(N("E_xclusion")),
+                Item(N("_Union"), command: paths.Union),
+                Item(N("_Difference"), command: paths.Difference),
+                Item(N("_Intersection"), command: paths.Intersection),
+                Item(N("E_xclusion"), command: paths.Exclusion),
                 Separator(),
                 Item(N("_Reverse Direction")),
                 Item(N("Si_mplify"))),

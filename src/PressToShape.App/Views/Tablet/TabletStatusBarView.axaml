@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="48"
+             x:Class="PressToShape.App.Views.Tablet.TabletStatusBarView"
+             x:DataType="vm:StatusBarViewModel">
+
+    <!-- The status bar of the tablet layout: the selection summary and the busy text on the left, the zoom controls on the right. It reads its sizes
+         from the touch sizes of the layout, so its controls are at least 48 dp. -->
+    <Border Background="{DynamicResource ToolbarBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderSubtleBrush}"
+            BorderThickness="0,1,0,0"
+            Height="{DynamicResource StatusBarHeight}"
+            Padding="12,0,8,0">
+        <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+
+            <TextBlock Grid.Column="0" VerticalAlignment="Center"
+                       Foreground="{DynamicResource TextSecondaryBrush}" FontSize="{DynamicResource UiFontSize}"
+                       Text="{Binding SelectionSummary}" />
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="16,0,0,0"
+                       Foreground="{DynamicResource TextSecondaryBrush}" FontSize="{DynamicResource UiFontSize}"
+                       Text="{Binding BusyText}" IsVisible="{Binding IsBusy}" />
+
+            <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+                <Button Classes="icon" Command="{Binding ZoomOutCommand}"
+                        ToolTip.Tip="{loc:T 'Zoom out'}" AutomationProperties.Name="{loc:T 'Zoom out'}">
+                    <materialIcons:MaterialIcon Kind="MinusThick" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+                <DropDownButton x:Name="ZoomButton" Content="{Binding ZoomText}" MinWidth="96" Padding="12,0"
+                                MinHeight="{DynamicResource ToolbarButtonSize}"
+                                FontSize="{DynamicResource UiFontSize}"
+                                ToolTip.Tip="{loc:T 'Zoom'}" AutomationProperties.Name="{loc:T 'Zoom level'}">
+                    <DropDownButton.Flyout>
+                        <MenuFlyout ItemsSource="{Binding ZoomPresets}">
+                            <MenuFlyout.ItemContainerTheme>
+                                <ControlTheme TargetType="MenuItem"
+                                              BasedOn="{StaticResource {x:Type MenuItem}}"
+                                              x:DataType="vm:ZoomPresetViewModel">
+                                    <Setter Property="Header" Value="{Binding Text}" />
+                                    <Setter Property="Command" Value="{Binding SelectCommand}" />
+                                </ControlTheme>
+                            </MenuFlyout.ItemContainerTheme>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+                <Button Classes="icon" Command="{Binding ZoomInCommand}"
+                        ToolTip.Tip="{loc:T 'Zoom in'}" AutomationProperties.Name="{loc:T 'Zoom in'}">
+                    <materialIcons:MaterialIcon Kind="Plus" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+                <Button Classes="icon" Command="{Binding FitToWindowCommand}"
+                        ToolTip.Tip="{loc:T 'Fit artboard in window'}" AutomationProperties.Name="{loc:T 'Fit artboard in window'}">
+                    <materialIcons:MaterialIcon Kind="FitToScreen" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+
+</UserControl>

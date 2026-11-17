@@ -109,6 +109,11 @@ internal sealed class ShapeDto
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<NodeDto?>? Nodes { get; set; }
 
+    // Only for a path with more than one sub-path: its sub-paths. Then the path has no "nodes" and no "closed" of its own.
+    [JsonPropertyName("subPaths")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public List<SubPathDto?>? SubPaths { get; set; }
+
     // Only for a path: written only when the path is closed, and missing means open.
     [JsonPropertyName("closed")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -123,6 +128,18 @@ internal sealed class ShapeDto
     [JsonPropertyName("children")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<ShapeDto?>? Children { get; set; }
+}
+
+// A sub-path of a compound path: its nodes and whether it is closed (written only when it is, missing means open).
+internal sealed class SubPathDto
+{
+    [JsonPropertyName("nodes")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public List<NodeDto?>? Nodes { get; set; }
+
+    [JsonPropertyName("closed")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? Closed { get; set; }
 }
 
 // A node of a path. The handle points are written only for a node that has them, and then in pairs.

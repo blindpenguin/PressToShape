@@ -96,7 +96,7 @@ internal sealed partial class CanvasInteraction
         }
 
         _state.SetNodeSelection([new NodeRef(hit.ShapeId, hit.Index)]);
-        Nodes.SetType(path.Nodes[hit.Index].Type == NodeType.Corner ? NodeType.Smooth : NodeType.Corner);
+        Nodes.SetType(path.NodeAt(hit.Index).Type == NodeType.Corner ? NodeType.Smooth : NodeType.Corner);
     }
 
     /// <summary>
@@ -137,7 +137,7 @@ internal sealed partial class CanvasInteraction
     }
 
     private int PathNodeCount(System.Guid shapeId) =>
-        _state.Document.FindShape(shapeId)?.Shape is { } shape && EditablePath.For(shape) is { } path ? path.Nodes.Length : 1;
+        _state.Document.FindShape(shapeId)?.Shape is { } shape && EditablePath.For(shape) is { } path ? path.NodeCount : 1;
 
     // The button went up: a click on one of several selected nodes, without a move, selects only that node.
     private void NodeToolReleased()

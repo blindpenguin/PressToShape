@@ -66,20 +66,20 @@ public class TabletViewsTests
     // ---- toolbar ----
 
     [Fact]
-    public void Toolbar_BuildsAndShowsTheTitleAndTheZoom() => HeadlessUi.Run(() =>
+    public void Toolbar_BuildsAndShowsTheTitle_AndHasNoZoom() => HeadlessUi.Run(() =>
     {
         var shell = CreateShell();
         var (view, window) = Show(new TabletToolbarView { DataContext = shell.Toolbar }, touch: false);
 
         var texts = view.GetVisualDescendants().OfType<TextBlock>().Select(t => t.Text).ToList();
         Assert.Contains("Untitled", texts);
-        Assert.Equal("100%", Assert.IsType<string>(view.GetVisualDescendants().OfType<DropDownButton>().Single().Content));
+        Assert.Empty(view.GetVisualDescendants().OfType<DropDownButton>());
 
         window.Close();
     });
 
     [Fact]
-    public void Toolbar_FollowsTheDocument_StarUndoAndZoom() => HeadlessUi.Run(() =>
+    public void Toolbar_FollowsTheDocument_StarAndUndo() => HeadlessUi.Run(() =>
     {
         var shell = CreateShell();
         var (view, window) = Show(new TabletToolbarView { DataContext = shell.Toolbar }, touch: false);
@@ -94,10 +94,6 @@ public class TabletViewsTests
         Assert.True(undo.IsEnabled);
         Assert.Contains("* Untitled", view.GetVisualDescendants().OfType<TextBlock>().Select(t => t.Text));
 
-        Named<Button>(view, "Zoom in").Command!.Execute(null);
-        Dispatcher.UIThread.RunJobs();
-        Assert.Equal("150%", view.GetVisualDescendants().OfType<DropDownButton>().Single().Content);
-
         window.Close();
     });
 
@@ -107,12 +103,12 @@ public class TabletViewsTests
         var shell = CreateShell();
         var (view, window) = Show(new TabletToolbarView { DataContext = shell.Toolbar }, touch: false);
 
-        foreach (var name in new[] { "Undo", "Redo", "Duplicate", "Delete", "Zoom out", "Zoom in", "Fit artboard in window", "More options" })
+        foreach (var name in new[] { "Undo", "Redo", "Duplicate", "Delete", "More options" })
         {
             Assert.NotNull(Named<Button>(view, name));
         }
 
-        Assert.NotNull(Named<DropDownButton>(view, "Zoom level"));
+        Assert.DoesNotContain(view.GetVisualDescendants().OfType<Button>(), b => AutomationProperties.GetName(b) is "Zoom in" or "Zoom out" or "Fit artboard in window");
 
         window.Close();
     });
@@ -124,7 +120,7 @@ public class TabletViewsTests
         var (view, window) = Show(new TabletToolbarView { DataContext = shell.Toolbar }, touch: true);
 
         var controls = InteractiveControls(view);
-        Assert.Equal(12, controls.Count); // undo, redo, duplicate, delete, three panel icons, zoom out, zoom drop-down, zoom in, fit, overflow
+        Assert.Equal(8, controls.Count); // undo, redo, duplicate, delete, three panel icons, overflow
         var tooSmall = controls.Where(c => c.Bounds.Width < MinimumTouchTarget || c.Bounds.Height < MinimumTouchTarget).Select(Describe).ToList();
         Assert.True(tooSmall.Count == 0, "Controls under 48 dp: " + string.Join(", ", tooSmall));
 
@@ -391,7 +387,7 @@ public class TabletViewsTests
     });
 
     [Fact]
-    public void Shell_HasNoRulers_NoMenuBar_NoStatusBar_AndNoBarUnderTheCanvas() => HeadlessUi.Run(() =>
+    public void Shell_HasNoRulers_NoMenuBar_AndNoDesktopStatusBar() => HeadlessUi.Run(() =>
     {
         var shell = CreateShell();
         var (view, window) = ShowShell(shell);
@@ -418,6 +414,8 @@ public class TabletViewsTests
         Assert.All(toolbarControls, c => Assert.True(c.Bounds.Height >= MinimumTouchTarget, Describe(c)));
         var panelControls = InteractiveControls(Only<TabletPanelView>(view));
         Assert.All(panelControls, c => Assert.True(c.Bounds.Height >= MinimumTouchTarget, Describe(c)));
+        var barControls = InteractiveControls(Only<TabletStatusBarView>(view));
+        Assert.All(barControls, c => Assert.True(c.Bounds.Height >= MinimumTouchTarget, Describe(c)));
 
         window.Close();
     });
@@ -439,7 +437,10 @@ public class TabletViewsTests
         Assert.Equal(toolbar.Bounds.Height, Origin(canvas, window).Y, 0.5);
         Assert.Equal(column.Bounds.Width, Origin(canvas, window).X, 0.5);
         Assert.Equal(1280, column.Bounds.Width + canvas.Bounds.Width, 0.5);
-        Assert.Equal(720, Origin(canvas, window).Y + canvas.Bounds.Height, 0.5);
+        // The status bar is under the tool column and the canvas, so the canvas ends at the top of the bar.
+        var bar = Only<TabletStatusBarView>(view);
+        Assert.Equal(Origin(bar, window).Y, Origin(canvas, window).Y + canvas.Bounds.Height, 0.5);
+        Assert.Equal(720, Origin(bar, window).Y + bar.Bounds.Height, 0.5);
 
         window.Close();
     });
@@ -476,7 +477,7 @@ public class TabletViewsTests
         Assert.Equal(before, (canvas.Bounds, Origin(canvas, window)));
         Assert.InRange(panel.Bounds.Width, 260, 360);
         Assert.Equal(1280, Origin(panel, window).X + panel.Bounds.Width, 0.5);
-        Assert.Equal(720, Origin(panel, window).Y + panel.Bounds.Height, 0.5);
+        Assert.Equal(Origin(canvas, window).Y + canvas.Bounds.Height, Origin(panel, window).Y + panel.Bounds.Height, 0.5);
         Assert.Equal(Origin(canvas, window).Y, Origin(panel, window).Y, 0.5);
 
         shell.Panel.Close();

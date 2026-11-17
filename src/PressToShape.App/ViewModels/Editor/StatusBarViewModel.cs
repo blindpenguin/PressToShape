@@ -4,24 +4,44 @@ using System.ComponentModel;
 using System.Globalization;
 using CommunityToolkit.Mvvm.Input;
 using PressToShape.App.Localization;
-using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 
-namespace PressToShape.App.ViewModels.Desktop;
+namespace PressToShape.App.ViewModels.Editor;
 
-/// <summary>Status bar: selection summary on the left, zoom controls on the right.</summary>
+/// <summary>Status bar of both layouts: selection summary and the busy text on the left, zoom controls on the right.</summary>
 internal sealed partial class StatusBarViewModel : LocalizedViewModel
 {
     private readonly EditorState _state;
     private readonly ZoomViewModel _zoom;
 
-    public StatusBarViewModel(EditorState state, ILocalizer localizer, Action fitToWindow)
+    private readonly PathEditor? _pathEditing;
+
+    /// <param name="state">The editor state.</param>
+    /// <param name="localizer">Translates the texts.</param>
+    /// <param name="fitToWindow">Fits the artboard to the window.</param>
+    /// <param name="pathEditing">The path operations, to show a text while one runs in the background. Optional.</param>
+    public StatusBarViewModel(EditorState state, ILocalizer localizer, Action fitToWindow, PathEditor? pathEditing = null)
         : base(localizer)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _zoom = new ZoomViewModel(state, localizer, fitToWindow);
         _state.PropertyChanged += OnStateChanged;
+        _pathEditing = pathEditing;
+        if (_pathEditing is not null)
+        {
+            _pathEditing.BusyChanged += (_, _) =>
+            {
+                OnPropertyChanged(nameof(IsBusy));
+                OnPropertyChanged(nameof(BusyText));
+            };
+        }
     }
+
+    /// <summary>Whether a path operation is running in the background.</summary>
+    public bool IsBusy => _pathEditing?.IsBusy == true;
+
+    /// <summary>The translated text shown while <see cref="IsBusy"/>.</summary>
+    public string BusyText => Localizer.T("Working…");
 
     /// <summary>The translated selection text: "Nothing selected", "1 selected" or "N selected".</summary>
     public string SelectionSummary => SelectionSummaryText.Format(Localizer, _state.SelectedCount);

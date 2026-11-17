@@ -40,20 +40,20 @@ public class CanvasScenePathTests
         Assert.Equal(100 * scale, screen.Width, 9);
         Assert.Equal(100 * scale, screen.Height, 9);
         var outline = screen.Path!;
-        Assert.Equal(2, outline.Nodes.Length);
+        Assert.Equal(2, outline.SubPaths[0].Nodes.Length);
         // The first node sits at the box's top left, the second at its bottom right, both relative to the box.
-        Assert.Equal(0, outline.Nodes[0].X, 9);
-        Assert.Equal(0, outline.Nodes[0].Y, 9);
-        Assert.Equal(100 * scale, outline.Nodes[1].X, 9);
-        Assert.Equal(100 * scale, outline.Nodes[1].Y, 9);
-        Assert.Equal(0, outline.Nodes[0].OutX!.Value, 9);
-        Assert.Equal(40 * scale, outline.Nodes[0].OutY!.Value, 9);
-        Assert.Equal(40 * scale, outline.Nodes[1].InX!.Value, 9);
-        Assert.Equal(100 * scale, outline.Nodes[1].InY!.Value, 9);
-        Assert.False(outline.Nodes[0].HasIn);
-        Assert.True(outline.Nodes[0].HasOut);
-        Assert.True(outline.Nodes[1].HasIn);
-        Assert.False(outline.Nodes[1].HasOut);
+        Assert.Equal(0, outline.SubPaths[0].Nodes[0].X, 9);
+        Assert.Equal(0, outline.SubPaths[0].Nodes[0].Y, 9);
+        Assert.Equal(100 * scale, outline.SubPaths[0].Nodes[1].X, 9);
+        Assert.Equal(100 * scale, outline.SubPaths[0].Nodes[1].Y, 9);
+        Assert.Equal(0, outline.SubPaths[0].Nodes[0].OutX!.Value, 9);
+        Assert.Equal(40 * scale, outline.SubPaths[0].Nodes[0].OutY!.Value, 9);
+        Assert.Equal(40 * scale, outline.SubPaths[0].Nodes[1].InX!.Value, 9);
+        Assert.Equal(100 * scale, outline.SubPaths[0].Nodes[1].InY!.Value, 9);
+        Assert.False(outline.SubPaths[0].Nodes[0].HasIn);
+        Assert.True(outline.SubPaths[0].Nodes[0].HasOut);
+        Assert.True(outline.SubPaths[0].Nodes[1].HasIn);
+        Assert.False(outline.SubPaths[0].Nodes[1].HasOut);
     }
 
     [Fact]
@@ -62,8 +62,8 @@ public class CanvasScenePathTests
         var open = CanvasScene.BuildShape(Curve(), 100, 0, 0);
         var closed = CanvasScene.BuildShape(Curve(closed: true), 100, 0, 0);
 
-        Assert.False(open.Path!.IsClosed);
-        Assert.True(closed.Path!.IsClosed);
+        Assert.False(open.Path!.SubPaths[0].IsClosed);
+        Assert.True(closed.Path!.SubPaths[0].IsClosed);
         Assert.Equal(FillRule.EvenOdd, closed.Path.FillRule);
     }
 
@@ -93,7 +93,7 @@ public class CanvasScenePathTests
         var screen = CanvasScene.BuildShape(line, 100, 0, 0);
 
         Assert.Equal(0, screen.Height);
-        Assert.All(screen.Path!.Nodes, node => Assert.True(double.IsFinite(node.X) && double.IsFinite(node.Y)));
+        Assert.All(screen.Path!.SubPaths[0].Nodes, node => Assert.True(double.IsFinite(node.X) && double.IsFinite(node.Y)));
     }
 
     [Fact]

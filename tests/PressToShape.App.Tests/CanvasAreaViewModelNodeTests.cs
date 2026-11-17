@@ -41,7 +41,7 @@ public class CanvasAreaViewModelNodeTests
 
         f.Canvas.DoubleClick(300, 200);
 
-        var node = Current(f).Nodes[1];
+        var node = Current(f).SubPaths[0].Nodes[1];
         Assert.Equal(NodeType.Smooth, node.Type);
         Assert.True(node.HasIn && node.HasOut);
         Assert.Equal(steps + 1, f.State.History.Steps.Count);
@@ -57,7 +57,7 @@ public class CanvasAreaViewModelNodeTests
 
         f.Canvas.DoubleClick(300, 200);
 
-        Assert.Equal(NodeType.Corner, Current(f).Nodes[1].Type);
+        Assert.Equal(NodeType.Corner, Current(f).SubPaths[0].Nodes[1].Type);
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class CanvasAreaViewModelNodeTests
 
         f.Canvas.DoubleClick(300, 200);
 
-        Assert.Equal(NodeType.Corner, Current(f).Nodes[1].Type);
+        Assert.Equal(NodeType.Corner, Current(f).SubPaths[0].Nodes[1].Type);
     }
 
     [Fact]
@@ -90,7 +90,7 @@ public class CanvasAreaViewModelNodeTests
 
         f.Canvas.DoubleClick(300, 200);
 
-        Assert.Equal(NodeType.Corner, Current(f).Nodes[1].Type);
+        Assert.Equal(NodeType.Corner, Current(f).SubPaths[0].Nodes[1].Type);
         Assert.Equal(steps, f.State.History.Steps.Count);
         Assert.Equal([new NodeRef(f.Path.Id, 1)], f.State.SelectedNodes);
     }
@@ -105,7 +105,7 @@ public class CanvasAreaViewModelNodeTests
         f.Canvas.DoubleClick(700, 500);
 
         var path = Assert.IsType<PathShape>(f.State.Document.FindShape(rectangle.Id)!.Shape);
-        Assert.Equal(NodeType.Smooth, path.Nodes[1].Type);
+        Assert.Equal(NodeType.Smooth, path.SubPaths[0].Nodes[1].Type);
     }
 
     [Fact]
@@ -121,7 +121,7 @@ public class CanvasAreaViewModelNodeTests
         f.Canvas.TouchPressed(2, ScreenX(302), ScreenY(201));
         f.Canvas.TouchReleased(2, ScreenX(302), ScreenY(201));
 
-        Assert.Equal(NodeType.Smooth, Current(f).Nodes[1].Type);
+        Assert.Equal(NodeType.Smooth, Current(f).SubPaths[0].Nodes[1].Type);
     }
 
     // ---- Delete ----
@@ -135,7 +135,7 @@ public class CanvasAreaViewModelNodeTests
 
         f.Canvas.DeleteSelection();
 
-        Assert.Equal(3, Current(f).Nodes.Length);
+        Assert.Equal(3, Current(f).SubPaths[0].Nodes.Length);
         Assert.Equal(steps + 1, f.State.History.Steps.Count);
         Assert.Equal(HistoryStepType.DeletePathPoints, f.State.History.Steps[^1]);
         Assert.Equal(f.Path.Id, f.State.SelectedShapeId);

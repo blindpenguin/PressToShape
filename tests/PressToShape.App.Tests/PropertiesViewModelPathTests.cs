@@ -129,7 +129,7 @@ public class PropertiesViewModelPathTests
 
         f.Properties.ClosePathCommand.Execute(null);
 
-        Assert.True(((PathShape)f.Get(path)).IsClosed);
+        Assert.True(((PathShape)f.Get(path)).SubPaths[0].IsClosed);
         Assert.Equal(steps + 1, f.Steps);
         Assert.Equal(HistoryStepType.ChangePath, f.State.History.Steps[^1]);
         Assert.True(f.Properties.IsPathClosed);
@@ -144,7 +144,7 @@ public class PropertiesViewModelPathTests
 
         f.Properties.OpenPathCommand.Execute(null);
 
-        Assert.False(((PathShape)f.Get(path)).IsClosed);
+        Assert.False(((PathShape)f.Get(path)).SubPaths[0].IsClosed);
         Assert.True(f.Properties.IsPathOpen);
     }
 
@@ -220,7 +220,7 @@ public class PropertiesViewModelPathTests
 
         f.Properties.ClosePathCommand.Execute(null);
 
-        Assert.True(((PathShape)f.Get(path)).IsClosed);
+        Assert.True(((PathShape)f.Get(path)).SubPaths[0].IsClosed);
         Assert.Equal(rectangle, f.Get(rectangle));
     }
 
@@ -235,7 +235,7 @@ public class PropertiesViewModelPathTests
 
         f.Properties.ClosePathCommand.Execute(null);
 
-        Assert.All(new[] { first, second }, p => Assert.True(((PathShape)f.Get(p)).IsClosed));
+        Assert.All(new[] { first, second }, p => Assert.True(((PathShape)f.Get(p)).SubPaths[0].IsClosed));
         Assert.Equal(steps + 1, f.Steps);
         Assert.True(f.Properties.IsPathClosed);
     }

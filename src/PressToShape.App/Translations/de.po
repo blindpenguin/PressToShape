@@ -871,8 +871,35 @@ msgstr "Ebene duplizieren"
 msgid "Merge layers"
 msgstr "Ebenen zusammenführen"
 
+msgid "Union"
+msgstr "Vereinigung"
+
+msgid "Difference"
+msgstr "Differenz"
+
+msgid "Intersection"
+msgstr "Schnittmenge"
+
+msgid "Exclusion"
+msgstr "Exklusion"
+
+msgid "Combine"
+msgstr "Kombinieren"
+
+msgid "Break apart"
+msgstr "Aufteilen"
+
 msgid "Move to layer"
 msgstr "In Ebene verschieben"
+
+msgid "The operation left nothing, so nothing was changed."
+msgstr "Von der Operation blieb nichts übrig, deshalb wurde nichts geändert."
+
+msgid "The operation could not be done."
+msgstr "Die Operation konnte nicht ausgeführt werden."
+
+msgid "Working…"
+msgstr "Arbeite…"
 
 msgid "Layer {0}"
 msgstr "Ebene {0}"

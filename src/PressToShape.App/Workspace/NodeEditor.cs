@@ -38,7 +38,7 @@ internal sealed class NodeEditor
     {
         get
         {
-            var types = Targets().SelectMany(t => t.Indices.Select(i => t.Path.Nodes[i].Type)).Distinct().Take(2).ToList();
+            var types = Targets().SelectMany(t => t.Indices.Select(i => t.Path.NodeAt(i).Type)).Distinct().Take(2).ToList();
             return types.Count == 1 ? types[0] : null;
         }
     }
@@ -162,10 +162,12 @@ internal sealed class NodeEditor
         }
     }
 
-    // Whether two paths look the same: the same box, openness and nodes.
+    // Whether two paths look the same: the same box and the same sub-paths with the same openness and nodes.
     internal static bool IsSame(PathShape a, PathShape b) =>
         ReferenceEquals(a, b)
-        || (a.Bounds == b.Bounds && a.IsClosed == b.IsClosed && a.Nodes.AsSpan().SequenceEqual(b.Nodes.AsSpan()));
+        || (a.Bounds == b.Bounds
+            && a.SubPaths.Length == b.SubPaths.Length
+            && a.SubPaths.Zip(b.SubPaths).All(pair => pair.First.IsClosed == pair.Second.IsClosed && pair.First.Nodes.AsSpan().SequenceEqual(pair.Second.Nodes.AsSpan())));
 
     // The editable shapes that have selected nodes: visible and not locked, as a path (a rectangle or ellipse converted), with the
     // indices that exist.
@@ -181,7 +183,7 @@ internal sealed class NodeEditor
                 continue;
             }
 
-            var indices = group.Select(n => n.Index).Where(i => i >= 0 && i < path.Nodes.Length).Distinct().OrderBy(i => i).ToList();
+            var indices = group.Select(n => n.Index).Where(i => i >= 0 && i < path.NodeCount).Distinct().OrderBy(i => i).ToList();
             if (indices.Count > 0)
             {
                 targets.Add(new NodeTarget(path, indices));
@@ -198,14 +200,24 @@ internal sealed class NodeEditor
             return null;
         }
 
-        var count = target.Path.Nodes.Length;
-        if (second == first + 1)
+        // Two neighbors inside one sub-path make its segment: the segment that starts at the first of them, or the closing segment
+        // of a closed sub-path (from its last node to its first one).
+        var path = target.Path;
+        var (subPath, firstLocal) = path.Locate(first);
+        var (secondSubPath, secondLocal) = path.Locate(second);
+        if (subPath != secondSubPath)
         {
-            return (target, first);
+            return null;
         }
 
-        // The closing segment of a closed path runs from the last node to the first one.
-        return target.Path.IsClosed && first == 0 && second == count - 1 ? (target, second) : null;
+        var segmentStart = path.FirstSegmentIndex(subPath);
+        if (secondLocal == firstLocal + 1)
+        {
+            return (target, segmentStart + firstLocal);
+        }
+
+        var length = path.SubPaths[subPath].Nodes.Length;
+        return path.SubPaths[subPath].IsClosed && firstLocal == 0 && secondLocal == length - 1 ? (target, segmentStart + secondLocal) : null;
     }
 
 }

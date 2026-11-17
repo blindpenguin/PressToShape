@@ -16,7 +16,7 @@ public class ShapeConversionRoundedTests
     {
         var path = ShapeConversion.ToPath(Rectangle(CornerRadii.Zero))!;
 
-        Assert.Equal([new PathNode(0, 0), new PathNode(1, 0), new PathNode(1, 1), new PathNode(0, 1)], path.Nodes.AsSpan().ToArray());
+        Assert.Equal([new PathNode(0, 0), new PathNode(1, 0), new PathNode(1, 1), new PathNode(0, 1)], path.SubPaths[0].Nodes.AsSpan().ToArray());
     }
 
     [Fact]
@@ -25,7 +25,7 @@ public class ShapeConversionRoundedTests
         var path = ShapeConversion.ToPath(Rectangle(CornerRadii.Uniform(1000)))!;
 
         // The limit is 60 (half of the height), so there are eight nodes and the arcs meet in the middle of the short sides.
-        Assert.Equal(8, path.Nodes.Length);
+        Assert.Equal(8, path.SubPaths[0].Nodes.Length);
     }
 
     [Theory]
@@ -37,8 +37,8 @@ public class ShapeConversionRoundedTests
     {
         var path = ShapeConversion.ToPath(Rectangle(CornerRadii.Zero.With(corner, 20)))!;
 
-        Assert.Equal(5, path.Nodes.Length);
-        Assert.True(path.IsClosed);
+        Assert.Equal(5, path.SubPaths[0].Nodes.Length);
+        Assert.True(path.SubPaths[0].IsClosed);
     }
 
     [Fact]
@@ -46,8 +46,8 @@ public class ShapeConversionRoundedTests
     {
         var path = ShapeConversion.ToPath(Rectangle(CornerRadii.Uniform(20)))!;
 
-        Assert.Equal(8, path.Nodes.Length);
-        Assert.All(path.Nodes, node => Assert.Equal(NodeType.Corner, node.Type));
+        Assert.Equal(8, path.SubPaths[0].Nodes.Length);
+        Assert.All(path.SubPaths[0].Nodes, node => Assert.Equal(NodeType.Corner, node.Type));
     }
 
     [Fact]

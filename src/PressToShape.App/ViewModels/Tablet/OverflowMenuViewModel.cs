@@ -9,19 +9,20 @@ using static PressToShape.App.Localization.Localizer;
 namespace PressToShape.App.ViewModels.Tablet;
 
 /// <summary>
-/// The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, lock and hide, and the language. It uses the same texts as the desktop menus
+/// The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, the path operations, lock and hide, and the language. It uses the same texts as the desktop menus
 /// (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through <see cref="MenuItemViewModel.PlainHeader"/>.
 /// There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart).
 /// An item without a command, or whose command cannot run, is disabled.
 /// </summary>
 internal sealed class OverflowMenuViewModel : ViewModelBase
 {
-    public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects)
+    public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, PathMenuCommands paths)
     {
         ArgumentNullException.ThrowIfNull(localizer);
         ArgumentNullException.ThrowIfNull(files);
         ArgumentNullException.ThrowIfNull(edit);
         ArgumentNullException.ThrowIfNull(objects);
+        ArgumentNullException.ThrowIfNull(paths);
 
         MenuItemViewModel Item(string header, ICommand command) => MenuItemViewModel.Item(localizer, header, null, command);
 
@@ -51,6 +52,16 @@ internal sealed class OverflowMenuViewModel : ViewModelBase
                 Item(N("Bring F_orward"), objects.BringForward),
                 Item(N("Send _Backward"), objects.SendBackward),
                 Item(N("Send to Bac_k"), objects.SendToBack)),
+            MenuItemViewModel.Submenu(
+                localizer,
+                N("_Path"),
+                Item(N("Com_bine"), paths.Combine),
+                Item(N("Break _Apart"), paths.BreakApart),
+                MenuItemViewModel.Separator(localizer),
+                Item(N("_Union"), paths.Union),
+                Item(N("_Difference"), paths.Difference),
+                Item(N("_Intersection"), paths.Intersection),
+                Item(N("E_xclusion"), paths.Exclusion)),
             Item(N("_Lock"), objects.Lock),
             Item(N("Unloc_k All"), objects.UnlockAll),
             Item(N("_Hide"), objects.Hide),

@@ -62,7 +62,7 @@ public class CanvasInteractionPenEditTests
 
         var result = Only(state);
         Assert.Equal(path.Id, result.Id);
-        Assert.Equal(4, result.Nodes.Length);
+        Assert.Equal(4, result.SubPaths[0].Nodes.Length);
         Assert.Equal(150, result.ToDocumentNodes()[3].Y, 6);
         Assert.Equal(steps + 1, state.History.Steps.Count);
         Assert.Equal(path.Id, state.SelectedShapeId);
@@ -95,7 +95,7 @@ public class CanvasInteractionPenEditTests
         interaction.FinishPen();
         state.Undo();
 
-        Assert.Equal(3, Only(state).Nodes.Length);
+        Assert.Equal(3, Only(state).SubPaths[0].Nodes.Length);
         Assert.Equal(path.Id, Only(state).Id);
     }
 
@@ -157,8 +157,8 @@ public class CanvasInteractionPenEditTests
         Click(interaction, 1, 1);
 
         var result = Only(state);
-        Assert.True(result.IsClosed);
-        Assert.Equal(3, result.Nodes.Length);
+        Assert.True(result.SubPaths[0].IsClosed);
+        Assert.Equal(3, result.SubPaths[0].Nodes.Length);
     }
 
     [Fact]
@@ -170,7 +170,7 @@ public class CanvasInteractionPenEditTests
         Click(interaction, 50, 150);
         state.ActiveTool = Tool.Select;
 
-        Assert.Equal(4, Only(state).Nodes.Length);
+        Assert.Equal(4, Only(state).SubPaths[0].Nodes.Length);
         Assert.Equal(path.Id, Only(state).Id);
     }
 
@@ -182,7 +182,7 @@ public class CanvasInteractionPenEditTests
 
         Click(interaction, 100, 0);
 
-        Assert.Equal(2, Only(state).Nodes.Length);
+        Assert.Equal(2, Only(state).SubPaths[0].Nodes.Length);
         Assert.Equal(steps + 1, state.History.Steps.Count);
         Assert.Equal(HistoryStepType.DeletePathNode, state.History.Steps[^1]);
         Assert.False(interaction.IsPenDrawing);
@@ -196,8 +196,8 @@ public class CanvasInteractionPenEditTests
 
         Click(interaction, 0, 0);
 
-        Assert.Equal(2, Only(state).Nodes.Length);
-        Assert.True(Only(state).IsClosed);
+        Assert.Equal(2, Only(state).SubPaths[0].Nodes.Length);
+        Assert.True(Only(state).SubPaths[0].IsClosed);
     }
 
     [Fact]
@@ -222,7 +222,7 @@ public class CanvasInteractionPenEditTests
         Click(interaction, 50, 1);
 
         var result = Only(state);
-        Assert.Equal(4, result.Nodes.Length);
+        Assert.Equal(4, result.SubPaths[0].Nodes.Length);
         Assert.Equal(steps + 1, state.History.Steps.Count);
         Assert.Equal(HistoryStepType.AddPathNode, state.History.Steps[^1]);
         var added = result.ToDocumentNodes()[1];
@@ -241,7 +241,7 @@ public class CanvasInteractionPenEditTests
         Click(interaction, onCurve.X, onCurve.Y);
 
         var result = Only(state);
-        Assert.Equal(3, result.Nodes.Length);
+        Assert.Equal(3, result.SubPaths[0].Nodes.Length);
         var added = result.ToDocumentNodes()[1];
         Assert.Equal(onCurve.X, added.X, 3);
         Assert.Equal(onCurve.Y, added.Y, 3);
@@ -259,7 +259,7 @@ public class CanvasInteractionPenEditTests
         interaction.FinishPen();
 
         Assert.Equal(2, state.Document.Layers.SelectMany(l => l.Shapes).Count());
-        Assert.Equal(3, state.Document.Layers.SelectMany(l => l.Shapes).OfType<PathShape>().First().Nodes.Length);
+        Assert.Equal(3, state.Document.Layers.SelectMany(l => l.Shapes).OfType<PathShape>().First().SubPaths[0].Nodes.Length);
     }
 
     [Fact]
@@ -271,7 +271,7 @@ public class CanvasInteractionPenEditTests
 
         Assert.True(interaction.IsPenDrawing);
         Assert.Null(state.PenContinuedId);
-        Assert.Equal(3, Only(state).Nodes.Length);
+        Assert.Equal(3, Only(state).SubPaths[0].Nodes.Length);
     }
 
     [Fact]
@@ -282,7 +282,7 @@ public class CanvasInteractionPenEditTests
 
         Click(interaction, 100, 0);
 
-        Assert.Equal(3, Only(state).Nodes.Length);
+        Assert.Equal(3, Only(state).SubPaths[0].Nodes.Length);
         Assert.True(interaction.IsPenDrawing);
         Assert.Null(state.PenContinuedId);
     }
@@ -341,7 +341,7 @@ public class CanvasInteractionPenEditTests
         Click(interaction, 51, 0);
 
         var result = Only(state);
-        Assert.Equal(3, result.Nodes.Length);
+        Assert.Equal(3, result.SubPaths[0].Nodes.Length);
         Assert.Equal(90, result.Rotation);
     }
 
@@ -372,7 +372,7 @@ public class CanvasInteractionPenEditTests
         Click(interaction, 150, 50);
         interaction.FinishPen();
 
-        var nodes = Only(state).Nodes;
+        var nodes = Only(state).SubPaths[0].Nodes;
         Assert.Equal([NodeType.Corner, NodeType.Smooth, NodeType.Corner], nodes.Select(n => n.Type));
     }
 }

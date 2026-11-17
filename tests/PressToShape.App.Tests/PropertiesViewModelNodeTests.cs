@@ -192,14 +192,14 @@ public class PropertiesViewModelNodeTests
         var steps = f.Steps;
 
         f.Properties.MakeNodeSmoothCommand.Execute(null);
-        Assert.Equal(NodeType.Smooth, f.Current.Nodes[2].Type);
+        Assert.Equal(NodeType.Smooth, f.Current.SubPaths[0].Nodes[2].Type);
         Assert.True(f.Properties.IsNodeSmooth);
 
         f.Properties.MakeNodeSymmetricCommand.Execute(null);
-        Assert.Equal(NodeType.Symmetric, f.Current.Nodes[2].Type);
+        Assert.Equal(NodeType.Symmetric, f.Current.SubPaths[0].Nodes[2].Type);
 
         f.Properties.MakeNodeCornerCommand.Execute(null);
-        Assert.Equal(NodeType.Corner, f.Current.Nodes[2].Type);
+        Assert.Equal(NodeType.Corner, f.Current.SubPaths[0].Nodes[2].Type);
 
         Assert.Equal(steps + 3, f.Steps);
         Assert.Equal(HistoryStepType.ChangeNodeType, f.State.History.Steps[^1]);
@@ -244,12 +244,12 @@ public class PropertiesViewModelNodeTests
 
         f.Properties.MakeSegmentCurvedCommand.Execute(null);
 
-        Assert.True(f.Current.Nodes[2].HasOut);
+        Assert.True(f.Current.SubPaths[0].Nodes[2].HasOut);
         Assert.Equal(steps + 1, f.Steps);
 
         f.Properties.MakeSegmentStraightCommand.Execute(null);
 
-        Assert.False(f.Current.Nodes[2].HasOut);
+        Assert.False(f.Current.SubPaths[0].Nodes[2].HasOut);
         Assert.Equal(steps + 2, f.Steps);
         Assert.Equal(HistoryStepType.ChangeSegment, f.State.History.Steps[^1]);
     }

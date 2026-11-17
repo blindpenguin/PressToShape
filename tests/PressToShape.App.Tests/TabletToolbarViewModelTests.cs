@@ -12,10 +12,9 @@ public class TabletToolbarViewModelTests
     private static (TestShell Shell, TabletToolbarViewModel Toolbar) Create(TestShell? shell = null)
     {
         shell ??= new TestShell();
-        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests, shell.ObjectCommandsForTests);
-        var zoom = new PressToShape.App.ViewModels.Editor.ZoomViewModel(shell.State, shell.LocalizerForTests, shell.FitToWindow);
+        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests, shell.ObjectCommandsForTests, shell.PathCommandsForTests);
         var panel = new TabletPanelViewModel(shell.Inspector, shell.LocalizerForTests);
-        return (shell, new TabletToolbarViewModel(shell.LocalizerForTests, shell, shell.UndoCommand, shell.RedoCommand, zoom, menu, panel));
+        return (shell, new TabletToolbarViewModel(shell.LocalizerForTests, shell, shell.UndoCommand, shell.RedoCommand, menu, panel));
     }
 
     [Fact]
@@ -103,19 +102,6 @@ public class TabletToolbarViewModelTests
         shell.AddRectangle();
 
         Assert.Contains(nameof(PressToShape.App.ViewModels.Desktop.ToolbarButtonViewModel.IsEnabled), raised);
-    }
-
-    [Fact]
-    public void Zoom_ShowsTheZoomOfTheEditor_AndItsCommandsWork()
-    {
-        var (shell, toolbar) = Create();
-        Assert.Equal("100%", toolbar.Zoom.ZoomText);
-
-        toolbar.Zoom.ZoomInCommand.Execute(null);
-
-        Assert.Equal("150%", toolbar.Zoom.ZoomText);
-        Assert.Equal(150, shell.State.ZoomPercent);
-        Assert.Equal(PressToShape.App.Workspace.ZoomLevels.Presets, toolbar.Zoom.ZoomPresets.Select(p => p.Percent));
     }
 
     [Fact]
@@ -220,26 +206,23 @@ public class TabletToolbarViewModelTests
 
     private static TabletToolbarViewModel CreateWith(TestShell shell, TabletPanelViewModel panel)
     {
-        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests, shell.ObjectCommandsForTests);
-        var zoom = new PressToShape.App.ViewModels.Editor.ZoomViewModel(shell.State, shell.LocalizerForTests, shell.FitToWindow);
-        return new TabletToolbarViewModel(shell.LocalizerForTests, shell, shell.UndoCommand, shell.RedoCommand, zoom, menu, panel);
+        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests, shell.ObjectCommandsForTests, shell.PathCommandsForTests);
+        return new TabletToolbarViewModel(shell.LocalizerForTests, shell, shell.UndoCommand, shell.RedoCommand, menu, panel);
     }
 
     [Fact]
     public void Constructor_NullArguments_Throw()
     {
         var shell = new TestShell();
-        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests, shell.ObjectCommandsForTests);
-        var zoom = new PressToShape.App.ViewModels.Editor.ZoomViewModel(shell.State, shell.LocalizerForTests, shell.FitToWindow);
+        var menu = new OverflowMenuViewModel(shell.LocalizerForTests, shell.FileCommandsForTests, shell.EditCommandsForTests, shell.ObjectCommandsForTests, shell.PathCommandsForTests);
         var panel = new TabletPanelViewModel(shell.Inspector, shell.LocalizerForTests);
         var localizer = shell.LocalizerForTests;
 
-        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(null!, shell, shell.UndoCommand, shell.RedoCommand, zoom, menu, panel));
-        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, null!, shell.UndoCommand, shell.RedoCommand, zoom, menu, panel));
-        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, shell, null!, shell.RedoCommand, zoom, menu, panel));
-        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, shell, shell.UndoCommand, null!, zoom, menu, panel));
-        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, shell, shell.UndoCommand, shell.RedoCommand, null!, menu, panel));
-        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, shell, shell.UndoCommand, shell.RedoCommand, zoom, null!, panel));
-        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, shell, shell.UndoCommand, shell.RedoCommand, zoom, menu, null!));
+        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(null!, shell, shell.UndoCommand, shell.RedoCommand, menu, panel));
+        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, null!, shell.UndoCommand, shell.RedoCommand, menu, panel));
+        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, shell, null!, shell.RedoCommand, menu, panel));
+        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, shell, shell.UndoCommand, null!, menu, panel));
+        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, shell, shell.UndoCommand, shell.RedoCommand, null!, panel));
+        Assert.Throws<System.ArgumentNullException>(() => new TabletToolbarViewModel(localizer, shell, shell.UndoCommand, shell.RedoCommand, menu, null!));
     }
 }

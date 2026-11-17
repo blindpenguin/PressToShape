@@ -8,7 +8,7 @@ namespace PressToShape.Core.IO;
 
 public static partial class ProjectFile
 {
-    /// <summary>The most nodes one path in a file may have.</summary>
+    /// <summary>The most nodes one path in a file may have, over all its sub-paths together.</summary>
     public const int MaxPathNodes = 100_000;
 
     private const string EvenOddText = "evenodd";
@@ -16,16 +16,32 @@ public static partial class ProjectFile
     private static PathShape? BuildPath(ShapeDto dto, Guid id, Appearance appearance, string name, bool visible, bool locked, out ProjectFileResult? failure)
     {
         failure = null;
-        if (dto.Nodes is null)
+        if (dto.SubPaths is not null && (dto.Nodes is not null || dto.Closed is not null))
         {
-            failure = ProjectFileResult.Failure(ProjectFileError.NotProjectFile, "A path misses its nodes.");
+            failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, "A path has both nodes and sub-paths.");
             return null;
         }
 
-        if (dto.Nodes.Count < 2 || dto.Nodes.Count > MaxPathNodes)
+        List<SubPathDto?> sources;
+        if (dto.SubPaths is not null)
         {
-            failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, $"A path needs from 2 to {MaxPathNodes} nodes, this one has {dto.Nodes.Count}.");
-            return null;
+            if (dto.SubPaths.Count < 2 || dto.SubPaths.Count > PathShape.MaxSubPaths)
+            {
+                failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, $"A compound path needs from 2 to {PathShape.MaxSubPaths} sub-paths, this one has {dto.SubPaths.Count}.");
+                return null;
+            }
+
+            sources = dto.SubPaths;
+        }
+        else
+        {
+            if (dto.Nodes is null)
+            {
+                failure = ProjectFileResult.Failure(ProjectFileError.NotProjectFile, "A path misses its nodes.");
+                return null;
+            }
+
+            sources = [new SubPathDto { Nodes = dto.Nodes, Closed = dto.Closed }];
         }
 
         if (dto.FillRule is not null && dto.FillRule != EvenOddText)
@@ -34,24 +50,44 @@ public static partial class ProjectFile
             return null;
         }
 
-        var nodes = ImmutableArray.CreateBuilder<PathNode>(dto.Nodes.Count);
-        foreach (var nodeDto in dto.Nodes)
+        var total = 0;
+        var subPaths = ImmutableArray.CreateBuilder<SubPath>(sources.Count);
+        foreach (var source in sources)
         {
-            if (nodeDto is not { X: { } x, Y: { } y })
+            if (source?.Nodes is null)
             {
-                failure = ProjectFileResult.Failure(ProjectFileError.NotProjectFile, "A path node misses an entry.");
+                failure = ProjectFileResult.Failure(ProjectFileError.NotProjectFile, "A path misses its nodes.");
                 return null;
             }
 
-            // A half handle or a number that is not finite makes the node constructor throw, which Read turns into InvalidValue.
-            var plain = new PathNode(x, y, nodeDto.InX, nodeDto.InY, nodeDto.OutX, nodeDto.OutY);
-            if (!TryReadNodeType(nodeDto.Type, plain, out var type))
+            total += source.Nodes.Count;
+            if (source.Nodes.Count < 2 || total > MaxPathNodes)
             {
-                failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, "A path node has an unknown type: " + nodeDto.Type);
+                failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, $"A sub-path needs at least 2 nodes and a path at most {MaxPathNodes} nodes in all.");
                 return null;
             }
 
-            nodes.Add(new PathNode(x, y, nodeDto.InX, nodeDto.InY, nodeDto.OutX, nodeDto.OutY, type));
+            var nodes = ImmutableArray.CreateBuilder<PathNode>(source.Nodes.Count);
+            foreach (var nodeDto in source.Nodes)
+            {
+                if (nodeDto is not { X: { } x, Y: { } y })
+                {
+                    failure = ProjectFileResult.Failure(ProjectFileError.NotProjectFile, "A path node misses an entry.");
+                    return null;
+                }
+
+                // A half handle or a number that is not finite makes the node constructor throw, which Read turns into InvalidValue.
+                var plain = new PathNode(x, y, nodeDto.InX, nodeDto.InY, nodeDto.OutX, nodeDto.OutY);
+                if (!TryReadNodeType(nodeDto.Type, plain, out var type))
+                {
+                    failure = ProjectFileResult.Failure(ProjectFileError.InvalidValue, "A path node has an unknown type: " + nodeDto.Type);
+                    return null;
+                }
+
+                nodes.Add(new PathNode(x, y, nodeDto.InX, nodeDto.InY, nodeDto.OutX, nodeDto.OutY, type));
+            }
+
+            subPaths.Add(new SubPath(nodes.MoveToImmutable(), source.Closed ?? false));
         }
 
         return new PathShape
@@ -61,8 +97,7 @@ public static partial class ProjectFile
             Y = dto.Y!.Value,
             Width = dto.Width!.Value,
             Height = dto.Height!.Value,
-            Nodes = nodes.MoveToImmutable(),
-            IsClosed = dto.Closed ?? false,
+            SubPaths = subPaths.MoveToImmutable(),
             FillRule = dto.FillRule is null ? FillRule.NonZero : FillRule.EvenOdd,
             Appearance = appearance,
             Rotation = dto.Rotation ?? 0,
@@ -72,9 +107,28 @@ public static partial class ProjectFile
         };
     }
 
+    // One sub-path is written as "nodes" and "closed" like a path always was, so such files stay the same. Only a compound path writes "subPaths".
     private static void AddPathData(ShapeDto dto, PathShape path)
     {
-        dto.Nodes = new List<NodeDto?>(path.Nodes.Select(node => new NodeDto
+        if (path.SubPaths.Length == 1)
+        {
+            dto.Nodes = NodeDtos(path.SubPaths[0]);
+            dto.Closed = path.SubPaths[0].IsClosed ? true : null;
+        }
+        else
+        {
+            dto.SubPaths = new List<SubPathDto?>(path.SubPaths.Select(subPath => (SubPathDto?)new SubPathDto
+            {
+                Nodes = NodeDtos(subPath),
+                Closed = subPath.IsClosed ? true : null,
+            }));
+        }
+
+        dto.FillRule = path.FillRule == FillRule.EvenOdd ? EvenOddText : null;
+    }
+
+    private static List<NodeDto?> NodeDtos(SubPath subPath) =>
+        new(subPath.Nodes.Select(node => (NodeDto?)new NodeDto
         {
             X = node.X,
             Y = node.Y,
@@ -84,9 +138,6 @@ public static partial class ProjectFile
             OutY = node.OutY,
             Type = node.Type == NodeTypes.Derive(node) ? null : NodeTypeText(node.Type),
         }));
-        dto.Closed = path.IsClosed ? true : null;
-        dto.FillRule = path.FillRule == FillRule.EvenOdd ? EvenOddText : null;
-    }
 
     // A missing type is the one the handles give (files from before the node types have none). Any other text must be a known type.
     private static bool TryReadNodeType(string? text, PathNode plain, out NodeType type)

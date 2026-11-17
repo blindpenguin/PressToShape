@@ -20,6 +20,7 @@ internal sealed partial class CanvasInteraction
 
     // The path that is being continued. Its nodes are in the pen, in screen positions, and it is replaced when the drawing ends.
     private PathShape? _continued;
+    private int _continuedSubPath;
 
     /// <summary>Whether the Pen has an unfinished path.</summary>
     public bool IsPenDrawing => _pen.IsDrawing;
@@ -141,6 +142,7 @@ internal sealed partial class CanvasInteraction
     private void FinishPath(bool close)
     {
         var continued = _continued;
+        var continuedSubPath = _continuedSubPath;
         var path = _pen.Finish(close);
         ClearPenView();
         if (path is null || (continued is null && !CanDrawInActiveLayer()))
@@ -150,7 +152,7 @@ internal sealed partial class CanvasInteraction
 
         if (continued is not null)
         {
-            ReplaceContinuedPath(continued, path, close);
+            ReplaceContinuedPath(continued, path, continuedSubPath, close);
             return;
         }
 
@@ -159,23 +161,28 @@ internal sealed partial class CanvasInteraction
         _state.Select(shape.Id);
     }
 
-    // The new path keeps the id, the look and the flags of the old one. Its rotation is part of the node positions now.
-    // Finishing straight away, without a new node and without closing, changes nothing and makes no step.
-    private void ReplaceContinuedPath(PathShape original, PathShape drawn, bool close)
+    // The pen drew one sub-path (the continued one, with its new nodes). The new path keeps the id, the look and the flags of the old
+    // one, and its other sub-paths, with the rotation of the old path baked into every node because the rotation is part of the node
+    // positions now. Finishing straight away, without a new node and without closing, changes nothing and makes no step.
+    private void ReplaceContinuedPath(PathShape original, PathShape drawn, int subPathIndex, bool close)
     {
-        if (!close && drawn.Nodes.Length == original.Nodes.Length)
+        var drawnSubPath = drawn.ToDocumentSubPaths()[0];
+        if (!close && drawnSubPath.Nodes.Count == original.SubPaths[subPathIndex].Nodes.Length)
         {
             return;
         }
 
-        var shape = drawn with
+        var subPaths = new List<DocumentSubPath>(EditablePath.AsOnScreen(original).ToDocumentSubPaths())
+        {
+            [subPathIndex] = drawnSubPath,
+        };
+        var shape = PathShape.Create(subPaths, original.FillRule) with
         {
             Id = original.Id,
             Appearance = original.Appearance,
             Name = original.Name,
             IsVisible = original.IsVisible,
             IsLocked = original.IsLocked,
-            FillRule = original.FillRule,
         };
         _state.Edit(HistoryStepType.DrawPath, document => document.UpdateShapes(new Dictionary<System.Guid, Shape> { [shape.Id] = shape }));
         _state.Select(shape.Id);

@@ -6,6 +6,7 @@ using PressToShape.App.Localization;
 using PressToShape.App.Services;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.PathOperations;
 
 namespace PressToShape.App.ViewModels.Editor;
 
@@ -33,6 +34,7 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         Toolbox = new ToolboxViewModel(State, localizer);
         Editor = new SelectionEditor(State);
         Objects = new ObjectEditor(State);
+        PathEditing = new PathEditor(State, services.Messages, localizer);
         LayerEditing = new LayerEditor(State, localizer);
         var ring = new RingMenuViewModel(localizer);
         Canvas = new CanvasAreaViewModel(State, Editor, ring: ring);
@@ -66,10 +68,19 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
             HideCommand,
             ShowAllCommand);
 
+        PathCommands = new PathMenuCommands(
+            UnionShapesCommand,
+            DifferenceShapesCommand,
+            IntersectShapesCommand,
+            ExcludeShapesCommand,
+            CombinePathsCommand,
+            BreakApartPathCommand);
+
         LayerCommands = new LayerMenuCommands(LayerEditing);
 
         ring.Content = RingMenuContent.Create(ObjectCommands, EditCommands);
 
+        PathEditing.BusyChanged += (_, _) => NotifyObjectCommands();
         Canvas.PropertyChanged += OnCanvasPropertyChanged;
         _session.PropertyChanged += (_, _) => NotifyDocumentNameChanged();
         State.PropertyChanged += OnStateHistoryAvailabilityChanged;
@@ -87,8 +98,14 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
     /// <summary>The edits of the structure: group, arrange, lock, hide, rename. One instance, shared by the menus and the object list.</summary>
     public ObjectEditor Objects { get; }
 
+    /// <summary>The path operations (boolean operations, Combine, Break Apart) on the selection. One instance, shared by the menus.</summary>
+    public PathEditor PathEditing { get; }
+
     /// <summary>The editor for the layers. The Layers panel and the Layer menu share it.</summary>
     public LayerEditor LayerEditing { get; }
+
+    /// <summary>The commands of the boolean, Combine and Break Apart items of the Path menu.</summary>
+    public PathMenuCommands PathCommands { get; }
 
     /// <summary>The commands of the Layer menu.</summary>
     public LayerMenuCommands LayerCommands { get; }
@@ -198,6 +215,7 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
                 LayerCommands.NotifyCanExecuteChanged();
                 break;
             case nameof(EditorState.SelectedShapeIds):
+            case nameof(EditorState.IsDragInProgress):
                 NotifyObjectCommands();
                 LayerCommands.NotifyCanExecuteChanged();
                 break;
@@ -220,6 +238,12 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         UnlockAllCommand.NotifyCanExecuteChanged();
         HideCommand.NotifyCanExecuteChanged();
         ShowAllCommand.NotifyCanExecuteChanged();
+        UnionShapesCommand.NotifyCanExecuteChanged();
+        DifferenceShapesCommand.NotifyCanExecuteChanged();
+        IntersectShapesCommand.NotifyCanExecuteChanged();
+        ExcludeShapesCommand.NotifyCanExecuteChanged();
+        CombinePathsCommand.NotifyCanExecuteChanged();
+        BreakApartPathCommand.NotifyCanExecuteChanged();
     }
 
     private void NotifyPasteCommands()
@@ -295,6 +319,31 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
 
     [RelayCommand(CanExecute = nameof(CanShowAll))]
     private void ShowAll() => Objects.ShowAll();
+
+    // The boolean operations, Combine and Break Apart. The Path menu items use these commands.
+    [RelayCommand(CanExecute = nameof(CanBoolean))]
+    private Task UnionShapes() => PathEditing.BooleanAsync(PathOperationType.Union);
+
+    [RelayCommand(CanExecute = nameof(CanBoolean))]
+    private Task DifferenceShapes() => PathEditing.BooleanAsync(PathOperationType.Difference);
+
+    [RelayCommand(CanExecute = nameof(CanBoolean))]
+    private Task IntersectShapes() => PathEditing.BooleanAsync(PathOperationType.Intersection);
+
+    [RelayCommand(CanExecute = nameof(CanBoolean))]
+    private Task ExcludeShapes() => PathEditing.BooleanAsync(PathOperationType.Exclusion);
+
+    [RelayCommand(CanExecute = nameof(CanCombine))]
+    private Task CombinePaths() => PathEditing.CombineAsync();
+
+    [RelayCommand(CanExecute = nameof(CanBreakApart))]
+    private Task BreakApartPath() => PathEditing.BreakApartAsync();
+
+    private bool CanBoolean() => PathEditing.CanBoolean;
+
+    private bool CanCombine() => PathEditing.CanCombine;
+
+    private bool CanBreakApart() => PathEditing.CanBreakApart;
 
     private bool CanGroup() => Objects.CanGroup;
 

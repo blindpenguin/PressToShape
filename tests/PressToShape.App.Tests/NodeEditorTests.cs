@@ -54,7 +54,7 @@ public class NodeEditorTests
 
         editor.SetType(NodeType.Smooth);
 
-        var node = ((PathShape)Current(state, path)).Nodes[2];
+        var node = ((PathShape)Current(state, path)).SubPaths[0].Nodes[2];
         Assert.Equal(NodeType.Smooth, node.Type);
         Assert.True(node.HasIn && node.HasOut);
         Assert.Equal(steps + 1, state.History.Steps.Count);
@@ -86,7 +86,7 @@ public class NodeEditorTests
         var path = Assert.IsType<PathShape>(Current(state, rectangle));
         Assert.Equal(rectangle.Id, path.Id);
         Assert.Equal("Box", path.Name);
-        Assert.Equal(NodeType.Smooth, path.Nodes[0].Type);
+        Assert.Equal(NodeType.Smooth, path.SubPaths[0].Nodes[0].Type);
         Assert.Equal(steps + 1, state.History.Steps.Count);
         state.Undo();
         Assert.IsType<RectangleShape>(Current(state, rectangle));
@@ -118,8 +118,8 @@ public class NodeEditorTests
 
         editor.SetType(NodeType.Smooth);
 
-        Assert.Equal(NodeType.Smooth, ((PathShape)Current(state, first)).Nodes[2].Type);
-        Assert.Equal(NodeType.Smooth, ((PathShape)Current(state, second)).Nodes[3].Type);
+        Assert.Equal(NodeType.Smooth, ((PathShape)Current(state, first)).SubPaths[0].Nodes[2].Type);
+        Assert.Equal(NodeType.Smooth, ((PathShape)Current(state, second)).SubPaths[0].Nodes[3].Type);
         Assert.Equal(steps + 1, state.History.Steps.Count);
     }
 
@@ -154,7 +154,7 @@ public class NodeEditorTests
         editor.SetType(NodeType.Smooth);
         state.Undo();
 
-        Assert.Equal(NodeType.Corner, ((PathShape)Current(state, path)).Nodes[2].Type);
+        Assert.Equal(NodeType.Corner, ((PathShape)Current(state, path)).SubPaths[0].Nodes[2].Type);
     }
 
     [Fact]
@@ -207,7 +207,7 @@ public class NodeEditorTests
 
         editor.StraightenSelectedSegment();
 
-        var nodes = ((PathShape)Current(state, path)).Nodes;
+        var nodes = ((PathShape)Current(state, path)).SubPaths[0].Nodes;
         Assert.False(nodes[1].HasOut);
         Assert.Equal(NodeType.Corner, nodes[1].Type);
         Assert.Equal(steps + 1, state.History.Steps.Count);
@@ -224,7 +224,7 @@ public class NodeEditorTests
 
         editor.CurveSelectedSegment();
 
-        var nodes = ((PathShape)Current(state, path)).Nodes;
+        var nodes = ((PathShape)Current(state, path)).SubPaths[0].Nodes;
         Assert.True(nodes[2].HasOut);
         Assert.True(nodes[3].HasIn);
         Assert.Equal(steps + 1, state.History.Steps.Count);
@@ -255,7 +255,7 @@ public class NodeEditorTests
         editor.CurveSelectedSegment();
 
         var path = Assert.IsType<PathShape>(Current(state, rectangle));
-        Assert.True(path.Nodes[0].HasOut);
+        Assert.True(path.SubPaths[0].Nodes[0].HasOut);
         Assert.Equal(steps + 1, state.History.Steps.Count);
     }
 
@@ -269,7 +269,7 @@ public class NodeEditorTests
 
         editor.DeleteSelected();
 
-        Assert.Equal(2, ((PathShape)Current(state, path)).Nodes.Length);
+        Assert.Equal(2, ((PathShape)Current(state, path)).SubPaths[0].Nodes.Length);
         Assert.Equal(steps + 1, state.History.Steps.Count);
         Assert.Equal(HistoryStepType.DeletePathPoints, state.History.Steps[^1]);
         Assert.Empty(state.SelectedNodes);
@@ -300,8 +300,8 @@ public class NodeEditorTests
         editor.DeleteSelected();
 
         var path = Assert.IsType<PathShape>(Current(state, rectangle));
-        Assert.Equal(3, path.Nodes.Length);
-        Assert.True(path.IsClosed);
+        Assert.Equal(3, path.SubPaths[0].Nodes.Length);
+        Assert.True(path.SubPaths[0].IsClosed);
     }
 
     [Fact]
@@ -314,7 +314,7 @@ public class NodeEditorTests
         editor.DeleteSelected();
         state.Undo();
 
-        Assert.Equal(4, ((PathShape)Current(state, path)).Nodes.Length);
+        Assert.Equal(4, ((PathShape)Current(state, path)).SubPaths[0].Nodes.Length);
     }
 
     [Fact]

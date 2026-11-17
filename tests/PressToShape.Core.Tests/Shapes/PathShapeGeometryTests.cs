@@ -80,9 +80,9 @@ public class PathShapeGeometryTests
         Assert.True(rebuilt.IsLocked);
         Assert.False(rebuilt.IsVisible);
         Assert.Equal(45, rebuilt.Rotation);
-        Assert.True(rebuilt.IsClosed);
+        Assert.True(rebuilt.SubPaths[0].IsClosed);
         Assert.Equal(FillRule.EvenOdd, rebuilt.FillRule);
-        Assert.Equal(3, rebuilt.Nodes.Length);
+        Assert.Equal(3, rebuilt.SubPaths[0].Nodes.Length);
     }
 
     [Fact]

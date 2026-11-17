@@ -16,7 +16,7 @@
     <Panel Background="{DynamicResource WindowBackgroundBrush}">
 
         <!-- The layout. Its bottom margin keeps it above the on-screen keyboard, see the code-behind. -->
-        <Grid x:Name="LayoutRoot" RowDefinitions="Auto,*">
+        <Grid x:Name="LayoutRoot" RowDefinitions="Auto,*,Auto">
 
             <tablet:TabletToolbarView x:Name="ToolbarView" Grid.Row="0" DataContext="{Binding Toolbar}" />
 
@@ -29,6 +29,9 @@
                     <tablet:TabletPanelView HorizontalAlignment="Right" DataContext="{Binding Panel}" />
                 </Grid>
             </Grid>
+
+            <!-- The status bar under the tool column and the canvas: selection summary, the busy text and the zoom controls. -->
+            <tablet:TabletStatusBarView x:Name="StatusBarView" Grid.Row="2" DataContext="{Binding StatusBar}" />
 
         </Grid>
 

@@ -35,7 +35,7 @@ public class ShapeConversionTests
         Assert.Equal(shape.Bounds, path.Bounds);
         Assert.Equal(25, path.Rotation);
         Assert.Equal(shape.Appearance, path.Appearance);
-        Assert.True(path.IsClosed);
+        Assert.True(path.SubPaths[0].IsClosed);
     }
 
     [Fact]
@@ -58,10 +58,10 @@ public class ShapeConversionTests
     {
         var path = ShapeConversion.ToPath(Rectangle())!;
 
-        Assert.Equal(4, path.Nodes.Length);
-        Assert.All(path.Nodes, n => Assert.Equal(NodeType.Corner, n.Type));
-        Assert.All(path.Nodes, n => Assert.False(n.HasIn || n.HasOut));
-        Assert.Equal([new PathNode(0, 0), new PathNode(1, 0), new PathNode(1, 1), new PathNode(0, 1)], path.Nodes.AsSpan().ToArray());
+        Assert.Equal(4, path.SubPaths[0].Nodes.Length);
+        Assert.All(path.SubPaths[0].Nodes, n => Assert.Equal(NodeType.Corner, n.Type));
+        Assert.All(path.SubPaths[0].Nodes, n => Assert.False(n.HasIn || n.HasOut));
+        Assert.Equal([new PathNode(0, 0), new PathNode(1, 0), new PathNode(1, 1), new PathNode(0, 1)], path.SubPaths[0].Nodes.AsSpan().ToArray());
     }
 
     [Fact]
@@ -69,14 +69,14 @@ public class ShapeConversionTests
     {
         var path = ShapeConversion.ToPath(Ellipse())!;
 
-        Assert.Equal(4, path.Nodes.Length);
-        Assert.All(path.Nodes, n => Assert.Equal(NodeType.Symmetric, n.Type));
-        Assert.All(path.Nodes, n => Assert.True(NodeTypes.Satisfies(n)));
+        Assert.Equal(4, path.SubPaths[0].Nodes.Length);
+        Assert.All(path.SubPaths[0].Nodes, n => Assert.Equal(NodeType.Symmetric, n.Type));
+        Assert.All(path.SubPaths[0].Nodes, n => Assert.True(NodeTypes.Satisfies(n)));
         // The top node sits in the middle of the top edge and its handles are 0.2761 of the width to each side.
-        Assert.Equal(0.5, path.Nodes[0].X, 9);
-        Assert.Equal(0, path.Nodes[0].Y, 9);
-        Assert.Equal(0.5 + 0.5522847498307936 * 0.5, path.Nodes[0].OutX!.Value, 9);
-        Assert.Equal(0.5 - 0.5522847498307936 * 0.5, path.Nodes[0].InX!.Value, 9);
+        Assert.Equal(0.5, path.SubPaths[0].Nodes[0].X, 9);
+        Assert.Equal(0, path.SubPaths[0].Nodes[0].Y, 9);
+        Assert.Equal(0.5 + 0.5522847498307936 * 0.5, path.SubPaths[0].Nodes[0].OutX!.Value, 9);
+        Assert.Equal(0.5 - 0.5522847498307936 * 0.5, path.SubPaths[0].Nodes[0].InX!.Value, 9);
     }
 
     [Theory]

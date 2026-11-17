@@ -52,6 +52,17 @@ public class MenuBarViewModelTests
             }
             .ToDictionary(name => name, _ => new SwitchableCommand(false));
 
+        public Dictionary<string, SwitchableCommand> PathCommandsByName { get; } = new[] { "union", "difference", "intersection", "exclusion", "combine", "break apart" }
+            .ToDictionary(name => name, _ => new SwitchableCommand(false));
+
+        private PathMenuCommands PathCommands() => new(
+            PathCommandsByName["union"],
+            PathCommandsByName["difference"],
+            PathCommandsByName["intersection"],
+            PathCommandsByName["exclusion"],
+            PathCommandsByName["combine"],
+            PathCommandsByName["break apart"]);
+
         private ObjectMenuCommands ObjectCommands() => new(
             ObjectCommandsByName["group"],
             ObjectCommandsByName["ungroup"],
@@ -91,7 +102,7 @@ public class MenuBarViewModelTests
                 new RelayCommand(() => FileCalls.Add("export")),
                 path => new RelayCommand(() => FileCalls.Add("recent " + path)));
             Layers = new LayerEditor(State, Localizer);
-            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, EditCommands(), ObjectCommands(), new LayerMenuCommands(Layers), Recent, Undo, Redo);
+            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, EditCommands(), ObjectCommands(), new LayerMenuCommands(Layers), PathCommands(), Recent, Undo, Redo);
         }
     }
 
@@ -134,6 +145,30 @@ public class MenuBarViewModelTests
         }.OrderBy(h => h);
 
         Assert.Equal(expected, enabledLeaves);
+    }
+
+    [Fact]
+    public void PathMenu_BooleanCombineAndBreakApartItems_FollowTheirCommands()
+    {
+        var f = new Fixture();
+        var items = new Dictionary<string, string>
+        {
+            ["Union"] = "union",
+            ["Difference"] = "difference",
+            ["Intersection"] = "intersection",
+            ["Exclusion"] = "exclusion",
+            ["Combine"] = "combine",
+            ["Break Apart"] = "break apart",
+        };
+
+        foreach (var (header, command) in items)
+        {
+            Assert.False(Find(f, header).IsEnabled);
+            f.PathCommandsByName[command].Set(true);
+            Assert.True(Find(f, header).IsEnabled);
+            Find(f, header).Command!.Execute(null);
+            Assert.Equal(1, f.PathCommandsByName[command].Executions);
+        }
     }
 
     [Fact]

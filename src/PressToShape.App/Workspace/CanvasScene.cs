@@ -107,18 +107,24 @@ internal static class CanvasScene
     {
         var width = path.Width * scale;
         var height = path.Height * scale;
-        var nodes = ImmutableArray.CreateBuilder<ScreenPathNode>(path.Nodes.Length);
-        foreach (var node in path.Nodes)
+        var subPaths = ImmutableArray.CreateBuilder<ScreenSubPath>(path.SubPaths.Length);
+        foreach (var subPath in path.SubPaths)
         {
-            nodes.Add(new ScreenPathNode(
-                node.X * width,
-                node.Y * height,
-                node.InX * width,
-                node.InY * height,
-                node.OutX * width,
-                node.OutY * height));
+            var nodes = ImmutableArray.CreateBuilder<ScreenPathNode>(subPath.Nodes.Length);
+            foreach (var node in subPath.Nodes)
+            {
+                nodes.Add(new ScreenPathNode(
+                    node.X * width,
+                    node.Y * height,
+                    node.InX * width,
+                    node.InY * height,
+                    node.OutX * width,
+                    node.OutY * height));
+            }
+
+            subPaths.Add(new ScreenSubPath(nodes.MoveToImmutable(), subPath.IsClosed));
         }
 
-        return new ScreenPath(nodes.MoveToImmutable(), path.IsClosed, path.FillRule);
+        return new ScreenPath(subPaths.MoveToImmutable(), path.FillRule);
     }
 }

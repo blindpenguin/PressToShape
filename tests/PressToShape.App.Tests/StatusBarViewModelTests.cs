@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PressToShape.App.Localization;
-using PressToShape.App.ViewModels.Desktop;
+using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
 using Xunit;
 

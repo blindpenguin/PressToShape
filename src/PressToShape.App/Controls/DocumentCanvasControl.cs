@@ -453,30 +453,38 @@ internal sealed class DocumentCanvasControl : Control
 
         if (shape.Fill is { } fillColor)
         {
-            context.DrawGeometry(new ImmutableSolidColorBrush(ToAvalonia(fillColor)), null, ToGeometry(outline, shape, closeFigure: true));
+            context.DrawGeometry(new ImmutableSolidColorBrush(ToAvalonia(fillColor)), null, ToGeometry(outline, shape, forFill: true));
         }
 
         if (shape.Stroke is { } strokeColor)
         {
             var pen = new ImmutablePen(new ImmutableSolidColorBrush(ToAvalonia(strokeColor)), shape.StrokeWidth);
-            context.DrawGeometry(null, pen, ToGeometry(outline, shape, closeFigure: outline.IsClosed));
+            context.DrawGeometry(null, pen, ToGeometry(outline, shape, forFill: false));
         }
     }
 
-    private static StreamGeometry ToGeometry(ScreenPath outline, ScreenShape shape, bool closeFigure)
+    // One figure per sub-path. For the fill every figure is closed, for the stroke only the closed sub-paths are.
+    private static StreamGeometry ToGeometry(ScreenPath outline, ScreenShape shape, bool forFill)
     {
         var geometry = new StreamGeometry();
         using (var context = geometry.Open())
         {
             context.SetFillRule(outline.FillRule == CoreFillRule.EvenOdd ? FillRule.EvenOdd : FillRule.NonZero);
             var open = false;
+            var closedByPath = false;
             foreach (var command in PathOutline.Commands(outline, shape.X, shape.Y))
             {
                 switch (command.Type)
                 {
                     case PathCommandType.Move:
-                        context.BeginFigure(new Point(command.X, command.Y), closeFigure);
+                        if (open)
+                        {
+                            context.EndFigure(forFill || closedByPath);
+                        }
+
+                        context.BeginFigure(new Point(command.X, command.Y), forFill);
                         open = true;
+                        closedByPath = false;
                         break;
                     case PathCommandType.Line:
                         context.LineTo(new Point(command.X, command.Y));
@@ -485,13 +493,14 @@ internal sealed class DocumentCanvasControl : Control
                         context.CubicBezierTo(new Point(command.Control1X, command.Control1Y), new Point(command.Control2X, command.Control2Y), new Point(command.X, command.Y));
                         break;
                     case PathCommandType.Close:
+                        closedByPath = true;
                         break;
                 }
             }
 
             if (open)
             {
-                context.EndFigure(closeFigure);
+                context.EndFigure(forFill || closedByPath);
             }
         }
 

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:PressToShape.App.ViewModels.Desktop"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
              xmlns:editor="using:PressToShape.App.ViewModels.Editor"
              xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="28"
@@ -32,6 +32,8 @@
             <TextBlock Grid.Column="0" Classes="status" Text="{Binding SelectionSummary}" />
             <TextBlock Grid.Column="1" Classes="status" Margin="16,0,0,0"
                        Text="{Binding PathLengthText}" IsVisible="{Binding ShowPathLength}" />
+            <TextBlock Grid.Column="2" Classes="status" Margin="16,0,0,0"
+                       Text="{Binding BusyText}" IsVisible="{Binding IsBusy}" />
 
             <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
                 <Button Classes="icon small" Command="{Binding ActivateHandToolCommand}"

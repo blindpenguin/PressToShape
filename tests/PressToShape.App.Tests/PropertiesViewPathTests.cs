@@ -91,7 +91,7 @@ public class PropertiesViewPathTests
         Dispatcher.UIThread.RunJobs();
 
         var path = Assert.IsType<PathShape>(state.Document.FindShape(state.SelectedShapeId!.Value)!.Shape);
-        Assert.True(path.IsClosed);
+        Assert.True(path.SubPaths[0].IsClosed);
         Assert.Equal(FillRule.EvenOdd, path.FillRule);
         Assert.Contains("selected", Choice(view, "Closed path")!.Classes);
         Assert.DoesNotContain("selected", Choice(view, "Open path")!.Classes);

@@ -5,9 +5,10 @@ using System.Linq;
 namespace PressToShape.Core.Shapes;
 
 /// <summary>
-/// The rules for editing the nodes and handles of a <see cref="PathShape"/>. Every method takes the path and positions in the frame of
+/// The rules for editing the nodes and handles of a <see cref="PathShape"/>. A node is addressed by its flat index across the sub-paths
+/// (see <see cref="PathShape.Locate"/>) and an edit changes only the sub-path that holds it. Every method takes the path and positions in the frame of
 /// the path before its rotation (see <see cref="PathShape.ToLocal"/>), changes nothing in place and returns a new path built with
-/// <see cref="PathShape.Rebuilt"/>, so every node that was not moved keeps its place on the screen, also for a rotated path.
+/// <see cref="PathShape.Rebuilt(IReadOnlyList{DocumentSubPath}, FillRule)"/>, so every node that was not moved keeps its place on the screen, also for a rotated path.
 /// </summary>
 public static partial class PathNodeEditing
 {
@@ -26,11 +27,11 @@ public static partial class PathNodeEditing
             return path;
         }
 
-        var nodes = new List<DocumentNode>(path.ToDocumentNodes());
+        var buffer = PathBuffer.From(path);
         foreach (var index in indices.Distinct())
         {
-            var node = nodes[index];
-            nodes[index] = new DocumentNode(
+            var node = buffer[index];
+            buffer[index] = new DocumentNode(
                 node.X + dx,
                 node.Y + dy,
                 node.InX + dx,
@@ -40,7 +41,7 @@ public static partial class PathNodeEditing
                 node.Type);
         }
 
-        return path.Rebuilt(nodes, path.IsClosed, path.FillRule);
+        return buffer.Build()!;
     }
 
     /// <summary>
@@ -57,8 +58,8 @@ public static partial class PathNodeEditing
         Guard.Finite(x, nameof(x));
         Guard.Finite(y, nameof(y));
 
-        var nodes = new List<DocumentNode>(path.ToDocumentNodes());
-        var node = nodes[index];
+        var buffer = PathBuffer.From(path);
+        var node = buffer[index];
         var vectorX = x - node.X;
         var vectorY = y - node.Y;
         var length = Math.Sqrt(vectorX * vectorX + vectorY * vectorY);
@@ -83,8 +84,8 @@ public static partial class PathNodeEditing
                 outY = null;
             }
 
-            nodes[index] = new DocumentNode(node.X, node.Y, inX, inY, outX, outY, NodeType.Corner);
-            return path.Rebuilt(nodes, path.IsClosed, path.FillRule);
+            buffer[index] = new DocumentNode(node.X, node.Y, inX, inY, outX, outY, NodeType.Corner);
+            return buffer.Build()!;
         }
 
         // The other handle, if there is one, is placed opposite to the moved one.
@@ -115,13 +116,13 @@ public static partial class PathNodeEditing
             inY = otherY;
         }
 
-        nodes[index] = new DocumentNode(node.X, node.Y, inX, inY, outX, outY, type);
-        return path.Rebuilt(nodes, path.IsClosed, path.FillRule);
+        buffer[index] = new DocumentNode(node.X, node.Y, inX, inY, outX, outY, type);
+        return buffer.Build()!;
     }
 
     /// <summary>
-    /// Removes the nodes. The neighbors connect, each keeping its own handle, so the curve changes a little. Returns <c>null</c> if fewer
-    /// than two nodes would remain, in which case the caller deletes the shape.
+    /// Removes the nodes. The neighbors connect, each keeping its own handle, so the curve changes a little. A sub-path that would be left
+    /// with fewer than two nodes is removed with them. Returns <c>null</c> if no sub-path would remain, in which case the caller deletes the shape.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">An index is not the index of a node.</exception>
     public static PathShape? RemoveNodes(PathShape path, IReadOnlyCollection<int> indices)
@@ -136,8 +137,18 @@ public static partial class PathNodeEditing
             return path;
         }
 
-        var nodes = path.ToDocumentNodes().Where((_, index) => !removed.Contains(index)).ToList();
-        return nodes.Count < 2 ? null : path.Rebuilt(nodes, path.IsClosed, path.FillRule);
+        var buffer = PathBuffer.From(path);
+        var flat = 0;
+        for (var subPath = 0; subPath < buffer.SubPathCount; subPath++)
+        {
+            var nodes = buffer.Nodes(subPath);
+            var kept = nodes.Where((_, index) => !removed.Contains(flat + index)).ToList();
+            flat += nodes.Count;
+            nodes.Clear();
+            nodes.AddRange(kept);
+        }
+
+        return buffer.Build();
     }
 
     /// <summary>The position of the anchor of a node on the screen, with the rotation of the path applied.</summary>
@@ -147,7 +158,7 @@ public static partial class PathNodeEditing
         ArgumentNullException.ThrowIfNull(path);
         CheckIndices(path, [index]);
 
-        var node = path.ToDocumentNodes()[index];
+        var node = PathBuffer.From(path)[index];
         return path.FromLocal(node.X, node.Y);
     }
 
@@ -155,7 +166,7 @@ public static partial class PathNodeEditing
     {
         foreach (var index in indices)
         {
-            if (index < 0 || index >= path.Nodes.Length)
+            if (index < 0 || index >= path.NodeCount)
             {
                 throw new ArgumentOutOfRangeException(nameof(indices), index, "The index is not the index of a node.");
             }
