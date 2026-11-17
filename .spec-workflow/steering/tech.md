@@ -44,7 +44,7 @@ Not applicable.
 These are deliberately not decided here. Each gets evaluated in its own spec before anything is built:
 
 - **Canvas rendering approach** (for example Avalonia custom drawing versus direct Skia, retained scene graph versus immediate redraw, hit-testing and viewport strategy). To be chosen by comparing options in a spec.
-- **Document and geometry model** (path representation, bezier math, transforms, boolean operations).
+- **Document and geometry model** (boolean operations; the path representation is decided, see decisions 18 and 19).
 - **Undo/redo mechanism** (command pattern versus snapshots).
 - **Native file format** and its versioning.
 - **Input handling**: stylus pressure, tilt and palm rejection beyond the two-finger rule. (Mouse, touch and stylus as pointers are decided, see decision 13.)
@@ -116,6 +116,9 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 15. **Keyboard and safe area on Android**: Avalonia already keeps the content out from under the system bars, and the on-screen keyboard does not resize the view but reports the area it covers through `InputPane`, so the layout leaves that gap itself.
 16. **Tool groups, a floating panel and a long press that is pure logic** (spec `tablet-layout-refinement`): the tablet shows six tool icons; similar tools share one (`ToolGroups` data in `Workspace`, `ToolGroupViewModel`), a tap uses the group's last tool and a long press (`LongPressTracker`, pure, fed with timestamps; `ToolGroupButton` control) opens a flyout. The properties, layers and history panels open from toolbar icons and float over the canvas (`TabletPanelViewModel`), so the canvas never changes its size; a touch on the canvas closes the panel and still reaches the canvas. The active tool of `EditorState` stays the only truth.
 17. **Back on Android arrives twice**: as the Escape key and as the back request. Dialogs inside the layout therefore do not cancel on Escape, and `BackRequestGuard` ignores a back request right after a menu or flyout was closed by the Escape half. The order of one Back press is: toolbar menu, dialog, tool flyout, panel, then the unsaved-changes flow or leaving.
+
+18. **Paths are shapes with a box, nodes as fractions of it** (spec `path-and-pen-tool`): `PathShape` derives from `Shape` and keeps X, Y, Width, Height and Rotation like every other shape, so move, resize, rotate, groups and arrange work unchanged. Its nodes (anchor, in handle, out handle) are stored as fractions of the tight box, handles may lie outside it, and every edit recomputes the box and keeps unmoved nodes at the same place on screen, also for a rotated path. A path has one sub-path (no compound paths yet). Chosen over nodes in document coordinates because a transform then changes only the box.
+19. **Node type stored per node, left out of the file when derived** (spec `node-and-direct-select`): each node has a type (corner, smooth, symmetric) that decides how its handles follow each other while one is dragged. The project file writes `type` only when it differs from the type derived from the handles, so simple paths stay small and older files load the same. Editing a rectangle or ellipse with a node tool converts it to a path in the same undo step (`ShapeConversion.ToPath`).
 
 ## Known Limitations
 - `ViewLocator` uses reflection and is not trimming- or AOT-safe. This is acceptable for now. Replace it if trimming or AOT is adopted.
