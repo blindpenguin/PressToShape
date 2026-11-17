@@ -33,9 +33,10 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         Toolbox = new ToolboxViewModel(State, localizer);
         Editor = new SelectionEditor(State);
         Objects = new ObjectEditor(State);
+        LayerEditing = new LayerEditor(State, localizer);
         var ring = new RingMenuViewModel(localizer);
         Canvas = new CanvasAreaViewModel(State, Editor, ring: ring);
-        Inspector = new InspectorViewModel(State, localizer, Editor, Objects);
+        Inspector = new InspectorViewModel(State, localizer, Editor, Objects, LayerEditing);
         FileCommands = new FileMenuCommands(
             NewCommand,
             OpenCommand,
@@ -65,6 +66,8 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
             HideCommand,
             ShowAllCommand);
 
+        LayerCommands = new LayerMenuCommands(LayerEditing);
+
         ring.Content = RingMenuContent.Create(ObjectCommands, EditCommands);
 
         Canvas.PropertyChanged += OnCanvasPropertyChanged;
@@ -83,6 +86,12 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
 
     /// <summary>The edits of the structure: group, arrange, lock, hide, rename. One instance, shared by the menus and the object list.</summary>
     public ObjectEditor Objects { get; }
+
+    /// <summary>The editor for the layers. The Layers panel and the Layer menu share it.</summary>
+    public LayerEditor LayerEditing { get; }
+
+    /// <summary>The commands of the Layer menu.</summary>
+    public LayerMenuCommands LayerCommands { get; }
 
     public CanvasAreaViewModel Canvas { get; }
 
@@ -186,12 +195,15 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
                 NotifyPasteCommands();
                 SelectAllCommand.NotifyCanExecuteChanged();
                 NotifyObjectCommands();
+                LayerCommands.NotifyCanExecuteChanged();
                 break;
             case nameof(EditorState.SelectedShapeIds):
                 NotifyObjectCommands();
+                LayerCommands.NotifyCanExecuteChanged();
                 break;
             case nameof(EditorState.ActiveLayerId):
                 NotifyPasteCommands();
+                LayerCommands.NotifyCanExecuteChanged();
                 break;
         }
     }

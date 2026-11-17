@@ -99,7 +99,7 @@ _(no documentation)_
 
 Source: `src/PressToShape.App/Views/Editor/LayersView.axaml.cs:16-208`
 
-The Layers tab. The view only turns pointer input into calls of the view model: a press selects, a double-tap renames, and a drag (after a long press for a finger) drops an object above another one of the same group.
+The Layers tab. The view only turns pointer input into calls of the view model: a press selects, a double-tap renames, and a drag (after a long press for a finger) drops an object above another one of the same group or onto a layer, or a layer above another layer.
 
 **Members**
 

@@ -2,6 +2,22 @@
 
 Project: PressToShape.Core.Tests
 
+## LayerRoundTripTests (class)
+
+`public class LayerRoundTripTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/LayerRoundTripTests.cs:12-106`
+
+_(no documentation)_
+
+**Members**
+
+- `public void WriteThenRead_LayersInChangedOrder_KeepCountOrderNamesAndFlags()` - _(no documentation)_
+- `public void WriteThenRead_LayersWithShapesAndGroups_KeepContents()` - _(no documentation)_
+- `public void WriteThenRead_AfterLayerCommands_KeepsTheResult()` - _(no documentation)_
+- `public void ToUtf8_LayersInChangedOrder_ExportsVisibleLayersInStackingOrder()` - _(no documentation)_
+- `public void ToUtf8_AfterMoveLayerAbove_FollowsTheNewOrder()` - _(no documentation)_
+
 ## ProjectFileGroupTests (class)
 
 `public class ProjectFileGroupTests`

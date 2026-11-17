@@ -137,7 +137,7 @@ public class LayersViewTests
 
         var buttons = view.GetVisualDescendants().OfType<Button>().Where(b => b.IsEffectivelyVisible && b.TemplatedParent is null).ToList();
 
-        Assert.Equal(8, buttons.Count); // add layer, the layer's expander and two toggles, and two toggles for each of the two objects
+        Assert.Equal(13, buttons.Count); // the six layer commands, the layer's expander and two toggles, and two toggles for each of the two objects
         Assert.All(buttons, b => Assert.True(b.Bounds.Width >= 48 && b.Bounds.Height >= 48, $"{AutomationProperties.GetName(b)} {b.Bounds.Width:0}x{b.Bounds.Height:0}"));
 
         window.Close();

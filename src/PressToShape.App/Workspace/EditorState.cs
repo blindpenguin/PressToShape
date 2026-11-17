@@ -19,6 +19,9 @@ internal sealed partial class EditorState : ObservableObject
 {
     private double _zoomPercent = ZoomLevels.Default;
 
+    // The ids of the layers of the previous document, bottom first, to find the next active layer when the active one is gone.
+    private ImmutableArray<Guid> _layerOrder;
+
     /// <summary>Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.</summary>
     public EditorState(Document? document = null)
     {
@@ -168,6 +171,9 @@ internal sealed partial class EditorState : ObservableObject
         ArgumentNullException.ThrowIfNull(document);
 
         Document = document;
+
+        // A new or opened document is unrelated to the old one, so the top layer is active, as at the start.
+        ActiveLayerId = document.Layers[^1].Id;
         History.Reset(document);
         ResetPen();
         ClearNodeSelection();
@@ -399,14 +405,37 @@ internal sealed partial class EditorState : ObservableObject
 
         if (value.Layers.All(l => l.Id != ActiveLayerId))
         {
-            ActiveLayerId = value.Layers[^1].Id;
+            ActiveLayerId = NearestLayerId(value);
         }
+
+        _layerOrder = [.. value.Layers.Select(l => l.Id)];
 
         OnPropertyChanged(nameof(ArtboardWidth));
         OnPropertyChanged(nameof(ArtboardHeight));
 
         // A different artboard size changes how far the view may move.
         SetPan(PanX, PanY);
+    }
+
+    // The active layer is gone. The layer that was below it takes over, so Undo of "Add layer" and the deletion of a layer land on the
+    // layer the user came from. If no layer below is left, the lowest layer is the one that was above.
+    private Guid NearestLayerId(Document value)
+    {
+        var index = _layerOrder.IsDefault ? -1 : _layerOrder.IndexOf(ActiveLayerId);
+        if (index < 0)
+        {
+            return value.Layers[^1].Id;
+        }
+
+        for (var i = index - 1; i >= 0; i--)
+        {
+            if (value.Layers.Any(l => l.Id == _layerOrder[i]))
+            {
+                return _layerOrder[i];
+            }
+        }
+
+        return value.Layers[0].Id;
     }
 
     public void SetZoom(double percent) => ZoomPercent = percent;

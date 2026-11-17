@@ -14,7 +14,7 @@ using static PressToShape.App.Localization.Localizer;
 namespace PressToShape.App.ViewModels.Desktop;
 
 /// <summary>
-/// The complete menu structure. The File actions, the Edit actions, the group, arrange, lock and hide items, Quit, the zoom items, the Window items and the languages have behavior.
+/// The complete menu structure. The File actions, the Edit actions, the group, arrange, lock and hide items, the Layer menu, Quit, the zoom items, the Window items and the languages have behavior.
 /// Everything else has no command and is therefore disabled until its feature exists.
 /// </summary>
 internal sealed class MenuBarViewModel : ViewModelBase
@@ -28,6 +28,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
         FileMenuCommands files,
         EditMenuCommands edit,
         ObjectMenuCommands objects,
+        LayerMenuCommands layers,
         RecentFiles recent,
         ICommand undo,
         ICommand redo)
@@ -40,6 +41,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(files);
         ArgumentNullException.ThrowIfNull(edit);
         ArgumentNullException.ThrowIfNull(objects);
+        ArgumentNullException.ThrowIfNull(layers);
         ArgumentNullException.ThrowIfNull(recent);
         ArgumentNullException.ThrowIfNull(undo);
         ArgumentNullException.ThrowIfNull(redo);
@@ -128,6 +130,19 @@ internal sealed class MenuBarViewModel : ViewModelBase
                 Submenu(N("Clipping _Mask"),
                     Item(N("_Make")),
                     Item(N("_Release")))),
+            Submenu(N("_Layer"),
+                Item(N("_Add Layer"), command: layers.Add),
+                Item(N("Dupli_cate Layer"), command: layers.Duplicate),
+                Item(N("_Delete Layer"), command: layers.Delete),
+                Separator(),
+                Item(N("_Merge Down"), command: layers.MergeDown),
+                Separator(),
+                Item(N("Move _Up"), command: layers.MoveUp),
+                Item(N("Move Do_wn"), command: layers.MoveDown),
+                Separator(),
+                Submenu(N("Move _Selection"),
+                    Item(N("To Layer _Above"), command: layers.MoveSelectionUp),
+                    Item(N("To Layer _Below"), command: layers.MoveSelectionDown))),
             Submenu(N("_Path"),
                 Item(N("_Convert Object to Path"), "Ctrl+Shift+O"),
                 Item(N("_Stroke to Path")),

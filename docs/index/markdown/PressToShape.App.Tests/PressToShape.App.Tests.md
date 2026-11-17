@@ -1186,6 +1186,25 @@ _(no documentation)_
 - `public Task ConfirmClose_WithChanges_AsksAndFollowsTheAnswer()` - _(no documentation)_
 - `public void FitToWindow_UsesTheCanvasViewport()` - _(no documentation)_
 
+## EditorStateActiveLayerTests (class)
+
+`public class EditorStateActiveLayerTests`
+
+Source: `tests/PressToShape.App.Tests/EditorStateActiveLayerTests.cs:10-114`
+
+_(no documentation)_
+
+**Members**
+
+- `public void NewState_ActivatesTheTopLayer()` - _(no documentation)_
+- `public void Undo_OfAddedLayerAboveActive_ActivatesTheLayerBelow()` - _(no documentation)_
+- `public void Undo_OfLayerAddedInTheMiddle_ActivatesTheLayerBelowIt()` - _(no documentation)_
+- `public void Edit_RemovingTheActiveMiddleLayer_ActivatesTheLayerBelow()` - _(no documentation)_
+- `public void Edit_RemovingTheActiveBottomLayer_ActivatesTheNewBottomLayer()` - _(no documentation)_
+- `public void Redo_OfDeletedActiveLayer_ActivatesTheLayerBelow()` - _(no documentation)_
+- `public void Edit_RemovingAnotherLayer_KeepsTheActiveLayer()` - _(no documentation)_
+- `public void ReplaceDocument_ActivatesTheTopLayerOfTheNewDocument()` - _(no documentation)_
+
 ## EditorStateGroupTests (class)
 
 `public class EditorStateGroupTests`
@@ -1694,6 +1713,93 @@ _(no documentation)_
 - `public void UnsupportedSavedChoice_IsIgnored(string saved, string system, string expected)` - _(no documentation)_
 - `public void InvariantCulture_FallsBackToEnglish()` - _(no documentation)_
 
+## LayerEditorTests (class)
+
+`public class LayerEditorTests`
+
+Source: `tests/PressToShape.App.Tests/LayerEditorTests.cs:12-496`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Add_AboveActiveLayer_IsOneStepAndActivatesTheNewLayer()` - _(no documentation)_
+- `public void Add_WithSelectionAndEnteredGroup_ClearsBoth()` - _(no documentation)_
+- `public void Add_NameInUse_TakesTheLowestFreeNumber()` - _(no documentation)_
+- `public void Add_InGerman_UsesTheTranslatedName()` - _(no documentation)_
+- `public void Add_UndoAndRedo_RemoveAndRestoreTheLayer()` - _(no documentation)_
+- `public void Delete_MiddleActiveLayer_RemovesItWithShapesAndActivatesTheLayerBelow()` - _(no documentation)_
+- `public void Delete_LayerWithSelectedShape_DropsItFromTheSelection()` - _(no documentation)_
+- `public void Delete_UndoRestoresLayerShapesAndPosition()` - _(no documentation)_
+- `public void Delete_LastLayer_IsNotPossible()` - _(no documentation)_
+- `public void Rename_NewName_IsOneStep()` - _(no documentation)_
+- `public void Rename_EmptyBlankOrSameName_ChangesNothing(string name)` - _(no documentation)_
+- `public void Rename_UnknownLayer_IsIgnored()` - _(no documentation)_
+- `public void MoveUpAndDown_ActiveLayer_SwapWithNeighbourAndKeepActive()` - _(no documentation)_
+- `public void MoveUpAndDown_AtTheEnds_AreDisabledAndRecordNothing()` - _(no documentation)_
+- `public void MoveAbove_LayerOnTarget_IsOneStepAndKeepsSelection()` - _(no documentation)_
+- `public void MoveAbove_SameOrUnknownIds_IsIgnored()` - _(no documentation)_
+- `public void Duplicate_ActiveLayer_InsertsCopyAboveSelectsItAndClearsSelection()` - _(no documentation)_
+- `public void Duplicate_InGerman_UsesTheTranslatedName()` - _(no documentation)_
+- `public void Duplicate_Undo_RemovesTheCopyAndActivatesTheOriginal()` - _(no documentation)_
+- `public void MergeDown_ActiveLayer_MovesShapesToLowerLayerAndActivatesIt()` - _(no documentation)_
+- `public void MergeDown_Undo_RestoresBothLayers()` - _(no documentation)_
+- `public void MergeDown_BottomLayer_IsDisabled()` - _(no documentation)_
+- `public void MergeDown_LockedOrHiddenLayerOfTheTwo_IsDisabled(int layerIndex, bool locked)` - _(no documentation)_
+- `public void MergeDown_OtherLayerLocked_StaysEnabled()` - _(no documentation)_
+- `public void MoveSelectionToLayer_Shapes_GoToTopOfTargetAndStaySelected()` - _(no documentation)_
+- `public void MoveSelectionToLayer_Undo_BringsTheShapeBack()` - _(no documentation)_
+- `public void MoveSelectionToLayer_MemberOfEnteredGroup_LeavesGroupAndEnteredState()` - _(no documentation)_
+- `public void MoveSelectionToLayer_AlreadyOnTop_RecordsNothing()` - _(no documentation)_
+- `public void MoveSelectionToLayer_LockedOrHiddenTarget_IsRejected(bool locked)` - _(no documentation)_
+- `public void MoveSelectionToLayer_NothingSelected_IsDisabled()` - _(no documentation)_
+- `public void MoveSelectionUpAndDown_SelectionInOneLayer_MovesToTheNeighbourLayer()` - _(no documentation)_
+- `public void MoveSelectionUpAndDown_SelectionInSeveralLayers_IsDisabled()` - _(no documentation)_
+- `public void MoveSelectionUp_NeighbourLayerLocked_IsDisabled()` - _(no documentation)_
+
+## LayersViewLayerTests (class)
+
+`public class LayersViewLayerTests`
+
+Source: `tests/PressToShape.App.Tests/LayersViewLayerTests.cs:22-159`
+
+_(no documentation)_
+
+**Members**
+
+- `public void View_HasTheSixLayerButtons()` - _(no documentation)_
+- `public void View_ButtonsFollowTheCommandsAndTheActiveLayer()` - _(no documentation)_
+- `public void View_AddLayerButton_AddsARowAndMakesItActive()` - _(no documentation)_
+- `public void View_RenamingALayerRow_ShowsTheNameField_AndTheNewNameAfterCommit()` - _(no documentation)_
+- `public void View_DraggingAnObjectRowOntoAnotherLayerRow_MovesTheObject()` - _(no documentation)_
+- `public void View_DraggingALayerRowOntoAnotherLayerRow_ReordersTheLayers()` - _(no documentation)_
+
+## LayersViewModelLayerTests (class)
+
+`public class LayersViewModelLayerTests`
+
+Source: `tests/PressToShape.App.Tests/LayersViewModelLayerTests.cs:12-230`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Commands_InThreeLayerDocumentTopLayerActive_HaveTheExpectedCanExecute()` - _(no documentation)_
+- `public void Commands_OneLayerDocument_CannotDeleteMoveOrMerge()` - _(no documentation)_
+- `public void Commands_AfterSelectingTheBottomLayer_ChangeCanExecuteAndRaiseTheEvent()` - _(no documentation)_
+- `public void MoveLayerUpCommand_Executed_ReordersTheLayerRows()` - _(no documentation)_
+- `public void Undo_AfterLayerCommands_RowsFollowTheDocument()` - _(no documentation)_
+- `public void DeleteLayerCommand_Executed_RemovesTheLayerRowAndItsObjects()` - _(no documentation)_
+- `public void LayerRow_CanBeRenamedThroughTheRowCommands()` - _(no documentation)_
+- `public void LayerRow_RenameWithEmptyOrSameName_KeepsTheName(string text)` - _(no documentation)_
+- `public void LayerRow_RenameCancelled_KeepsTheName()` - _(no documentation)_
+- `public void Reorder_LayerOnLayer_PutsItDirectlyAboveTheTarget()` - _(no documentation)_
+- `public void Reorder_LayerOnItselfOrOnAnObject_IsRefused()` - _(no documentation)_
+- `public void Reorder_ObjectOnLayerRow_MovesOnlyThatObjectWhenItIsNotSelected()` - _(no documentation)_
+- `public void Reorder_ObjectOfTheSelectionOnLayerRow_MovesTheWholeSelection()` - _(no documentation)_
+- `public void Reorder_ObjectOnLockedOrHiddenLayer_IsRefused(bool locked)` - _(no documentation)_
+- `public void Reorder_LockedObjectOnLayerRow_IsRefused()` - _(no documentation)_
+
 ## LayersViewModelPathTests (class)
 
 `public class LayersViewModelPathTests`
@@ -1717,7 +1823,7 @@ _(no documentation)_
 
 `public class LayersViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/LayersViewModelTests.cs:14-482`
+Source: `tests/PressToShape.App.Tests/LayersViewModelTests.cs:14-488`
 
 _(no documentation)_
 
@@ -1743,15 +1849,15 @@ _(no documentation)_
 - `public void Toggles_VisibleRow_HidesAndLocksIt()` - _(no documentation)_
 - `public void Rename_CommitsAsOneStep_EmptyNameFallsBackToTheDefault()` - _(no documentation)_
 - `public void Rename_Cancelled_ChangesNothing()` - _(no documentation)_
-- `public void Rename_LayerRow_IsNotPossible()` - _(no documentation)_
+- `public void Rename_LayerRow_IsPossible()` - _(no documentation)_
 - `public void Reorder_WithinAParent_MovesTheObjectAboveTheTarget()` - _(no documentation)_
-- `public void Reorder_AnotherParentOrALayerRow_IsIgnored()` - _(no documentation)_
+- `public void Reorder_AnotherParentOrALayerOnAnObject_IsIgnored()` - _(no documentation)_
 - `public void Select_LayerRow_MakesTheLayerActive()` - _(no documentation)_
 - `public void Constructor_NullArguments_Throw()` - _(no documentation)_
 - `public void LayerRow_Toggles_HideAndLockTheLayerAsOneStepEach()` - _(no documentation)_
 - `public void LayerToggle_ThenUndo_RestoresTheLayerAndTheRow()` - _(no documentation)_
 - `public void ActiveLayer_IsMarked_AndFollowsTheState()` - _(no documentation)_
-- `public void AddLayerCommand_CannotExecuteYet()` - _(no documentation)_
+- `public void AddLayerCommand_Executed_AddsAnActiveLayerRow()` - _(no documentation)_
 
 ## LayersViewTests (class)
 
@@ -1886,7 +1992,7 @@ Settings kept in memory.
 
 `public class MenuBarViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-584`
+Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-627`
 
 _(no documentation)_
 
@@ -1894,6 +2000,9 @@ _(no documentation)_
 
 - `public void TopLevelMenus_AreInMockupOrder()` - _(no documentation)_
 - `public void OnlyTheImplementedItems_AreEnabledLeafItems()` - _(no documentation)_
+- `public void LayerMenu_HasTheLayerCommandsInOrder()` - _(no documentation)_
+- `public void LayerMenu_InOneLayerDocument_OnlyAddAndDuplicateAreEnabled()` - _(no documentation)_
+- `public void LayerMenu_AddLayer_RunsTheCommandAndEnablesTheOthers()` - _(no documentation)_
 - `public void EnabledItems_HaveACommandOrAreSubmenus()` - _(no documentation)_
 - `public void ItemsWithoutCommand_AreDisabled()` - _(no documentation)_
 - `public void Separators_AreMarked_AndDisabled()` - _(no documentation)_

@@ -105,7 +105,7 @@ public class TranslationConsistencyTests
     {
         var localizer = new Localizer(new FakeCatalogSource().Add("de", GermanDictionary()), language);
         var menu = new MenuBarViewModel(
-            new EditorState(), new NoShutdown(), localizer, _ => { }, () => { }, NoFileCommands(), NoEditCommands(), NoObjectCommands(), new RecentFiles(new MemorySettingsStore()), new SwitchableCommand(false), new SwitchableCommand(false));
+            new EditorState(), new NoShutdown(), localizer, _ => { }, () => { }, NoFileCommands(), NoEditCommands(), NoObjectCommands(), new LayerMenuCommands(new LayerEditor(new EditorState(), localizer)), new RecentFiles(new MemorySettingsStore()), new SwitchableCommand(false), new SwitchableCommand(false));
 
         var problems = new List<string>();
         CheckLevel("menu bar", menu.Menus, problems);

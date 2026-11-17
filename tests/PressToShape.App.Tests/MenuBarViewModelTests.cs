@@ -41,6 +41,8 @@ public class MenuBarViewModelTests
 
         public Localizer Localizer { get; }
 
+        public LayerEditor Layers { get; }
+
         public Dictionary<string, SwitchableCommand> EditCommandsByName { get; } = new[] { "cut", "copy", "paste", "paste in place", "duplicate", "delete", "select all", "deselect" }
             .ToDictionary(name => name, _ => new SwitchableCommand(false));
 
@@ -88,7 +90,8 @@ public class MenuBarViewModelTests
                 new RelayCommand(() => FileCalls.Add("save as")),
                 new RelayCommand(() => FileCalls.Add("export")),
                 path => new RelayCommand(() => FileCalls.Add("recent " + path)));
-            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, EditCommands(), ObjectCommands(), Recent, Undo, Redo);
+            Layers = new LayerEditor(State, Localizer);
+            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, EditCommands(), ObjectCommands(), new LayerMenuCommands(Layers), Recent, Undo, Redo);
         }
     }
 
@@ -106,7 +109,7 @@ public class MenuBarViewModelTests
         var f = new Fixture();
 
         Assert.Equal(
-            new[] { "File", "Edit", "Object", "Path", "Text", "View", "Window", "Help" },
+            new[] { "File", "Edit", "Object", "Layer", "Path", "Text", "View", "Window", "Help" },
             f.Menu.Menus.Select(m => Clean(m.Header)));
     }
 
@@ -127,9 +130,49 @@ public class MenuBarViewModelTests
             "Quit", "Zoom In", "Zoom Out", "Fit Artboard in Window", "Actual Size (100%)",
             "Properties", "Layers", "Assets", "History",
             "English", "Deutsch",
+            "Add Layer", "Duplicate Layer",
         }.OrderBy(h => h);
 
         Assert.Equal(expected, enabledLeaves);
+    }
+
+    [Fact]
+    public void LayerMenu_HasTheLayerCommandsInOrder()
+    {
+        var f = new Fixture();
+
+        var menu = f.Menu.Menus.Single(m => Clean(m.Header) == "Layer");
+
+        Assert.Equal(
+            new[] { "Add Layer", "Duplicate Layer", "Delete Layer", "-", "Merge Down", "-", "Move Up", "Move Down", "-", "Move Selection" },
+            menu.Children.Select(i => i.IsSeparator ? "-" : Clean(i.Header)));
+        Assert.Equal(["To Layer Above", "To Layer Below"], Find(f, "Move Selection").Children.Select(i => Clean(i.Header)));
+    }
+
+    [Fact]
+    public void LayerMenu_InOneLayerDocument_OnlyAddAndDuplicateAreEnabled()
+    {
+        var f = new Fixture();
+
+        var enabled = f.Menu.Menus.Single(m => Clean(m.Header) == "Layer").Descendants()
+            .Where(i => !i.IsSeparator && i.Children.Count == 0 && i.IsEnabled)
+            .Select(i => Clean(i.Header));
+
+        Assert.Equal(["Add Layer", "Duplicate Layer"], enabled);
+    }
+
+    [Fact]
+    public void LayerMenu_AddLayer_RunsTheCommandAndEnablesTheOthers()
+    {
+        var f = new Fixture();
+
+        f.Menu.Menus.Single(m => Clean(m.Header) == "Layer").Children[0].Command!.Execute(null);
+
+        Assert.Equal(2, f.State.Document.Layers.Length);
+        Assert.True(f.Layers.CanDelete);
+        Assert.True(f.Layers.CanMerge);
+        Assert.True(Find(f, "Delete Layer").Command!.CanExecute(null));
+        Assert.True(Find(f, "Merge Down").Command!.CanExecute(null));
     }
 
     [Fact]
@@ -173,7 +216,7 @@ public class MenuBarViewModelTests
     {
         var f = new Fixture();
 
-        foreach (var name in new[] { "File", "Edit", "Object", "Path", "Text", "View", "Window", "Help" })
+        foreach (var name in new[] { "File", "Edit", "Object", "Layer", "Path", "Text", "View", "Window", "Help" })
         {
             Assert.True(Find(f, name).IsEnabled, name);
         }

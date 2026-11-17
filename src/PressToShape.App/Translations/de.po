@@ -855,3 +855,66 @@ msgstr "Zurück"
 
 msgid "Close"
 msgstr "Schließen"
+
+msgid "Delete layer"
+msgstr "Ebene löschen"
+
+msgid "Rename layer"
+msgstr "Ebene umbenennen"
+
+msgid "Reorder layer"
+msgstr "Ebene umsortieren"
+
+msgid "Duplicate layer"
+msgstr "Ebene duplizieren"
+
+msgid "Merge layers"
+msgstr "Ebenen zusammenführen"
+
+msgid "Move to layer"
+msgstr "In Ebene verschieben"
+
+msgid "Layer {0}"
+msgstr "Ebene {0}"
+
+msgid "{0} copy"
+msgstr "{0} Kopie"
+
+msgid "Move layer up"
+msgstr "Ebene nach oben"
+
+msgid "Move layer down"
+msgstr "Ebene nach unten"
+
+msgid "Merge layer down"
+msgstr "Ebene nach unten zusammenführen"
+
+msgid "_Layer"
+msgstr "_Ebene"
+
+msgid "_Add Layer"
+msgstr "Ebene _hinzufügen"
+
+msgid "Dupli_cate Layer"
+msgstr "Ebene dupli_zieren"
+
+msgid "_Delete Layer"
+msgstr "Ebene _löschen"
+
+msgid "_Merge Down"
+msgstr "_Nach unten zusammenführen"
+
+msgid "Move _Up"
+msgstr "Ebene nach _oben"
+
+msgid "Move Do_wn"
+msgstr "Ebene nach _unten"
+
+msgid "Move _Selection"
+msgstr "_Auswahl verschieben"
+
+msgid "To Layer _Above"
+msgstr "In Ebene darü_ber"
+
+msgid "To Layer _Below"
+msgstr "In Ebene dar_unter"

@@ -237,6 +237,59 @@ _(no documentation)_
 - `public void Ungroup_NoIds_ReturnsSameDocument()` - _(no documentation)_
 - `public void Ungroup_AfterGroup_MembersMoveToTheTopmostPosition()` - _(no documentation)_
 
+## LayerOperationsTests (class)
+
+`public class LayerOperationsTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/LayerOperationsTests.cs:10-237`
+
+_(no documentation)_
+
+**Members**
+
+- `public void DuplicateLayer_Layer_InsertsCopyAboveWithSameFlagsAndLook()` - _(no documentation)_
+- `public void DuplicateLayer_LayerWithGroup_GivesNewIdsToEveryShapeAndGroup()` - _(no documentation)_
+- `public void DuplicateLayer_EmptyLayer_InsertsEmptyCopy()` - _(no documentation)_
+- `public void DuplicateLayer_UnknownLayer_Throws()` - _(no documentation)_
+- `public void MergeLayerDown_TwoLayers_PutsUpperShapesOnTopOfLowerAndKeepsLowerLayer()` - _(no documentation)_
+- `public void MergeLayerDown_UpperLayerWithGroup_KeepsGroup()` - _(no documentation)_
+- `public void MergeLayerDown_BottomLayer_Throws()` - _(no documentation)_
+- `public void MergeLayerDown_UnknownLayer_Throws()` - _(no documentation)_
+- `public void MoveShapesToLayer_OneShape_GoesToTopOfTargetLayer()` - _(no documentation)_
+- `public void MoveShapesToLayer_ShapesFromTwoLayers_KeepDocumentOrder()` - _(no documentation)_
+- `public void MoveShapesToLayer_MemberOfGroup_LeavesGroupAndGroupStays()` - _(no documentation)_
+- `public void MoveShapesToLayer_AllMembersOfGroup_RemovesEmptyGroup()` - _(no documentation)_
+- `public void MoveShapesToLayer_GroupAndItsMember_MovesGroupOnce()` - _(no documentation)_
+- `public void MoveShapesToLayer_IntoOwnLayer_GoesToTop()` - _(no documentation)_
+- `public void MoveShapesToLayer_NoIds_ReturnsSameDocument()` - _(no documentation)_
+- `public void MoveShapesToLayer_UnknownIds_Throw()` - _(no documentation)_
+- `public void LayerOperations_Applied_LeaveOriginalDocumentUnchanged()` - _(no documentation)_
+
+## LayerReorderTests (class)
+
+`public class LayerReorderTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/LayerReorderTests.cs:10-159`
+
+_(no documentation)_
+
+**Members**
+
+- `public void InsertLayer_AtIndex_PlacesTheLayer(int index, string[] expected)` - _(no documentation)_
+- `public void InsertLayer_BadIndex_Throws(int index)` - _(no documentation)_
+- `public void InsertLayer_ExistingId_Throws()` - _(no documentation)_
+- `public void MoveLayerToIndex_Up_SwapsWithNeighbour()` - _(no documentation)_
+- `public void MoveLayerToIndex_ToBottom_PlacesAtBottom()` - _(no documentation)_
+- `public void MoveLayerToIndex_SameIndex_ReturnsSameDocument()` - _(no documentation)_
+- `public void MoveLayerToIndex_UnknownId_Throws()` - _(no documentation)_
+- `public void MoveLayerToIndex_BadIndex_Throws(int index)` - _(no documentation)_
+- `public void MoveLayerAbove_LayerBelowTarget_GoesAboveTarget()` - _(no documentation)_
+- `public void MoveLayerAbove_LayerAboveTarget_GoesDirectlyAboveTarget()` - _(no documentation)_
+- `public void MoveLayerAbove_AlreadyDirectlyAbove_ReturnsSameDocument()` - _(no documentation)_
+- `public void MoveLayerAbove_SameLayer_Throws()` - _(no documentation)_
+- `public void MoveLayerAbove_UnknownId_Throws()` - _(no documentation)_
+- `public void MoveLayerToIndex_Moved_KeepsLayersFlagsAndShapesAndOriginal()` - _(no documentation)_
+
 ## LayerTests (class)
 
 `public class LayerTests`

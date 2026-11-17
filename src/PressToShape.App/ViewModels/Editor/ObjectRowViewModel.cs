@@ -51,8 +51,8 @@ internal sealed partial class ObjectRowViewModel : ViewModelBase
     /// <summary>Whether the row has an expander: layers and groups.</summary>
     public bool HasChildren => IsLayer || IsGroup;
 
-    /// <summary>Whether the row can be renamed in the list. A layer is renamed elsewhere.</summary>
-    public bool CanRename => !IsLayer;
+    /// <summary>Whether the row can be renamed in the list. Every row can: layers, groups and shapes.</summary>
+    public bool CanRename => true;
 
     /// <summary>The name that is shown: the name the user gave, or the translated name of the type.</summary>
     [ObservableProperty] public partial string Name { get; private set; } = string.Empty;
@@ -112,7 +112,7 @@ internal sealed partial class ObjectRowViewModel : ViewModelBase
         IsRenaming = true;
     }
 
-    /// <summary>Gives the object the typed name as one step and ends the editing. An empty name removes the name.</summary>
+    /// <summary>Gives the object or layer the typed name as one step and ends the editing. An empty name removes the name of an object, and a layer keeps its name.</summary>
     [RelayCommand]
     public void CommitRename()
     {

@@ -149,4 +149,25 @@ public enum HistoryStepType
 
     /// <summary>The corner radius of a rectangle was changed, by a field or by dragging a radius handle.</summary>
     ChangeCornerRadius,
+
+    /// <summary>A layer was added.</summary>
+    AddLayer,
+
+    /// <summary>A layer was deleted.</summary>
+    DeleteLayer,
+
+    /// <summary>A layer was renamed.</summary>
+    RenameLayer,
+
+    /// <summary>A layer was moved to another place in the stacking order of the layers.</summary>
+    ReorderLayer,
+
+    /// <summary>A layer was duplicated.</summary>
+    DuplicateLayer,
+
+    /// <summary>A layer was merged into the layer below it.</summary>
+    MergeLayers,
+
+    /// <summary>Shapes were moved to another layer.</summary>
+    MoveToLayer,
 }

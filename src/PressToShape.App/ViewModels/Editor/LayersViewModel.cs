@@ -23,15 +23,21 @@ internal sealed partial class LayersViewModel : LocalizedViewModel
 {
     private readonly EditorState _state;
     private readonly ObjectEditor _objects;
+    private readonly LayerEditor _layers;
     private readonly HashSet<Guid> _expanded = [];
     private readonly HashSet<Guid> _knownLayers = [];
     private List<ObjectRowViewModel> _all = [];
 
-    public LayersViewModel(EditorState state, ObjectEditor objects, ILocalizer localizer)
+    /// <param name="state">The editor state.</param>
+    /// <param name="objects">The editor for objects. The shell passes the one it shares with the menus.</param>
+    /// <param name="localizer">The translator.</param>
+    /// <param name="layers">The editor for layers. The shell passes the one it shares with the menus.</param>
+    public LayersViewModel(EditorState state, ObjectEditor objects, ILocalizer localizer, LayerEditor? layers = null)
         : base(localizer)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _objects = objects ?? throw new ArgumentNullException(nameof(objects));
+        _layers = layers ?? new LayerEditor(state, localizer);
 
         _state.PropertyChanged += OnStateChanged;
         Sync();
@@ -150,29 +156,106 @@ internal sealed partial class LayersViewModel : LocalizedViewModel
         }
     }
 
-    /// <summary>Adding layers is not part of this slice, so this cannot execute yet.</summary>
-    [RelayCommand(CanExecute = nameof(CanAddLayer))]
-    private void AddLayer()
+    /// <summary>Adds an empty layer above the active layer.</summary>
+    [RelayCommand]
+    private void AddLayer() => _layers.Add();
+
+    /// <summary>Copies the active layer with everything in it.</summary>
+    [RelayCommand]
+    private void DuplicateLayer() => _layers.Duplicate();
+
+    /// <summary>Deletes the active layer with everything in it. Not possible for the last layer.</summary>
+    [RelayCommand(CanExecute = nameof(CanDeleteLayer))]
+    private void DeleteLayer() => _layers.Delete();
+
+    private bool CanDeleteLayer() => _layers.CanDelete;
+
+    /// <summary>Moves the active layer one place up.</summary>
+    [RelayCommand(CanExecute = nameof(CanMoveLayerUp))]
+    private void MoveLayerUp() => _layers.MoveUp();
+
+    private bool CanMoveLayerUp() => _layers.CanMoveUp;
+
+    /// <summary>Moves the active layer one place down.</summary>
+    [RelayCommand(CanExecute = nameof(CanMoveLayerDown))]
+    private void MoveLayerDown() => _layers.MoveDown();
+
+    private bool CanMoveLayerDown() => _layers.CanMoveDown;
+
+    /// <summary>Merges the active layer into the layer below it.</summary>
+    [RelayCommand(CanExecute = nameof(CanMergeLayerDown))]
+    private void MergeLayerDown() => _layers.MergeDown();
+
+    private bool CanMergeLayerDown() => _layers.CanMerge;
+
+    /// <summary>
+    /// Gives the object or layer of the row a name, as one step. An empty name removes the name of an object. A layer keeps its old name
+    /// instead, because a layer always has a name.
+    /// </summary>
+    public void Rename(ObjectRowViewModel row, string name)
     {
+        if (row.IsLayer)
+        {
+            _layers.Rename(row.Id, name);
+        }
+        else
+        {
+            _objects.Rename(row.Id, name);
+        }
     }
 
-    private static bool CanAddLayer() => false;
+    /// <summary>
+    /// Whether the dragged row can be dropped on the target row. A layer can be dropped on another layer. An object can be dropped on an
+    /// object with the same parent, and on a layer that is neither hidden nor locked, when the object can be selected.
+    /// </summary>
+    public bool CanReorder(ObjectRowViewModel dragged, ObjectRowViewModel target)
+    {
+        if (dragged.IsLayer)
+        {
+            return target.IsLayer && dragged.Id != target.Id;
+        }
 
-    /// <summary>Gives the object of the row a name, as one step. An empty name removes the name.</summary>
-    public void Rename(ObjectRowViewModel row, string name) => _objects.Rename(row.Id, name);
+        if (target.IsLayer)
+        {
+            return IsOpenLayer(target.Id) && (_state.SelectedShapeIds.Contains(dragged.Id) || SelectionQueries.IsSelectable(_state.Document, dragged.Id));
+        }
 
-    /// <summary>Whether the dragged row can be dropped on the target row: both are objects with the same parent.</summary>
-    public bool CanReorder(ObjectRowViewModel dragged, ObjectRowViewModel target) =>
-        !dragged.IsLayer && !target.IsLayer && _objects.CanMoveAbove(dragged.Id, target.Id);
+        return _objects.CanMoveAbove(dragged.Id, target.Id);
+    }
 
-    /// <summary>Puts the dragged object directly above the target in the stacking order, as one step. Does nothing if that is not possible.</summary>
+    /// <summary>
+    /// Drops the dragged row on the target, as one step. A layer goes directly above the target layer. An object goes directly above the
+    /// target object, or to the top of the target layer: the whole selection moves if the object is part of it, otherwise only the object.
+    /// Does nothing if that is not possible.
+    /// </summary>
     public void Reorder(ObjectRowViewModel dragged, ObjectRowViewModel target)
     {
-        if (CanReorder(dragged, target))
+        if (!CanReorder(dragged, target))
+        {
+            return;
+        }
+
+        if (dragged.IsLayer)
+        {
+            _layers.MoveAbove(dragged.Id, target.Id);
+        }
+        else if (target.IsLayer)
+        {
+            if (!_state.SelectedShapeIds.Contains(dragged.Id))
+            {
+                Select(dragged, extend: false);
+            }
+
+            _layers.MoveSelectionToLayer(target.Id);
+        }
+        else
         {
             _objects.MoveAbove(dragged.Id, target.Id);
         }
     }
+
+    private bool IsOpenLayer(Guid layerId) =>
+        _state.Document.Layers.FirstOrDefault(layer => layer.Id == layerId) is { IsVisible: true, IsLocked: false };
 
     protected override void OnLanguageRefreshed() => Sync();
 
@@ -186,9 +269,11 @@ internal sealed partial class LayersViewModel : LocalizedViewModel
             case nameof(EditorState.Document):
                 Sync();
                 ShowSelection(revealSelected: false);
+                NotifyLayerCommands();
                 break;
             case nameof(EditorState.ActiveLayerId):
                 ShowActiveLayer();
+                NotifyLayerCommands();
                 break;
             case nameof(EditorState.SelectedShapeIds):
                 // The mark of the last clicked row is for rows that cannot be selected. Once the selection changes it has done its job.
@@ -200,6 +285,15 @@ internal sealed partial class LayersViewModel : LocalizedViewModel
                 ShowSelection(revealSelected: true);
                 break;
         }
+    }
+
+    // What the layer commands can do depends on the document and on the active layer.
+    private void NotifyLayerCommands()
+    {
+        DeleteLayerCommand.NotifyCanExecuteChanged();
+        MoveLayerUpCommand.NotifyCanExecuteChanged();
+        MoveLayerDownCommand.NotifyCanExecuteChanged();
+        MergeLayerDownCommand.NotifyCanExecuteChanged();
     }
 
     private void ShowActiveLayer()

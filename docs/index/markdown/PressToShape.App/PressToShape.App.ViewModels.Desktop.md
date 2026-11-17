@@ -33,13 +33,13 @@ Root of the desktop layout. Adds the menu bar, the toolbar and the status bar to
 
 `internal sealed class MenuBarViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:20-177`
+Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:20-192`
 
-The complete menu structure. The File actions, the Edit actions, the group, arrange, lock and hide items, Quit, the zoom items, the Window items and the languages have behavior. Everything else has no command and is therefore disabled until its feature exists.
+The complete menu structure. The File actions, the Edit actions, the group, arrange, lock and hide items, the Layer menu, Quit, the zoom items, the Window items and the languages have behavior. Everything else has no command and is therefore disabled until its feature exists.
 
 **Members**
 
-- `public MenuBarViewModel(EditorState state, IAppShutdown shutdown, ILocalizer localizer, Action<InspectorTab> showTab, Action fitToWindow, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, RecentFiles recent, ICommand undo, ICommand redo)` - _(no documentation)_
+- `public MenuBarViewModel(EditorState state, IAppShutdown shutdown, ILocalizer localizer, Action<InspectorTab> showTab, Action fitToWindow, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, LayerMenuCommands layers, RecentFiles recent, ICommand undo, ICommand redo)` - _(no documentation)_
 - `public IReadOnlyList<MenuItemViewModel> Menus { get; }` - _(no documentation)_
 
 **Relationships**
@@ -48,6 +48,7 @@ The complete menu structure. The File actions, the Edit actions, the group, arra
 - Depends on (constructor) `PressToShape.App.Services.IAppShutdown`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.EditMenuCommands`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.FileMenuCommands`
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.LayerMenuCommands`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.ObjectMenuCommands`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.RecentFiles`

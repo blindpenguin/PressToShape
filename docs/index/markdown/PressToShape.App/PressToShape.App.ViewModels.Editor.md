@@ -132,7 +132,7 @@ What the clipboard, delete and selection items of the Edit menu do. Undo and Red
 
 `internal abstract partial class EditorShellViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:17-306`
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:17-318`
 
 What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
 
@@ -168,6 +168,8 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public ToolboxViewModel Toolbox { get; }` - _(no documentation)_
 - `public SelectionEditor Editor { get; }` - The selection edits (copy, paste, nudge, property changes). One instance, shared by the canvas, the inspector and the menus.
 - `public ObjectEditor Objects { get; }` - The edits of the structure: group, arrange, lock, hide, rename. One instance, shared by the menus and the object list.
+- `public LayerEditor LayerEditing { get; }` - The editor for the layers. The Layers panel and the Layer menu share it.
+- `public LayerMenuCommands LayerCommands { get; }` - The commands of the Layer menu.
 - `public CanvasAreaViewModel Canvas { get; }` - _(no documentation)_
 - `public InspectorViewModel Inspector { get; }` - _(no documentation)_
 - `public string DocumentName { get; }` - The file name of the document, or the translated word for "Untitled" while it has none.
@@ -262,13 +264,13 @@ State of the History tab: the start state and one row per step, oldest first. Th
 
 `internal partial sealed class InspectorViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:10-53`
+Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:10-54`
 
 State of the inspector: the selected tab and the view models of its tabs.
 
 **Members**
 
-- `public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null)` - _(no documentation)_
+- `public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null, LayerEditor? layers = null)` - _(no documentation)_
 - `public PropertiesViewModel Properties { get; }` - _(no documentation)_
 - `public LayersViewModel Layers { get; }` - _(no documentation)_
 - `public PlaceholderPanelViewModel Assets { get; }` - _(no documentation)_
@@ -281,39 +283,73 @@ State of the inspector: the selected tab and the view models of its tabs.
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Depends on (constructor) `PressToShape.App.Workspace.LayerEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`
 
+## LayerMenuCommands (class)
+
+`internal sealed class LayerMenuCommands`
+
+Source: `src/PressToShape.App/ViewModels/Editor/LayerMenuCommands.cs:12-72`
+
+What the items of the Layer menu do. Each command runs a PressToShape.App.Workspace.LayerEditor command and is disabled while that would change nothing. Call PressToShape.App.ViewModels.Editor.LayerMenuCommands.NotifyCanExecuteChanged when the document, the active layer or the selection changed.
+
+**Members**
+
+- `public LayerMenuCommands(LayerEditor layers)` - _(no documentation)_
+- `public ICommand Add { get; }` - Adds an empty layer above the active layer.
+- `public ICommand Duplicate { get; }` - Copies the active layer.
+- `public ICommand Delete { get; }` - Deletes the active layer. Disabled for the last layer.
+- `public ICommand MergeDown { get; }` - Merges the active layer into the one below.
+- `public ICommand MoveUp { get; }` - Moves the active layer up.
+- `public ICommand MoveDown { get; }` - Moves the active layer down.
+- `public ICommand MoveSelectionUp { get; }` - Moves the selected objects to the layer above.
+- `public ICommand MoveSelectionDown { get; }` - Moves the selected objects to the layer below.
+- `public void NotifyCanExecuteChanged()` - Asks every command to check again whether it can run.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Workspace.LayerEditor`
+- Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
+
 ## LayersViewModel (class)
 
 `internal partial sealed class LayersViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:22-384`
+Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:22-478`
 
 State of the Layers tab: the layers of the document as header rows, and below each layer its shapes and groups as a tree, topmost first. PressToShape.App.ViewModels.Editor.LayersViewModel.Rows is the flat list that the view shows: the rows whose groups and layer are expanded. The list follows the document. When only names, flags or the selection changed, the existing rows are updated, so the list is not rebuilt under the user's click, and which groups are open survives undo and redo as far as the groups still exist.
 
 **Members**
 
 - `public IRelayCommand AddLayerCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.LayersViewModel.AddLayer`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.LayersViewModel.AddLayer.
-- `public LayersViewModel(EditorState state, ObjectEditor objects, ILocalizer localizer)` - _(no documentation)_
+- `public IRelayCommand DeleteLayerCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.LayersViewModel.DeleteLayer`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.LayersViewModel.DeleteLayer.
+- `public IRelayCommand DuplicateLayerCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.LayersViewModel.DuplicateLayer`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.LayersViewModel.DuplicateLayer.
+- `public IRelayCommand MergeLayerDownCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.LayersViewModel.MergeLayerDown`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.LayersViewModel.MergeLayerDown.
+- `public IRelayCommand MoveLayerDownCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.LayersViewModel.MoveLayerDown`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.LayersViewModel.MoveLayerDown.
+- `public IRelayCommand MoveLayerUpCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.LayersViewModel.MoveLayerUp`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.LayersViewModel.MoveLayerUp.
+- `public LayersViewModel(EditorState state, ObjectEditor objects, ILocalizer localizer, LayerEditor? layers = null)` - _(no documentation)_
 - `public ObservableCollection<ObjectRowViewModel> Rows { get; }` - The rows to show, topmost first: a layer, then what is in it, and so on. Rows below a closed group or layer are not in it.
 - `public void Select(ObjectRowViewModel row, bool extend)` - A row was clicked. A layer row makes its layer the active one. A shape or group row selects the object on the canvas: the group around it is entered, so the object can be selected, and the selection becomes this row, or with extend grows by it when it has the same parent as the rest. A row that cannot be selected (locked or hidden) is only marked as the current row.
 - `public void SetExpanded(ObjectRowViewModel row, bool expanded)` - Shows or hides the rows below a layer or group.
 - `public void SetHidden(ObjectRowViewModel row, bool hidden)` - Hides or shows the object of the row, as one step.
 - `public void SetLocked(ObjectRowViewModel row, bool locked)` - Locks or unlocks the object of the row, as one step.
-- `public void Rename(ObjectRowViewModel row, string name)` - Gives the object of the row a name, as one step. An empty name removes the name.
-- `public bool CanReorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Whether the dragged row can be dropped on the target row: both are objects with the same parent.
-- `public void Reorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Puts the dragged object directly above the target in the stacking order, as one step. Does nothing if that is not possible.
+- `public void Rename(ObjectRowViewModel row, string name)` - Gives the object or layer of the row a name, as one step. An empty name removes the name of an object. A layer keeps its old name instead, because a layer always has a name.
+- `public bool CanReorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Whether the dragged row can be dropped on the target row. A layer can be dropped on another layer. An object can be dropped on an object with the same parent, and on a layer that is neither hidden nor locked, when the object can be selected.
+- `public void Reorder(ObjectRowViewModel dragged, ObjectRowViewModel target)` - Drops the dragged row on the target, as one step. A layer goes directly above the target layer. An object goes directly above the target object, or to the top of the target layer: the whole selection moves if the object is part of it, otherwise only the object. Does nothing if that is not possible.
 - `protected void OnLanguageRefreshed()` - _(no documentation)_
 
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Depends on (constructor) `PressToShape.App.Workspace.LayerEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+- Injected into `PressToShape.App.Tests.LayersViewModelLayerTests.Fixture`
 - Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
 - Injected into `PressToShape.App.ViewModels.Editor.ObjectRowViewModel`
 
@@ -415,7 +451,7 @@ One row of the object list: a layer header, a shape or a group. The values are d
 - `public bool IsEllipse { get; }` - Whether the row is an ellipse.
 - `public bool IsPath { get; }` - Whether the row is a path.
 - `public bool HasChildren { get; }` - Whether the row has an expander: layers and groups.
-- `public bool CanRename { get; }` - Whether the row can be renamed in the list. A layer is renamed elsewhere.
+- `public bool CanRename { get; }` - Whether the row can be renamed in the list. Every row can: layers, groups and shapes.
 - `public string Name { get; private set; }` - _(no documentation)_
 - `public string StoredName { get; private set; }` - _(no documentation)_
 - `public bool IsVisible { get; private set; }` - _(no documentation)_
@@ -431,7 +467,7 @@ One row of the object list: a layer header, a shape or a group. The values are d
 - `public string EditText { get; set; }` - _(no documentation)_
 - `public void Update(string name, string storedName, bool isVisible, bool isLocked, bool effectivelyHidden, bool effectivelyLocked)` - Copies the display values. Called when the document changed.
 - `public void BeginRename()` - Starts editing the name.
-- `public void CommitRename()` - Gives the object the typed name as one step and ends the editing. An empty name removes the name.
+- `public void CommitRename()` - Gives the object or layer the typed name as one step and ends the editing. An empty name removes the name of an object, and a layer keeps its name.
 - `public void CancelRename()` - Ends the editing and keeps the old name.
 
 **Relationships**

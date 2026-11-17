@@ -118,6 +118,7 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.ToolGroupViewModel`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
+- Injected into `PressToShape.App.Workspace.LayerEditor`
 
 ## ITranslationCatalog (interface)
 

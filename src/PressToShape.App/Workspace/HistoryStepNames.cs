@@ -62,6 +62,13 @@ internal static class HistoryStepNames
         HistoryStepType.ChangeSegment => N("Change segment"),
         HistoryStepType.DeletePathPoints => N("Delete path points"),
         HistoryStepType.ChangeCornerRadius => N("Change corner radius"),
+        HistoryStepType.AddLayer => N("Add layer"),
+        HistoryStepType.DeleteLayer => N("Delete layer"),
+        HistoryStepType.RenameLayer => N("Rename layer"),
+        HistoryStepType.ReorderLayer => N("Reorder layer"),
+        HistoryStepType.DuplicateLayer => N("Duplicate layer"),
+        HistoryStepType.MergeLayers => N("Merge layers"),
+        HistoryStepType.MoveToLayer => N("Move to layer"),
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown history step type."),
     };
 }

@@ -244,21 +244,21 @@ State shared by all regions of the editor shell: the document, its undo history,
 - `public Guid? EnteredGroupId { get; private set; }` - _(no documentation)_
 - `public ImmutableHashSet<NodeRef> SelectedNodes { get; private set; }` - _(no documentation)_
 - `public bool HasSelectedNodes { get; }` - Whether at least one node is selected.
-- `public EditorState(Document? document = null)` - Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.
 - `public void SetNodeSelection(IEnumerable<NodeRef> nodes)` - Replaces the selected nodes. Repeated nodes count once.
 - `public bool EnterGroup(Guid groupId)` - Enters the group. Of the selection only the direct children of the group stay selected. Does nothing if the id is not a group that can be selected.
-- `public Action<ColorPickTarget, Color>? ColorPicked` - Raised when a pick from the canvas ended on a shape: the target that asked for it and the color that was taken.
+- `public EditorState(Document? document = null)` - Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.
 - `public void ToggleNode(NodeRef node)` - Adds the node to the selected nodes, or removes it if it is selected.
-- `public EventHandler? HistoryChanged` - Raised after the undo history changed: a step was recorded, undone or redone, or the history was reset.
+- `public Action<ColorPickTarget, Color>? ColorPicked` - Raised when a pick from the canvas ended on a shape: the target that asked for it and the color that was taken.
 - `public void ClearNodeSelection()` - Clears the selected nodes.
+- `public EventHandler? HistoryChanged` - Raised after the undo history changed: a step was recorded, undone or redone, or the history was reset.
 - `public DocumentHistory History { get; }` - The undo history of the current document.
-- `public bool IsDragInProgress { get; set; }` - _(no documentation)_
 - `public void LeaveGroup()` - Leaves the entered group by one level and selects it. If that group is inside another group, the other group is entered. Does nothing when no group is entered.
+- `public bool IsDragInProgress { get; set; }` - _(no documentation)_
 - `public bool CanUndo { get; }` - Whether a step can be undone right now.
 - `public bool CanRedo { get; }` - Whether a step can be redone right now.
 - `public Document Document { get; set; }` - _(no documentation)_
-- `public Guid ActiveLayerId { get; set; }` - _(no documentation)_
 - `public void LeaveAllGroups()` - Leaves every entered group at once, so the top level of the drawing is selectable again. The selection stays.
+- `public Guid ActiveLayerId { get; set; }` - _(no documentation)_
 - `public ImmutableArray<Guid> SelectedShapeIds { get; private set; }` - _(no documentation)_
 - `public Guid? SelectedShapeId { get; }` - The id of the selected shape if exactly one shape is selected, otherwise null.
 - `public int SelectedCount { get; }` - How many shapes are selected.
@@ -310,6 +310,8 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
+- Injected into `PressToShape.App.Tests.LayerEditorTests.Fixture`
+- Injected into `PressToShape.App.Tests.LayersViewModelLayerTests.Fixture`
 - Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.StatusBarViewModel`
@@ -327,6 +329,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.Workspace.CanvasInteraction`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
 - Injected into `PressToShape.App.Workspace.DocumentSession`
+- Injected into `PressToShape.App.Workspace.LayerEditor`
 - Injected into `PressToShape.App.Workspace.NodeEditor`
 - Injected into `PressToShape.App.Workspace.ObjectEditor`
 - Injected into `PressToShape.App.Workspace.SelectionEditor`
@@ -355,7 +358,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-67`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-74`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -404,6 +407,47 @@ How far the layout has to stop above the bottom of the screen so that the on-scr
 **Members**
 
 - `public double Gap(bool isKeyboardOpen, double viewBottom, double coveredTop)` - The gap at the bottom of the view, in the same units as the arguments.
+
+## LayerEditor (class)
+
+`internal sealed class LayerEditor`
+
+Source: `src/PressToShape.App/Workspace/LayerEditor.cs:15-269`
+
+Edits of the layers: add, delete, rename, reorder, duplicate, merge, and moving the selected objects to another layer. Each change of the document is one history step. A command that would change nothing records no step, and its Can... property is false. The commands without a layer id work on the active layer.
+
+**Members**
+
+- `public LayerEditor(EditorState state, ILocalizer localizer, Func<Guid>? idSource = null)` - _(no documentation)_
+- `public bool CanAdd { get; }` - Always true: a layer can be added to any document.
+- `public bool CanDelete { get; }` - Whether the active layer can be deleted: a document keeps at least one layer.
+- `public bool CanDuplicate { get; }` - Always true: the active layer can be duplicated.
+- `public bool CanMerge { get; }` - Whether the active layer can be merged into the one below: there is one, and neither of the two is hidden or locked.
+- `public bool CanMoveUp { get; }` - Whether a layer is above the active layer.
+- `public bool CanMoveDown { get; }` - Whether a layer is below the active layer.
+- `public bool CanMoveSelectionUp { get; }` - Whether the selection can move to the layer above the one that holds it.
+- `public bool CanMoveSelectionDown { get; }` - Whether the selection can move to the layer below the one that holds it.
+- `public bool CanMoveSelectionTo(Guid layerId)` - Whether the selection can move to this layer: something is selected and the layer exists and is neither hidden nor locked.
+- `public void Add()` - Adds an empty layer above the active layer. It becomes the active layer, and the selection and the entered group are cleared.
+- `public void Delete()` - Deletes the active layer with its objects. The layer below it becomes active, or the one above if there is none.
+- `public void Duplicate()` - Inserts a copy of the active layer above it. The copy becomes the active layer, and the selection is cleared.
+- `public void MergeDown()` - Merges the active layer into the layer below it, which becomes the active layer. Does nothing if PressToShape.App.Workspace.LayerEditor.CanMerge is false.
+- `public void MoveUp()` - Moves the active layer one place up. Does nothing if it is the top layer.
+- `public void MoveDown()` - Moves the active layer one place down. Does nothing if it is the bottom layer.
+- `public void MoveAbove(Guid layerId, Guid targetId)` - Puts a layer directly above another one, as one step. Does nothing for unknown or equal ids.
+- `public void Rename(Guid layerId, string name)` - Gives a layer a name, as one step. A layer always has a name, so an empty or blank name, and the name the layer has, change nothing.
+- `public void MoveSelectionToLayer(Guid layerId)` - Moves the selected objects to the top of a layer, as one step. They stay selected. Does nothing if PressToShape.App.Workspace.LayerEditor.CanMoveSelectionTo is false or the objects are on top of the layer already.
+- `public void MoveSelectionUp()` - Moves the selection to the layer above the one that holds it.
+- `public void MoveSelectionDown()` - Moves the selection to the layer below the one that holds it.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Injected into `PressToShape.App.Tests.LayerEditorTests.Fixture`
+- Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.LayerMenuCommands`
+- Injected into `PressToShape.App.ViewModels.Editor.LayersViewModel`
 
 ## LongPressTracker (class)
 

@@ -146,6 +146,7 @@ A group of shapes that is selected, moved and styled as one. Children keep their
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
 - Injected into `PressToShape.Core.Documents.ShapeLocation`
+- Injected into `PressToShape.Core.Tests.Documents.LayerOperationsTests.Fixture`
 
 ## NodeHandleSide (enum)
 
@@ -302,6 +303,8 @@ An axis-aligned rectangle, with square or rounded corners.
 - Inherits `PressToShape.Core.Shapes.Shape`
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
+- Injected into `PressToShape.App.Tests.LayerEditorTests.Fixture`
+- Injected into `PressToShape.App.Tests.LayersViewModelLayerTests.Fixture`
 
 ## RoundedCorner (record)
 
@@ -371,6 +374,7 @@ A drawable shape with a position, a size and an appearance. Immutable: change it
 - Injected into `PressToShape.App.Workspace.SelectionQueries.Node`
 - Injected into `PressToShape.Core.Documents.ShapeLocation`
 - Injected into `PressToShape.Core.Documents.ShapeTree.Found`
+- Injected into `PressToShape.Core.Tests.Documents.LayerOperationsTests.Fixture`
 
 ## ShapeConversion (class)
 

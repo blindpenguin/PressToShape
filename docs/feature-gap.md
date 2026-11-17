@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15), updated 2026-11-16 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, and rounded corners on rectangles. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-17 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, rounded corners on rectangles, and layer management. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -10,7 +10,7 @@ Columns:
 
 ## Summary
 
-The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, appearance, undo and redo, groups and arrange, lock and hide, the object list, and file save, load and SVG export work. The big gaps are node editing (moving nodes and handles), layer management, snapping, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
+The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, node editing, appearance, undo and redo, groups and arrange, lock and hide, the object list, layer management, and file save, load and SVG export work. The big gaps are snapping and the grid, the transform menu entries, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
 
 The structural base is in place: **`PathShape`** (line and cubic bezier segments, open or closed, non-zero or even-odd fill) keeps the box and rotation of every other shape and stores its nodes as fractions of the box, so move, resize, rotate, groups and arrange work on it unchanged. Text, boolean operations, masks and SVG import build on it (a path has one sub-path only, no compound paths yet).
 
@@ -67,13 +67,12 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 | Feature | State | Stage |
 |---|---|---|
 | Layers: show, hide, lock | Done | MVP |
-| Add layer | UI only (command cannot execute) | MVP |
-| Delete, rename, reorder, duplicate, merge layers | Missing | MVP |
+| Add, delete, rename, reorder, duplicate layers; merge a layer down (buttons in the Layers panel, Layer menu on desktop, drag a layer row onto another) | Done | MVP |
 | Groups: group, ungroup, nested groups, enter a group with a double-click or double-tap | Done | MVP |
 | Arrange: bring to front, forward, backward, send to back (within one layer or group) | Done | MVP |
 | Lock and hide single objects, Show All and Unlock All | Done | MVP |
 | Object names, an object list / outline (rename, expand, drag to reorder within a group) | Done | Unplanned |
-| Move objects between layers | Missing | Unplanned |
+| Move objects between layers (drag onto a layer row, or Layer menu: Move Selection to the layer above or below) | Done | Unplanned |
 | Clipping masks, opacity masks | UI only | After MVP |
 | Symbols and reusable assets | UI only (empty Assets panel) | After MVP |
 

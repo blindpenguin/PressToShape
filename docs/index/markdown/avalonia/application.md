@@ -23,7 +23,7 @@
 
 - `vm:ToolbarButtonViewModel` at src/PressToShape.App/Views/Desktop/ToolbarView.axaml:13
 - `vm:HistoryItemViewModel` at src/PressToShape.App/Views/Editor/HistoryView.axaml:33
-- `vm:ObjectRowViewModel` at src/PressToShape.App/Views/Editor/LayersView.axaml:69
+- `vm:ObjectRowViewModel` at src/PressToShape.App/Views/Editor/LayersView.axaml:91
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:145
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:185
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:236

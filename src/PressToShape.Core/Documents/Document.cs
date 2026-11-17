@@ -88,6 +88,48 @@ public sealed record Document
         return this with { Layers = Layers.Add(layer) };
     }
 
+    /// <summary>Returns a document with the layer inserted so that it has this index (0 is the bottom, the layer count is the top).</summary>
+    /// <exception cref="ArgumentOutOfRangeException">The index is below 0 or above the layer count.</exception>
+    /// <exception cref="ArgumentException">A layer or shape in <paramref name="layer"/> has an id that already exists.</exception>
+    public Document InsertLayer(int index, Layer layer) => LayerOperations.Insert(this, index, layer);
+
+    /// <summary>Returns a document in which the layer has this index (0 is the bottom). Returns this document if it has it already.</summary>
+    /// <exception cref="KeyNotFoundException">No layer has this id.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The index is not the index of a layer.</exception>
+    public Document MoveLayerToIndex(Guid layerId, int index) => LayerOperations.MoveToIndex(this, layerId, index);
+
+    /// <summary>Returns a document in which the layer is directly above <paramref name="targetId"/>. Returns this document if it is there already.</summary>
+    /// <exception cref="KeyNotFoundException">An id is not the id of a layer.</exception>
+    /// <exception cref="InvalidOperationException">The ids are the same.</exception>
+    public Document MoveLayerAbove(Guid layerId, Guid targetId) => LayerOperations.MoveAbove(this, layerId, targetId);
+
+    /// <summary>
+    /// Returns a document with a copy of the layer directly above it: same flags, a copy of every shape and group below it, and new ids
+    /// for the copy and everything in it.
+    /// </summary>
+    /// <param name="layerId">The layer to copy.</param>
+    /// <param name="newLayerId">The id of the copy.</param>
+    /// <param name="name">The name of the copy. Core holds no default text, so the caller provides it.</param>
+    /// <param name="newShapeId">Creates the id of each copied shape and group.</param>
+    /// <exception cref="KeyNotFoundException">No layer has this id.</exception>
+    /// <exception cref="ArgumentException">An id of the copy exists in the document already.</exception>
+    public Document DuplicateLayer(Guid layerId, Guid newLayerId, string name, Func<Guid> newShapeId) =>
+        LayerOperations.Duplicate(this, layerId, newLayerId, name, newShapeId);
+
+    /// <summary>
+    /// Returns a document in which the layer's shapes are on top of the layer below and the layer is gone. The lower layer keeps its id, name and flags.
+    /// </summary>
+    /// <exception cref="KeyNotFoundException">No layer has this id.</exception>
+    /// <exception cref="InvalidOperationException">The layer is the bottom layer.</exception>
+    public Document MergeLayerDown(Guid layerId) => LayerOperations.MergeDown(this, layerId);
+
+    /// <summary>
+    /// Returns a document in which the shapes, nested ones included, are top-level shapes at the top of the layer, in their old document
+    /// order. A group that loses its last child goes with it. Returns this document if <paramref name="ids"/> is empty.
+    /// </summary>
+    /// <exception cref="KeyNotFoundException">An id is not the id of a shape, or no layer has the layer id.</exception>
+    public Document MoveShapesToLayer(IReadOnlySet<Guid> ids, Guid layerId) => LayerOperations.MoveShapesToLayer(this, ids, layerId);
+
     /// <summary>Returns a document without the layer and its shapes.</summary>
     /// <exception cref="KeyNotFoundException">No layer has this id.</exception>
     /// <exception cref="InvalidOperationException">The layer is the last one.</exception>

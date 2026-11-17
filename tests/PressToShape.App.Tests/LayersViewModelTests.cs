@@ -358,11 +358,11 @@ public class LayersViewModelTests
     }
 
     [Fact]
-    public void Rename_LayerRow_IsNotPossible()
+    public void Rename_LayerRow_IsPossible()
     {
         var f = Create([Rect("a")]);
 
-        Assert.False(f.List.Rows[0].BeginRenameCommand.CanExecute(null));
+        Assert.True(f.List.Rows[0].BeginRenameCommand.CanExecute(null));
     }
 
     [Fact]
@@ -380,7 +380,7 @@ public class LayersViewModelTests
     }
 
     [Fact]
-    public void Reorder_AnotherParentOrALayerRow_IsIgnored()
+    public void Reorder_AnotherParentOrALayerOnAnObject_IsIgnored()
     {
         var inner = Rect("i");
         var group = Group("G", inner);
@@ -390,7 +390,6 @@ public class LayersViewModelTests
         var steps = f.State.History.Steps.Count;
 
         Assert.False(f.List.CanReorder(Row(f, a.Id), Row(f, inner.Id)));
-        Assert.False(f.List.CanReorder(Row(f, a.Id), f.List.Rows[0]));
         Assert.False(f.List.CanReorder(f.List.Rows[0], Row(f, a.Id)));
         f.List.Reorder(Row(f, a.Id), Row(f, inner.Id));
 
@@ -475,8 +474,15 @@ public class LayersViewModelTests
     }
 
     [Fact]
-    public void AddLayerCommand_CannotExecuteYet()
+    public void AddLayerCommand_Executed_AddsAnActiveLayerRow()
     {
-        Assert.False(Create([Rect("a")]).List.AddLayerCommand.CanExecute(null));
+        var f = Create([Rect("a")]);
+
+        Assert.True(f.List.AddLayerCommand.CanExecute(null));
+        f.List.AddLayerCommand.Execute(null);
+
+        Assert.Equal(2, f.List.Rows.Count(r => r.IsLayer));
+        Assert.True(f.List.Rows[0].IsLayer);
+        Assert.True(f.List.Rows[0].IsActiveLayer);
     }
 }

@@ -284,7 +284,7 @@ public class TouchSizesTests
         Assert.Equal(5, rows.Count);
         Assert.All(rows, r => Assert.True(r.Bounds.Height >= MinimumTouchTarget, "Layer row " + r.Bounds.Height));
         var buttons = InteractiveControls(view);
-        Assert.Equal(14, buttons.Count); // add, the 13 buttons of the rows
+        Assert.Equal(19, buttons.Count); // the six layer commands, the 13 buttons of the rows
         var tooSmall = buttons.Where(c => c.Bounds.Width < MinimumTouchTarget || c.Bounds.Height < MinimumTouchTarget).Select(Describe).ToList();
         Assert.True(tooSmall.Count == 0, "Controls under 48 dp: " + string.Join(", ", tooSmall));
 

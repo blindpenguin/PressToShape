@@ -34,7 +34,7 @@ How PressToShape.Core.Documents.Document.Arrange changes the stacking order of s
 
 `public sealed record Document : IEquatable<Document>`
 
-Source: `src/PressToShape.Core/Documents/Document.cs:13-365`
+Source: `src/PressToShape.Core/Documents/Document.cs:13-407`
 
 A drawing: an artboard and a stack of layers. Immutable: every edit method returns a new document and leaves this one unchanged. Unchanged layers are shared between the two. A document always has at least one layer.
 
@@ -49,6 +49,12 @@ A drawing: an artboard and a stack of layers. Immutable: every edit method retur
 - `public Document AddSwatch(Color color)` - Returns a document with the colour added at the end of the palette. Returns this document if the palette has the colour.
 - `public Document RemoveSwatchAt(int index)` - Returns a document without the swatch at this index.
 - `public Document AddLayer(Layer layer)` - Returns a document with the layer added above all existing layers.
+- `public Document InsertLayer(int index, Layer layer)` - Returns a document with the layer inserted so that it has this index (0 is the bottom, the layer count is the top).
+- `public Document MoveLayerToIndex(Guid layerId, int index)` - Returns a document in which the layer has this index (0 is the bottom). Returns this document if it has it already.
+- `public Document MoveLayerAbove(Guid layerId, Guid targetId)` - Returns a document in which the layer is directly above targetId. Returns this document if it is there already.
+- `public Document DuplicateLayer(Guid layerId, Guid newLayerId, string name, Func<Guid> newShapeId)` - Returns a document with a copy of the layer directly above it: same flags, a copy of every shape and group below it, and new ids for the copy and everything in it.
+- `public Document MergeLayerDown(Guid layerId)` - Returns a document in which the layer's shapes are on top of the layer below and the layer is gone. The lower layer keeps its id, name and flags.
+- `public Document MoveShapesToLayer(IReadOnlySet<Guid> ids, Guid layerId)` - Returns a document in which the shapes, nested ones included, are top-level shapes at the top of the layer, in their old document order. A group that loses its last child goes with it. Returns this document if ids is empty.
 - `public Document RemoveLayer(Guid layerId)` - Returns a document without the layer and its shapes.
 - `public Document UpdateLayer(Guid layerId, Func<Layer, Layer> change)` - Returns a document in which the layer is replaced by the result of change.
 - `public Document AddShape(Guid layerId, Shape shape)` - Returns a document with the shape added above the existing shapes of the layer.
@@ -74,6 +80,7 @@ A drawing: an artboard and a stack of layers. Immutable: every edit method retur
 - Injected into `PressToShape.App.Workspace.EditorState`
 - Injected into `PressToShape.Core.History.DocumentHistory`
 - Injected into `PressToShape.Core.IO.ProjectFileResult`
+- Injected into `PressToShape.Core.Tests.Documents.LayerOperationsTests.Fixture`
 
 ## DocumentValidation (class)
 
@@ -136,6 +143,24 @@ A named group of shapes that can be hidden or locked. Immutable: change it with 
 **Relationships**
 
 - Injected into `PressToShape.Core.Documents.ShapeLocation`
+- Injected into `PressToShape.Core.Tests.Documents.LayerOperationsTests.Fixture`
+
+## LayerOperations (class)
+
+`internal static class LayerOperations`
+
+Source: `src/PressToShape.Core/Documents/LayerOperations.cs:10-165`
+
+Changes to the list of layers of a document: insert and reorder. Layers are listed bottom first.
+
+**Members**
+
+- `public Document Insert(Document document, int index, Layer layer)` - Inserts the layer so that it has this index afterwards (0 is the bottom, the layer count is the top).
+- `public Document MoveToIndex(Document document, Guid layerId, int index)` - Moves the layer so that it has this index afterwards. Returns the same document if it has it already.
+- `public Document MoveAbove(Document document, Guid layerId, Guid targetId)` - Puts the layer directly above the target layer. Returns the same document if it is there already.
+- `public Document Duplicate(Document document, Guid layerId, Guid newLayerId, string name, Func<Guid> newShapeId)` - Inserts a copy of the layer directly above it, with the same flags and a copy of every shape below it. The copy, and each shape and group in it, gets a new id.
+- `public Document MergeDown(Document document, Guid layerId)` - Moves the shapes of the layer onto the top of the layer below and removes the layer. The lower layer keeps its id, name and flags.
+- `public Document MoveShapesToLayer(Document document, IReadOnlySet<Guid> ids, Guid layerId)` - Moves the shapes onto the top of the layer. Shapes inside groups leave their group, and a group that loses its last child goes with it. The shapes keep their order in the document: lower layers first, then stack order. A shape and its own group move together.
 
 ## ShapeLocation (record)
 
