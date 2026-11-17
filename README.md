@@ -6,7 +6,7 @@ The project is in development. See the [feature gap](docs/feature-gap.md) for wh
 
 ## Screenshots
 
-The sample drawing was built with the PressToShape document model and opened in the app. The clouds are unions of circles and the frame is a difference of two rectangles, made with the path operations.
+The sample drawing was built with the PressToShape document model and opened in the app. The clouds are unions of circles and the frame is a difference of two rectangles, made with the path operations. You can open it yourself: [`docs/screenshots/landscape.p2s`](docs/screenshots/landscape.p2s) (File > Open).
 
 ![Desktop: a drawing with the sun selected, the Properties panel on the right](docs/screenshots/desktop-overview.png)
 
