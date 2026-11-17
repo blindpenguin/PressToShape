@@ -75,6 +75,8 @@ internal static class HistoryStepNames
         HistoryStepType.Exclusion => N("Exclusion"),
         HistoryStepType.Combine => N("Combine"),
         HistoryStepType.BreakApart => N("Break apart"),
+        HistoryStepType.ConvertToPath => N("Convert to path"),
+        HistoryStepType.ReverseDirection => N("Reverse direction"),
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown history step type."),
     };
 }

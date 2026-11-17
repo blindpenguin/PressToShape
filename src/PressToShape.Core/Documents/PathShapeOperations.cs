@@ -9,7 +9,7 @@ using PressToShape.Core.Shapes;
 namespace PressToShape.Core.Documents;
 
 /// <summary>
-/// The path operations on a document: the boolean operations, Combine and Break Apart. Every method checks the shapes first and returns
+/// The path operations on a document: the boolean operations, Combine, Break Apart, and converting shapes to paths and reversing paths. Every method checks the shapes first and returns
 /// a failure without changing anything if they cannot be used. The result is a new document, the input is never changed.
 /// </summary>
 public static class PathShapeOperations
@@ -94,6 +94,73 @@ public static class PathShapeOperations
             .ToList();
         var changed = ReplaceInPlace(document, found, pieces);
         return PathOperationResult.Success(changed, [.. pieces.Select(piece => piece.Id)]);
+    }
+
+    /// <summary>
+    /// The ids of the shapes that <see cref="ConvertToPaths"/> would change: the rectangles and ellipses among the selected shapes and among the
+    /// shapes inside selected groups (at any depth), each once, that are shown and not locked (the layer and the groups around them count).
+    /// Ids that are not shapes of the document are ignored.
+    /// </summary>
+    public static IReadOnlyList<Guid> ConvertibleShapeIds(Document document, IEnumerable<Guid> selectedIds) =>
+        [.. AffectedLeaves(document, selectedIds, IsConvertible).Select(shape => shape.Id)];
+
+    /// <summary>
+    /// Replaces the rectangles and ellipses found by <see cref="ConvertibleShapeIds"/> with the paths they would become
+    /// (<see cref="ShapeConversion.ToPath"/>). They keep id, name, flags, box, rotation, appearance and place in the stack, so they look the same.
+    /// Returns the same document if there is nothing to convert.
+    /// </summary>
+    public static Document ConvertToPaths(Document document, IEnumerable<Guid> selectedIds) =>
+        Change(document, selectedIds, IsConvertible, shape => ShapeConversion.ToPath(shape)!);
+
+    /// <summary>
+    /// The ids of the shapes that <see cref="ReverseDirections"/> would change: the paths among the selected shapes and among the shapes inside
+    /// selected groups (at any depth), each once, that are shown and not locked. Ids that are not shapes of the document are ignored.
+    /// </summary>
+    public static IReadOnlyList<Guid> ReversibleShapeIds(Document document, IEnumerable<Guid> selectedIds) =>
+        [.. AffectedLeaves(document, selectedIds, IsPath).Select(shape => shape.Id)];
+
+    /// <summary>
+    /// Reverses the paths found by <see cref="ReversibleShapeIds"/> (see <see cref="PathReversal.Reverse"/>). Returns the same document if there is
+    /// nothing to reverse.
+    /// </summary>
+    public static Document ReverseDirections(Document document, IEnumerable<Guid> selectedIds) =>
+        Change(document, selectedIds, IsPath, shape => PathReversal.Reverse((PathShape)shape));
+
+    private static bool IsConvertible(Shape shape) => shape is RectangleShape or EllipseShape;
+
+    private static bool IsPath(Shape shape) => shape is PathShape;
+
+    // The leaves of the selected shapes (a group gives its leaves), each once, that the test accepts and that are shown and not locked.
+    private static List<Shape> AffectedLeaves(Document document, IEnumerable<Guid> selectedIds, Func<Shape, bool> accepts)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(selectedIds);
+
+        var seen = new HashSet<Guid>();
+        var affected = new List<Shape>();
+        foreach (var id in selectedIds)
+        {
+            if (ShapeTree.Find(document.Layers, id) is not { } found)
+            {
+                continue;
+            }
+
+            foreach (var leaf in found.Shape.Leaves())
+            {
+                if (seen.Add(leaf.Id) && accepts(leaf) && document.FindShape(leaf.Id) is { IsEffectivelyVisible: true, IsEffectivelyLocked: false })
+                {
+                    affected.Add(leaf);
+                }
+            }
+        }
+
+        return affected;
+    }
+
+    private static Document Change(Document document, IEnumerable<Guid> selectedIds, Func<Shape, bool> accepts, Func<Shape, Shape> change)
+    {
+        var replacements = AffectedLeaves(document, selectedIds, accepts).ToDictionary(shape => shape.Id, change);
+        return replacements.Count == 0 ? document : document.UpdateShapes(replacements);
     }
 
     private sealed record Operand(ShapeTree.Found Found, Outline Outline);

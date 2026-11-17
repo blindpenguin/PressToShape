@@ -24,7 +24,7 @@ internal sealed class OverflowMenuViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(objects);
         ArgumentNullException.ThrowIfNull(paths);
 
-        MenuItemViewModel Item(string header, ICommand command) => MenuItemViewModel.Item(localizer, header, null, command);
+        MenuItemViewModel Item(string header, ICommand? command) => MenuItemViewModel.Item(localizer, header, null, command);
 
         Items =
         [
@@ -55,13 +55,17 @@ internal sealed class OverflowMenuViewModel : ViewModelBase
             MenuItemViewModel.Submenu(
                 localizer,
                 N("_Path"),
+                Item(N("_Convert Object to Path"), paths.ConvertToPath),
+                MenuItemViewModel.Separator(localizer),
                 Item(N("Com_bine"), paths.Combine),
                 Item(N("Break _Apart"), paths.BreakApart),
                 MenuItemViewModel.Separator(localizer),
                 Item(N("_Union"), paths.Union),
                 Item(N("_Difference"), paths.Difference),
                 Item(N("_Intersection"), paths.Intersection),
-                Item(N("E_xclusion"), paths.Exclusion)),
+                Item(N("E_xclusion"), paths.Exclusion),
+                MenuItemViewModel.Separator(localizer),
+                Item(N("_Reverse Direction"), paths.ReverseDirection)),
             Item(N("_Lock"), objects.Lock),
             Item(N("Unloc_k All"), objects.UnlockAll),
             Item(N("_Hide"), objects.Hide),

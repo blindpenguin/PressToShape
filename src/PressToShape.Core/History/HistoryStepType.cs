@@ -188,4 +188,10 @@ public enum HistoryStepType
 
     /// <summary>A compound path was split into one path for each sub-path.</summary>
     BreakApart,
+
+    /// <summary>Rectangles and ellipses were converted to paths.</summary>
+    ConvertToPath,
+
+    /// <summary>The direction of paths was reversed.</summary>
+    ReverseDirection,
 }

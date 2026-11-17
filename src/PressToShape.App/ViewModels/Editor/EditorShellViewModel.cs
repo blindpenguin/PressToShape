@@ -44,7 +44,9 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
             IntersectShapesCommand,
             ExcludeShapesCommand,
             CombinePathsCommand,
-            BreakApartPathCommand);
+            BreakApartPathCommand,
+            ConvertShapesToPathsCommand,
+            ReversePathDirectionCommand);
         Inspector = new InspectorViewModel(State, localizer, Editor, Objects, LayerEditing, PathCommands);
         FileCommands = new FileMenuCommands(
             NewCommand,
@@ -243,6 +245,8 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         ExcludeShapesCommand.NotifyCanExecuteChanged();
         CombinePathsCommand.NotifyCanExecuteChanged();
         BreakApartPathCommand.NotifyCanExecuteChanged();
+        ConvertShapesToPathsCommand.NotifyCanExecuteChanged();
+        ReversePathDirectionCommand.NotifyCanExecuteChanged();
     }
 
     private void NotifyPasteCommands()
@@ -337,6 +341,16 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
 
     [RelayCommand(CanExecute = nameof(CanBreakApart))]
     private Task BreakApartPath() => PathEditing.BreakApartAsync();
+
+    [RelayCommand(CanExecute = nameof(CanConvert))]
+    private void ConvertShapesToPaths() => PathEditing.ConvertToPath();
+
+    [RelayCommand(CanExecute = nameof(CanReverse))]
+    private void ReversePathDirection() => PathEditing.ReverseDirection();
+
+    private bool CanConvert() => PathEditing.CanConvert;
+
+    private bool CanReverse() => PathEditing.CanReverse;
 
     private bool CanBoolean() => PathEditing.CanBoolean;
 

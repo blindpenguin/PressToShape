@@ -26,6 +26,7 @@
         <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveCommand}" />
         <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding SaveAsCommand}" />
         <KeyBinding Gesture="Ctrl+Shift+E" Command="{Binding ExportSvgCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding ConvertShapesToPathsCommand}" />
     </UserControl.KeyBindings>
 
     <Grid RowDefinitions="Auto,Auto,*,Auto" Background="{DynamicResource WindowBackgroundBrush}">

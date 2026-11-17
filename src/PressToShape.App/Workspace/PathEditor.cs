@@ -65,6 +65,36 @@ internal sealed class PathEditor
     /// <summary>Whether a path with several sub-paths that is shown and not locked is selected.</summary>
     public bool CanBreakApart => CanStart && Selected().Any(location => IsUsable(location) && location.Shape is PathShape { SubPaths.Length: > 1 });
 
+    /// <summary>Whether a rectangle or an ellipse is selected, also inside a selected group, that is shown and not locked. False while busy or while a drag is going on.</summary>
+    public bool CanConvert => CanStart && PathShapeOperations.ConvertibleShapeIds(_state.Document, _state.SelectedShapeIds).Count > 0;
+
+    /// <summary>Whether a path is selected, also inside a selected group, that is shown and not locked. False while busy or while a drag is going on.</summary>
+    public bool CanReverse => CanStart && PathShapeOperations.ReversibleShapeIds(_state.Document, _state.SelectedShapeIds).Count > 0;
+
+    /// <summary>Converts the selected rectangles and ellipses to paths, as one step. The selection stays.</summary>
+    public void ConvertToPath()
+    {
+        if (!CanConvert)
+        {
+            return;
+        }
+
+        var ids = _state.SelectedShapeIds;
+        _state.Edit(HistoryStepType.ConvertToPath, document => PathShapeOperations.ConvertToPaths(document, ids));
+    }
+
+    /// <summary>Reverses the direction of the selected paths, as one step. The selection stays.</summary>
+    public void ReverseDirection()
+    {
+        if (!CanReverse)
+        {
+            return;
+        }
+
+        var ids = _state.SelectedShapeIds;
+        _state.Edit(HistoryStepType.ReverseDirection, document => PathShapeOperations.ReverseDirections(document, ids));
+    }
+
     /// <summary>Combines the selected shapes with the operation into one path, as one step.</summary>
     public async Task BooleanAsync(PathOperationType type)
     {

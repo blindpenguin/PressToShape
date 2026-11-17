@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15), updated 2026-11-17 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, rounded corners on rectangles, layer management, and compound paths with the boolean operations. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-17 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, rounded corners on rectangles, layer management, compound paths with the boolean operations, and Convert Object to Path and Reverse Direction. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -10,7 +10,7 @@ Columns:
 
 ## Summary
 
-The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, node editing, appearance, undo and redo, groups and arrange, lock and hide, the object list, layer management, boolean operations, combine and break apart, and file save, load and SVG export work. The big gaps are snapping and the grid, the transform menu entries, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
+The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, node editing, appearance, undo and redo, groups and arrange, lock and hide, the object list, layer management, boolean operations, combine and break apart, convert to path and reverse direction, and file save, load and SVG export work. The big gaps are snapping and the grid, the transform menu entries, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
 
 The structural base is in place: **`PathShape`** (line and cubic bezier segments, open or closed, non-zero or even-odd fill) keeps the box and rotation of every other shape and stores its nodes as fractions of the box, so move, resize, rotate, groups and arrange work on it unchanged. A path can have several sub-paths (compound paths), which is what the boolean operations, Combine and Break Apart produce. Text, masks and SVG import build on it.
 
@@ -97,10 +97,12 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 
 | Feature | State | Stage |
 |---|---|---|
-| Convert object to path, stroke to path | UI only | After MVP |
+| Convert object to path | Done: rectangles and ellipses (also inside selected groups) become paths that look the same, one undo step, `Ctrl+Shift+O` on the desktop, also in the tablet Path submenu | After MVP |
+| Stroke to path | UI only | After MVP |
 | Union, difference, intersection, exclusion | Done: on rectangles, ellipses and closed paths, curves are kept where unchanged, one undo step, large inputs run in the background | After MVP |
 | Combine, break apart | Done: compound paths with holes (even-odd), Break Apart keeps rotation and place | After MVP |
-| Reverse direction, simplify | UI only | After MVP |
+| Reverse direction | Done: paths (also inside selected groups), every sub-path reversed in place, one undo step | After MVP |
+| Simplify | UI only | After MVP |
 | Offset path, inset and outset | Missing | Unplanned |
 | Path effects, trace bitmap | Missing | Unplanned |
 | Blend and envelope distort | Missing | Unplanned |
@@ -122,7 +124,7 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 | Undo, redo, named history panel | Done | MVP |
 | New, open, save, save as, recent files | Done | MVP |
 | Unsaved-changes prompt | Done | MVP |
-| Export as SVG | Done (rect, ellipse and groups) | MVP |
+| Export as SVG | Done (rectangles, ellipses, paths including compound paths, and groups) | MVP |
 | Autosave and crash recovery | Missing | Unplanned (principle 5: "no lost work") |
 | SVG import | Missing | After MVP |
 | PNG export, export of a selection or area | Missing | Out of scope for now |

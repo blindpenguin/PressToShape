@@ -76,7 +76,11 @@ public class OverflowMenuViewModelTests
 
         public SwitchableCommand BreakApart { get; } = new(true);
 
-        public PathMenuCommands Paths => new(Union, Difference, Intersection, Exclusion, Combine, BreakApart);
+        public SwitchableCommand ConvertToPath { get; } = new(true);
+
+        public SwitchableCommand ReverseDirection { get; } = new(true);
+
+        public PathMenuCommands Paths => new(Union, Difference, Intersection, Exclusion, Combine, BreakApart, ConvertToPath, ReverseDirection);
     }
 
     private static OverflowMenuViewModel Create(Commands commands, ILocalizer? localizer = null) =>
@@ -115,21 +119,45 @@ public class OverflowMenuViewModelTests
     }
 
     [Fact]
-    public void ThePathSubmenu_HasTheSixPathCommandsAndRunsThem()
+    public void ThePathSubmenu_HasTheEightPathCommandsInOrderAndRunsThem()
     {
         var commands = new Commands();
         var path = Find(Create(commands), "Path");
 
         Assert.Equal(
-            ["Combine", "Break Apart", "-", "Union", "Difference", "Intersection", "Exclusion"],
+            ["Convert Object to Path", "-", "Combine", "Break Apart", "-", "Union", "Difference", "Intersection", "Exclusion", "-", "Reverse Direction"],
             path.Children.Select(c => c.IsSeparator ? "-" : c.PlainHeader));
         foreach (var item in path.Children.Where(c => !c.IsSeparator))
         {
             item.Command!.Execute(null);
         }
 
-        Assert.Equal([1, 1, 1, 1, 1, 1], new[] { commands.Combine, commands.BreakApart, commands.Union, commands.Difference, commands.Intersection, commands.Exclusion }.Select(c => c.Executions));
+        Assert.Equal(
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            new[] { commands.ConvertToPath, commands.Combine, commands.BreakApart, commands.Union, commands.Difference, commands.Intersection, commands.Exclusion, commands.ReverseDirection }.Select(c => c.Executions));
         Assert.True(path.IsEnabled);
+    }
+
+    [Fact]
+    public void ThePathSubmenu_ConvertAndReverseItems_FollowTheirCommands_AndAreDisabledWithoutCommands()
+    {
+        var commands = new Commands();
+        var path = Find(Create(commands), "Path");
+        var convert = path.Children.Single(c => c.PlainHeader == "Convert Object to Path");
+        var reverse = path.Children.Single(c => c.PlainHeader == "Reverse Direction");
+        Assert.True(convert.IsEnabled);
+        Assert.True(reverse.IsEnabled);
+
+        commands.ConvertToPath.Set(false);
+        commands.ReverseDirection.Set(false);
+
+        Assert.False(convert.IsEnabled);
+        Assert.False(reverse.IsEnabled);
+
+        var plain = new PathMenuCommands(commands.Union, commands.Difference, commands.Intersection, commands.Exclusion, commands.Combine, commands.BreakApart);
+        var withoutThem = Find(new OverflowMenuViewModel(FakeLocalizer.Create(), commands.File, commands.Edit, commands.Objects, plain), "Path");
+        Assert.False(withoutThem.Children.Single(c => c.PlainHeader == "Convert Object to Path").IsEnabled);
+        Assert.False(withoutThem.Children.Single(c => c.PlainHeader == "Reverse Direction").IsEnabled);
     }
 
     [Fact]

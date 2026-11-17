@@ -889,6 +889,12 @@ msgstr "Kombinieren"
 msgid "Break apart"
 msgstr "Aufteilen"
 
+msgid "Convert to path"
+msgstr "In Pfad umwandeln"
+
+msgid "Reverse direction"
+msgstr "Richtung umkehren"
+
 msgid "Move to layer"
 msgstr "In Ebene verschieben"
 

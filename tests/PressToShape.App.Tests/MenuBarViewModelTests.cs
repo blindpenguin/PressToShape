@@ -52,7 +52,7 @@ public class MenuBarViewModelTests
             }
             .ToDictionary(name => name, _ => new SwitchableCommand(false));
 
-        public Dictionary<string, SwitchableCommand> PathCommandsByName { get; } = new[] { "union", "difference", "intersection", "exclusion", "combine", "break apart" }
+        public Dictionary<string, SwitchableCommand> PathCommandsByName { get; } = new[] { "union", "difference", "intersection", "exclusion", "combine", "break apart", "convert", "reverse" }
             .ToDictionary(name => name, _ => new SwitchableCommand(false));
 
         private PathMenuCommands PathCommands() => new(
@@ -61,7 +61,9 @@ public class MenuBarViewModelTests
             PathCommandsByName["intersection"],
             PathCommandsByName["exclusion"],
             PathCommandsByName["combine"],
-            PathCommandsByName["break apart"]);
+            PathCommandsByName["break apart"],
+            PathCommandsByName["convert"],
+            PathCommandsByName["reverse"]);
 
         private ObjectMenuCommands ObjectCommands() => new(
             ObjectCommandsByName["group"],
@@ -169,6 +171,37 @@ public class MenuBarViewModelTests
             Find(f, header).Command!.Execute(null);
             Assert.Equal(1, f.PathCommandsByName[command].Executions);
         }
+    }
+
+    [Fact]
+    public void PathMenu_ConvertAndReverse_FollowTheirCommands_AndConvertShowsItsShortcut()
+    {
+        var f = new Fixture();
+        var convert = Find(f, "Convert Object to Path");
+        var reverse = Find(f, "Reverse Direction");
+
+        Assert.Equal("Ctrl+Shift+O", convert.Gesture);
+        Assert.False(convert.IsEnabled);
+        Assert.False(reverse.IsEnabled);
+
+        f.PathCommandsByName["convert"].Set(true);
+        f.PathCommandsByName["reverse"].Set(true);
+        convert.Command!.Execute(null);
+        reverse.Command!.Execute(null);
+
+        Assert.True(convert.IsEnabled);
+        Assert.True(reverse.IsEnabled);
+        Assert.Equal(1, f.PathCommandsByName["convert"].Executions);
+        Assert.Equal(1, f.PathCommandsByName["reverse"].Executions);
+    }
+
+    [Fact]
+    public void PathMenu_StrokeToPathAndSimplify_StayDisabledPlaceholders()
+    {
+        var f = new Fixture();
+
+        Assert.False(Find(f, "Stroke to Path").IsEnabled);
+        Assert.False(Find(f, "Simplify").IsEnabled);
     }
 
     [Fact]
