@@ -6,7 +6,8 @@ Applies on top of `spec-workflow.md`. Its core principle: **do not assume. If so
 - Ask with the `AskUserQuestion` tool (load it via ToolSearch if needed), not as plain text in the reply, and wait for the answers before drafting. Offer concrete options with a recommended one first.
 - Before writing a requirements document, ask the user about anything ambiguous: scope, target users, platforms, edge cases, data formats, performance or accessibility expectations, and what is explicitly out of scope.
 - Ask at every phase, not only the first. A design or task decision that the approved requirements don't settle is a question for the user.
-- Never fill a gap with a guess and present it as fact. If you must proceed on a working assumption (the user is unavailable, or the question is minor), list it under an "Assumptions" or "Open questions" heading in the document so the reviewer sees it at approval time.
+- Never fill a gap with a guess, and never use an "Assumptions" list as a substitute for asking. Every open point (behavior of an edge case, which objects are allowed, where a command sits, a limit or tolerance) is asked with `AskUserQuestion` before it goes into a document. Several rounds of questions are fine, and the questions come before the draft, not at approval time.
+- Only if the user is not available at all, write a working assumption under an "Assumptions" heading, say so in the reply, and ask about it as soon as the user is back. A question being minor is no reason to assume.
 - Ask a few focused questions in one batch, with a recommended default for each where you have one. Do not ask what the code, steering docs, or existing specs already answer. Read them first.
 - When the user's request is vague, restate your understanding in a sentence or two and confirm before drafting.
 - Conflicting sources (the request versus an approved spec, or the spec versus the code) are a question for the user. Do not silently pick one.

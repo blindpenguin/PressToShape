@@ -15,6 +15,7 @@ Cross-platform vector drawing application (desktop and tablet GUI) targeting Lin
 - **CommunityToolkit.Mvvm 8.4.2**: MVVM source generators (`[ObservableProperty]`, `[RelayCommand]`)
 - **AvaloniaUI.DiagnosticsSupport 2.2.3**: developer diagnostics, Debug builds only
 - **GetText.NET 10.0.1**: reads compiled gettext `.mo` catalogs for translations (MIT), referenced from `PressToShape.App` only. Building needs the GNU gettext tools (`msgfmt`) on the machine.
+- **Clipper2 1.5.4**: polygon clipping for the boolean path operations (MIT), referenced from `PressToShape.Core` only and used by one class, `BooleanEngine`.
 - **Material.Icons.Avalonia 3.0.2**: icon set for tool, toolbar and panel icons (built for Avalonia 12), referenced from `PressToShape.App` only
 - **Roslyn tooling (developer tool only)**: `Microsoft.CodeAnalysis.CSharp`, `Microsoft.CodeAnalysis.CSharp.Workspaces`, `Microsoft.CodeAnalysis.Workspaces.MSBuild` (5.12.0) and `Microsoft.Build.Locator` (1.11.2), referenced only by `tools/PressToShape.CodeIndex`. `Microsoft.Build.Framework` and `Microsoft.NET.StringTools` (18.7.1) are pinned there with `ExcludeAssets="runtime"`, because Microsoft.Build.Locator requires it. None of them is referenced by `src/` (checked by a test) or shipped with the app.
 - **SkiaSharp 3.119.4 and SkiaSharp.NativeAssets.Linux 3.119.4 (developer tool only)**: referenced only by `tools/PressToShape.CursorImages`, which renders the canvas cursor images. This is the SkiaSharp version Avalonia 12.1.6 already uses. Not referenced by `src/` or shipped with the app.
@@ -44,7 +45,7 @@ Not applicable.
 These are deliberately not decided here. Each gets evaluated in its own spec before anything is built:
 
 - **Canvas rendering approach** (for example Avalonia custom drawing versus direct Skia, retained scene graph versus immediate redraw, hit-testing and viewport strategy). To be chosen by comparing options in a spec.
-- **Document and geometry model** (boolean operations; the path representation is decided, see decisions 18 and 19).
+- **Document and geometry model** (the path representation is decided, see decisions 18 to 20; boolean operations are decided in decision 20).
 - **Undo/redo mechanism** (command pattern versus snapshots).
 - **Native file format** and its versioning.
 - **Input handling**: stylus pressure, tilt and palm rejection beyond the two-finger rule. (Mouse, touch and stylus as pointers are decided, see decision 13.)
@@ -119,6 +120,8 @@ These are deliberately not decided here. Each gets evaluated in its own spec bef
 
 18. **Paths are shapes with a box, nodes as fractions of it** (spec `path-and-pen-tool`): `PathShape` derives from `Shape` and keeps X, Y, Width, Height and Rotation like every other shape, so move, resize, rotate, groups and arrange work unchanged. Its nodes (anchor, in handle, out handle) are stored as fractions of the tight box, handles may lie outside it, and every edit recomputes the box and keeps unmoved nodes at the same place on screen, also for a rotated path. A path has one sub-path (no compound paths yet). Chosen over nodes in document coordinates because a transform then changes only the box.
 19. **Node type stored per node, left out of the file when derived** (spec `node-and-direct-select`): each node has a type (corner, smooth, symmetric) that decides how its handles follow each other while one is dragged. The project file writes `type` only when it differs from the type derived from the handles, so simple paths stay small and older files load the same. Editing a rectangle or ellipse with a node tool converts it to a path in the same undo step (`ShapeConversion.ToPath`).
+
+20. **Compound paths and Clipper2 for booleans** (spec `boolean-operations`): a `PathShape` has one or more sub-paths (`SubPaths`), each open or closed, with one fill rule for the path; a node is addressed by one flat index across all sub-paths. Union, difference, intersection and exclusion flatten the curves (tolerance 0.1 px), clip them with the Clipper2 package and fit the result back to cubic beziers, keeping unchanged curve pieces. The owner approved the package; it is used only inside `BooleanEngine`, whose API has plain geometry only, so a later live composite shape or Shape Builder can reuse it. The project file writes `nodes` and `closed` for a path with one sub-path (as before) and `subPaths` only for a compound path. This replaces the sentence in decision 18 that a path has one sub-path.
 
 ## Known Limitations
 - `ViewLocator` uses reflection and is not trimming- or AOT-safe. This is acceptable for now. Replace it if trimming or AOT is adopted.

@@ -23,7 +23,7 @@ Scope is staged. The first usable version (MVP) comes first.
 5. **Canvas**: zoom, pan, rulers, snapping.
 6. **History**: undo and redo.
 7. **File I/O**: save and load documents in PressToShape's own project format, and export to SVG.
-8. **Two adaptive layouts**: a desktop layout (menu, toolbar, tool column, canvas, tabbed inspector, status bar) and a tablet landscape layout (compact toolbar with the actions and the panel icons, one tool column with grouped tools, a canvas that fills the screen, and panels that float over the canvas only while asked for). The tablet layout deliberately differs from the desktop one to save space; the tablet half of the GUI mockup in `docs/mockup/` is only a starting point.
+8. **Two adaptive layouts**: a desktop layout (menu, toolbar, tool column, canvas, tabbed inspector, status bar) and a tablet landscape layout (compact toolbar with the actions and the panel icons, one tool column with grouped tools, a canvas that takes the space between them and a slim status bar with the selection summary and the zoom controls, and panels that float over the canvas only while asked for). The tablet layout deliberately differs from the desktop one to save space; the tablet half of the GUI mockup in `docs/mockup/` is only a starting point.
 
 ### After the MVP
 - Text, masks and clipping, boolean path operations, align and distribute, gradients, effects, an assets panel, and SVG import.

@@ -37,7 +37,7 @@ PressToShape/
 ```
 Workspace/            pure logic without Avalonia types: tools, zoom, ruler ticks, shared EditorState
 ViewModels/Desktop/   view models that exist only for the desktop layout (shell, menu bar, toolbar, status bar)
-ViewModels/Tablet/    view models that exist only for the tablet layout (shell, toolbar, overflow menu, tool column and tool groups, floating panel, in-layout dialog host)
+ViewModels/Tablet/    view models that exist only for the tablet layout (shell, toolbar, overflow menu, tool column and tool groups, floating panel, in-layout dialog host). The status bar view model is shared with the desktop (`ViewModels/Editor`)
 ViewModels/Editor/    view models reusable by every layout (the shell base class EditorShellViewModel, tool column, canvas area, inspector, layers, zoom)
 Views/Desktop/        the desktop layout shell and its layout-specific views
 Views/Tablet/         the tablet layout shell and its layout-specific views
@@ -69,7 +69,7 @@ Android ─┘
 - Platform-specific code is isolated in the heads or behind interfaces defined in Core or App.
 
 ### Two layouts, one core
-- The desktop layout (menu, toolbar, tool column, canvas, tabbed inspector, status bar) and the tablet landscape layout (compact toolbar, one tool column with grouped tools, canvas, floating panel opened from toolbar icons) are different view compositions over the same view models and core.
+- The desktop layout (menu, toolbar, tool column, canvas, tabbed inspector, status bar) and the tablet landscape layout (compact toolbar, one tool column with grouped tools, canvas, status bar, floating panel opened from toolbar icons) are different view compositions over the same view models and core.
 - Layout-specific views live in App under `Views/Desktop` and `Views/Tablet`. Shared building blocks (canvas area, inspector panels, tool column) live in `Views/Editor` and are written once.
 - The layout is chosen in one place, `AppLayout`, from the application lifetime (window on desktop, activity on Android). Platform behavior is not selected by runtime `if` checks scattered through shared code.
 - Sizes for touch are a dictionary `TouchSizes` in `Styles/Theme.axaml`. The tablet shell copies it into its own resources (`TouchSizes.ApplyTo`) and has the style class `touch`, so the shared views, which read their sizes with `DynamicResource`, become touch-sized there and stay unchanged on the desktop.

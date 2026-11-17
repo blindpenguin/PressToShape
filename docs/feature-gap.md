@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15), updated 2026-11-17 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, rounded corners on rectangles, and layer management. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-17 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, rounded corners on rectangles, layer management, and compound paths with the boolean operations. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -10,9 +10,9 @@ Columns:
 
 ## Summary
 
-The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, node editing, appearance, undo and redo, groups and arrange, lock and hide, the object list, layer management, and file save, load and SVG export work. The big gaps are snapping and the grid, the transform menu entries, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
+The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, node editing, appearance, undo and redo, groups and arrange, lock and hide, the object list, layer management, boolean operations, combine and break apart, and file save, load and SVG export work. The big gaps are snapping and the grid, the transform menu entries, and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
 
-The structural base is in place: **`PathShape`** (line and cubic bezier segments, open or closed, non-zero or even-odd fill) keeps the box and rotation of every other shape and stores its nodes as fractions of the box, so move, resize, rotate, groups and arrange work on it unchanged. Text, boolean operations, masks and SVG import build on it (a path has one sub-path only, no compound paths yet).
+The structural base is in place: **`PathShape`** (line and cubic bezier segments, open or closed, non-zero or even-odd fill) keeps the box and rotation of every other shape and stores its nodes as fractions of the box, so move, resize, rotate, groups and arrange work on it unchanged. A path can have several sub-paths (compound paths), which is what the boolean operations, Combine and Break Apart produce. Text, masks and SVG import build on it.
 
 ## 1. Drawing tools
 
@@ -98,8 +98,8 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 | Feature | State | Stage |
 |---|---|---|
 | Convert object to path, stroke to path | UI only | After MVP |
-| Union, difference, intersection, exclusion | UI only | After MVP |
-| Combine, break apart | UI only | After MVP |
+| Union, difference, intersection, exclusion | Done: on rectangles, ellipses and closed paths, curves are kept where unchanged, one undo step, large inputs run in the background | After MVP |
+| Combine, break apart | Done: compound paths with holes (even-odd), Break Apart keeps rotation and place | After MVP |
 | Reverse direction, simplify | UI only | After MVP |
 | Offset path, inset and outset | Missing | Unplanned |
 | Path effects, trace bitmap | Missing | Unplanned |
