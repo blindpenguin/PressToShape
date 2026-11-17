@@ -4,6 +4,17 @@ A vector drawing program for hobbyists, in the spirit of Inkscape and Illustrato
 
 The project is in development. See the [feature gap](docs/feature-gap.md) for what works today and what is still missing.
 
+## Screenshots
+
+The sample drawing was built with the PressToShape document model and opened in the app. The clouds are unions of circles and the frame is a difference of two rectangles, made with the path operations.
+
+![Desktop: a drawing with the sun selected, the Properties panel on the right](docs/screenshots/desktop-overview.png)
+
+| Desktop | Tablet |
+|---|---|
+| ![Two shapes selected: the Path Operations section appears in the Properties panel](docs/screenshots/desktop-path-operations.png) | ![Tablet layout: toolbar, tool column, canvas and status bar](docs/screenshots/tablet-overview.png) |
+| ![The Layers panel with named layers and shapes](docs/screenshots/desktop-layers.png) | ![Tablet layout with the floating Properties panel and the Path Operations section](docs/screenshots/tablet-path-operations.png) |
+
 ## Structure
 
 | Project | Role |
