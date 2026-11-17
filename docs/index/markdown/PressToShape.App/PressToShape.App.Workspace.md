@@ -775,7 +775,7 @@ What a press with the Pen did to the unfinished path.
 
 `internal enum PropertiesSection`
 
-Source: `src/PressToShape.App/Workspace/PropertiesSection.cs:6-21`
+Source: `src/PressToShape.App/Workspace/PropertiesSection.cs:6-24`
 
 The sections of the Properties tab. Combined as flags to say which ones a tool shows.
 
@@ -789,6 +789,7 @@ The sections of the Properties tab. Combined as flags to say which ones a tool s
 - `public QuickActions` - _(no documentation)_
 - `public Node` - The nodes of the selected paths: position of a node and, for the Node tool, the type and segment buttons.
 - `public Corners` - The corner radii of the one selected rectangle. Shown by the tools that show the radius handles.
+- `public PathOperations` - The boolean operations and Combine as icon buttons. Shown by the tools that select several objects, and only while two or more are selected.
 
 ## PropertiesSections (class)
 

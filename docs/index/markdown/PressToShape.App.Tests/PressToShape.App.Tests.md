@@ -2581,13 +2581,13 @@ _(no documentation)_
 
 `public class PropertiesSectionsTests`
 
-Source: `tests/PressToShape.App.Tests/PropertiesSectionsTests.cs:8-81`
+Source: `tests/PressToShape.App.Tests/PropertiesSectionsTests.cs:8-89`
 
 _(no documentation)_
 
 **Members**
 
-- `public void For_SelectTool_ShowsTransformAppearanceAlignAndQuickActions()` - _(no documentation)_
+- `public void For_SelectTool_ShowsTransformAppearanceAlignPathOperationsAndQuickActions()` - _(no documentation)_
 - `public void For_DirectSelect_ShowsTheSelectionSectionsAndAlsoPathAndNode()` - _(no documentation)_
 - `public void For_ShapeOrTextTool_ShowsAppearanceOnly()` - _(no documentation)_
 - `public void For_Pen_ShowsAppearanceAndPath()` - _(no documentation)_
@@ -2595,6 +2595,7 @@ _(no documentation)_
 - `public void For_ToolWithoutProperties_ShowsNothing()` - _(no documentation)_
 - `public void For_EveryTool_IsDefinedAndShowsPathForPenDirectSelectAndNode_AndNodeForDirectSelectAndNode()` - _(no documentation)_
 - `public void For_EveryTool_ShowsTheCornersSectionOnlyForSelectAndDirectSelect()` - _(no documentation)_
+- `public void For_EveryTool_ShowsThePathOperationsSectionOnlyForSelectAndDirectSelect()` - _(no documentation)_
 - `public void For_UndefinedTool_Throws()` - _(no documentation)_
 
 ## PropertiesViewColorTests (class)
@@ -2690,6 +2691,26 @@ _(no documentation)_
 - `public void Properties_RaisePropertyChanged_WhenTheNodeSelectionChanges()` - _(no documentation)_
 - `public void CommitPendingEdits_AppliesATypedNodeValue()` - _(no documentation)_
 - `public void TypeCommand_OnARectangleCorner_ConvertsItInOneStep()` - _(no documentation)_
+
+## PropertiesViewModelPathOperationsTests (class)
+
+`public class PropertiesViewModelPathOperationsTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewModelPathOperationsTests.cs:12-170`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ShowPathOperations_SelectTool_NeedsTwoOrMoreSelected(int selected, bool expected)` - _(no documentation)_
+- `public void ShowPathOperations_TwoSelected_DependsOnTheTool(int tool, bool expected)` - _(no documentation)_
+- `public void ShowPathOperations_WhenTheSelectionCountChanges_RaisesPropertyChanged()` - _(no documentation)_
+- `public void ShowPathOperations_WhenTheToolChanges_RaisesPropertyChanged()` - _(no documentation)_
+- `public void IsPathOperationsExpanded_Default_IsTrue()` - _(no documentation)_
+- `public void PathOperations_WithoutCommands_CannotRun()` - _(no documentation)_
+- `public void PathOperations_WithCommands_AreTheSameInstances()` - _(no documentation)_
+- `public void Shell_PathOperationsAreTheShellCommands_AndOneRunIsOneUnionStep()` - _(no documentation)_
+- `public void Shell_WithAGroupSelected_NoPathOperationCanRun()` - _(no documentation)_
 
 ## PropertiesViewModelPathTests (class)
 
@@ -2798,6 +2819,27 @@ _(no documentation)_
 - `public void NodeSection_InTheTouchLayout_HasButtonsOfAtLeast48()` - _(no documentation)_
 - `public void NodeSection_CanBeCollapsed()` - _(no documentation)_
 - `public void NodeSection_InANarrowPanel_WrapsTheButtonsInsteadOfOverflowing()` - _(no documentation)_
+
+## PropertiesViewPathOperationsTests (class)
+
+`public class PropertiesViewPathOperationsTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewPathOperationsTests.cs:16-238`
+
+_(no documentation)_
+
+**Members**
+
+- `public void TheSection_WithTwoSelected_SitsAfterAlignAndDistributeAndBeforeQuickActions()` - _(no documentation)_
+- `public void TheSection_HasFiveButtonsInOrder_WithTooltipsThatMatchTheirNames()` - _(no documentation)_
+- `public void TheSection_WithOneSelectedObject_IsHidden()` - _(no documentation)_
+- `public void TheSection_WithThePenTool_IsHidden_AndAppearsAgainWithSelect()` - _(no documentation)_
+- `public void TheButtons_WithTwoRectangles_AreEnabled_AndAUnionButtonRunsTheUnion()` - _(no documentation)_
+- `public void TheButtons_WithTwoOpenPaths_BooleansAreDisabledAndCombineIsEnabled()` - _(no documentation)_
+- `public void TheButtons_WithTheTouchSizes_AreAtLeast48()` - _(no documentation)_
+- `public void QuickActions_AreIconButtonsWithTooltipsAndNames_InOrder()` - _(no documentation)_
+- `public void QuickActions_GroupFollowsTheSelection_AndRunsTheGroupCommand()` - _(no documentation)_
+- `public void QuickActions_WithTheTouchSizes_AreAtLeast48()` - _(no documentation)_
 
 ## PropertiesViewPathTests (class)
 

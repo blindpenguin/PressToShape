@@ -132,7 +132,7 @@ What the clipboard, delete and selection items of the Edit menu do. Undo and Red
 
 `internal abstract partial class EditorShellViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:18-367`
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:18-366`
 
 What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
 
@@ -272,13 +272,13 @@ State of the History tab: the start state and one row per step, oldest first. Th
 
 `internal partial sealed class InspectorViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:10-54`
+Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:10-55`
 
 State of the inspector: the selected tab and the view models of its tabs.
 
 **Members**
 
-- `public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null, LayerEditor? layers = null)` - _(no documentation)_
+- `public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null, LayerEditor? layers = null, PathMenuCommands? paths = null)` - _(no documentation)_
 - `public PropertiesViewModel Properties { get; }` - _(no documentation)_
 - `public LayersViewModel Layers { get; }` - _(no documentation)_
 - `public PlaceholderPanelViewModel Assets { get; }` - _(no documentation)_
@@ -290,6 +290,7 @@ State of the inspector: the selected tab and the view models of its tabs.
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.PathMenuCommands`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.LayerEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
@@ -511,7 +512,7 @@ The swatches saved with the document, shown in the Appearance section. Adding an
 
 `internal sealed record PathMenuCommands : IEquatable<PathMenuCommands>`
 
-Source: `src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:6-12`
+Source: `src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:7-23`
 
 What the boolean, Combine and Break Apart items of the Path menu do. A command is disabled while it cannot run.
 
@@ -524,10 +525,13 @@ What the boolean, Combine and Break Apart items of the Path menu do. A command i
 - `public ICommand Exclusion { get; init; }` - _(no documentation)_
 - `public ICommand Combine { get; init; }` - _(no documentation)_
 - `public ICommand BreakApart { get; init; }` - _(no documentation)_
+- `public PathMenuCommands Disabled { get; }` - Six commands that can never run, for a view that has no real ones (a test, or a caller that does not offer the path operations).
 
 **Relationships**
 
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
 
 ## PlaceholderPanelViewModel (class)
@@ -590,8 +594,8 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public bool HasNodesSelected { get; }` - Whether at least one node that can be edited is selected.
 - `public bool HasRectangleSelected { get; }` - Whether exactly one rectangle (and nothing else) is selected.
 - `public bool IsNodeCorner { get; }` - Whether every selected node is a corner.
-- `public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null)` - _(no documentation)_
 - `public bool ShowCorners { get; }` - Whether the Corners section is shown: the tool has it and one rectangle is selected.
+- `public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null, PathMenuCommands? paths = null)` - _(no documentation)_
 - `public bool IsNodeSmooth { get; }` - Whether every selected node is smooth.
 - `public bool IsNodeSymmetric { get; }` - Whether every selected node is symmetric.
 - `public bool LinkCorners { get; set; }` - Whether a change of one radius changes all four. Shared with the radius handles (a drag by touch) through the editor state, so the toggle here is the toggle there.
@@ -615,6 +619,8 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public bool ShowPath { get; }` - _(no documentation)_
 - `public bool ShowAlign { get; }` - _(no documentation)_
 - `public bool ShowQuickActions { get; }` - _(no documentation)_
+- `public bool ShowPathOperations { get; }` - Whether the Path Operations section is shown: the tool has it and two or more objects are selected.
+- `public PathMenuCommands PathOperations { get; }` - The commands of the buttons of the Path Operations section. Each can run only when the same item of the Path menu can.
 - `public bool ShowHeader { get; }` - Whether the selection header is shown: any tool that has at least one section.
 - `public bool ShowNoPropertiesHint { get; }` - Whether the active tool has no properties, so a hint replaces the sections.
 - `public string Header { get; }` - "Nothing selected", "1 selected" or "N selected".
@@ -625,6 +631,7 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public bool IsPathExpanded { get; set; }` - _(no documentation)_
 - `public bool IsAlignExpanded { get; set; }` - _(no documentation)_
 - `public bool IsQuickActionsExpanded { get; set; }` - _(no documentation)_
+- `public bool IsPathOperationsExpanded { get; set; }` - _(no documentation)_
 - `public void StartPick(ColorPickTarget target)` - Starts a pick from the canvas for the fill or the stroke. The next click on a shape sets that color.
 - `public void BeginOpacityDrag()` - The user started to move the opacity slider. The changes until PressToShape.App.ViewModels.Editor.PropertiesViewModel.EndOpacityDrag are one step.
 - `public void PreviewOpacity(double percent)` - Shows the slider's opacity on the canvas. Ignored unless a drag began.
@@ -633,6 +640,7 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.PathMenuCommands`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`

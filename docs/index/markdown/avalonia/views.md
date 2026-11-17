@@ -69,9 +69,9 @@ _(no documentation)_
 `T:PressToShape.App.Views.Editor.InspectorView` at src/PressToShape.App/Views/Editor/InspectorView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Editor/InspectorView.axaml`, 5 bindings.
 _(no documentation)_
 
-- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46); 0 commands, 10 test classes
-- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/InspectorView.axaml:1); 0 commands, 10 test classes
-- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/LayersViewTests.cs:152); 0 commands, 10 test classes
+- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:46); 0 commands, 12 test classes
+- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/InspectorView.axaml:1); 0 commands, 12 test classes
+- view model `InspectorViewModel` (`T:PressToShape.App.ViewModels.Editor.InspectorViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/LayersViewTests.cs:152); 0 commands, 12 test classes
 
 ### LayersView
 
@@ -94,17 +94,18 @@ _(no documentation)_
 
 ### PropertiesView
 
-`T:PressToShape.App.Views.Editor.PropertiesView` at src/PressToShape.App/Views/Editor/PropertiesView.axaml.cs:15. XAML: `src/PressToShape.App/Views/Editor/PropertiesView.axaml`, 109 bindings.
+`T:PressToShape.App.Views.Editor.PropertiesView` at src/PressToShape.App/Views/Editor/PropertiesView.axaml.cs:15. XAML: `src/PressToShape.App/Views/Editor/PropertiesView.axaml`, 116 bindings.
 The Properties tab. The code-behind only forwards: the number fields (shared with the contextual bar of the tablet layout), the pickers' open and close, the pick, add-to-palette and recent-color buttons of the pickers, the palette swatches (with the Shift state), and the opacity slider's drag. Every decision is in PressToShape.App.ViewModels.Editor.PropertiesViewModel.
 
-- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/PropertiesView.axaml:1); 12 commands, 19 test classes
-- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewColorTests.cs:29); 12 commands, 19 test classes
-- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewCornersTests.cs:35); 12 commands, 19 test classes
-- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewNodeTests.cs:27); 12 commands, 19 test classes
-- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewNodeTests.cs:190); 12 commands, 19 test classes
-- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewPathTests.cs:23); 12 commands, 19 test classes
-- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:159); 12 commands, 19 test classes
-- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.PropertiesViewModel maps to PressToShape.App.Views.Editor.PropertiesView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:26 (src/PressToShape.App/Views/Editor/InspectorView.axaml:26); 12 commands, 19 test classes
+- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/PropertiesView.axaml:1); 12 commands, 20 test classes
+- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewColorTests.cs:29); 12 commands, 20 test classes
+- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewCornersTests.cs:35); 12 commands, 20 test classes
+- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewNodeTests.cs:27); 12 commands, 20 test classes
+- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewNodeTests.cs:190); 12 commands, 20 test classes
+- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewPathOperationsTests.cs:24); 12 commands, 20 test classes
+- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewPathTests.cs:23); 12 commands, 20 test classes
+- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:159); 12 commands, 20 test classes
+- view model `PropertiesViewModel` (`T:PressToShape.App.ViewModels.Editor.PropertiesViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.PropertiesViewModel maps to PressToShape.App.Views.Editor.PropertiesView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:26 (src/PressToShape.App/Views/Editor/InspectorView.axaml:26); 12 commands, 20 test classes
 
 ### SwatchesView
 

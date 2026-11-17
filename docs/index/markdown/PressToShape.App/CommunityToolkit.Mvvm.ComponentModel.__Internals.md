@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class __KnownINotifyPropertyChangedArgs`
 
-Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-281` (generated)
+Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-285` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangedEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -47,6 +47,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 - `public PropertyChangedEventArgs IsPathExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsPathExpanded" generated properties.
 - `public PropertyChangedEventArgs IsAlignExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsAlignExpanded" generated properties.
 - `public PropertyChangedEventArgs IsQuickActionsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsQuickActionsExpanded" generated properties.
+- `public PropertyChangedEventArgs IsPathOperationsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsPathOperationsExpanded" generated properties.
 - `public PropertyChangedEventArgs IsNodeExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsNodeExpanded" generated properties.
 - `public PropertyChangedEventArgs IsOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "IsOpen" generated properties.
 - `public PropertyChangedEventArgs CenterX` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "CenterX" generated properties.
@@ -83,7 +84,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 
 `internal static class __KnownINotifyPropertyChangingArgs`
 
-Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-281` (generated)
+Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-285` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangingEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -124,6 +125,7 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 - `public PropertyChangingEventArgs IsPathExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsPathExpanded" generated properties.
 - `public PropertyChangingEventArgs IsAlignExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsAlignExpanded" generated properties.
 - `public PropertyChangingEventArgs IsQuickActionsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsQuickActionsExpanded" generated properties.
+- `public PropertyChangingEventArgs IsPathOperationsExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsPathOperationsExpanded" generated properties.
 - `public PropertyChangingEventArgs IsNodeExpanded` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsNodeExpanded" generated properties.
 - `public PropertyChangingEventArgs IsOpen` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "IsOpen" generated properties.
 - `public PropertyChangingEventArgs CenterX` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "CenterX" generated properties.

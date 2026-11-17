@@ -20,7 +20,7 @@ Project file: `src/PressToShape.Android/PressToShape.Android.csproj`. 8 symbols,
 
 ## PressToShape.App
 
-Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2800 symbols, 10103 relationships.
+Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2813 symbols, 10156 relationships.
 
 - [CommunityToolkit.Mvvm.ComponentModel.__Internals](PressToShape.App/CommunityToolkit.Mvvm.ComponentModel.__Internals.md) (2 types)
 - [PressToShape.App](PressToShape.App/PressToShape.App.md) (3 types)
@@ -49,7 +49,7 @@ Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2800 symbols, 1010
 - [InspectorView.axaml](PressToShape.App/xaml/Views.Editor.InspectorView.axaml.md) (XAML, 5 bindings)
 - [LayersView.axaml](PressToShape.App/xaml/Views.Editor.LayersView.axaml.md) (XAML, 35 bindings)
 - [PlaceholderPanelView.axaml](PressToShape.App/xaml/Views.Editor.PlaceholderPanelView.axaml.md) (XAML, 1 bindings)
-- [PropertiesView.axaml](PressToShape.App/xaml/Views.Editor.PropertiesView.axaml.md) (XAML, 109 bindings)
+- [PropertiesView.axaml](PressToShape.App/xaml/Views.Editor.PropertiesView.axaml.md) (XAML, 116 bindings)
 - [SwatchesView.axaml](PressToShape.App/xaml/Views.Editor.SwatchesView.axaml.md) (XAML, 2 bindings)
 - [ToolboxView.axaml](PressToShape.App/xaml/Views.Editor.ToolboxView.axaml.md) (XAML, 6 bindings)
 - [MainWindow.axaml](PressToShape.App/xaml/Views.MainWindow.axaml.md) (XAML, 1 bindings)
@@ -64,10 +64,10 @@ Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2800 symbols, 1010
 
 ## PressToShape.App.Tests
 
-Project file: `tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj`. 3155 symbols, 29631 relationships.
+Project file: `tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj`. 3186 symbols, 29893 relationships.
 
 - [<global namespace>](PressToShape.App.Tests/_global_namespace_.md) (1 types)
-- [PressToShape.App.Tests](PressToShape.App.Tests/PressToShape.App.Tests.md) (163 types)
+- [PressToShape.App.Tests](PressToShape.App.Tests/PressToShape.App.Tests.md) (165 types)
 
 ## PressToShape.Benchmarks
 

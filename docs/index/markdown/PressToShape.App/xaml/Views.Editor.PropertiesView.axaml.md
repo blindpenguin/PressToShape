@@ -10,6 +10,7 @@ Class: `PressToShape.App.Views.Editor.PropertiesView`.
 - `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewCornersTests.cs:35)
 - `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewNodeTests.cs:190)
 - `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewNodeTests.cs:27)
+- `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewPathOperationsTests.cs:24)
 - `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/PropertiesViewPathTests.cs:23)
 - `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:159)
 - `T:PressToShape.App.ViewModels.Editor.PropertiesViewModel` (verified): x:DataType (src/PressToShape.App/Views/Editor/PropertiesView.axaml:1)
@@ -120,11 +121,18 @@ Class: `PressToShape.App.Views.Editor.PropertiesView`.
 - line 322: controls:CollapsibleSection.IsExpanded = Binding `IsAlignExpanded` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.IsAlignExpanded` (verified)
 - line 322: controls:CollapsibleSection.IsVisible = Binding `ShowAlign` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ShowAlign` (verified)
 - line 323: StackPanel.IsEnabled = Binding `HasSelection` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.HasSelection` (verified)
-- line 349: controls:CollapsibleSection.IsExpanded = Binding `IsQuickActionsExpanded` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.IsQuickActionsExpanded` (verified)
-- line 349: controls:CollapsibleSection.IsVisible = Binding `ShowQuickActions` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ShowQuickActions` (verified)
-- line 350: WrapPanel.IsEnabled = Binding `HasSelection` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.HasSelection` (verified)
-- line 351: Button.Command = Binding `GroupCommand` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.GroupCommand` (verified), command
-- line 352: Button.Command = Binding `UngroupCommand` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UngroupCommand` (verified), command
+- line 349: controls:CollapsibleSection.IsExpanded = Binding `IsPathOperationsExpanded` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.IsPathOperationsExpanded` (verified)
+- line 349: controls:CollapsibleSection.IsVisible = Binding `ShowPathOperations` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ShowPathOperations` (verified)
+- line 351: Button.Command = Binding `PathOperations.Union` -> `P:PressToShape.App.ViewModels.Editor.PathMenuCommands.Union` (verified), command
+- line 355: Button.Command = Binding `PathOperations.Difference` -> `P:PressToShape.App.ViewModels.Editor.PathMenuCommands.Difference` (verified), command
+- line 359: Button.Command = Binding `PathOperations.Intersection` -> `P:PressToShape.App.ViewModels.Editor.PathMenuCommands.Intersection` (verified), command
+- line 363: Button.Command = Binding `PathOperations.Exclusion` -> `P:PressToShape.App.ViewModels.Editor.PathMenuCommands.Exclusion` (verified), command
+- line 367: Button.Command = Binding `PathOperations.Combine` -> `P:PressToShape.App.ViewModels.Editor.PathMenuCommands.Combine` (verified), command
+- line 374: controls:CollapsibleSection.IsExpanded = Binding `IsQuickActionsExpanded` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.IsQuickActionsExpanded` (verified)
+- line 374: controls:CollapsibleSection.IsVisible = Binding `ShowQuickActions` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ShowQuickActions` (verified)
+- line 375: StackPanel.IsEnabled = Binding `HasSelection` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.HasSelection` (verified)
+- line 376: Button.Command = Binding `GroupCommand` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.GroupCommand` (verified), command
+- line 380: Button.Command = Binding `UngroupCommand` -> `P:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UngroupCommand` (verified), command
 
 ## Resource references
 
@@ -169,6 +177,22 @@ Class: `PressToShape.App.Views.Editor.PropertiesView`.
 - line 341: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
 - line 344: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
 - line 344: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 353: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 353: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 357: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 357: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 361: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 361: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 365: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 365: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 369: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 369: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 378: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 378: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 382: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 382: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 386: materialIcons:MaterialIcon.Height = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
+- line 386: materialIcons:MaterialIcon.Width = DynamicResource `PanelIconSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/PanelIconSize` (verified)
 
 ## Styles
 
