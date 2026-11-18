@@ -86,6 +86,7 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.Tests.EditorShellViewModelRingTests.BareShell`
 - Injected into `PressToShape.App.Tests.EditorShellViewModelTests.BareShell`
 - Injected into `PressToShape.App.Tests.EditorShellViewModelTests.Fixture`
+- Injected into `PressToShape.App.Tests.OpenSettingsCommandTests.BareShell`
 - Injected into `PressToShape.App.Tests.RingMenuControlTests.BareShell`
 - Injected into `PressToShape.App.Tests.RingMenuControlTests.Scene`
 - Injected into `PressToShape.App.Tests.TestShell`
@@ -105,6 +106,8 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.RingMenuViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.RingSlotViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.SettingsCategoryViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.SettingsViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.StatusBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.ToolboxViewModel`
@@ -241,6 +244,7 @@ Holds the current language and translates texts through the catalog of that lang
 - Injected into `PressToShape.App.Tests.DesktopShellViewModelTests.FileShell`
 - Injected into `PressToShape.App.Tests.DocumentFileServiceTests.Setup`
 - Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
+- Injected into `PressToShape.App.Tests.SettingsViewModelTests.Fixture`
 
 ## SupportedLanguages (class)
 

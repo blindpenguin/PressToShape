@@ -1978,7 +1978,7 @@ A catalog source for tests: one dictionary per language code. Counts the loads.
 
 `internal sealed class FakeFileDialogs : IFileDialogs`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:51-87`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:52-88`
 
 Returns queued answers instead of showing pickers, and records what it was asked.
 
@@ -2004,7 +2004,7 @@ Returns queued answers instead of showing pickers, and records what it was asked
 
 `internal sealed class FakeFileStore : IFileStore`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:12-48`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:13-49`
 
 An in-memory file system. Can be told to fail on write or read.
 
@@ -2038,7 +2038,7 @@ Creates real PressToShape.App.Localization.Localizer instances with fake German 
 
 `internal sealed class FakeMessageDialogs : IMessageDialogs`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:90-109`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:91-110`
 
 Answers the unsaved-changes question with a fixed or queued choice, and records questions and errors.
 
@@ -2079,6 +2079,27 @@ A picked file kept in memory. Like the Android one, opening it for writing empti
 
 - Implements `PressToShape.App.Services.IPickedFile`
 - Injected into `PressToShape.App.Tests.FakePickedFile.WriteStream`
+
+## FakeSettingsDialogs (class)
+
+`internal sealed class FakeSettingsDialogs : ISettingsDialogs`
+
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:147-188`
+
+A settings window that stays open until the test closes it.
+
+**Members**
+
+- `public int ShowCount { get; private set; }` - _(no documentation)_
+- `public SettingsViewModel? Shown { get; private set; }` - _(no documentation)_
+- `public bool Throws { get; set; }` - Makes the next PressToShape.App.Tests.FakeSettingsDialogs.ShowAsync throw.
+- `public Task ShowAsync(SettingsViewModel viewModel)` - _(no documentation)_
+- `public void Close(bool ok)` - Closes the window the way OK or Cancel does: the view model says so, then the window goes away.
+- `public void CloseWithoutChoice()` - Closes the window without any choice, like the close button of the window.
+
+**Relationships**
+
+- Implements `PressToShape.App.Services.ISettingsDialogs`
 
 ## GettextCatalogTests (class)
 
@@ -2557,19 +2578,21 @@ A clock that only moves when a test says so. One timestamp tick is one milliseco
 
 `internal sealed class MemorySettingsStore : ISettingsStore`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:112-119`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:113-127`
 
 Settings kept in memory.
 
 **Members**
 
 - `public AppSettings Current { get; set; }` - _(no documentation)_
+- `public int SaveCount { get; private set; }` - How many times PressToShape.App.Tests.MemorySettingsStore.Save was called.
 - `public AppSettings Load()` - _(no documentation)_
 - `public void Save(AppSettings settings)` - _(no documentation)_
 
 **Relationships**
 
 - Implements `PressToShape.App.Settings.ISettingsStore`
+- Injected into `PressToShape.App.Tests.SettingsViewModelTests.Fixture`
 
 ## MenuBarSmartTests (class)
 
@@ -2611,7 +2634,7 @@ _(no documentation)_
 
 `public class MenuBarViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-698`
+Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-724`
 
 _(no documentation)_
 
@@ -2659,6 +2682,8 @@ _(no documentation)_
 - `public void UndoAndRedoItems_FollowTheirCommands_AndKeepTheirShortcutHints()` - _(no documentation)_
 - `public void EditItems_AreDisabledUntilTheirCommandCanRun_AndRunTheirCommand()` - _(no documentation)_
 - `public void EditItems_KeepTheirGestureHints()` - _(no documentation)_
+- `public void PreferencesItem_RunsTheCommand_AndHasNoGesture()` - _(no documentation)_
+- `public void PreferencesItem_FollowsTheAvailabilityOfItsCommand()` - _(no documentation)_
 
 ## MenuItemViewModelTests (class)
 
@@ -2852,6 +2877,20 @@ _(no documentation)_
 - `public void WhileEditing_NewValuesDoNotReplaceTheTypedText_UntilRevertedOrCommitted()` - _(no documentation)_
 - `public void Constructor_RejectsBadArguments()` - _(no documentation)_
 
+## NumberParsingTests (class)
+
+`public sealed class NumberParsingTests`
+
+Source: `tests/PressToShape.App.Tests/NumberParsingTests.cs:7-52`
+
+_(no documentation)_
+
+**Members**
+
+- `public void TryParse_ValidText_GivesTheNumber(string text, string culture, double expected)` - _(no documentation)_
+- `public void TryParse_InvalidText_GivesFalseAndZero(string? text)` - _(no documentation)_
+- `public void TryParse_ThousandsSeparatorInGerman_IsRefused()` - _(no documentation)_
+
 ## ObjectCommandsTests (class)
 
 `public class ObjectCommandsTests`
@@ -2910,11 +2949,29 @@ _(no documentation)_
 - `public void MoveAbove_DifferentParentsOrSameShape_DoesNothing()` - _(no documentation)_
 - `public void Constructor_NullState_Throws()` - _(no documentation)_
 
+## OpenSettingsCommandTests (class)
+
+`public sealed class OpenSettingsCommandTests`
+
+Source: `tests/PressToShape.App.Tests/OpenSettingsCommandTests.cs:11-118`
+
+_(no documentation)_
+
+**Members**
+
+- `public Task OpenSettingsCommand_Ok_AppliesTheValues()` - _(no documentation)_
+- `public Task OpenSettingsCommand_Cancel_AppliesNothing()` - _(no documentation)_
+- `public Task OpenSettingsCommand_ClosedWithoutChoice_AppliesNothing()` - _(no documentation)_
+- `public Task OpenSettingsCommand_AlreadyOpen_IgnoresASecondCall()` - _(no documentation)_
+- `public Task OpenSettingsCommand_AfterClosing_CanOpenAgainWithTheCurrentValues()` - _(no documentation)_
+- `public Task OpenSettingsCommand_DialogThrows_ResetsTheFlag()` - _(no documentation)_
+- `public void OpenSettingsCommand_NoSettingsDialogs_CannotRun()` - _(no documentation)_
+
 ## OverflowMenuViewModelTests (class)
 
 `public class OverflowMenuViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-274`
+Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-299`
 
 _(no documentation)_
 
@@ -2929,6 +2986,8 @@ _(no documentation)_
 - `public void Items_ShowNoShortcutTexts()` - _(no documentation)_
 - `public void Items_RunTheMatchingCommand()` - _(no documentation)_
 - `public void AnItemWhoseCommandCannotRun_IsDisabled_AndFollowsTheCommand()` - _(no documentation)_
+- `public void Preferences_Item_RunsTheCommandAndFollowsItsAvailability()` - _(no documentation)_
+- `public void Preferences_WithoutACommand_IsDisabled()` - _(no documentation)_
 - `public void TheLanguageSubmenu_IsAlwaysEnabled_AndListsBothLanguages()` - _(no documentation)_
 - `public void ChoosingALanguage_SwitchesIt_MovesTheCheckMark_AndTranslatesTheHeaders()` - _(no documentation)_
 - `public void Constructor_NullArguments_Throw()` - _(no documentation)_
@@ -4067,6 +4126,27 @@ _(no documentation)_
 - `public void Mixed_Of_HandlesEmptyOneAndManyValues()` - _(no documentation)_
 - `public void From_Null_Throws()` - _(no documentation)_
 
+## SettingsDialogHostTests (class)
+
+`public sealed class SettingsDialogHostTests`
+
+Source: `tests/PressToShape.App.Tests/SettingsDialogHostTests.cs:12-191`
+
+_(no documentation)_
+
+**Members**
+
+- `public Task ShowAsync_ViewModelClosesWithOk_ReturnsAndHidesTheSettings()` - _(no documentation)_
+- `public Task ShowAsync_ViewModelCancels_ReturnsAndHidesTheSettings()` - _(no documentation)_
+- `public Task Dismiss_SettingsOpen_ClosesThemWithoutAChoice()` - _(no documentation)_
+- `public void Dismiss_NothingOpen_DoesNothing()` - _(no documentation)_
+- `public Task ShowAsync_SecondRequest_WaitsForTheFirst()` - _(no documentation)_
+- `public Task Back_OnAPage_GoesToTheListAndKeepsTheSettingsOpen()` - _(no documentation)_
+- `public Task RequestBackAsync_SettingsOnAPage_GoesToTheListAndDoesNotLeave()` - _(no documentation)_
+- `public Task RequestBackAsync_SettingsOnTheList_CancelsWithoutApplying()` - _(no documentation)_
+- `public Task RequestLeaveAsync_SettingsOpen_ClosesThemAndStays()` - _(no documentation)_
+- `public Task OverlaySettingsDialogs_Ok_AppliesTheValuesThroughTheShell()` - _(no documentation)_
+
 ## SettingsStoreTests (class)
 
 `public sealed class SettingsStoreTests : IDisposable`
@@ -4088,6 +4168,73 @@ _(no documentation)_
 - `public void Save_LeavesNoTemporaryFiles()` - _(no documentation)_
 - `public void DefaultPath_IsInsideTheApplicationDataFolder()` - _(no documentation)_
 - `public void Constructor_RequiresAPath()` - _(no documentation)_
+
+## SettingsViewHeadlessTests (class)
+
+`public sealed class SettingsViewHeadlessTests`
+
+Source: `tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:20-182`
+
+_(no documentation)_
+
+**Members**
+
+- `public void SettingsView_ShowsTheThreeCategoriesAndTheGeneralPage()` - _(no documentation)_
+- `public void SettingsView_SelectingACategory_ShowsItsPageAndKeepsTheEnteredValues()` - _(no documentation)_
+- `public void SettingsView_InvalidSpacing_ShowsTheErrorAndDisablesOk()` - _(no documentation)_
+- `public void SettingsWindow_Cancel_ClosesTheWindow()` - _(no documentation)_
+- `public void TabletSettingsView_ShowsTheListFirstThenThePageThenTheList()` - _(no documentation)_
+- `public void TabletSettingsView_TappingACategory_OpensItsPage()` - _(no documentation)_
+- `public void TabletSettingsView_Buttons_HaveTouchSize()` - _(no documentation)_
+
+## SettingsViewModelNavigationTests (class)
+
+`public sealed class SettingsViewModelNavigationTests`
+
+Source: `tests/PressToShape.App.Tests/SettingsViewModelNavigationTests.cs:10-242`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Constructor_Categories_AreGeneralCanvasSnappingWithGeneralSelected()` - _(no documentation)_
+- `public void Constructor_Pages_AreTheMatchingPageViewModelsOfTheSameSettings()` - _(no documentation)_
+- `public void SelectedCategory_Changed_KeepsTheEnteredValues()` - _(no documentation)_
+- `public void RestoreDefaults_Canvas_ResetsOnlyTheCanvasValues()` - _(no documentation)_
+- `public void RestoreDefaults_Canvas_UsesTheRulerDefaultOfTheLayout()` - _(no documentation)_
+- `public void RestoreDefaults_Snapping_ResetsOnlyTheSnappingValues()` - _(no documentation)_
+- `public void RestoreDefaults_General_ChoosesTheLanguageOfTheSystem(string systemCulture, string expected)` - _(no documentation)_
+- `public void RestoreDefaults_AnyCategory_AppliesNothing()` - _(no documentation)_
+- `public void RestoreDefaults_Canvas_ClearsAnInvalidSpacing()` - _(no documentation)_
+- `public void OkCommand_ValidValues_RaisesCloseRequestedWithTrue()` - _(no documentation)_
+- `public void OkCommand_InvalidSpacing_CannotRunAndRaisesNothing()` - _(no documentation)_
+- `public void CancelCommand_Always_RaisesCloseRequestedWithFalse()` - _(no documentation)_
+- `public void GridSpacingText_Invalid_MarksTheCanvasCategory()` - _(no documentation)_
+- `public void OpenCategoryCommand_Category_ShowsItsPage()` - _(no documentation)_
+- `public void BackCommand_OnAPage_ShowsTheListAndKeepsTheValues()` - _(no documentation)_
+- `public void BackCommand_OnTheList_Cancels()` - _(no documentation)_
+
+## SettingsViewModelTests (class)
+
+`public sealed class SettingsViewModelTests`
+
+Source: `tests/PressToShape.App.Tests/SettingsViewModelTests.cs:13-195`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Constructor_CurrentValues_AreCopied()` - _(no documentation)_
+- `public void Constructor_GermanLanguage_ShowsSpacingWithTheLocalizerCulture()` - _(no documentation)_
+- `public void Setters_ChangedValues_WriteNothingBeforeApply()` - _(no documentation)_
+- `public void Apply_ChangedValues_AreWrittenAndSavedOncePerValue()` - _(no documentation)_
+- `public void Apply_NothingChanged_DoesNotSave()` - _(no documentation)_
+- `public void Apply_OtherLanguage_SwitchesTheLanguage()` - _(no documentation)_
+- `public void Apply_UnknownSettings_AreKept()` - _(no documentation)_
+- `public void GridSpacingText_Invalid_SetsTheErrorAndDisablesApply(string text)` - _(no documentation)_
+- `public void GridSpacingText_Valid_ClearsTheError(string language, string text)` - _(no documentation)_
+- `public void Apply_InvalidSpacing_KeepsTheOldSpacingAndStillAppliesTheRest()` - _(no documentation)_
+- `public void GridSpacingText_Changed_RaisesPropertyChangedForTheErrorAndCanApply()` - _(no documentation)_
 
 ## SmartSnapSizeTests (class)
 
@@ -4183,13 +4330,14 @@ _(no documentation)_
 
 `public sealed class SnapPreferencesTests`
 
-Source: `tests/PressToShape.App.Tests/SnapPreferencesTests.cs:8-174`
+Source: `tests/PressToShape.App.Tests/SnapPreferencesTests.cs:8-187`
 
 _(no documentation)_
 
 **Members**
 
 - `public void Constructor_EmptyStore_UsesDefaults()` - _(no documentation)_
+- `public void Constructor_EmptyStore_MatchesThePublicDefaults()` - _(no documentation)_
 - `public void Constructor_EmptyStore_RulersFollowTheLayoutDefault(bool defaultShowRulers)` - _(no documentation)_
 - `public void Setters_Changed_AreRestoredByANewInstance()` - _(no documentation)_
 - `public void Constructor_InvalidStoredSpacing_UsesTheDefault(string stored)` - _(no documentation)_
@@ -4650,13 +4798,13 @@ _(no documentation)_
 
 `internal static class TestFileServices`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:122-130`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:130-144`
 
 Creates the file services of the shell from fakes.
 
 **Members**
 
-- `public FileServices Create(FakeFileStore? files = null, FakeFileDialogs? dialogs = null, FakeMessageDialogs? messages = null, ISettingsStore? settings = null)` - _(no documentation)_
+- `public FileServices Create(FakeFileStore? files = null, FakeFileDialogs? dialogs = null, FakeMessageDialogs? messages = null, ISettingsStore? settings = null, ISettingsDialogs? settingsDialogs = null)` - _(no documentation)_
 
 ## TestSelection (class)
 

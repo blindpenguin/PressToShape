@@ -27,13 +27,13 @@ Shows message dialogs inside the layout, for a platform without windows. The lay
 
 `internal sealed class OverflowMenuViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/OverflowMenuViewModel.cs:17-80`
+Source: `src/PressToShape.App/ViewModels/Tablet/OverflowMenuViewModel.cs:17-81`
 
-The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, the path operations, lock and hide, and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
+The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, the path operations, lock and hide, the preferences and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
 
 **Members**
 
-- `public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, PathMenuCommands paths)` - _(no documentation)_
+- `public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, PathMenuCommands paths, ICommand? preferences = null)` - _(no documentation)_
 - `public IReadOnlyList<MenuItemViewModel> Items { get; }` - The items in the order they are shown, with separators between the groups.
 
 **Relationships**
@@ -68,6 +68,28 @@ A toolbar icon that opens the floating panel with one tab, or closes it when tha
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+
+## SettingsDialogHost (class)
+
+`internal partial sealed class SettingsDialogHost : ViewModelBase`
+
+Source: `src/PressToShape.App/ViewModels/Tablet/SettingsDialogHost.cs:13-54`
+
+Shows the settings inside the layout, for a platform without windows. The layout shows PressToShape.App.ViewModels.Tablet.SettingsDialogHost.Current over the editor while it is not null. Only one is shown at a time: a second request waits until the first is closed.
+
+**Members**
+
+- `public SettingsViewModel? Current { get; private set; }` - _(no documentation)_
+- `public bool IsOpen { get; }` - _(no documentation)_
+- `public Task ShowAsync(SettingsViewModel viewModel)` - Shows the settings and returns when they are closed, by OK, by Cancel or by PressToShape.App.ViewModels.Tablet.SettingsDialogHost.Dismiss.
+- `public void Back()` - The Back button: goes from a page to the list, and cancels from the list. Does nothing if nothing is shown.
+- `public void Dismiss()` - Closes the settings without applying anything. Does nothing if nothing is shown.
+
+**Relationships**
+
+- Inherits `PressToShape.App.ViewModels.ViewModelBase`
+- Injected into `PressToShape.App.Services.OverlaySettingsDialogs`
+- Injected into `PressToShape.App.ViewModels.Tablet.TabletShellViewModel`
 
 ## TabletColorSwatchViewModel (class)
 
@@ -128,20 +150,21 @@ The panel of the tablet layout, which floats over the canvas and shows one of th
 
 `internal sealed class TabletShellViewModel : EditorShellViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:14-102`
+Source: `src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:14-118`
 
 Root of the tablet layout. Adds the compact toolbar with its overflow menu, the tool column, the floating panel and the in-layout message dialog to what every shell has (see PressToShape.App.ViewModels.Editor.EditorShellViewModel). The Back button goes through PressToShape.App.ViewModels.Tablet.TabletShellViewModel.RequestBackAsync.
 
 **Members**
 
-- `public TabletShellViewModel(IAppShutdown shutdown, ILocalizer localizer, FileServices services, MessageDialogHost dialogs)` - _(no documentation)_
+- `public TabletShellViewModel(IAppShutdown shutdown, ILocalizer localizer, FileServices services, MessageDialogHost dialogs, SettingsDialogHost? settingsHost = null)` - _(no documentation)_
 - `public TabletToolbarViewModel Toolbar { get; }` - _(no documentation)_
 - `public StatusBarViewModel StatusBar { get; }` - The status bar under the canvas: selection summary, the busy text and the zoom controls.
 - `public OverflowMenuViewModel OverflowMenu { get; }` - The "..." menu. It is also reachable as PressToShape.App.ViewModels.Tablet.TabletShellViewModel.Toolbar.OverflowMenu.
 - `public TabletPanelViewModel Panel { get; }` - _(no documentation)_
 - `public TabletToolColumnViewModel Column { get; }` - The tool column with its tool groups and the swatches.
 - `public MessageDialogHost Dialogs { get; }` - The message dialog that is shown over the layout, or nothing.
-- `public Task<bool> RequestBackAsync()` - The Back button was pressed (after the view closed a toolbar menu, if one was open). It closes the topmost thing that is open and stops there: a message dialog (as Cancel), then a tool group flyout, then the panel. Only when none of them is open does it do what PressToShape.App.ViewModels.Tablet.TabletShellViewModel.RequestLeaveAsync does.
+- `public SettingsDialogHost SettingsHost { get; }` - The settings that are shown over the layout, or nothing. The same host is given to PressToShape.App.Services.OverlaySettingsDialogs.
+- `public Task<bool> RequestBackAsync()` - The Back button was pressed (after the view closed a toolbar menu, if one was open). It closes the topmost thing that is open and stops there: a message dialog (as Cancel), then the settings (a page goes back to the list, the list cancels), then a tool group flyout, then the panel. Only when none of them is open does it do what PressToShape.App.ViewModels.Tablet.TabletShellViewModel.RequestLeaveAsync does.
 - `public Task<bool> RequestLeaveAsync()` - Leaving was asked for. While a message dialog is open, Back closes it like Cancel and the app stays. Otherwise: without unsaved changes the app is left at once, with them the user is asked to save, discard or cancel, and the app is left only after a successful save or after discarding.
 
 **Relationships**
@@ -150,6 +173,7 @@ Root of the tablet layout. Adds the compact toolbar with its overflow menu, the 
 - Depends on (constructor) `PressToShape.App.Services.FileServices`
 - Depends on (constructor) `PressToShape.App.Services.IAppShutdown`
 - Depends on (constructor) `PressToShape.App.ViewModels.Tablet.MessageDialogHost`
+- Depends on (constructor) `PressToShape.App.ViewModels.Tablet.SettingsDialogHost`
 - Inherits `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
 
 ## TabletToolColumnViewModel (class)

@@ -36,6 +36,20 @@ The pointer shapes of the canvas. Avalonia has no standard rotate, open hand, cl
 
 - `public Cursor For(CanvasCursorType type, double scale)` - The cursor for a type on a screen with this scale (1.0 is 100%). Created on first use and then reused.
 
+## CanvasSettingsPageView (class)
+
+`public partial class CanvasSettingsPageView : UserControl`
+
+Source: `src/PressToShape.App/Views/Editor/CanvasSettingsPageView.axaml.cs:5-11`
+
+_(no documentation)_
+
+**Members**
+
+- `public CanvasSettingsPageView()` - _(no documentation)_
+- `internal TextBox GridSpacingBox` _(generated)_ - _(no documentation)_
+- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+
 ## CoreColorBrushConverter (class)
 
 `internal sealed class CoreColorBrushConverter : IValueConverter`
@@ -65,6 +79,19 @@ Turns the Core color of a shape into an Avalonia color and back. Alpha is kept.
 - `public Color ToCore(Color color)` - _(no documentation)_
 - `public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)` - _(no documentation)_
 - `public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)` - _(no documentation)_
+
+## GeneralSettingsPageView (class)
+
+`public partial class GeneralSettingsPageView : UserControl`
+
+Source: `src/PressToShape.App/Views/Editor/GeneralSettingsPageView.axaml.cs:5-11`
+
+_(no documentation)_
+
+**Members**
+
+- `public GeneralSettingsPageView()` - _(no documentation)_
+- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
 
 ## HistoryView (class)
 
@@ -152,6 +179,32 @@ The Properties tab. The code-behind only forwards: the number fields (shared wit
 - `internal ItemsControl PaletteStrip` _(generated)_ - _(no documentation)_
 - `public PropertiesView()` - _(no documentation)_
 - `internal Slider OpacitySlider` _(generated)_ - _(no documentation)_
+- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+
+## SettingsView (class)
+
+`public partial class SettingsView : UserControl`
+
+Source: `src/PressToShape.App/Views/Editor/SettingsView.axaml.cs:6-12`
+
+The settings with the category list at the side. Used in the desktop window.
+
+**Members**
+
+- `public SettingsView()` - _(no documentation)_
+- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+
+## SnappingSettingsPageView (class)
+
+`public partial class SnappingSettingsPageView : UserControl`
+
+Source: `src/PressToShape.App/Views/Editor/SnappingSettingsPageView.axaml.cs:5-11`
+
+_(no documentation)_
+
+**Members**
+
+- `public SnappingSettingsPageView()` - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
 
 ## SwatchesView (class)

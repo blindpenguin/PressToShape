@@ -5,7 +5,7 @@ Class: `PressToShape.App.Views.MessageDialogView`.
 
 ## View model links
 
-- `T:PressToShape.App.ViewModels.MessageDialogViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:49 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:49)
+- `T:PressToShape.App.ViewModels.MessageDialogViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:54 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:54)
 - `T:PressToShape.App.ViewModels.MessageDialogViewModel` (verified): x:DataType (src/PressToShape.App/Views/MessageDialogView.axaml:1)
 
 ## Bindings

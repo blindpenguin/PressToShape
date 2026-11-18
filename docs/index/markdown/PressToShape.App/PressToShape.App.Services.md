@@ -44,6 +44,23 @@ Shows the questions and messages as modal dialogs over the main window.
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Implements `PressToShape.App.Services.IMessageDialogs`
 
+## AvaloniaSettingsDialogs (class)
+
+`internal sealed class AvaloniaSettingsDialogs : ISettingsDialogs`
+
+Source: `src/PressToShape.App/Services/AvaloniaSettingsDialogs.cs:10-32`
+
+Shows the settings as a modal window over the main window.
+
+**Members**
+
+- `public AvaloniaSettingsDialogs(Func<Window?> owner)` - _(no documentation)_
+- `public Task ShowAsync(SettingsViewModel viewModel)` - _(no documentation)_
+
+**Relationships**
+
+- Implements `PressToShape.App.Services.ISettingsDialogs`
+
 ## DelegateAppShutdown (class)
 
 `internal sealed class DelegateAppShutdown : IAppShutdown`
@@ -81,27 +98,30 @@ Closes the application when it runs with a classic desktop lifetime. Does nothin
 
 `internal sealed record FileServices : IEquatable<FileServices>`
 
-Source: `src/PressToShape.App/Services/FileServices.cs:7-7`
+Source: `src/PressToShape.App/Services/FileServices.cs:8-14`
 
 What the file actions need from the outside: settings, files, file pickers and message dialogs.
 
 **Members**
 
-- `public FileServices(ISettingsStore Settings, IFileStore Files, IFileDialogs Dialogs, IMessageDialogs Messages, bool RemembersRecentFiles = true)` - What the file actions need from the outside: settings, files, file pickers and message dialogs.
-- `public IFileDialogs Dialogs { get; init; }` - _(no documentation)_
+- `public FileServices(ISettingsStore Settings, IFileStore Files, IFileDialogs Dialogs, IMessageDialogs Messages, bool RemembersRecentFiles = true, ISettingsDialogs? SettingsDialogs = null)` - What the file actions need from the outside: settings, files, file pickers and message dialogs.
+- `public ISettingsStore Settings { get; init; }` - _(no documentation)_
 - `public IFileStore Files { get; init; }` - _(no documentation)_
+- `public IFileDialogs Dialogs { get; init; }` - _(no documentation)_
 - `public IMessageDialogs Messages { get; init; }` - _(no documentation)_
 - `public bool RemembersRecentFiles { get; init; }` - Whether the recently used files are kept in the settings. Off where a file reference does not survive a restart (Android).
-- `public ISettingsStore Settings { get; init; }` - _(no documentation)_
+- `public ISettingsDialogs? SettingsDialogs { get; init; }` - Shows the settings window. null where there is none: "Preferences…" is then disabled.
 
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Services.IFileDialogs`
 - Depends on (constructor) `PressToShape.App.Services.IFileStore`
 - Depends on (constructor) `PressToShape.App.Services.IMessageDialogs`
+- Depends on (constructor) `PressToShape.App.Services.ISettingsDialogs`
 - Depends on (constructor) `PressToShape.App.Settings.ISettingsStore`
 - Injected into `PressToShape.App.Tests.EditorShellViewModelRingTests.BareShell`
 - Injected into `PressToShape.App.Tests.EditorShellViewModelTests.BareShell`
+- Injected into `PressToShape.App.Tests.OpenSettingsCommandTests.BareShell`
 - Injected into `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletShellViewModel`
@@ -133,6 +153,7 @@ Lets view models close the application without referencing Avalonia types.
 - Implemented by `PressToShape.App.Tests.MenuBarViewModelTests.FakeShutdown`
 - Implemented by `PressToShape.App.Tests.ObjectCommandsTests.FakeShutdown`
 - Implemented by `PressToShape.App.Tests.SelectionAndPropertiesIntegrationTests.NoShutdown`
+- Implemented by `PressToShape.App.Tests.SettingsDialogHostTests.FakeShutdown`
 - Implemented by `PressToShape.App.Tests.TabletShellViewModelTests.FakeShutdown`
 - Implemented by `PressToShape.App.Tests.TabletStatusBarViewTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.TabletViewsTests.NoShutdown`
@@ -225,6 +246,25 @@ A file that the user picked, seen through the two things the app needs from it: 
 - Implemented by `PressToShape.App.Services.PickedStorageFile`
 - Implemented by `PressToShape.App.Tests.FakePickedFile`
 
+## ISettingsDialogs (interface)
+
+`internal interface ISettingsDialogs`
+
+Source: `src/PressToShape.App/Services/ISettingsDialogs.cs:7-14`
+
+Shows the settings window: a modal window on the desktop, an overlay inside the layout where there are no windows.
+
+**Members**
+
+- `public Task ShowAsync(SettingsViewModel viewModel)` - Shows the settings and returns when they are closed. The result is not returned: the caller listens to PressToShape.App.ViewModels.Editor.SettingsViewModel.CloseRequested and applies the values only after OK. A dialog closed in any other way counts as Cancel.
+
+**Relationships**
+
+- Implemented by `PressToShape.App.Services.AvaloniaSettingsDialogs`
+- Implemented by `PressToShape.App.Services.OverlaySettingsDialogs`
+- Implemented by `PressToShape.App.Tests.FakeSettingsDialogs`
+- Injected into `PressToShape.App.Services.FileServices`
+
 ## LocalFileStore (class)
 
 `internal sealed class LocalFileStore : IFileStore`
@@ -261,6 +301,24 @@ The questions and messages for a platform without windows: they are shown inside
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.ViewModels.Tablet.MessageDialogHost`
 - Implements `PressToShape.App.Services.IMessageDialogs`
+
+## OverlaySettingsDialogs (class)
+
+`internal sealed class OverlaySettingsDialogs : ISettingsDialogs`
+
+Source: `src/PressToShape.App/Services/OverlaySettingsDialogs.cs:9-19`
+
+Shows the settings for a platform without windows: inside the layout, through a PressToShape.App.ViewModels.Tablet.SettingsDialogHost.
+
+**Members**
+
+- `public OverlaySettingsDialogs(SettingsDialogHost host)` - _(no documentation)_
+- `public Task ShowAsync(SettingsViewModel viewModel)` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.ViewModels.Tablet.SettingsDialogHost`
+- Implements `PressToShape.App.Services.ISettingsDialogs`
 
 ## PickedStorageFile (class)
 

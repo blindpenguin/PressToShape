@@ -84,6 +84,24 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
 
+## CanvasSettingsPageViewModel (class)
+
+`internal sealed class CanvasSettingsPageViewModel : ViewModelBase`
+
+Source: `src/PressToShape.App/ViewModels/Editor/CanvasSettingsPageViewModel.cs:4-7`
+
+The page of the settings window for the Canvas category. It only gives its view the values of the PressToShape.App.ViewModels.Editor.SettingsViewModel.
+
+**Members**
+
+- `public CanvasSettingsPageViewModel(SettingsViewModel settings)` - The page of the settings window for the Canvas category. It only gives its view the values of the PressToShape.App.ViewModels.Editor.SettingsViewModel.
+- `public SettingsViewModel Settings { get; }` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.SettingsViewModel`
+- Inherits `PressToShape.App.ViewModels.ViewModelBase`
+
 ## ColorFieldViewModel (class)
 
 `internal partial sealed class ColorFieldViewModel : ViewModelBase`
@@ -144,7 +162,7 @@ What the clipboard, delete and selection items of the Edit menu do. Undo and Red
 
 `internal abstract partial class EditorShellViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:18-383`
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.Settings.cs:8-45`
 
 What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
 
@@ -169,6 +187,7 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public IRelayCommand LockCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Lock`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Lock.
 - `public IAsyncRelayCommand NewCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.NewAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.NewAsync.
 - `public IAsyncRelayCommand OpenCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenAsync.
+- `public IAsyncRelayCommand OpenSettingsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenSettingsAsync`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.OpenSettingsAsync.
 - `public IRelayCommand PasteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Paste`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Paste.
 - `public IRelayCommand PasteInPlaceCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.PasteInPlace`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.PasteInPlace.
 - `public IRelayCommand RedoCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Redo`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Redo.
@@ -210,6 +229,7 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - Depends on (constructor) `PressToShape.App.Services.FileServices`
 - Inherited by `PressToShape.App.Tests.EditorShellViewModelRingTests.BareShell`
 - Inherited by `PressToShape.App.Tests.EditorShellViewModelTests.BareShell`
+- Inherited by `PressToShape.App.Tests.OpenSettingsCommandTests.BareShell`
 - Inherited by `PressToShape.App.Tests.RingMenuControlTests.BareShell`
 - Inherited by `PressToShape.App.Tests.TestShell`
 - Inherited by `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
@@ -239,6 +259,24 @@ What the File menu items do. OpenRecent creates the command for one entry of the
 
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
+
+## GeneralSettingsPageViewModel (class)
+
+`internal sealed class GeneralSettingsPageViewModel : ViewModelBase`
+
+Source: `src/PressToShape.App/ViewModels/Editor/GeneralSettingsPageViewModel.cs:4-7`
+
+The page of the settings window for the General category. It only gives its view the values of the PressToShape.App.ViewModels.Editor.SettingsViewModel.
+
+**Members**
+
+- `public GeneralSettingsPageViewModel(SettingsViewModel settings)` - The page of the settings window for the General category. It only gives its view the values of the PressToShape.App.ViewModels.Editor.SettingsViewModel.
+- `public SettingsViewModel Settings { get; }` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.SettingsViewModel`
+- Inherits `PressToShape.App.ViewModels.ViewModelBase`
 
 ## HistoryItemViewModel (class)
 
@@ -380,7 +418,7 @@ State of the Layers tab: the layers of the document as header rows, and below ea
 
 `internal partial sealed class NumberFieldViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/NumberFieldViewModel.cs:13-124`
+Source: `src/PressToShape.App/ViewModels/Editor/NumberFieldViewModel.cs:12-108`
 
 A number text box of the Properties tab. The text is typed by the user and applied with PressToShape.App.ViewModels.Editor.NumberFieldViewModel.Commit (Enter or leaving the box). Invalid text is never applied: the previous value comes back. Numbers are shown and parsed with the language's culture; a dot is accepted as the decimal separator in every language.
 
@@ -403,6 +441,18 @@ A number text box of the Properties tab. The text is typed by the user and appli
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+
+## NumberParsing (class)
+
+`internal static class NumberParsing`
+
+Source: `src/PressToShape.App/ViewModels/Editor/NumberParsing.cs:6-26`
+
+Parses the numbers that the user types into a number box.
+
+**Members**
+
+- `public bool TryParse(string? text, CultureInfo culture, out double value)` - Parses a finite number with the given culture. A dot is accepted as the decimal separator in every culture. Surrounding white space is ignored. Gives false and 0 for empty text, text that is not a number, NaN, infinity and numbers with thousands separators.
 
 ## ObjectMenuCommands (record)
 
@@ -735,6 +785,106 @@ One wedge of the ring menu. Slots are made again for every level that is shown, 
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Workspace.RingSlotDefinition`
+- Inherits `PressToShape.App.ViewModels.ViewModelBase`
+
+## SettingsCategoryType (enum)
+
+`internal enum SettingsCategoryType`
+
+Source: `src/PressToShape.App/ViewModels/Editor/SettingsCategoryType.cs:4-9`
+
+The categories of the settings window, in the order of the list.
+
+**Members**
+
+- `public General` - _(no documentation)_
+- `public Canvas` - _(no documentation)_
+- `public Snapping` - _(no documentation)_
+
+## SettingsCategoryViewModel (class)
+
+`internal partial sealed class SettingsCategoryViewModel : LocalizedViewModel`
+
+Source: `src/PressToShape.App/ViewModels/Editor/SettingsCategoryViewModel.cs:9-39`
+
+One row of the category list of the settings window, with the page it shows.
+
+**Members**
+
+- `public SettingsCategoryViewModel(ILocalizer localizer, SettingsCategoryType type, string title, MaterialIconKind icon, ViewModelBase page)` - _(no documentation)_
+- `public SettingsCategoryType Type { get; }` - _(no documentation)_
+- `public string Title { get; }` - The translated title.
+- `public MaterialIconKind Icon { get; }` - _(no documentation)_
+- `public ViewModelBase Page { get; }` - _(no documentation)_
+- `public bool HasError { get; set; }` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.ViewModels.ViewModelBase`
+- Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+
+## SettingsViewModel (class)
+
+`internal partial sealed class SettingsViewModel : LocalizedViewModel`
+
+Source: `src/PressToShape.App/ViewModels/Editor/SettingsViewModel.Navigation.cs:13-109`
+
+The content of the settings window: a copy of the user settings that the user edits, and the rules for applying it. Nothing reaches PressToShape.App.Workspace.SnapPreferences or the language before PressToShape.App.ViewModels.Editor.SettingsViewModel.Apply (the window has OK and Cancel). The categories, the navigation and the commands are in the other part of this class.
+
+**Members**
+
+- `public IRelayCommand BackCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.SettingsViewModel.Back`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.SettingsViewModel.Back.
+- `public IRelayCommand CancelCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.SettingsViewModel.Cancel`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.SettingsViewModel.Cancel.
+- `public IRelayCommand OkCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.SettingsViewModel.Ok`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.SettingsViewModel.Ok.
+- `public IRelayCommand<SettingsCategoryViewModel> OpenCategoryCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.SettingsViewModel.OpenCategory(PressToShape.App.ViewModels.Editor.SettingsCategoryViewModel)`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand`1 instance wrapping PressToShape.App.ViewModels.Editor.SettingsViewModel.OpenCategory.
+- `public IRelayCommand RestoreDefaultsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.SettingsViewModel.RestoreDefaults`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.SettingsViewModel.RestoreDefaults.
+- `public EventHandler<bool>? CloseRequested` - Raised when the window should close. true means OK (the values are applied by the caller), false means Cancel.
+- `public IReadOnlyList<SettingsCategoryViewModel> Categories { get; private set; }` - The categories in the order of the list.
+- `public SettingsCategoryViewModel SelectedCategory { get; set; }` - _(no documentation)_
+- `public SettingsViewModel(SnapPreferences snapping, ILocalizer localizer, CultureInfo systemUiCulture, bool defaultShowRulers)` - _(no documentation)_
+- `public bool IsPageOpen { get; set; }` - _(no documentation)_
+- `public IReadOnlyList<LanguageInfo> Languages { get; }` - The languages the user can choose from, each with its name in its own language.
+- `public LanguageInfo SelectedLanguage { get; set; }` - _(no documentation)_
+- `public bool ShowRulers { get; set; }` - _(no documentation)_
+- `public bool ShowGrid { get; set; }` - _(no documentation)_
+- `public string GridSpacingText { get; set; }` - _(no documentation)_
+- `public bool SnapToGrid { get; set; }` - _(no documentation)_
+- `public bool SnapToObjects { get; set; }` - _(no documentation)_
+- `public bool SmartGuides { get; set; }` - _(no documentation)_
+- `public bool ShowGuides { get; set; }` - _(no documentation)_
+- `public string? GridSpacingError { get; }` - The message for an invalid grid spacing, or null when the text is valid.
+- `public bool HasGridSpacingError { get; }` - Whether PressToShape.App.ViewModels.Editor.SettingsViewModel.GridSpacingError has a message. The page shows the message only then.
+- `public bool CanApply { get; }` - Whether the values can be applied: no field has an error.
+- `public bool HasChanges { get; }` - Whether any value differs from the one that is in use.
+- `public void Apply()` - Writes the values that differ from the ones in use. An invalid spacing is skipped. The language is switched last, so the other values are already stored when the texts refresh.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Workspace.SnapPreferences`
+- Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
+- Injected into `PressToShape.App.Tests.SettingsViewModelTests.Fixture`
+- Injected into `PressToShape.App.ViewModels.Editor.CanvasSettingsPageViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.GeneralSettingsPageViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.SnappingSettingsPageViewModel`
+
+## SnappingSettingsPageViewModel (class)
+
+`internal sealed class SnappingSettingsPageViewModel : ViewModelBase`
+
+Source: `src/PressToShape.App/ViewModels/Editor/SnappingSettingsPageViewModel.cs:4-7`
+
+The page of the settings window for the Snapping category. It only gives its view the values of the PressToShape.App.ViewModels.Editor.SettingsViewModel.
+
+**Members**
+
+- `public SnappingSettingsPageViewModel(SettingsViewModel settings)` - The page of the settings window for the Snapping category. It only gives its view the values of the PressToShape.App.ViewModels.Editor.SettingsViewModel.
+- `public SettingsViewModel Settings { get; }` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.ViewModels.Editor.SettingsViewModel`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 
 ## StatusBarViewModel (class)

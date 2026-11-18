@@ -55,6 +55,20 @@ _(no documentation)_
 - `public MenuBarView()` - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
 
+## SettingsWindow (class)
+
+`public partial class SettingsWindow : Window`
+
+Source: `src/PressToShape.App/Views/Desktop/SettingsWindow.axaml.cs:7-24`
+
+_(no documentation)_
+
+**Members**
+
+- `public SettingsWindow()` - _(no documentation)_
+- `protected void OnDataContextChanged(EventArgs e)` - _(no documentation)_
+- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+
 ## StatusBarView (class)
 
 `public partial class StatusBarView : UserControl`

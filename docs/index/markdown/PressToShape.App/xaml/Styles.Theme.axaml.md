@@ -44,100 +44,106 @@ No `x:Class`.
 - line 63: `SmartGuideTextBrush` (SolidColorBrush), theme Dark
 - line 64: `SmartGuideLabelBackgroundBrush` (SolidColorBrush), theme Dark
 - line 67: `ScrimBrush` (SolidColorBrush), theme Dark
-- line 70: `RingWedgeBrush` (SolidColorBrush), theme Dark
-- line 71: `RingWedgeHoverBrush` (SolidColorBrush), theme Dark
-- line 72: `RingWedgeFocusBrush` (SolidColorBrush), theme Dark
-- line 73: `RingWedgeOutlineBrush` (SolidColorBrush), theme Dark
-- line 74: `RingCenterBrush` (SolidColorBrush), theme Dark
-- line 75: `RingIconBrush` (SolidColorBrush), theme Dark
-- line 76: `RingIconUnavailableBrush` (SolidColorBrush), theme Dark
-- line 81: `SystemAccentColor` (Color), theme Light
-- line 82: `SystemAccentColorLight1` (Color), theme Light
-- line 83: `SystemAccentColorLight2` (Color), theme Light
-- line 84: `SystemAccentColorLight3` (Color), theme Light
-- line 85: `SystemAccentColorDark1` (Color), theme Light
-- line 86: `SystemAccentColorDark2` (Color), theme Light
-- line 87: `SystemAccentColorDark3` (Color), theme Light
-- line 88: `AppAccentBrush` (SolidColorBrush), theme Light
-- line 89: `AppAccentForegroundBrush` (SolidColorBrush), theme Light
-- line 90: `SelectedItemBrush` (SolidColorBrush), theme Light
-- line 93: `WindowBackgroundBrush` (SolidColorBrush), theme Light
-- line 94: `PanelBackgroundBrush` (SolidColorBrush), theme Light
-- line 95: `ToolbarBackgroundBrush` (SolidColorBrush), theme Light
-- line 96: `ToolColumnBackgroundBrush` (SolidColorBrush), theme Light
-- line 97: `CanvasBackgroundBrush` (SolidColorBrush), theme Light
-- line 98: `ArtboardFillBrush` (SolidColorBrush), theme Light
-- line 99: `ArtboardBorderBrush` (SolidColorBrush), theme Light
-- line 100: `SelectionOutlineBrush` (SolidColorBrush), theme Light
-- line 101: `SelectionHandleFillBrush` (SolidColorBrush), theme Light
-- line 104: `BorderSubtleBrush` (SolidColorBrush), theme Light
-- line 105: `BorderStrongBrush` (SolidColorBrush), theme Light
-- line 108: `TextPrimaryBrush` (SolidColorBrush), theme Light
-- line 109: `TextSecondaryBrush` (SolidColorBrush), theme Light
-- line 110: `TextDisabledBrush` (SolidColorBrush), theme Light
-- line 113: `ControlBackgroundBrush` (SolidColorBrush), theme Light
-- line 114: `ControlHoverBrush` (SolidColorBrush), theme Light
-- line 115: `ControlPressedBrush` (SolidColorBrush), theme Light
-- line 118: `RulerBackgroundBrush` (SolidColorBrush), theme Light
-- line 119: `RulerTickBrush` (SolidColorBrush), theme Light
-- line 120: `RulerTextBrush` (SolidColorBrush), theme Light
-- line 123: `GridLineBrush` (SolidColorBrush), theme Light
-- line 124: `SnapGuideBrush` (SolidColorBrush), theme Light
-- line 127: `RulerGuideBrush` (SolidColorBrush), theme Light
-- line 128: `RulerGuideSelectedBrush` (SolidColorBrush), theme Light
-- line 129: `RulerGuideActiveBrush` (SolidColorBrush), theme Light
-- line 130: `SmartGuideBrush` (SolidColorBrush), theme Light
-- line 131: `SmartGuideTextBrush` (SolidColorBrush), theme Light
-- line 132: `SmartGuideLabelBackgroundBrush` (SolidColorBrush), theme Light
-- line 135: `ScrimBrush` (SolidColorBrush), theme Light
-- line 138: `RingWedgeBrush` (SolidColorBrush), theme Light
-- line 139: `RingWedgeHoverBrush` (SolidColorBrush), theme Light
-- line 140: `RingWedgeFocusBrush` (SolidColorBrush), theme Light
-- line 141: `RingWedgeOutlineBrush` (SolidColorBrush), theme Light
-- line 142: `RingCenterBrush` (SolidColorBrush), theme Light
-- line 143: `RingIconBrush` (SolidColorBrush), theme Light
-- line 144: `RingIconUnavailableBrush` (SolidColorBrush), theme Light
-- line 150: `ToolButtonSize` (x:Double)
-- line 151: `ToolbarButtonSize` (x:Double)
-- line 152: `ToolbarHeight` (x:Double)
-- line 153: `StatusBarHeight` (x:Double)
-- line 154: `RulerSize` (x:Double)
-- line 155: `FieldHeight` (x:Double)
-- line 156: `PanelSpacing` (x:Double)
-- line 157: `UiFontSize` (x:Double)
-- line 158: `SectionHeaderFontSize` (x:Double)
-- line 159: `ControlCornerRadius` (CornerRadius)
-- line 160: `PanelPadding` (Thickness)
-- line 163: `ToolIconSize` (x:Double)
-- line 164: `ToolButtonMargin` (Thickness)
-- line 165: `ToolColumnPadding` (Thickness)
-- line 166: `SwatchAreaWidth` (x:Double)
-- line 167: `SwatchAreaHeight` (x:Double)
-- line 168: `SwatchAreaMargin` (Thickness)
-- line 169: `SwatchSize` (x:Double)
-- line 170: `SwatchButtonSize` (x:Double)
-- line 171: `SwatchIconSize` (x:Double)
-- line 174: `ToolGroupMarkSize` (x:Double)
-- line 176: `ColorSwatchRingSize` (x:Double)
-- line 177: `ColorSwatchFillSize` (x:Double)
-- line 178: `ToolFlyoutItemHeight` (x:Double)
-- line 181: `PanelIconSize` (x:Double)
-- line 182: `PropertySwatchWidth` (x:Double)
-- line 183: `PropertySwatchHeight` (x:Double)
-- line 184: `SmallSwatchSize` (x:Double)
-- line 185: `SwatchButtonMinSize` (x:Double)
-- line 188: `LayerRowMinHeight` (x:Double)
-- line 189: `HistoryRowMinHeight` (x:Double)
-- line 190: `RowButtonSize` (x:Double)
-- line 191: `RowIconSize` (x:Double)
-- line 194: `RowIndentSize` (x:Double)
-- line 197: `SelectionHandleSize` (x:Double)
-- line 198: `TouchHandleGrabSize` (x:Double)
-- line 201: `EnteredGroupDimOpacity` (x:Double)
-- line 204: `FlyoutMaxHeight` (x:Double)
-- line 207: `RingOuterRadius` (x:Double)
-- line 208: `RingInnerRadius` (x:Double)
-- line 209: `RingIconSize` (x:Double)
-- line 211: `TabletPanelWidth` (x:Double)
-- line 214: `TouchTargetSize` (x:Double)
-- line 221: `TouchSizes` (ResourceDictionary)
+- line 70: `ErrorTextBrush` (SolidColorBrush), theme Dark
+- line 73: `RingWedgeBrush` (SolidColorBrush), theme Dark
+- line 74: `RingWedgeHoverBrush` (SolidColorBrush), theme Dark
+- line 75: `RingWedgeFocusBrush` (SolidColorBrush), theme Dark
+- line 76: `RingWedgeOutlineBrush` (SolidColorBrush), theme Dark
+- line 77: `RingCenterBrush` (SolidColorBrush), theme Dark
+- line 78: `RingIconBrush` (SolidColorBrush), theme Dark
+- line 79: `RingIconUnavailableBrush` (SolidColorBrush), theme Dark
+- line 84: `SystemAccentColor` (Color), theme Light
+- line 85: `SystemAccentColorLight1` (Color), theme Light
+- line 86: `SystemAccentColorLight2` (Color), theme Light
+- line 87: `SystemAccentColorLight3` (Color), theme Light
+- line 88: `SystemAccentColorDark1` (Color), theme Light
+- line 89: `SystemAccentColorDark2` (Color), theme Light
+- line 90: `SystemAccentColorDark3` (Color), theme Light
+- line 91: `AppAccentBrush` (SolidColorBrush), theme Light
+- line 92: `AppAccentForegroundBrush` (SolidColorBrush), theme Light
+- line 93: `SelectedItemBrush` (SolidColorBrush), theme Light
+- line 96: `WindowBackgroundBrush` (SolidColorBrush), theme Light
+- line 97: `PanelBackgroundBrush` (SolidColorBrush), theme Light
+- line 98: `ToolbarBackgroundBrush` (SolidColorBrush), theme Light
+- line 99: `ToolColumnBackgroundBrush` (SolidColorBrush), theme Light
+- line 100: `CanvasBackgroundBrush` (SolidColorBrush), theme Light
+- line 101: `ArtboardFillBrush` (SolidColorBrush), theme Light
+- line 102: `ArtboardBorderBrush` (SolidColorBrush), theme Light
+- line 103: `SelectionOutlineBrush` (SolidColorBrush), theme Light
+- line 104: `SelectionHandleFillBrush` (SolidColorBrush), theme Light
+- line 107: `BorderSubtleBrush` (SolidColorBrush), theme Light
+- line 108: `BorderStrongBrush` (SolidColorBrush), theme Light
+- line 111: `TextPrimaryBrush` (SolidColorBrush), theme Light
+- line 112: `TextSecondaryBrush` (SolidColorBrush), theme Light
+- line 113: `TextDisabledBrush` (SolidColorBrush), theme Light
+- line 116: `ControlBackgroundBrush` (SolidColorBrush), theme Light
+- line 117: `ControlHoverBrush` (SolidColorBrush), theme Light
+- line 118: `ControlPressedBrush` (SolidColorBrush), theme Light
+- line 121: `RulerBackgroundBrush` (SolidColorBrush), theme Light
+- line 122: `RulerTickBrush` (SolidColorBrush), theme Light
+- line 123: `RulerTextBrush` (SolidColorBrush), theme Light
+- line 126: `GridLineBrush` (SolidColorBrush), theme Light
+- line 127: `SnapGuideBrush` (SolidColorBrush), theme Light
+- line 130: `RulerGuideBrush` (SolidColorBrush), theme Light
+- line 131: `RulerGuideSelectedBrush` (SolidColorBrush), theme Light
+- line 132: `RulerGuideActiveBrush` (SolidColorBrush), theme Light
+- line 133: `SmartGuideBrush` (SolidColorBrush), theme Light
+- line 134: `SmartGuideTextBrush` (SolidColorBrush), theme Light
+- line 135: `SmartGuideLabelBackgroundBrush` (SolidColorBrush), theme Light
+- line 138: `ScrimBrush` (SolidColorBrush), theme Light
+- line 141: `ErrorTextBrush` (SolidColorBrush), theme Light
+- line 144: `RingWedgeBrush` (SolidColorBrush), theme Light
+- line 145: `RingWedgeHoverBrush` (SolidColorBrush), theme Light
+- line 146: `RingWedgeFocusBrush` (SolidColorBrush), theme Light
+- line 147: `RingWedgeOutlineBrush` (SolidColorBrush), theme Light
+- line 148: `RingCenterBrush` (SolidColorBrush), theme Light
+- line 149: `RingIconBrush` (SolidColorBrush), theme Light
+- line 150: `RingIconUnavailableBrush` (SolidColorBrush), theme Light
+- line 156: `ToolButtonSize` (x:Double)
+- line 157: `ToolbarButtonSize` (x:Double)
+- line 158: `ToolbarHeight` (x:Double)
+- line 159: `StatusBarHeight` (x:Double)
+- line 160: `RulerSize` (x:Double)
+- line 161: `FieldHeight` (x:Double)
+- line 162: `PanelSpacing` (x:Double)
+- line 163: `SettingsCategoryListWidth` (x:Double)
+- line 164: `SettingsFieldWidth` (x:Double)
+- line 165: `SettingsPagePadding` (Thickness)
+- line 166: `SettingsRowSpacing` (x:Double)
+- line 167: `UiFontSize` (x:Double)
+- line 168: `SectionHeaderFontSize` (x:Double)
+- line 169: `ControlCornerRadius` (CornerRadius)
+- line 170: `PanelPadding` (Thickness)
+- line 173: `ToolIconSize` (x:Double)
+- line 174: `ToolButtonMargin` (Thickness)
+- line 175: `ToolColumnPadding` (Thickness)
+- line 176: `SwatchAreaWidth` (x:Double)
+- line 177: `SwatchAreaHeight` (x:Double)
+- line 178: `SwatchAreaMargin` (Thickness)
+- line 179: `SwatchSize` (x:Double)
+- line 180: `SwatchButtonSize` (x:Double)
+- line 181: `SwatchIconSize` (x:Double)
+- line 184: `ToolGroupMarkSize` (x:Double)
+- line 186: `ColorSwatchRingSize` (x:Double)
+- line 187: `ColorSwatchFillSize` (x:Double)
+- line 188: `ToolFlyoutItemHeight` (x:Double)
+- line 191: `PanelIconSize` (x:Double)
+- line 192: `PropertySwatchWidth` (x:Double)
+- line 193: `PropertySwatchHeight` (x:Double)
+- line 194: `SmallSwatchSize` (x:Double)
+- line 195: `SwatchButtonMinSize` (x:Double)
+- line 198: `LayerRowMinHeight` (x:Double)
+- line 199: `HistoryRowMinHeight` (x:Double)
+- line 200: `RowButtonSize` (x:Double)
+- line 201: `RowIconSize` (x:Double)
+- line 204: `RowIndentSize` (x:Double)
+- line 207: `SelectionHandleSize` (x:Double)
+- line 208: `TouchHandleGrabSize` (x:Double)
+- line 211: `EnteredGroupDimOpacity` (x:Double)
+- line 214: `FlyoutMaxHeight` (x:Double)
+- line 217: `RingOuterRadius` (x:Double)
+- line 218: `RingInnerRadius` (x:Double)
+- line 219: `RingIconSize` (x:Double)
+- line 221: `TabletPanelWidth` (x:Double)
+- line 224: `TouchTargetSize` (x:Double)
+- line 231: `TouchSizes` (ResourceDictionary)

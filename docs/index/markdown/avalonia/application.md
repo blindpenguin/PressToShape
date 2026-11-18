@@ -22,13 +22,16 @@
 ## Explicit data templates
 
 - `vm:ToolbarButtonViewModel` at src/PressToShape.App/Views/Desktop/ToolbarView.axaml:13
+- `loc:LanguageInfo` at src/PressToShape.App/Views/Editor/GeneralSettingsPageView.axaml:20
 - `vm:HistoryItemViewModel` at src/PressToShape.App/Views/Editor/HistoryView.axaml:33
 - `vm:ObjectRowViewModel` at src/PressToShape.App/Views/Editor/LayersView.axaml:91
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:145
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:185
 - `coreShapes:Color` at src/PressToShape.App/Views/Editor/PropertiesView.axaml:236
+- `vm:SettingsCategoryViewModel` at src/PressToShape.App/Views/Editor/SettingsView.axaml:20
 - `vm:ToolItemViewModel` at src/PressToShape.App/Views/Editor/ToolboxView.axaml:15
 - `vm:MessageDialogButtonViewModel` at src/PressToShape.App/Views/MessageDialogView.axaml:22
+- `vm:SettingsCategoryViewModel` at src/PressToShape.App/Views/Tablet/TabletSettingsView.axaml:30
 - `vm:ToolGroupViewModel` at src/PressToShape.App/Views/Tablet/TabletToolColumnView.axaml:29
 - `editorVm:ToolItemViewModel` at src/PressToShape.App/Views/Tablet/TabletToolColumnView.axaml:56
 - `vm:PanelButtonViewModel` at src/PressToShape.App/Views/Tablet/TabletToolbarView.axaml:85

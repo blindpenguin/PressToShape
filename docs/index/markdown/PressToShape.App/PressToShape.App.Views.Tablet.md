@@ -28,6 +28,19 @@ The tabbed panel of the tablet layout, with an icon for each tab. All state is i
 - `public TabletPanelView()` - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
 
+## TabletSettingsView (class)
+
+`public partial class TabletSettingsView : UserControl`
+
+Source: `src/PressToShape.App/Views/Tablet/TabletSettingsView.axaml.cs:6-12`
+
+The settings for the tablet layout: the category list, then the page of a category.
+
+**Members**
+
+- `public TabletSettingsView()` - _(no documentation)_
+- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+
 ## TabletShellView (class)
 
 `public partial class TabletShellView : UserControl`

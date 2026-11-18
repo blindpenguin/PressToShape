@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class AppLayout`
 
-Source: `src/PressToShape.App/AppLayout.cs:19-75`
+Source: `src/PressToShape.App/AppLayout.cs:19-78`
 
 Chooses the layout, in this one place, by the kind of application: an application with a window (Linux, Windows) shows the desktop layout, an Android activity shows the tablet layout. The two layouts share the document, the tools and the file logic, and differ in the shell around them. The choice takes what it needs as arguments, so it can be tested without the real settings file.
 

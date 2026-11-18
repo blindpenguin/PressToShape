@@ -1825,7 +1825,7 @@ A guide line to draw while a point is snapped to an object. All numbers are docu
 
 `internal sealed class SnapPreferences`
 
-Source: `src/PressToShape.App/Workspace/SnapPreferences.cs:12-155`
+Source: `src/PressToShape.App/Workspace/SnapPreferences.cs:12-170`
 
 The grid, snapping and ruler switches and the grid spacing, kept in the settings file. They are user settings, not part of the document. The stored values are untrusted: a missing, damaged or invalid value gives the default for that value. A setter that gets an invalid spacing keeps the old one. Every real change is saved at once and raises PressToShape.App.Workspace.SnapPreferences.Changed.
 
@@ -1834,6 +1834,11 @@ The grid, snapping and ruler switches and the grid spacing, kept in the settings
 - `public double MinSpacing` - The smallest grid spacing, in document units.
 - `public double MaxSpacing` - The largest grid spacing, in document units.
 - `public double DefaultSpacing` - The grid spacing of a new installation, in document units.
+- `public bool DefaultShowGrid` - Whether the grid is shown on a new installation.
+- `public bool DefaultSnapToGrid` - Whether points snap to the grid on a new installation.
+- `public bool DefaultSnapToObjects` - Whether points snap to other objects on a new installation.
+- `public bool DefaultSmartGuides` - Whether the smart guides are on in a new installation.
+- `public bool DefaultShowGuides` - Whether the ruler guides are shown on a new installation.
 - `public SnapPreferences(ISettingsStore store, bool defaultShowRulers = true, bool persist = true)` - _(no documentation)_
 - `public SnapPreferences InMemory(bool defaultShowRulers = true)` - Preferences that are kept only in memory, with the defaults. For a state that has no settings file, such as most tests.
 - `public EventHandler? Changed` - Raised after a value changed.
@@ -1849,6 +1854,8 @@ The grid, snapping and ruler switches and the grid spacing, kept in the settings
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Settings.ISettingsStore`
+- Injected into `PressToShape.App.Tests.SettingsViewModelTests.Fixture`
+- Injected into `PressToShape.App.ViewModels.Editor.SettingsViewModel`
 - Injected into `PressToShape.App.Workspace.EditorState`
 
 ## SnapResult (record)
