@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal sealed class AppSettings`
 
-Source: `src/PressToShape.App/Settings/AppSettings.cs:8-37`
+Source: `src/PressToShape.App/Settings/AppSettings.cs:8-43`
 
 User settings stored in settings.json. Unknown entries are kept, so newer settings survive a save by an older version.
 
@@ -19,6 +19,8 @@ User settings stored in settings.json. Unknown entries are kept, so newer settin
 - `public JsonElement? SnapToObjects { get; set; }` - Whether moves and drawing snap to other objects (raw JSON value).
 - `public JsonElement? GridSpacing { get; set; }` - The grid spacing in document units (raw JSON value).
 - `public JsonElement? ShowRulers { get; set; }` - Whether the rulers are shown (raw JSON value). Missing means the default of the layout.
+- `public JsonElement? SmartGuides { get; set; }` - Whether the smart guides (distance labels, equal spacing, equal size, path points) are on (raw JSON value).
+- `public JsonElement? ShowGuides { get; set; }` - Whether the ruler guides are shown and snapped to (raw JSON value). Missing means on.
 - `public Dictionary<string, JsonElement>? ExtraData { get; set; }` - Entries this version does not know about.
 
 ## ISettingsStore (interface)

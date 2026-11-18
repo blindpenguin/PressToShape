@@ -35,7 +35,7 @@ The undo and redo history of a document, kept as snapshots. Documents are immuta
 
 `public enum HistoryStepType`
 
-Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-197`
+Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-206`
 
 What a step of the history did. The app turns each value into a translated name.
 
@@ -105,3 +105,6 @@ What a step of the history did. The app turns each value into a translated name.
 - `public BreakApart` - A compound path was split into one path for each sub-path.
 - `public ConvertToPath` - Rectangles and ellipses were converted to paths.
 - `public ReverseDirection` - The direction of paths was reversed.
+- `public CreateGuide` - A guide was dragged out of a ruler.
+- `public MoveGuide` - A guide was moved.
+- `public DeleteGuide` - A guide was deleted.

@@ -128,6 +128,7 @@ Lets view models close the application without referencing Avalonia types.
 - Implemented by `PressToShape.App.Tests.EditorShellViewModelRingTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.EditorStateSnapTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.LayersViewTests.NoShutdown`
+- Implemented by `PressToShape.App.Tests.MenuBarSmartTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.MenuBarSnapTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.MenuBarViewModelTests.FakeShutdown`
 - Implemented by `PressToShape.App.Tests.ObjectCommandsTests.FakeShutdown`

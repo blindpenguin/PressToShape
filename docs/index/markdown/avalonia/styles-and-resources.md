@@ -57,7 +57,7 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 
 ### src/PressToShape.App/Styles/Theme.axaml
 
-- 124 resources, 0 styles, variants Dark, Light
+- 136 resources, 0 styles, variants Dark, Light
 
 ### src/PressToShape.App/Views/Desktop/MenuBarView.axaml
 
@@ -152,19 +152,19 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - `SystemAccentColorDark3` (Color, Dark) at src/PressToShape.App/Styles/Theme.axaml:19
 - `RulerTickBrush` (SolidColorBrush, Dark) at src/PressToShape.App/Styles/Theme.axaml:51
 - `RulerTextBrush` (SolidColorBrush, Dark) at src/PressToShape.App/Styles/Theme.axaml:52
-- `SystemAccentColor` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:73
-- `SystemAccentColorLight1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:74
-- `SystemAccentColorLight2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:75
-- `SystemAccentColorLight3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:76
-- `SystemAccentColorDark1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:77
-- `SystemAccentColorDark2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:78
-- `SystemAccentColorDark3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:79
-- `RulerTickBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:111
-- `RulerTextBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:112
-- `PanelSpacing` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:140
-- `RowIndentSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:178
-- `TouchHandleGrabSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:182
-- `TouchSizes` (ResourceDictionary) at src/PressToShape.App/Styles/Theme.axaml:205
+- `SystemAccentColor` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:81
+- `SystemAccentColorLight1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:82
+- `SystemAccentColorLight2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:83
+- `SystemAccentColorLight3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:84
+- `SystemAccentColorDark1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:85
+- `SystemAccentColorDark2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:86
+- `SystemAccentColorDark3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:87
+- `RulerTickBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:119
+- `RulerTextBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:120
+- `PanelSpacing` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:156
+- `RowIndentSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:194
+- `TouchHandleGrabSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:198
+- `TouchSizes` (ResourceDictionary) at src/PressToShape.App/Styles/Theme.axaml:221
 - `GestureTextConverter` (views:GestureTextConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:12
 - `CheckableToggleTypeConverter` (views:CheckableToggleTypeConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:13
 - `IndentConverter` (views:ObjectIndentConverter) at src/PressToShape.App/Views/Editor/LayersView.axaml:14

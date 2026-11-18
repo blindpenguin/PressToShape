@@ -19,7 +19,7 @@ A titled section whose whole header row toggles the content. Used by the inspect
 
 `internal sealed class DocumentCanvasControl : Control`
 
-Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:17-651`
+Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:17-844`
 
 Draws the shapes of a document. It only draws: PressToShape.App.Workspace.CanvasScene decides what is drawn and where. Shape colors are document data, so this control uses no theme brushes. It does not handle pointer input.
 
@@ -44,6 +44,14 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `public StyledProperty<IBrush?> GridBrushProperty` - The brush of the grid lines. It comes from the theme.
 - `public StyledProperty<IReadOnlyList<ScreenSnapGuide>?> SnapGuidesProperty` - The guide lines of the object a drag is snapped to, in screen space. They are drawn over everything else.
 - `public StyledProperty<IBrush?> GuideBrushProperty` - The brush of the snap guide lines. It comes from the theme.
+- `public StyledProperty<IReadOnlyList<ScreenRulerGuide>?> RulerGuidesProperty` - The ruler guides in screen space. They are drawn as lines across the whole control, over the shapes.
+- `public StyledProperty<IReadOnlyList<ScreenSmartMarker>?> SmartMarkersProperty` - The markers and labels of the smart guides in screen space. They are drawn last.
+- `public StyledProperty<IBrush?> RulerGuideBrushProperty` - The brush of a ruler guide. It comes from the theme.
+- `public StyledProperty<IBrush?> RulerGuideSelectedBrushProperty` - The brush of the selected ruler guide. It comes from the theme.
+- `public StyledProperty<IBrush?> RulerGuideActiveBrushProperty` - The brush of a ruler guide that the drag is snapped to. It comes from the theme.
+- `public StyledProperty<IBrush?> SmartGuideBrushProperty` - The brush of the lines of the smart guide markers. It comes from the theme.
+- `public StyledProperty<IBrush?> SmartGuideTextBrushProperty` - The brush of the numbers of the smart guide markers. It comes from the theme.
+- `public StyledProperty<IBrush?> SmartGuideLabelBackgroundBrushProperty` - The background of the numbers of the smart guide markers. It comes from the theme.
 - `public DocumentCanvasControl()` - _(no documentation)_
 - `public Document? Document { get; set; }` - _(no documentation)_
 - `public double ZoomPercent { get; set; }` - _(no documentation)_
@@ -63,6 +71,14 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `public double GridSpacing { get; set; }` - _(no documentation)_
 - `public IBrush? GridBrush { get; set; }` - _(no documentation)_
 - `public IReadOnlyList<ScreenSnapGuide>? SnapGuides { get; set; }` - _(no documentation)_
+- `public IReadOnlyList<ScreenRulerGuide>? RulerGuides { get; set; }` - _(no documentation)_
+- `public IReadOnlyList<ScreenSmartMarker>? SmartMarkers { get; set; }` - _(no documentation)_
+- `public IBrush? RulerGuideBrush { get; set; }` - _(no documentation)_
+- `public IBrush? RulerGuideSelectedBrush { get; set; }` - _(no documentation)_
+- `public IBrush? RulerGuideActiveBrush { get; set; }` - _(no documentation)_
+- `public IBrush? SmartGuideBrush { get; set; }` - _(no documentation)_
+- `public IBrush? SmartGuideTextBrush { get; set; }` - _(no documentation)_
+- `public IBrush? SmartGuideLabelBackgroundBrush { get; set; }` - _(no documentation)_
 - `public IBrush? GuideBrush { get; set; }` - _(no documentation)_
 - `public void Render(DrawingContext context)` - _(no documentation)_
 

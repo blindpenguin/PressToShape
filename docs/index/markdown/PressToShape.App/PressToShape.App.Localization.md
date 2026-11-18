@@ -94,6 +94,7 @@ Translates user-visible texts. The English source text is the message id.
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.ToolbarButtonViewModel`
 - Injected into `PressToShape.App.ViewModels.Desktop.ToolbarViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.HistoryItemViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.HistoryViewModel`

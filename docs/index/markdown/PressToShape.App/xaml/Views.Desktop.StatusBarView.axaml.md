@@ -20,17 +20,19 @@ Class: `PressToShape.App.Views.Desktop.StatusBarView`.
 - line 39: ToggleButton.IsChecked = Binding `ShowGrid` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ShowGrid` (verified)
 - line 44: ToggleButton.IsChecked = Binding `SnapToGrid` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.SnapToGrid` (verified)
 - line 49: ToggleButton.IsChecked = Binding `SnapToObjects` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.SnapToObjects` (verified)
-- line 55: GridSpacingBox.IsEnabled = Binding `GridSpacingField.IsEnabled` -> `P:PressToShape.App.ViewModels.Editor.NumberFieldViewModel.IsEnabled` (verified)
-- line 55: GridSpacingBox.Tag = Binding `GridSpacingField` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.GridSpacingField` (verified)
-- line 55: GridSpacingBox.Text = Binding `GridSpacingField.Text` -> `P:PressToShape.App.ViewModels.Editor.NumberFieldViewModel.Text` (verified)
-- line 61: Button.Command = Binding `ActivateHandToolCommand` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ActivateHandToolCommand` (verified), command
-- line 65: Button.Command = Binding `ZoomOutCommand` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ZoomOutCommand` (verified), command
-- line 70: DropDownButton.Content = Binding `ZoomText` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ZoomText` (verified)
-- line 78: MenuFlyout.ItemsSource = Binding `ZoomPresets` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ZoomPresets` (verified)
-- line 83: Setter.Header = Binding `Text` -> `P:PressToShape.App.ViewModels.Editor.ZoomPresetViewModel.Text` (verified)
-- line 84: Setter.Command = Binding `SelectCommand` -> `P:PressToShape.App.ViewModels.Editor.ZoomPresetViewModel.SelectCommand` (verified), command
-- line 91: Button.Command = Binding `ZoomInCommand` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ZoomInCommand` (verified), command
-- line 95: Button.Command = Binding `FitToWindowCommand` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.FitToWindowCommand` (verified), command
+- line 54: ToggleButton.IsChecked = Binding `SmartGuides` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.SmartGuides` (verified)
+- line 59: ToggleButton.IsChecked = Binding `ShowGuides` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ShowGuides` (verified)
+- line 65: GridSpacingBox.IsEnabled = Binding `GridSpacingField.IsEnabled` -> `P:PressToShape.App.ViewModels.Editor.NumberFieldViewModel.IsEnabled` (verified)
+- line 65: GridSpacingBox.Tag = Binding `GridSpacingField` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.GridSpacingField` (verified)
+- line 65: GridSpacingBox.Text = Binding `GridSpacingField.Text` -> `P:PressToShape.App.ViewModels.Editor.NumberFieldViewModel.Text` (verified)
+- line 71: Button.Command = Binding `ActivateHandToolCommand` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ActivateHandToolCommand` (verified), command
+- line 75: Button.Command = Binding `ZoomOutCommand` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ZoomOutCommand` (verified), command
+- line 80: DropDownButton.Content = Binding `ZoomText` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ZoomText` (verified)
+- line 88: MenuFlyout.ItemsSource = Binding `ZoomPresets` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ZoomPresets` (verified)
+- line 93: Setter.Header = Binding `Text` -> `P:PressToShape.App.ViewModels.Editor.ZoomPresetViewModel.Text` (verified)
+- line 94: Setter.Command = Binding `SelectCommand` -> `P:PressToShape.App.ViewModels.Editor.ZoomPresetViewModel.SelectCommand` (verified), command
+- line 101: Button.Command = Binding `ZoomInCommand` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.ZoomInCommand` (verified), command
+- line 105: Button.Command = Binding `FitToWindowCommand` -> `P:PressToShape.App.ViewModels.Editor.StatusBarViewModel.FitToWindowCommand` (verified), command
 
 ## Resource references
 
@@ -38,7 +40,7 @@ Class: `PressToShape.App.Views.Desktop.StatusBarView`.
 - line 25: Border.Background = DynamicResource `ToolbarBackgroundBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ToolbarBackgroundBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ToolbarBackgroundBrush@Light` (verified)
 - line 26: Border.BorderBrush = DynamicResource `BorderSubtleBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderSubtleBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/BorderSubtleBrush@Light` (verified)
 - line 28: Border.Height = StaticResource `StatusBarHeight` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/StatusBarHeight` (verified)
-- line 81: ControlTheme.BasedOn = StaticResource `{x:Type MenuItem}` -> unresolved: not defined in this solution (may come from the Avalonia theme)
+- line 91: ControlTheme.BasedOn = StaticResource `{x:Type MenuItem}` -> unresolved: not defined in this solution (may come from the Avalonia theme)
 
 ## Styles
 

@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal partial sealed class CanvasAreaViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.LongPress.cs:8-51`
+Source: `src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.Guides.cs:11-121`
 
 Geometry of the canvas area: where the artboard is drawn and where the ruler zero points are. The view only reports the viewport size, everything else is derived here.
 
@@ -15,15 +15,22 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public bool ShowGrid { get; }` - Whether the grid is drawn.
 - `public double GridSpacing { get; }` - The distance between grid lines in document units.
 - `public bool IsWatchingLongPress { get; }` - Whether a press may still become a long press, so the view keeps calling PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.Tick.
+- `public bool SmartGuides { get; }` - Whether the smart guides (labels, equal spacing, equal size, path points) are on.
 - `public bool ShowRulers { get; }` - Whether the rulers are shown.
+- `public bool ShowGuides { get; }` - Whether the ruler guides are drawn, can be moved and are snapped to.
 - `public IReadOnlyList<ScreenSnapGuide> SnapGuidesOnScreen { get; }` - The guide lines of the current drag in screen pixels. Empty without a snap to an object.
+- `public IReadOnlyList<ScreenRulerGuide> ScreenGuides { get; }` - The ruler guides in screen pixels. Empty while the guides are hidden.
 - `public void Tick()` - Time passed. When a finger or a pen has stayed down long enough without moving, the action the press started is undone and the ring menu opens at the press. The release that follows is no tap.
-- `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null)` - _(no documentation)_
+- `public IReadOnlyList<ScreenSmartMarker> ScreenMarkers { get; }` - The markers and labels of the smart guides for the current drag, in screen pixels.
+- `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null, ILocalizer? localizer = null)` - _(no documentation)_
 - `public double ViewportWidth { get; set; }` - _(no documentation)_
+- `public void BeginGuideDrag(GuideOrientation orientation)` - The user pressed a ruler and starts a guide: a horizontal ruler makes a horizontal guide, a vertical ruler a vertical one. The guide follows the pointer until PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.GuidePointerReleased. Positions of the next two calls are in screen pixels relative to the canvas area.
 - `public double ViewportHeight { get; set; }` - _(no documentation)_
+- `public void GuidePointerMoved(double screenX, double screenY)` - The pointer moved during a drag from a ruler. Does nothing without one.
 - `public bool IsAltHeld { get; set; }` - _(no documentation)_
 - `public RingMenuViewModel? Ring { get; }` - The ring context menu, or null when the canvas was made without one.
 - `public Document Document { get; }` - The document the canvas draws.
+- `public void GuidePointerReleased(double screenX, double screenY, bool canceled = false)` - The button went up after a drag from a ruler. The guide stays when the pointer is over the canvas, otherwise (on a ruler or outside) it is not made. With canceled (Escape, a lost pointer) nothing is made.
 - `public ScreenShape? Draft { get; }` - The shape that is being drawn, in screen space, or null.
 - `public SelectionOverlay Overlay { get; }` - Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.
 - `public Guid? EnteredGroupId { get; }` - The group that was entered, or null. The canvas dims everything outside it.
@@ -69,6 +76,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 
 **Relationships**
 
+- Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.RingMenuViewModel`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
@@ -733,7 +741,7 @@ One wedge of the ring menu. Slots are made again for every level that is shown, 
 
 `internal partial sealed class StatusBarViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/StatusBarViewModel.cs:12-129`
+Source: `src/PressToShape.App/ViewModels/Editor/StatusBarViewModel.cs:12-145`
 
 Status bar of both layouts: selection summary and the busy text on the left, zoom controls on the right.
 
@@ -746,6 +754,8 @@ Status bar of both layouts: selection summary and the busy text on the left, zoo
 - `public bool ShowGrid { get; set; }` - Whether the grid is shown. Setting it changes the user setting, so the menu and the other status bar follow.
 - `public bool SnapToGrid { get; set; }` - Whether points snap to the grid lines.
 - `public bool SnapToObjects { get; set; }` - Whether points snap to the edges, centers and nodes of other objects.
+- `public bool SmartGuides { get; set; }` - Whether the smart guides (distance labels, equal spacing, equal size, path points) are on.
+- `public bool ShowGuides { get; set; }` - Whether the ruler guides are shown and snapped to.
 - `public NumberFieldViewModel GridSpacingField { get; }` - The grid spacing box. A value outside PressToShape.App.Workspace.SnapPreferences.MinSpacing to PressToShape.App.Workspace.SnapPreferences.MaxSpacing or text that is no number is refused and the old value comes back.
 - `public string SelectionSummary { get; }` - The translated selection text: "Nothing selected", "1 selected" or "N selected".
 - `public string PathLengthText { get; }` - Path length of the selection, for example "Path length: 2,480.6 px". Empty until selections exist.

@@ -80,6 +80,31 @@ _(no documentation)_
 - `public void Layers_GroupsNested65Levels_AreRejected()` - _(no documentation)_
 - `public void Layers_GroupsNested64Levels_AreAccepted()` - _(no documentation)_
 
+## DocumentGuideTests (class)
+
+`public sealed class DocumentGuideTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/DocumentGuideTests.cs:10-153`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Guides_NewDocument_AreEmpty()` - _(no documentation)_
+- `public void AddGuide_AppendsInOrder()` - _(no documentation)_
+- `public void AddGuide_SameIdTwice_Throws()` - _(no documentation)_
+- `public void AddGuide_Null_Throws()` - _(no documentation)_
+- `public void MoveGuide_ChangesOnlyThatGuide()` - _(no documentation)_
+- `public void MoveGuide_UnknownIdOrSamePosition_ReturnsTheSameDocument()` - _(no documentation)_
+- `public void MoveGuide_NonFinitePosition_Throws(double position)` - _(no documentation)_
+- `public void RemoveGuide_RemovesIt_AndUnknownIdChangesNothing()` - _(no documentation)_
+- `public void FindGuide_UnknownId_ReturnsNull()` - _(no documentation)_
+- `public void Guide_NonFinitePositionOrEmptyId_Throws()` - _(no documentation)_
+- `public void Guides_Init_RejectsDuplicateIdsAndNulls()` - _(no documentation)_
+- `public void Guides_DefaultArray_MeansNone()` - _(no documentation)_
+- `public void Guides_SurviveOtherEdits_AndLeaveLayersAlone()` - _(no documentation)_
+- `public void Guides_AreNotShapes_TheyAreNotHitOrListed()` - _(no documentation)_
+
 ## DocumentHitTestTests (class)
 
 `public class DocumentHitTestTests`

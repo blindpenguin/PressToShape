@@ -6,18 +6,20 @@ Project: PressToShape.App
 
 `public partial class CanvasAreaView : UserControl`
 
-Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:12-404`
+Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:13-473`
 
 _(no documentation)_
 
 **Members**
 
+- `internal RulerControl HorizontalRuler` _(generated)_ - _(no documentation)_
+- `internal RulerControl VerticalRuler` _(generated)_ - _(no documentation)_
 - `internal Panel Viewport` _(generated)_ - _(no documentation)_
 - `internal RingMenuControl RingMenu` _(generated)_ - _(no documentation)_
 - `internal ScrollBar VerticalBar` _(generated)_ - _(no documentation)_
 - `internal ScrollBar HorizontalBar` _(generated)_ - _(no documentation)_
-- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
 - `public CanvasAreaView()` - _(no documentation)_
+- `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
 - `protected void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)` - _(no documentation)_
 - `protected void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)` - _(no documentation)_
 - `protected void OnDataContextChanged(EventArgs e)` - _(no documentation)_

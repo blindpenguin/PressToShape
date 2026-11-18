@@ -34,6 +34,12 @@ An axis-aligned rectangle in document units. Origin is the artboard's top-left c
 - `public double X { get; init; }` - Left edge.
 - `public double Y { get; init; }` - Top edge.
 
+**Relationships**
+
+- Injected into `PressToShape.App.Workspace.PathPointTargets.NearSegment`
+- Injected into `PressToShape.App.Workspace.SmartBox`
+- Injected into `PressToShape.App.Workspace.SmartSize`
+
 ## Cubic (record)
 
 `public readonly record Cubic : IEquatable<Cubic>`
@@ -49,6 +55,10 @@ A cubic bezier segment in document units: from P0 to P3, shaped by two handle po
 - `public (double X, double Y) P1 { get; init; }` - Handle point of the start.
 - `public (double X, double Y) P2 { get; init; }` - Handle point of the end.
 - `public (double X, double Y) P3 { get; init; }` - End point.
+
+**Relationships**
+
+- Injected into `PressToShape.App.Workspace.PathPointTargets.NearSegment`
 
 ## FlatPoint (record)
 

@@ -6,7 +6,7 @@ Project: PressToShape.Core
 
 `internal sealed class ArtboardDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:23-32`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:39-48`
 
 _(no documentation)_
 
@@ -19,7 +19,7 @@ _(no documentation)_
 
 `internal sealed class FileDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:7-21`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:7-26`
 
 _(no documentation)_
 
@@ -30,12 +30,26 @@ _(no documentation)_
 - `public ArtboardDto? Artboard { get; set; }` - _(no documentation)_
 - `public List<LayerDto?>? Layers { get; set; }` - _(no documentation)_
 - `public List<string?>? Palette { get; set; }` - _(no documentation)_
+- `public List<GuideDto?>? Guides { get; set; }` - _(no documentation)_
+
+## GuideDto (class)
+
+`internal sealed class GuideDto`
+
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:28-37`
+
+_(no documentation)_
+
+**Members**
+
+- `public string? Orientation { get; set; }` - _(no documentation)_
+- `public double? Position { get; set; }` - _(no documentation)_
 
 ## LayerDto (class)
 
 `internal sealed class LayerDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:34-45`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:50-61`
 
 _(no documentation)_
 
@@ -51,7 +65,7 @@ _(no documentation)_
 
 `internal sealed class NodeDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:146-176`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:162-192`
 
 _(no documentation)_
 
@@ -123,7 +137,7 @@ The outcome of reading a project file: either a document or an error.
 
 `internal sealed class ShapeDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:47-131`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:63-147`
 
 _(no documentation)_
 
@@ -154,7 +168,7 @@ _(no documentation)_
 
 `internal sealed class SubPathDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:134-143`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:150-159`
 
 _(no documentation)_
 

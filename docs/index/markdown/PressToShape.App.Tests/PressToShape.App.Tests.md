@@ -70,6 +70,25 @@ _(no documentation)_
 - `public void ConsumeIfSamePress_AfterTheWindow_IsFalse()` - _(no documentation)_
 - `public void NoteClosed_Again_StartsANewWindow()` - _(no documentation)_
 
+## CanvasAreaViewGuideTests (class)
+
+`public sealed class CanvasAreaViewGuideTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewGuideTests.cs:17-176`
+
+_(no documentation)_
+
+**Members**
+
+- `public void DragFromTheHorizontalRuler_IntoTheCanvas_MakesAHorizontalGuide()` - _(no documentation)_
+- `public void DragFromTheVerticalRuler_MakesAVerticalGuide()` - _(no documentation)_
+- `public void ReleaseOverTheRuler_MakesNoGuide()` - _(no documentation)_
+- `public void TheGuideReachesTheControl_AndStaysAfterThePointerLeaves()` - _(no documentation)_
+- `public void Escape_DuringTheDrag_CancelsIt()` - _(no documentation)_
+- `public void ARightClickOnTheRuler_DoesNothing()` - _(no documentation)_
+- `public void WithTheRulersOff_ThereIsNothingToDragFrom()` - _(no documentation)_
+- `public void ADragOnTheCanvas_MovesAnExistingGuide_AndTheDeleteKeyRemovesTheSelectedOne()` - _(no documentation)_
+
 ## CanvasAreaViewModelDoubleTapTests (class)
 
 `public class CanvasAreaViewModelDoubleTapTests`
@@ -106,6 +125,34 @@ _(no documentation)_
 - `public void SnapGuidesOnScreen_FollowTheZoom(double zoom)` - _(no documentation)_
 - `public void SnapGuidesOnScreen_FollowThePan()` - _(no documentation)_
 - `public void SnapGuidesOnScreen_ChangeRaisesTheProperty_AndClearingEmptiesIt()` - _(no documentation)_
+
+## CanvasAreaViewModelGuideTests (class)
+
+`public sealed class CanvasAreaViewModelGuideTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelGuideTests.cs:12-280`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Defaults_SmartGuidesOffShowGuidesOn_NothingDrawn()` - _(no documentation)_
+- `public void ScreenGuides_ConvertWithZoomAndOrigin_AndCarrySelectedAndActive(double zoom)` - _(no documentation)_
+- `public void ScreenGuides_Hidden_WhenShowGuidesIsOff()` - _(no documentation)_
+- `public void ScreenGuides_AndMarkers_RaiseWhenTheirSourcesChange()` - _(no documentation)_
+- `public void SmartGuidesSetting_IsForwarded()` - _(no documentation)_
+- `public void ScreenMarkers_ConvertLinesAndPoints()` - _(no documentation)_
+- `public void ScreenMarkers_TextUsesTheNumberFormatOfTheLanguage(string language, double value, string expected)` - _(no documentation)_
+- `public void RulerDrag_FromBeginToRelease_MakesAGuide()` - _(no documentation)_
+- `public void RulerDrag_VerticalUsesTheX()` - _(no documentation)_
+- `public void RulerDrag_ReleasedOnARulerOrOutside_MakesNoGuide(double x, double y)` - _(no documentation)_
+- `public void RulerDrag_Canceled_MakesNoGuide()` - _(no documentation)_
+- `public void GuidePointerMethods_WithoutADrag_DoNothing()` - _(no documentation)_
+- `public void Escape_DuringAGuideDrag_RestoresTheGuide()` - _(no documentation)_
+- `public void MovingAGuideWithThePointer_AndDroppingItOnTheRuler_DeletesIt()` - _(no documentation)_
+- `public void Cursor_OverAGuide_ShowsAResizeCursorForItsDirection_AndWhileMovingIt()` - _(no documentation)_
+- `public void Cursor_HandToolOrHiddenGuides_ShowNoGuideCursor()` - _(no documentation)_
+- `public void DeleteSelection_DeletesASelectedGuide()` - _(no documentation)_
 
 ## CanvasAreaViewModelLongPressTests (class)
 
@@ -437,6 +484,59 @@ _(no documentation)_
 - `public void DeleteSelection_Group_RemovesTheWholeGroupAsOneStep()` - _(no documentation)_
 - `public void Escape_InAnEnteredGroup_LeavesIt()` - _(no documentation)_
 
+## CanvasInteractionGuideSnapTests (class)
+
+`public sealed class CanvasInteractionGuideSnapTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionGuideSnapTests.cs:11-236`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Move_SnapsAnEdgeToAGuide_AndTheGuideIsActiveWhileDragging()` - _(no documentation)_
+- `public void Move_SnapsToAHorizontalGuide()` - _(no documentation)_
+- `public void AGuideWinsATieAgainstAnObjectEdge()` - _(no documentation)_
+- `public void ANearerObjectEdge_WinsOverAGuide()` - _(no documentation)_
+- `public void NoSnap_WithSnapToObjectsOff_ShowGuidesOff_OrCtrl()` - _(no documentation)_
+- `public void Resize_SnapsTheMovingEdgeToAGuide()` - _(no documentation)_
+- `public void Draw_SnapsTheCornersToGuides()` - _(no documentation)_
+- `public void Pen_PointsSnapToGuides()` - _(no documentation)_
+- `public void Nodes_SnapToGuides()` - _(no documentation)_
+- `public void ADraggedGuide_DoesNotSnap_ToOtherGuides()` - _(no documentation)_
+- `public void Abort_ClearsTheActiveGuides()` - _(no documentation)_
+- `public void DeleteSelectedGuide_IsOneStep_AndUndoBringsItBack()` - _(no documentation)_
+- `public void DeleteSelectedGuide_WithoutASelection_DoesNothing()` - _(no documentation)_
+- `public void DeleteSelection_DeletesASelectedGuide_ButAShapeSelectionKeepsPriority()` - _(no documentation)_
+
+## CanvasInteractionGuideTests (class)
+
+`public sealed class CanvasInteractionGuideTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionGuideTests.cs:11-294`
+
+_(no documentation)_
+
+**Members**
+
+- `public void BeginGuideFromRuler_MovesAndEnds_MakeAGuide()` - _(no documentation)_
+- `public void BeginGuideFromRuler_Vertical_UsesTheX()` - _(no documentation)_
+- `public void WhileMaking_TheGuideFollowsThePointerInThePreview()` - _(no documentation)_
+- `public void DroppedOutsideTheCanvas_MakesNoGuideAndNoStep()` - _(no documentation)_
+- `public void BeginGuideFromRuler_SwitchesShowGuidesOn()` - _(no documentation)_
+- `public void PressOnAGuide_Moves_AndKeepsTheGrabOffset()` - _(no documentation)_
+- `public void PressOnAGuide_SelectsIt_AndAClickMakesNoStep()` - _(no documentation)_
+- `public void HitDistance_IsFourForMouseAndTwelveForTouch(bool touch, double distance, bool hits)` - _(no documentation)_
+- `public void HitDistance_ScalesWithTheZoom()` - _(no documentation)_
+- `public void MovedAndDroppedOutside_DeletesTheGuide_AsOneStep()` - _(no documentation)_
+- `public void Abort_RestoresTheGuide_AndRecordsNothing()` - _(no documentation)_
+- `public void UndoAndRedo_FollowTheGuideSteps()` - _(no documentation)_
+- `public void AGuideWinsOverAShapeOnlyWithinThePressDistance()` - _(no documentation)_
+- `public void ShowGuidesOff_GuidesAreIgnored()` - _(no documentation)_
+- `public void AnyToolMovesAGuide_ButThePenDrawingAndAColorPickDoNot()` - _(no documentation)_
+- `public void PenToolWithoutAPath_CanMoveAGuide()` - _(no documentation)_
+- `public void ThePositionIsNotSnapped()` - _(no documentation)_
+
 ## CanvasInteractionNodeDragTests (class)
 
 `public class CanvasInteractionNodeDragTests`
@@ -630,6 +730,114 @@ _(no documentation)_
 - `public void Press_WithTwoShapesSelected_StartsNoRadiusDrag()` - _(no documentation)_
 - `public void DragARadiusHandle_OnARotatedRectangle_UsesTheRotatedFrame()` - _(no documentation)_
 - `public void DragARadiusHandle_ZoomedIn_FollowsTheScreenInset()` - _(no documentation)_
+
+## CanvasInteractionSmartLabelTests (class)
+
+`public sealed class CanvasInteractionSmartLabelTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSmartLabelTests.cs:10-174`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Move_WithSmartGuidesOn_ShowsTheDistanceToTheNeighbours()` - _(no documentation)_
+- `public void Move_WithSmartGuidesOff_ShowsNoLabels()` - _(no documentation)_
+- `public void Move_WithCtrl_ShowsNoLabels_AndCtrlReleasedShowsThemAgain()` - _(no documentation)_
+- `public void Labels_DisappearOnReleaseCancelAndAbort()` - _(no documentation)_
+- `public void Labels_UseThePositionAfterTheSnap()` - _(no documentation)_
+- `public void Labels_WorkWithBothSnapsOff()` - _(no documentation)_
+- `public void Labels_ARotatedShapeIsMeasuredFromTheBoundsOfItsOutline()` - _(no documentation)_
+- `public void Move_IsStillOneUndoStep()` - _(no documentation)_
+- `public void TheDraggedShapesAreNoNeighbours()` - _(no documentation)_
+- `public void SettingChangedAfterThePress_AppliesFromTheNextDrag()` - _(no documentation)_
+
+## CanvasInteractionSmartNodeTests (class)
+
+`public sealed class CanvasInteractionSmartNodeTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSmartNodeTests.cs:11-180`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Node_SnapsToTheMiddleOfASegmentOfAnotherPath()` - _(no documentation)_
+- `public void Node_SnapsToTheCrossingOfTwoOtherPaths()` - _(no documentation)_
+- `public void Node_TheEditedPathsOwnSegmentsAreNoTargets()` - _(no documentation)_
+- `public void SeveralNodes_KeepTheirOffsets()` - _(no documentation)_
+- `public void Handle_EndSnapsToAPathPoint()` - _(no documentation)_
+- `public void Marker_ShowsWhileDraggingAndClearsOnReleaseAndAbort()` - _(no documentation)_
+- `public void Off_Ctrl_AndBending_DoNotSnap()` - _(no documentation)_
+- `public void Drag_IsOneUndoStep()` - _(no documentation)_
+
+## CanvasInteractionSmartPenTests (class)
+
+`public sealed class CanvasInteractionSmartPenTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSmartPenTests.cs:10-155`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Point_SnapsToTheMiddleOfASegment()` - _(no documentation)_
+- `public void Point_SnapsToTheCrossingOfTwoSegments()` - _(no documentation)_
+- `public void Hover_ShowsAPathPointMarker_AndFinishClearsIt()` - _(no documentation)_
+- `public void Hover_NothingNear_ShowsNoMarker()` - _(no documentation)_
+- `public void Point_SmartGuidesOffOrCtrl_DoesNotSnap()` - _(no documentation)_
+- `public void ANodeAtTheSameDistance_WinsOverTheSegmentMiddle()` - _(no documentation)_
+- `public void ThePointTargetIsRebuiltAfterThePointerMovesFar()` - _(no documentation)_
+- `public void FinishingAndClosing_StillWin()` - _(no documentation)_
+- `public void ContinuedPath_IsNoTargetOfItself()` - _(no documentation)_
+
+## CanvasInteractionSmartSizeTests (class)
+
+`public sealed class CanvasInteractionSmartSizeTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSmartSizeTests.cs:10-216`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Resize_CornerSnapsWidthAndHeightToAnotherObject()` - _(no documentation)_
+- `public void Resize_ShowsSizeMarkersWhileDragging_AndClearsThemAfter()` - _(no documentation)_
+- `public void Resize_WithKeepProportions_OnlyTheNearerAxisSnaps_AndTheOtherFollows()` - _(no documentation)_
+- `public void Resize_FromCenter_SnapsWithHalfTheOffset_AndKeepsTheCenter()` - _(no documentation)_
+- `public void Resize_OutsideTolerance_DoesNotSnap()` - _(no documentation)_
+- `public void Resize_OffCtrlOrARotatedFrame_DoesNotSnap()` - _(no documentation)_
+- `public void Resize_CancelRestoresTheShape_AndOneUndoStepOtherwise()` - _(no documentation)_
+- `public void Draw_WidthAndHeightSnapToAnotherObject()` - _(no documentation)_
+- `public void Draw_WithShift_TheSquareSnapsItsLargerSide()` - _(no documentation)_
+- `public void Draw_WithAlt_GrowsFromThePressPointAndSnaps()` - _(no documentation)_
+- `public void Draw_ShowsMarkersAndLabelsWhileDragging_AndClearsThemOnCancel()` - _(no documentation)_
+- `public void Draw_Labels_ShowTheDistanceToNeighbours()` - _(no documentation)_
+- `public void Draw_WithSmartGuidesOffOrCtrl_DoesNotSnap()` - _(no documentation)_
+- `public void Draw_Ellipse_Works()` - _(no documentation)_
+
+## CanvasInteractionSmartSpacingTests (class)
+
+`public sealed class CanvasInteractionSmartSpacingTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSmartSpacingTests.cs:11-205`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Move_SnapsToAnExistingGap_AndShowsTheEqualGaps()` - _(no documentation)_
+- `public void Move_SnapsToTheMiddleBetweenTwoNeighbours()` - _(no documentation)_
+- `public void Move_ShowsTheMarkersWhileDraggingAndClearsThemAfter()` - _(no documentation)_
+- `public void Move_OutsideTheTolerance_DoesNotSnap()` - _(no documentation)_
+- `public void Move_WithSmartGuidesOffOrCtrl_DoesNotSnap()` - _(no documentation)_
+- `public void Move_AnEdgeSnapThatIsNearer_WinsOverEqualSpacing()` - _(no documentation)_
+- `public void Move_EqualSpacingThatIsNearer_WinsOverAnEdge()` - _(no documentation)_
+- `public void Move_AbortRestoresTheShape_AndOneUndoStepOtherwise()` - _(no documentation)_
+- `public void ResizeRightEdge_SnapsTheGapAfterTheBox()` - _(no documentation)_
+- `public void ResizeLeftEdge_SnapsTheGapBeforeTheBox()` - _(no documentation)_
+- `public void ResizeOfARotatedFrame_DoesNotSnapOrShowMarkers()` - _(no documentation)_
+- `public void Resize_WithCtrl_DoesNotSnap()` - _(no documentation)_
 
 ## CanvasInteractionSnapDrawTests (class)
 
@@ -1200,6 +1408,25 @@ _(no documentation)_
 - `public void CutDuplicateDeleteAndSelectCommands_DoTheirWork()` - _(no documentation)_
 - `public void TheEditMenuItems_UseTheShellCommands()` - _(no documentation)_
 
+## DistanceLabelsTests (class)
+
+`public sealed class DistanceLabelsTests`
+
+Source: `tests/PressToShape.App.Tests/DistanceLabelsTests.cs:12-105`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Build_OneNeighbourOnEachSide_GivesFourLabels()` - _(no documentation)_
+- `public void Build_TheNearestOfSeveralOnASide()` - _(no documentation)_
+- `public void Build_NoNeighbour_GivesNoLabel()` - _(no documentation)_
+- `public void Build_NeighbourThatDoesNotOverlapOnTheOtherAxis_IsIgnored()` - _(no documentation)_
+- `public void Build_TouchingOrOverlappingBoxes_GiveNoLabelOnThatAxis()` - _(no documentation)_
+- `public void Build_TheLineIsInTheMiddleOfTheOverlap()` - _(no documentation)_
+- `public void Build_NonFiniteBox_GivesNothing()` - _(no documentation)_
+- `public void Build_ZeroSizeDraggedBox_Works()` - _(no documentation)_
+
 ## DocumentCanvasControlGridTests (class)
 
 `public sealed class DocumentCanvasControlGridTests`
@@ -1278,6 +1505,23 @@ _(no documentation)_
 - `public void Render_RoundedRectangles_DoesNotThrow()` - _(no documentation)_
 - `public void Render_RoundedRectangleWithoutFillOrStrokeAndWithOpacity_DoesNotThrow()` - _(no documentation)_
 - `public void Render_FlatRoundedRectangle_DoesNotThrow()` - _(no documentation)_
+
+## DocumentCanvasControlSmartTests (class)
+
+`public sealed class DocumentCanvasControlSmartTests`
+
+Source: `tests/PressToShape.App.Tests/DocumentCanvasControlSmartTests.cs:14-117`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Render_RulerGuides_DoesNotThrow()` - _(no documentation)_
+- `public void Render_EveryMarkerType_DoesNotThrow()` - _(no documentation)_
+- `public void Render_WithoutBrushes_OrWithoutADocument_DoesNotThrow()` - _(no documentation)_
+- `public void Render_MarkersWithTheLineBrushOnlyOrWithoutTextBrush_DoesNotThrow()` - _(no documentation)_
+- `public void Properties_Default_AreEmpty()` - _(no documentation)_
+- `public void ThemeBrushes_ExistForBothVariants()` - _(no documentation)_
 
 ## DocumentFileServiceTests (class)
 
@@ -1533,6 +1777,28 @@ _(no documentation)_
 - `public void SetNodeSelection_RectangleWithRoundedCorners_AllowsAllItsNodes(int roundedCorners, int nodeCount)` - _(no documentation)_
 - `public void Edit_RadiusRemoved_DropsNodeSelectionsThatNoLongerExist()` - _(no documentation)_
 - `public void Edit_RadiusAdded_KeepsTheNodeSelection()` - _(no documentation)_
+
+## EditorStateSmartTests (class)
+
+`public sealed class EditorStateSmartTests`
+
+Source: `tests/PressToShape.App.Tests/EditorStateSmartTests.cs:11-156`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Defaults_AreEmpty()` - _(no documentation)_
+- `public void Properties_RaisePropertyChanged()` - _(no documentation)_
+- `public void SelectGuide_ClearsTheShapeSelection()` - _(no documentation)_
+- `public void SelectingAShape_ClearsTheGuideSelection()` - _(no documentation)_
+- `public void ClearingTheShapeSelection_KeepsTheGuideSelection()` - _(no documentation)_
+- `public void SelectGuide_UnknownId_DoesNothing()` - _(no documentation)_
+- `public void ClearGuideSelection_Clears()` - _(no documentation)_
+- `public void UndoOfAGuideCreate_ClearsAStaleSelection()` - _(no documentation)_
+- `public void DeletingTheSelectedGuide_ClearsTheSelection()` - _(no documentation)_
+- `public void SmartMarker_PathPointType_IsAPoint()` - _(no documentation)_
+- `public void SmartMarkers_Cleared_AreEmptyAgain()` - _(no documentation)_
 
 ## EditorStateSnapTests (class)
 
@@ -1937,7 +2203,7 @@ The application of the headless UI tests: the real theme and control styles, but
 
 `public class HistoryViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-242`
+Source: `tests/PressToShape.App.Tests/HistoryViewModelTests.cs:13-243`
 
 _(no documentation)_
 
@@ -2304,6 +2570,24 @@ Settings kept in memory.
 **Relationships**
 
 - Implements `PressToShape.App.Settings.ISettingsStore`
+
+## MenuBarSmartTests (class)
+
+`public sealed class MenuBarSmartTests`
+
+Source: `tests/PressToShape.App.Tests/MenuBarSmartTests.cs:9-120`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Item_IsEnabledAndCheckable(string header)` - _(no documentation)_
+- `public void Item_CheckStateFollowsThePreferences_SmartGuidesOffShowGuidesOn()` - _(no documentation)_
+- `public void Item_Execute_TogglesTheSetting_AndBack()` - _(no documentation)_
+- `public void Item_ChangeFromTheStatusBar_UpdatesTheMenu_AndTheReverse()` - _(no documentation)_
+- `public void StatusBar_PropertiesRaiseOnChangesFromElsewhere()` - _(no documentation)_
+- `public void Toggling_DoesNotChangeTheDocumentOrTheHistory()` - _(no documentation)_
+- `public void Items_HaveTheirAltKeyMnemonics()` - _(no documentation)_
 
 ## MenuBarSnapTests (class)
 
@@ -2805,6 +3089,36 @@ _(no documentation)_
 - `public void Commands_Origin_MovesEveryPoint()` - _(no documentation)_
 - `public void Commands_NullPath_Throws()` - _(no documentation)_
 - `public void ScreenPathNode_HasInAndHasOut_NeedBothNumbers()` - _(no documentation)_
+
+## PathPointTargetsTests (class)
+
+`public sealed class PathPointTargetsTests`
+
+Source: `tests/PressToShape.App.Tests/PathPointTargetsTests.cs:12-240`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Middle_OfAStraightSegment()` - _(no documentation)_
+- `public void Middle_OfACurve_IsThePointAtHalfTheParameter()` - _(no documentation)_
+- `public void Middles_OfAllSegmentsOfAPolyline()` - _(no documentation)_
+- `public void Crossing_OfTwoLines()` - _(no documentation)_
+- `public void Crossing_OfALineAndACurve()` - _(no documentation)_
+- `public void Crossing_OfTwoSegmentsOfTheSamePath()` - _(no documentation)_
+- `public void NoCrossing_ForParallelTouchingAndNeighbouringSegments()` - _(no documentation)_
+- `public void RadiusLimit_OnlyNearSegmentsGiveTargets()` - _(no documentation)_
+- `public void Build_RecordsTheCenterAndRadius()` - _(no documentation)_
+- `public void ExcludedPaths_HiddenPathsAndHiddenLayers_GiveNothing()` - _(no documentation)_
+- `public void RectanglesAndEllipses_GiveNoTargets()` - _(no documentation)_
+- `public void PathsInGroups_Count_UnlessTheGroupIsHidden()` - _(no documentation)_
+- `public void RotatedPaths_UseTheirPositionsOnTheScreen()` - _(no documentation)_
+- `public void Nearest_WithinTheToleranceOnBothAxes()` - _(no documentation)_
+- `public void Nearest_ASegmentMiddleBeatsACrossingAtTheSameDistance()` - _(no documentation)_
+- `public void Nearest_TheNearerOfTwo()` - _(no documentation)_
+- `public void BadInput_GivesNothing()` - _(no documentation)_
+- `public void ThreeHundredSegments_BuildQuickly()` - _(no documentation)_
+- `public void MoreThanTheLimitOfSegments_StillGivesTheMiddlesButNoCrossings()` - _(no documentation)_
 
 ## PenDrawingTests (class)
 
@@ -3775,6 +4089,96 @@ _(no documentation)_
 - `public void DefaultPath_IsInsideTheApplicationDataFolder()` - _(no documentation)_
 - `public void Constructor_RequiresAPath()` - _(no documentation)_
 
+## SmartSnapSizeTests (class)
+
+`public sealed class SmartSnapSizeTests`
+
+Source: `tests/PressToShape.App.Tests/SmartSnapSizeTests.cs:12-131`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Width_SnapsToTheWidthOfAnotherBox_RightEdgeDragged()` - _(no documentation)_
+- `public void Width_LeftEdgeDragged_TheOffsetPointsTheOtherWay()` - _(no documentation)_
+- `public void Height_Snaps()` - _(no documentation)_
+- `public void WidthAndHeightAtOnce_GiveTwoCandidates()` - _(no documentation)_
+- `public void AxisWithoutAMovingEdge_IsSkipped()` - _(no documentation)_
+- `public void OutsideTolerance_GivesNothing()` - _(no documentation)_
+- `public void FromCenter_TheOffsetIsHalf()` - _(no documentation)_
+- `public void Markers_BracketTheDraggedBoxAsItWillBe_AndTheMatchingBox()` - _(no documentation)_
+- `public void Markers_LeftEdgeDragged_KeepTheRightEdgeFixed()` - _(no documentation)_
+- `public void Markers_FromCenter_StayCentered()` - _(no documentation)_
+- `public void TheNearestOfSeveralSizes_Wins()` - _(no documentation)_
+- `public void ZeroNaNAndNegativeInput_GiveNothing()` - _(no documentation)_
+
+## SmartSnapSpacingTests (class)
+
+`public sealed class SmartSnapSpacingTests`
+
+Source: `tests/PressToShape.App.Tests/SmartSnapSpacingTests.cs:12-140`
+
+_(no documentation)_
+
+**Members**
+
+- `public void EqualToAnExistingGap_OnTheRightOfANeighbour()` - _(no documentation)_
+- `public void EqualToAnExistingGap_OnTheLeftOfANeighbour()` - _(no documentation)_
+- `public void CenteredBetweenTwoNeighbours()` - _(no documentation)_
+- `public void CenteredBetweenTwoNeighbours_OutsideTolerance_GivesNothing()` - _(no documentation)_
+- `public void Vertical_WorksLikeHorizontal()` - _(no documentation)_
+- `public void OutsideTolerance_GivesNothing()` - _(no documentation)_
+- `public void ToleranceDecidesWhetherItSnaps()` - _(no documentation)_
+- `public void NoNeighbours_GivesNothing()` - _(no documentation)_
+- `public void ABoxWithoutAnExistingEqualGapAndOneNeighbour_GivesNothing()` - _(no documentation)_
+- `public void BadInput_GivesNothing()` - _(no documentation)_
+- `public void MarkersMarkAtMostThreeExistingGaps()` - _(no documentation)_
+
+## SmartTargetsTests (class)
+
+`public sealed class SmartTargetsTests`
+
+Source: `tests/PressToShape.App.Tests/SmartTargetsTests.cs:12-196`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Collect_EmptyDocument_HasNothing()` - _(no documentation)_
+- `public void Collect_HiddenLockedAndExcluded()` - _(no documentation)_
+- `public void Collect_HiddenLayer_AndHiddenGroupMembers_AreLeftOut()` - _(no documentation)_
+- `public void Collect_GroupCountsByItsOwnBox_AndItsMembersToo()` - _(no documentation)_
+- `public void Collect_ExcludedGroup_KeepsItsMembers()` - _(no documentation)_
+- `public void Gaps_ARow_AreBetweenNeighboursOnly()` - _(no documentation)_
+- `public void Gaps_AColumn_AreVertical()` - _(no documentation)_
+- `public void Gaps_BoxesThatDoNotOverlapOnTheOtherAxis_HaveNoGap()` - _(no documentation)_
+- `public void Gaps_TouchingOrOverlappingBoxes_HaveNoGap()` - _(no documentation)_
+- `public void Gaps_PositionIsInTheMiddleOfTheOverlap()` - _(no documentation)_
+- `public void Gaps_UseTheNearestNeighbourOfEachBox()` - _(no documentation)_
+- `public void Boxes_AreTheBoundsOfTheTurnedOutline()` - _(no documentation)_
+- `public void Sizes_AreSortedAndSkipZero()` - _(no documentation)_
+- `public void FindGaps_ReturnsTheOnesWithinTheTolerance_NearestFirst()` - _(no documentation)_
+- `public void FindGaps_BadInput_FindsNothing()` - _(no documentation)_
+- `public void FindSize_NearestWithinTolerance_SmallerOnATie()` - _(no documentation)_
+- `public void Collect_ThousandBoxes_IsFast()` - _(no documentation)_
+
+## SnapPreferencesSmartTests (class)
+
+`public sealed class SnapPreferencesSmartTests`
+
+Source: `tests/PressToShape.App.Tests/SnapPreferencesSmartTests.cs:8-91`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Defaults_SmartGuidesOff_ShowGuidesOn()` - _(no documentation)_
+- `public void Setters_AreRestoredByANewInstance()` - _(no documentation)_
+- `public void DamagedValues_GiveTheDefaults(string stored)` - _(no documentation)_
+- `public void Setters_OtherEntriesSurvive()` - _(no documentation)_
+- `public void Setters_RaiseChangedOncePerRealChange()` - _(no documentation)_
+- `public void Switches_DoNotChangeTheSnapSettings()` - _(no documentation)_
+
 ## SnapPreferencesTests (class)
 
 `public sealed class SnapPreferencesTests`
@@ -3824,6 +4228,35 @@ _(no documentation)_
 - `public void TryFindNearest_NonFiniteInput_FindsNothing()` - _(no documentation)_
 - `public void TryFindNearest_YAxis_UsesTheYTargets()` - _(no documentation)_
 - `public void Collect_TargetsKeepTheExtentAlongTheOtherAxis()` - _(no documentation)_
+
+## SnapperExtrasTests (class)
+
+`public sealed class SnapperExtrasTests`
+
+Source: `tests/PressToShape.App.Tests/SnapperExtrasTests.cs:11-218`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Extra_BeatsAFartherEdge_AndCarriesItsMarkers()` - _(no documentation)_
+- `public void Edge_BeatsAFartherExtra()` - _(no documentation)_
+- `public void Extra_BeatsAGridLine_EvenWhenTheGridLineIsNearer()` - _(no documentation)_
+- `public void Extra_WorksWithSnapToObjectsOff()` - _(no documentation)_
+- `public void Extra_ActsOnItsOwnAxisOnly_AndOutsideToleranceOrNaNIsIgnored()` - _(no documentation)_
+- `public void Extra_TheSmallestOfSeveral_Wins()` - _(no documentation)_
+- `public void Extra_ToleranceScalesWithZoom()` - _(no documentation)_
+- `public void Extra_AxesAreIndependent()` - _(no documentation)_
+- `public void Guide_IsATarget_ItsIdIsActive_AndItGetsNoGuideLine()` - _(no documentation)_
+- `public void Guide_Horizontal_SnapsOnTheYAxis()` - _(no documentation)_
+- `public void Guide_WinsATieAgainstAnObjectEdge()` - _(no documentation)_
+- `public void Guide_NearerThanAnEdge_Wins_AndFartherLoses()` - _(no documentation)_
+- `public void Guides_NotIncluded_AreNoTargets()` - _(no documentation)_
+- `public void Guide_WithSnapToObjectsOff_DoesNotSnap()` - _(no documentation)_
+- `public void Guide_BeatsAGridLine()` - _(no documentation)_
+- `public void WithoutExtras_ResultsAreAsBefore()` - _(no documentation)_
+- `public void Collect_GuidesGoToTheAxisOfTheirOrientation()` - _(no documentation)_
+- `public void TryFindNearest_AGuideAtTheSameValueAsAnEdge_IsReturned()` - _(no documentation)_
 
 ## SnapperTests (class)
 
@@ -3886,7 +4319,7 @@ Finds the translatable texts in the App project, the way a gettext extraction wo
 
 `public sealed class StatusBarSnapViewTests`
 
-Source: `tests/PressToShape.App.Tests/StatusBarSnapViewTests.cs:17-98`
+Source: `tests/PressToShape.App.Tests/StatusBarSnapViewTests.cs:17-122`
 
 _(no documentation)_
 
@@ -3895,6 +4328,7 @@ _(no documentation)_
 - `public void Toggles_ReflectTheStateAndChangeIt(bool tablet)` - _(no documentation)_
 - `public void SpacingBox_ShowsTheSpacing_AndAppliesAValueOnEnter(bool tablet)` - _(no documentation)_
 - `public void SpacingBox_InvalidValue_ComesBackToTheOldOne(bool tablet)` - _(no documentation)_
+- `public void GuideToggles_ReflectTheStateAndChangeIt(bool tablet)` - _(no documentation)_
 
 ## StatusBarViewModelSnapTests (class)
 

@@ -34,7 +34,7 @@ How PressToShape.Core.Documents.Document.Arrange changes the stacking order of s
 
 `public sealed record Document : IEquatable<Document>`
 
-Source: `src/PressToShape.Core/Documents/Document.cs:13-407`
+Source: `src/PressToShape.Core/Documents/Document.cs:13-460`
 
 A drawing: an artboard and a stack of layers. Immutable: every edit method returns a new document and leaves this one unchanged. Unchanged layers are shared between the two. A document always has at least one layer.
 
@@ -44,8 +44,13 @@ A drawing: an artboard and a stack of layers. Immutable: every edit method retur
 - `public double ArtboardHeight { get; init; }` - Artboard height in document units. Finite and greater than zero.
 - `public ImmutableArray<Layer> Layers { get; init; }` - The layers in stacking order, bottom first. At least one layer, and layer and shape ids are unique in the document.
 - `public ImmutableArray<Color> Palette { get; init; }` - The swatches saved with the document, in the order the user added them. No colour appears twice.
+- `public ImmutableArray<Guide> Guides { get; init; }` - The guides that were dragged out of the rulers, in the order they were made. Positions are finite and ids are unique.
 - `public Document Create(string firstLayerName)` - Creates a 1200 x 800 document with one visible, unlocked layer.
 - `public Document WithArtboardSize(double width, double height)` - Returns a document with a new artboard size.
+- `public Document AddGuide(Guide guide)` - Returns a document with the guide added at the end.
+- `public Document MoveGuide(Guid guideId, double position)` - Returns a document in which the guide is at this position. Returns this document if there is no such guide or it is there already.
+- `public Document RemoveGuide(Guid guideId)` - Returns a document without the guide. Returns this document if there is no such guide.
+- `public Guide? FindGuide(Guid guideId)` - The guide with this id, or null.
 - `public Document AddSwatch(Color color)` - Returns a document with the colour added at the end of the palette. Returns this document if the palette has the colour.
 - `public Document RemoveSwatchAt(int index)` - Returns a document without the swatch at this index.
 - `public Document AddLayer(Layer layer)` - Returns a document with the layer added above all existing layers.
@@ -87,13 +92,14 @@ A drawing: an artboard and a stack of layers. Immutable: every edit method retur
 
 `internal static class DocumentValidation`
 
-Source: `src/PressToShape.Core/Documents/DocumentValidation.cs:9-78`
+Source: `src/PressToShape.Core/Documents/DocumentValidation.cs:9-104`
 
 The rules a document's layers must follow. A broken value never becomes a document.
 
 **Members**
 
 - `public ImmutableArray<Layer> Validated(ImmutableArray<Layer> layers)` - Returns the layers if they are valid: at least one layer, no null layer or shape, layer ids unique, shape and group ids unique over the whole tree, groups nested at most PressToShape.Core.Documents.ShapeTree.MaxDepth levels, and every group with the box and the rotation that follow from its children.
+- `public ImmutableArray<Guide> ValidatedGuides(ImmutableArray<Guide> guides)` - Returns the guides if they are valid: none null and the ids unique. A default array means no guides.
 
 ## FlagOperations (class)
 
@@ -124,6 +130,37 @@ Group and ungroup on a document. Documents are validated when they are made, so 
 - `public Document Group(Document document, IReadOnlyList<Guid> ids, Guid groupId)` - Replaces the shapes with one new group. The group takes the stack position of the topmost shape, and the shapes keep their order.
 - `public Document Ungroup(Document document, IReadOnlySet<Guid> groupIds)` - Replaces each group by its children, in place and in order. One level for each group: a group inside a group that is not in groupIds stays a group. The groups' own names and flags are dropped.
 - `internal Document WithSiblings(Document document, int layerIndex, GroupShape? parent, ImmutableArray<Shape> siblings)` - _(no documentation)_
+
+## Guide (record)
+
+`public sealed record Guide : IEquatable<Guide>`
+
+Source: `src/PressToShape.Core/Documents/Guide.cs:19-42`
+
+A guide line that the user dragged out of a ruler. It is part of the document, but not of any layer: it has no look, cannot be selected as a shape and is not exported. Immutable: change it with with.
+
+**Members**
+
+- `public Guid Id { get; init; }` - Identifier, unique within a document. It is not saved: a guide that is loaded gets a new one.
+- `public GuideOrientation Orientation { get; init; }` - Whether the guide is a horizontal or a vertical line.
+- `public double Position { get; init; }` - Where the guide is, in document units: the y of a horizontal guide, the x of a vertical one. Finite.
+
+**Relationships**
+
+- Injected into `PressToShape.App.Tests.CanvasInteractionGuideSnapTests.Scene`
+
+## GuideOrientation (enum)
+
+`public enum GuideOrientation`
+
+Source: `src/PressToShape.Core/Documents/Guide.cs:6-13`
+
+The direction of a guide line.
+
+**Members**
+
+- `public Horizontal` - A line across the drawing at a y position.
+- `public Vertical` - A line up and down the drawing at an x position.
 
 ## Layer (record)
 

@@ -4,6 +4,13 @@ Types that other types take as constructor parameters, and where they are provid
 
 ## Injected types
 
+### Bounds (class)
+
+`T:PressToShape.Core.Geometry.Bounds`. An axis-aligned rectangle in document units. Origin is the artboard's top-left corner, y grows downward.
+
+- used by: `NearSegment`, `SmartBox`, `SmartSize`
+- created at `CanvasInteraction.SnappedDrawPoint` (src/PressToShape.App/Workspace/CanvasInteraction.SmartGuides.cs:108), `CanvasInteraction.SnappedDrawPoint` (src/PressToShape.App/Workspace/CanvasInteraction.SmartGuides.cs:109), `CanvasInteraction.SnappedMove` (src/PressToShape.App/Workspace/CanvasInteraction.Snapping.cs:175), `CanvasInteraction.SnappedMove` (src/PressToShape.App/Workspace/CanvasInteraction.Snapping.cs:178), `CanvasInteraction.SnappedHandle` (src/PressToShape.App/Workspace/CanvasInteraction.Snapping.cs:269), `CanvasInteraction.ResizedBox` (src/PressToShape.App/Workspace/CanvasInteraction.Snapping.cs:301), `SelectionBounds.Union` (src/PressToShape.App/Workspace/SelectionBounds.cs:34), `Bezier.ExtremaBounds` (src/PressToShape.Core/Geometry/Bezier.cs:60), `GroupShape.UnionOfBounds` (src/PressToShape.Core/Shapes/GroupShape.cs:75), `PathShape.TightBounds` (src/PressToShape.Core/Shapes/PathShape.cs:290), `Shape.Bounds` (src/PressToShape.Core/Shapes/Shape.cs:110), `Shape.RotatedBounds` (src/PressToShape.Core/Shapes/Shape.cs:135)
+
 ### ColorFieldViewModel (class)
 
 `T:PressToShape.App.ViewModels.Editor.ColorFieldViewModel`. A color of the Properties tab (fill or stroke). While the color picker is open the user's changes are previewed on the canvas (PressToShape.App.ViewModels.Editor.ColorFieldViewModel.Update) and the whole edit becomes one undo step when the picker closes (PressToShape.App.ViewModels.Editor.ColorFieldViewModel.EndEdit). "None" and a color chosen elsewhere take effect at once as one step.
@@ -11,12 +18,19 @@ Types that other types take as constructor parameters, and where they are provid
 - used by: `PaletteViewModel`
 - created at `PropertiesViewModel.PropertiesViewModel` (src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:63), `PropertiesViewModel.PropertiesViewModel` (src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:67)
 
+### Cubic (class)
+
+`T:PressToShape.Core.Geometry.Cubic`. A cubic bezier segment in document units: from P0 to P3, shaped by two handle points. A line is a cubic whose handle points lie on its end points.
+
+- used by: `NearSegment`
+- created at `Bezier.Split` (src/PressToShape.Core/Geometry/Bezier.cs:35), `CurveFitting.Curve` (src/PressToShape.Core/PathOperations/CurveFitting.cs:124), `CurveFitting.Curve` (src/PressToShape.Core/PathOperations/CurveFitting.cs:130), `PathShape.BuildSegments` (src/PressToShape.Core/Shapes/PathShape.cs:301)
+
 ### Document (class)
 
 `T:PressToShape.Core.Documents.Document`. A drawing: an artboard and a stack of layers. Immutable: every edit method returns a new document and leaves this one unchanged. Unchanged layers are shared between the two. A document always has at least one layer.
 
 - used by: `DocumentHistory`, `EditorState`, `PathOperationResult`, `ProjectFileResult`
-- created at `Document.Create` (src/PressToShape.Core/Documents/Document.cs:61)
+- created at `Document.Create` (src/PressToShape.Core/Documents/Document.cs:69)
 
 ### DocumentSession (class)
 
@@ -72,7 +86,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.Core.Shapes.GroupShape`. A group of shapes that is selected, moved and styled as one. Children keep their own document coordinates, so a group has no transform. Its box is the union of the rotated bounds of its children, always upright (PressToShape.Core.Shapes.Shape.Rotation is 0), and follows PressToShape.Core.Shapes.GroupShape.Children by itself. Do not set the box, the rotation or the appearance of a group: change its children. Immutable: change it with with.
 
 - used by: `ShapeLocation`
-- created at `GroupOperations.Group` (src/PressToShape.Core/Documents/GroupOperations.cs:43), `ProjectFile.BuildGroup` (src/PressToShape.Core/IO/ProjectFile.cs:215)
+- created at `GroupOperations.Group` (src/PressToShape.Core/Documents/GroupOperations.cs:43), `ProjectFile.BuildGroup` (src/PressToShape.Core/IO/ProjectFile.cs:247)
 
 ### IAppShutdown (interface)
 
@@ -109,7 +123,7 @@ Types that other types take as constructor parameters, and where they are provid
 
 `T:PressToShape.App.Localization.ILocalizer`. Translates user-visible texts. The English source text is the message id.
 
-- used by: `AvaloniaFileDialogs`, `AvaloniaMessageDialogs`, `DesktopShellViewModel`, `DocumentFileService`, `EditorShellViewModel`, `HistoryItemViewModel`, `HistoryViewModel`, `InspectorViewModel`, `LanguagePreference`, `LayerEditor`, `LayersViewModel`, `LocalizedTextObservable`, `LocalizedViewModel`, `MenuBarViewModel`, `MenuItemViewModel`, `NumberFieldViewModel`, `OverflowMenuViewModel`, `OverlayMessageDialogs`, `PanelButtonViewModel`, `PathEditor`, `PlaceholderPanelViewModel`, `PropertiesViewModel`, `RingMenuViewModel`, `RingSlotViewModel`, `StatusBarViewModel`, `TabletColorSwatchViewModel`, `TabletPanelViewModel`, `TabletShellViewModel`, `TabletToolColumnViewModel`, `TabletToolbarViewModel`, `ToolGroupViewModel`, `ToolItemViewModel`, `ToolbarButtonViewModel`, `ToolbarViewModel`, `ToolboxViewModel`, `ZoomViewModel`
+- used by: `AvaloniaFileDialogs`, `AvaloniaMessageDialogs`, `CanvasAreaViewModel`, `DesktopShellViewModel`, `DocumentFileService`, `EditorShellViewModel`, `HistoryItemViewModel`, `HistoryViewModel`, `InspectorViewModel`, `LanguagePreference`, `LayerEditor`, `LayersViewModel`, `LocalizedTextObservable`, `LocalizedViewModel`, `MenuBarViewModel`, `MenuItemViewModel`, `NumberFieldViewModel`, `OverflowMenuViewModel`, `OverlayMessageDialogs`, `PanelButtonViewModel`, `PathEditor`, `PlaceholderPanelViewModel`, `PropertiesViewModel`, `RingMenuViewModel`, `RingSlotViewModel`, `StatusBarViewModel`, `TabletColorSwatchViewModel`, `TabletPanelViewModel`, `TabletShellViewModel`, `TabletToolColumnViewModel`, `TabletToolbarViewModel`, `ToolGroupViewModel`, `ToolItemViewModel`, `ToolbarButtonViewModel`, `ToolbarViewModel`, `ToolboxViewModel`, `ZoomViewModel`
 - implemented by `Localizer`, created at `LocalizationHost.Localizer` (src/PressToShape.App/Localization/LocalizationHost.cs:14), `PressToShapeApp.Initialize` (src/PressToShape.App/PressToShapeApp.axaml.cs:26)
 
 ### IMessageDialogs (interface)
@@ -126,7 +140,7 @@ Types that other types take as constructor parameters, and where they are provid
 
 - used by: `FileServices`, `LanguagePreference`, `RecentFiles`, `SnapPreferences`
 - implemented by `JsonFileSettingsStore`, created at `PressToShapeApp.Initialize` (src/PressToShape.App/PressToShapeApp.axaml.cs:25)
-- implemented by `NoStore`, created at `SnapPreferences.InMemory` (src/PressToShape.App/Workspace/SnapPreferences.cs:48)
+- implemented by `NoStore`, created at `SnapPreferences.InMemory` (src/PressToShape.App/Workspace/SnapPreferences.cs:52)
 
 ### InspectorViewModel (class)
 
@@ -140,7 +154,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.Core.Documents.Layer`. A named group of shapes that can be hidden or locked. Immutable: change it with with. Records compare PressToShape.Core.Documents.Layer.Shapes by reference, not by content.
 
 - used by: `ShapeLocation`
-- created at `LayerEditor.Add` (src/PressToShape.App/Workspace/LayerEditor.cs:72), `Document.Create` (src/PressToShape.Core/Documents/Document.cs:61), `ProjectFile.Build` (src/PressToShape.Core/IO/ProjectFile.cs:131)
+- created at `LayerEditor.Add` (src/PressToShape.App/Workspace/LayerEditor.cs:72), `Document.Create` (src/PressToShape.Core/Documents/Document.cs:69), `ProjectFile.Build` (src/PressToShape.Core/IO/ProjectFile.cs:134)
 
 ### LayerEditor (class)
 
@@ -280,7 +294,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.SelectionEditor`. Edits that work on the selected shapes and do not need the mouse: select all, deselect, copy, cut, paste, duplicate (and, in the same class, nudging and property edits). Every change of the document is one history step.
 
 - used by: `CanvasAreaViewModel`, `InspectorViewModel`, `PropertiesViewModel`
-- created at `CanvasAreaViewModel.CanvasAreaViewModel` (src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:46), `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:38), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:23), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:46)
+- created at `CanvasAreaViewModel.CanvasAreaViewModel` (src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:50), `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:38), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:23), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:46)
 
 ### Shape (class)
 
@@ -289,12 +303,19 @@ Types that other types take as constructor parameters, and where they are provid
 - used by: `Found`, `Node`, `ShapeLocation`
 - created at no creation site found
 
+### SnapCandidate (class)
+
+`T:PressToShape.App.Workspace.SnapCandidate`. A snap that a smart guide offers on one axis: move the dragged box by Offset and show the Markers. PressToShape.App.Workspace.Snapper compares it with the other snaps of that axis.
+
+- used by: `AxisSnap`
+- created at `SmartSnap.EqualSize` (src/PressToShape.App/Workspace/SmartSnap.cs:126), `SmartSnap.Add` (src/PressToShape.App/Workspace/SmartSnap.cs:142)
+
 ### SnapPreferences (class)
 
 `T:PressToShape.App.Workspace.SnapPreferences`. The grid, snapping and ruler switches and the grid spacing, kept in the settings file. They are user settings, not part of the document. The stored values are untrusted: a missing, damaged or invalid value gives the default for that value. A setter that gets an invalid spacing keeps the old one. Every real change is saved at once and raises PressToShape.App.Workspace.SnapPreferences.Changed.
 
 - used by: `EditorState`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:33), `SnapPreferences.InMemory` (src/PressToShape.App/Workspace/SnapPreferences.cs:48)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:33), `SnapPreferences.InMemory` (src/PressToShape.App/Workspace/SnapPreferences.cs:52)
 
 ### StorageFileRegistry (class)
 
@@ -340,4 +361,4 @@ Types that other types take as constructor parameters, and where they are provid
 
 ## Container registrations
 
-no container registrations found; services are created by hand in `AppLayout.Choose`, `AppLayout.CreateTabletShell`, `CanvasAreaViewModel.CanvasAreaViewModel`, `CanvasScene.BuildPath`, `DesktopShellViewModel.DesktopShellViewModel`, `Document.Create`, `EditorShellViewModel.EditorShellViewModel`, `EmbeddedCatalogSource.EmbeddedCatalogSource`, `GroupOperations.Group`, `InspectorViewModel.InspectorViewModel`, `LayerEditor.Add`, `LayersViewModel.LayersViewModel`, `LocalizationHost.Localizer`, `Mixed.Of`, `PathMenuCommands.CreateDisabled`, `PathOperationBenchmarks.Wavy`, `PathShape.Create`, `PathShapeOperations.Operands`, `PressToShapeApp.Initialize`, `ProjectFile.Build`, `ProjectFile.BuildGroup`, `ProjectFile.BuildPath`, `PropertiesViewModel.PropertiesViewModel`, `RingSlotDefinition.WithChildren`, `RingSlotDefinition.WithCommand`, `ScreenPolygon.FromBox`, `SelectionOverlay.Build`, `SelectionOverlay.BuildRadiusHandles`, `ShapeOperationBenchmarks.Setup`, `ShapeTree.Find`, `SnapPreferences.InMemory`, `TabletShellViewModel.TabletShellViewModel`, `ToolDefinitions.All`, `ToolGroups.All`.
+no container registrations found; services are created by hand in `AppLayout.Choose`, `AppLayout.CreateTabletShell`, `Bezier.ExtremaBounds`, `Bezier.Split`, `CanvasAreaViewModel.CanvasAreaViewModel`, `CanvasInteraction.ResizedBox`, `CanvasInteraction.SnappedDrawPoint`, `CanvasInteraction.SnappedHandle`, `CanvasInteraction.SnappedMove`, `CanvasScene.BuildPath`, `CurveFitting.Curve`, `DesktopShellViewModel.DesktopShellViewModel`, `Document.Create`, `EditorShellViewModel.EditorShellViewModel`, `EmbeddedCatalogSource.EmbeddedCatalogSource`, `GroupOperations.Group`, `GroupShape.UnionOfBounds`, `InspectorViewModel.InspectorViewModel`, `LayerEditor.Add`, `LayersViewModel.LayersViewModel`, `LocalizationHost.Localizer`, `Mixed.Of`, `PathMenuCommands.CreateDisabled`, `PathOperationBenchmarks.Wavy`, `PathShape.BuildSegments`, `PathShape.Create`, `PathShape.TightBounds`, `PathShapeOperations.Operands`, `PressToShapeApp.Initialize`, `ProjectFile.Build`, `ProjectFile.BuildGroup`, `ProjectFile.BuildPath`, `PropertiesViewModel.PropertiesViewModel`, `RingSlotDefinition.WithChildren`, `RingSlotDefinition.WithCommand`, `ScreenPolygon.FromBox`, `SelectionBounds.Union`, `SelectionOverlay.Build`, `SelectionOverlay.BuildRadiusHandles`, `Shape.Bounds`, `Shape.RotatedBounds`, `ShapeOperationBenchmarks.Setup`, `ShapeTree.Find`, `SmartSnap.Add`, `SmartSnap.EqualSize`, `SnapPreferences.InMemory`, `TabletShellViewModel.TabletShellViewModel`, `ToolDefinitions.All`, `ToolGroups.All`.

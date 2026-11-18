@@ -37,9 +37,17 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `OriginY` (Styled, `double`, default not set) at line 31
 - `Overlay` (Styled, `SelectionOverlay?`, default not set) at line 39
 - `PenOverlay` (Styled, `ScreenPenOverlay?`, default not set) at line 43
+- `RulerGuideActiveBrush` (Styled, `IBrush?`, default not set) at line 111
+- `RulerGuideBrush` (Styled, `IBrush?`, default not set) at line 103
+- `RulerGuideSelectedBrush` (Styled, `IBrush?`, default not set) at line 107
+- `RulerGuides` (Styled, `IReadOnlyList<ScreenRulerGuide>?`, default not set) at line 95
 - `SelectionBrush` (Styled, `IBrush?`, default not set) at line 55
 - `SelectionHandleFillBrush` (Styled, `IBrush?`, default not set) at line 59
 - `ShowGrid` (Styled, `bool`, default not set) at line 75
+- `SmartGuideBrush` (Styled, `IBrush?`, default not set) at line 115
+- `SmartGuideLabelBackgroundBrush` (Styled, `IBrush?`, default not set) at line 123
+- `SmartGuideTextBrush` (Styled, `IBrush?`, default not set) at line 119
+- `SmartMarkers` (Styled, `IReadOnlyList<ScreenSmartMarker>?`, default not set) at line 99
 - `SnapGuides` (Styled, `IReadOnlyList<ScreenSnapGuide>?`, default not set) at line 87
 - `ZoomPercent` (Styled, `double`, default 100) at line 23
 

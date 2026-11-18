@@ -54,15 +54,21 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 - `public bool IsRadiusDragging { get; }` - Whether a radius handle is being dragged.
 - `internal NodeEditor Nodes { get; }` - The editor of the selected nodes (type, segments, delete, nudge, position). Shared with the keys of the canvas.
 - `public bool IsNodeDragging { get; }` - Whether a node, handle or bend drag is in progress.
+- `public GuideOrientation? GuideDragOrientation { get; }` - The orientation of the guide that is being moved or made, or null without such a drag.
 - `public bool IsPenDrawing { get; }` - Whether the Pen has an unfinished path.
+- `public bool IsGuideDragging { get; }` - Whether a guide is being moved or made.
 - `public bool FinishPen()` - Finishes the path of the Pen as an open path (the Enter key). A path with fewer than two nodes is dropped. Returns whether there was a path to finish.
+- `public Guide? GuideAt(double x, double y, InputPointerType inputType = Mouse)` - The guide that a press at this document position would take: the nearest one within 4 screen pixels (12 for a finger), or null. Also null when guides are hidden.
 - `internal bool IsSnapSuspended { get; }` - Whether the last pointer event suspended snapping (the Ctrl key was held).
 - `public CanvasInteraction(EditorState state)` - _(no documentation)_
 - `public bool DiscardPen()` - Drops the unfinished path of the Pen (the Escape key). Returns whether there was one.
+- `public void BeginGuideFromRuler(GuideOrientation orientation)` - Starts the making of a guide from a ruler: a new guide follows the pointer. Guides are shown from now on, because a new guide would be invisible otherwise. Moves arrive through PressToShape.App.Workspace.CanvasInteraction.PointerMoved, the end through PressToShape.App.Workspace.CanvasInteraction.EndGuideDrag.
 - `public bool IsDragging { get; }` - Whether a drag is in progress.
 - `public HandleType? DraggedHandle { get; }` - The handle that is being dragged, or null if no resize or rotate drag is in progress.
 - `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. A press by mouse or pen uses PressToShape.App.Workspace.SelectionGeometry.GrabSize.
+- `public void EndGuideDrag(double x, double y, bool overCanvas)` - Ends a guide drag at this document position. overCanvas tells whether the pointer is inside the canvas: a moved guide that is dropped outside is deleted and a new one is not made. Does nothing without a guide drag.
 - `public void PointerPressed(double x, double y, bool shift = false, InputPointerType inputType = Mouse, bool suspendSnap = false)` - The primary button went down at this document position. shift adds to or removes from the selection. suspendSnap (the Ctrl key) turns snapping off for this event. inputType is the device: a finger grabs a handle from a larger area than a mouse or a pen.
+- `public void DeleteSelectedGuide()` - Deletes the selected ruler guide as one step. Does nothing when no guide is selected.
 - `public bool IsOverNodeTarget(double x, double y)` - Whether the position is over something the node tools can grab: a node, a shown handle or (Node tool) a segment of a selected shape. Always false during a drag and for the other tools. Used for the cursor.
 - `public void PointerMoved(double x, double y, bool shift = false, bool alt = false, bool suspendSnap = false)` - The pointer moved to this document position. Does nothing without a drag.
 - `public void PointerReleased(double x, double y, bool shift = false, bool alt = false, bool suspendSnap = false)` - The button went up at this document position. Ends the drag in every case.
@@ -76,6 +82,10 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionGuideSnapTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSmartLabelTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSmartSizeTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSmartSpacingTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionSnapMoveTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionSnapResizeTests.Scene`
 
@@ -151,6 +161,18 @@ The facts about the cursor images of the canvas: which size fits a screen scale,
 - `public int SizeFor(double scale)` - The image size for a screen scale (1.0 is 100%). A scale that is not a finite positive number counts as 100%, because a wrong size is better than no cursor.
 - `public string? FileName(CanvasCursorType type, int size)` - The file name of the image for a cursor type and size, or null for the arrow, which stays the system cursor.
 - `public (int X, int Y) Hotspot(CanvasCursorType type, int size)` - The active point of the image in its own pixels. It is the center of the image, except for the magnifier, where it is the center of the lens. The point at 64 px is exactly double the point at 32 px.
+
+## DistanceLabels (class)
+
+`internal static class DistanceLabels`
+
+Source: `src/PressToShape.App/Workspace/DistanceLabels.cs:11-32`
+
+The distance labels of the smart guides: from the dragged box to the nearest box on each of the four sides (see PressToShape.App.Workspace.SmartNeighbours). The line runs across the gap in the middle of the overlap and carries the gap as its value. Pure function.
+
+**Members**
+
+- `public IReadOnlyList<SmartMarker> Build(Bounds dragged, SmartTargets targets)` - Up to four PressToShape.App.Workspace.SmartMarkerType.Distance markers, one for each side that has a neighbour. Nothing for a box that is not finite.
 
 ## DocumentFileService (class)
 
@@ -246,15 +268,20 @@ State shared by all regions of the editor shell: the document, its undo history,
 - `public SnapPreferences Snapping { get; }` - The grid and snap settings. They are user settings: changing one is no edit of the document and no step of the history.
 - `public Guid? PenContinuedId { get; set; }` - _(no documentation)_
 - `public ImmutableArray<SnapGuide> SnapGuides { get; set; }` - _(no documentation)_
+- `public ImmutableArray<SmartMarker> SmartMarkers { get; set; }` - _(no documentation)_
 - `public Guid? EnteredGroupId { get; private set; }` - _(no documentation)_
 - `public ImmutableHashSet<NodeRef> SelectedNodes { get; private set; }` - _(no documentation)_
+- `public ImmutableArray<Guid> ActiveGuideIds { get; set; }` - _(no documentation)_
 - `public bool HasSelectedNodes { get; }` - Whether at least one node is selected.
+- `public Guid? SelectedGuideId { get; private set; }` - _(no documentation)_
 - `public void SetNodeSelection(IEnumerable<NodeRef> nodes)` - Replaces the selected nodes. Repeated nodes count once.
 - `public bool EnterGroup(Guid groupId)` - Enters the group. Of the selection only the direct children of the group stay selected. Does nothing if the id is not a group that can be selected.
+- `public void SelectGuide(Guid guideId)` - Selects a ruler guide and clears the shape selection. A guide that does not exist in the document is not selected.
 - `public EditorState(Document? document = null, SnapPreferences? snapping = null)` - Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.
 - `public void ToggleNode(NodeRef node)` - Adds the node to the selected nodes, or removes it if it is selected.
 - `public void ClearNodeSelection()` - Clears the selected nodes.
 - `public Action<ColorPickTarget, Color>? ColorPicked` - Raised when a pick from the canvas ended on a shape: the target that asked for it and the color that was taken.
+- `public void ClearGuideSelection()` - Clears the guide selection.
 - `public EventHandler? HistoryChanged` - Raised after the undo history changed: a step was recorded, undone or redone, or the history was reset.
 - `public void LeaveGroup()` - Leaves the entered group by one level and selects it. If that group is inside another group, the other group is entered. Does nothing when no group is entered.
 - `public DocumentHistory History { get; }` - The undo history of the current document.
@@ -316,6 +343,10 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionGuideSnapTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSmartLabelTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSmartSizeTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSmartSpacingTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionSnapMoveTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionSnapResizeTests.Scene`
 - Injected into `PressToShape.App.Tests.LayerEditorTests.Fixture`
@@ -424,7 +455,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-82`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-85`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -787,6 +818,52 @@ Turns a PressToShape.App.Workspace.ScreenPath into drawing steps, so the canvas 
 **Members**
 
 - `public IReadOnlyList<PathCommand> Commands(ScreenPath path, double originX, double originY)` - The steps that draw the path, moved by the origin (the top left corner of the shape's box on the screen). Every sub-path starts with a PressToShape.App.Workspace.PathCommandType.Move. A segment without handles is a line. A closed sub-path ends with the segment from the last node back to the first (a line or a curve) and a PressToShape.App.Workspace.PathCommandType.Close. An open sub-path has no close step.
+
+## PathPointTarget (record)
+
+`internal readonly record PathPointTarget : IEquatable<PathPointTarget>`
+
+Source: `src/PressToShape.App/Workspace/PathPointTargets.cs:21-21`
+
+A point on the screen of the drawing that a Pen point or a node can snap to, in document units.
+
+**Members**
+
+- `public PathPointTarget(double X, double Y, PathPointType Type)` - A point on the screen of the drawing that a Pen point or a node can snap to, in document units.
+- `public PathPointType Type { get; init; }` - _(no documentation)_
+- `public double X { get; init; }` - _(no documentation)_
+- `public double Y { get; init; }` - _(no documentation)_
+
+## PathPointTargets (class)
+
+`internal sealed class PathPointTargets`
+
+Source: `src/PressToShape.App/Workspace/PathPointTargets.cs:29-259`
+
+The segment middles and the crossings of segments of the visible paths that are not excluded, for the Pen and the node tools. Only segments near a center (within PressToShape.App.Workspace.PathPointTargets.Radius of it, in document units) are used, so the work stays small on a big drawing: the caller builds the targets again when the pointer has moved far from the center. The rotation of a path is applied. Crossings are found among the near segments, also between segments of the same path; the place where two neighbouring segments meet is a node, not a crossing. Pure code.
+
+**Members**
+
+- `public PathPointTargets Empty { get; }` - No targets.
+- `public double CenterX { get; }` - The x of the center the targets were built for.
+- `public double CenterY { get; }` - The y of the center the targets were built for.
+- `public double Radius { get; }` - How far from the center segments were used.
+- `public IReadOnlyList<PathPointTarget> Points { get; }` - The targets.
+- `public PathPointTargets Build(Document document, IReadOnlySet<Guid> excludedIds, double centerX, double centerY, double radius)` - Builds the targets of the segments within the radius of the center.
+- `public PathPointTarget? Nearest(double x, double y, double tolerance)` - The target that is within the tolerance (inclusive) of the point on both axes and nearest to it, or null. A segment middle wins over a crossing at the same distance. Nothing for a point or tolerance that is not finite.
+
+## PathPointType (enum)
+
+`internal enum PathPointType`
+
+Source: `src/PressToShape.App/Workspace/PathPointTargets.cs:11-18`
+
+What a path point target is.
+
+**Members**
+
+- `public SegmentMiddle` - The middle of a segment (the point of a curve at half of its parameter).
+- `public Crossing` - The point where two segments cross.
 
 ## PenDrawing (class)
 
@@ -1224,6 +1301,22 @@ A rectangle in screen pixels, for example the outline of the selected shape.
 - `public double X { get; init; }` - _(no documentation)_
 - `public double Y { get; init; }` - _(no documentation)_
 
+## ScreenRulerGuide (record)
+
+`internal readonly record ScreenRulerGuide : IEquatable<ScreenRulerGuide>`
+
+Source: `src/PressToShape.App/Workspace/ScreenSmartMarker.cs:8-8`
+
+A ruler guide in screen pixels, ready to draw across the canvas.
+
+**Members**
+
+- `public ScreenRulerGuide(bool IsVertical, double Position, bool IsSelected, bool IsActive)` - A ruler guide in screen pixels, ready to draw across the canvas.
+- `public bool IsActive { get; init; }` - Whether the current drag is snapped to the guide.
+- `public bool IsSelected { get; init; }` - Whether the user selected the guide.
+- `public bool IsVertical { get; init; }` - Whether the guide is a vertical line (at an x) or a horizontal one (at a y).
+- `public double Position { get; init; }` - The x of a vertical guide or the y of a horizontal one.
+
 ## ScreenShape (record)
 
 `internal readonly record ScreenShape : IEquatable<ScreenShape>`
@@ -1266,6 +1359,24 @@ The geometry a PressToShape.App.Workspace.ScreenShape is drawn with.
 - `public Rectangle` - _(no documentation)_
 - `public Ellipse` - _(no documentation)_
 - `public Path` - A path of lines and curves. The shape's PressToShape.App.Workspace.ScreenShape.Path holds its outline.
+
+## ScreenSmartMarker (record)
+
+`internal readonly record ScreenSmartMarker : IEquatable<ScreenSmartMarker>`
+
+Source: `src/PressToShape.App/Workspace/ScreenSmartMarker.cs:21-21`
+
+A smart guide marker in screen pixels with its label text. A line along an axis from From to To at Cross on the other axis. A PressToShape.App.Workspace.SmartMarkerType.PathPoint is the point (From, Cross) of a horizontal marker.
+
+**Members**
+
+- `public ScreenSmartMarker(SmartMarkerType Type, bool IsHorizontal, double From, double To, double Cross, string? Text)` - A smart guide marker in screen pixels with its label text. A line along an axis from From to To at Cross on the other axis. A PressToShape.App.Workspace.SmartMarkerType.PathPoint is the point (From, Cross) of a horizontal marker.
+- `public double Cross { get; init; }` - The position across, on the other axis.
+- `public double From { get; init; }` - Where the line starts along its direction.
+- `public bool IsHorizontal { get; init; }` - Whether the line runs left to right (its x values change) or up and down.
+- `public string? Text { get; init; }` - The number to show next to the line, in the number format of the language, or null for none.
+- `public double To { get; init; }` - Where the line ends along its direction.
+- `public SmartMarkerType Type { get; init; }` - What the marker shows.
 
 ## ScreenSnapGuide (record)
 
@@ -1516,6 +1627,152 @@ The shapes that were copied or cut. A copy kept by the app: nothing goes to the 
 - `public void Clear()` - Empties the clipboard.
 - `public double NextPasteOffset()` - The offset for the next paste: 10 units for the first paste, 20 for the second, and so on.
 
+## SmartBox (record)
+
+`internal readonly record SmartBox : IEquatable<SmartBox>`
+
+Source: `src/PressToShape.App/Workspace/SmartTargets.cs:11-11`
+
+A box of an object that smart guides compare the dragged box with, in document units (the bounds of the turned outline).
+
+**Members**
+
+- `public SmartBox(Guid Id, Bounds Bounds)` - A box of an object that smart guides compare the dragged box with, in document units (the bounds of the turned outline).
+- `public Bounds Bounds { get; init; }` - _(no documentation)_
+- `public Guid Id { get; init; }` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.Core.Geometry.Bounds`
+
+## SmartGap (record)
+
+`internal readonly record SmartGap : IEquatable<SmartGap>`
+
+Source: `src/PressToShape.App/Workspace/SmartTargets.cs:17-17`
+
+A gap between two boxes on one axis: Size is its length, it runs from From to To along the axis, at Cross on the other axis (the middle of the part where the two boxes overlap).
+
+**Members**
+
+- `public SmartGap(double Size, double From, double To, double Cross)` - A gap between two boxes on one axis: Size is its length, it runs from From to To along the axis, at Cross on the other axis (the middle of the part where the two boxes overlap).
+- `public double Cross { get; init; }` - _(no documentation)_
+- `public double From { get; init; }` - _(no documentation)_
+- `public double Size { get; init; }` - _(no documentation)_
+- `public double To { get; init; }` - _(no documentation)_
+
+## SmartMarker (record)
+
+`internal readonly record SmartMarker : IEquatable<SmartMarker>`
+
+Source: `src/PressToShape.App/Workspace/SmartMarker.cs:30-30`
+
+One thing the canvas draws while a smart guide is active, in document units. A line along Axis (X: horizontal line, the x values change) from From to To at Cross on the other axis. A PressToShape.App.Workspace.SmartMarkerType.PathPoint is the point (From, Cross) and has no length.
+
+**Members**
+
+- `public SmartMarker(SmartMarkerType Type, SnapAxis Axis, double From, double To, double Cross, double Value)` - One thing the canvas draws while a smart guide is active, in document units. A line along Axis (X: horizontal line, the x values change) from From to To at Cross on the other axis. A PressToShape.App.Workspace.SmartMarkerType.PathPoint is the point (From, Cross) and has no length.
+- `public SnapAxis Axis { get; init; }` - The axis the line runs along.
+- `public double Cross { get; init; }` - The position on the other axis.
+- `public double From { get; init; }` - Where the line starts along its axis.
+- `public double To { get; init; }` - Where the line ends along its axis.
+- `public SmartMarkerType Type { get; init; }` - What the marker shows.
+- `public double Value { get; init; }` - The number to show next to the line (a distance or a size), or System.Double.NaN for none.
+
+## SmartMarkerType (enum)
+
+`internal enum SmartMarkerType`
+
+Source: `src/PressToShape.App/Workspace/SmartMarker.cs:4-17`
+
+What a smart marker shows.
+
+**Members**
+
+- `public Distance` - The distance between the dragged box and a neighbour: a measure line with a number.
+- `public EqualGap` - A gap that is equal to another gap: a measure line with end ticks and a number.
+- `public EqualSize` - A side of a box whose size equals the size of another box: a bracket along the side.
+- `public PathPoint` - A segment middle or a crossing that a point snapped to: a small cross.
+
+## SmartNeighbour (record)
+
+`internal readonly record SmartNeighbour : IEquatable<SmartNeighbour>`
+
+Source: `src/PressToShape.App/Workspace/SmartNeighbour.cs:11-11`
+
+A box next to the dragged box: how far away it is and where the measure line between them runs.
+
+**Members**
+
+- `public SmartNeighbour(double Gap, double From, double To, double Cross)` - A box next to the dragged box: how far away it is and where the measure line between them runs.
+- `public double Cross { get; init; }` - The middle of the part where the two boxes overlap on the other axis.
+- `public double From { get; init; }` - Where the gap starts along the axis.
+- `public double Gap { get; init; }` - The distance between the two boxes along the axis. More than 0.
+- `public double To { get; init; }` - Where the gap ends along the axis.
+
+## SmartNeighbours (class)
+
+`internal static class SmartNeighbours`
+
+Source: `src/PressToShape.App/Workspace/SmartNeighbour.cs:14-63`
+
+Finds the box next to a dragged box. Pure function, used by the distance labels and the equal spacing snap.
+
+**Members**
+
+- `public SmartNeighbour? Nearest(Bounds dragged, SmartTargets targets, SnapAxis axis, bool before)` - The nearest box before (left, above) or after (right, below) the dragged box along the axis that is clear of it (a gap of more than 0) and overlaps it on the other axis. A dragged box without extent on the other axis overlaps a box it lies strictly inside of. null if there is none.
+- `public SnapAxis Other(SnapAxis axis)` - The other axis.
+- `public (double Start, double End) Span(Bounds bounds, SnapAxis axis)` - The start and the end of the bounds along the axis.
+
+## SmartSize (record)
+
+`internal readonly record SmartSize : IEquatable<SmartSize>`
+
+Source: `src/PressToShape.App/Workspace/SmartTargets.cs:20-20`
+
+The width or the height of a box.
+
+**Members**
+
+- `public SmartSize(double Size, Bounds Box)` - The width or the height of a box.
+- `public Bounds Box { get; init; }` - _(no documentation)_
+- `public double Size { get; init; }` - _(no documentation)_
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.Core.Geometry.Bounds`
+
+## SmartSnap (class)
+
+`internal static class SmartSnap`
+
+Source: `src/PressToShape.App/Workspace/SmartSnap.cs:27-169`
+
+The snaps of the smart guides that need the other objects: equal spacing and equal size. Each function returns candidates that PressToShape.App.Workspace.Snapper compares with the edge, guide and grid snaps. Pure functions; input that is not finite gives no candidate.
+
+**Members**
+
+- `public IReadOnlyList<SnapCandidate> EqualSpacing(Bounds dragged, SmartTargets targets, double tolerance, SpacingSides? x = null, SpacingSides? y = null)` - The equal spacing snaps for a dragged box, on both axes. A gap to the nearest neighbour on a side that is within the tolerance of a gap that exists between two other boxes snaps to that gap. A box with a neighbour on each side snaps to the middle between them when the two gaps are within the tolerance of being equal (each gap changes by half the difference, so the offset is that half). The markers show the gaps that are equal after the snap.
+- `public IReadOnlyList<SnapCandidate> EqualSize(Bounds box, int directionX, int directionY, bool fromCenter, SmartTargets targets, double tolerance)` - The equal size snaps for a box that is being resized or drawn. On an axis where an edge moves (the direction is not 0) the width or height of the box snaps to the width or height of another box within the tolerance. The offset is for the pointer on that axis: the edge that the pointer drags moves by the size difference, and with fromCenter (both edges move) by half of it. The markers are a bracket along the side of the dragged box as it will be and one along the same side of the matching box.
+
+## SmartTargets (class)
+
+`internal sealed class SmartTargets`
+
+Source: `src/PressToShape.App/Workspace/SmartTargets.cs:28-236`
+
+What the smart guides compare a drag with, collected once at the press: the boxes of all visible objects that are not part of the drag, the gaps that exist between them, and their widths and heights. Hidden layers, hidden shapes and the members of hidden groups are left out, locked objects count. A group counts by its own box and its members count too. A group that is excluded gives no box of its own, its members are still visited. A gap is measured between a box and its nearest neighbour on a side that overlaps it on the other axis, so there are at most as many gaps as boxes.
+
+**Members**
+
+- `public SmartTargets Empty { get; }` - No boxes, gaps or sizes.
+- `public IReadOnlyList<SmartBox> Boxes { get; }` - The boxes, in document order.
+- `public IReadOnlyList<SmartGap> Gaps(SnapAxis axis)` - The gaps between boxes along an axis (X: between boxes side by side), ordered by size.
+- `public IReadOnlyList<SmartSize> Sizes(SnapAxis axis)` - The widths of the boxes (axis X) or the heights (axis Y), ordered by size.
+- `public SmartTargets Collect(Document document, IReadOnlySet<Guid> excludedIds)` - Collects the targets of a document.
+- `public IReadOnlyList<SmartGap> FindGaps(SnapAxis axis, double size, double tolerance, int max)` - The gaps on the axis whose size is within the tolerance (inclusive) of the size, the nearest size first, at most max. Nothing for a size or tolerance that is not finite.
+- `public SmartSize? FindSize(SnapAxis axis, double size, double tolerance)` - The nearest width (axis X) or height (axis Y) of a box within the tolerance (inclusive) of the size, or null. Of two at the same distance the smaller one wins.
+
 ## SnapAxis (enum)
 
 `internal enum SnapAxis`
@@ -1529,11 +1786,30 @@ The axis a snap works on.
 - `public X` - Horizontal positions: a vertical guide line stands at an x value.
 - `public Y` - Vertical positions: a horizontal guide line stands at a y value.
 
+## SnapCandidate (record)
+
+`internal sealed record SnapCandidate : IEquatable<SnapCandidate>`
+
+Source: `src/PressToShape.App/Workspace/SnapTypes.cs:44-44`
+
+A snap that a smart guide offers on one axis: move the dragged box by Offset and show the Markers. PressToShape.App.Workspace.Snapper compares it with the other snaps of that axis.
+
+**Members**
+
+- `public SnapCandidate(SnapAxis Axis, double Offset, IReadOnlyList<SmartMarker> Markers)` - A snap that a smart guide offers on one axis: move the dragged box by Offset and show the Markers. PressToShape.App.Workspace.Snapper compares it with the other snaps of that axis.
+- `public SnapAxis Axis { get; init; }` - The axis the offset is on.
+- `public IReadOnlyList<SmartMarker> Markers { get; init; }` - What to draw while the snap is active.
+- `public double Offset { get; init; }` - How far to move, in document units.
+
+**Relationships**
+
+- Injected into `PressToShape.App.Workspace.Snapper.AxisSnap`
+
 ## SnapGuide (record)
 
 `internal readonly record SnapGuide : IEquatable<SnapGuide>`
 
-Source: `src/PressToShape.App/Workspace/SnapTypes.cs:21-21`
+Source: `src/PressToShape.App/Workspace/SnapTypes.cs:22-22`
 
 A guide line to draw while a point is snapped to an object. All numbers are document units.
 
@@ -1549,7 +1825,7 @@ A guide line to draw while a point is snapped to an object. All numbers are docu
 
 `internal sealed class SnapPreferences`
 
-Source: `src/PressToShape.App/Workspace/SnapPreferences.cs:12-137`
+Source: `src/PressToShape.App/Workspace/SnapPreferences.cs:12-155`
 
 The grid, snapping and ruler switches and the grid spacing, kept in the settings file. They are user settings, not part of the document. The stored values are untrusted: a missing, damaged or invalid value gives the default for that value. A setter that gets an invalid spacing keeps the old one. Every real change is saved at once and raises PressToShape.App.Workspace.SnapPreferences.Changed.
 
@@ -1565,6 +1841,8 @@ The grid, snapping and ruler switches and the grid spacing, kept in the settings
 - `public bool SnapToGrid { get; set; }` - Whether points snap to the grid lines.
 - `public bool SnapToObjects { get; set; }` - Whether points snap to the edges, centers and nodes of other objects.
 - `public bool ShowRulers { get; set; }` - Whether the rulers are shown.
+- `public bool SmartGuides { get; set; }` - Whether distance labels, equal spacing, equal size and the segment middles and crossings are on.
+- `public bool ShowGuides { get; set; }` - Whether the ruler guides are drawn, can be moved and are snapped to.
 - `public double GridSpacing { get; set; }` - The distance between grid lines in document units, from PressToShape.App.Workspace.SnapPreferences.MinSpacing to PressToShape.App.Workspace.SnapPreferences.MaxSpacing. An invalid value is ignored.
 - `public bool IsValidSpacing(double value)` - Whether a value is a usable grid spacing.
 
@@ -1577,7 +1855,7 @@ The grid, snapping and ruler switches and the grid spacing, kept in the settings
 
 `internal sealed record SnapResult : IEquatable<SnapResult>`
 
-Source: `src/PressToShape.App/Workspace/SnapTypes.cs:24-28`
+Source: `src/PressToShape.App/Workspace/SnapTypes.cs:25-35`
 
 The correction a snap gives: add the offsets to the dragged position. The guides are the object targets that were hit.
 
@@ -1587,13 +1865,15 @@ The correction a snap gives: add the offsets to the dragged position. The guides
 - `public IReadOnlyList<SnapGuide> Guides { get; init; }` - _(no documentation)_
 - `public double OffsetX { get; init; }` - _(no documentation)_
 - `public double OffsetY { get; init; }` - _(no documentation)_
+- `public IReadOnlyList<SmartMarker> Markers { get; init; }` - The markers of the smart guide snap that won on an axis, to draw while the drag lasts.
+- `public IReadOnlyList<Guid> ActiveGuideIds { get; init; }` - The ids of the ruler guides the drag snapped to. The canvas draws them as active.
 - `public SnapResult None { get; }` - No snap: no offset and no guide.
 
 ## SnapSettings (record)
 
 `internal readonly record SnapSettings : IEquatable<SnapSettings>`
 
-Source: `src/PressToShape.App/Workspace/SnapTypes.cs:9-14`
+Source: `src/PressToShape.App/Workspace/SnapTypes.cs:10-15`
 
 Which snaps are on and the grid spacing, as PressToShape.App.Workspace.Snapper needs them.
 
@@ -1609,14 +1889,15 @@ Which snaps are on and the grid spacing, as PressToShape.App.Workspace.Snapper n
 
 `internal readonly record SnapTarget : IEquatable<SnapTarget>`
 
-Source: `src/PressToShape.App/Workspace/SnapTargets.cs:29-29`
+Source: `src/PressToShape.App/Workspace/SnapTargets.cs:32-32`
 
-One position that a point can snap to on one axis. From and To are the extent of the target along the other axis, so a guide line can start and end at the target.
+One position that a point can snap to on one axis. From and To are the extent of the target along the other axis, so a guide line can start and end at the target. Id is the id of a ruler guide (type PressToShape.App.Workspace.SnapTargetType.Guide).
 
 **Members**
 
-- `public SnapTarget(double Value, SnapTargetType Type, double From, double To)` - One position that a point can snap to on one axis. From and To are the extent of the target along the other axis, so a guide line can start and end at the target.
+- `public SnapTarget(double Value, SnapTargetType Type, double From, double To, Guid? Id = null)` - One position that a point can snap to on one axis. From and To are the extent of the target along the other axis, so a guide line can start and end at the target. Id is the id of a ruler guide (type PressToShape.App.Workspace.SnapTargetType.Guide).
 - `public double From { get; init; }` - _(no documentation)_
+- `public Guid? Id { get; init; }` - _(no documentation)_
 - `public double To { get; init; }` - _(no documentation)_
 - `public SnapTargetType Type { get; init; }` - _(no documentation)_
 - `public double Value { get; init; }` - _(no documentation)_
@@ -1625,7 +1906,7 @@ One position that a point can snap to on one axis. From and To are the extent of
 
 `internal enum SnapTargetType`
 
-Source: `src/PressToShape.App/Workspace/SnapTargets.cs:10-23`
+Source: `src/PressToShape.App/Workspace/SnapTargets.cs:10-26`
 
 What a snap target is.
 
@@ -1635,12 +1916,13 @@ What a snap target is.
 - `public BoxCenter` - The center line of the bounding box of a shape or group.
 - `public PathNode` - The anchor of a path node.
 - `public Artboard` - An edge or center line of the artboard.
+- `public Guide` - A ruler guide of the document. It wins a tie with the other types.
 
 ## SnapTargets (class)
 
 `internal sealed class SnapTargets`
 
-Source: `src/PressToShape.App/Workspace/SnapTargets.cs:37-185`
+Source: `src/PressToShape.App/Workspace/SnapTargets.cs:40-221`
 
 The positions a drag can snap to, collected once at the press of a drag so that the pointer moves only search them. For every visible shape and group that is not excluded: the edges and the center of its bounding box (the box of the turned outline) and, for a path, its anchor nodes with the rotation applied. The artboard adds its edges and its center lines. Hidden shapes, shapes of hidden groups and hidden layers are no targets, locked shapes are. A group that is excluded gives no box of its own, its members are still visited.
 
@@ -1649,15 +1931,15 @@ The positions a drag can snap to, collected once at the press of a drag so that 
 - `public SnapTargets Empty { get; }` - No targets.
 - `public IReadOnlyList<SnapTarget> X { get; }` - The targets on the x axis, ordered by value.
 - `public IReadOnlyList<SnapTarget> Y { get; }` - The targets on the y axis, ordered by value.
-- `public SnapTargets Collect(Document document, IReadOnlySet<Guid> excludedIds)` - Collects the targets of a document.
+- `public SnapTargets Collect(Document document, IReadOnlySet<Guid> excludedIds, bool includeGuides = false)` - Collects the targets of a document.
 - `public SnapTargets WithNodes(IEnumerable<(double X, double Y)> nodes)` - These targets and the given anchor positions (document units) as node targets: the nodes of a path that is drawn or edited.
-- `public bool TryFindNearest(SnapAxis axis, double value, double tolerance, out SnapTarget nearest)` - The target on the axis that is nearest to the value, if one is within the tolerance (inclusive). Of two targets at the same distance the one with the smaller value wins.
+- `public bool TryFindNearest(SnapAxis axis, double value, double tolerance, out SnapTarget nearest)` - The target on the axis that is nearest to the value, if one is within the tolerance (inclusive). Of two targets at the same distance the one with the smaller value wins, and a ruler guide wins over the others at the same value.
 
 ## Snapper (class)
 
 `internal static class Snapper`
 
-Source: `src/PressToShape.App/Workspace/Snapper.cs:14-154`
+Source: `src/PressToShape.App/Workspace/Snapper.cs:14-215`
 
 Finds the correction that makes a dragged point or box line up with a target. The x axis and the y axis snap on their own. On an axis the nearest object target within the tolerance wins; only when there is none the nearest grid line does, so an object target beats a grid line that is nearer. Of several candidates (the left edge, the center and the right edge of a box) the one with the smallest distance to a target decides. The tolerance is PressToShape.App.Workspace.Snapper.TolerancePixels on the screen, so it feels the same at every zoom. Pure functions: no input that is not finite gives NaN or infinity, it gives no snap.
 
@@ -1666,7 +1948,26 @@ Finds the correction that makes a dragged point or box line up with a target. Th
 - `public double TolerancePixels` - How close, in screen pixels, a point must be to a target or a grid line to snap.
 - `public IReadOnlyList<double> CandidatesX(Bounds bounds)` - The left edge, the center and the right edge of the bounds: the candidates on the x axis.
 - `public IReadOnlyList<double> CandidatesY(Bounds bounds)` - The top edge, the center and the bottom edge of the bounds: the candidates on the y axis.
-- `public SnapResult Snap(IReadOnlyList<double> xCandidates, IReadOnlyList<double> yCandidates, SnapTargets? targets, SnapSettings settings, double zoomPercent, Bounds? dragged = null)` - The offsets that put the best candidate on a target or a grid line, and the guide lines of the object targets that were hit.
+- `public SnapResult Snap(IReadOnlyList<double> xCandidates, IReadOnlyList<double> yCandidates, SnapTargets? targets, SnapSettings settings, double zoomPercent, Bounds? dragged = null, IReadOnlyList<SnapCandidate>? extras = null)` - The offsets that put the best candidate on a target or a grid line, and the guide lines of the object targets that were hit.
+
+## SpacingSides (record)
+
+`internal readonly record SpacingSides : IEquatable<SpacingSides>`
+
+Source: `src/PressToShape.App/Workspace/SmartSnap.cs:8-21`
+
+Which equal spacing snaps apply on an axis: the gap before the box (left, above), the gap after it, and the middle between the two.
+
+**Members**
+
+- `public SpacingSides(bool Before, bool After, bool Centered)` - Which equal spacing snaps apply on an axis: the gap before the box (left, above), the gap after it, and the middle between the two.
+- `public bool After { get; init; }` - _(no documentation)_
+- `public bool Before { get; init; }` - _(no documentation)_
+- `public bool Centered { get; init; }` - _(no documentation)_
+- `public SpacingSides All { get; }` - All three.
+- `public SpacingSides None { get; }` - None: the axis is skipped.
+- `public SpacingSides AfterOnly { get; }` - Only the gap after the box: for a resize that drags the right or the bottom edge.
+- `public SpacingSides BeforeOnly { get; }` - Only the gap before the box: for a resize that drags the left or the top edge.
 
 ## TickType (enum)
 

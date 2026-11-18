@@ -65,6 +65,28 @@ _(no documentation)_
 - `public void Read_NewerVersionThanKnown_Fails()` - _(no documentation)_
 - `public void Read_NullBytesOrArbitraryText_NeverThrows()` - _(no documentation)_
 
+## ProjectFileGuideTests (class)
+
+`public sealed class ProjectFileGuideTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/ProjectFileGuideTests.cs:9-147`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Write_DocumentWithoutGuides_HasNoGuidesEntry()` - _(no documentation)_
+- `public void WriteThenRead_Guides_KeepOrientationPositionAndOrder()` - _(no documentation)_
+- `public void Read_ALoadedGuide_GetsANewId()` - _(no documentation)_
+- `public void Write_Guides_UseTheNamesHorizontalAndVertical()` - _(no documentation)_
+- `public void Read_FileWithoutGuides_HasNone()` - _(no documentation)_
+- `public void Read_VersionOneFile_HasNoGuides()` - _(no documentation)_
+- `public void Read_DamagedGuides_AreSkippedAndTheRestLoads()` - _(no documentation)_
+- `public void Read_GuidesEntryNull_MeansNoGuides()` - _(no documentation)_
+- `public void FormatVersion_StaysTwo_AndANewerFileStillGivesTheError()` - _(no documentation)_
+- `public void SvgExport_IgnoresGuides()` - _(no documentation)_
+- `public void WriteThenRead_ShapesAndPaletteAreUnaffectedByGuides()` - _(no documentation)_
+
 ## ProjectFileNodeTypeTests (class)
 
 `public class ProjectFileNodeTypeTests`

@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal static class __KnownINotifyPropertyChangedArgs`
 
-Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-289` (generated)
+Source: `generated/__KnownINotifyPropertyChangedArgs.g.cs:10-301` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangedEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -80,12 +80,15 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangedEv
 - `public PropertyChangedEventArgs PenOverlay` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PenOverlay" generated properties.
 - `public PropertyChangedEventArgs PenContinuedId` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "PenContinuedId" generated properties.
 - `public PropertyChangedEventArgs SnapGuides` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "SnapGuides" generated properties.
+- `public PropertyChangedEventArgs SmartMarkers` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "SmartMarkers" generated properties.
+- `public PropertyChangedEventArgs ActiveGuideIds` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "ActiveGuideIds" generated properties.
+- `public PropertyChangedEventArgs SelectedGuideId` _(generated)_ - The cached System.ComponentModel.PropertyChangedEventArgs instance for all "SelectedGuideId" generated properties.
 
 ## __KnownINotifyPropertyChangingArgs (class)
 
 `internal static class __KnownINotifyPropertyChangingArgs`
 
-Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-289` (generated)
+Source: `generated/__KnownINotifyPropertyChangingArgs.g.cs:10-301` (generated)
 
 A helper type providing cached, reusable System.ComponentModel.PropertyChangingEventArgs instances for all properties generated with CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute.
 
@@ -159,3 +162,6 @@ A helper type providing cached, reusable System.ComponentModel.PropertyChangingE
 - `public PropertyChangingEventArgs PenOverlay` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PenOverlay" generated properties.
 - `public PropertyChangingEventArgs PenContinuedId` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "PenContinuedId" generated properties.
 - `public PropertyChangingEventArgs SnapGuides` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "SnapGuides" generated properties.
+- `public PropertyChangingEventArgs SmartMarkers` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "SmartMarkers" generated properties.
+- `public PropertyChangingEventArgs ActiveGuideIds` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "ActiveGuideIds" generated properties.
+- `public PropertyChangingEventArgs SelectedGuideId` _(generated)_ - The cached System.ComponentModel.PropertyChangingEventArgs instance for all "SelectedGuideId" generated properties.
