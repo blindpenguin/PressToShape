@@ -9,32 +9,33 @@ Links come from `x:DataType`, DataContext bindings and assignments, and the View
 `T:PressToShape.App.Controls.RingMenuControl` at src/PressToShape.App/Controls/RingMenuControl.cs:23. No XAML file.
 The ring context menu. It fills the canvas area (so a press beside the ring is caught here and closes it), and draws the wedges, their icons and the center around the point where the ring was opened. It draws what PressToShape.App.ViewModels.Editor.RingMenuViewModel holds and forwards pointer and key input to it; PressToShape.App.Workspace.RingGeometry does the math. The colors and sizes come from the theme (see the styles of the classes ringWedge, ringIcon, ringCenter and ringCenterText).
 
-- view model `RingMenuViewModel` (`T:PressToShape.App.ViewModels.Editor.RingMenuViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:67 (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:67); 0 commands, 5 test classes
+- view model `RingMenuViewModel` (`T:PressToShape.App.ViewModels.Editor.RingMenuViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:72 (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:72); 0 commands, 5 test classes
 
 ### DesktopShellView
 
 `T:PressToShape.App.Views.Desktop.DesktopShellView` at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml.cs:8. XAML: `src/PressToShape.App/Views/Desktop/DesktopShellView.axaml`, 21 bindings.
 _(no documentation)_
 
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:1); 5 commands, 6 test classes
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DesktopShellKeyBindingTests.cs:29); 5 commands, 6 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:1); 5 commands, 9 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DesktopShellKeyBindingTests.cs:29); 5 commands, 9 test classes
 
 ### MenuBarView
 
 `T:PressToShape.App.Views.Desktop.MenuBarView` at src/PressToShape.App/Views/Desktop/MenuBarView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Desktop/MenuBarView.axaml`, 13 bindings.
 _(no documentation)_
 
-- view model `MenuBarViewModel` (`T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:36 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:36); 0 commands, 4 test classes
-- view model `MenuBarViewModel` (`T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/MenuBarView.axaml:1); 0 commands, 4 test classes
+- view model `MenuBarViewModel` (`T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:36 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:36); 0 commands, 5 test classes
+- view model `MenuBarViewModel` (`T:PressToShape.App.ViewModels.Desktop.MenuBarViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/MenuBarView.axaml:1); 0 commands, 5 test classes
 
 ### StatusBarView
 
-`T:PressToShape.App.Views.Desktop.StatusBarView` at src/PressToShape.App/Views/Desktop/StatusBarView.axaml.cs:5. XAML: `src/PressToShape.App/Views/Desktop/StatusBarView.axaml`, 13 bindings.
+`T:PressToShape.App.Views.Desktop.StatusBarView` at src/PressToShape.App/Views/Desktop/StatusBarView.axaml.cs:6. XAML: `src/PressToShape.App/Views/Desktop/StatusBarView.axaml`, 19 bindings.
 _(no documentation)_
 
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:50 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:50); 4 commands, 6 test classes
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/StatusBarView.axaml:1); 4 commands, 6 test classes
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:216); 4 commands, 6 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:50 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:50); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/StatusBarView.axaml:1); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/StatusBarSnapViewTests.cs:24); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:217); 4 commands, 8 test classes
 
 ### ToolbarView
 
@@ -46,15 +47,17 @@ _(no documentation)_
 
 ### CanvasAreaView
 
-`T:PressToShape.App.Views.Editor.CanvasAreaView` at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:12. XAML: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml`, 34 bindings.
+`T:PressToShape.App.Views.Editor.CanvasAreaView` at src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:12. XAML: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml`, 37 bindings.
 _(no documentation)_
 
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:43 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:43); 0 commands, 19 test classes
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:1); 0 commands, 19 test classes
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28); 0 commands, 19 test classes
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DocumentCanvasControlNodeTests.cs:97); 0 commands, 19 test classes
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/RingMenuControlTests.cs:43); 0 commands, 19 test classes
-- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:327); 0 commands, 19 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:43 (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:43); 0 commands, 23 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/CanvasAreaView.axaml:1); 0 commands, 23 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:28); 0 commands, 23 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/CanvasAreaViewSnapTests.cs:30); 0 commands, 23 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/CanvasAreaViewSnapTests.cs:92); 0 commands, 23 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DocumentCanvasControlNodeTests.cs:97); 0 commands, 23 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/RingMenuControlTests.cs:43); 0 commands, 23 test classes
+- view model `CanvasAreaViewModel` (`T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:327); 0 commands, 23 test classes
 
 ### HistoryView
 
@@ -129,8 +132,8 @@ _(no documentation)_
 `T:PressToShape.App.Views.MainWindow` at src/PressToShape.App/Views/MainWindow.axaml.cs:6. XAML: `src/PressToShape.App/Views/MainWindow.axaml`, 1 bindings.
 _(no documentation)_
 
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:40); 5 commands, 6 test classes
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1); 5 commands, 6 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:40); 5 commands, 9 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1); 5 commands, 9 test classes
 
 ### MessageDialogView
 
@@ -170,24 +173,26 @@ The tabbed panel of the tablet layout, with an icon for each tab. All state is i
 `T:PressToShape.App.Views.Tablet.TabletShellView` at src/PressToShape.App/Views/Tablet/TabletShellView.axaml.cs:19. XAML: `src/PressToShape.App/Views/Tablet/TabletShellView.axaml`, 8 bindings.
 The root of the tablet layout. The code-behind has three view-only jobs that need the platform or the pointer: it hands the Back button to the view model (after closing an open menu of the toolbar or the status bar, which only the view knows about), it closes the panel when the canvas is touched, and it keeps the layout above the on-screen keyboard. Avalonia already keeps the content out from under the system bars, and the keyboard does not resize the view but only reports the area it covers (found on the device), so the bottom margin is set here.
 
-- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:72); 0 commands, 6 test classes
-- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:1); 0 commands, 6 test classes
-- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:86); 0 commands, 6 test classes
-- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:366); 0 commands, 6 test classes
+- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:72); 0 commands, 8 test classes
+- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:1); 0 commands, 8 test classes
+- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/CanvasAreaViewSnapTests.cs:108); 0 commands, 8 test classes
+- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:86); 0 commands, 8 test classes
+- view model `TabletShellViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:366); 0 commands, 8 test classes
 
 ### TabletStatusBarView
 
-`T:PressToShape.App.Views.Tablet.TabletStatusBarView` at src/PressToShape.App/Views/Tablet/TabletStatusBarView.axaml.cs:11. XAML: `src/PressToShape.App/Views/Tablet/TabletStatusBarView.axaml`, 10 bindings.
+`T:PressToShape.App.Views.Tablet.TabletStatusBarView` at src/PressToShape.App/Views/Tablet/TabletStatusBarView.axaml.cs:11. XAML: `src/PressToShape.App/Views/Tablet/TabletStatusBarView.axaml`, 16 bindings.
 The status bar of the tablet layout. All behavior is in PressToShape.App.ViewModels.Editor.StatusBarViewModel. The view only knows whether its zoom list is open, so the Back button can close it first: a menu is not part of the view model.
 
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:34 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:34); 4 commands, 6 test classes
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: x:DataType (src/PressToShape.App/Views/Tablet/TabletStatusBarView.axaml:1); 4 commands, 6 test classes
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:109); 4 commands, 6 test classes
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:134); 4 commands, 6 test classes
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:150); 4 commands, 6 test classes
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:167); 4 commands, 6 test classes
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:183); 4 commands, 6 test classes
-- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:215); 4 commands, 6 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:34 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:34); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: x:DataType (src/PressToShape.App/Views/Tablet/TabletStatusBarView.axaml:1); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/StatusBarSnapViewTests.cs:24); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:109); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:134); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:150); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:168); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:184); 4 commands, 8 test classes
+- view model `StatusBarViewModel` (`T:PressToShape.App.ViewModels.Editor.StatusBarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:216); 4 commands, 8 test classes
 
 ### TabletToolColumnView
 
@@ -196,23 +201,23 @@ _(no documentation)_
 
 - view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:24 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:24); 0 commands, 3 test classes
 - view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: x:DataType (src/PressToShape.App/Views/Tablet/TabletToolColumnView.axaml:1); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:589); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:605); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:621); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:637); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:650); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:668); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:689); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:707); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:726); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:766); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:780); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:798); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:814); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:829); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:859); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:884); 0 commands, 3 test classes
-- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:903); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:590); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:606); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:622); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:638); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:651); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:669); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:690); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:708); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:727); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:767); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:781); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:799); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:815); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:830); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:860); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:885); 0 commands, 3 test classes
+- view model `TabletToolColumnViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolColumnViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:904); 0 commands, 3 test classes
 
 ### TabletToolbarView
 
@@ -232,7 +237,7 @@ The compact toolbar of the tablet layout. All behavior is in PressToShape.App.Vi
 - view model `TabletToolbarViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:212); 0 commands, 2 test classes
 - view model `TabletToolbarViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:229); 0 commands, 2 test classes
 - view model `TabletToolbarViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:248); 0 commands, 2 test classes
-- view model `TabletToolbarViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:746); 0 commands, 2 test classes
+- view model `TabletToolbarViewModel` (`T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:747); 0 commands, 2 test classes
 
 ## View models without a view
 

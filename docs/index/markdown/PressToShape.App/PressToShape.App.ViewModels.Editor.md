@@ -12,7 +12,11 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 
 **Members**
 
+- `public bool ShowGrid { get; }` - Whether the grid is drawn.
+- `public double GridSpacing { get; }` - The distance between grid lines in document units.
 - `public bool IsWatchingLongPress { get; }` - Whether a press may still become a long press, so the view keeps calling PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.Tick.
+- `public bool ShowRulers { get; }` - Whether the rulers are shown.
+- `public IReadOnlyList<ScreenSnapGuide> SnapGuidesOnScreen { get; }` - The guide lines of the current drag in screen pixels. Empty without a snap to an object.
 - `public void Tick()` - Time passed. When a finger or a pen has stayed down long enough without moving, the action the press started is undone and the ring menu opens at the press. The release that follows is no tap.
 - `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null)` - _(no documentation)_
 - `public double ViewportWidth { get; set; }` - _(no documentation)_
@@ -46,16 +50,16 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - `public double OriginX { get; }` - Horizontal screen position of the artboard's left edge, where the horizontal ruler's zero is. The artboard is centered (also when it is larger than the canvas area) and then moved by the view offset.
 - `public double OriginY { get; }` - Vertical screen position of the artboard's top edge. The vertical ruler's zero is here.
 - `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. The tablet layout sets it from the theme.
-- `public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = Mouse)` - The primary button went down. The position is in screen pixels of the canvas area. With the Hand tool this starts dragging the view, with the Zoom tool it zooms one step in (with alt: out) around the position, with the other tools it is handled by the tool. inputType is the device: a finger grabs handles from a larger area.
+- `public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = Mouse, bool suspendSnap = false)` - The primary button went down. The position is in screen pixels of the canvas area. With the Hand tool this starts dragging the view, with the Zoom tool it zooms one step in (with alt: out) around the position, with the other tools it is handled by the tool. inputType is the device: a finger grabs handles from a larger area.
 - `public bool OpenContextMenu(double screenX, double screenY, InputPointerType inputType = Mouse)` - Opens the ring menu at this position, in screen pixels of the canvas area (right-click, long press or the barrel button of a pen). First applies the selection rules of the menu (see PressToShape.App.Workspace.CanvasInteraction.SelectForContextMenu). Does nothing without a ring, with a tool other than Select, or while a drag, a pan, a pick from the canvas or a two-finger gesture is in progress.
-- `public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = Mouse)` - The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters a group or leaves the entered one (see PressToShape.App.Workspace.CanvasInteraction.DoubleClicked). With other tools it acts as a normal press.
+- `public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = Mouse, bool suspendSnap = false)` - The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters a group or leaves the entered one (see PressToShape.App.Workspace.CanvasInteraction.DoubleClicked). With other tools it acts as a normal press.
 - `public void TouchPressed(int id, double screenX, double screenY)` - A finger went down. One finger acts with the active tool like the mouse. A second finger undoes that action (see PressToShape.App.Workspace.CanvasInteraction.Abort) and the two fingers then move and zoom the view. Mouse and pen use PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.PointerPressed. The id only has to be unique from this press to the release.
 - `public void TouchMoved(int id, double screenX, double screenY)` - A finger moved.
 - `public void TouchReleased(int id, double screenX, double screenY)` - A finger went up.
 - `public void TouchCancelled()` - The system took the fingers away, or the pointer capture was lost. All fingers are forgotten and an action of one finger that was not finished is undone. Does nothing if no finger is down, for example after a normal release.
 - `public void MiddlePressed(double screenX, double screenY)` - The middle button went down: drags the view with any tool, unless another drag is in progress.
-- `public void PointerMoved(double screenX, double screenY, bool shift = false, bool alt = false)` - The pointer moved. The position is in screen pixels of the canvas area.
-- `public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)` - The button went up. The position is in screen pixels of the canvas area.
+- `public void PointerMoved(double screenX, double screenY, bool shift = false, bool alt = false, bool suspendSnap = false)` - The pointer moved. The position is in screen pixels of the canvas area.
+- `public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false, bool suspendSnap = false)` - The button went up. The position is in screen pixels of the canvas area.
 - `public void PointerHover(double screenX, double screenY)` - The pointer moved over the canvas without a drag: the handle under it decides the cursor, and the Pen shows its next segment.
 - `public void PointerLeft()` - The pointer left the canvas: no handle is hovered any more.
 - `public bool KeyPressed(CanvasKey key, bool shift)` - A key went down on the canvas. The arrow keys move the selection by 1 unit, with shift by 10. Escape leaves the entered group, or clears the selection, or ends a pick from the canvas, or cancels the drag of a radius handle. Nothing else happens during a drag.
@@ -132,7 +136,7 @@ What the clipboard, delete and selection items of the Edit menu do. Undo and Red
 
 `internal abstract partial class EditorShellViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:18-380`
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:18-383`
 
 What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
 
@@ -171,7 +175,7 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public IRelayCommand UngroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Ungroup`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Ungroup.
 - `public IAsyncRelayCommand UnionShapesCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnionShapes`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnionShapes.
 - `public IRelayCommand UnlockAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll.
-- `protected EditorShellViewModel(ILocalizer localizer, FileServices services)` - _(no documentation)_
+- `protected EditorShellViewModel(ILocalizer localizer, FileServices services, bool showRulersByDefault = true)` - _(no documentation)_
 - `public EditorState State { get; }` - _(no documentation)_
 - `public ToolboxViewModel Toolbox { get; }` - _(no documentation)_
 - `public SelectionEditor Editor { get; }` - The selection edits (copy, paste, nudge, property changes). One instance, shared by the canvas, the inspector and the menus.
@@ -729,7 +733,7 @@ One wedge of the ring menu. Slots are made again for every level that is shown, 
 
 `internal partial sealed class StatusBarViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/StatusBarViewModel.cs:12-94`
+Source: `src/PressToShape.App/ViewModels/Editor/StatusBarViewModel.cs:12-129`
 
 Status bar of both layouts: selection summary and the busy text on the left, zoom controls on the right.
 
@@ -739,6 +743,10 @@ Status bar of both layouts: selection summary and the busy text on the left, zoo
 - `public StatusBarViewModel(EditorState state, ILocalizer localizer, Action fitToWindow, PathEditor? pathEditing = null)` - _(no documentation)_
 - `public bool IsBusy { get; }` - Whether a path operation is running in the background.
 - `public string BusyText { get; }` - The translated text shown while PressToShape.App.ViewModels.Editor.StatusBarViewModel.IsBusy.
+- `public bool ShowGrid { get; set; }` - Whether the grid is shown. Setting it changes the user setting, so the menu and the other status bar follow.
+- `public bool SnapToGrid { get; set; }` - Whether points snap to the grid lines.
+- `public bool SnapToObjects { get; set; }` - Whether points snap to the edges, centers and nodes of other objects.
+- `public NumberFieldViewModel GridSpacingField { get; }` - The grid spacing box. A value outside PressToShape.App.Workspace.SnapPreferences.MinSpacing to PressToShape.App.Workspace.SnapPreferences.MaxSpacing or text that is no number is refused and the old value comes back.
 - `public string SelectionSummary { get; }` - The translated selection text: "Nothing selected", "1 selected" or "N selected".
 - `public string PathLengthText { get; }` - Path length of the selection, for example "Path length: 2,480.6 px". Empty until selections exist.
 - `public bool ShowPathLength { get; }` - _(no documentation)_

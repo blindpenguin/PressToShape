@@ -18,25 +18,30 @@ none found
 
 ## DocumentCanvasControl
 
-`T:PressToShape.App.Controls.DocumentCanvasControl` at src/PressToShape.App/Controls/DocumentCanvasControl.cs:16, base `Control`.
+`T:PressToShape.App.Controls.DocumentCanvasControl` at src/PressToShape.App/Controls/DocumentCanvasControl.cs:17, base `Control`.
 Draws the shapes of a document. It only draws: PressToShape.App.Workspace.CanvasScene decides what is drawn and where. Shape colors are document data, so this control uses no theme brushes. It does not handle pointer input.
 
 **Properties**
 
-- `DimOpacity` (Styled, `double`, default 0.35) at line 70
-- `Document` (Styled, `Document?`, default not set) at line 18
-- `Draft` (Styled, `ScreenShape?`, default not set) at line 34
-- `EnteredGroupId` (Styled, `Guid?`, default not set) at line 66
-- `HandleSize` (Styled, `double`, default SelectionOverlay.HandleSize) at line 62
-- `HiddenShapeId` (Styled, `Guid?`, default not set) at line 50
-- `NodeOverlay` (Styled, `ScreenNodeOverlay?`, default not set) at line 46
-- `OriginX` (Styled, `double`, default not set) at line 26
-- `OriginY` (Styled, `double`, default not set) at line 30
-- `Overlay` (Styled, `SelectionOverlay?`, default not set) at line 38
-- `PenOverlay` (Styled, `ScreenPenOverlay?`, default not set) at line 42
-- `SelectionBrush` (Styled, `IBrush?`, default not set) at line 54
-- `SelectionHandleFillBrush` (Styled, `IBrush?`, default not set) at line 58
-- `ZoomPercent` (Styled, `double`, default 100) at line 22
+- `DimOpacity` (Styled, `double`, default 0.35) at line 71
+- `Document` (Styled, `Document?`, default not set) at line 19
+- `Draft` (Styled, `ScreenShape?`, default not set) at line 35
+- `EnteredGroupId` (Styled, `Guid?`, default not set) at line 67
+- `GridBrush` (Styled, `IBrush?`, default not set) at line 83
+- `GridSpacing` (Styled, `double`, default 10) at line 79
+- `GuideBrush` (Styled, `IBrush?`, default not set) at line 91
+- `HandleSize` (Styled, `double`, default SelectionOverlay.HandleSize) at line 63
+- `HiddenShapeId` (Styled, `Guid?`, default not set) at line 51
+- `NodeOverlay` (Styled, `ScreenNodeOverlay?`, default not set) at line 47
+- `OriginX` (Styled, `double`, default not set) at line 27
+- `OriginY` (Styled, `double`, default not set) at line 31
+- `Overlay` (Styled, `SelectionOverlay?`, default not set) at line 39
+- `PenOverlay` (Styled, `ScreenPenOverlay?`, default not set) at line 43
+- `SelectionBrush` (Styled, `IBrush?`, default not set) at line 55
+- `SelectionHandleFillBrush` (Styled, `IBrush?`, default not set) at line 59
+- `ShowGrid` (Styled, `bool`, default not set) at line 75
+- `SnapGuides` (Styled, `IReadOnlyList<ScreenSnapGuide>?`, default not set) at line 87
+- `ZoomPercent` (Styled, `double`, default 100) at line 23
 
 **Events**
 

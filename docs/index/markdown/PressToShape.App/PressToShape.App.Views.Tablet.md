@@ -53,12 +53,13 @@ The root of the tablet layout. The code-behind has three view-only jobs that nee
 
 `public partial class TabletStatusBarView : UserControl`
 
-Source: `src/PressToShape.App/Views/Tablet/TabletStatusBarView.axaml.cs:11-29`
+Source: `src/PressToShape.App/Views/Tablet/TabletStatusBarView.axaml.cs:11-30`
 
 The status bar of the tablet layout. All behavior is in PressToShape.App.ViewModels.Editor.StatusBarViewModel. The view only knows whether its zoom list is open, so the Back button can close it first: a menu is not part of the view model.
 
 **Members**
 
+- `internal TextBox GridSpacingBox` _(generated)_ - _(no documentation)_
 - `internal DropDownButton ZoomButton` _(generated)_ - _(no documentation)_
 - `public TabletStatusBarView()` - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).

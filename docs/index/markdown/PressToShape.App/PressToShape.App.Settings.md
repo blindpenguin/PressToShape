@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `internal sealed class AppSettings`
 
-Source: `src/PressToShape.App/Settings/AppSettings.cs:8-22`
+Source: `src/PressToShape.App/Settings/AppSettings.cs:8-37`
 
 User settings stored in settings.json. Unknown entries are kept, so newer settings survive a save by an older version.
 
@@ -14,6 +14,11 @@ User settings stored in settings.json. Unknown entries are kept, so newer settin
 
 - `public string? Language { get; set; }` - The language code chosen by the user, for example "de". Null means no choice has been made.
 - `public JsonElement? RecentFiles { get; set; }` - The recently used files, most recent first, as a JSON array of paths. It is kept as a raw JSON value on purpose: a damaged value must not make the whole settings file unreadable. PressToShape.App.Workspace.RecentFiles reads and writes it.
+- `public JsonElement? ShowGrid { get; set; }` - Whether the grid is shown. Kept as a raw JSON value on purpose, like PressToShape.App.Settings.AppSettings.RecentFiles: a damaged value must not make the whole file unreadable.
+- `public JsonElement? SnapToGrid { get; set; }` - Whether moves and drawing snap to the grid (raw JSON value).
+- `public JsonElement? SnapToObjects { get; set; }` - Whether moves and drawing snap to other objects (raw JSON value).
+- `public JsonElement? GridSpacing { get; set; }` - The grid spacing in document units (raw JSON value).
+- `public JsonElement? ShowRulers { get; set; }` - Whether the rulers are shown (raw JSON value). Missing means the default of the layout.
 - `public Dictionary<string, JsonElement>? ExtraData { get; set; }` - Entries this version does not know about.
 
 ## ISettingsStore (interface)
@@ -35,9 +40,11 @@ Loads and saves PressToShape.App.Settings.AppSettings. Neither operation throws.
 - Implemented by `PressToShape.App.Tests.LanguagePreferenceTests.MemoryStore`
 - Implemented by `PressToShape.App.Tests.MemorySettingsStore`
 - Implemented by `PressToShape.App.Tests.RecentFilesTests.MemoryStore`
+- Implemented by `PressToShape.App.Workspace.SnapPreferences.NoStore`
 - Injected into `PressToShape.App.Localization.LanguagePreference`
 - Injected into `PressToShape.App.Services.FileServices`
 - Injected into `PressToShape.App.Workspace.RecentFiles`
+- Injected into `PressToShape.App.Workspace.SnapPreferences`
 
 ## JsonFileSettingsStore (class)
 

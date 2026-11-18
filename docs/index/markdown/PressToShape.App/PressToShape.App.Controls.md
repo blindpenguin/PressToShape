@@ -19,7 +19,7 @@ A titled section whose whole header row toggles the content. Used by the inspect
 
 `internal sealed class DocumentCanvasControl : Control`
 
-Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:16-533`
+Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:17-651`
 
 Draws the shapes of a document. It only draws: PressToShape.App.Workspace.CanvasScene decides what is drawn and where. Shape colors are document data, so this control uses no theme brushes. It does not handle pointer input.
 
@@ -39,6 +39,11 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `public StyledProperty<double> HandleSizeProperty` - The side of a selection handle in screen pixels. It comes from the theme, so a layout for touch can draw larger handles.
 - `public StyledProperty<Guid?> EnteredGroupIdProperty` - The entered group. Shapes outside it are drawn faded (see PressToShape.App.Workspace.CanvasScene). null when no group is entered.
 - `public StyledProperty<double> DimOpacityProperty` - The opacity of the shapes outside the entered group, 0 to 1. It comes from the theme.
+- `public StyledProperty<bool> ShowGridProperty` - Whether the grid is drawn, behind the shapes.
+- `public StyledProperty<double> GridSpacingProperty` - The distance between grid lines in document units.
+- `public StyledProperty<IBrush?> GridBrushProperty` - The brush of the grid lines. It comes from the theme.
+- `public StyledProperty<IReadOnlyList<ScreenSnapGuide>?> SnapGuidesProperty` - The guide lines of the object a drag is snapped to, in screen space. They are drawn over everything else.
+- `public StyledProperty<IBrush?> GuideBrushProperty` - The brush of the snap guide lines. It comes from the theme.
 - `public DocumentCanvasControl()` - _(no documentation)_
 - `public Document? Document { get; set; }` - _(no documentation)_
 - `public double ZoomPercent { get; set; }` - _(no documentation)_
@@ -54,6 +59,11 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `public Guid? EnteredGroupId { get; set; }` - _(no documentation)_
 - `public double DimOpacity { get; set; }` - _(no documentation)_
 - `public double HandleSize { get; set; }` - _(no documentation)_
+- `public bool ShowGrid { get; set; }` - _(no documentation)_
+- `public double GridSpacing { get; set; }` - _(no documentation)_
+- `public IBrush? GridBrush { get; set; }` - _(no documentation)_
+- `public IReadOnlyList<ScreenSnapGuide>? SnapGuides { get; set; }` - _(no documentation)_
+- `public IBrush? GuideBrush { get; set; }` - _(no documentation)_
 - `public void Render(DrawingContext context)` - _(no documentation)_
 
 ## NumberFieldBehavior (class)

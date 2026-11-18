@@ -33,7 +33,7 @@ Root of the desktop layout. Adds the menu bar, the toolbar and the status bar to
 
 `internal sealed class MenuBarViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:20-194`
+Source: `src/PressToShape.App/ViewModels/Desktop/MenuBarViewModel.cs:20-211`
 
 The complete menu structure. The File actions, the Edit actions, the group, arrange, lock and hide items, the Layer menu, Quit, the zoom items, the Window items and the languages have behavior. Everything else has no command and is therefore disabled until its feature exists.
 
@@ -59,7 +59,7 @@ The complete menu structure. The File actions, the Edit actions, the group, arra
 
 `internal sealed class MenuItemViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Desktop/MenuItemViewModel.cs:15-150`
+Source: `src/PressToShape.App/ViewModels/Desktop/MenuItemViewModel.cs:15-160`
 
 One entry of the menu bar. The header is translated and refreshes when the language changes. A leaf item without a command is disabled. A submenu is always enabled so it can be opened and its (possibly disabled) items inspected. A separator is rendered with the header "-".
 
@@ -81,6 +81,8 @@ One entry of the menu bar. The header is translated and refreshes when the langu
 - `public MenuItemViewModel Submenu(ILocalizer localizer, string header, ObservableCollection<MenuItemViewModel> children)` - A submenu whose items are replaced while the app runs, such as Open Recent. The caller changes the collection, and the menu follows. Give it at least one item at all times so the submenu stays enabled.
 - `public MenuItemViewModel Fixed(ILocalizer localizer, string text, ICommand command, string? toolTip = null)` - An item with a fixed, untranslated text, for data such as a file name, and an optional tooltip.
 - `public MenuItemViewModel Separator(ILocalizer localizer)` - _(no documentation)_
+- `public MenuItemViewModel Toggle(ILocalizer localizer, string header, string? gesture, ICommand command, Func<bool> isChecked)` - A checkable item with a translated header (a message id) and an optional shortcut text, for a switch such as Show Grid. The command changes the state. Call PressToShape.App.ViewModels.Desktop.MenuItemViewModel.RefreshChecked when the state changes from somewhere else.
+- `public void RefreshChecked()` - Reads the check state again. For a state that was changed by something other than this item's command.
 - `public MenuItemViewModel Checkable(ILocalizer localizer, string fixedHeader, ICommand command, Func<bool> isChecked)` - A checkable item with a fixed, untranslated header, for language names such as "Deutsch".
 - `internal string RemoveMnemonic(string text)` - Removes the mnemonic marker of a menu text: "_Save" gives "Save", "Save __ As" gives "Save _ As".
 - `public MenuItemViewModel[] LanguageItems(ILocalizer localizer)` - One checkable item for every language of the app, named in its own language. Choosing one switches the language.

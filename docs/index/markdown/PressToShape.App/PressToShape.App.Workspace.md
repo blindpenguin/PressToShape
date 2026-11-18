@@ -56,15 +56,16 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 - `public bool IsNodeDragging { get; }` - Whether a node, handle or bend drag is in progress.
 - `public bool IsPenDrawing { get; }` - Whether the Pen has an unfinished path.
 - `public bool FinishPen()` - Finishes the path of the Pen as an open path (the Enter key). A path with fewer than two nodes is dropped. Returns whether there was a path to finish.
+- `internal bool IsSnapSuspended { get; }` - Whether the last pointer event suspended snapping (the Ctrl key was held).
 - `public CanvasInteraction(EditorState state)` - _(no documentation)_
 - `public bool DiscardPen()` - Drops the unfinished path of the Pen (the Escape key). Returns whether there was one.
 - `public bool IsDragging { get; }` - Whether a drag is in progress.
 - `public HandleType? DraggedHandle { get; }` - The handle that is being dragged, or null if no resize or rotate drag is in progress.
 - `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. A press by mouse or pen uses PressToShape.App.Workspace.SelectionGeometry.GrabSize.
-- `public void PointerPressed(double x, double y, bool shift = false, InputPointerType inputType = Mouse)` - The primary button went down at this document position. shift adds to or removes from the selection. inputType is the device: a finger grabs a handle from a larger area than a mouse or a pen.
+- `public void PointerPressed(double x, double y, bool shift = false, InputPointerType inputType = Mouse, bool suspendSnap = false)` - The primary button went down at this document position. shift adds to or removes from the selection. suspendSnap (the Ctrl key) turns snapping off for this event. inputType is the device: a finger grabs a handle from a larger area than a mouse or a pen.
 - `public bool IsOverNodeTarget(double x, double y)` - Whether the position is over something the node tools can grab: a node, a shown handle or (Node tool) a segment of a selected shape. Always false during a drag and for the other tools. Used for the cursor.
-- `public void PointerMoved(double x, double y, bool shift = false, bool alt = false)` - The pointer moved to this document position. Does nothing without a drag.
-- `public void PointerReleased(double x, double y, bool shift = false, bool alt = false)` - The button went up at this document position. Ends the drag in every case.
+- `public void PointerMoved(double x, double y, bool shift = false, bool alt = false, bool suspendSnap = false)` - The pointer moved to this document position. Does nothing without a drag.
+- `public void PointerReleased(double x, double y, bool shift = false, bool alt = false, bool suspendSnap = false)` - The button went up at this document position. Ends the drag in every case.
 - `public void Cancel()` - Ends a drag without a result: the draft is dropped and a moved shape keeps the position it has, which then counts as one step if the shape moved.
 - `public void Abort()` - Ends a drag and undoes it: the draft and the selection box are dropped, and a move, resize or rotate puts the document back to the one from the press. Nothing is recorded in the history. Used when the drag was a mistake, for example when a second finger arrives. Does nothing without a drag. PressToShape.App.Workspace.CanvasInteraction.Cancel differs: it keeps what the drag reached.
 - `public void DeleteSelection()` - Removes all selected shapes from the document as one step. With Direct Select or the Node tool and selected nodes it removes the nodes instead (see PressToShape.App.Workspace.NodeEditor.DeleteSelected). Does nothing without a selection.
@@ -75,6 +76,8 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSnapMoveTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSnapResizeTests.Scene`
 
 ## CanvasKey (enum)
 
@@ -240,24 +243,26 @@ State shared by all regions of the editor shell: the document, its undo history,
 **Members**
 
 - `public PenOverlay? PenOverlay { get; set; }` - _(no documentation)_
+- `public SnapPreferences Snapping { get; }` - The grid and snap settings. They are user settings: changing one is no edit of the document and no step of the history.
 - `public Guid? PenContinuedId { get; set; }` - _(no documentation)_
+- `public ImmutableArray<SnapGuide> SnapGuides { get; set; }` - _(no documentation)_
 - `public Guid? EnteredGroupId { get; private set; }` - _(no documentation)_
 - `public ImmutableHashSet<NodeRef> SelectedNodes { get; private set; }` - _(no documentation)_
 - `public bool HasSelectedNodes { get; }` - Whether at least one node is selected.
 - `public void SetNodeSelection(IEnumerable<NodeRef> nodes)` - Replaces the selected nodes. Repeated nodes count once.
 - `public bool EnterGroup(Guid groupId)` - Enters the group. Of the selection only the direct children of the group stay selected. Does nothing if the id is not a group that can be selected.
-- `public EditorState(Document? document = null)` - Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.
+- `public EditorState(Document? document = null, SnapPreferences? snapping = null)` - Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.
 - `public void ToggleNode(NodeRef node)` - Adds the node to the selected nodes, or removes it if it is selected.
-- `public Action<ColorPickTarget, Color>? ColorPicked` - Raised when a pick from the canvas ended on a shape: the target that asked for it and the color that was taken.
 - `public void ClearNodeSelection()` - Clears the selected nodes.
+- `public Action<ColorPickTarget, Color>? ColorPicked` - Raised when a pick from the canvas ended on a shape: the target that asked for it and the color that was taken.
 - `public EventHandler? HistoryChanged` - Raised after the undo history changed: a step was recorded, undone or redone, or the history was reset.
-- `public DocumentHistory History { get; }` - The undo history of the current document.
 - `public void LeaveGroup()` - Leaves the entered group by one level and selects it. If that group is inside another group, the other group is entered. Does nothing when no group is entered.
+- `public DocumentHistory History { get; }` - The undo history of the current document.
 - `public bool IsDragInProgress { get; set; }` - _(no documentation)_
 - `public bool CanUndo { get; }` - Whether a step can be undone right now.
 - `public bool CanRedo { get; }` - Whether a step can be redone right now.
-- `public Document Document { get; set; }` - _(no documentation)_
 - `public void LeaveAllGroups()` - Leaves every entered group at once, so the top level of the drawing is selectable again. The selection stays.
+- `public Document Document { get; set; }` - _(no documentation)_
 - `public Guid ActiveLayerId { get; set; }` - _(no documentation)_
 - `public ImmutableArray<Guid> SelectedShapeIds { get; private set; }` - _(no documentation)_
 - `public Guid? SelectedShapeId { get; }` - The id of the selected shape if exactly one shape is selected, otherwise null.
@@ -305,11 +310,14 @@ State shared by all regions of the editor shell: the document, its undo history,
 
 **Relationships**
 
+- Depends on (constructor) `PressToShape.App.Workspace.SnapPreferences`
 - Depends on (constructor) `PressToShape.Core.Documents.Document`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSnapMoveTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionSnapResizeTests.Scene`
 - Injected into `PressToShape.App.Tests.LayerEditorTests.Fixture`
 - Injected into `PressToShape.App.Tests.LayersViewModelLayerTests.Fixture`
 - Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
@@ -334,6 +342,63 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.Workspace.ObjectEditor`
 - Injected into `PressToShape.App.Workspace.PathEditor`
 - Injected into `PressToShape.App.Workspace.SelectionEditor`
+
+## GridLineSet (record)
+
+`internal sealed record GridLineSet : IEquatable<GridLineSet>`
+
+Source: `src/PressToShape.App/Workspace/GridLines.cs:8-12`
+
+The grid lines to draw, as document positions: the x of each vertical line and the y of each horizontal line.
+
+**Members**
+
+- `public GridLineSet(IReadOnlyList<double> Vertical, IReadOnlyList<double> Horizontal)` - The grid lines to draw, as document positions: the x of each vertical line and the y of each horizontal line.
+- `public IReadOnlyList<double> Horizontal { get; init; }` - _(no documentation)_
+- `public IReadOnlyList<double> Vertical { get; init; }` - _(no documentation)_
+- `public GridLineSet Empty { get; }` - No lines.
+
+## GridLines (class)
+
+`internal static class GridLines`
+
+Source: `src/PressToShape.App/Workspace/GridLines.cs:19-113`
+
+Chooses which grid lines to draw. Lines are at multiples of the spacing from the document origin. When they would be closer than PressToShape.App.Workspace.GridLines.MinPixels on screen only every n-th line is drawn (n is 2, 5, 10, 20, 50, 100 and so on, the smallest that is far enough apart), so the grid stays readable and the number of lines stays small at any zoom. Pure logic, independent of drawing.
+
+**Members**
+
+- `public double MinPixels` - The smallest distance between two drawn lines on screen, in pixels.
+- `public GridLineSet Build(double spacing, double zoomPercent, double visibleLeft, double visibleTop, double visibleRight, double visibleBottom)` - The lines inside the visible range (document units). Empty for an input that is not finite, a spacing or zoom of 0 or less, or an empty range.
+- `public GridLineSet BuildOnScreen(double spacing, double zoomPercent, double originX, double originY, double width, double height)` - The lines to draw for a canvas, in screen pixels: the x of each vertical line and the y of each horizontal one. The canvas shows the artboard origin at (originX, originY) and is width by height pixels.
+- `public GridLineSet BuildInScreenRect(double spacing, double zoomPercent, double originX, double originY, double left, double top, double right, double bottom)` - The lines inside a rectangle of the screen, in screen pixels. The artboard origin is at (originX, originY). Used to draw the grid on the artboard only: the rectangle is the part of the artboard that is visible.
+- `public double DrawnStep(double spacing, double scale)` - The distance between drawn lines in document units: the spacing times the smallest multiplier that gives at least PressToShape.App.Workspace.GridLines.MinPixels on screen.
+
+## GridMath (class)
+
+`internal static class GridMath`
+
+Source: `src/PressToShape.App/Workspace/GridMath.cs:10-63`
+
+The arithmetic of the grid: the nearest line, the next line in a direction and the distance an arrow-key nudge moves an edge. Pure functions. A line is always computed as index * spacing, never by adding spacings, so repeated use does not drift. An input that is not finite, a spacing of 0 or less, or a direction other than -1 and 1 gives no change (0, or the value itself).
+
+**Members**
+
+- `public double Nearest(double value, double spacing)` - The grid line nearest to the value. Halfway rounds away from zero.
+- `public double NextLine(double value, double spacing, int direction)` - The first grid line strictly beyond the value in the direction (1 for increasing, -1 for decreasing). A value that is already on a line gives the line one spacing away.
+- `public double NudgeDelta(double edge, double spacing, int direction, int steps)` - How far an edge at edge moves to land on a grid line: the next line in the direction, plus steps - 1 further spacings. Returns 0 for a step count below 1.
+
+## GridNudge (class)
+
+`internal static class GridNudge`
+
+Source: `src/PressToShape.App/Workspace/GridNudge.cs:7-30`
+
+How far an arrow key moves the selection. Without Snap to Grid it is one document unit, ten with Shift. With Snap to Grid the top left corner of the selection moves to the next grid line in the direction of the key, and with Shift ten grid spacings further. Pure function.
+
+**Members**
+
+- `public (double Dx, double Dy) Delta(CanvasKey key, bool shift, bool snapToGrid, double spacing, double left, double top)` - The distance to move for an arrow key. Any other key gives (0, 0).
 
 ## HandleType (enum)
 
@@ -727,7 +792,7 @@ Turns a PressToShape.App.Workspace.ScreenPath into drawing steps, so the canvas 
 
 `internal sealed class PenDrawing`
 
-Source: `src/PressToShape.App/Workspace/PenDrawing.cs:13-171`
+Source: `src/PressToShape.App/Workspace/PenDrawing.cs:13-172`
 
 The state of a path that the Pen is drawing: the nodes so far and the gesture in progress. It knows nothing about the document, the zoom or the pointer device, so it is tested alone. Distances are in document units, the caller converts them from screen pixels. A press adds a corner node, a drag after it pulls out the handles (a symmetric node), a press on the first node closes the path and a press on the last node finishes it.
 
@@ -739,7 +804,7 @@ The state of a path that the Pen is drawing: the nodes so far and the gesture in
 - `public PathShape? PreviewShape { get; }` - The path as it would be if it ended at the pointer: the nodes so far plus a corner node at the last known pointer position, which gives a line, or a curve if the last node has an out handle. While the button is down the pointer is dragging a handle, so only the nodes are shown. null while there are fewer than two nodes to show.
 - `public PenOverlay? Overlay { get; }` - What to show over the unfinished path, or null when nothing is drawn.
 - `public void Begin(IReadOnlyList<DocumentNode> existing)` - Starts from the nodes of an existing open path, to continue it. The last node is the one the new nodes follow.
-- `public PenPressResult Press(double x, double y, double lastNodeDistance, double closeDistance)` - The button went down at this position. A press within lastNodeDistance of the last node means finish (a double click or double tap). A press within closeDistance of the first node of a path with at least three nodes means close. Otherwise a corner node is added.
+- `public PenPressResult Press(double x, double y, double lastNodeDistance, double closeDistance, double? nodeX = null, double? nodeY = null)` - The button went down at this position. A press within lastNodeDistance of the last node means finish (a double click or double tap). A press within closeDistance of the first node of a path with at least three nodes means close. Otherwise a corner node is added, at the pointer or, for a snapped press, at (nodeX, nodeY). Finish and close always use the pointer position, so snapping never prevents them.
 - `public void Drag(double x, double y, double threshold)` - The pointer moved with the button down. Once it is farther than threshold from the node that was just added, the node becomes symmetric: the out handle follows the pointer and the in handle is the mirror image on the other side. A shorter drag leaves a corner. Does nothing when no press added a node.
 - `public void AbortPress()` - Takes back the node that the press in progress added, for a press that turns out to be a mistake. Does nothing when no press is in progress.
 - `public void Release()` - The button went up. The node that was added keeps the handles the drag gave it.
@@ -1202,6 +1267,22 @@ The geometry a PressToShape.App.Workspace.ScreenShape is drawn with.
 - `public Ellipse` - _(no documentation)_
 - `public Path` - A path of lines and curves. The shape's PressToShape.App.Workspace.ScreenShape.Path holds its outline.
 
+## ScreenSnapGuide (record)
+
+`internal readonly record ScreenSnapGuide : IEquatable<ScreenSnapGuide>`
+
+Source: `src/PressToShape.App/Workspace/ScreenSnapGuide.cs:8-8`
+
+A snap guide line in screen pixels, ready to draw. A vertical line stands at an x and reaches from From to To in y.
+
+**Members**
+
+- `public ScreenSnapGuide(bool IsVertical, double Position, double From, double To)` - A snap guide line in screen pixels, ready to draw. A vertical line stands at an x and reaches from From to To in y.
+- `public double From { get; init; }` - Where the line starts along its direction.
+- `public bool IsVertical { get; init; }` - Whether the line is vertical (a guide of the x axis) or horizontal (a guide of the y axis).
+- `public double Position { get; init; }` - The x of a vertical line or the y of a horizontal one.
+- `public double To { get; init; }` - Where the line ends along its direction.
+
 ## ScreenSubPath (record)
 
 `internal sealed record ScreenSubPath : IEquatable<ScreenSubPath>`
@@ -1215,6 +1296,18 @@ One sub-path of a PressToShape.App.Workspace.ScreenPath, with its nodes already 
 - `public ScreenSubPath(ImmutableArray<ScreenPathNode> Nodes, bool IsClosed)` - One sub-path of a PressToShape.App.Workspace.ScreenPath, with its nodes already in screen pixels.
 - `public bool IsClosed { get; init; }` - Whether the last node connects back to the first one.
 - `public ImmutableArray<ScreenPathNode> Nodes { get; init; }` - The nodes in drawing order, at least two.
+
+## SelectionBounds (class)
+
+`internal static class SelectionBounds`
+
+Source: `src/PressToShape.App/Workspace/SelectionBounds.cs:9-36`
+
+The box around shapes, for snapping and nudging. Pure function.
+
+**Members**
+
+- `public Bounds? Union(IReadOnlyList<Shape> shapes)` - The axis-aligned bounds around the turned outlines of the shapes, or null for no shapes.
 
 ## SelectionBox (record)
 
@@ -1422,6 +1515,158 @@ The shapes that were copied or cut. A copy kept by the app: nothing goes to the 
 - `public void Set(IEnumerable<Shape> shapes)` - Replaces the content. The next paste starts at the first offset again.
 - `public void Clear()` - Empties the clipboard.
 - `public double NextPasteOffset()` - The offset for the next paste: 10 units for the first paste, 20 for the second, and so on.
+
+## SnapAxis (enum)
+
+`internal enum SnapAxis`
+
+Source: `src/PressToShape.App/Workspace/SnapAxis.cs:4-11`
+
+The axis a snap works on.
+
+**Members**
+
+- `public X` - Horizontal positions: a vertical guide line stands at an x value.
+- `public Y` - Vertical positions: a horizontal guide line stands at a y value.
+
+## SnapGuide (record)
+
+`internal readonly record SnapGuide : IEquatable<SnapGuide>`
+
+Source: `src/PressToShape.App/Workspace/SnapTypes.cs:21-21`
+
+A guide line to draw while a point is snapped to an object. All numbers are document units.
+
+**Members**
+
+- `public SnapGuide(SnapAxis Axis, double Position, double From, double To)` - A guide line to draw while a point is snapped to an object. All numbers are document units.
+- `public SnapAxis Axis { get; init; }` - X for a vertical line at an x position, Y for a horizontal line at a y position.
+- `public double From { get; init; }` - Where the line starts along the other axis.
+- `public double Position { get; init; }` - The x or the y of the line.
+- `public double To { get; init; }` - Where the line ends along the other axis.
+
+## SnapPreferences (class)
+
+`internal sealed class SnapPreferences`
+
+Source: `src/PressToShape.App/Workspace/SnapPreferences.cs:12-137`
+
+The grid, snapping and ruler switches and the grid spacing, kept in the settings file. They are user settings, not part of the document. The stored values are untrusted: a missing, damaged or invalid value gives the default for that value. A setter that gets an invalid spacing keeps the old one. Every real change is saved at once and raises PressToShape.App.Workspace.SnapPreferences.Changed.
+
+**Members**
+
+- `public double MinSpacing` - The smallest grid spacing, in document units.
+- `public double MaxSpacing` - The largest grid spacing, in document units.
+- `public double DefaultSpacing` - The grid spacing of a new installation, in document units.
+- `public SnapPreferences(ISettingsStore store, bool defaultShowRulers = true, bool persist = true)` - _(no documentation)_
+- `public SnapPreferences InMemory(bool defaultShowRulers = true)` - Preferences that are kept only in memory, with the defaults. For a state that has no settings file, such as most tests.
+- `public EventHandler? Changed` - Raised after a value changed.
+- `public bool ShowGrid { get; set; }` - Whether the grid is drawn.
+- `public bool SnapToGrid { get; set; }` - Whether points snap to the grid lines.
+- `public bool SnapToObjects { get; set; }` - Whether points snap to the edges, centers and nodes of other objects.
+- `public bool ShowRulers { get; set; }` - Whether the rulers are shown.
+- `public double GridSpacing { get; set; }` - The distance between grid lines in document units, from PressToShape.App.Workspace.SnapPreferences.MinSpacing to PressToShape.App.Workspace.SnapPreferences.MaxSpacing. An invalid value is ignored.
+- `public bool IsValidSpacing(double value)` - Whether a value is a usable grid spacing.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.App.Settings.ISettingsStore`
+- Injected into `PressToShape.App.Workspace.EditorState`
+
+## SnapResult (record)
+
+`internal sealed record SnapResult : IEquatable<SnapResult>`
+
+Source: `src/PressToShape.App/Workspace/SnapTypes.cs:24-28`
+
+The correction a snap gives: add the offsets to the dragged position. The guides are the object targets that were hit.
+
+**Members**
+
+- `public SnapResult(double OffsetX, double OffsetY, IReadOnlyList<SnapGuide> Guides)` - The correction a snap gives: add the offsets to the dragged position. The guides are the object targets that were hit.
+- `public IReadOnlyList<SnapGuide> Guides { get; init; }` - _(no documentation)_
+- `public double OffsetX { get; init; }` - _(no documentation)_
+- `public double OffsetY { get; init; }` - _(no documentation)_
+- `public SnapResult None { get; }` - No snap: no offset and no guide.
+
+## SnapSettings (record)
+
+`internal readonly record SnapSettings : IEquatable<SnapSettings>`
+
+Source: `src/PressToShape.App/Workspace/SnapTypes.cs:9-14`
+
+Which snaps are on and the grid spacing, as PressToShape.App.Workspace.Snapper needs them.
+
+**Members**
+
+- `public SnapSettings(bool SnapToGrid, bool SnapToObjects, double GridSpacing)` - Which snaps are on and the grid spacing, as PressToShape.App.Workspace.Snapper needs them.
+- `public double GridSpacing { get; init; }` - The distance between grid lines in document units.
+- `public bool SnapToGrid { get; init; }` - Whether points snap to grid lines.
+- `public bool SnapToObjects { get; init; }` - Whether points snap to the targets of other objects.
+- `public SnapSettings From(SnapPreferences preferences)` - The current state of the preferences.
+
+## SnapTarget (record)
+
+`internal readonly record SnapTarget : IEquatable<SnapTarget>`
+
+Source: `src/PressToShape.App/Workspace/SnapTargets.cs:29-29`
+
+One position that a point can snap to on one axis. From and To are the extent of the target along the other axis, so a guide line can start and end at the target.
+
+**Members**
+
+- `public SnapTarget(double Value, SnapTargetType Type, double From, double To)` - One position that a point can snap to on one axis. From and To are the extent of the target along the other axis, so a guide line can start and end at the target.
+- `public double From { get; init; }` - _(no documentation)_
+- `public double To { get; init; }` - _(no documentation)_
+- `public SnapTargetType Type { get; init; }` - _(no documentation)_
+- `public double Value { get; init; }` - _(no documentation)_
+
+## SnapTargetType (enum)
+
+`internal enum SnapTargetType`
+
+Source: `src/PressToShape.App/Workspace/SnapTargets.cs:10-23`
+
+What a snap target is.
+
+**Members**
+
+- `public BoxEdge` - An edge of the bounding box of a shape or group.
+- `public BoxCenter` - The center line of the bounding box of a shape or group.
+- `public PathNode` - The anchor of a path node.
+- `public Artboard` - An edge or center line of the artboard.
+
+## SnapTargets (class)
+
+`internal sealed class SnapTargets`
+
+Source: `src/PressToShape.App/Workspace/SnapTargets.cs:37-185`
+
+The positions a drag can snap to, collected once at the press of a drag so that the pointer moves only search them. For every visible shape and group that is not excluded: the edges and the center of its bounding box (the box of the turned outline) and, for a path, its anchor nodes with the rotation applied. The artboard adds its edges and its center lines. Hidden shapes, shapes of hidden groups and hidden layers are no targets, locked shapes are. A group that is excluded gives no box of its own, its members are still visited.
+
+**Members**
+
+- `public SnapTargets Empty { get; }` - No targets.
+- `public IReadOnlyList<SnapTarget> X { get; }` - The targets on the x axis, ordered by value.
+- `public IReadOnlyList<SnapTarget> Y { get; }` - The targets on the y axis, ordered by value.
+- `public SnapTargets Collect(Document document, IReadOnlySet<Guid> excludedIds)` - Collects the targets of a document.
+- `public SnapTargets WithNodes(IEnumerable<(double X, double Y)> nodes)` - These targets and the given anchor positions (document units) as node targets: the nodes of a path that is drawn or edited.
+- `public bool TryFindNearest(SnapAxis axis, double value, double tolerance, out SnapTarget nearest)` - The target on the axis that is nearest to the value, if one is within the tolerance (inclusive). Of two targets at the same distance the one with the smaller value wins.
+
+## Snapper (class)
+
+`internal static class Snapper`
+
+Source: `src/PressToShape.App/Workspace/Snapper.cs:14-154`
+
+Finds the correction that makes a dragged point or box line up with a target. The x axis and the y axis snap on their own. On an axis the nearest object target within the tolerance wins; only when there is none the nearest grid line does, so an object target beats a grid line that is nearer. Of several candidates (the left edge, the center and the right edge of a box) the one with the smallest distance to a target decides. The tolerance is PressToShape.App.Workspace.Snapper.TolerancePixels on the screen, so it feels the same at every zoom. Pure functions: no input that is not finite gives NaN or infinity, it gives no snap.
+
+**Members**
+
+- `public double TolerancePixels` - How close, in screen pixels, a point must be to a target or a grid line to snap.
+- `public IReadOnlyList<double> CandidatesX(Bounds bounds)` - The left edge, the center and the right edge of the bounds: the candidates on the x axis.
+- `public IReadOnlyList<double> CandidatesY(Bounds bounds)` - The top edge, the center and the bottom edge of the bounds: the candidates on the y axis.
+- `public SnapResult Snap(IReadOnlyList<double> xCandidates, IReadOnlyList<double> yCandidates, SnapTargets? targets, SnapSettings settings, double zoomPercent, Bounds? dragged = null)` - The offsets that put the best candidate on a target or a grid line, and the guide lines of the object targets that were hit.
 
 ## TickType (enum)
 

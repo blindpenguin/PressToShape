@@ -59,13 +59,14 @@ _(no documentation)_
 
 `public partial class StatusBarView : UserControl`
 
-Source: `src/PressToShape.App/Views/Desktop/StatusBarView.axaml.cs:5-11`
+Source: `src/PressToShape.App/Views/Desktop/StatusBarView.axaml.cs:6-13`
 
 _(no documentation)_
 
 **Members**
 
 - `public StatusBarView()` - _(no documentation)_
+- `internal TextBox GridSpacingBox` _(generated)_ - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
 
 ## ToolbarView (class)

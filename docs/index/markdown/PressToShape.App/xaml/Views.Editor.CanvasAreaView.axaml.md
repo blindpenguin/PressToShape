@@ -5,6 +5,8 @@ Class: `PressToShape.App.Views.Editor.CanvasAreaView`.
 
 ## View model links
 
+- `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/CanvasAreaViewSnapTests.cs:30)
+- `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/CanvasAreaViewSnapTests.cs:92)
 - `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/DocumentCanvasControlNodeTests.cs:97)
 - `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/RingMenuControlTests.cs:43)
 - `T:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:327)
@@ -14,11 +16,11 @@ Class: `PressToShape.App.Views.Editor.CanvasAreaView`.
 
 ## Bindings
 
-- line 17: Border.IsVisible = Binding `ShowRulers` -> `P:PressToShape.App.Views.Editor.CanvasAreaView.ShowRulers` (verified), source RelativeSource AncestorType=local:CanvasAreaView
-- line 23: controls:RulerControl.IsVisible = Binding `ShowRulers` -> `P:PressToShape.App.Views.Editor.CanvasAreaView.ShowRulers` (verified), source RelativeSource AncestorType=local:CanvasAreaView
+- line 17: Border.IsVisible = Binding `ShowRulers` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.ShowRulers` (verified)
+- line 23: controls:RulerControl.IsVisible = Binding `ShowRulers` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.ShowRulers` (verified)
 - line 26: controls:RulerControl.ZoomPercent = Binding `ZoomPercent` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.ZoomPercent` (verified)
 - line 27: controls:RulerControl.OriginPx = Binding `OriginX` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.OriginX` (verified)
-- line 30: controls:RulerControl.IsVisible = Binding `ShowRulers` -> `P:PressToShape.App.Views.Editor.CanvasAreaView.ShowRulers` (verified), source RelativeSource AncestorType=local:CanvasAreaView
+- line 30: controls:RulerControl.IsVisible = Binding `ShowRulers` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.ShowRulers` (verified)
 - line 33: controls:RulerControl.ZoomPercent = Binding `ZoomPercent` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.ZoomPercent` (verified)
 - line 34: controls:RulerControl.OriginPx = Binding `OriginY` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.OriginY` (verified)
 - line 43: Border.Canvas.Left = Binding `OriginX` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.OriginX` (verified)
@@ -35,19 +37,22 @@ Class: `PressToShape.App.Views.Editor.CanvasAreaView`.
 - line 59: controls:DocumentCanvasControl.NodeOverlay = Binding `NodeOverlay` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.NodeOverlay` (verified)
 - line 60: controls:DocumentCanvasControl.HiddenShapeId = Binding `HiddenShapeId` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HiddenShapeId` (verified)
 - line 61: controls:DocumentCanvasControl.EnteredGroupId = Binding `EnteredGroupId` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.EnteredGroupId` (verified)
-- line 68: RingMenu.DataContext = Binding `Ring` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.Ring` (verified)
-- line 80: VerticalBar.Minimum = Binding `VerticalScrollMinimum` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollMinimum` (verified)
-- line 81: VerticalBar.Maximum = Binding `VerticalScrollMaximum` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollMaximum` (verified)
-- line 82: VerticalBar.ViewportSize = Binding `VerticalScrollViewportSize` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollViewportSize` (verified)
-- line 83: VerticalBar.LargeChange = Binding `VerticalScrollViewportSize` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollViewportSize` (verified)
-- line 84: VerticalBar.Value = Binding `VerticalScrollValue` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollValue` (verified)
-- line 85: VerticalBar.IsEnabled = Binding `CanScrollVertically` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.CanScrollVertically` (verified)
-- line 93: HorizontalBar.Minimum = Binding `HorizontalScrollMinimum` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollMinimum` (verified)
-- line 94: HorizontalBar.Maximum = Binding `HorizontalScrollMaximum` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollMaximum` (verified)
-- line 95: HorizontalBar.ViewportSize = Binding `HorizontalScrollViewportSize` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollViewportSize` (verified)
-- line 96: HorizontalBar.LargeChange = Binding `HorizontalScrollViewportSize` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollViewportSize` (verified)
-- line 97: HorizontalBar.Value = Binding `HorizontalScrollValue` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollValue` (verified)
-- line 98: HorizontalBar.IsEnabled = Binding `CanScrollHorizontally` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.CanScrollHorizontally` (verified)
+- line 64: controls:DocumentCanvasControl.ShowGrid = Binding `ShowGrid` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.ShowGrid` (verified)
+- line 65: controls:DocumentCanvasControl.GridSpacing = Binding `GridSpacing` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.GridSpacing` (verified)
+- line 67: controls:DocumentCanvasControl.SnapGuides = Binding `SnapGuidesOnScreen` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.SnapGuidesOnScreen` (verified)
+- line 73: RingMenu.DataContext = Binding `Ring` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.Ring` (verified)
+- line 85: VerticalBar.Minimum = Binding `VerticalScrollMinimum` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollMinimum` (verified)
+- line 86: VerticalBar.Maximum = Binding `VerticalScrollMaximum` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollMaximum` (verified)
+- line 87: VerticalBar.ViewportSize = Binding `VerticalScrollViewportSize` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollViewportSize` (verified)
+- line 88: VerticalBar.LargeChange = Binding `VerticalScrollViewportSize` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollViewportSize` (verified)
+- line 89: VerticalBar.Value = Binding `VerticalScrollValue` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.VerticalScrollValue` (verified)
+- line 90: VerticalBar.IsEnabled = Binding `CanScrollVertically` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.CanScrollVertically` (verified)
+- line 98: HorizontalBar.Minimum = Binding `HorizontalScrollMinimum` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollMinimum` (verified)
+- line 99: HorizontalBar.Maximum = Binding `HorizontalScrollMaximum` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollMaximum` (verified)
+- line 100: HorizontalBar.ViewportSize = Binding `HorizontalScrollViewportSize` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollViewportSize` (verified)
+- line 101: HorizontalBar.LargeChange = Binding `HorizontalScrollViewportSize` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollViewportSize` (verified)
+- line 102: HorizontalBar.Value = Binding `HorizontalScrollValue` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.HorizontalScrollValue` (verified)
+- line 103: HorizontalBar.IsEnabled = Binding `CanScrollHorizontally` -> `P:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.CanScrollHorizontally` (verified)
 
 ## Resource references
 
@@ -62,7 +67,9 @@ Class: `PressToShape.App.Views.Editor.CanvasAreaView`.
 - line 48: Border.BorderBrush = DynamicResource `ArtboardBorderBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ArtboardBorderBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/ArtboardBorderBrush@Light` (verified)
 - line 62: controls:DocumentCanvasControl.DimOpacity = DynamicResource `EnteredGroupDimOpacity` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/EnteredGroupDimOpacity` (verified)
 - line 63: controls:DocumentCanvasControl.HandleSize = DynamicResource `SelectionHandleSize` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionHandleSize` (verified)
-- line 64: controls:DocumentCanvasControl.SelectionBrush = DynamicResource `SelectionOutlineBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionOutlineBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionOutlineBrush@Light` (verified)
-- line 65: controls:DocumentCanvasControl.SelectionHandleFillBrush = DynamicResource `SelectionHandleFillBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionHandleFillBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionHandleFillBrush@Light` (verified)
-- line 69: RingMenu.InnerRadius = DynamicResource `RingInnerRadius` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingInnerRadius` (verified)
-- line 70: RingMenu.OuterRadius = DynamicResource `RingOuterRadius` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingOuterRadius` (verified)
+- line 66: controls:DocumentCanvasControl.GridBrush = DynamicResource `GridLineBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/GridLineBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/GridLineBrush@Light` (verified)
+- line 68: controls:DocumentCanvasControl.GuideBrush = DynamicResource `SnapGuideBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SnapGuideBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SnapGuideBrush@Light` (verified)
+- line 69: controls:DocumentCanvasControl.SelectionBrush = DynamicResource `SelectionOutlineBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionOutlineBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionOutlineBrush@Light` (verified)
+- line 70: controls:DocumentCanvasControl.SelectionHandleFillBrush = DynamicResource `SelectionHandleFillBrush` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionHandleFillBrush@Dark`, `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/SelectionHandleFillBrush@Light` (verified)
+- line 74: RingMenu.InnerRadius = DynamicResource `RingInnerRadius` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingInnerRadius` (verified)
+- line 75: RingMenu.OuterRadius = DynamicResource `RingOuterRadius` -> `R:src/PressToShape.App/Styles/Theme.axaml#/ResourceDictionary/RingOuterRadius` (verified)

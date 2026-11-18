@@ -6,6 +6,7 @@ Class: `PressToShape.App.Views.Tablet.TabletShellView`.
 ## View model links
 
 - `T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel` (verified): DataContext assignment (src/PressToShape.App/AppLayout.cs:72)
+- `T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/CanvasAreaViewSnapTests.cs:108)
 - `T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:86)
 - `T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:366)
 - `T:PressToShape.App.ViewModels.Tablet.TabletShellViewModel` (verified): x:DataType (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:1)

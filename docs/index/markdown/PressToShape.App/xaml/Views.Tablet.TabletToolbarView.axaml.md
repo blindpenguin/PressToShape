@@ -15,7 +15,7 @@ Class: `PressToShape.App.Views.Tablet.TabletToolbarView`.
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:229)
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:248)
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:72)
-- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:746)
+- `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:747)
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/TabletViewsTests.cs:85)
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:21 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:21)
 - `T:PressToShape.App.ViewModels.Tablet.TabletToolbarViewModel` (verified): x:DataType (src/PressToShape.App/Views/Tablet/TabletToolbarView.axaml:1)

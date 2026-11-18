@@ -90,6 +90,23 @@ _(no documentation)_
 - `public void DoubleTap_WithAnotherTool_DoesNothing()` - _(no documentation)_
 - `public void TwoFingerGesture_BetweenTaps_BreaksTheDoubleTap()` - _(no documentation)_
 
+## CanvasAreaViewModelGridTests (class)
+
+`public sealed class CanvasAreaViewModelGridTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelGridTests.cs:9-109`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Properties_Default_AreGridOffSpacingTenRulersOn()` - _(no documentation)_
+- `public void Properties_FollowThePreferences_AndRaiseTheChange()` - _(no documentation)_
+- `public void SnapGuidesOnScreen_ConvertsToScreenPixels_AtFullZoom()` - _(no documentation)_
+- `public void SnapGuidesOnScreen_FollowTheZoom(double zoom)` - _(no documentation)_
+- `public void SnapGuidesOnScreen_FollowThePan()` - _(no documentation)_
+- `public void SnapGuidesOnScreen_ChangeRaisesTheProperty_AndClearingEmptiesIt()` - _(no documentation)_
+
 ## CanvasAreaViewModelLongPressTests (class)
 
 `public class CanvasAreaViewModelLongPressTests`
@@ -214,6 +231,26 @@ _(no documentation)_
 - `public void DocumentChange_WhileOpen_ClosesTheRing()` - _(no documentation)_
 - `public void OpenContextMenu_AddsNoHistoryStep()` - _(no documentation)_
 
+## CanvasAreaViewModelSnapNudgeTests (class)
+
+`public sealed class CanvasAreaViewModelSnapNudgeTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelSnapNudgeTests.cs:12-152`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Arrow_SnapToGridOn_MovesTheTopLeftCornerToTheNextLine()` - _(no documentation)_
+- `public void Arrow_SnapToGridOn_ABoxOnTheLineMovesOneFullSpacing()` - _(no documentation)_
+- `public void Arrow_SnapToGridOnWithShift_MovesTenSpacings()` - _(no documentation)_
+- `public void Arrow_SnapToGridOff_KeepsTheOldSteps()` - _(no documentation)_
+- `public void Arrow_SnapToObjectsOnly_DoesNotUseTheGrid()` - _(no documentation)_
+- `public void Arrow_SeveralPresses_AreOneUndoStep()` - _(no documentation)_
+- `public void Arrow_SeveralShapes_UseTheTopLeftOfTheirCommonBox()` - _(no documentation)_
+- `public void Arrow_WithSelectedNodes_UsesTheTopLeftOfTheNodes()` - _(no documentation)_
+- `public void Arrow_SnapToGridOffWithNodes_KeepsTheOldStep()` - _(no documentation)_
+
 ## CanvasAreaViewModelTests (class)
 
 `public class CanvasAreaViewModelTests`
@@ -332,6 +369,22 @@ _(no documentation)_
 - `public void Finger_FifteenPixelsFromAHandle_GrabsIt_ButTheMouseDoesNot()` - _(no documentation)_
 - `public void TouchGrabSize_CanBeChanged()` - _(no documentation)_
 - `public void Mouse_StillDrawsWithTheExistingMethods()` - _(no documentation)_
+
+## CanvasAreaViewSnapTests (class)
+
+`public sealed class CanvasAreaViewSnapTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewSnapTests.cs:17-122`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Rulers_FollowTheSetting()` - _(no documentation)_
+- `public void Grid_AppearsWhenShowGridIsSet()` - _(no documentation)_
+- `public void Guides_ReachTheControl()` - _(no documentation)_
+- `public void Desktop_ShowsTheRulersByDefault()` - _(no documentation)_
+- `public void Tablet_HidesTheRulersByDefault_AndShowsThemWhenTheSettingSaysSo()` - _(no documentation)_
 
 ## CanvasInteractionContextMenuTests (class)
 
@@ -577,6 +630,136 @@ _(no documentation)_
 - `public void Press_WithTwoShapesSelected_StartsNoRadiusDrag()` - _(no documentation)_
 - `public void DragARadiusHandle_OnARotatedRectangle_UsesTheRotatedFrame()` - _(no documentation)_
 - `public void DragARadiusHandle_ZoomedIn_FollowsTheScreenInset()` - _(no documentation)_
+
+## CanvasInteractionSnapDrawTests (class)
+
+`public sealed class CanvasInteractionSnapDrawTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSnapDrawTests.cs:10-144`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Rectangle_SnapToGrid_BothCornersSnapOnBothAxes()` - _(no documentation)_
+- `public void Ellipse_SnapToGrid_Snaps()` - _(no documentation)_
+- `public void Rectangle_SnapToObjects_CornerLinesUpWithAnotherShape()` - _(no documentation)_
+- `public void Rectangle_ShiftAfterSnapping_KeepsASquare()` - _(no documentation)_
+- `public void Rectangle_AltAfterSnapping_KeepsTheCenterAtTheSnappedStart()` - _(no documentation)_
+- `public void Rectangle_CtrlSuspendsSnapping()` - _(no documentation)_
+- `public void Rectangle_BothSnapsOff_DrawsAsBefore()` - _(no documentation)_
+- `public void Rectangle_IsOneUndoStepAndRemovesTheGuides()` - _(no documentation)_
+- `public void Rectangle_Cancelled_RemovesTheGuides()` - _(no documentation)_
+
+## CanvasInteractionSnapMoveTests (class)
+
+`public sealed class CanvasInteractionSnapMoveTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSnapMoveTests.cs:11-262`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Move_SnapToGridOn_EdgeJumpsOntoTheLine()` - _(no documentation)_
+- `public void Move_SnapToGridOn_NearestOfEdgeAndCenterWins()` - _(no documentation)_
+- `public void Move_BothSnapsOff_DoesNotSnap()` - _(no documentation)_
+- `public void Move_SnapToObjects_RightEdgeLinesUpWithTheEdgeOfAnotherShape()` - _(no documentation)_
+- `public void Move_SnapToObjects_ShowsAGuideWhileDraggingAndRemovesItOnRelease()` - _(no documentation)_
+- `public void Move_Cancelled_RemovesTheGuides()` - _(no documentation)_
+- `public void Move_Aborted_RemovesTheGuidesAndRestoresTheShape()` - _(no documentation)_
+- `public void Move_ObjectTargetBeatsANearerGridLine()` - _(no documentation)_
+- `public void Move_CtrlHeld_SuspendsSnappingAndShowsNoGuide()` - _(no documentation)_
+- `public void Move_CtrlReleasedDuringTheDrag_SnapsAgainFromTheNextMove()` - _(no documentation)_
+- `public void Move_SnapsToTheArtboardEdge()` - _(no documentation)_
+- `public void Move_LockedShapeIsATarget_HiddenShapeIsNot()` - _(no documentation)_
+- `public void Move_TheDraggedShapeIsNoTargetOfItself()` - _(no documentation)_
+- `public void Move_RotatedShape_SnapsByTheBoundsOfItsOutline()` - _(no documentation)_
+- `public void Move_OneUndoStepForTheWholeDrag()` - _(no documentation)_
+- `public void Move_InsideAGroup_SnapsToTheSiblingsButNotToTheGroupBox()` - _(no documentation)_
+
+## CanvasInteractionSnapNodeTests (class)
+
+`public sealed class CanvasInteractionSnapNodeTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSnapNodeTests.cs:11-239`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Node_SnapToGrid_JumpsOntoTheLine()` - _(no documentation)_
+- `public void Node_SnapToObjects_LinesUpWithANodeOfAnotherPath()` - _(no documentation)_
+- `public void Node_SnapToObjects_LinesUpWithAnotherNodeOfTheSamePath()` - _(no documentation)_
+- `public void Node_TheDraggedNodeAndTheOwnBoxAreNoTargets()` - _(no documentation)_
+- `public void Node_SeveralNodes_MoveByTheSameSnappedDistance()` - _(no documentation)_
+- `public void Node_ShiftAxisLock_StillWorksAfterSnapping()` - _(no documentation)_
+- `public void Handle_SnapToGrid_TheEndOfTheHandleLandsOnTheLine()` - _(no documentation)_
+- `public void Handle_TheNodeThatOwnsTheHandleIsNoTarget()` - _(no documentation)_
+- `public void Node_CtrlSuspendsSnapping()` - _(no documentation)_
+- `public void Node_ShowsAGuideWhileDraggingAndClearsItOnRelease()` - _(no documentation)_
+- `public void Node_Aborted_RestoresTheNodesAndClearsTheGuides()` - _(no documentation)_
+- `public void Node_IsOneUndoStep()` - _(no documentation)_
+- `public void Bend_DoesNotSnap()` - _(no documentation)_
+
+## CanvasInteractionSnapPenTests (class)
+
+`public sealed class CanvasInteractionSnapPenTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSnapPenTests.cs:9-186`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Pen_SnapToGrid_NewPointsLandOnGridLines()` - _(no documentation)_
+- `public void Pen_SnapToObjects_PointLinesUpWithAnotherShape()` - _(no documentation)_
+- `public void Pen_SnapToObjects_PointLinesUpWithANodeOfTheSamePath()` - _(no documentation)_
+- `public void Pen_ClickOnTheFirstNode_StillClosesThePath()` - _(no documentation)_
+- `public void Pen_ClickOnTheLastNode_StillFinishesThePath()` - _(no documentation)_
+- `public void Pen_DraggedHandleEnd_Snaps()` - _(no documentation)_
+- `public void Pen_HoverPreview_ShowsTheSnappedPosition()` - _(no documentation)_
+- `public void Pen_CtrlSuspendsSnapping()` - _(no documentation)_
+- `public void Pen_BothSnapsOff_PlacesPointsWhereClicked()` - _(no documentation)_
+- `public void Pen_Finished_RemovesTheGuides()` - _(no documentation)_
+- `public void Pen_ContinuingAPath_SnapsToTheNodesOfThePathBeingDrawn()` - _(no documentation)_
+
+## CanvasInteractionSnapResizeTests (class)
+
+`public sealed class CanvasInteractionSnapResizeTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSnapResizeTests.cs:9-197`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Resize_CornerSnapsToTheGridOnBothAxes()` - _(no documentation)_
+- `public void Resize_SideHandleSnapsOnlyItsOwnAxis()` - _(no documentation)_
+- `public void Resize_SnapToObjects_EdgeLinesUpWithAnotherShape()` - _(no documentation)_
+- `public void Resize_OppositeEdgesStayFixed()` - _(no documentation)_
+- `public void Resize_KeepProportions_OnlyTheNearerAxisSnaps()` - _(no documentation)_
+- `public void Resize_FromCenterWithAlt_StillWorksWithSnapping()` - _(no documentation)_
+- `public void Resize_CtrlSuspendsSnapping()` - _(no documentation)_
+- `public void Resize_RotatedFrame_DoesNotSnap()` - _(no documentation)_
+- `public void Rotate_StillUsesTheFifteenDegreeSnapOnly()` - _(no documentation)_
+- `public void Resize_ShowsAGuideWhileDraggingAndClearsItOnRelease()` - _(no documentation)_
+- `public void Resize_Aborted_RestoresTheShapeAndRemovesTheGuides()` - _(no documentation)_
+- `public void Resize_BothSnapsOff_BehavesAsBefore()` - _(no documentation)_
+
+## CanvasInteractionSuspendSnapTests (class)
+
+`public sealed class CanvasInteractionSuspendSnapTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionSuspendSnapTests.cs:7-56`
+
+_(no documentation)_
+
+**Members**
+
+- `public void PointerMethods_WithoutTheArgument_DoNotSuspend()` - _(no documentation)_
+- `public void PointerMethods_WithTheArgument_SuspendForThatEvent()` - _(no documentation)_
+- `public void CanvasAreaViewModel_PassesTheArgumentToTheInteraction()` - _(no documentation)_
 
 ## CanvasInteractionTests (class)
 
@@ -1017,6 +1200,23 @@ _(no documentation)_
 - `public void CutDuplicateDeleteAndSelectCommands_DoTheirWork()` - _(no documentation)_
 - `public void TheEditMenuItems_UseTheShellCommands()` - _(no documentation)_
 
+## DocumentCanvasControlGridTests (class)
+
+`public sealed class DocumentCanvasControlGridTests`
+
+Source: `tests/PressToShape.App.Tests/DocumentCanvasControlGridTests.cs:14-78`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Render_GridOn_DoesNotThrow()` - _(no documentation)_
+- `public void Render_GridAtAnyZoom_DoesNotThrow(double zoom)` - _(no documentation)_
+- `public void Render_GridWithoutBrushOrSpacingZero_DoesNotThrow()` - _(no documentation)_
+- `public void Render_GuidesDrawn_DoesNotThrow()` - _(no documentation)_
+- `public void Render_WithoutADocument_DrawsNothingAndDoesNotThrow()` - _(no documentation)_
+- `public void Properties_Default_GridIsOffWithSpacingTenAndNoGuides()` - _(no documentation)_
+
 ## DocumentCanvasControlNodeTests (class)
 
 `public class DocumentCanvasControlNodeTests`
@@ -1334,6 +1534,26 @@ _(no documentation)_
 - `public void Edit_RadiusRemoved_DropsNodeSelectionsThatNoLongerExist()` - _(no documentation)_
 - `public void Edit_RadiusAdded_KeepsTheNodeSelection()` - _(no documentation)_
 
+## EditorStateSnapTests (class)
+
+`public sealed class EditorStateSnapTests`
+
+Source: `tests/PressToShape.App.Tests/EditorStateSnapTests.cs:9-122`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Snapping_Default_IsInMemoryWithTheDefaults()` - _(no documentation)_
+- `public void Snapping_Given_IsUsed()` - _(no documentation)_
+- `public void SnapGuides_Default_IsEmpty()` - _(no documentation)_
+- `public void SnapGuides_Set_RaisesPropertyChanged()` - _(no documentation)_
+- `public void ChangingASetting_IsNoEditAndNoStepAndLeavesTheDocumentAlone()` - _(no documentation)_
+- `public void ChangingASetting_DoesNotRecordAHistoryStep()` - _(no documentation)_
+- `public void ChangingASetting_DoesNotMarkTheDocumentAsChanged()` - _(no documentation)_
+- `public void DesktopShell_UsesTheSettingsFileAndShowsRulersByDefault()` - _(no documentation)_
+- `public void TabletShell_HidesRulersByDefault()` - _(no documentation)_
+
 ## EditorStateTests (class)
 
 `public class EditorStateTests`
@@ -1611,6 +1831,67 @@ _(no documentation)_
 - `public void MissingOrInvalidLanguage_ReturnsNull(string code)` - _(no documentation)_
 - `public void CorruptStream_Throws_ButTheSourceNeverDoes()` - _(no documentation)_
 - `public void LocalizerWithTheEmbeddedSource_TranslatesGerman()` - _(no documentation)_
+
+## GridLinesTests (class)
+
+`public sealed class GridLinesTests`
+
+Source: `tests/PressToShape.App.Tests/GridLinesTests.cs:7-154`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Build_SpacingTenAtFullZoom_DrawsEveryLine()` - _(no documentation)_
+- `public void DrawnStep_Zoom_ChoosesTheSmallestStepFarEnoughApart(double zoomPercent, double expected)` - _(no documentation)_
+- `public void Build_LowZoom_ThinsTheLinesToAtLeastEightPixels()` - _(no documentation)_
+- `public void Build_OnlyLinesInsideTheVisibleRange()` - _(no documentation)_
+- `public void Build_LineExactlyOnTheRangeEdge_IsIncluded()` - _(no documentation)_
+- `public void Build_AnyZoom_KeepsTheLineCountBelowTheVisibleSizeOverEight(double zoomPercent, double visibleScreenPixels)` - _(no documentation)_
+- `public void Build_HugeRange_IsCapped()` - _(no documentation)_
+- `public void Build_UnusableSpacingOrZoom_GivesNoLines(double spacing, double zoomPercent)` - _(no documentation)_
+- `public void Build_EmptyOrNonFiniteRange_GivesNoLines()` - _(no documentation)_
+- `public void BuildOnScreen_LinesStandAtTheScreenPositionsOfTheDocumentLines()` - _(no documentation)_
+- `public void BuildOnScreen_AtHalfZoom_LinesAreThinnedAndScaled()` - _(no documentation)_
+- `public void BuildOnScreen_OriginLeftOfTheCanvas_StillStartsAtTheFirstVisibleLine()` - _(no documentation)_
+- `public void BuildOnScreen_UnusableInput_GivesNoLines(double zoom, double origin)` - _(no documentation)_
+- `public void BuildInScreenRect_GivesOnlyTheLinesInsideTheRectangle()` - _(no documentation)_
+- `public void BuildInScreenRect_UnusableInput_GivesNoLines()` - _(no documentation)_
+
+## GridMathTests (class)
+
+`public sealed class GridMathTests`
+
+Source: `tests/PressToShape.App.Tests/GridMathTests.cs:6-103`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Nearest_Value_GivesTheClosestLine(double value, double spacing, double expected)` - _(no documentation)_
+- `public void NextLine_Value_GivesTheLineStrictlyBeyond(double value, double spacing, int direction, double expected)` - _(no documentation)_
+- `public void NextLine_ValueOnALineWithFloatingPointNoise_CountsAsOnTheLine()` - _(no documentation)_
+- `public void NudgeDelta_Edge_MovesToALineAndFurtherForMoreSteps(double edge, double spacing, int direction, int steps, double expected)` - _(no documentation)_
+- `public void NudgeDelta_ManyPresses_DoNotDrift()` - _(no documentation)_
+- `public void Methods_UnusableInput_ChangeNothing(double value, double spacing)` - _(no documentation)_
+- `public void NextLine_BadDirection_ChangesNothing(int direction)` - _(no documentation)_
+- `public void NudgeDelta_BadDirectionOrSteps_MovesNothing(int direction, int steps)` - _(no documentation)_
+
+## GridNudgeTests (class)
+
+`public sealed class GridNudgeTests`
+
+Source: `tests/PressToShape.App.Tests/GridNudgeTests.cs:7-50`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Delta_WithoutTheGrid_IsOneOrTenUnits(string key, bool shift, double dx, double dy)` - _(no documentation)_
+- `public void Delta_WithTheGrid_MovesTheLeftEdgeToTheNextLine(string key, double left, double spacing, double dx, double dy)` - _(no documentation)_
+- `public void Delta_WithTheGridAndShift_MovesTenSpacingsFurther()` - _(no documentation)_
+- `public void Delta_UpAndDown_UseTheTopEdge()` - _(no documentation)_
+- `public void Delta_OtherKey_IsZero()` - _(no documentation)_
 
 ## HeadProjectReferenceTests (class)
 
@@ -2024,11 +2305,29 @@ Settings kept in memory.
 
 - Implements `PressToShape.App.Settings.ISettingsStore`
 
+## MenuBarSnapTests (class)
+
+`public sealed class MenuBarSnapTests`
+
+Source: `tests/PressToShape.App.Tests/MenuBarSnapTests.cs:9-117`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Item_IsEnabledAndCheckable(string header)` - _(no documentation)_
+- `public void Item_CheckStateFollowsThePreferences()` - _(no documentation)_
+- `public void Item_Execute_TogglesTheSetting()` - _(no documentation)_
+- `public void Item_ExecuteTwice_TogglesBack()` - _(no documentation)_
+- `public void Item_ChangeFromElsewhere_RaisesIsChecked()` - _(no documentation)_
+- `public void Item_Toggling_DoesNotChangeTheDocumentOrTheHistory()` - _(no documentation)_
+- `public void Item_KeepsItsGestureAndMnemonic()` - _(no documentation)_
+
 ## MenuBarViewModelTests (class)
 
 `public class MenuBarViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-695`
+Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-698`
 
 _(no documentation)_
 
@@ -3476,6 +3775,86 @@ _(no documentation)_
 - `public void DefaultPath_IsInsideTheApplicationDataFolder()` - _(no documentation)_
 - `public void Constructor_RequiresAPath()` - _(no documentation)_
 
+## SnapPreferencesTests (class)
+
+`public sealed class SnapPreferencesTests`
+
+Source: `tests/PressToShape.App.Tests/SnapPreferencesTests.cs:8-174`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Constructor_EmptyStore_UsesDefaults()` - _(no documentation)_
+- `public void Constructor_EmptyStore_RulersFollowTheLayoutDefault(bool defaultShowRulers)` - _(no documentation)_
+- `public void Setters_Changed_AreRestoredByANewInstance()` - _(no documentation)_
+- `public void Constructor_InvalidStoredSpacing_UsesTheDefault(string stored)` - _(no documentation)_
+- `public void Constructor_DamagedBooleans_UseTheDefaults()` - _(no documentation)_
+- `public void GridSpacing_AtTheLimits_IsAccepted(double value)` - _(no documentation)_
+- `public void GridSpacing_Invalid_KeepsTheOldValueAndSavesNothing(double value)` - _(no documentation)_
+- `public void Setters_OtherSettingsEntries_AreKept()` - _(no documentation)_
+- `public void Setters_RealChange_RaiseChangedOncePerChange()` - _(no documentation)_
+- `public void Setters_NotPersisting_SaveNothingButStillChange()` - _(no documentation)_
+
+## SnapTargetsTests (class)
+
+`public sealed class SnapTargetsTests`
+
+Source: `tests/PressToShape.App.Tests/SnapTargetsTests.cs:11-217`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Collect_EmptyDocument_GivesOnlyTheArtboard()` - _(no documentation)_
+- `public void Collect_Shape_AddsEdgesAndCenterOfItsBox()` - _(no documentation)_
+- `public void Collect_RotatedShape_UsesTheBoundsOfTheTurnedOutline()` - _(no documentation)_
+- `public void Collect_HiddenAndLockedShapes_HiddenLeftOutLockedKept()` - _(no documentation)_
+- `public void Collect_HiddenLayer_IsLeftOut()` - _(no documentation)_
+- `public void Collect_ExcludedShape_GivesNothing()` - _(no documentation)_
+- `public void Collect_Group_AddsItsOwnBoxAndTheBoxesOfItsMembers()` - _(no documentation)_
+- `public void Collect_ExcludedGroup_KeepsItsOtherMembers()` - _(no documentation)_
+- `public void Collect_HiddenGroup_LeavesOutItsMembers()` - _(no documentation)_
+- `public void Collect_Path_AddsItsAnchorNodes()` - _(no documentation)_
+- `public void Collect_RotatedPath_AddsTheNodesWhereTheyAreOnTheScreen()` - _(no documentation)_
+- `public void WithNodes_AddsNodeTargetsOnBothAxes()` - _(no documentation)_
+- `public void TryFindNearest_WithinTolerance_ReturnsTheNearest()` - _(no documentation)_
+- `public void TryFindNearest_ToleranceIsInclusiveAndOutsideFindsNothing()` - _(no documentation)_
+- `public void TryFindNearest_BeyondBothEndsAndNoTargets_Works()` - _(no documentation)_
+- `public void TryFindNearest_NonFiniteInput_FindsNothing()` - _(no documentation)_
+- `public void TryFindNearest_YAxis_UsesTheYTargets()` - _(no documentation)_
+- `public void Collect_TargetsKeepTheExtentAlongTheOtherAxis()` - _(no documentation)_
+
+## SnapperTests (class)
+
+`public sealed class SnapperTests`
+
+Source: `tests/PressToShape.App.Tests/SnapperTests.cs:10-219`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Snap_GridOn_PointNearALineMovesOntoIt()` - _(no documentation)_
+- `public void Snap_GridOn_PointOutsideToleranceStays()` - _(no documentation)_
+- `public void Snap_ToleranceIsEightScreenPixelsAtAnyZoom(double zoom, double distanceInDocumentUnits, bool snaps)` - _(no documentation)_
+- `public void Snap_BothOff_ChangesNothing()` - _(no documentation)_
+- `public void Snap_ObjectsOn_SnapsToEdgeAndShowsGuide()` - _(no documentation)_
+- `public void Snap_ObjectTargetBeatsANearerGridLine()` - _(no documentation)_
+- `public void Snap_ObjectsOnButNoneInRange_FallsBackToTheGrid()` - _(no documentation)_
+- `public void Snap_AxesAreIndependent()` - _(no documentation)_
+- `public void Snap_SeveralCandidates_TheSmallestDistanceDecides()` - _(no documentation)_
+- `public void Snap_BoxAlignedWithATarget_ShowsAGuideForEveryAlignedCandidate()` - _(no documentation)_
+- `public void Snap_GuideReachesFromTheTargetToTheDraggedBox()` - _(no documentation)_
+- `public void Snap_GuideKeepsTheTargetExtentWithoutDraggedBounds()` - _(no documentation)_
+- `public void Snap_ArtboardEdges_AreTargets()` - _(no documentation)_
+- `public void Snap_NonFiniteCandidates_NeverGiveNaNOrInfinity(double bad)` - _(no documentation)_
+- `public void Snap_UnusableZoom_GivesNoSnap(double zoom)` - _(no documentation)_
+- `public void Snap_UnusableSpacing_SkipsTheGrid(double spacing)` - _(no documentation)_
+- `public void Snap_ZeroSizeBox_Works()` - _(no documentation)_
+- `public void Candidates_GiveEdgesAndCenter()` - _(no documentation)_
+- `public void SnapSettingsFrom_ReadsThePreferences()` - _(no documentation)_
+
 ## SourceText (record)
 
 `internal sealed record SourceText : IEquatable<SourceText>`
@@ -3502,6 +3881,39 @@ Finds the translatable texts in the App project, the way a gettext extraction wo
 **Members**
 
 - `public IReadOnlyList<SourceText> FindAll()` - _(no documentation)_
+
+## StatusBarSnapViewTests (class)
+
+`public sealed class StatusBarSnapViewTests`
+
+Source: `tests/PressToShape.App.Tests/StatusBarSnapViewTests.cs:17-98`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Toggles_ReflectTheStateAndChangeIt(bool tablet)` - _(no documentation)_
+- `public void SpacingBox_ShowsTheSpacing_AndAppliesAValueOnEnter(bool tablet)` - _(no documentation)_
+- `public void SpacingBox_InvalidValue_ComesBackToTheOldOne(bool tablet)` - _(no documentation)_
+
+## StatusBarViewModelSnapTests (class)
+
+`public sealed class StatusBarViewModelSnapTests`
+
+Source: `tests/PressToShape.App.Tests/StatusBarViewModelSnapTests.cs:8-127`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Toggles_StartWithTheStateOfThePreferences()` - _(no documentation)_
+- `public void Toggles_Set_ChangeThePreferences()` - _(no documentation)_
+- `public void Toggles_ChangedElsewhere_RaisePropertyChanged()` - _(no documentation)_
+- `public void Spacing_ValidText_IsApplied()` - _(no documentation)_
+- `public void Spacing_AtTheLimitsAndDecimals_IsApplied(string text)` - _(no documentation)_
+- `public void Spacing_InvalidText_IsRefusedAndTheOldValueComesBack(string text)` - _(no documentation)_
+- `public void Spacing_ChangedElsewhere_UpdatesTheField()` - _(no documentation)_
+- `public void Spacing_InGerman_ShowsAndAcceptsTheDecimalComma()` - _(no documentation)_
 
 ## StatusBarViewModelTests (class)
 
@@ -3687,7 +4099,7 @@ _(no documentation)_
 
 `public class TabletStatusBarViewTests`
 
-Source: `tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:26-242`
+Source: `tests/PressToShape.App.Tests/TabletStatusBarViewTests.cs:26-243`
 
 _(no documentation)_
 
@@ -3748,7 +4160,7 @@ _(no documentation)_
 
 `public class TabletViewsTests`
 
-Source: `tests/PressToShape.App.Tests/TabletViewsTests.cs:20-916`
+Source: `tests/PressToShape.App.Tests/TabletViewsTests.cs:20-917`
 
 _(no documentation)_
 
@@ -4023,7 +4435,7 @@ _(no documentation)_
 
 `public class TouchSizesTests`
 
-Source: `tests/PressToShape.App.Tests/TouchSizesTests.cs:23-390`
+Source: `tests/PressToShape.App.Tests/TouchSizesTests.cs:23-385`
 
 _(no documentation)_
 
@@ -4042,7 +4454,7 @@ _(no documentation)_
 - `public void Desktop_HistoryRows_KeepTheirSize()` - _(no documentation)_
 - `public void WithTheTouchSizes_LayerRowsAndTheirButtons_AreAtLeast48()` - _(no documentation)_
 - `public void WithTheTouchSizes_HistoryRows_AreAtLeast48High()` - _(no documentation)_
-- `public void Canvas_ShowsItsRulers_ByDefault_AndHidesThemWhenAsked()` - _(no documentation)_
+- `public void Canvas_ShowsItsRulers_ByDefault()` - _(no documentation)_
 - `public void Desktop_SelectionHandles_AreDrawnWith8()` - _(no documentation)_
 - `public void WithTheTouchSizes_SelectionHandles_AreDrawnLarger()` - _(no documentation)_
 - `public void TheTouchGrabSize_ComesFromTheTheme()` - _(no documentation)_

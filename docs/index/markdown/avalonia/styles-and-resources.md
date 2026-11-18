@@ -12,7 +12,7 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 
 ### src/PressToShape.App/Styles/Controls.axaml
 
-- 2 resources, 37 styles
+- 2 resources, 41 styles
 - style `^:pointerover /template/ Border#PART_LayoutRoot` at line 37, 1 setters
 - style `^:pointerover` at line 40, 1 setters
 - style `^:selected` at line 43, 1 setters
@@ -26,34 +26,38 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - style `ToggleButton.tool:checked /template/ ContentPresenter#PART_ContentPresenter` at line 118, 2 setters
 - style `ToggleButton.tool:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 122, 1 setters
 - style `ToggleButton.tool:disabled /template/ ContentPresenter#PART_ContentPresenter` at line 125, 1 setters
-- style `Button.choice` at line 130, 2 setters
-- style `Button.choice.selected /template/ ContentPresenter#PART_ContentPresenter` at line 134, 2 setters
-- style `Button.choice.selected:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 138, 1 setters
-- style `ToggleButton.section-toggle` at line 143, 7 setters
-- style `ToggleButton.section-toggle /template/ ContentPresenter#PART_ContentPresenter` at line 152, 2 setters
-- style `ToggleButton.section-toggle:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 156, 1 setters
-- style `ToggleButton.section-toggle:checked /template/ ContentPresenter#PART_ContentPresenter` at line 159, 2 setters
-- style `ToggleButton.section-toggle:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 163, 1 setters
-- style `ToggleButton.section-toggle:checked materialIcons|MaterialIcon.collapsed` at line 166, 1 setters
-- style `ToggleButton.section-toggle:not(:checked) materialIcons|MaterialIcon.expanded` at line 169, 1 setters
-- style `Border.panel` at line 176, 2 setters
-- style `TextBlock.section-header` at line 180, 4 setters
-- style `TextBlock.secondary` at line 186, 1 setters
-- style `TextBlock.unit` at line 191, 3 setters
-- style `TextBox.field` at line 196, 8 setters
-- style `.touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider` at line 211, 1 setters
-- style `Path.ringWedge` at line 219, 3 setters
-- style `Path.ringWedge.hovered` at line 224, 1 setters
-- style `Path.ringWedge.focused` at line 227, 3 setters
-- style `Path.ringWedge.unavailable.hovered` at line 232, 1 setters
-- style `materialIcons|MaterialIcon.ringIcon` at line 235, 3 setters
-- style `materialIcons|MaterialIcon.ringIcon.unavailable` at line 240, 1 setters
-- style `Ellipse.ringCenter` at line 243, 3 setters
-- style `TextBlock.ringCenterText` at line 248, 4 setters
+- style `ToggleButton.snap` at line 130, 7 setters
+- style `ToggleButton.snap:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 139, 1 setters
+- style `ToggleButton.snap:checked /template/ ContentPresenter#PART_ContentPresenter` at line 142, 2 setters
+- style `ToggleButton.snap:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 146, 1 setters
+- style `Button.choice` at line 151, 2 setters
+- style `Button.choice.selected /template/ ContentPresenter#PART_ContentPresenter` at line 155, 2 setters
+- style `Button.choice.selected:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 159, 1 setters
+- style `ToggleButton.section-toggle` at line 164, 7 setters
+- style `ToggleButton.section-toggle /template/ ContentPresenter#PART_ContentPresenter` at line 173, 2 setters
+- style `ToggleButton.section-toggle:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 177, 1 setters
+- style `ToggleButton.section-toggle:checked /template/ ContentPresenter#PART_ContentPresenter` at line 180, 2 setters
+- style `ToggleButton.section-toggle:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter` at line 184, 1 setters
+- style `ToggleButton.section-toggle:checked materialIcons|MaterialIcon.collapsed` at line 187, 1 setters
+- style `ToggleButton.section-toggle:not(:checked) materialIcons|MaterialIcon.expanded` at line 190, 1 setters
+- style `Border.panel` at line 197, 2 setters
+- style `TextBlock.section-header` at line 201, 4 setters
+- style `TextBlock.secondary` at line 207, 1 setters
+- style `TextBlock.unit` at line 212, 3 setters
+- style `TextBox.field` at line 217, 8 setters
+- style `.touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider` at line 232, 1 setters
+- style `Path.ringWedge` at line 240, 3 setters
+- style `Path.ringWedge.hovered` at line 245, 1 setters
+- style `Path.ringWedge.focused` at line 248, 3 setters
+- style `Path.ringWedge.unavailable.hovered` at line 253, 1 setters
+- style `materialIcons|MaterialIcon.ringIcon` at line 256, 3 setters
+- style `materialIcons|MaterialIcon.ringIcon.unavailable` at line 261, 1 setters
+- style `Ellipse.ringCenter` at line 264, 3 setters
+- style `TextBlock.ringCenterText` at line 269, 4 setters
 
 ### src/PressToShape.App/Styles/Theme.axaml
 
-- 120 resources, 0 styles, variants Dark, Light
+- 124 resources, 0 styles, variants Dark, Light
 
 ### src/PressToShape.App/Views/Desktop/MenuBarView.axaml
 
@@ -148,19 +152,19 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - `SystemAccentColorDark3` (Color, Dark) at src/PressToShape.App/Styles/Theme.axaml:19
 - `RulerTickBrush` (SolidColorBrush, Dark) at src/PressToShape.App/Styles/Theme.axaml:51
 - `RulerTextBrush` (SolidColorBrush, Dark) at src/PressToShape.App/Styles/Theme.axaml:52
-- `SystemAccentColor` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:69
-- `SystemAccentColorLight1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:70
-- `SystemAccentColorLight2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:71
-- `SystemAccentColorLight3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:72
-- `SystemAccentColorDark1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:73
-- `SystemAccentColorDark2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:74
-- `SystemAccentColorDark3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:75
-- `RulerTickBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:107
-- `RulerTextBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:108
-- `PanelSpacing` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:132
-- `RowIndentSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:170
-- `TouchHandleGrabSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:174
-- `TouchSizes` (ResourceDictionary) at src/PressToShape.App/Styles/Theme.axaml:197
+- `SystemAccentColor` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:73
+- `SystemAccentColorLight1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:74
+- `SystemAccentColorLight2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:75
+- `SystemAccentColorLight3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:76
+- `SystemAccentColorDark1` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:77
+- `SystemAccentColorDark2` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:78
+- `SystemAccentColorDark3` (Color, Light) at src/PressToShape.App/Styles/Theme.axaml:79
+- `RulerTickBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:111
+- `RulerTextBrush` (SolidColorBrush, Light) at src/PressToShape.App/Styles/Theme.axaml:112
+- `PanelSpacing` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:140
+- `RowIndentSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:178
+- `TouchHandleGrabSize` (x:Double) at src/PressToShape.App/Styles/Theme.axaml:182
+- `TouchSizes` (ResourceDictionary) at src/PressToShape.App/Styles/Theme.axaml:205
 - `GestureTextConverter` (views:GestureTextConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:12
 - `CheckableToggleTypeConverter` (views:CheckableToggleTypeConverter) at src/PressToShape.App/Views/Desktop/MenuBarView.axaml:13
 - `IndentConverter` (views:ObjectIndentConverter) at src/PressToShape.App/Views/Editor/LayersView.axaml:14

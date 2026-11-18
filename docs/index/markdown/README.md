@@ -20,7 +20,7 @@ Project file: `src/PressToShape.Android/PressToShape.Android.csproj`. 8 symbols,
 
 ## PressToShape.App
 
-Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2827 symbols, 10213 relationships.
+Project file: `src/PressToShape.App/PressToShape.App.csproj`. 3007 symbols, 10988 relationships.
 
 - [CommunityToolkit.Mvvm.ComponentModel.__Internals](PressToShape.App/CommunityToolkit.Mvvm.ComponentModel.__Internals.md) (2 types)
 - [PressToShape.App](PressToShape.App/PressToShape.App.md) (3 types)
@@ -36,15 +36,15 @@ Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2827 symbols, 1021
 - [PressToShape.App.Views.Desktop](PressToShape.App/PressToShape.App.Views.Desktop.md) (6 types)
 - [PressToShape.App.Views.Editor](PressToShape.App/PressToShape.App.Views.Editor.md) (12 types)
 - [PressToShape.App.Views.Tablet](PressToShape.App/PressToShape.App.Views.Tablet.md) (6 types)
-- [PressToShape.App.Workspace](PressToShape.App/PressToShape.App.Workspace.md) (82 types)
+- [PressToShape.App.Workspace](PressToShape.App/PressToShape.App.Workspace.md) (97 types)
 - [PressToShapeApp.axaml](PressToShape.App/xaml/PressToShapeApp.axaml.md) (XAML, 0 bindings)
 - [Controls.axaml](PressToShape.App/xaml/Styles.Controls.axaml.md) (XAML, 9 bindings)
 - [Theme.axaml](PressToShape.App/xaml/Styles.Theme.axaml.md) (XAML, 0 bindings)
 - [DesktopShellView.axaml](PressToShape.App/xaml/Views.Desktop.DesktopShellView.axaml.md) (XAML, 21 bindings)
 - [MenuBarView.axaml](PressToShape.App/xaml/Views.Desktop.MenuBarView.axaml.md) (XAML, 13 bindings)
-- [StatusBarView.axaml](PressToShape.App/xaml/Views.Desktop.StatusBarView.axaml.md) (XAML, 13 bindings)
+- [StatusBarView.axaml](PressToShape.App/xaml/Views.Desktop.StatusBarView.axaml.md) (XAML, 19 bindings)
 - [ToolbarView.axaml](PressToShape.App/xaml/Views.Desktop.ToolbarView.axaml.md) (XAML, 13 bindings)
-- [CanvasAreaView.axaml](PressToShape.App/xaml/Views.Editor.CanvasAreaView.axaml.md) (XAML, 34 bindings)
+- [CanvasAreaView.axaml](PressToShape.App/xaml/Views.Editor.CanvasAreaView.axaml.md) (XAML, 37 bindings)
 - [HistoryView.axaml](PressToShape.App/xaml/Views.Editor.HistoryView.axaml.md) (XAML, 7 bindings)
 - [InspectorView.axaml](PressToShape.App/xaml/Views.Editor.InspectorView.axaml.md) (XAML, 5 bindings)
 - [LayersView.axaml](PressToShape.App/xaml/Views.Editor.LayersView.axaml.md) (XAML, 35 bindings)
@@ -58,16 +58,16 @@ Project file: `src/PressToShape.App/PressToShape.App.csproj`. 2827 symbols, 1021
 - [TabletColorSwatchView.axaml](PressToShape.App/xaml/Views.Tablet.TabletColorSwatchView.axaml.md) (XAML, 9 bindings)
 - [TabletPanelView.axaml](PressToShape.App/xaml/Views.Tablet.TabletPanelView.axaml.md) (XAML, 3 bindings)
 - [TabletShellView.axaml](PressToShape.App/xaml/Views.Tablet.TabletShellView.axaml.md) (XAML, 8 bindings)
-- [TabletStatusBarView.axaml](PressToShape.App/xaml/Views.Tablet.TabletStatusBarView.axaml.md) (XAML, 10 bindings)
+- [TabletStatusBarView.axaml](PressToShape.App/xaml/Views.Tablet.TabletStatusBarView.axaml.md) (XAML, 16 bindings)
 - [TabletToolColumnView.axaml](PressToShape.App/xaml/Views.Tablet.TabletToolColumnView.axaml.md) (XAML, 18 bindings)
 - [TabletToolbarView.axaml](PressToShape.App/xaml/Views.Tablet.TabletToolbarView.axaml.md) (XAML, 34 bindings)
 
 ## PressToShape.App.Tests
 
-Project file: `tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj`. 3210 symbols, 30211 relationships.
+Project file: `tests/PressToShape.App.Tests/PressToShape.App.Tests.csproj`. 3485 symbols, 32575 relationships.
 
 - [<global namespace>](PressToShape.App.Tests/_global_namespace_.md) (1 types)
-- [PressToShape.App.Tests](PressToShape.App.Tests/PressToShape.App.Tests.md) (167 types)
+- [PressToShape.App.Tests](PressToShape.App.Tests/PressToShape.App.Tests.md) (187 types)
 
 ## PressToShape.Benchmarks
 
