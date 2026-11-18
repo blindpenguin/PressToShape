@@ -330,17 +330,12 @@ public class TouchSizesTests
     }
 
     [Fact]
-    public void Canvas_ShowsItsRulers_ByDefault_AndHidesThemWhenAsked() => HeadlessUi.Run(() =>
+    public void Canvas_ShowsItsRulers_ByDefault() => HeadlessUi.Run(() =>
     {
         var (view, _, window) = ShowCanvas(touch: false);
         var rulers = view.GetVisualDescendants().OfType<RulerControl>().ToList();
         Assert.Equal(2, rulers.Count);
         Assert.All(rulers, r => Assert.True(r.IsEffectivelyVisible));
-
-        view.ShowRulers = false;
-        Dispatcher.UIThread.RunJobs();
-
-        Assert.All(rulers, r => Assert.False(r.IsEffectivelyVisible));
         window.Close();
     });
 

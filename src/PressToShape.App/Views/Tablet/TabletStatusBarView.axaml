@@ -26,6 +26,28 @@
                        Text="{Binding BusyText}" IsVisible="{Binding IsBusy}" />
 
             <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+                <ToggleButton Classes="snap" IsChecked="{Binding ShowGrid, Mode=TwoWay}"
+                              MinWidth="{DynamicResource ToolbarButtonSize}" MinHeight="{DynamicResource ToolbarButtonSize}"
+                              ToolTip.Tip="{loc:T 'Show Grid'}" AutomationProperties.Name="{loc:T 'Show Grid'}">
+                    <materialIcons:MaterialIcon Kind="GridLarge" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </ToggleButton>
+                <ToggleButton Classes="snap" IsChecked="{Binding SnapToGrid, Mode=TwoWay}"
+                              MinWidth="{DynamicResource ToolbarButtonSize}" MinHeight="{DynamicResource ToolbarButtonSize}"
+                              ToolTip.Tip="{loc:T 'Snap to Grid'}" AutomationProperties.Name="{loc:T 'Snap to Grid'}">
+                    <materialIcons:MaterialIcon Kind="DotsGrid" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </ToggleButton>
+                <ToggleButton Classes="snap" IsChecked="{Binding SnapToObjects, Mode=TwoWay}"
+                              MinWidth="{DynamicResource ToolbarButtonSize}" MinHeight="{DynamicResource ToolbarButtonSize}"
+                              ToolTip.Tip="{loc:T 'Snap to Objects'}" AutomationProperties.Name="{loc:T 'Snap to Objects'}">
+                    <materialIcons:MaterialIcon Kind="Magnet" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                </ToggleButton>
+                <TextBox x:Name="GridSpacingBox" Classes="field" Width="96" Margin="0,0,12,0"
+                         Text="{Binding GridSpacingField.Text}" IsEnabled="{Binding GridSpacingField.IsEnabled}" Tag="{Binding GridSpacingField}"
+                         ToolTip.Tip="{loc:T 'Grid Spacing'}" AutomationProperties.Name="{loc:T 'Grid Spacing'}">
+                    <TextBox.InnerRightContent>
+                        <TextBlock Classes="unit" Text="px" />
+                    </TextBox.InnerRightContent>
+                </TextBox>
                 <Button Classes="icon" Command="{Binding ZoomOutCommand}"
                         ToolTip.Tip="{loc:T 'Zoom out'}" AutomationProperties.Name="{loc:T 'Zoom out'}">
                     <materialIcons:MaterialIcon Kind="MinusThick" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />

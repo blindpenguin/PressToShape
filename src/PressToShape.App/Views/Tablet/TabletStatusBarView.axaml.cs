@@ -15,6 +15,7 @@ public partial class TabletStatusBarView : UserControl
     public TabletStatusBarView()
     {
         InitializeComponent();
+        NumberFieldBehavior.Attach(this);
 
         _menus.Track(ZoomButton.Flyout);
         _menus.Closed += (_, _) => MenuClosed?.Invoke(this, EventArgs.Empty);

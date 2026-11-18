@@ -345,6 +345,18 @@ msgstr "Vergrößern"
 msgid "Fit artboard in window"
 msgstr "Zeichenfläche ins Fenster einpassen"
 
+msgid "Show Grid"
+msgstr "Raster anzeigen"
+
+msgid "Snap to Grid"
+msgstr "Am Raster ausrichten"
+
+msgid "Snap to Objects"
+msgstr "An Objekten ausrichten"
+
+msgid "Grid Spacing"
+msgstr "Rasterweite"
+
 msgid "Select (V)"
 msgstr "Auswählen (V)"
 

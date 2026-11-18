@@ -395,7 +395,8 @@ public class TabletViewsTests
         Assert.All(view.GetVisualDescendants().OfType<RulerControl>(), r => Assert.False(r.IsEffectivelyVisible));
         Assert.Empty(view.GetVisualDescendants().OfType<Menu>());
         Assert.Empty(view.GetVisualDescendants().OfType<PressToShape.App.Views.Desktop.StatusBarView>());
-        Assert.DoesNotContain(view.GetVisualDescendants().OfType<TextBox>(), t => t.IsEffectivelyVisible && t.Tag is not null);
+        // The only visible number field is the grid spacing of the status bar. The property fields of the panels stay closed.
+        Assert.DoesNotContain(view.GetVisualDescendants().OfType<TextBox>(), t => t.IsEffectivelyVisible && t.Tag is not null && t.Name != "GridSpacingBox");
 
         window.Close();
     });

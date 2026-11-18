@@ -3,6 +3,7 @@ using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
+using PressToShape.Core.Shapes;
 
 namespace PressToShape.App.ViewModels.Editor;
 
@@ -45,6 +46,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         _editor = editor ?? new SelectionEditor(_state);
         _interaction = new CanvasInteraction(_state);
         _state.PropertyChanged += OnStateChanged;
+        _state.Snapping.Changed += OnSnappingChanged;
     }
 
     /// <summary>Width of the area that shows the artboard, in screen pixels. Set by the view.</summary>
@@ -205,14 +207,14 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// dragging the view, with the Zoom tool it zooms one step in (with <paramref name="alt"/>: out) around the position,
     /// with the other tools it is handled by the tool. <paramref name="inputType"/> is the device: a finger grabs handles from a larger area.
     /// </summary>
-    public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = InputPointerType.Mouse)
+    public void PointerPressed(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = InputPointerType.Mouse, bool suspendSnap = false)
     {
         IsAltHeld = alt;
         WatchLongPress(screenX, screenY, inputType);
         if (_state.ColorPick != ColorPickTarget.None)
         {
             // A pick from the canvas takes the click, whatever the active tool is.
-            _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift, inputType);
+            _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift, inputType, suspendSnap);
             return;
         }
 
@@ -228,7 +230,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 _state.ZoomAround(zoom, screenX, screenY);
                 break;
             default:
-                _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift, inputType);
+                _interaction.PointerPressed(ToDocumentX(screenX), ToDocumentY(screenY), shift, inputType, suspendSnap);
                 SetHover(null);
                 SetNodeHover(null);
                 if (_state.ActiveTool is Tool.DirectSelect or Tool.Node)
@@ -290,7 +292,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// The primary button was pressed a second time at this position, in screen pixels of the canvas area. With the Select tool this enters
     /// a group or leaves the entered one (see <see cref="CanvasInteraction.DoubleClicked"/>). With other tools it acts as a normal press.
     /// </summary>
-    public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = InputPointerType.Mouse)
+    public void DoubleClick(double screenX, double screenY, bool alt = false, bool shift = false, InputPointerType inputType = InputPointerType.Mouse, bool suspendSnap = false)
     {
         if (_state.ActiveTool is Tool.Select or Tool.Node && _state.ColorPick == ColorPickTarget.None)
         {
@@ -301,7 +303,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         }
         else
         {
-            PointerPressed(screenX, screenY, alt, shift);
+            PointerPressed(screenX, screenY, alt, shift, suspendSnap: suspendSnap);
         }
     }
 
@@ -415,7 +417,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     }
 
     /// <summary>The pointer moved. The position is in screen pixels of the canvas area.</summary>
-    public void PointerMoved(double screenX, double screenY, bool shift = false, bool alt = false)
+    public void PointerMoved(double screenX, double screenY, bool shift = false, bool alt = false, bool suspendSnap = false)
     {
         IsAltHeld = alt;
         _longPress.Move(screenX, screenY);
@@ -426,22 +428,22 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             return;
         }
 
-        _interaction.PointerMoved(ToDocumentX(screenX), ToDocumentY(screenY), shift, alt);
+        _interaction.PointerMoved(ToDocumentX(screenX), ToDocumentY(screenY), shift, alt, suspendSnap);
     }
 
     /// <summary>The button went up. The position is in screen pixels of the canvas area.</summary>
-    public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false)
+    public void PointerReleased(double screenX, double screenY, bool shift = false, bool alt = false, bool suspendSnap = false)
     {
         IsAltHeld = alt;
         _longPress.Release();
         if (_panning)
         {
-            PointerMoved(screenX, screenY, alt: alt);
+            PointerMoved(screenX, screenY, alt: alt, suspendSnap: suspendSnap);
             EndPan();
             return;
         }
 
-        _interaction.PointerReleased(ToDocumentX(screenX), ToDocumentY(screenY), shift, alt);
+        _interaction.PointerReleased(ToDocumentX(screenX), ToDocumentY(screenY), shift, alt, suspendSnap);
         PointerHover(screenX, screenY);
         if (_state.ActiveTool is Tool.DirectSelect or Tool.Node)
         {
@@ -517,23 +519,10 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             && !_state.IsDragInProgress
             && key is CanvasKey.Left or CanvasKey.Right or CanvasKey.Up or CanvasKey.Down)
         {
-            var nodeStep = shift ? 10 : 1;
             var nodes = _interaction.Nodes;
-            switch (key)
-            {
-                case CanvasKey.Left:
-                    nodes.Nudge(-nodeStep, 0);
-                    break;
-                case CanvasKey.Right:
-                    nodes.Nudge(nodeStep, 0);
-                    break;
-                case CanvasKey.Up:
-                    nodes.Nudge(0, -nodeStep);
-                    break;
-                default:
-                    nodes.Nudge(0, nodeStep);
-                    break;
-            }
+            var (nodeLeft, nodeTop) = SelectedNodesTopLeft(nodes);
+            var (nodeDx, nodeDy) = GridNudge.Delta(key, shift, _state.Snapping.SnapToGrid, _state.Snapping.GridSpacing, nodeLeft, nodeTop);
+            nodes.Nudge(nodeDx, nodeDy);
 
             return true;
         }
@@ -543,27 +532,36 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             return false;
         }
 
-        var step = shift ? 10 : 1;
-        switch (key)
+        if (key is CanvasKey.Left or CanvasKey.Right or CanvasKey.Up or CanvasKey.Down)
         {
-            case CanvasKey.Left:
-                _editor.Nudge(-step, 0);
-                break;
-            case CanvasKey.Right:
-                _editor.Nudge(step, 0);
-                break;
-            case CanvasKey.Up:
-                _editor.Nudge(0, -step);
-                break;
-            case CanvasKey.Down:
-                _editor.Nudge(0, step);
-                break;
-            default:
-                _editor.Deselect();
-                break;
+            var box = SelectionBounds.Union(SelectionQueries.SelectedLeaves(_state.Document, _state.SelectedShapeIds));
+            var (dx, dy) = GridNudge.Delta(key, shift, _state.Snapping.SnapToGrid, _state.Snapping.GridSpacing, box?.X ?? 0, box?.Y ?? 0);
+            _editor.Nudge(dx, dy);
+        }
+        else
+        {
+            _editor.Deselect();
         }
 
         return true;
+    }
+
+    // The top left corner of the box around the selected nodes, on the screen.
+    private static (double Left, double Top) SelectedNodesTopLeft(NodeEditor nodes)
+    {
+        var left = double.MaxValue;
+        var top = double.MaxValue;
+        foreach (var target in nodes.Targets())
+        {
+            foreach (var index in target.Indices)
+            {
+                var (x, y) = PathNodeEditing.NodePosition(target.Path, index);
+                left = Math.Min(left, x);
+                top = Math.Min(top, y);
+            }
+        }
+
+        return left == double.MaxValue ? (0, 0) : (left, top);
     }
 
     /// <summary>Ends a drag without a result, for example when the pointer capture is lost.</summary>
@@ -714,6 +712,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         OnPropertyChanged(nameof(Overlay));
         OnPropertyChanged(nameof(PenOverlay));
         OnPropertyChanged(nameof(NodeOverlay));
+        OnPropertyChanged(nameof(SnapGuidesOnScreen));
     }
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
@@ -759,6 +758,9 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 break;
             case nameof(EditorState.PenContinuedId):
                 OnPropertyChanged(nameof(HiddenShapeId));
+                break;
+            case nameof(EditorState.SnapGuides):
+                OnPropertyChanged(nameof(SnapGuidesOnScreen));
                 break;
             case nameof(EditorState.EnteredGroupId):
                 OnPropertyChanged(nameof(EnteredGroupId));

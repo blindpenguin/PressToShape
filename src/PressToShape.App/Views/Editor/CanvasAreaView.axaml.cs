@@ -11,10 +11,6 @@ namespace PressToShape.App.Views.Editor;
 
 public partial class CanvasAreaView : UserControl
 {
-    /// <summary>Whether the rulers (and the corner between them) are shown. The desktop layout shows them, the tablet layout does not.</summary>
-    public static readonly StyledProperty<bool> ShowRulersProperty =
-        AvaloniaProperty.Register<CanvasAreaView, bool>(nameof(ShowRulers), defaultValue: true);
-
     // The button that started the current pointer interaction. Further presses while it lasts are ignored.
     private MouseButton? _activeButton;
 
@@ -60,12 +56,6 @@ public partial class CanvasAreaView : UserControl
                 viewModel.VerticalScrollValue = e.NewValue;
             }
         };
-    }
-
-    public bool ShowRulers
-    {
-        get => GetValue(ShowRulersProperty);
-        set => SetValue(ShowRulersProperty, value);
     }
 
     private void OnViewportPointerWheelChanged(object? sender, PointerWheelEventArgs e)
@@ -131,13 +121,14 @@ public partial class CanvasAreaView : UserControl
             _activeButton = MouseButton.Left;
             var alt = e.KeyModifiers.HasFlag(KeyModifiers.Alt);
             var shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
+            var suspendSnap = e.KeyModifiers.HasFlag(KeyModifiers.Control);
             if (e.ClickCount == 2)
             {
-                viewModel.DoubleClick(position.X, position.Y, alt, shift);
+                viewModel.DoubleClick(position.X, position.Y, alt, shift, suspendSnap: suspendSnap);
             }
             else
             {
-                viewModel.PointerPressed(position.X, position.Y, alt, shift, InputTypeOf(e.Pointer.Type));
+                viewModel.PointerPressed(position.X, position.Y, alt, shift, InputTypeOf(e.Pointer.Type), suspendSnap);
                 WatchLongPress(viewModel, e.Pointer);
             }
         }
@@ -207,7 +198,7 @@ public partial class CanvasAreaView : UserControl
 
         if (e.Pointer.Captured == Viewport)
         {
-            viewModel.PointerMoved(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Shift), e.KeyModifiers.HasFlag(KeyModifiers.Alt));
+            viewModel.PointerMoved(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Shift), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Control));
         }
         else
         {
@@ -246,7 +237,7 @@ public partial class CanvasAreaView : UserControl
 
         var position = e.GetPosition(Viewport);
         _activeButton = null;
-        viewModel.PointerReleased(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Shift), e.KeyModifiers.HasFlag(KeyModifiers.Alt));
+        viewModel.PointerReleased(position.X, position.Y, e.KeyModifiers.HasFlag(KeyModifiers.Shift), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Control));
         e.Pointer.Capture(null);
         e.Handled = true;
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -70,6 +71,26 @@ internal sealed class DocumentCanvasControl : Control
     public static readonly StyledProperty<double> DimOpacityProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, double>(nameof(DimOpacity), defaultValue: 0.35);
 
+    /// <summary>Whether the grid is drawn, behind the shapes.</summary>
+    public static readonly StyledProperty<bool> ShowGridProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, bool>(nameof(ShowGrid));
+
+    /// <summary>The distance between grid lines in document units.</summary>
+    public static readonly StyledProperty<double> GridSpacingProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, double>(nameof(GridSpacing), defaultValue: 10);
+
+    /// <summary>The brush of the grid lines. It comes from the theme.</summary>
+    public static readonly StyledProperty<IBrush?> GridBrushProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(GridBrush));
+
+    /// <summary>The guide lines of the object a drag is snapped to, in screen space. They are drawn over everything else.</summary>
+    public static readonly StyledProperty<IReadOnlyList<ScreenSnapGuide>?> SnapGuidesProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IReadOnlyList<ScreenSnapGuide>?>(nameof(SnapGuides));
+
+    /// <summary>The brush of the snap guide lines. It comes from the theme.</summary>
+    public static readonly StyledProperty<IBrush?> GuideBrushProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(GuideBrush));
+
     // The outlines keep this width at every zoom.
     private const double OutlineThickness = 1;
 
@@ -92,7 +113,12 @@ internal sealed class DocumentCanvasControl : Control
             SelectionHandleFillBrushProperty,
             HandleSizeProperty,
             EnteredGroupIdProperty,
-            DimOpacityProperty);
+            DimOpacityProperty,
+            ShowGridProperty,
+            GridSpacingProperty,
+            GridBrushProperty,
+            SnapGuidesProperty,
+            GuideBrushProperty);
     }
 
     public DocumentCanvasControl()
@@ -184,12 +210,44 @@ internal sealed class DocumentCanvasControl : Control
         set => SetValue(HandleSizeProperty, value);
     }
 
+    public bool ShowGrid
+    {
+        get => GetValue(ShowGridProperty);
+        set => SetValue(ShowGridProperty, value);
+    }
+
+    public double GridSpacing
+    {
+        get => GetValue(GridSpacingProperty);
+        set => SetValue(GridSpacingProperty, value);
+    }
+
+    public IBrush? GridBrush
+    {
+        get => GetValue(GridBrushProperty);
+        set => SetValue(GridBrushProperty, value);
+    }
+
+    public IReadOnlyList<ScreenSnapGuide>? SnapGuides
+    {
+        get => GetValue(SnapGuidesProperty);
+        set => SetValue(SnapGuidesProperty, value);
+    }
+
+    public IBrush? GuideBrush
+    {
+        get => GetValue(GuideBrushProperty);
+        set => SetValue(GuideBrushProperty, value);
+    }
+
     public override void Render(DrawingContext context)
     {
         if (Document is not { } document)
         {
             return;
         }
+
+        DrawGrid(context);
 
         var dim = double.IsFinite(DimOpacity) ? System.Math.Clamp(DimOpacity, 0, 1) : 1;
         foreach (var shape in CanvasScene.Build(document, ZoomPercent, OriginX, OriginY, EnteredGroupId, HiddenShapeId))
@@ -225,6 +283,66 @@ internal sealed class DocumentCanvasControl : Control
         if (NodeOverlay is { } nodeOverlay && SelectionBrush is { } nodeBrush)
         {
             DrawNodeOverlay(context, nodeOverlay, nodeBrush);
+        }
+
+        DrawGuides(context);
+    }
+
+    // Thin lines on the artboard, behind the shapes. Every line sits on the middle of a pixel, so it stays sharp.
+    private void DrawGrid(DrawingContext context)
+    {
+        if (!ShowGrid || GridBrush is not { } brush || Document is not { } document)
+        {
+            return;
+        }
+
+        // Only the artboard has a grid. The part of it that is on the control gives the rectangle for the lines.
+        var scale = ZoomPercent / 100;
+        var left = System.Math.Max(0, OriginX);
+        var top = System.Math.Max(0, OriginY);
+        var right = System.Math.Min(Bounds.Width, OriginX + document.ArtboardWidth * scale);
+        var bottom = System.Math.Min(Bounds.Height, OriginY + document.ArtboardHeight * scale);
+        if (!(right > left) || !(bottom > top))
+        {
+            return;
+        }
+
+        var lines = GridLines.BuildInScreenRect(GridSpacing, ZoomPercent, OriginX, OriginY, left, top, right, bottom);
+        var pen = new Pen(brush, OutlineThickness);
+        foreach (var x in lines.Vertical)
+        {
+            var at = System.Math.Floor(x) + 0.5;
+            context.DrawLine(pen, new Point(at, top), new Point(at, bottom));
+        }
+
+        foreach (var y in lines.Horizontal)
+        {
+            var at = System.Math.Floor(y) + 0.5;
+            context.DrawLine(pen, new Point(left, at), new Point(right, at));
+        }
+    }
+
+    // The lines that show which object the drag is snapped to, over everything else.
+    private void DrawGuides(DrawingContext context)
+    {
+        if (SnapGuides is not { Count: > 0 } guides || GuideBrush is not { } brush)
+        {
+            return;
+        }
+
+        var pen = new Pen(brush, OutlineThickness);
+        foreach (var guide in guides)
+        {
+            if (!double.IsFinite(guide.Position) || !double.IsFinite(guide.From) || !double.IsFinite(guide.To))
+            {
+                continue;
+            }
+
+            var at = System.Math.Floor(guide.Position) + 0.5;
+            context.DrawLine(
+                pen,
+                guide.IsVertical ? new Point(at, guide.From) : new Point(guide.From, at),
+                guide.IsVertical ? new Point(at, guide.To) : new Point(guide.To, at));
         }
     }
 

@@ -82,7 +82,9 @@ internal sealed partial class CanvasInteraction
         var scale = _state.ZoomPercent / 100;
         var grab = inputType == InputPointerType.Touch ? TouchGrabSize : SelectionGeometry.GrabSize;
         var samePoint = (inputType == InputPointerType.Touch ? PenSamePointTouchPixels : PenSamePointPixels) / scale;
-        var result = _pen.Press(x, y, samePoint, grab / 2 / scale);
+        var closeDistance = grab / 2 / scale;
+        var (nodeX, nodeY) = PenSnapped(x, y, samePoint, closeDistance);
+        var result = _pen.Press(x, y, samePoint, closeDistance, nodeX, nodeY);
         switch (result)
         {
             case PenPressResult.ClosedPath:
@@ -106,13 +108,17 @@ internal sealed partial class CanvasInteraction
         }
 
         var scale = _state.ZoomPercent / 100;
+        var closeDistance = SelectionGeometry.GrabSize / 2 / scale;
         if (_pen.IsPressing)
         {
-            _pen.Drag(x, y, PenDragPixels / scale);
+            // The end of the handle snaps. The node that was just added is no target for it.
+            var (handleX, handleY) = PenSnapped(x, y, 0, 0);
+            _pen.Drag(handleX, handleY, PenDragPixels / scale);
         }
         else
         {
-            _pen.Hover(x, y, SelectionGeometry.GrabSize / 2 / scale);
+            var (hoverX, hoverY) = PenSnapped(x, y, PenSamePointPixels / scale, closeDistance);
+            _pen.Hover(hoverX, hoverY, closeDistance);
         }
 
         ShowPen();
@@ -198,6 +204,7 @@ internal sealed partial class CanvasInteraction
 
     private void ClearPenView()
     {
+        ClearSnap();
         _continued = null;
         _state.Draft = null;
         _state.PenOverlay = null;

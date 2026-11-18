@@ -69,9 +69,10 @@ internal sealed class PenDrawing
     /// <summary>
     /// The button went down at this position. A press within <paramref name="lastNodeDistance"/> of the last node means finish (a
     /// double click or double tap). A press within <paramref name="closeDistance"/> of the first node of a path with at least three
-    /// nodes means close. Otherwise a corner node is added.
+    /// nodes means close. Otherwise a corner node is added, at the pointer or, for a snapped press, at
+    /// (<paramref name="nodeX"/>, <paramref name="nodeY"/>). Finish and close always use the pointer position, so snapping never prevents them.
     /// </summary>
-    public PenPressResult Press(double x, double y, double lastNodeDistance, double closeDistance)
+    public PenPressResult Press(double x, double y, double lastNodeDistance, double closeDistance, double? nodeX = null, double? nodeY = null)
     {
         if (_nodes.Count > 0 && Distance(_nodes[^1], x, y) <= lastNodeDistance)
         {
@@ -83,7 +84,7 @@ internal sealed class PenDrawing
             return PenPressResult.ClosedPath;
         }
 
-        _nodes.Add(new DocumentNode(x, y));
+        _nodes.Add(new DocumentNode(nodeX ?? x, nodeY ?? y));
         _isPressing = true;
         _highlightFirst = false;
 

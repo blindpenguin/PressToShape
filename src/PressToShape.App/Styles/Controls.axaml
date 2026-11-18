@@ -126,6 +126,27 @@
         <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}" />
     </Style>
 
+    <!-- Switch button (status bar: grid, snap to grid, snap to objects): like a tool toggle, but the layout sets its size -->
+    <Style Selector="ToggleButton.snap">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="ToggleButton.snap:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.snap:checked /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppAccentForegroundBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.snap:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+    </Style>
+
     <!-- Choice button: one of a row of buttons that stands for a setting. The one that is set has the accent background -->
     <Style Selector="Button.choice">
         <Setter Property="Padding" Value="12,4" />

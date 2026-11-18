@@ -26,6 +26,9 @@ internal sealed partial class StatusBarViewModel : LocalizedViewModel
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _zoom = new ZoomViewModel(state, localizer, fitToWindow);
         _state.PropertyChanged += OnStateChanged;
+        GridSpacingField = new NumberFieldViewModel(localizer, SnapPreferences.MinSpacing, SnapPreferences.MaxSpacing, spacing => _state.Snapping.GridSpacing = spacing);
+        GridSpacingField.SetValue(_state.Snapping.GridSpacing);
+        _state.Snapping.Changed += OnSnappingChanged;
         _pathEditing = pathEditing;
         if (_pathEditing is not null)
         {
@@ -42,6 +45,30 @@ internal sealed partial class StatusBarViewModel : LocalizedViewModel
 
     /// <summary>The translated text shown while <see cref="IsBusy"/>.</summary>
     public string BusyText => Localizer.T("Working…");
+
+    /// <summary>Whether the grid is shown. Setting it changes the user setting, so the menu and the other status bar follow.</summary>
+    public bool ShowGrid
+    {
+        get => _state.Snapping.ShowGrid;
+        set => _state.Snapping.ShowGrid = value;
+    }
+
+    /// <summary>Whether points snap to the grid lines.</summary>
+    public bool SnapToGrid
+    {
+        get => _state.Snapping.SnapToGrid;
+        set => _state.Snapping.SnapToGrid = value;
+    }
+
+    /// <summary>Whether points snap to the edges, centers and nodes of other objects.</summary>
+    public bool SnapToObjects
+    {
+        get => _state.Snapping.SnapToObjects;
+        set => _state.Snapping.SnapToObjects = value;
+    }
+
+    /// <summary>The grid spacing box. A value outside <see cref="SnapPreferences.MinSpacing"/> to <see cref="SnapPreferences.MaxSpacing"/> or text that is no number is refused and the old value comes back.</summary>
+    public NumberFieldViewModel GridSpacingField { get; }
 
     /// <summary>The translated selection text: "Nothing selected", "1 selected" or "N selected".</summary>
     public string SelectionSummary => SelectionSummaryText.Format(Localizer, _state.SelectedCount);
@@ -73,6 +100,14 @@ internal sealed partial class StatusBarViewModel : LocalizedViewModel
     /// <summary>The pan button next to the zoom controls activates the Hand tool.</summary>
     [RelayCommand]
     private void ActivateHandTool() => _state.ActiveTool = Tool.Hand;
+
+    private void OnSnappingChanged(object? sender, EventArgs e)
+    {
+        OnPropertyChanged(nameof(ShowGrid));
+        OnPropertyChanged(nameof(SnapToGrid));
+        OnPropertyChanged(nameof(SnapToObjects));
+        GridSpacingField.SetValue(_state.Snapping.GridSpacing);
+    }
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
     {

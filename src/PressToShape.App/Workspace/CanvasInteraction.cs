@@ -34,6 +34,12 @@ internal sealed partial class CanvasInteraction
     private double _grabOffsetX;
     private double _grabOffsetY;
 
+    // Whether snapping is suspended for the pointer event that is handled right now (the Ctrl key). Set by every pointer method.
+    private bool _suspendSnap;
+
+    /// <summary>Whether the last pointer event suspended snapping (the Ctrl key was held).</summary>
+    internal bool IsSnapSuspended => _suspendSnap;
+
     public CanvasInteraction(EditorState state)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
@@ -65,10 +71,12 @@ internal sealed partial class CanvasInteraction
 
     /// <summary>
     /// The primary button went down at this document position. <paramref name="shift"/> adds to or removes from the selection.
+    /// <paramref name="suspendSnap"/> (the Ctrl key) turns snapping off for this event.
     /// <paramref name="inputType"/> is the device: a finger grabs a handle from a larger area than a mouse or a pen.
     /// </summary>
-    public void PointerPressed(double x, double y, bool shift = false, InputPointerType inputType = InputPointerType.Mouse)
+    public void PointerPressed(double x, double y, bool shift = false, InputPointerType inputType = InputPointerType.Mouse, bool suspendSnap = false)
     {
+        _suspendSnap = suspendSnap;
         Cancel();
 
         if (_state.ColorPick != ColorPickTarget.None)
@@ -91,7 +99,9 @@ internal sealed partial class CanvasInteraction
             case Tool.Ellipse:
                 if (CanDrawInActiveLayer())
                 {
-                    BeginDrag(DragType.Drawing, x, y);
+                    BeginSnapSession([]);
+                    var (startX, startY) = SnappedPoint(x, y);
+                    BeginDrag(DragType.Drawing, startX, startY);
                 }
 
                 break;
@@ -113,8 +123,9 @@ internal sealed partial class CanvasInteraction
     }
 
     /// <summary>The pointer moved to this document position. Does nothing without a drag.</summary>
-    public void PointerMoved(double x, double y, bool shift = false, bool alt = false)
+    public void PointerMoved(double x, double y, bool shift = false, bool alt = false, bool suspendSnap = false)
     {
+        _suspendSnap = suspendSnap;
         if (_state.ActiveTool == Tool.Pen)
         {
             PenMoved(x, y);
@@ -150,8 +161,9 @@ internal sealed partial class CanvasInteraction
     }
 
     /// <summary>The button went up at this document position. Ends the drag in every case.</summary>
-    public void PointerReleased(double x, double y, bool shift = false, bool alt = false)
+    public void PointerReleased(double x, double y, bool shift = false, bool alt = false, bool suspendSnap = false)
     {
+        _suspendSnap = suspendSnap;
         if (_state.ActiveTool == Tool.Pen)
         {
             PenReleased();
@@ -210,8 +222,10 @@ internal sealed partial class CanvasInteraction
             return;
         }
 
+        // The shape is made before the drag ends, because ending it drops the snap targets.
+        var created = CreateShape(x, y, shift, alt);
         EndDrag();
-        if (CanDrawInActiveLayer() && CreateShape(x, y, shift, alt) is { } shape && IsBigEnough(shape))
+        if (CanDrawInActiveLayer() && created is { } shape && IsBigEnough(shape))
         {
             var type = shape is EllipseShape ? HistoryStepType.DrawEllipse : HistoryStepType.DrawRectangle;
             _state.Edit(type, document => document.AddShape(_state.ActiveLayerId, shape));
@@ -322,6 +336,7 @@ internal sealed partial class CanvasInteraction
 
             _startShapes = SelectionQueries.SelectedLeaves(document, _state.SelectedShapeIds);
             _startDocument = document;
+            BeginSnapSession(_startShapes);
             BeginDrag(DragType.Moving, x, y);
             return;
         }
@@ -337,6 +352,10 @@ internal sealed partial class CanvasInteraction
         _startDocument = _state.Document;
         _startFrame = frame;
         _handle = handle;
+        if (handle != HandleType.Rotate)
+        {
+            BeginSnapSession(_startShapes);
+        }
 
         // The pointer may be a few pixels off the handle's center: keep that distance so the handle does not jump.
         var (hx, hy) = SelectionGeometry.HandlePosition(frame, handle, _state.ZoomPercent);
@@ -404,6 +423,7 @@ internal sealed partial class CanvasInteraction
             _ => (HistoryStepType?)null,
         };
         _drag = DragType.None;
+        ClearSnap();
         _nodeMarquee = false;
         _state.Draft = null;
         _state.SelectionBox = null;
@@ -425,11 +445,14 @@ internal sealed partial class CanvasInteraction
         switch (_drag)
         {
             case DragType.Resizing when _startFrame is { } frame:
-                return SelectionTransforms.Resize(_startShapes, frame, _handle, x + _grabOffsetX, y + _grabOffsetY, shift, alt);
+                var keepsRatio = shift || (!frame.IsSingle && _startShapes.Any(s => s.Rotation != 0));
+                var (handleX, handleY) = SnappedHandle(frame, x + _grabOffsetX, y + _grabOffsetY, keepsRatio);
+                return SelectionTransforms.Resize(_startShapes, frame, _handle, handleX, handleY, shift, alt);
             case DragType.Rotating when _startFrame is { } frame:
                 return SelectionTransforms.Rotate(_startShapes, frame, _startX, _startY, x, y, shift);
             default:
-                return SelectionTransforms.Move(_startShapes, x - _startX, y - _startY);
+                var (dx, dy) = SnappedMove(x - _startX, y - _startY);
+                return SelectionTransforms.Move(_startShapes, dx, dy);
         }
     }
 
@@ -460,8 +483,10 @@ internal sealed partial class CanvasInteraction
     }
 
     // Shift makes the shape square (a circle for the ellipse), Alt draws it around the press point as its center.
-    private Shape? CreateShape(double x, double y, bool shift, bool alt)
+    private Shape? CreateShape(double pointerX, double pointerY, bool shift, bool alt)
     {
+        // The corner snaps first, then Shift and Alt shape the result.
+        var (x, y) = SnappedPoint(pointerX, pointerY);
         var dx = x - _startX;
         var dy = y - _startY;
         if (shift)

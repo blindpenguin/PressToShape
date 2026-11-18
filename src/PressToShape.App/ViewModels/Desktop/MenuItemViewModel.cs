@@ -104,6 +104,16 @@ internal sealed class MenuItemViewModel : LocalizedViewModel
     public static MenuItemViewModel Separator(ILocalizer localizer) =>
         new(localizer, SeparatorHeader, false, null, null, [], null);
 
+    /// <summary>
+    /// A checkable item with a translated header (a message id) and an optional shortcut text, for a switch such as Show Grid. The command
+    /// changes the state. Call <see cref="RefreshChecked"/> when the state changes from somewhere else.
+    /// </summary>
+    public static MenuItemViewModel Toggle(ILocalizer localizer, string header, string? gesture, ICommand command, Func<bool> isChecked) =>
+        new(localizer, header, true, gesture, command ?? throw new ArgumentNullException(nameof(command)), [], isChecked ?? throw new ArgumentNullException(nameof(isChecked)));
+
+    /// <summary>Reads the check state again. For a state that was changed by something other than this item's command.</summary>
+    public void RefreshChecked() => OnPropertyChanged(nameof(IsChecked));
+
     /// <summary>A checkable item with a fixed, untranslated header, for language names such as "Deutsch".</summary>
     public static MenuItemViewModel Checkable(ILocalizer localizer, string fixedHeader, ICommand command, Func<bool> isChecked) =>
         new(localizer, fixedHeader, false, null, command, [], isChecked ?? throw new ArgumentNullException(nameof(isChecked)));

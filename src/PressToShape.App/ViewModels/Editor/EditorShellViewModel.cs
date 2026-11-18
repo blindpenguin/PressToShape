@@ -22,12 +22,15 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
     private readonly DocumentFileService _files;
     private bool _initialFitDone;
 
-    protected EditorShellViewModel(ILocalizer localizer, FileServices services)
+    /// <param name="localizer">Translates the texts.</param>
+    /// <param name="services">The file and settings services.</param>
+    /// <param name="showRulersByDefault">Whether the rulers are shown until the user chooses otherwise. The desktop layout shows them, the tablet layout does not.</param>
+    protected EditorShellViewModel(ILocalizer localizer, FileServices services, bool showRulersByDefault = true)
     {
         _localizer = localizer ?? throw new ArgumentNullException(nameof(localizer));
         ArgumentNullException.ThrowIfNull(services);
 
-        State = new EditorState(Document.Create(localizer.T("Layer 1")));
+        State = new EditorState(Document.Create(localizer.T("Layer 1")), new SnapPreferences(services.Settings, showRulersByDefault));
         _session = new DocumentSession(State);
         Recent = new RecentFiles(services.Settings, services.RemembersRecentFiles);
         _files = new DocumentFileService(State, _session, Recent, services.Files, services.Dialogs, services.Messages, localizer, FitToWindow);

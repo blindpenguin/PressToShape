@@ -62,6 +62,23 @@ internal sealed class MenuBarViewModel : ViewModelBase
             MenuItemViewModel.Submenu(localizer, header, children);
         MenuItemViewModel Separator() => MenuItemViewModel.Separator(localizer);
 
+        // The switches of the View menu read the user settings and toggle them. They follow changes made elsewhere, such as the status bar.
+        var snapping = state.Snapping;
+        MenuItemViewModel Toggle(string header, string? gesture, Action toggle, Func<bool> isChecked) =>
+            MenuItemViewModel.Toggle(localizer, header, gesture, new RelayCommand(toggle), isChecked);
+        var showRulersItem = Toggle(N("Show _Rulers"), "Ctrl+R", () => snapping.ShowRulers = !snapping.ShowRulers, () => snapping.ShowRulers);
+        var showGridItem = Toggle(N("Show _Grid"), null, () => snapping.ShowGrid = !snapping.ShowGrid, () => snapping.ShowGrid);
+        var snapToGridItem = Toggle(N("_Snap to Grid"), null, () => snapping.SnapToGrid = !snapping.SnapToGrid, () => snapping.SnapToGrid);
+        var snapToObjectsItem = Toggle(N("Snap to Ob_jects"), null, () => snapping.SnapToObjects = !snapping.SnapToObjects, () => snapping.SnapToObjects);
+        MenuItemViewModel[] switches = [showRulersItem, showGridItem, snapToGridItem, snapToObjectsItem];
+        snapping.Changed += (_, _) =>
+        {
+            foreach (var item in switches)
+            {
+                item.RefreshChecked();
+            }
+        };
+
         var recentItems = new ObservableCollection<MenuItemViewModel>();
         void RebuildRecent()
         {
@@ -170,10 +187,10 @@ internal sealed class MenuBarViewModel : ViewModelBase
                 Item(N("_Fit Artboard in Window"), "Ctrl+0", fit),
                 Item(N("_Actual Size (100%)"), "Ctrl+1", actualSize),
                 Separator(),
-                Item(N("Show _Rulers"), "Ctrl+R"),
-                Item(N("Show _Grid")),
-                Item(N("_Snap to Grid")),
-                Item(N("Snap to Ob_jects")),
+                showRulersItem,
+                showGridItem,
+                snapToGridItem,
+                snapToObjectsItem,
                 Separator(),
                 Submenu(N("_Language"), MenuItemViewModel.LanguageItems(localizer))),
             Submenu(N("_Window"),

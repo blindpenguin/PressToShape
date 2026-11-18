@@ -23,8 +23,11 @@ internal sealed partial class EditorState : ObservableObject
     private ImmutableArray<Guid> _layerOrder;
 
     /// <summary>Creates the state. Without a document it starts with an empty one: Core has no default layer name, the shell passes the real start document.</summary>
-    public EditorState(Document? document = null)
+    /// <param name="document">The start document.</param>
+    /// <param name="snapping">The grid and snap settings. Without them the state keeps its own, in memory only.</param>
+    public EditorState(Document? document = null, SnapPreferences? snapping = null)
     {
+        Snapping = snapping ?? SnapPreferences.InMemory();
         Document = document ?? Document.Create(string.Empty);
         ActiveLayerId = Document.Layers[^1].Id;
         History = new DocumentHistory(Document);

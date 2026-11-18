@@ -51,6 +51,10 @@
             <SolidColorBrush x:Key="RulerTickBrush">#7A7A88</SolidColorBrush>
             <SolidColorBrush x:Key="RulerTextBrush">#A0A0AE</SolidColorBrush>
 
+            <!-- Grid and snap guide lines on the canvas -->
+            <SolidColorBrush x:Key="GridLineBrush">#40A0A0B0</SolidColorBrush>
+            <SolidColorBrush x:Key="SnapGuideBrush">#FF4FB3</SolidColorBrush>
+
             <!-- Dims the layout behind a message dialog -->
             <SolidColorBrush x:Key="ScrimBrush">#99000000</SolidColorBrush>
 
@@ -106,6 +110,10 @@
             <SolidColorBrush x:Key="RulerBackgroundBrush">#F7F7FA</SolidColorBrush>
             <SolidColorBrush x:Key="RulerTickBrush">#7A7A88</SolidColorBrush>
             <SolidColorBrush x:Key="RulerTextBrush">#4F4F5E</SolidColorBrush>
+
+            <!-- Grid and snap guide lines on the canvas -->
+            <SolidColorBrush x:Key="GridLineBrush">#40606070</SolidColorBrush>
+            <SolidColorBrush x:Key="SnapGuideBrush">#E0208A</SolidColorBrush>
 
             <!-- Dims the layout behind a message dialog -->
             <SolidColorBrush x:Key="ScrimBrush">#66000000</SolidColorBrush>

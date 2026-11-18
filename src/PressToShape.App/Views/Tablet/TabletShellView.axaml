@@ -25,7 +25,7 @@
 
                 <!-- The canvas takes everything that is left. The panel floats over its right edge while it is open, so the canvas never changes its size. -->
                 <Grid Grid.Column="1">
-                    <editor:CanvasAreaView x:Name="CanvasArea" ShowRulers="False" DataContext="{Binding Canvas}" />
+                    <editor:CanvasAreaView x:Name="CanvasArea" DataContext="{Binding Canvas}" />
                     <tablet:TabletPanelView HorizontalAlignment="Right" DataContext="{Binding Panel}" />
                 </Grid>
             </Grid>

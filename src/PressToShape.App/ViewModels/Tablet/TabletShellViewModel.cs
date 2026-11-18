@@ -20,7 +20,7 @@ internal sealed class TabletShellViewModel : EditorShellViewModel
     /// <param name="services">Files, pickers and dialogs. On the tablet the dialogs are shown through <paramref name="dialogs"/>.</param>
     /// <param name="dialogs">Holds the message dialog that the layout shows over everything else.</param>
     public TabletShellViewModel(IAppShutdown shutdown, ILocalizer localizer, FileServices services, MessageDialogHost dialogs)
-        : base(localizer, services)
+        : base(localizer, services, showRulersByDefault: false)
     {
         _shutdown = shutdown ?? throw new ArgumentNullException(nameof(shutdown));
         Dialogs = dialogs ?? throw new ArgumentNullException(nameof(dialogs));

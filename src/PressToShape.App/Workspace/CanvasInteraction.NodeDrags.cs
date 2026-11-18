@@ -53,6 +53,7 @@ internal sealed partial class CanvasInteraction
             return;
         }
 
+        BeginNodeSnapSession(drag);
         BeginDrag(drag, x, y);
     }
 
@@ -69,7 +70,8 @@ internal sealed partial class CanvasInteraction
         switch (_drag)
         {
             case DragType.MovingNodes:
-                MoveSelectedNodes(x - _startX, y - _startY, shift, replacements);
+                var (dx, dy) = SnappedNodeMove(x - _startX, y - _startY);
+                MoveSelectedNodes(dx, dy, shift, replacements);
                 break;
             case DragType.MovingHandle when _nodePath is { } handlePath:
                 AddIfChanged(replacements, handlePath, MovedHandle(handlePath, x, y, alt));
@@ -118,6 +120,8 @@ internal sealed partial class CanvasInteraction
     {
         var scale = _state.ZoomPercent / 100;
         var target = (X: x + _grabOffsetX, Y: y + _grabOffsetY);
+        var snap = Snap([target.X], [target.Y], null);
+        target = (target.X + snap.OffsetX, target.Y + snap.OffsetY);
         var anchor = PathNodeEditing.NodePosition(path, _nodeHit.Index);
         if (Math.Sqrt(Math.Pow(target.X - anchor.X, 2) + Math.Pow(target.Y - anchor.Y, 2)) * scale <= HandleSnapPixels)
         {
