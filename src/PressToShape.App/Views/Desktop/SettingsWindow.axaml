@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:loc="using:PressToShape.App.Localization"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+        xmlns:editor="using:PressToShape.App.Views.Editor"
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="440"
+        x:Class="PressToShape.App.Views.Desktop.SettingsWindow"
+        x:DataType="vm:SettingsViewModel"
+        Title="{loc:T 'Preferences'}"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Width="640" Height="440"
+        MinWidth="560" MinHeight="380"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+
+    <editor:SettingsView />
+
+</Window>

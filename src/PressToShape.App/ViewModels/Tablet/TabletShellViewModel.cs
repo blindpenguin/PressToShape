@@ -19,13 +19,14 @@ internal sealed class TabletShellViewModel : EditorShellViewModel
     /// <param name="localizer">The translator.</param>
     /// <param name="services">Files, pickers and dialogs. On the tablet the dialogs are shown through <paramref name="dialogs"/>.</param>
     /// <param name="dialogs">Holds the message dialog that the layout shows over everything else.</param>
-    public TabletShellViewModel(IAppShutdown shutdown, ILocalizer localizer, FileServices services, MessageDialogHost dialogs)
+    public TabletShellViewModel(IAppShutdown shutdown, ILocalizer localizer, FileServices services, MessageDialogHost dialogs, SettingsDialogHost? settingsHost = null)
         : base(localizer, services, showRulersByDefault: false)
     {
         _shutdown = shutdown ?? throw new ArgumentNullException(nameof(shutdown));
         Dialogs = dialogs ?? throw new ArgumentNullException(nameof(dialogs));
+        SettingsHost = settingsHost ?? new SettingsDialogHost();
 
-        OverflowMenu = new OverflowMenuViewModel(localizer, FileCommands, EditCommands, ObjectCommands, PathCommands);
+        OverflowMenu = new OverflowMenuViewModel(localizer, FileCommands, EditCommands, ObjectCommands, PathCommands, OpenSettingsCommand);
         Panel = new TabletPanelViewModel(Inspector, localizer);
         Column = new TabletToolColumnViewModel(Toolbox, State, localizer, new TabletColorSwatchViewModel(Inspector.Properties, Panel, localizer));
         Toolbar = new TabletToolbarViewModel(localizer, this, UndoCommand, RedoCommand, OverflowMenu, Panel);
@@ -48,9 +49,12 @@ internal sealed class TabletShellViewModel : EditorShellViewModel
     /// <summary>The message dialog that is shown over the layout, or nothing.</summary>
     public MessageDialogHost Dialogs { get; }
 
+    /// <summary>The settings that are shown over the layout, or nothing. The same host is given to <see cref="Services.OverlaySettingsDialogs"/>.</summary>
+    public SettingsDialogHost SettingsHost { get; }
+
     /// <summary>
     /// The Back button was pressed (after the view closed a toolbar menu, if one was open). It closes the topmost thing that is open and
-    /// stops there: a message dialog (as Cancel), then a tool group flyout, then the panel. Only when none of them is open does it do what
+    /// stops there: a message dialog (as Cancel), then the settings (a page goes back to the list, the list cancels), then a tool group flyout, then the panel. Only when none of them is open does it do what
     /// <see cref="RequestLeaveAsync"/> does.
     /// </summary>
     /// <returns>Whether the app was told to end.</returns>
@@ -59,6 +63,12 @@ internal sealed class TabletShellViewModel : EditorShellViewModel
         if (Dialogs.IsOpen)
         {
             Dialogs.Dismiss();
+            return Task.FromResult(false);
+        }
+
+        if (SettingsHost.IsOpen)
+        {
+            SettingsHost.Back();
             return Task.FromResult(false);
         }
 
@@ -88,6 +98,12 @@ internal sealed class TabletShellViewModel : EditorShellViewModel
         if (Dialogs.IsOpen)
         {
             Dialogs.Dismiss();
+            return false;
+        }
+
+        if (SettingsHost.IsOpen)
+        {
+            SettingsHost.Dismiss();
             return false;
         }
 

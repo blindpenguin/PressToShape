@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="440"
+             x:Class="PressToShape.App.Views.Editor.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+    <!-- The desktop settings: the categories on the left, the page of the selected category on the right, OK and Cancel at the bottom. -->
+    <Grid RowDefinitions="*,Auto">
+
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*">
+            <ListBox Grid.Column="0" Width="{DynamicResource SettingsCategoryListWidth}"
+                     ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}"
+                     AutomationProperties.Name="{loc:T 'Categories'}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SettingsCategoryViewModel">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                            <TextBlock Text="{Binding Title}" VerticalAlignment="Center" />
+                            <materialIcons:MaterialIcon Kind="AlertCircle" IsVisible="{Binding HasError}"
+                                                        Foreground="{DynamicResource ErrorTextBrush}"
+                                                        Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}"
+                                                        AutomationProperties.Name="{loc:T 'This page has an invalid value'}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Border Grid.Column="1" Width="1" Background="{DynamicResource BorderSubtleBrush}" />
+
+            <!-- The page is found by the view locator from the page view model of the category. -->
+            <ContentControl Grid.Column="2" Content="{Binding SelectedCategory.Page}" />
+        </Grid>
+
+        <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource BorderSubtleBrush}"
+                Background="{DynamicResource PanelBackgroundBrush}" Padding="{DynamicResource PanelPadding}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="{DynamicResource PanelSpacing}">
+                <Button Classes="dialogButton" Content="{loc:T 'OK'}" IsDefault="True" Command="{Binding OkCommand}" />
+                <Button Classes="dialogButton" Content="{loc:T 'Cancel'}" IsCancel="True" Command="{Binding CancelCommand}" />
+            </StackPanel>
+        </Border>
+
+    </Grid>
+
+</UserControl>

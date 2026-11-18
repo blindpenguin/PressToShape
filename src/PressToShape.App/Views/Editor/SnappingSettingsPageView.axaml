@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+             x:Class="PressToShape.App.Views.Editor.SnappingSettingsPageView"
+             x:DataType="vm:SnappingSettingsPageViewModel">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="{DynamicResource SettingsPagePadding}" Spacing="{DynamicResource SettingsRowSpacing}">
+
+            <TextBlock Classes="section-header" Text="{loc:T 'Snapping'}" />
+
+            <CheckBox Classes="setting" Content="{loc:T 'Snap to grid'}" IsChecked="{Binding Settings.SnapToGrid}" />
+            <CheckBox Classes="setting" Content="{loc:T 'Snap to objects'}" IsChecked="{Binding Settings.SnapToObjects}" />
+            <CheckBox Classes="setting" Content="{loc:T 'Smart guides'}" IsChecked="{Binding Settings.SmartGuides}" />
+            <CheckBox Classes="setting" Content="{loc:T 'Show guides'}" IsChecked="{Binding Settings.ShowGuides}" />
+
+            <Button Classes="dialogButton" HorizontalAlignment="Left" Content="{loc:T 'Restore defaults'}"
+                    Command="{Binding Settings.RestoreDefaultsCommand}" />
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

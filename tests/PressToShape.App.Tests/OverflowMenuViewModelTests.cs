@@ -38,6 +38,8 @@ public class OverflowMenuViewModelTests
 
         public SwitchableCommand Deselect { get; } = new(true);
 
+        public SwitchableCommand Preferences { get; } = new(true);
+
         public FileMenuCommands File => new(New, Open, Save, SaveAs, ExportSvg, _ => new SwitchableCommand(true));
 
         public EditMenuCommands Edit => new(Cut, Copy, Paste, PasteInPlace, Duplicate, Delete, SelectAll, Deselect);
@@ -84,7 +86,7 @@ public class OverflowMenuViewModelTests
     }
 
     private static OverflowMenuViewModel Create(Commands commands, ILocalizer? localizer = null) =>
-        new(localizer ?? FakeLocalizer.Create(), commands.File, commands.Edit, commands.Objects, commands.Paths);
+        new(localizer ?? FakeLocalizer.Create(), commands.File, commands.Edit, commands.Objects, commands.Paths, commands.Preferences);
 
     private static MenuItemViewModel Find(OverflowMenuViewModel menu, string plainHeader) => menu.Items.Single(i => i.PlainHeader == plainHeader);
 
@@ -99,7 +101,7 @@ public class OverflowMenuViewModelTests
                 "New", "Open…", "Save", "Save As…", "Export as SVG…", "-",
                 "Cut", "Copy", "Paste", "Paste in Place", "Duplicate", "Delete", "Select All", "Deselect", "-",
                 "Group", "Ungroup", "Arrange", "Path", "Lock", "Unlock All", "Hide", "Show All", "-",
-                "Language",
+                "Preferences…", "Language",
             },
             menu.Items.Select(i => i.PlainHeader));
     }
@@ -228,6 +230,29 @@ public class OverflowMenuViewModelTests
 
         Assert.True(paste.IsEnabled);
         Assert.Contains(nameof(MenuItemViewModel.IsEnabled), raised);
+    }
+
+    [Fact]
+    public void Preferences_Item_RunsTheCommandAndFollowsItsAvailability()
+    {
+        var commands = new Commands();
+        var item = Find(Create(commands), "Preferences…");
+
+        Assert.True(item.IsEnabled);
+        item.Command!.Execute(null);
+        Assert.Equal(1, commands.Preferences.Executions);
+
+        commands.Preferences.Set(false);
+        Assert.False(item.IsEnabled);
+    }
+
+    [Fact]
+    public void Preferences_WithoutACommand_IsDisabled()
+    {
+        var commands = new Commands();
+        var menu = new OverflowMenuViewModel(FakeLocalizer.Create(), commands.File, commands.Edit, commands.Objects, commands.Paths);
+
+        Assert.False(Find(menu, "Preferences…").IsEnabled);
     }
 
     [Fact]

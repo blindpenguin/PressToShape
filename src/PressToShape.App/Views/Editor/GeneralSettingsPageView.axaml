@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+             x:Class="PressToShape.App.Views.Editor.GeneralSettingsPageView"
+             x:DataType="vm:GeneralSettingsPageViewModel">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="{DynamicResource SettingsPagePadding}" Spacing="{DynamicResource SettingsRowSpacing}">
+
+            <TextBlock Classes="section-header" Text="{loc:T 'General'}" />
+
+            <TextBlock Classes="secondary" Text="{loc:T 'Language'}" />
+            <ListBox ItemsSource="{Binding Settings.Languages}" SelectedItem="{Binding Settings.SelectedLanguage}"
+                     AutomationProperties.Name="{loc:T 'Language'}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="loc:LanguageInfo">
+                        <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Classes="dialogButton" HorizontalAlignment="Left" Content="{loc:T 'Restore defaults'}"
+                    Command="{Binding Settings.RestoreDefaultsCommand}" />
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

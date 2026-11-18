@@ -987,3 +987,51 @@ msgstr "Hilfslinie verschieben"
 
 msgid "Delete guide"
 msgstr "Hilfslinie löschen"
+
+msgid "Enter a number from {0} to {1}."
+msgstr "Gib eine Zahl von {0} bis {1} ein."
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Canvas"
+msgstr "Zeichenfläche"
+
+msgid "Snapping"
+msgstr "Ausrichten"
+
+msgid "Language"
+msgstr "Sprache"
+
+msgid "Show rulers"
+msgstr "Lineale anzeigen"
+
+msgid "Show grid"
+msgstr "Raster anzeigen"
+
+msgid "Grid spacing"
+msgstr "Rasterabstand"
+
+msgid "Snap to grid"
+msgstr "Am Raster ausrichten"
+
+msgid "Snap to objects"
+msgstr "An Objekten ausrichten"
+
+msgid "Smart guides"
+msgstr "Intelligente Hilfslinien"
+
+msgid "Show guides"
+msgstr "Hilfslinien anzeigen"
+
+msgid "Restore defaults"
+msgstr "Standardwerte wiederherstellen"
+
+msgid "Categories"
+msgstr "Kategorien"
+
+msgid "This page has an invalid value"
+msgstr "Diese Seite enthält einen ungültigen Wert"
+
+msgid "Preferences"
+msgstr "Voreinstellungen"

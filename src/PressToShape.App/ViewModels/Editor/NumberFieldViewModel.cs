@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PressToShape.App.Localization;
 
@@ -12,8 +11,6 @@ namespace PressToShape.App.ViewModels.Editor;
 /// </summary>
 internal sealed partial class NumberFieldViewModel : LocalizedViewModel
 {
-    private const NumberStyles Styles = NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint;
-
     private readonly Action<double> _apply;
     private double? _value;
 
@@ -71,7 +68,7 @@ internal sealed partial class NumberFieldViewModel : LocalizedViewModel
     /// </summary>
     public void Commit()
     {
-        if (!IsEnabled || !TryParse(Text, out var value) || value < Minimum || value > Maximum)
+        if (!IsEnabled || !NumberParsing.TryParse(Text, Localizer.Culture, out var value) || value < Minimum || value > Maximum)
         {
             Revert();
             return;
@@ -106,19 +103,6 @@ internal sealed partial class NumberFieldViewModel : LocalizedViewModel
     }
 
     private void ShowValue() => Text = _value is { } value && !IsMixed ? Format(value) : string.Empty;
-
-    private bool TryParse(string text, out double value)
-    {
-        var trimmed = text.Trim();
-        if ((double.TryParse(trimmed, Styles, Localizer.Culture, out value) || double.TryParse(trimmed, Styles, CultureInfo.InvariantCulture, out value))
-            && double.IsFinite(value))
-        {
-            return true;
-        }
-
-        value = 0;
-        return false;
-    }
 
     private static double Round(double value) => Math.Round(value, 3, MidpointRounding.AwayFromZero);
 }

@@ -21,6 +21,19 @@ public sealed class SnapPreferencesTests
         Assert.True(preferences.ShowRulers);
     }
 
+    [Fact]
+    public void Constructor_EmptyStore_MatchesThePublicDefaults()
+    {
+        var preferences = new SnapPreferences(new MemorySettingsStore());
+
+        Assert.Equal(SnapPreferences.DefaultShowGrid, preferences.ShowGrid);
+        Assert.Equal(SnapPreferences.DefaultSnapToGrid, preferences.SnapToGrid);
+        Assert.Equal(SnapPreferences.DefaultSnapToObjects, preferences.SnapToObjects);
+        Assert.Equal(SnapPreferences.DefaultSmartGuides, preferences.SmartGuides);
+        Assert.Equal(SnapPreferences.DefaultShowGuides, preferences.ShowGuides);
+        Assert.Equal(SnapPreferences.DefaultSpacing, preferences.GridSpacing);
+    }
+
     [Theory]
     [InlineData(true)]
     [InlineData(false)]

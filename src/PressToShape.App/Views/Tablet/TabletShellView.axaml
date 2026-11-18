@@ -33,6 +33,11 @@
             <!-- The status bar under the tool column and the canvas: selection summary, the busy text and the zoom controls. -->
             <tablet:TabletStatusBarView x:Name="StatusBarView" Grid.Row="2" DataContext="{Binding StatusBar}" />
 
+            <!-- The settings fill the layout while they are open. They are inside the layout grid, so they also stay above the on-screen keyboard. -->
+            <Panel Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding SettingsHost.IsOpen}">
+                <tablet:TabletSettingsView DataContext="{Binding SettingsHost.Current}" />
+            </Panel>
+
         </Grid>
 
         <!-- A message dialog over everything else. The dimmed background takes the touches, so nothing below can be used while a dialog is open. -->

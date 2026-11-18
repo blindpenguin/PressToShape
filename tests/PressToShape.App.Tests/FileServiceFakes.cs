@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using PressToShape.App.Services;
 using PressToShape.App.Settings;
+using PressToShape.App.ViewModels.Editor;
 
 namespace PressToShape.App.Tests;
 
@@ -113,9 +114,16 @@ internal sealed class MemorySettingsStore : ISettingsStore
 {
     public AppSettings Current { get; set; } = new();
 
+    /// <summary>How many times <see cref="Save"/> was called.</summary>
+    public int SaveCount { get; private set; }
+
     public AppSettings Load() => Current;
 
-    public void Save(AppSettings settings) => Current = settings;
+    public void Save(AppSettings settings)
+    {
+        SaveCount++;
+        Current = settings;
+    }
 }
 
 /// <summary>Creates the file services of the shell from fakes.</summary>
@@ -125,6 +133,56 @@ internal static class TestFileServices
         FakeFileStore? files = null,
         FakeFileDialogs? dialogs = null,
         FakeMessageDialogs? messages = null,
-        ISettingsStore? settings = null) =>
-        new(settings ?? new MemorySettingsStore(), files ?? new FakeFileStore(), dialogs ?? new FakeFileDialogs(), messages ?? new FakeMessageDialogs());
+        ISettingsStore? settings = null,
+        ISettingsDialogs? settingsDialogs = null) =>
+        new(
+            settings ?? new MemorySettingsStore(),
+            files ?? new FakeFileStore(),
+            dialogs ?? new FakeFileDialogs(),
+            messages ?? new FakeMessageDialogs(),
+            SettingsDialogs: settingsDialogs);
+}
+
+/// <summary>A settings window that stays open until the test closes it.</summary>
+internal sealed class FakeSettingsDialogs : ISettingsDialogs
+{
+    private TaskCompletionSource? _open;
+
+    public int ShowCount { get; private set; }
+
+    public SettingsViewModel? Shown { get; private set; }
+
+    /// <summary>Makes the next <see cref="ShowAsync"/> throw.</summary>
+    public bool Throws { get; set; }
+
+    public Task ShowAsync(SettingsViewModel viewModel)
+    {
+        ShowCount++;
+        Shown = viewModel;
+        if (Throws)
+        {
+            throw new InvalidOperationException("The window could not be shown.");
+        }
+
+        _open = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        return _open.Task;
+    }
+
+    /// <summary>Closes the window the way OK or Cancel does: the view model says so, then the window goes away.</summary>
+    public void Close(bool ok)
+    {
+        if (ok)
+        {
+            Shown!.OkCommand.Execute(null);
+        }
+        else
+        {
+            Shown!.CancelCommand.Execute(null);
+        }
+
+        _open!.SetResult();
+    }
+
+    /// <summary>Closes the window without any choice, like the close button of the window.</summary>
+    public void CloseWithoutChoice() => _open!.SetResult();
 }

@@ -9,14 +9,14 @@ using static PressToShape.App.Localization.Localizer;
 namespace PressToShape.App.ViewModels.Tablet;
 
 /// <summary>
-/// The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, the path operations, lock and hide, and the language. It uses the same texts as the desktop menus
+/// The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, the path operations, lock and hide, the preferences and the language. It uses the same texts as the desktop menus
 /// (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through <see cref="MenuItemViewModel.PlainHeader"/>.
 /// There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart).
 /// An item without a command, or whose command cannot run, is disabled.
 /// </summary>
 internal sealed class OverflowMenuViewModel : ViewModelBase
 {
-    public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, PathMenuCommands paths)
+    public OverflowMenuViewModel(ILocalizer localizer, FileMenuCommands files, EditMenuCommands edit, ObjectMenuCommands objects, PathMenuCommands paths, ICommand? preferences = null)
     {
         ArgumentNullException.ThrowIfNull(localizer);
         ArgumentNullException.ThrowIfNull(files);
@@ -71,6 +71,7 @@ internal sealed class OverflowMenuViewModel : ViewModelBase
             Item(N("_Hide"), objects.Hide),
             Item(N("_Show All"), objects.ShowAll),
             MenuItemViewModel.Separator(localizer),
+            Item(N("Pre_ferences…"), preferences),
             MenuItemViewModel.Submenu(localizer, N("_Language"), MenuItemViewModel.LanguageItems(localizer)),
         ];
     }

@@ -33,6 +33,8 @@ public class MenuBarViewModelTests
 
         public RecentFiles Recent { get; } = new(new MemorySettingsStore());
 
+        public SwitchableCommand Preferences { get; } = new(true);
+
         public SwitchableCommand Undo { get; } = new(false);
 
         public SwitchableCommand Redo { get; } = new(false);
@@ -104,7 +106,7 @@ public class MenuBarViewModelTests
                 new RelayCommand(() => FileCalls.Add("export")),
                 path => new RelayCommand(() => FileCalls.Add("recent " + path)));
             Layers = new LayerEditor(State, Localizer);
-            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, EditCommands(), ObjectCommands(), new LayerMenuCommands(Layers), PathCommands(), Recent, Undo, Redo);
+            Menu = new MenuBarViewModel(State, Shutdown, Localizer, ShownTabs.Add, () => FitCalls++, files, EditCommands(), ObjectCommands(), new LayerMenuCommands(Layers), PathCommands(), Recent, Undo, Redo, Preferences);
         }
     }
 
@@ -143,7 +145,7 @@ public class MenuBarViewModelTests
             "Quit", "Zoom In", "Zoom Out", "Fit Artboard in Window", "Actual Size (100%)",
             "Properties", "Layers", "Assets", "History",
             "English", "Deutsch",
-            "Add Layer", "Duplicate Layer",
+            "Add Layer", "Duplicate Layer", "Preferences…",
             "Show Rulers", "Show Grid", "Snap to Grid", "Snap to Objects", "Smart Guides", "Show Guides",
         }.OrderBy(h => h);
 
@@ -695,5 +697,28 @@ public class MenuBarViewModelTests
         Assert.Equal("Ctrl+A", Find(f, "Select All").Gesture);
         Assert.Equal("Ctrl+Shift+A", Find(f, "Deselect").Gesture);
     }
-}
 
+    [Fact]
+    public void PreferencesItem_RunsTheCommand_AndHasNoGesture()
+    {
+        var f = new Fixture();
+        var item = Find(f, "Preferences…");
+
+        Assert.True(item.IsEnabled);
+        Assert.Null(item.Gesture);
+        item.Command!.Execute(null);
+
+        Assert.Equal(1, f.Preferences.Executions);
+    }
+
+    [Fact]
+    public void PreferencesItem_FollowsTheAvailabilityOfItsCommand()
+    {
+        var f = new Fixture();
+        var item = Find(f, "Preferences…");
+
+        f.Preferences.Set(false);
+
+        Assert.False(item.IsEnabled);
+    }
+}

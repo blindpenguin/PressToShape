@@ -207,6 +207,22 @@
     <Style Selector="TextBlock.secondary">
         <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
     </Style>
+    <!-- The buttons of the settings (OK, Cancel, Restore defaults) and its switches: content centered, also in the taller touch size. -->
+    <Style Selector="Button.dialogButton">
+        <Setter Property="MinWidth" Value="88" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <!-- The box of a CheckBox stays at the top of its 32 px area, also when the touch size makes the control taller. The label is put next to the box with it. -->
+    <Style Selector="CheckBox.setting">
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Padding" Value="8,5,0,0" />
+    </Style>
+    <Style Selector="TextBlock.error">
+        <Setter Property="Foreground" Value="{DynamicResource ErrorTextBrush}" />
+        <Setter Property="FontSize" Value="{DynamicResource UiFontSize}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
 
     <!-- Numeric/text field with an optional suffix such as "px" (set InnerRightContent). The suffix gets space to the border. -->
     <Style Selector="TextBlock.unit">

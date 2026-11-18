@@ -20,6 +20,8 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
     private readonly ILocalizer _localizer;
     private readonly DocumentSession _session;
     private readonly DocumentFileService _files;
+    private readonly ISettingsDialogs? _settingsDialogs;
+    private readonly bool _showRulersByDefault;
     private bool _initialFitDone;
 
     /// <param name="localizer">Translates the texts.</param>
@@ -30,6 +32,8 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         _localizer = localizer ?? throw new ArgumentNullException(nameof(localizer));
         ArgumentNullException.ThrowIfNull(services);
 
+        _settingsDialogs = services.SettingsDialogs;
+        _showRulersByDefault = showRulersByDefault;
         State = new EditorState(Document.Create(localizer.T("Layer 1")), new SnapPreferences(services.Settings, showRulersByDefault));
         _session = new DocumentSession(State);
         Recent = new RecentFiles(services.Settings, services.RemembersRecentFiles);

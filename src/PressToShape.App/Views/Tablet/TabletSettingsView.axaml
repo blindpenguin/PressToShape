@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:loc="using:PressToShape.App.Localization"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PressToShape.App.ViewModels.Editor"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="480"
+             x:Class="PressToShape.App.Views.Tablet.TabletSettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+    <!-- The tablet settings fill the layout: the list of the categories first, then the page of the tapped category, with a back button. -->
+    <Grid Background="{DynamicResource WindowBackgroundBrush}" RowDefinitions="Auto,*,Auto">
+
+        <Border Grid.Row="0" Background="{DynamicResource ToolbarBackgroundBrush}" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BorderSubtleBrush}"
+                Height="{DynamicResource ToolbarHeight}">
+            <StackPanel Orientation="Horizontal" Spacing="{DynamicResource PanelSpacing}" Margin="{DynamicResource PanelPadding}">
+                <Button Classes="icon" IsVisible="{Binding IsPageOpen}" Command="{Binding BackCommand}"
+                        ToolTip.Tip="{loc:T 'Back'}" AutomationProperties.Name="{loc:T 'Back'}">
+                    <materialIcons:MaterialIcon Kind="ArrowLeft" Width="{DynamicResource ToolIconSize}" Height="{DynamicResource ToolIconSize}" />
+                </Button>
+                <TextBlock Classes="section-header" Text="{loc:T 'Preferences'}" />
+            </StackPanel>
+        </Border>
+
+        <Panel Grid.Row="1">
+            <ScrollViewer IsVisible="{Binding !IsPageOpen}" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Categories}" AutomationProperties.Name="{loc:T 'Categories'}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:SettingsCategoryViewModel">
+                            <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="{DynamicResource PanelPadding}"
+                                    Command="{Binding $parent[ItemsControl].((vm:SettingsViewModel)DataContext).OpenCategoryCommand}"
+                                    CommandParameter="{Binding}">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <materialIcons:MaterialIcon Kind="{Binding Icon}" Width="{DynamicResource ToolIconSize}" Height="{DynamicResource ToolIconSize}" />
+                                    <TextBlock Text="{Binding Title}" VerticalAlignment="Center" />
+                                    <materialIcons:MaterialIcon Kind="AlertCircle" IsVisible="{Binding HasError}"
+                                                                Foreground="{DynamicResource ErrorTextBrush}"
+                                                                Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}"
+                                                                AutomationProperties.Name="{loc:T 'This page has an invalid value'}" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- The page is found by the view locator from the page view model of the category. -->
+            <ContentControl IsVisible="{Binding IsPageOpen}" Content="{Binding SelectedCategory.Page}" />
+        </Panel>
+
+        <Border Grid.Row="2" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource BorderSubtleBrush}"
+                Background="{DynamicResource PanelBackgroundBrush}" Padding="{DynamicResource PanelPadding}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="{DynamicResource PanelSpacing}">
+                <Button Classes="dialogButton" Content="{loc:T 'OK'}" Command="{Binding OkCommand}" />
+                <Button Classes="dialogButton" Content="{loc:T 'Cancel'}" Command="{Binding CancelCommand}" />
+            </StackPanel>
+        </Border>
+
+    </Grid>
+
+</UserControl>

@@ -20,6 +20,21 @@ internal sealed class SnapPreferences
     /// <summary>The grid spacing of a new installation, in document units.</summary>
     public const double DefaultSpacing = 10;
 
+    /// <summary>Whether the grid is shown on a new installation.</summary>
+    public const bool DefaultShowGrid = false;
+
+    /// <summary>Whether points snap to the grid on a new installation.</summary>
+    public const bool DefaultSnapToGrid = false;
+
+    /// <summary>Whether points snap to other objects on a new installation.</summary>
+    public const bool DefaultSnapToObjects = false;
+
+    /// <summary>Whether the smart guides are on in a new installation.</summary>
+    public const bool DefaultSmartGuides = false;
+
+    /// <summary>Whether the ruler guides are shown on a new installation.</summary>
+    public const bool DefaultShowGuides = true;
+
     private readonly ISettingsStore _store;
     private readonly bool _persist;
     private bool _showGrid;
@@ -39,13 +54,13 @@ internal sealed class SnapPreferences
         _persist = persist;
 
         var settings = _store.Load();
-        _showGrid = ReadBool(settings.ShowGrid, false);
-        _snapToGrid = ReadBool(settings.SnapToGrid, false);
-        _snapToObjects = ReadBool(settings.SnapToObjects, false);
+        _showGrid = ReadBool(settings.ShowGrid, DefaultShowGrid);
+        _snapToGrid = ReadBool(settings.SnapToGrid, DefaultSnapToGrid);
+        _snapToObjects = ReadBool(settings.SnapToObjects, DefaultSnapToObjects);
         _gridSpacing = ReadSpacing(settings.GridSpacing);
         _showRulers = ReadBool(settings.ShowRulers, defaultShowRulers);
-        _smartGuides = ReadBool(settings.SmartGuides, false);
-        _showGuides = ReadBool(settings.ShowGuides, true);
+        _smartGuides = ReadBool(settings.SmartGuides, DefaultSmartGuides);
+        _showGuides = ReadBool(settings.ShowGuides, DefaultShowGuides);
     }
 
     /// <summary>Preferences that are kept only in memory, with the defaults. For a state that has no settings file, such as most tests.</summary>

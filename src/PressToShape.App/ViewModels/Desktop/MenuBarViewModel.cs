@@ -32,7 +32,8 @@ internal sealed class MenuBarViewModel : ViewModelBase
         PathMenuCommands paths,
         RecentFiles recent,
         ICommand undo,
-        ICommand redo)
+        ICommand redo,
+        ICommand? preferences = null)
     {
         ArgumentNullException.ThrowIfNull(localizer);
         ArgumentNullException.ThrowIfNull(state);
@@ -127,7 +128,7 @@ internal sealed class MenuBarViewModel : ViewModelBase
                 Item(N("Select _All"), "Ctrl+A", edit.SelectAll),
                 Item(N("De_select"), "Ctrl+Shift+A", edit.Deselect),
                 Separator(),
-                Item(N("Pre_ferences…"))),
+                Item(N("Pre_ferences…"), command: preferences)),
             Submenu(N("_Object"),
                 Submenu(N("_Transform"),
                     Item(N("Rotate 90° _Clockwise")),

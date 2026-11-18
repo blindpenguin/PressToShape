@@ -34,7 +34,8 @@ internal static class AppLayout
                 settings,
                 new LocalFileStore(),
                 new AvaloniaFileDialogs(() => desktop.MainWindow, localizer),
-                new AvaloniaMessageDialogs(() => desktop.MainWindow, localizer));
+                new AvaloniaMessageDialogs(() => desktop.MainWindow, localizer),
+                SettingsDialogs: new AvaloniaSettingsDialogs(() => desktop.MainWindow));
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new DesktopShellViewModel(new DesktopAppShutdown(), localizer, services),
@@ -62,14 +63,16 @@ internal static class AppLayout
     {
         var registry = new StorageFileRegistry();
         var dialogs = new MessageDialogHost();
+        var settingsHost = new SettingsDialogHost();
         var view = new TabletShellView();
         var services = new FileServices(
             settings,
             new StorageFileStore(registry),
             new AvaloniaFileDialogs(() => TopLevel.GetTopLevel(view), localizer, registry),
             new OverlayMessageDialogs(dialogs, localizer),
-            RemembersRecentFiles: false);
-        view.DataContext = new TabletShellViewModel(new DelegateAppShutdown(() => exitRequested()?.Invoke()), localizer, services, dialogs);
+            RemembersRecentFiles: false,
+            SettingsDialogs: new OverlaySettingsDialogs(settingsHost));
+        view.DataContext = new TabletShellViewModel(new DelegateAppShutdown(() => exitRequested()?.Invoke()), localizer, services, dialogs, settingsHost);
         return view;
     }
 }

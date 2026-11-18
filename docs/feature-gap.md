@@ -131,7 +131,7 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 | PNG export, export of a selection or area | Missing | Out of scope for now |
 | PDF export | Missing | Out of scope for now |
 | Import of raster images (placed or linked) | Missing | Out of scope (raster editing) |
-| Preferences (settings dialog) | UI only | Unplanned |
+| Preferences (settings dialog) | Done: Edit > Preferences… (desktop window) and the overflow menu (tablet, list first and then the page); categories General (language), Canvas (rulers, grid, grid spacing) and Snapping (snap and guide switches); OK, Cancel and Restore defaults per page | Unplanned |
 | Keyboard shortcut list, about box | UI only | Unplanned |
 | Translations (English, German) | Done | Beyond the steering docs |
 
@@ -144,7 +144,7 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 | Pen pressure and tilt | Missing | Unplanned |
 | Palm rejection | Shelved, see [palm-detection.md](palm-detection.md) | Unplanned |
 | Ring context menu (right-click, long press, Menu key): group, ungroup, duplicate, delete, lock, hide, arrange; paste and select all on empty canvas | Done (fixed slots; the barrel button of a pen is not checked on a device yet) | Unplanned |
-| Customizable ring slots | Missing (waits for the settings dialog) | Unplanned |
+| Customizable ring slots | Missing (the settings dialog now exists, it has no ring page yet) | Unplanned |
 | Other stylus-button actions, eraser end | Missing | Unplanned |
 | On-screen modifier keys (shift, ctrl) | Missing | Unplanned |
 
