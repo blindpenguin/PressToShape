@@ -27,6 +27,8 @@ internal sealed class SnapPreferences
     private bool _snapToObjects;
     private double _gridSpacing;
     private bool _showRulers;
+    private bool _smartGuides;
+    private bool _showGuides;
 
     /// <param name="store">The settings file.</param>
     /// <param name="defaultShowRulers">Whether the rulers are shown when the file has no choice: the desktop layout shows them, the tablet layout does not.</param>
@@ -42,6 +44,8 @@ internal sealed class SnapPreferences
         _snapToObjects = ReadBool(settings.SnapToObjects, false);
         _gridSpacing = ReadSpacing(settings.GridSpacing);
         _showRulers = ReadBool(settings.ShowRulers, defaultShowRulers);
+        _smartGuides = ReadBool(settings.SmartGuides, false);
+        _showGuides = ReadBool(settings.ShowGuides, true);
     }
 
     /// <summary>Preferences that are kept only in memory, with the defaults. For a state that has no settings file, such as most tests.</summary>
@@ -76,6 +80,20 @@ internal sealed class SnapPreferences
     {
         get => _showRulers;
         set => Set(ref _showRulers, value, (settings, element) => settings.ShowRulers = element);
+    }
+
+    /// <summary>Whether distance labels, equal spacing, equal size and the segment middles and crossings are on.</summary>
+    public bool SmartGuides
+    {
+        get => _smartGuides;
+        set => Set(ref _smartGuides, value, (settings, element) => settings.SmartGuides = element);
+    }
+
+    /// <summary>Whether the ruler guides are drawn, can be moved and are snapped to.</summary>
+    public bool ShowGuides
+    {
+        get => _showGuides;
+        set => Set(ref _showGuides, value, (settings, element) => settings.ShowGuides = element);
     }
 
     /// <summary>The distance between grid lines in document units, from <see cref="MinSpacing"/> to <see cref="MaxSpacing"/>. An invalid value is ignored.</summary>

@@ -144,7 +144,7 @@ public class MenuBarViewModelTests
             "Properties", "Layers", "Assets", "History",
             "English", "Deutsch",
             "Add Layer", "Duplicate Layer",
-            "Show Rulers", "Show Grid", "Snap to Grid", "Snap to Objects",
+            "Show Rulers", "Show Grid", "Snap to Grid", "Snap to Objects", "Smart Guides", "Show Guides",
         }.OrderBy(h => h);
 
         Assert.Equal(expected, enabledLeaves);
@@ -489,8 +489,8 @@ public class MenuBarViewModelTests
     {
         var f = new Fixture();
 
-        // The language items and the four switches of the View menu show a check state.
-        var switches = new[] { "Show Rulers", "Show Grid", "Snap to Grid", "Snap to Objects" };
+        // The language items and the six switches of the View menu show a check state.
+        var switches = new[] { "Show Rulers", "Show Grid", "Snap to Grid", "Snap to Objects", "Smart Guides", "Show Guides" };
         Assert.All(
             Flatten(f.Menu.Menus).Where(i => !LanguageMenu(f).Children.Contains(i) && !switches.Contains(Clean(i.Header))),
             i => Assert.False(i.IsCheckable, i.Header));

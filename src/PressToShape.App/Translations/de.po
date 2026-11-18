@@ -210,6 +210,12 @@ msgstr "Am Raster _ausrichten"
 msgid "Snap to Ob_jects"
 msgstr "An O_bjekten ausrichten"
 
+msgid "S_mart Guides"
+msgstr "_Intelligente Hilfslinien"
+
+msgid "Show G_uides"
+msgstr "_Hilfslinien anzeigen"
+
 msgid "_Language"
 msgstr "_Sprache"
 
@@ -353,6 +359,12 @@ msgstr "Am Raster ausrichten"
 
 msgid "Snap to Objects"
 msgstr "An Objekten ausrichten"
+
+msgid "Smart Guides"
+msgstr "Intelligente Hilfslinien"
+
+msgid "Show Guides"
+msgstr "Hilfslinien anzeigen"
 
 msgid "Grid Spacing"
 msgstr "Rasterweite"
@@ -966,3 +978,12 @@ msgstr "In Ebene darü_ber"
 
 msgid "To Layer _Below"
 msgstr "In Ebene dar_unter"
+
+msgid "Create guide"
+msgstr "Hilfslinie erstellen"
+
+msgid "Move guide"
+msgstr "Hilfslinie verschieben"
+
+msgid "Delete guide"
+msgstr "Hilfslinie löschen"

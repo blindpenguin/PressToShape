@@ -51,6 +51,16 @@
                               ToolTip.Tip="{loc:T 'Snap to Objects'}" AutomationProperties.Name="{loc:T 'Snap to Objects'}">
                     <materialIcons:MaterialIcon Kind="Magnet" Width="16" Height="16" />
                 </ToggleButton>
+                <ToggleButton Classes="snap" IsChecked="{Binding SmartGuides, Mode=TwoWay}"
+                              MinWidth="24" MinHeight="24"
+                              ToolTip.Tip="{loc:T 'Smart Guides'}" AutomationProperties.Name="{loc:T 'Smart Guides'}">
+                    <materialIcons:MaterialIcon Kind="AutoAwesome" Width="16" Height="16" />
+                </ToggleButton>
+                <ToggleButton Classes="snap" IsChecked="{Binding ShowGuides, Mode=TwoWay}"
+                              MinWidth="24" MinHeight="24"
+                              ToolTip.Tip="{loc:T 'Show Guides'}" AutomationProperties.Name="{loc:T 'Show Guides'}">
+                    <materialIcons:MaterialIcon Kind="VectorLine" Width="16" Height="16" />
+                </ToggleButton>
                 <TextBox x:Name="GridSpacingBox" Classes="field" Width="64" MinHeight="24" Height="24" Margin="0,0,12,0"
                          Text="{Binding GridSpacingField.Text}" IsEnabled="{Binding GridSpacingField.IsEnabled}" Tag="{Binding GridSpacingField}"
                          ToolTip.Tip="{loc:T 'Grid Spacing'}" AutomationProperties.Name="{loc:T 'Grid Spacing'}">

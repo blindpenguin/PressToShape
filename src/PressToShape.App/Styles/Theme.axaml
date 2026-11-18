@@ -55,6 +55,14 @@
             <SolidColorBrush x:Key="GridLineBrush">#40A0A0B0</SolidColorBrush>
             <SolidColorBrush x:Key="SnapGuideBrush">#FF4FB3</SolidColorBrush>
 
+            <!-- Ruler guides and the markers of the smart guides -->
+            <SolidColorBrush x:Key="RulerGuideBrush">#4FC3E8</SolidColorBrush>
+            <SolidColorBrush x:Key="RulerGuideSelectedBrush">#F5A524</SolidColorBrush>
+            <SolidColorBrush x:Key="RulerGuideActiveBrush">#FF4FB3</SolidColorBrush>
+            <SolidColorBrush x:Key="SmartGuideBrush">#FF6AC1</SolidColorBrush>
+            <SolidColorBrush x:Key="SmartGuideTextBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="SmartGuideLabelBackgroundBrush">#C2185B</SolidColorBrush>
+
             <!-- Dims the layout behind a message dialog -->
             <SolidColorBrush x:Key="ScrimBrush">#99000000</SolidColorBrush>
 
@@ -114,6 +122,14 @@
             <!-- Grid and snap guide lines on the canvas -->
             <SolidColorBrush x:Key="GridLineBrush">#40606070</SolidColorBrush>
             <SolidColorBrush x:Key="SnapGuideBrush">#E0208A</SolidColorBrush>
+
+            <!-- Ruler guides and the markers of the smart guides -->
+            <SolidColorBrush x:Key="RulerGuideBrush">#19A7CE</SolidColorBrush>
+            <SolidColorBrush x:Key="RulerGuideSelectedBrush">#E08A00</SolidColorBrush>
+            <SolidColorBrush x:Key="RulerGuideActiveBrush">#E0208A</SolidColorBrush>
+            <SolidColorBrush x:Key="SmartGuideBrush">#C2185B</SolidColorBrush>
+            <SolidColorBrush x:Key="SmartGuideTextBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="SmartGuideLabelBackgroundBrush">#C2185B</SolidColorBrush>
 
             <!-- Dims the layout behind a message dialog -->
             <SolidColorBrush x:Key="ScrimBrush">#66000000</SolidColorBrush>

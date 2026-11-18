@@ -18,6 +18,22 @@ internal sealed class FileDto
     [JsonPropertyName("palette")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string?>? Palette { get; set; }
+
+    // Optional: written only for a document with guides, and missing means no guides.
+    [JsonPropertyName("guides")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public List<GuideDto?>? Guides { get; set; }
+}
+
+internal sealed class GuideDto
+{
+    [JsonPropertyName("orientation")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Orientation { get; set; }
+
+    [JsonPropertyName("position")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? Position { get; set; }
 }
 
 internal sealed class ArtboardDto

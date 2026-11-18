@@ -70,7 +70,9 @@ internal sealed class MenuBarViewModel : ViewModelBase
         var showGridItem = Toggle(N("Show _Grid"), null, () => snapping.ShowGrid = !snapping.ShowGrid, () => snapping.ShowGrid);
         var snapToGridItem = Toggle(N("_Snap to Grid"), null, () => snapping.SnapToGrid = !snapping.SnapToGrid, () => snapping.SnapToGrid);
         var snapToObjectsItem = Toggle(N("Snap to Ob_jects"), null, () => snapping.SnapToObjects = !snapping.SnapToObjects, () => snapping.SnapToObjects);
-        MenuItemViewModel[] switches = [showRulersItem, showGridItem, snapToGridItem, snapToObjectsItem];
+        var smartGuidesItem = Toggle(N("S_mart Guides"), null, () => snapping.SmartGuides = !snapping.SmartGuides, () => snapping.SmartGuides);
+        var showGuidesItem = Toggle(N("Show G_uides"), null, () => snapping.ShowGuides = !snapping.ShowGuides, () => snapping.ShowGuides);
+        MenuItemViewModel[] switches = [showRulersItem, showGridItem, snapToGridItem, snapToObjectsItem, smartGuidesItem, showGuidesItem];
         snapping.Changed += (_, _) =>
         {
             foreach (var item in switches)
@@ -191,6 +193,8 @@ internal sealed class MenuBarViewModel : ViewModelBase
                 showGridItem,
                 snapToGridItem,
                 snapToObjectsItem,
+                smartGuidesItem,
+                showGuidesItem,
                 Separator(),
                 Submenu(N("_Language"), MenuItemViewModel.LanguageItems(localizer))),
             Submenu(N("_Window"),

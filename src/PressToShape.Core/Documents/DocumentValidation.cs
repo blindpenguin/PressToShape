@@ -41,6 +41,32 @@ internal static class DocumentValidation
         return layers;
     }
 
+    /// <summary>Returns the guides if they are valid: none null and the ids unique. A default array means no guides.</summary>
+    /// <exception cref="ArgumentException">A rule is broken.</exception>
+    public static ImmutableArray<Guide> ValidatedGuides(ImmutableArray<Guide> guides)
+    {
+        if (guides.IsDefault)
+        {
+            return [];
+        }
+
+        var ids = new HashSet<Guid>();
+        foreach (var guide in guides)
+        {
+            if (guide is null)
+            {
+                throw new ArgumentException("A guide must not be null.", nameof(Document.Guides));
+            }
+
+            if (!ids.Add(guide.Id))
+            {
+                throw new ArgumentException($"Guide id {guide.Id} is used more than once.", nameof(Document.Guides));
+            }
+        }
+
+        return guides;
+    }
+
     private static void ValidateShapes(ImmutableArray<Shape> shapes, HashSet<Guid> shapeIds, int depth)
     {
         foreach (var shape in shapes)

@@ -194,4 +194,13 @@ public enum HistoryStepType
 
     /// <summary>The direction of paths was reversed.</summary>
     ReverseDirection,
+
+    /// <summary>A guide was dragged out of a ruler.</summary>
+    CreateGuide,
+
+    /// <summary>A guide was moved.</summary>
+    MoveGuide,
+
+    /// <summary>A guide was deleted.</summary>
+    DeleteGuide,
 }

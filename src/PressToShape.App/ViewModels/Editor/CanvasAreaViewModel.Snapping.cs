@@ -32,5 +32,8 @@ internal sealed partial class CanvasAreaViewModel
         OnPropertyChanged(nameof(ShowGrid));
         OnPropertyChanged(nameof(GridSpacing));
         OnPropertyChanged(nameof(ShowRulers));
+        OnPropertyChanged(nameof(SmartGuides));
+        OnPropertyChanged(nameof(ShowGuides));
+        NotifyGuidesChanged();
     }
 }

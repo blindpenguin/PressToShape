@@ -16,6 +16,7 @@ public sealed record Document
     private readonly double _artboardHeight = 800;
     private readonly ImmutableArray<Layer> _layers;
     private readonly ImmutableArray<Color> _palette = [];
+    private readonly ImmutableArray<Guide> _guides = [];
 
     // Private: a document needs a first layer, so it is created through Create.
     private Document()
@@ -52,6 +53,13 @@ public sealed record Document
         init => _palette = value.IsDefault ? [] : value.Distinct().ToImmutableArray();
     }
 
+    /// <summary>The guides that were dragged out of the rulers, in the order they were made. Positions are finite and ids are unique.</summary>
+    public ImmutableArray<Guide> Guides
+    {
+        get => _guides;
+        init => _guides = DocumentValidation.ValidatedGuides(value);
+    }
+
     /// <summary>Creates a 1200 x 800 document with one visible, unlocked layer.</summary>
     /// <param name="firstLayerName">The name of the first layer. Core has no default text, so the caller provides it.</param>
     public static Document Create(string firstLayerName)
@@ -64,6 +72,51 @@ public sealed record Document
     /// <summary>Returns a document with a new artboard size.</summary>
     public Document WithArtboardSize(double width, double height) =>
         this with { ArtboardWidth = width, ArtboardHeight = height };
+
+    /// <summary>Returns a document with the guide added at the end.</summary>
+    /// <exception cref="ArgumentException">A guide with this id exists already.</exception>
+    public Document AddGuide(Guide guide)
+    {
+        ArgumentNullException.ThrowIfNull(guide);
+
+        return this with { Guides = _guides.Add(guide) };
+    }
+
+    /// <summary>Returns a document in which the guide is at this position. Returns this document if there is no such guide or it is there already.</summary>
+    /// <exception cref="ArgumentException">The position is not finite.</exception>
+    public Document MoveGuide(Guid guideId, double position)
+    {
+        var index = IndexOfGuide(guideId);
+        if (index < 0 || _guides[index].Position == position)
+        {
+            return this;
+        }
+
+        return this with { Guides = _guides.SetItem(index, _guides[index] with { Position = position }) };
+    }
+
+    /// <summary>Returns a document without the guide. Returns this document if there is no such guide.</summary>
+    public Document RemoveGuide(Guid guideId)
+    {
+        var index = IndexOfGuide(guideId);
+        return index < 0 ? this : this with { Guides = _guides.RemoveAt(index) };
+    }
+
+    private int IndexOfGuide(Guid guideId)
+    {
+        for (var i = 0; i < _guides.Length; i++)
+        {
+            if (_guides[i].Id == guideId)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /// <summary>The guide with this id, or <c>null</c>.</summary>
+    public Guide? FindGuide(Guid guideId) => _guides.FirstOrDefault(g => g.Id == guideId);
 
     /// <summary>Returns a document with the colour added at the end of the palette. Returns this document if the palette has the colour.</summary>
     public Document AddSwatch(Color color) =>

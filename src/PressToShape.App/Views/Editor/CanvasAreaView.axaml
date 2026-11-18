@@ -19,14 +19,14 @@
                 Background="{DynamicResource RulerBackgroundBrush}"
                 BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,1,1" />
 
-        <controls:RulerControl Grid.Row="0" Grid.Column="1"
+        <controls:RulerControl x:Name="HorizontalRuler" Grid.Row="0" Grid.Column="1"
                                IsVisible="{Binding ShowRulers}"
                                Orientation="Horizontal"
                                Height="{StaticResource RulerSize}"
                                ZoomPercent="{Binding ZoomPercent}"
                                OriginPx="{Binding OriginX}" />
 
-        <controls:RulerControl Grid.Row="1" Grid.Column="0"
+        <controls:RulerControl x:Name="VerticalRuler" Grid.Row="1" Grid.Column="0"
                                IsVisible="{Binding ShowRulers}"
                                Orientation="Vertical"
                                Width="{StaticResource RulerSize}"
@@ -66,6 +66,14 @@
                                             GridBrush="{DynamicResource GridLineBrush}"
                                             SnapGuides="{Binding SnapGuidesOnScreen}"
                                             GuideBrush="{DynamicResource SnapGuideBrush}"
+                                            RulerGuides="{Binding ScreenGuides}"
+                                            SmartMarkers="{Binding ScreenMarkers}"
+                                            RulerGuideBrush="{DynamicResource RulerGuideBrush}"
+                                            RulerGuideSelectedBrush="{DynamicResource RulerGuideSelectedBrush}"
+                                            RulerGuideActiveBrush="{DynamicResource RulerGuideActiveBrush}"
+                                            SmartGuideBrush="{DynamicResource SmartGuideBrush}"
+                                            SmartGuideTextBrush="{DynamicResource SmartGuideTextBrush}"
+                                            SmartGuideLabelBackgroundBrush="{DynamicResource SmartGuideLabelBackgroundBrush}"
                                             SelectionBrush="{DynamicResource SelectionOutlineBrush}"
                                             SelectionHandleFillBrush="{DynamicResource SelectionHandleFillBrush}" />
             <!-- The ring context menu. It fills the viewport while it is open, so the canvas does not get pointer input then. -->

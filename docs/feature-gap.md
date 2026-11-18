@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15), updated 2026-11-18 for the grid, snapping to the grid and to objects and the Show Rulers switch, and 2026-11-17 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, rounded corners on rectangles, layer management, compound paths with the boolean operations, and Convert Object to Path and Reverse Direction. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-18 for ruler guides and smart guides, and for the grid, snapping to the grid and to objects and the Show Rulers switch, and 2026-11-17 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, rounded corners on rectangles, layer management, compound paths with the boolean operations, and Convert Object to Path and Reverse Direction. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -10,7 +10,7 @@ Columns:
 
 ## Summary
 
-The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, node editing, appearance, undo and redo, groups and arrange, lock and hide, the object list, layer management, boolean operations, combine and break apart, convert to path and reverse direction, the grid and snapping, and file save, load and SVG export work. The big gaps are the transform menu entries and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
+The shell, the canvas, rectangles, ellipses and paths drawn with the Pen, selection and transform, node editing, appearance, undo and redo, groups and arrange, lock and hide, the object list, layer management, boolean operations, combine and break apart, convert to path and reverse direction, the grid and snapping, ruler guides and smart guides, and file save, load and SVG export work. The big gaps are the transform menu entries and the whole "after MVP" list. Many menu entries already exist as disabled placeholders.
 
 The structural base is in place: **`PathShape`** (line and cubic bezier segments, open or closed, non-zero or even-odd fill) keeps the box and rotation of every other shape and stores its nodes as fractions of the box, so move, resize, rotate, groups and arrange work on it unchanged. A path can have several sub-paths (compound paths), which is what the boolean operations, Combine and Break Apart produce. Text, masks and SVG import build on it.
 
@@ -85,9 +85,10 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 | Touch pan and pinch zoom | Done | MVP |
 | Snapping to grid and objects | Done: moves, resizes, new shapes, Pen points and handles, node moves and arrow-key nudges snap to grid lines, to the edges and centers of other objects and the artboard, and to path nodes (8 screen pixels, guide lines, hold Ctrl on desktop to suspend; switches in the View menu on desktop and in the status bar, saved as user settings) | MVP |
 | Grid | Done: shown on the artboard, behind the shapes, spacing 1 to 1000 (default 10), thinned at low zoom, not exported | MVP |
-| Guides (drag from the ruler) | Missing | Unplanned |
+| Guides (drag from the ruler) | Done: drag out of a ruler, move by dragging, delete by dropping on the ruler or with Delete, saved in the project file, snapped to with Snap to Objects, "Show Guides" switch | Unplanned |
 | Align and distribute | UI only (toolbar buttons) | After MVP |
-| Smart guides (distance labels, equal spacing), snap to segment middles and intersections | Missing | Unplanned |
+| Smart guides | Done: distance labels, equal spacing, equal size while moving, resizing and drawing, and segment middles and crossings for Pen points and nodes, one "Smart Guides" switch (off by default) | Unplanned |
+| Smart guides for rows of evenly spaced objects, snap to segment middles for moves | Missing | Unplanned |
 | Outline / wireframe view | Missing | Unplanned |
 | Multiple artboards | Missing | Unplanned |
 | Document settings (artboard size, units, color mode) | UI only | Unplanned |

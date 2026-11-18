@@ -58,6 +58,8 @@ internal sealed partial class CanvasInteraction
         MovingHandle,
         Bending,
         RoundingCorners,
+        MovingGuide,
+        CreatingGuide,
     }
 
     /// <summary>Whether a drag is in progress.</summary>
@@ -90,6 +92,11 @@ internal sealed partial class CanvasInteraction
             // The tool is a pick that starts with the click: the fill, or the stroke with Shift.
             _state.BeginColorPick(shift ? ColorPickTarget.Stroke : ColorPickTarget.Fill);
             PickColorAt(x, y);
+            return;
+        }
+
+        if (TryBeginGuideDrag(x, y, inputType))
+        {
             return;
         }
 
@@ -126,7 +133,7 @@ internal sealed partial class CanvasInteraction
     public void PointerMoved(double x, double y, bool shift = false, bool alt = false, bool suspendSnap = false)
     {
         _suspendSnap = suspendSnap;
-        if (_state.ActiveTool == Tool.Pen)
+        if (_state.ActiveTool == Tool.Pen && !IsGuideDragging)
         {
             PenMoved(x, y);
             return;
@@ -139,8 +146,13 @@ internal sealed partial class CanvasInteraction
 
         switch (_drag)
         {
+            case DragType.MovingGuide:
+            case DragType.CreatingGuide:
+                ShowGuideDrag(x, y);
+                break;
             case DragType.Drawing:
                 _state.Draft = CreateShape(x, y, shift, alt);
+                ShowSmart([.. _drawMarkers, .. LabelsForDraft(_state.Draft)]);
                 break;
             case DragType.Marquee:
                 _state.SelectionBox = BoxTo(x, y);
@@ -164,6 +176,13 @@ internal sealed partial class CanvasInteraction
     public void PointerReleased(double x, double y, bool shift = false, bool alt = false, bool suspendSnap = false)
     {
         _suspendSnap = suspendSnap;
+        if (IsGuideDragging)
+        {
+            // A release that reaches here is inside the canvas. The view model ends a drag that left it with EndGuideDrag.
+            EndGuideDrag(x, y, overCanvas: true);
+            return;
+        }
+
         if (_state.ActiveTool == Tool.Pen)
         {
             PenReleased();
@@ -251,7 +270,7 @@ internal sealed partial class CanvasInteraction
     {
         AbortPenPress();
         if (_drag is DragType.Moving or DragType.Resizing or DragType.Rotating or DragType.MovingNodes or DragType.MovingHandle or DragType.Bending
-            or DragType.RoundingCorners
+            or DragType.RoundingCorners or DragType.MovingGuide or DragType.CreatingGuide
             && _startDocument is { } original
             && !ReferenceEquals(original, _state.Document))
         {
@@ -267,6 +286,13 @@ internal sealed partial class CanvasInteraction
     /// </summary>
     public void DeleteSelection()
     {
+        // A selected ruler guide is deleted when no shape is selected.
+        if (_state.SelectedGuideId is not null && !_state.HasSelection)
+        {
+            DeleteSelectedGuide();
+            return;
+        }
+
         // With a node tool and selected nodes, Delete removes the nodes instead of the shape.
         if (IsNodeTool && _state.HasSelectedNodes && Nodes.HasEditableNodes)
         {
@@ -420,6 +446,8 @@ internal sealed partial class CanvasInteraction
             DragType.MovingHandle => HistoryStepType.MovePathHandle,
             DragType.Bending => HistoryStepType.BendSegment,
             DragType.RoundingCorners => HistoryStepType.ChangeCornerRadius,
+            DragType.MovingGuide => _guideDeleted ? HistoryStepType.DeleteGuide : HistoryStepType.MoveGuide,
+            DragType.CreatingGuide => HistoryStepType.CreateGuide,
             _ => (HistoryStepType?)null,
         };
         _drag = DragType.None;
@@ -446,8 +474,10 @@ internal sealed partial class CanvasInteraction
         {
             case DragType.Resizing when _startFrame is { } frame:
                 var keepsRatio = shift || (!frame.IsSingle && _startShapes.Any(s => s.Rotation != 0));
-                var (handleX, handleY) = SnappedHandle(frame, x + _grabOffsetX, y + _grabOffsetY, keepsRatio);
-                return SelectionTransforms.Resize(_startShapes, frame, _handle, handleX, handleY, shift, alt);
+                var (handleX, handleY) = SnappedHandle(frame, x + _grabOffsetX, y + _grabOffsetY, keepsRatio, alt);
+                var resized = SelectionTransforms.Resize(_startShapes, frame, _handle, handleX, handleY, shift, alt);
+                ShowSmart([.. _resizeMarkers, .. LabelsForResize(frame, resized)]);
+                return resized;
             case DragType.Rotating when _startFrame is { } frame:
                 return SelectionTransforms.Rotate(_startShapes, frame, _startX, _startY, x, y, shift);
             default:
@@ -486,7 +516,7 @@ internal sealed partial class CanvasInteraction
     private Shape? CreateShape(double pointerX, double pointerY, bool shift, bool alt)
     {
         // The corner snaps first, then Shift and Alt shape the result.
-        var (x, y) = SnappedPoint(pointerX, pointerY);
+        var (x, y) = SnappedDrawPoint(pointerX, pointerY, shift, alt);
         var dx = x - _startX;
         var dy = y - _startY;
         if (shift)

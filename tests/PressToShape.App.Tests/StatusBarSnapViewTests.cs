@@ -95,4 +95,28 @@ public sealed class StatusBarSnapViewTests
         Assert.Equal("10", box.Text);
         window.Close();
     });
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void GuideToggles_ReflectTheStateAndChangeIt(bool tablet) => HeadlessUi.Run(() =>
+    {
+        var (state, window, view) = Show(tablet);
+        var smart = Toggle(view, "Smart Guides");
+        var guides = Toggle(view, "Show Guides");
+        Assert.False(smart.IsChecked);
+        Assert.True(guides.IsChecked);
+
+        state.Snapping.SmartGuides = true;
+        Dispatcher.UIThread.RunJobs();
+        Assert.True(smart.IsChecked);
+
+        guides.IsChecked = false;
+        smart.IsChecked = false;
+        Dispatcher.UIThread.RunJobs();
+
+        Assert.False(state.Snapping.ShowGuides);
+        Assert.False(state.Snapping.SmartGuides);
+        window.Close();
+    });
 }

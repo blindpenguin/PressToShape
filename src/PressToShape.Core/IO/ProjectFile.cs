@@ -28,6 +28,8 @@ public static partial class ProjectFile
     private const string EllipseType = "ellipse";
     private const string GroupType = "group";
     private const string PathType = "path";
+    private const string HorizontalGuide = "horizontal";
+    private const string VerticalGuide = "vertical";
 
     private static readonly JsonSerializerOptions Options = new()
     {
@@ -50,6 +52,7 @@ public static partial class ProjectFile
             Artboard = new ArtboardDto { Width = document.ArtboardWidth, Height = document.ArtboardHeight },
             Layers = new List<LayerDto?>(document.Layers.Select(ToDto)),
             Palette = document.Palette.IsEmpty ? null : new List<string?>(document.Palette.Select(color => ToText(color))),
+            Guides = document.Guides.IsEmpty ? null : new List<GuideDto?>(document.Guides.Select(ToDto)),
         };
 
         return JsonSerializer.SerializeToUtf8Bytes(file, Options);
@@ -156,8 +159,37 @@ public static partial class ProjectFile
             ArtboardHeight = height,
             Layers = layers.ToImmutable(),
             Palette = palette.ToImmutable(),
+            Guides = BuildGuides(file.Guides),
         };
         return ProjectFileResult.Success(document);
+    }
+
+    private static GuideDto ToDto(Guide guide) => new()
+    {
+        Orientation = guide.Orientation == GuideOrientation.Horizontal ? HorizontalGuide : VerticalGuide,
+        Position = guide.Position,
+    };
+
+    // A guide that is damaged (no or an unknown orientation, no position, a position that is not finite) is left out: it is no reason to
+    // refuse the drawing. A guide gets a new id, because the id is not saved.
+    private static ImmutableArray<Guide> BuildGuides(List<GuideDto?>? dtos)
+    {
+        var guides = ImmutableArray.CreateBuilder<Guide>();
+        foreach (var dto in dtos ?? [])
+        {
+            var orientation = dto?.Orientation switch
+            {
+                HorizontalGuide => GuideOrientation.Horizontal,
+                VerticalGuide => GuideOrientation.Vertical,
+                _ => (GuideOrientation?)null,
+            };
+            if (orientation is { } found && dto?.Position is { } position && double.IsFinite(position))
+            {
+                guides.Add(new Guide { Orientation = found, Position = position });
+            }
+        }
+
+        return guides.ToImmutable();
     }
 
     private static Shape? BuildShape(ShapeDto? dto, int groupDepth, out ProjectFileResult? failure)

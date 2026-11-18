@@ -6,6 +6,7 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 using PressToShape.App.ViewModels.Editor;
 using PressToShape.App.Workspace;
+using PressToShape.Core.Documents;
 
 namespace PressToShape.App.Views.Editor;
 
@@ -38,6 +39,10 @@ public partial class CanvasAreaView : UserControl
         Viewport.PointerExited += OnViewportPointerExited;
         Viewport.PointerWheelChanged += OnViewportPointerWheelChanged;
         Viewport.KeyDown += OnViewportKeyDown;
+
+        // A drag out of a ruler makes a guide. The view only forwards the pointer, the view model decides.
+        AttachRuler(HorizontalRuler, GuideOrientation.Horizontal);
+        AttachRuler(VerticalRuler, GuideOrientation.Vertical);
 
         _longPressTimer.Tick += OnLongPressTick;
 
@@ -262,6 +267,70 @@ public partial class CanvasAreaView : UserControl
         }
 
         viewModel.Cancel();
+    }
+
+    // The pointer that drags a guide out of a ruler. Other pointers are ignored while it lasts.
+    private IPointer? _rulerPointer;
+
+    private void AttachRuler(Control ruler, GuideOrientation orientation)
+    {
+        ruler.PointerPressed += (_, e) => OnRulerPressed(ruler, e, orientation);
+        ruler.PointerMoved += OnRulerMoved;
+        ruler.PointerReleased += OnRulerReleased;
+        ruler.PointerCaptureLost += OnRulerCaptureLost;
+    }
+
+    private void OnRulerPressed(Control ruler, PointerPressedEventArgs e, GuideOrientation orientation)
+    {
+        if (DataContext is not CanvasAreaViewModel viewModel
+            || _rulerPointer is not null
+            || !e.GetCurrentPoint(ruler).Properties.IsLeftButtonPressed)
+        {
+            return;
+        }
+
+        _rulerPointer = e.Pointer;
+        e.Pointer.Capture(ruler);
+
+        // The Escape key reaches the canvas, which cancels the drag.
+        Viewport.Focus();
+        viewModel.BeginGuideDrag(orientation);
+        var position = e.GetPosition(Viewport);
+        viewModel.GuidePointerMoved(position.X, position.Y);
+        e.Handled = true;
+    }
+
+    private void OnRulerMoved(object? sender, PointerEventArgs e)
+    {
+        if (DataContext is CanvasAreaViewModel viewModel && e.Pointer == _rulerPointer)
+        {
+            var position = e.GetPosition(Viewport);
+            viewModel.GuidePointerMoved(position.X, position.Y);
+            e.Handled = true;
+        }
+    }
+
+    private void OnRulerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if (DataContext is not CanvasAreaViewModel viewModel || e.Pointer != _rulerPointer)
+        {
+            return;
+        }
+
+        _rulerPointer = null;
+        var position = e.GetPosition(Viewport);
+        viewModel.GuidePointerReleased(position.X, position.Y);
+        e.Pointer.Capture(null);
+        e.Handled = true;
+    }
+
+    private void OnRulerCaptureLost(object? sender, PointerCaptureLostEventArgs e)
+    {
+        if (DataContext is CanvasAreaViewModel viewModel && e.Pointer == _rulerPointer)
+        {
+            _rulerPointer = null;
+            viewModel.GuidePointerReleased(0, 0, canceled: true);
+        }
     }
 
     private void OnViewportKeyDown(object? sender, KeyEventArgs e)

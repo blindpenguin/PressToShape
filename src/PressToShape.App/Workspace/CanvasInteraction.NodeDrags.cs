@@ -121,7 +121,7 @@ internal sealed partial class CanvasInteraction
         var scale = _state.ZoomPercent / 100;
         var target = (X: x + _grabOffsetX, Y: y + _grabOffsetY);
         var snap = Snap([target.X], [target.Y], null);
-        target = (target.X + snap.OffsetX, target.Y + snap.OffsetY);
+        target = WithPathPoint(_nodeEditedIds, target.X, target.Y, (target.X + snap.OffsetX, target.Y + snap.OffsetY), _startDocument);
         var anchor = PathNodeEditing.NodePosition(path, _nodeHit.Index);
         if (Math.Sqrt(Math.Pow(target.X - anchor.X, 2) + Math.Pow(target.Y - anchor.Y, 2)) * scale <= HandleSnapPixels)
         {

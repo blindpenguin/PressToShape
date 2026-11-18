@@ -40,7 +40,7 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         PathEditing = new PathEditor(State, services.Messages, localizer);
         LayerEditing = new LayerEditor(State, localizer);
         var ring = new RingMenuViewModel(localizer);
-        Canvas = new CanvasAreaViewModel(State, Editor, ring: ring);
+        Canvas = new CanvasAreaViewModel(State, Editor, ring: ring, localizer: localizer);
         PathCommands = new PathMenuCommands(
             UnionShapesCommand,
             DifferenceShapesCommand,

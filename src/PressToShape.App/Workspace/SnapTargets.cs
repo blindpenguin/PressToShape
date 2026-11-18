@@ -20,13 +20,16 @@ internal enum SnapTargetType
 
     /// <summary>An edge or center line of the artboard.</summary>
     Artboard,
+
+    /// <summary>A ruler guide of the document. It wins a tie with the other types.</summary>
+    Guide,
 }
 
 /// <summary>
 /// One position that a point can snap to on one axis. <paramref name="From"/> and <paramref name="To"/> are the extent of the target along the
-/// other axis, so a guide line can start and end at the target.
+/// other axis, so a guide line can start and end at the target. <paramref name="Id"/> is the id of a ruler guide (type <see cref="SnapTargetType.Guide"/>).
 /// </summary>
-internal readonly record struct SnapTarget(double Value, SnapTargetType Type, double From, double To);
+internal readonly record struct SnapTarget(double Value, SnapTargetType Type, double From, double To, Guid? Id = null);
 
 /// <summary>
 /// The positions a drag can snap to, collected once at the press of a drag so that the pointer moves only search them. For every visible shape
@@ -57,7 +60,8 @@ internal sealed class SnapTargets
     /// <summary>Collects the targets of a document.</summary>
     /// <param name="document">The document.</param>
     /// <param name="excludedIds">The shapes and groups that give no target of their own, for example the ones being dragged and the groups around them.</param>
-    public static SnapTargets Collect(Document document, IReadOnlySet<Guid> excludedIds)
+    /// <param name="includeGuides">Whether the ruler guides of the document are targets too (a vertical guide on the x axis, a horizontal one on the y axis).</param>
+    public static SnapTargets Collect(Document document, IReadOnlySet<Guid> excludedIds, bool includeGuides = false)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(excludedIds);
@@ -80,6 +84,15 @@ internal sealed class SnapTargets
         y.Add(new SnapTarget(0, SnapTargetType.Artboard, 0, width));
         y.Add(new SnapTarget(height / 2, SnapTargetType.Artboard, 0, width));
         y.Add(new SnapTarget(height, SnapTargetType.Artboard, 0, width));
+        if (includeGuides)
+        {
+            foreach (var guide in document.Guides)
+            {
+                var target = new SnapTarget(guide.Position, SnapTargetType.Guide, 0, 0, guide.Id);
+                (guide.Orientation == GuideOrientation.Vertical ? x : y).Add(target);
+            }
+        }
+
         return new SnapTargets(x, y);
     }
 
@@ -96,7 +109,7 @@ internal sealed class SnapTargets
 
     /// <summary>
     /// The target on the axis that is nearest to the value, if one is within the tolerance (inclusive). Of two targets at the same
-    /// distance the one with the smaller value wins.
+    /// distance the one with the smaller value wins, and a ruler guide wins over the others at the same value.
     /// </summary>
     public bool TryFindNearest(SnapAxis axis, double value, double tolerance, out SnapTarget nearest)
     {
@@ -123,6 +136,29 @@ internal sealed class SnapTargets
                 bestDistance = distance;
                 nearest = targets[i];
                 found = true;
+            }
+        }
+
+        // Several targets can lie at the same value. A ruler guide among them is the one that is returned.
+        if (found && nearest.Type != SnapTargetType.Guide)
+        {
+            var at = Array.BinarySearch(targets, nearest, ValueComparer.Instance);
+            for (var i = Math.Max(0, at < 0 ? ~at : at); i < targets.Length && targets[i].Value == nearest.Value; i++)
+            {
+                if (targets[i].Type == SnapTargetType.Guide)
+                {
+                    nearest = targets[i];
+                    break;
+                }
+            }
+
+            for (var i = Math.Min(targets.Length - 1, at < 0 ? ~at : at); i >= 0 && targets[i].Value == nearest.Value && nearest.Type != SnapTargetType.Guide; i--)
+            {
+                if (targets[i].Type == SnapTargetType.Guide)
+                {
+                    nearest = targets[i];
+                    break;
+                }
             }
         }
 

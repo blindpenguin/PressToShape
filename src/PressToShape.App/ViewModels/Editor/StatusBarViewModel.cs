@@ -67,6 +67,20 @@ internal sealed partial class StatusBarViewModel : LocalizedViewModel
         set => _state.Snapping.SnapToObjects = value;
     }
 
+    /// <summary>Whether the smart guides (distance labels, equal spacing, equal size, path points) are on.</summary>
+    public bool SmartGuides
+    {
+        get => _state.Snapping.SmartGuides;
+        set => _state.Snapping.SmartGuides = value;
+    }
+
+    /// <summary>Whether the ruler guides are shown and snapped to.</summary>
+    public bool ShowGuides
+    {
+        get => _state.Snapping.ShowGuides;
+        set => _state.Snapping.ShowGuides = value;
+    }
+
     /// <summary>The grid spacing box. A value outside <see cref="SnapPreferences.MinSpacing"/> to <see cref="SnapPreferences.MaxSpacing"/> or text that is no number is refused and the old value comes back.</summary>
     public NumberFieldViewModel GridSpacingField { get; }
 
@@ -106,6 +120,8 @@ internal sealed partial class StatusBarViewModel : LocalizedViewModel
         OnPropertyChanged(nameof(ShowGrid));
         OnPropertyChanged(nameof(SnapToGrid));
         OnPropertyChanged(nameof(SnapToObjects));
+        OnPropertyChanged(nameof(SmartGuides));
+        OnPropertyChanged(nameof(ShowGuides));
         GridSpacingField.SetValue(_state.Snapping.GridSpacing);
     }
 

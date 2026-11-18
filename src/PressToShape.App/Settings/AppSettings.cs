@@ -31,6 +31,12 @@ internal sealed class AppSettings
     /// <summary>Whether the rulers are shown (raw JSON value). Missing means the default of the layout.</summary>
     public JsonElement? ShowRulers { get; set; }
 
+    /// <summary>Whether the smart guides (distance labels, equal spacing, equal size, path points) are on (raw JSON value).</summary>
+    public JsonElement? SmartGuides { get; set; }
+
+    /// <summary>Whether the ruler guides are shown and snapped to (raw JSON value). Missing means on.</summary>
+    public JsonElement? ShowGuides { get; set; }
+
     /// <summary>Entries this version does not know about.</summary>
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? ExtraData { get; set; }

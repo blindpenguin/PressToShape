@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using PressToShape.App.Localization;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
 using PressToShape.Core.Shapes;
@@ -14,6 +15,7 @@ namespace PressToShape.App.ViewModels.Editor;
 internal sealed partial class CanvasAreaViewModel : ViewModelBase
 {
     private readonly EditorState _state;
+    private readonly ILocalizer? _localizer;
     private readonly CanvasInteraction _interaction;
     private readonly SelectionEditor _editor;
     private readonly TouchGestureTracker _touch = new();
@@ -37,9 +39,11 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <param name="editor">The editor for keyboard edits. The shell passes the one it shares with the menus. Without one the view model makes its own.</param>
     /// <param name="time">The clock for the double-tap of a finger. Defaults to the system clock, tests pass their own.</param>
     /// <param name="ring">The ring context menu of the canvas. The shell passes it (it needs the localizer). Without one the canvas has no ring menu.</param>
-    public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null)
+    /// <param name="localizer">Gives the number format of the labels. Without one the numbers are formatted without a language.</param>
+    public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null, ILocalizer? localizer = null)
     {
         Ring = ring;
+        _localizer = localizer;
         _time = time ?? TimeProvider.System;
         _clockStart = _time.GetTimestamp();
         _state = state ?? throw new ArgumentNullException(nameof(state));
@@ -101,6 +105,11 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             if (_panning)
             {
                 return CanvasCursorType.ClosedHand;
+            }
+
+            if ((_interaction.GuideDragOrientation ?? _hoverGuide) is { } guideOrientation)
+            {
+                return guideOrientation == GuideOrientation.Vertical ? CanvasCursorType.ResizeWestEast : CanvasCursorType.ResizeNorthSouth;
             }
 
             if ((_interaction.DraggedHandle ?? _hoverHandle) is { } handle)
@@ -443,6 +452,14 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
             return;
         }
 
+        if (_interaction.IsGuideDragging)
+        {
+            // A guide that is dropped outside the canvas (on a ruler) is deleted, or not made.
+            _interaction.EndGuideDrag(ToDocumentX(screenX), ToDocumentY(screenY), IsOverCanvas(screenX, screenY));
+            PointerHover(screenX, screenY);
+            return;
+        }
+
         _interaction.PointerReleased(ToDocumentX(screenX), ToDocumentY(screenY), shift, alt, suspendSnap);
         PointerHover(screenX, screenY);
         if (_state.ActiveTool is Tool.DirectSelect or Tool.Node)
@@ -462,6 +479,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
 
         SetHover(_panning ? null : _interaction.HoverHandle(ToDocumentX(screenX), ToDocumentY(screenY)));
         SetNodeHover(_panning ? null : _interaction.IsOverNodeTarget(ToDocumentX(screenX), ToDocumentY(screenY)));
+        SetGuideHover(screenX, screenY);
     }
 
     /// <summary>The pointer left the canvas: no handle is hovered any more.</summary>
@@ -469,6 +487,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     {
         SetHover(null);
         SetNodeHover(null);
+        SetGuideHover(null);
     }
 
     /// <summary>
@@ -490,7 +509,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         }
 
         // Escape during the drag of a radius handle puts the radii back and records nothing, as a second finger does.
-        if (key == CanvasKey.Escape && _interaction.IsRadiusDragging)
+        if (key == CanvasKey.Escape && (_interaction.IsRadiusDragging || _interaction.IsGuideDragging))
         {
             _interaction.Abort();
             return true;
@@ -713,6 +732,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         OnPropertyChanged(nameof(PenOverlay));
         OnPropertyChanged(nameof(NodeOverlay));
         OnPropertyChanged(nameof(SnapGuidesOnScreen));
+        NotifyGuidesChanged();
     }
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
@@ -761,6 +781,11 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 break;
             case nameof(EditorState.SnapGuides):
                 OnPropertyChanged(nameof(SnapGuidesOnScreen));
+                break;
+            case nameof(EditorState.SmartMarkers):
+            case nameof(EditorState.ActiveGuideIds):
+            case nameof(EditorState.SelectedGuideId):
+                NotifyGuidesChanged();
                 break;
             case nameof(EditorState.EnteredGroupId):
                 OnPropertyChanged(nameof(EnteredGroupId));

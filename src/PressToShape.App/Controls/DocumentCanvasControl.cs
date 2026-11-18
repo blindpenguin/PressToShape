@@ -91,6 +91,48 @@ internal sealed class DocumentCanvasControl : Control
     public static readonly StyledProperty<IBrush?> GuideBrushProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(GuideBrush));
 
+    /// <summary>The ruler guides in screen space. They are drawn as lines across the whole control, over the shapes.</summary>
+    public static readonly StyledProperty<IReadOnlyList<ScreenRulerGuide>?> RulerGuidesProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IReadOnlyList<ScreenRulerGuide>?>(nameof(RulerGuides));
+
+    /// <summary>The markers and labels of the smart guides in screen space. They are drawn last.</summary>
+    public static readonly StyledProperty<IReadOnlyList<ScreenSmartMarker>?> SmartMarkersProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IReadOnlyList<ScreenSmartMarker>?>(nameof(SmartMarkers));
+
+    /// <summary>The brush of a ruler guide. It comes from the theme.</summary>
+    public static readonly StyledProperty<IBrush?> RulerGuideBrushProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(RulerGuideBrush));
+
+    /// <summary>The brush of the selected ruler guide. It comes from the theme.</summary>
+    public static readonly StyledProperty<IBrush?> RulerGuideSelectedBrushProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(RulerGuideSelectedBrush));
+
+    /// <summary>The brush of a ruler guide that the drag is snapped to. It comes from the theme.</summary>
+    public static readonly StyledProperty<IBrush?> RulerGuideActiveBrushProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(RulerGuideActiveBrush));
+
+    /// <summary>The brush of the lines of the smart guide markers. It comes from the theme.</summary>
+    public static readonly StyledProperty<IBrush?> SmartGuideBrushProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(SmartGuideBrush));
+
+    /// <summary>The brush of the numbers of the smart guide markers. It comes from the theme.</summary>
+    public static readonly StyledProperty<IBrush?> SmartGuideTextBrushProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(SmartGuideTextBrush));
+
+    /// <summary>The background of the numbers of the smart guide markers. It comes from the theme.</summary>
+    public static readonly StyledProperty<IBrush?> SmartGuideLabelBackgroundBrushProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, IBrush?>(nameof(SmartGuideLabelBackgroundBrush));
+
+    // The size of the numbers of the smart guides in screen pixels. It stays the same at every zoom, so the numbers stay readable.
+    private const double LabelFontSize = 11;
+
+    // How far the bracket of an equal size marker is from the side it measures, and how long its end ticks are, in screen pixels.
+    private const double BracketDistance = 6;
+    private const double TickLength = 4;
+
+    // The arm length of the cross that marks a path point, in screen pixels.
+    private const double CrossArm = 4;
+
     // The outlines keep this width at every zoom.
     private const double OutlineThickness = 1;
 
@@ -118,7 +160,15 @@ internal sealed class DocumentCanvasControl : Control
             GridSpacingProperty,
             GridBrushProperty,
             SnapGuidesProperty,
-            GuideBrushProperty);
+            GuideBrushProperty,
+            RulerGuidesProperty,
+            SmartMarkersProperty,
+            RulerGuideBrushProperty,
+            RulerGuideSelectedBrushProperty,
+            RulerGuideActiveBrushProperty,
+            SmartGuideBrushProperty,
+            SmartGuideTextBrushProperty,
+            SmartGuideLabelBackgroundBrushProperty);
     }
 
     public DocumentCanvasControl()
@@ -234,6 +284,54 @@ internal sealed class DocumentCanvasControl : Control
         set => SetValue(SnapGuidesProperty, value);
     }
 
+    public IReadOnlyList<ScreenRulerGuide>? RulerGuides
+    {
+        get => GetValue(RulerGuidesProperty);
+        set => SetValue(RulerGuidesProperty, value);
+    }
+
+    public IReadOnlyList<ScreenSmartMarker>? SmartMarkers
+    {
+        get => GetValue(SmartMarkersProperty);
+        set => SetValue(SmartMarkersProperty, value);
+    }
+
+    public IBrush? RulerGuideBrush
+    {
+        get => GetValue(RulerGuideBrushProperty);
+        set => SetValue(RulerGuideBrushProperty, value);
+    }
+
+    public IBrush? RulerGuideSelectedBrush
+    {
+        get => GetValue(RulerGuideSelectedBrushProperty);
+        set => SetValue(RulerGuideSelectedBrushProperty, value);
+    }
+
+    public IBrush? RulerGuideActiveBrush
+    {
+        get => GetValue(RulerGuideActiveBrushProperty);
+        set => SetValue(RulerGuideActiveBrushProperty, value);
+    }
+
+    public IBrush? SmartGuideBrush
+    {
+        get => GetValue(SmartGuideBrushProperty);
+        set => SetValue(SmartGuideBrushProperty, value);
+    }
+
+    public IBrush? SmartGuideTextBrush
+    {
+        get => GetValue(SmartGuideTextBrushProperty);
+        set => SetValue(SmartGuideTextBrushProperty, value);
+    }
+
+    public IBrush? SmartGuideLabelBackgroundBrush
+    {
+        get => GetValue(SmartGuideLabelBackgroundBrushProperty);
+        set => SetValue(SmartGuideLabelBackgroundBrushProperty, value);
+    }
+
     public IBrush? GuideBrush
     {
         get => GetValue(GuideBrushProperty);
@@ -285,7 +383,9 @@ internal sealed class DocumentCanvasControl : Control
             DrawNodeOverlay(context, nodeOverlay, nodeBrush);
         }
 
+        DrawRulerGuides(context);
         DrawGuides(context);
+        DrawSmartMarkers(context);
     }
 
     // Thin lines on the artboard, behind the shapes. Every line sits on the middle of a pixel, so it stays sharp.
@@ -320,6 +420,99 @@ internal sealed class DocumentCanvasControl : Control
             var at = System.Math.Floor(y) + 0.5;
             context.DrawLine(pen, new Point(left, at), new Point(right, at));
         }
+    }
+
+    // The ruler guides: thin lines across the whole control. The guide that the drag is snapped to and the selected guide have their own color.
+    private void DrawRulerGuides(DrawingContext context)
+    {
+        if (RulerGuides is not { Count: > 0 } guides)
+        {
+            return;
+        }
+
+        foreach (var guide in guides)
+        {
+            var brush = guide.IsActive ? RulerGuideActiveBrush : guide.IsSelected ? RulerGuideSelectedBrush : RulerGuideBrush;
+            if (brush is null || !double.IsFinite(guide.Position))
+            {
+                continue;
+            }
+
+            var pen = new Pen(brush, OutlineThickness);
+            var at = System.Math.Floor(guide.Position) + 0.5;
+            context.DrawLine(pen, guide.IsVertical ? new Point(at, 0) : new Point(0, at), guide.IsVertical ? new Point(at, Bounds.Height) : new Point(Bounds.Width, at));
+        }
+    }
+
+    // The markers of the smart guides. A distance or an equal gap is a measure line with end ticks, an equal size a bracket beside the side
+    // that it measures, a path point a small cross. A marker with a text gets the number on a small background.
+    private void DrawSmartMarkers(DrawingContext context)
+    {
+        if (SmartMarkers is not { Count: > 0 } markers || SmartGuideBrush is not { } brush)
+        {
+            return;
+        }
+
+        var pen = new Pen(brush, OutlineThickness);
+        foreach (var marker in markers)
+        {
+            if (!double.IsFinite(marker.From) || !double.IsFinite(marker.To) || !double.IsFinite(marker.Cross))
+            {
+                continue;
+            }
+
+            switch (marker.Type)
+            {
+                case SmartMarkerType.PathPoint:
+                    var center = marker.IsHorizontal ? new Point(marker.From, marker.Cross) : new Point(marker.Cross, marker.From);
+                    context.DrawLine(pen, new Point(center.X - CrossArm, center.Y - CrossArm), new Point(center.X + CrossArm, center.Y + CrossArm));
+                    context.DrawLine(pen, new Point(center.X - CrossArm, center.Y + CrossArm), new Point(center.X + CrossArm, center.Y - CrossArm));
+                    break;
+                case SmartMarkerType.EqualSize:
+                    DrawMeasure(context, pen, marker, marker.Cross + BracketDistance, -TickLength, 0, labelOutside: true);
+                    break;
+                default:
+                    DrawMeasure(context, pen, marker, marker.Cross, -TickLength, TickLength);
+                    break;
+            }
+        }
+    }
+
+    // A line from the start to the end of the marker at the position across, with a tick at each end that reaches from the offset before to the
+    // offset after (a bracket has ticks only on the side of the box) and the number.
+    private void DrawMeasure(DrawingContext context, Pen pen, ScreenSmartMarker marker, double across, double tickBefore, double tickAfter, bool labelOutside = false)
+    {
+        Point Along(double along, double offset) => marker.IsHorizontal ? new Point(along, across + offset) : new Point(across + offset, along);
+
+        context.DrawLine(pen, Along(marker.From, 0), Along(marker.To, 0));
+        context.DrawLine(pen, Along(marker.From, tickBefore), Along(marker.From, tickAfter));
+        context.DrawLine(pen, Along(marker.To, tickBefore), Along(marker.To, tickAfter));
+        if (marker.Text is { Length: > 0 } text && SmartGuideTextBrush is { } textBrush)
+        {
+            DrawLabel(context, text, textBrush, Along((marker.From + marker.To) / 2, 0), marker.IsHorizontal, labelOutside);
+        }
+    }
+
+    // The number next to the middle of a line: above a horizontal line (below it for a bracket, so it does not cover the shape), to the right of a
+    // vertical one, on a small rounded background.
+    private void DrawLabel(DrawingContext context, string text, IBrush textBrush, Point middle, bool horizontalLine, bool outside)
+    {
+        var formatted = new FormattedText(
+            text,
+            System.Globalization.CultureInfo.CurrentUICulture,
+            FlowDirection.LeftToRight,
+            Typeface.Default,
+            LabelFontSize,
+            textBrush);
+        var origin = horizontalLine
+            ? new Point(middle.X - formatted.Width / 2, outside ? middle.Y + 4 : middle.Y - formatted.Height - 3)
+            : new Point(middle.X + 6, middle.Y - formatted.Height / 2);
+        if (SmartGuideLabelBackgroundBrush is { } background)
+        {
+            context.DrawRectangle(background, null, new Rect(origin.X - 3, origin.Y - 1, formatted.Width + 6, formatted.Height + 2), 3, 3);
+        }
+
+        context.DrawText(formatted, origin);
     }
 
     // The lines that show which object the drag is snapped to, over everything else.

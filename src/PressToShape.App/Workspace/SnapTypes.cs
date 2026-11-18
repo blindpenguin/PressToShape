@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace PressToShape.App.Workspace;
@@ -23,6 +24,21 @@ internal readonly record struct SnapGuide(SnapAxis Axis, double Position, double
 /// <summary>The correction a snap gives: add the offsets to the dragged position. The guides are the object targets that were hit.</summary>
 internal sealed record SnapResult(double OffsetX, double OffsetY, IReadOnlyList<SnapGuide> Guides)
 {
+    /// <summary>The markers of the smart guide snap that won on an axis, to draw while the drag lasts.</summary>
+    public IReadOnlyList<SmartMarker> Markers { get; init; } = [];
+
+    /// <summary>The ids of the ruler guides the drag snapped to. The canvas draws them as active.</summary>
+    public IReadOnlyList<Guid> ActiveGuideIds { get; init; } = [];
+
     /// <summary>No snap: no offset and no guide.</summary>
     public static SnapResult None { get; } = new(0, 0, []);
 }
+
+/// <summary>
+/// A snap that a smart guide offers on one axis: move the dragged box by <paramref name="Offset"/> and show the <paramref name="Markers"/>.
+/// <see cref="Snapper"/> compares it with the other snaps of that axis.
+/// </summary>
+/// <param name="Axis">The axis the offset is on.</param>
+/// <param name="Offset">How far to move, in document units.</param>
+/// <param name="Markers">What to draw while the snap is active.</param>
+internal sealed record SnapCandidate(SnapAxis Axis, double Offset, IReadOnlyList<SmartMarker> Markers);

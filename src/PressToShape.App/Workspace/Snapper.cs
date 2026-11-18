@@ -34,13 +34,15 @@ internal static class Snapper
     /// <param name="settings">Which snaps are on and the grid spacing.</param>
     /// <param name="zoomPercent">The zoom in percent. 100 means one document unit per screen pixel.</param>
     /// <param name="dragged">The bounds of the dragged thing before the offsets, so a guide line reaches from the target to it. Null draws only the target's extent.</param>
+    /// <param name="extras">The snaps of the smart guides (equal spacing, equal size). On an axis the smallest distance wins among the object, guide and extra snaps; a ruler guide wins a tie, an extra wins a tie with an object edge, and an object snap or an extra always beats a grid line.</param>
     public static SnapResult Snap(
         IReadOnlyList<double> xCandidates,
         IReadOnlyList<double> yCandidates,
         SnapTargets? targets,
         SnapSettings settings,
         double zoomPercent,
-        Bounds? dragged = null)
+        Bounds? dragged = null,
+        IReadOnlyList<SnapCandidate>? extras = null)
     {
         ArgumentNullException.ThrowIfNull(xCandidates);
         ArgumentNullException.ThrowIfNull(yCandidates);
@@ -51,8 +53,8 @@ internal static class Snapper
         }
 
         var tolerance = TolerancePixels / (zoomPercent / 100);
-        var x = SnapAxisOffset(SnapAxis.X, xCandidates, targets, settings, tolerance);
-        var y = SnapAxisOffset(SnapAxis.Y, yCandidates, targets, settings, tolerance);
+        var x = SnapAxisOffset(SnapAxis.X, xCandidates, targets, settings, tolerance, extras);
+        var y = SnapAxisOffset(SnapAxis.Y, yCandidates, targets, settings, tolerance, extras);
         if (x is null && y is null)
         {
             return SnapResult.None;
@@ -61,50 +63,86 @@ internal static class Snapper
         var offsetX = x?.Offset ?? 0;
         var offsetY = y?.Offset ?? 0;
         var guides = new List<SnapGuide>();
-        if (x is { IsObject: true })
+        var markers = new List<SmartMarker>();
+        var activeGuides = new List<Guid>();
+        foreach (var (axis, snap, candidates, offset, otherOffset) in new[]
         {
-            AddGuides(SnapAxis.X, xCandidates, targets!, offsetX, dragged is { } box ? (box.Y + offsetY, box.Y + box.Height + offsetY) : null, guides);
+            (SnapAxis.X, x, xCandidates, offsetX, offsetY),
+            (SnapAxis.Y, y, yCandidates, offsetY, offsetX),
+        })
+        {
+            if (snap is { Extra: { } extra })
+            {
+                markers.AddRange(extra.Markers);
+            }
+            else if (snap is { IsObject: true })
+            {
+                (double From, double To)? extent = dragged is { } box
+                    ? axis == SnapAxis.X ? (box.Y + otherOffset, box.Y + box.Height + otherOffset) : (box.X + otherOffset, box.X + box.Width + otherOffset)
+                    : null;
+                AddGuides(axis, candidates, targets!, offset, extent, guides, activeGuides);
+            }
         }
 
-        if (y is { IsObject: true })
-        {
-            AddGuides(SnapAxis.Y, yCandidates, targets!, offsetY, dragged is { } box2 ? (box2.X + offsetX, box2.X + box2.Width + offsetX) : null, guides);
-        }
-
-        return new SnapResult(offsetX, offsetY, guides);
+        return new SnapResult(offsetX, offsetY, guides) { Markers = markers, ActiveGuideIds = activeGuides };
     }
 
-    private readonly record struct AxisSnap(double Offset, bool IsObject);
+    private readonly record struct AxisSnap(double Offset, bool IsObject, SnapCandidate? Extra = null);
 
-    private static AxisSnap? SnapAxisOffset(SnapAxis axis, IReadOnlyList<double> candidates, SnapTargets? targets, SnapSettings settings, double tolerance)
+    private static AxisSnap? SnapAxisOffset(
+        SnapAxis axis,
+        IReadOnlyList<double> candidates,
+        SnapTargets? targets,
+        SnapSettings settings,
+        double tolerance,
+        IReadOnlyList<SnapCandidate>? extras)
     {
+        double? best = null;
+        var bestDistance = double.MaxValue;
+        var bestIsGuide = false;
         if (settings.SnapToObjects && targets is not null)
         {
-            double? best = null;
-            var bestDistance = double.MaxValue;
             foreach (var candidate in candidates)
             {
                 if (targets.TryFindNearest(axis, candidate, tolerance, out var target))
                 {
                     var distance = Math.Abs(target.Value - candidate);
-                    if (distance < bestDistance)
+                    var better = distance < bestDistance || (distance == bestDistance && !bestIsGuide && target.Type == SnapTargetType.Guide);
+                    if (better)
                     {
                         bestDistance = distance;
                         best = target.Value - candidate;
+                        bestIsGuide = target.Type == SnapTargetType.Guide;
                     }
                 }
             }
+        }
 
-            if (best is { } offset)
+        // The smart guide snaps of this axis: the smallest offset within the tolerance.
+        SnapCandidate? extra = null;
+        foreach (var candidate in extras ?? [])
+        {
+            if (candidate.Axis == axis && double.IsFinite(candidate.Offset) && Math.Abs(candidate.Offset) <= tolerance
+                && (extra is null || Math.Abs(candidate.Offset) < Math.Abs(extra.Offset)))
             {
-                return new AxisSnap(offset, IsObject: true);
+                extra = candidate;
             }
+        }
+
+        if (extra is not null && (best is null || Math.Abs(extra.Offset) < bestDistance || (Math.Abs(extra.Offset) == bestDistance && !bestIsGuide)))
+        {
+            return new AxisSnap(extra.Offset, IsObject: true, extra);
+        }
+
+        if (best is { } offset)
+        {
+            return new AxisSnap(offset, IsObject: true);
         }
 
         if (settings.SnapToGrid && double.IsFinite(settings.GridSpacing) && settings.GridSpacing > 0)
         {
-            double? best = null;
-            var bestDistance = double.MaxValue;
+            double? bestGrid = null;
+            var bestGridDistance = double.MaxValue;
             foreach (var candidate in candidates)
             {
                 if (!double.IsFinite(candidate))
@@ -112,17 +150,17 @@ internal static class Snapper
                     continue;
                 }
 
-                var offset = GridMath.Nearest(candidate, settings.GridSpacing) - candidate;
-                if (Math.Abs(offset) <= tolerance && Math.Abs(offset) < bestDistance)
+                var gridOffset = GridMath.Nearest(candidate, settings.GridSpacing) - candidate;
+                if (Math.Abs(gridOffset) <= tolerance && Math.Abs(gridOffset) < bestGridDistance)
                 {
-                    bestDistance = Math.Abs(offset);
-                    best = offset;
+                    bestGridDistance = Math.Abs(gridOffset);
+                    bestGrid = gridOffset;
                 }
             }
 
-            if (best is { } gridOffset)
+            if (bestGrid is { } found)
             {
-                return new AxisSnap(gridOffset, IsObject: false);
+                return new AxisSnap(found, IsObject: false);
             }
         }
 
@@ -130,12 +168,35 @@ internal static class Snapper
     }
 
     // Every candidate that lands on a target after the offset gets a guide, so a box whose left and right edge both hit targets shows both.
-    private static void AddGuides(SnapAxis axis, IReadOnlyList<double> candidates, SnapTargets targets, double offset, (double From, double To)? dragged, List<SnapGuide> guides)
+    private static void AddGuides(
+        SnapAxis axis,
+        IReadOnlyList<double> candidates,
+        SnapTargets targets,
+        double offset,
+        (double From, double To)? dragged,
+        List<SnapGuide> guides,
+        List<Guid> activeGuides)
     {
         foreach (var candidate in candidates)
         {
             var position = candidate + offset;
-            if (!targets.TryFindNearest(axis, position, SamePosition, out var target) || guides.Exists(g => g.Axis == axis && Math.Abs(g.Position - target.Value) <= SamePosition))
+            if (!targets.TryFindNearest(axis, position, SamePosition, out var target))
+            {
+                continue;
+            }
+
+            // A ruler guide is drawn by the canvas itself, as active. It gets no guide line.
+            if (target.Type == SnapTargetType.Guide)
+            {
+                if (target.Id is { } id && !activeGuides.Contains(id))
+                {
+                    activeGuides.Add(id);
+                }
+
+                continue;
+            }
+
+            if (guides.Exists(g => g.Axis == axis && Math.Abs(g.Position - target.Value) <= SamePosition))
             {
                 continue;
             }

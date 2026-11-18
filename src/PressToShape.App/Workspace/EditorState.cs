@@ -398,6 +398,11 @@ internal sealed partial class EditorState : ObservableObject
         }
 
         SelectedShapeIds = ids;
+        if (!ids.IsEmpty)
+        {
+            SelectedGuideId = null;
+        }
+
         ClearNodeSelection();
         OnPropertyChanged(nameof(SelectedShapeId));
         OnPropertyChanged(nameof(SelectedCount));
@@ -407,6 +412,11 @@ internal sealed partial class EditorState : ObservableObject
     partial void OnDocumentChanged(Document value)
     {
         PruneNodeSelection(value);
+        if (SelectedGuideId is { } guideId && value.FindGuide(guideId) is null)
+        {
+            SelectedGuideId = null;
+        }
+
         if (!SelectedShapeIds.IsEmpty)
         {
             // Shapes that are gone, or that are now hidden or locked (also through a layer or a group), leave the selection.

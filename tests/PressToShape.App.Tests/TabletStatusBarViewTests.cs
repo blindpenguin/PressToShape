@@ -149,9 +149,9 @@ public class TabletStatusBarViewTests
         var shell = CreateShell();
         var (view, window) = Show(new TabletStatusBarView { DataContext = shell.StatusBar }, touch: true);
 
-        // Four buttons (zoom out, zoom list, zoom in, fit), the three switches and the grid spacing box.
+        // Four buttons (zoom out, zoom list, zoom in, fit), the five switches and the grid spacing box.
         var controls = view.GetVisualDescendants().OfType<Control>().Where(c => c is Button or TextBox && c.TemplatedParent is null && c.IsEffectivelyVisible).ToList();
-        Assert.Equal(8, controls.Count);
+        Assert.Equal(10, controls.Count);
         var tooSmall = controls.Where(c => c.Bounds.Width < 48 || c.Bounds.Height < 48).Select(c => $"{AutomationProperties.GetName(c)} {c.Bounds.Width:0}x{c.Bounds.Height:0}").ToList();
         Assert.True(tooSmall.Count == 0, "Controls under 48 dp: " + string.Join(", ", tooSmall));
 
