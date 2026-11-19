@@ -21,6 +21,7 @@ internal sealed partial class CanvasInteraction
     private const double ClickPixels = 3;
 
     private readonly EditorState _state;
+    private readonly ITextMeasurer? _textMeasurer;
 
     private DragType _drag = DragType.None;
     private Tool _dragTool;
@@ -40,9 +41,12 @@ internal sealed partial class CanvasInteraction
     /// <summary>Whether the last pointer event suspended snapping (the Ctrl key was held).</summary>
     internal bool IsSnapSuspended => _suspendSnap;
 
-    public CanvasInteraction(EditorState state)
+    /// <param name="state">The editor state.</param>
+    /// <param name="textMeasurer">Measures a text when its editing ends, so a point text gets its box. Without one the box is left as it is.</param>
+    public CanvasInteraction(EditorState state, ITextMeasurer? textMeasurer = null)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
+        _textMeasurer = textMeasurer;
         _state.PropertyChanged += OnStatePropertyChanged;
     }
 
@@ -60,6 +64,7 @@ internal sealed partial class CanvasInteraction
         RoundingCorners,
         MovingGuide,
         CreatingGuide,
+        CreatingText,
     }
 
     /// <summary>Whether a drag is in progress.</summary>
@@ -80,6 +85,9 @@ internal sealed partial class CanvasInteraction
     {
         _suspendSnap = suspendSnap;
         Cancel();
+
+        // A press ends the editing of a text, whatever it hits. The text tool can then start a new one with the same press.
+        CommitTextEdit();
 
         if (_state.ColorPick != ColorPickTarget.None)
         {
@@ -111,6 +119,9 @@ internal sealed partial class CanvasInteraction
                     BeginDrag(DragType.Drawing, startX, startY);
                 }
 
+                break;
+            case Tool.Text:
+                PressWithTextTool(x, y);
                 break;
             case Tool.Pen:
                 PenPressed(x, y, inputType);
@@ -156,6 +167,9 @@ internal sealed partial class CanvasInteraction
                 break;
             case DragType.Marquee:
                 _state.SelectionBox = BoxTo(x, y);
+                break;
+            case DragType.CreatingText:
+                _state.SelectionBox = TextBoxTo(x, y);
                 break;
             case DragType.RoundingCorners:
                 ShowRadius(x, y, shift);
@@ -221,6 +235,12 @@ internal sealed partial class CanvasInteraction
         {
             Show(TransformedShapes(x, y, shift, alt));
             EndDrag();
+            return;
+        }
+
+        if (_drag == DragType.CreatingText)
+        {
+            EndTextDrag(x, y);
             return;
         }
 
@@ -473,9 +493,9 @@ internal sealed partial class CanvasInteraction
         switch (_drag)
         {
             case DragType.Resizing when _startFrame is { } frame:
-                var keepsRatio = shift || (!frame.IsSingle && _startShapes.Any(s => s.Rotation != 0));
+                var keepsRatio = shift || (!frame.IsSingle && _startShapes.Any(s => s.Rotation != 0)) || SelectionTransforms.HasPointText(_startShapes);
                 var (handleX, handleY) = SnappedHandle(frame, x + _grabOffsetX, y + _grabOffsetY, keepsRatio, alt);
-                var resized = SelectionTransforms.Resize(_startShapes, frame, _handle, handleX, handleY, shift, alt);
+                var resized = FitPointTexts(SelectionTransforms.Resize(_startShapes, frame, _handle, handleX, handleY, shift, alt));
                 ShowSmart([.. _resizeMarkers, .. LabelsForResize(frame, resized)]);
                 return resized;
             case DragType.Rotating when _startFrame is { } frame:
@@ -515,6 +535,18 @@ internal sealed partial class CanvasInteraction
     // Shift makes the shape square (a circle for the ellipse), Alt draws it around the press point as its center.
     private Shape? CreateShape(double pointerX, double pointerY, bool shift, bool alt)
     {
+        var (left, top, width, height) = DragBox(pointerX, pointerY, shift, alt);
+        return _dragTool switch
+        {
+            Tool.Rectangle => new RectangleShape { X = left, Y = top, Width = width, Height = height, Appearance = _state.DefaultAppearance },
+            Tool.Ellipse => new EllipseShape { X = left, Y = top, Width = width, Height = height, Appearance = _state.DefaultAppearance },
+            _ => null,
+        };
+    }
+
+    // The box of a drag from the press point to the pointer.
+    private (double Left, double Top, double Width, double Height) DragBox(double pointerX, double pointerY, bool shift, bool alt)
+    {
         // The corner snaps first, then Shift and Alt shape the result.
         var (x, y) = SnappedDrawPoint(pointerX, pointerY, shift, alt);
         var dx = x - _startX;
@@ -530,13 +562,7 @@ internal sealed partial class CanvasInteraction
         var height = alt ? Math.Abs(dy) * 2 : Math.Abs(dy);
         var left = alt ? _startX - Math.Abs(dx) : Math.Min(_startX, _startX + dx);
         var top = alt ? _startY - Math.Abs(dy) : Math.Min(_startY, _startY + dy);
-
-        return _dragTool switch
-        {
-            Tool.Rectangle => new RectangleShape { X = left, Y = top, Width = width, Height = height, Appearance = _state.DefaultAppearance },
-            Tool.Ellipse => new EllipseShape { X = left, Y = top, Width = width, Height = height, Appearance = _state.DefaultAppearance },
-            _ => null,
-        };
+        return (left, top, width, height);
     }
 
     private bool IsBigEnough(Shape shape)

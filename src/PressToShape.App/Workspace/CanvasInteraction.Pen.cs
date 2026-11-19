@@ -139,6 +139,8 @@ internal sealed partial class CanvasInteraction
     // Choosing another tool ends the path where it is, if it has two nodes.
     private void OnStatePropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
+        TextStateChanged(e);
+
         if (e.PropertyName == nameof(EditorState.ActiveTool) && _state.ActiveTool != Tool.Pen && _pen.IsDrawing)
         {
             FinishPath(close: false);

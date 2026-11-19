@@ -36,7 +36,7 @@ public class LayerRoundTripTests
 
     private static XElement[] ExportedLayers(Document document)
     {
-        var svg = XDocument.Parse(new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(SvgExport.ToUtf8(document)));
+        var svg = XDocument.Parse(new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(SvgExport.ToUtf8(document, new FakeTextMeasurer())));
         return [.. svg.Root!.Elements(Svg + "g")];
     }
 

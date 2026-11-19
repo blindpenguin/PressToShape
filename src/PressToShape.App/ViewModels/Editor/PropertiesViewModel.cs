@@ -5,6 +5,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PressToShape.App.Localization;
+using PressToShape.App.Services;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
 using PressToShape.Core.History;
@@ -35,9 +36,20 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
 
     /// <param name="objects">The editor behind the Group and Ungroup buttons. Without one the view model makes its own.</param>
     /// <param name="paths">The commands behind the buttons of the Path Operations section. The shell passes the ones it shares with the menus. Without them the buttons cannot run.</param>
-    public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null, PathMenuCommands? paths = null)
+    /// <param name="textMeasurer">Measures texts, so a point text follows a change of its font. Without one its box stays as it is.</param>
+    /// <param name="fonts">The font families to choose from. Without one the font list is empty.</param>
+    public PropertiesViewModel(
+        EditorState state,
+        SelectionEditor editor,
+        ILocalizer localizer,
+        ObjectEditor? objects = null,
+        PathMenuCommands? paths = null,
+        ITextMeasurer? textMeasurer = null,
+        IFontCatalog? fonts = null)
         : base(localizer)
     {
+        _textMeasurer = textMeasurer;
+        _fonts = fonts;
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _editor = editor ?? throw new ArgumentNullException(nameof(editor));
         _objects = objects ?? new ObjectEditor(_state);
@@ -56,6 +68,10 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
         TopRightRadius = new NumberFieldViewModel(localizer, 0, MaxCoordinate, value => SetRadius(Corner.TopRight, value));
         BottomRightRadius = new NumberFieldViewModel(localizer, 0, MaxCoordinate, value => SetRadius(Corner.BottomRight, value));
         BottomLeftRadius = new NumberFieldViewModel(localizer, 0, MaxCoordinate, value => SetRadius(Corner.BottomLeft, value));
+
+        FontSize = new NumberFieldViewModel(localizer, TextShape.MinFontSize, TextShape.MaxFontSize, value => ApplyTextFormat(new TextFormatChange(FontSize: value)));
+        LineSpacing = new NumberFieldViewModel(localizer, TextShape.MinLineSpacing, TextShape.MaxLineSpacing, value => ApplyTextFormat(new TextFormatChange(LineSpacing: value)));
+        LetterSpacing = new NumberFieldViewModel(localizer, TextShape.MinLetterSpacing, TextShape.MaxLetterSpacing, value => ApplyTextFormat(new TextFormatChange(LetterSpacing: value)));
 
         NodeX = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Nodes.SetPosition(value, null));
         NodeY = new NumberFieldViewModel(localizer, -MaxCoordinate, MaxCoordinate, value => Nodes.SetPosition(null, value));
@@ -108,7 +124,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
     /// </summary>
     public void CommitPendingEdits()
     {
-        foreach (var field in new[] { X, Y, Width, Height, Rotation, StrokeWidth, OpacityPercent, NodeX, NodeY, LinkedRadius, TopLeftRadius, TopRightRadius, BottomRightRadius, BottomLeftRadius })
+        foreach (var field in new[] { X, Y, Width, Height, Rotation, StrokeWidth, OpacityPercent, FontSize, LineSpacing, LetterSpacing, NodeX, NodeY, LinkedRadius, TopLeftRadius, TopRightRadius, BottomRightRadius, BottomLeftRadius })
         {
             if (field.IsEditing)
             {
@@ -317,6 +333,7 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
         RefreshPathValues();
         RefreshNodeValues();
         RefreshCornerValues();
+        RefreshTextValues();
         var shapes = SelectedShapes();
         var values = SelectionValues.From(shapes);
         if (values is null)
@@ -383,6 +400,8 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
                 OnPropertyChanged(nameof(ShowAppearance));
                 OnPropertyChanged(nameof(ShowPath));
                 OnPropertyChanged(nameof(ShowCorners));
+                OnPropertyChanged(nameof(ShowText));
+                RefreshTextValues();
                 OnPropertyChanged(nameof(ShowNode));
                 OnPropertyChanged(nameof(ShowNodeTypeTools));
                 OnPropertyChanged(nameof(ShowAlign));
@@ -404,6 +423,9 @@ internal sealed partial class PropertiesViewModel : LocalizedViewModel
                 break;
             case nameof(EditorState.LinkCornerRadii):
                 OnPropertyChanged(nameof(LinkCorners));
+                break;
+            case nameof(EditorState.TextDefaults):
+                RefreshTextValues();
                 break;
         }
     }

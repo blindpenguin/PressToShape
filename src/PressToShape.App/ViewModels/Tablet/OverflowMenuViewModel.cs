@@ -56,6 +56,7 @@ internal sealed class OverflowMenuViewModel : ViewModelBase
                 localizer,
                 N("_Path"),
                 Item(N("_Convert Object to Path"), paths.ConvertToPath),
+                Item(N("Convert Text to _Path"), paths.ConvertTextToPath),
                 MenuItemViewModel.Separator(localizer),
                 Item(N("Com_bine"), paths.Combine),
                 Item(N("Break _Apart"), paths.BreakApart),

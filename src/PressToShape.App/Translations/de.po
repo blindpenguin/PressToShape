@@ -1035,3 +1035,36 @@ msgstr "Diese Seite enthält einen ungültigen Wert"
 
 msgid "Preferences"
 msgstr "Voreinstellungen"
+
+msgid "Create text"
+msgstr "Text erstellen"
+
+msgid "Edit text"
+msgstr "Text bearbeiten"
+
+msgid "Format text"
+msgstr "Text formatieren"
+
+msgid "Convert text to path"
+msgstr "Text in Pfad umwandeln"
+
+msgid "{0} (not installed)"
+msgstr "{0} (nicht installiert)"
+
+msgid "Font"
+msgstr "Schrift"
+
+msgid "Font size"
+msgstr "Schriftgröße"
+
+msgid "Bold"
+msgstr "Fett"
+
+msgid "Italic"
+msgstr "Kursiv"
+
+msgid "Line spacing"
+msgstr "Zeilenabstand"
+
+msgid "Letter spacing"
+msgstr "Zeichenabstand"

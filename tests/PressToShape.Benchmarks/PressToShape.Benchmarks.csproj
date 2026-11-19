@@ -10,6 +10,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Include="..\PressToShape.Core.Tests\FakeTextMeasurer.cs" Link="FakeTextMeasurer.cs"/>
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\..\src\PressToShape.App\PressToShape.App.csproj"/>
     </ItemGroup>
 </Project>

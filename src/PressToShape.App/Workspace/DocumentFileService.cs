@@ -6,6 +6,7 @@ using PressToShape.App.Localization;
 using PressToShape.App.Services;
 using PressToShape.Core.Documents;
 using PressToShape.Core.IO;
+using PressToShape.Core.Shapes;
 
 namespace PressToShape.App.Workspace;
 
@@ -27,6 +28,7 @@ internal sealed class DocumentFileService
     private readonly IFileDialogs _dialogs;
     private readonly IMessageDialogs _messages;
     private readonly ILocalizer _localizer;
+    private readonly ITextMeasurer _measurer;
     private readonly Action _fitToWindow;
 
     public DocumentFileService(
@@ -37,6 +39,7 @@ internal sealed class DocumentFileService
         IFileDialogs dialogs,
         IMessageDialogs messages,
         ILocalizer localizer,
+        ITextMeasurer measurer,
         Action fitToWindow)
     {
         _state = state ?? throw new ArgumentNullException(nameof(state));
@@ -46,6 +49,7 @@ internal sealed class DocumentFileService
         _dialogs = dialogs ?? throw new ArgumentNullException(nameof(dialogs));
         _messages = messages ?? throw new ArgumentNullException(nameof(messages));
         _localizer = localizer ?? throw new ArgumentNullException(nameof(localizer));
+        _measurer = measurer ?? throw new ArgumentNullException(nameof(measurer));
         _fitToWindow = fitToWindow ?? throw new ArgumentNullException(nameof(fitToWindow));
     }
 
@@ -134,7 +138,7 @@ internal sealed class DocumentFileService
         var document = _state.Document;
         try
         {
-            var bytes = await Task.Run(() => SvgExport.ToUtf8(document));
+            var bytes = await Task.Run(() => SvgExport.ToUtf8(document, _measurer));
             await _files.WriteAllBytesAtomicAsync(path, bytes);
         }
         catch (Exception ex) when (IsFileFailure(ex))

@@ -5,6 +5,7 @@ using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
 using PressToShape.Core.IO;
 using PressToShape.Core.Shapes;
+using PressToShape.Core.Tests;
 using Xunit;
 
 namespace PressToShape.App.Tests;
@@ -250,7 +251,7 @@ public class PathEditingFeaturesTests
         Assert.True(loaded.Succeeded, loaded.Detail);
         var path = Assert.IsType<PathShape>(Assert.Single(loaded.Document!.Layers.SelectMany(l => l.Shapes)));
         Assert.Equal(3, path.SubPaths[0].Nodes.Length);
-        var svg = Encoding.UTF8.GetString(SvgExport.ToUtf8(state.Document));
+        var svg = Encoding.UTF8.GetString(SvgExport.ToUtf8(state.Document, new FakeTextMeasurer()));
         Assert.Contains("<path", svg);
         Assert.Contains("d=\"M 0 0 L 100 0 L 100 100\"", svg);
     }

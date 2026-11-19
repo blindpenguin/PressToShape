@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using PressToShape.Core.Documents;
 using PressToShape.Core.Shapes;
 
@@ -21,8 +22,9 @@ internal static class CanvasScene
     /// <param name="originX">Screen position of the artboard's left edge.</param>
     /// <param name="originY">Screen position of the artboard's top edge.</param>
     /// <param name="enteredGroupId">The group that was entered. Shapes that are not inside it are marked as dimmed. <c>null</c> dims nothing.</param>
-    /// <param name="hiddenShapeId">A shape that is left out because a draft takes its place, for example a path that is being continued. <c>null</c> leaves nothing out.</param>
-    public static IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY, Guid? enteredGroupId = null, Guid? hiddenShapeId = null)
+    /// <param name="hiddenShapeId">A shape that is left out because a draft takes its place, for example a path that is being continued, or a text that is being edited. <c>null</c> leaves nothing out.</param>
+    /// <param name="measurer">Lays out the texts. Without one, texts have no lines and nothing of them is drawn.</param>
+    public static IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY, Guid? enteredGroupId = null, Guid? hiddenShapeId = null, ITextMeasurer? measurer = null)
     {
         ArgumentNullException.ThrowIfNull(document);
 
@@ -31,7 +33,7 @@ internal static class CanvasScene
         {
             if (layer.IsVisible)
             {
-                AddShapes(layer.Shapes, shapes, zoomPercent, originX, originY, dimmed: enteredGroupId is not null, enteredGroupId, hiddenShapeId);
+                AddShapes(layer.Shapes, shapes, zoomPercent, originX, originY, dimmed: enteredGroupId is not null, enteredGroupId, hiddenShapeId, measurer);
             }
         }
 
@@ -46,7 +48,8 @@ internal static class CanvasScene
         double originY,
         bool dimmed,
         Guid? enteredGroupId,
-        Guid? hiddenShapeId)
+        Guid? hiddenShapeId,
+        ITextMeasurer? measurer)
     {
         foreach (var shape in source)
         {
@@ -58,17 +61,17 @@ internal static class CanvasScene
             if (shape is GroupShape group)
             {
                 // Inside the entered group nothing is dimmed, also not in the groups below it.
-                AddShapes(group.Children, target, zoomPercent, originX, originY, dimmed && group.Id != enteredGroupId, enteredGroupId, hiddenShapeId);
+                AddShapes(group.Children, target, zoomPercent, originX, originY, dimmed && group.Id != enteredGroupId, enteredGroupId, hiddenShapeId, measurer);
             }
             else
             {
-                target.Add(BuildShape(shape, zoomPercent, originX, originY) with { IsDimmed = dimmed });
+                target.Add(BuildShape(shape, zoomPercent, originX, originY, measurer) with { IsDimmed = dimmed });
             }
         }
     }
 
     /// <summary>Converts one shape, for example a shape that is still being drawn and is not in a document.</summary>
-    public static ScreenShape BuildShape(Shape shape, double zoomPercent, double originX, double originY)
+    public static ScreenShape BuildShape(Shape shape, double zoomPercent, double originX, double originY, ITextMeasurer? measurer = null)
     {
         ArgumentNullException.ThrowIfNull(shape);
 
@@ -78,6 +81,7 @@ internal static class CanvasScene
             RectangleShape => ScreenShapeType.Rectangle,
             EllipseShape => ScreenShapeType.Ellipse,
             PathShape => ScreenShapeType.Path,
+            TextShape => ScreenShapeType.Text,
             _ => throw new NotSupportedException($"Shape type {shape.GetType().Name} cannot be drawn."),
         };
 
@@ -96,7 +100,17 @@ internal static class CanvasScene
             appearance.Opacity,
             shape.Rotation,
             Path: shape is PathShape path ? BuildPath(path, scale) : null,
-            Corners: shape is RectangleShape { EffectiveRadii.IsZero: false } rectangle ? Scaled(rectangle.EffectiveRadii, scale) : null);
+            Corners: shape is RectangleShape { EffectiveRadii.IsZero: false } rectangle ? Scaled(rectangle.EffectiveRadii, scale) : null,
+            Text: shape is TextShape text ? BuildText(text, scale, measurer) : null);
+    }
+
+    // The lines are laid out at the size of the document and then scaled, so the line breaks do not change with the zoom.
+    private static ScreenText BuildText(TextShape text, double scale, ITextMeasurer? measurer)
+    {
+        var lines = measurer is null
+            ? []
+            : measurer.Layout(text).Lines.Select(line => new ScreenTextLine(line.Text, line.X * scale, line.Baseline * scale)).ToArray();
+        return new ScreenText(lines, text.FontFamily, text.FontSize * scale, text.IsBold, text.IsItalic, text.LetterSpacing * scale, text.Alignment, text.IsArea);
     }
 
     private static CornerRadii Scaled(CornerRadii radii, double scale) =>

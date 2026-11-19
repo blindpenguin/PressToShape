@@ -15,7 +15,7 @@ public class SvgExportPathTests
 
     private static XDocument Export(Document document)
     {
-        var bytes = SvgExport.ToUtf8(document);
+        var bytes = SvgExport.ToUtf8(document, new FakeTextMeasurer());
         return XDocument.Parse(new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(bytes));
     }
 

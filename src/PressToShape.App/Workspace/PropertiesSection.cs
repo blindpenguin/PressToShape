@@ -21,4 +21,7 @@ internal enum PropertiesSection
 
     /// <summary>The boolean operations and Combine as icon buttons. Shown by the tools that select several objects, and only while two or more are selected.</summary>
     PathOperations = 128,
+
+    /// <summary>The font, size, style, alignment and spacing of texts. Shown by the Text tool, and by the selection tools while a text is selected.</summary>
+    Text = 256,
 }

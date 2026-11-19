@@ -1,3 +1,4 @@
+using PressToShape.Core.Tests;
 using System;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
@@ -131,5 +132,5 @@ public class ShapeOperationBenchmarks
     public byte[] SaveProject() => ProjectFile.Write(_state.Document);
 
     [Benchmark(Description = "Export SVG")]
-    public byte[] ExportSvg() => SvgExport.ToUtf8(_state.Document);
+    public byte[] ExportSvg() => SvgExport.ToUtf8(_state.Document, new FakeTextMeasurer());
 }

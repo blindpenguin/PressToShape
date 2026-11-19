@@ -17,7 +17,7 @@ public class SvgExportTests
 
     private static XDocument Export(Document document)
     {
-        var bytes = SvgExport.ToUtf8(document);
+        var bytes = SvgExport.ToUtf8(document, new FakeTextMeasurer());
         return XDocument.Parse(new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(bytes));
     }
 
@@ -52,7 +52,7 @@ public class SvgExportTests
     [Fact]
     public void ToUtf8_Output_IsUtf8WithoutByteOrderMarkAndHasADeclaration()
     {
-        var bytes = SvgExport.ToUtf8(Document.Create("L"));
+        var bytes = SvgExport.ToUtf8(Document.Create("L"), new FakeTextMeasurer());
 
         Assert.Equal((byte)'<', bytes[0]);
         Assert.StartsWith("<?xml", Encoding.UTF8.GetString(bytes), StringComparison.Ordinal);
@@ -282,7 +282,7 @@ public class SvgExportTests
     [Fact]
     public void ToUtf8_NullDocument_Throws()
     {
-        Assert.Throws<ArgumentNullException>(() => SvgExport.ToUtf8(null!));
+        Assert.Throws<ArgumentNullException>(() => SvgExport.ToUtf8(null!, new FakeTextMeasurer()));
     }
 
     [Fact]

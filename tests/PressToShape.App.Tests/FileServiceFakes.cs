@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using PressToShape.App.Services;
+using PressToShape.Core.Tests;
 using PressToShape.App.Settings;
 using PressToShape.App.ViewModels.Editor;
 
@@ -140,7 +141,9 @@ internal static class TestFileServices
             files ?? new FakeFileStore(),
             dialogs ?? new FakeFileDialogs(),
             messages ?? new FakeMessageDialogs(),
-            SettingsDialogs: settingsDialogs);
+            SettingsDialogs: settingsDialogs,
+            TextMeasurer: new FakeTextMeasurer(),
+            TextOutliner: new FakeTextOutliner());
 }
 
 /// <summary>A settings window that stays open until the test closes it.</summary>

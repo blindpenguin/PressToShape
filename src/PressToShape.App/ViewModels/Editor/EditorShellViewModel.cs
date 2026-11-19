@@ -7,6 +7,7 @@ using PressToShape.App.Services;
 using PressToShape.App.Workspace;
 using PressToShape.Core.Documents;
 using PressToShape.Core.PathOperations;
+using PressToShape.Core.Shapes;
 
 namespace PressToShape.App.ViewModels.Editor;
 
@@ -33,18 +34,20 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(services);
 
         _settingsDialogs = services.SettingsDialogs;
+        TextMeasurer = services.TextMeasurer ?? new AvaloniaTextMeasurer();
+        TextOutliner = services.TextOutliner ?? new AvaloniaTextOutliner();
         _showRulersByDefault = showRulersByDefault;
         State = new EditorState(Document.Create(localizer.T("Layer 1")), new SnapPreferences(services.Settings, showRulersByDefault));
         _session = new DocumentSession(State);
         Recent = new RecentFiles(services.Settings, services.RemembersRecentFiles);
-        _files = new DocumentFileService(State, _session, Recent, services.Files, services.Dialogs, services.Messages, localizer, FitToWindow);
+        _files = new DocumentFileService(State, _session, Recent, services.Files, services.Dialogs, services.Messages, localizer, TextMeasurer, FitToWindow);
         Toolbox = new ToolboxViewModel(State, localizer);
         Editor = new SelectionEditor(State);
         Objects = new ObjectEditor(State);
-        PathEditing = new PathEditor(State, services.Messages, localizer);
+        PathEditing = new PathEditor(State, services.Messages, localizer, textOutliner: TextOutliner);
         LayerEditing = new LayerEditor(State, localizer);
         var ring = new RingMenuViewModel(localizer);
-        Canvas = new CanvasAreaViewModel(State, Editor, ring: ring, localizer: localizer);
+        Canvas = new CanvasAreaViewModel(State, Editor, ring: ring, localizer: localizer, textMeasurer: TextMeasurer);
         PathCommands = new PathMenuCommands(
             UnionShapesCommand,
             DifferenceShapesCommand,
@@ -53,8 +56,9 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
             CombinePathsCommand,
             BreakApartPathCommand,
             ConvertShapesToPathsCommand,
-            ReversePathDirectionCommand);
-        Inspector = new InspectorViewModel(State, localizer, Editor, Objects, LayerEditing, PathCommands);
+            ReversePathDirectionCommand,
+            ConvertTextToPathCommand);
+        Inspector = new InspectorViewModel(State, localizer, Editor, Objects, LayerEditing, PathCommands, TextMeasurer, services.FontCatalog ?? new AvaloniaFontCatalog());
         FileCommands = new FileMenuCommands(
             NewCommand,
             OpenCommand,
@@ -97,6 +101,12 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
     }
 
     public EditorState State { get; }
+
+    /// <summary>Measures texts. The canvas and the SVG export use it, so they all lay a text out the same way.</summary>
+    internal ITextMeasurer TextMeasurer { get; }
+
+    /// <summary>Gives the glyph contours of texts for "Convert Text to Path".</summary>
+    internal ITextOutliner TextOutliner { get; }
 
     public ToolboxViewModel Toolbox { get; }
 
@@ -254,6 +264,7 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         BreakApartPathCommand.NotifyCanExecuteChanged();
         ConvertShapesToPathsCommand.NotifyCanExecuteChanged();
         ReversePathDirectionCommand.NotifyCanExecuteChanged();
+        ConvertTextToPathCommand.NotifyCanExecuteChanged();
     }
 
     private void NotifyPasteCommands()
@@ -354,6 +365,11 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
 
     [RelayCommand(CanExecute = nameof(CanReverse))]
     private void ReversePathDirection() => PathEditing.ReverseDirection();
+
+    [RelayCommand(CanExecute = nameof(CanConvertText))]
+    private void ConvertTextToPath() => PathEditing.ConvertTextToPath();
+
+    private bool CanConvertText() => PathEditing.CanConvertText;
 
     private bool CanConvert() => PathEditing.CanConvert;
 

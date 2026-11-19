@@ -54,7 +54,7 @@ public class MenuBarViewModelTests
             }
             .ToDictionary(name => name, _ => new SwitchableCommand(false));
 
-        public Dictionary<string, SwitchableCommand> PathCommandsByName { get; } = new[] { "union", "difference", "intersection", "exclusion", "combine", "break apart", "convert", "reverse" }
+        public Dictionary<string, SwitchableCommand> PathCommandsByName { get; } = new[] { "union", "difference", "intersection", "exclusion", "combine", "break apart", "convert", "reverse", "convert text" }
             .ToDictionary(name => name, _ => new SwitchableCommand(false));
 
         private PathMenuCommands PathCommands() => new(
@@ -65,7 +65,8 @@ public class MenuBarViewModelTests
             PathCommandsByName["combine"],
             PathCommandsByName["break apart"],
             PathCommandsByName["convert"],
-            PathCommandsByName["reverse"]);
+            PathCommandsByName["reverse"],
+            PathCommandsByName["convert text"]);
 
         private ObjectMenuCommands ObjectCommands() => new(
             ObjectCommandsByName["group"],
@@ -145,7 +146,7 @@ public class MenuBarViewModelTests
             "Quit", "Zoom In", "Zoom Out", "Fit Artboard in Window", "Actual Size (100%)",
             "Properties", "Layers", "Assets", "History",
             "English", "Deutsch",
-            "Add Layer", "Duplicate Layer", "Preferences…",
+            "Add Layer", "Duplicate Layer", "Preferences…", "Font…", "Character Panel",
             "Show Rulers", "Show Grid", "Snap to Grid", "Snap to Objects", "Smart Guides", "Show Guides",
         }.OrderBy(h => h);
 
@@ -174,6 +175,34 @@ public class MenuBarViewModelTests
             Find(f, header).Command!.Execute(null);
             Assert.Equal(1, f.PathCommandsByName[command].Executions);
         }
+    }
+
+    [Fact]
+    public void TextMenu_ConvertTextToPath_FollowsItsCommandAndRunsIt()
+    {
+        var f = new Fixture();
+        var item = Find(f, "Convert Text to Path");
+        Assert.False(item.IsEnabled);
+
+        f.PathCommandsByName["convert text"].Set(true);
+
+        Assert.True(item.IsEnabled);
+        item.Command!.Execute(null);
+        Assert.Equal(1, f.PathCommandsByName["convert text"].Executions);
+    }
+
+    [Theory]
+    [InlineData("Font…")]
+    [InlineData("Character Panel")]
+    public void TextMenu_FontAndCharacterPanel_ShowThePropertiesTab(string header)
+    {
+        var f = new Fixture();
+        var item = Find(f, header);
+
+        Assert.True(item.IsEnabled);
+        item.Command!.Execute(null);
+
+        Assert.Equal([InspectorTab.Properties], f.ShownTabs);
     }
 
     [Fact]

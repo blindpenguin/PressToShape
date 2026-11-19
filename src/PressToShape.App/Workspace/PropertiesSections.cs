@@ -12,12 +12,13 @@ internal static class PropertiesSections
     public static PropertiesSection For(Tool tool) => tool switch
     {
         Tool.Select =>
-            PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Align
+            PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Text | PropertiesSection.Align
             | PropertiesSection.PathOperations | PropertiesSection.QuickActions,
         Tool.DirectSelect =>
-            PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Path
+            PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Text | PropertiesSection.Path
             | PropertiesSection.Node | PropertiesSection.Align | PropertiesSection.PathOperations | PropertiesSection.QuickActions,
-        Tool.Rectangle or Tool.Ellipse or Tool.Text => PropertiesSection.Appearance,
+        Tool.Rectangle or Tool.Ellipse => PropertiesSection.Appearance,
+        Tool.Text => PropertiesSection.Appearance | PropertiesSection.Text,
         Tool.Pen => PropertiesSection.Appearance | PropertiesSection.Path,
         Tool.Node => PropertiesSection.Appearance | PropertiesSection.Path | PropertiesSection.Node,
         Tool.Eyedropper or Tool.Hand or Tool.Zoom => PropertiesSection.None,

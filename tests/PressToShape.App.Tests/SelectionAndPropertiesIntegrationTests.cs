@@ -12,6 +12,7 @@ using PressToShape.Core.Documents;
 using PressToShape.Core.History;
 using PressToShape.Core.IO;
 using PressToShape.Core.Shapes;
+using PressToShape.Core.Tests;
 using Xunit;
 
 namespace PressToShape.App.Tests;
@@ -255,7 +256,7 @@ public class SelectionAndPropertiesIntegrationTests
         s.Shell.Inspector.Properties.Rotation.Commit();
 
         var read = ProjectFile.Read(ProjectFile.Write(s.State.Document));
-        var svg = Encoding.UTF8.GetString(SvgExport.ToUtf8(s.State.Document));
+        var svg = Encoding.UTF8.GetString(SvgExport.ToUtf8(s.State.Document, new FakeTextMeasurer()));
 
         Assert.True(read.Succeeded);
         Assert.Equal(45, read.Document!.Layers.SelectMany(l => l.Shapes).Single().Rotation, 6);

@@ -19,6 +19,7 @@
         <PackageReference Include="CommunityToolkit.Mvvm"/>
         <PackageReference Include="GetText.NET"/>
         <PackageReference Include="Material.Icons.Avalonia"/>
+        <PackageReference Include="SkiaSharp"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -122,6 +122,63 @@
                     </Grid>
                 </controls:CollapsibleSection>
 
+                <controls:CollapsibleSection Header="{loc:T 'Text'}" IsExpanded="{Binding IsTextExpanded}" IsVisible="{Binding ShowText}">
+                    <Grid Margin="12,4,12,12" ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="8">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="{loc:T 'Font'}" />
+                        <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding FontFamilies}" SelectedItem="{Binding SelectedFont}"
+                                  ToolTip.Tip="{loc:T 'Font'}" AutomationProperties.Name="{loc:T 'Font'}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:FontFamilyItem">
+                                    <TextBlock Text="{Binding Display}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Classes="label" Text="{loc:T 'Font size'}" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Classes="field" Text="{Binding FontSize.Text}" IsEnabled="{Binding FontSize.IsEnabled}" Tag="{Binding FontSize}"
+                                 ToolTip.Tip="{loc:T 'Font size'}" AutomationProperties.Name="{loc:T 'Font size'}">
+                            <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                        </TextBox>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="4">
+                            <ToggleButton Classes="tool" IsChecked="{Binding IsBold}"
+                                          ToolTip.Tip="{loc:T 'Bold'}" AutomationProperties.Name="{loc:T 'Bold'}">
+                                <materialIcons:MaterialIcon Kind="FormatBold" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                            </ToggleButton>
+                            <ToggleButton Classes="tool" IsChecked="{Binding IsItalic}"
+                                          ToolTip.Tip="{loc:T 'Italic'}" AutomationProperties.Name="{loc:T 'Italic'}">
+                                <materialIcons:MaterialIcon Kind="FormatItalic" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                            </ToggleButton>
+                            <ToggleButton Classes="tool" Margin="12,0,0,0" IsChecked="{Binding IsAlignedLeft, Mode=OneWay}"
+                                          Command="{Binding SetTextAlignmentCommand}" CommandParameter="{x:Static coreShapes:TextAlignType.Left}"
+                                          ToolTip.Tip="{loc:T 'Align Left'}" AutomationProperties.Name="{loc:T 'Align Left'}">
+                                <materialIcons:MaterialIcon Kind="FormatAlignLeft" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                            </ToggleButton>
+                            <ToggleButton Classes="tool" IsChecked="{Binding IsAlignedCenter, Mode=OneWay}"
+                                          Command="{Binding SetTextAlignmentCommand}" CommandParameter="{x:Static coreShapes:TextAlignType.Center}"
+                                          ToolTip.Tip="{loc:T 'Align Center'}" AutomationProperties.Name="{loc:T 'Align Center'}">
+                                <materialIcons:MaterialIcon Kind="FormatAlignCenter" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                            </ToggleButton>
+                            <ToggleButton Classes="tool" IsChecked="{Binding IsAlignedRight, Mode=OneWay}"
+                                          Command="{Binding SetTextAlignmentCommand}" CommandParameter="{x:Static coreShapes:TextAlignType.Right}"
+                                          ToolTip.Tip="{loc:T 'Align Right'}" AutomationProperties.Name="{loc:T 'Align Right'}">
+                                <materialIcons:MaterialIcon Kind="FormatAlignRight" Width="{DynamicResource PanelIconSize}" Height="{DynamicResource PanelIconSize}" />
+                            </ToggleButton>
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Classes="label" Text="{loc:T 'Line spacing'}" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Classes="field" Text="{Binding LineSpacing.Text}" IsEnabled="{Binding LineSpacing.IsEnabled}" Tag="{Binding LineSpacing}"
+                                 ToolTip.Tip="{loc:T 'Line spacing'}" AutomationProperties.Name="{loc:T 'Line spacing'}" />
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Classes="label" Text="{loc:T 'Letter spacing'}" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Classes="field" Text="{Binding LetterSpacing.Text}" IsEnabled="{Binding LetterSpacing.IsEnabled}" Tag="{Binding LetterSpacing}"
+                                 ToolTip.Tip="{loc:T 'Letter spacing'}" AutomationProperties.Name="{loc:T 'Letter spacing'}">
+                            <TextBox.InnerRightContent><TextBlock Classes="unit" Text="px" /></TextBox.InnerRightContent>
+                        </TextBox>
+                    </Grid>
+                </controls:CollapsibleSection>
+
                 <controls:CollapsibleSection Header="{loc:T 'Appearance'}" IsExpanded="{Binding IsAppearanceExpanded}" IsVisible="{Binding ShowAppearance}">
                     <Grid Margin="12,4,12,12" ColumnDefinitions="100,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="8">
                         <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="{loc:T 'Fill'}" />

@@ -72,7 +72,7 @@ public class HistoryViewModelTests
             "Move path points", "Move handle", "Change node type", "Bend segment", "Change segment", "Delete path points",
             "Change corner radius", "Add layer", "Delete layer", "Rename layer", "Reorder layer", "Duplicate layer", "Merge layers", "Move to layer",
             "Union", "Difference", "Intersection", "Exclusion", "Combine", "Break apart", "Convert to path", "Reverse direction",
-            "Create guide", "Move guide", "Delete guide",
+            "Create guide", "Move guide", "Delete guide", "Create text", "Edit text", "Format text", "Convert text to path",
         };
         Assert.Equal(expected, Names(history));
         Assert.Equal(Enum.GetValues<HistoryStepType>().Length + 1, expected.Length);

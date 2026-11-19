@@ -15,15 +15,19 @@ namespace PressToShape.Core.IO;
 /// Hidden shapes and the shapes below hidden groups are left out. There is no background and
 /// the output holds no scripts, links or external references.
 /// </summary>
-public static class SvgExport
+public static partial class SvgExport
 {
     private const string SvgNamespace = "http://www.w3.org/2000/svg";
     private const string InkscapeNamespace = "http://www.inkscape.org/namespaces/inkscape";
 
-    /// <summary>Writes the document as UTF-8 SVG without a byte order mark.</summary>
-    public static byte[] ToUtf8(Document document)
+    /// <summary>
+    /// Writes the document as UTF-8 SVG without a byte order mark. The measurer gives the lines of each text, so the line breaks of an area
+    /// text are the ones of the editor and not left to the viewer.
+    /// </summary>
+    public static byte[] ToUtf8(Document document, ITextMeasurer measurer)
     {
         ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(measurer);
 
         using var stream = new MemoryStream();
         var settings = new XmlWriterSettings
@@ -46,7 +50,7 @@ public static class SvgExport
 
             for (var i = 0; i < document.Layers.Length; i++)
             {
-                WriteLayer(writer, document.Layers[i], i + 1);
+                WriteLayer(writer, document.Layers[i], i + 1, measurer);
             }
 
             writer.WriteEndElement();
@@ -56,7 +60,7 @@ public static class SvgExport
         return stream.ToArray();
     }
 
-    private static void WriteLayer(XmlWriter writer, Layer layer, int number)
+    private static void WriteLayer(XmlWriter writer, Layer layer, int number, ITextMeasurer measurer)
     {
         if (!layer.IsVisible)
         {
@@ -70,13 +74,13 @@ public static class SvgExport
 
         foreach (var shape in layer.Shapes)
         {
-            WriteShape(writer, shape);
+            WriteShape(writer, shape, measurer);
         }
 
         writer.WriteEndElement();
     }
 
-    private static void WriteShape(XmlWriter writer, Shape shape)
+    private static void WriteShape(XmlWriter writer, Shape shape, ITextMeasurer measurer)
     {
         // A hidden shape is left out with everything below it. Locked shapes are exported like any other.
         if (!shape.IsVisible)
@@ -87,7 +91,7 @@ public static class SvgExport
         switch (shape)
         {
             case GroupShape group:
-                WriteGroup(writer, group);
+                WriteGroup(writer, group, measurer);
                 return;
             case RectangleShape { EffectiveRadii.IsUniform: false } rounded:
                 // SVG has one radius for all corners of a rect, so different radii are written as a path with arcs.
@@ -124,6 +128,9 @@ public static class SvgExport
                 }
 
                 break;
+            case TextShape text:
+                WriteTextStart(writer, text);
+                break;
             default:
                 throw new NotSupportedException($"Shape type {shape.GetType().Name} cannot be exported.");
         }
@@ -155,6 +162,11 @@ public static class SvgExport
         {
             // The box center is the turning point, like in the editor.
             writer.WriteAttributeString("transform", $"rotate({Number(shape.Rotation)} {Number(shape.CenterX)} {Number(shape.CenterY)})");
+        }
+
+        if (shape is TextShape textShape)
+        {
+            WriteTextLines(writer, textShape, measurer);
         }
 
         writer.WriteEndElement();
@@ -224,7 +236,7 @@ public static class SvgExport
     }
 
     // The children keep their document coordinates, so the group needs no transform.
-    private static void WriteGroup(XmlWriter writer, GroupShape group)
+    private static void WriteGroup(XmlWriter writer, GroupShape group, ITextMeasurer measurer)
     {
         writer.WriteStartElement("g", SvgNamespace);
         if (group.Name.Length > 0)
@@ -234,7 +246,7 @@ public static class SvgExport
 
         foreach (var child in group.Children)
         {
-            WriteShape(writer, child);
+            WriteShape(writer, child, measurer);
         }
 
         writer.WriteEndElement();

@@ -144,6 +144,51 @@ internal sealed class ShapeDto
     [JsonPropertyName("children")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<ShapeDto?>? Children { get; set; }
+
+    // Only for a text: the content. Line breaks are "\n".
+    [JsonPropertyName("text")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Text { get; set; }
+
+    // Only for a text: written only for area text, and missing means point text.
+    [JsonPropertyName("area")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? Area { get; set; }
+
+    // Only for a text: the font family name, kept even when the font is not installed. Missing means the default font.
+    [JsonPropertyName("font")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Font { get; set; }
+
+    // Only for a text: missing means the default size.
+    [JsonPropertyName("fontSize")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? FontSize { get; set; }
+
+    // Only for a text: written only when bold, and missing means regular.
+    [JsonPropertyName("bold")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? Bold { get; set; }
+
+    // Only for a text: written only when italic, and missing means upright.
+    [JsonPropertyName("italic")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? Italic { get; set; }
+
+    // Only for a text: "center" or "right", and missing means left.
+    [JsonPropertyName("align")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Align { get; set; }
+
+    // Only for a text: written only when not 1.
+    [JsonPropertyName("lineSpacing")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? LineSpacing { get; set; }
+
+    // Only for a text: written only when not 0.
+    [JsonPropertyName("letterSpacing")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? LetterSpacing { get; set; }
 }
 
 // A sub-path of a compound path: its nodes and whether it is closed (written only when it is, missing means open).

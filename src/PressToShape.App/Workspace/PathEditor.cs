@@ -24,6 +24,7 @@ internal sealed class PathEditor
     private readonly Func<Guid> _newId;
     private readonly int _backgroundNodeLimit;
     private readonly Func<Func<PathOperationResult>, Task<PathOperationResult>> _background;
+    private readonly ITextOutliner? _textOutliner;
 
     /// <param name="state">The editor state to work on.</param>
     /// <param name="messages">Shows the message when an operation did nothing.</param>
@@ -31,14 +32,17 @@ internal sealed class PathEditor
     /// <param name="idSource">Creates the ids of new shapes. Defaults to new GUIDs, tests pass their own.</param>
     /// <param name="backgroundNodeLimit">The total node count of the operands above which a boolean operation runs off the UI thread. Defaults to <see cref="BooleanEngine.BackgroundNodeLimit"/>.</param>
     /// <param name="background">Runs the work off the UI thread. Defaults to <see cref="Task.Run(Func{PathOperationResult})"/>, tests pass their own to control when the work ends.</param>
+    /// <param name="textOutliner">Gives the glyph contours of texts. Without one texts cannot be converted.</param>
     public PathEditor(
         EditorState state,
         IMessageDialogs messages,
         ILocalizer localizer,
         Func<Guid>? idSource = null,
         int backgroundNodeLimit = BooleanEngine.BackgroundNodeLimit,
-        Func<Func<PathOperationResult>, Task<PathOperationResult>>? background = null)
+        Func<Func<PathOperationResult>, Task<PathOperationResult>>? background = null,
+        ITextOutliner? textOutliner = null)
     {
+        _textOutliner = textOutliner;
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _messages = messages ?? throw new ArgumentNullException(nameof(messages));
         _localizer = localizer ?? throw new ArgumentNullException(nameof(localizer));
@@ -65,13 +69,40 @@ internal sealed class PathEditor
     /// <summary>Whether a path with several sub-paths that is shown and not locked is selected.</summary>
     public bool CanBreakApart => CanStart && Selected().Any(location => IsUsable(location) && location.Shape is PathShape { SubPaths.Length: > 1 });
 
-    /// <summary>Whether a rectangle or an ellipse is selected, also inside a selected group, that is shown and not locked. False while busy or while a drag is going on.</summary>
-    public bool CanConvert => CanStart && PathShapeOperations.ConvertibleShapeIds(_state.Document, _state.SelectedShapeIds).Count > 0;
+    /// <summary>
+    /// Whether a rectangle, an ellipse or a text is selected, also inside a selected group, that is shown and not locked. False while busy or
+    /// while a drag is going on.
+    /// </summary>
+    public bool CanConvert => CanStart && (PathShapeOperations.ConvertibleShapeIds(_state.Document, _state.SelectedShapeIds).Count > 0 || HasTextToConvert());
+
+    /// <summary>
+    /// Whether a text is selected, also inside a selected group, that is shown, not locked and not empty. False while busy or while a drag is
+    /// going on, and without an outliner. Whether the font gives outlines is only found out when the text is converted, because asking for
+    /// the outlines of every selected text each time the selection changes would be slow.
+    /// </summary>
+    public bool CanConvertText => CanStart && HasTextToConvert();
+
+    /// <summary>Converts the selected texts to paths, as one step. The selection stays.</summary>
+    public void ConvertTextToPath()
+    {
+        if (!CanConvertText || _textOutliner is not { } outliner)
+        {
+            return;
+        }
+
+        var ids = _state.SelectedShapeIds;
+        _state.Edit(HistoryStepType.ConvertTextToPath, document => TextOperations.ConvertToOutlines(document, ids, outliner));
+    }
+
+    private bool HasTextToConvert() =>
+        _textOutliner is not null
+        && SelectionQueries.SelectedLeaves(_state.Document, _state.SelectedShapeIds).OfType<TextShape>().Any(text =>
+            text.Text.Trim().Length > 0 && _state.Document.FindShape(text.Id) is { IsEffectivelyVisible: true, IsEffectivelyLocked: false });
 
     /// <summary>Whether a path is selected, also inside a selected group, that is shown and not locked. False while busy or while a drag is going on.</summary>
     public bool CanReverse => CanStart && PathShapeOperations.ReversibleShapeIds(_state.Document, _state.SelectedShapeIds).Count > 0;
 
-    /// <summary>Converts the selected rectangles and ellipses to paths, as one step. The selection stays.</summary>
+    /// <summary>Converts the selected rectangles, ellipses and texts to paths, as one step. The selection stays.</summary>
     public void ConvertToPath()
     {
         if (!CanConvert)
@@ -80,7 +111,13 @@ internal sealed class PathEditor
         }
 
         var ids = _state.SelectedShapeIds;
-        _state.Edit(HistoryStepType.ConvertToPath, document => PathShapeOperations.ConvertToPaths(document, ids));
+        var hasShapes = PathShapeOperations.ConvertibleShapeIds(_state.Document, ids).Count > 0;
+        var step = hasShapes ? HistoryStepType.ConvertToPath : HistoryStepType.ConvertTextToPath;
+        _state.Edit(step, document =>
+        {
+            var converted = PathShapeOperations.ConvertToPaths(document, ids);
+            return _textOutliner is { } outliner ? TextOperations.ConvertToOutlines(converted, ids, outliner) : converted;
+        });
     }
 
     /// <summary>Reverses the direction of the selected paths, as one step. The selection stays.</summary>

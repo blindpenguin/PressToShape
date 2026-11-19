@@ -58,6 +58,7 @@
                                             PenOverlay="{Binding PenOverlay}"
                                             NodeOverlay="{Binding NodeOverlay}"
                                             HiddenShapeId="{Binding HiddenShapeId}"
+                                            TextMeasurer="{Binding TextMeasurer}"
                                             EnteredGroupId="{Binding EnteredGroupId}"
                                             DimOpacity="{DynamicResource EnteredGroupDimOpacity}"
                                             HandleSize="{DynamicResource SelectionHandleSize}"
@@ -76,6 +77,14 @@
                                             SmartGuideLabelBackgroundBrush="{DynamicResource SmartGuideLabelBackgroundBrush}"
                                             SelectionBrush="{DynamicResource SelectionOutlineBrush}"
                                             SelectionHandleFillBrush="{DynamicResource SelectionHandleFillBrush}" />
+            <!-- The editor of the text that is typed on the canvas. It sits over the canvas and is empty when no text is edited. -->
+            <controls:TextEditorControl x:Name="TextEditor"
+                                        Shape="{Binding EditedTextShape}"
+                                        EditedText="{Binding EditedText}"
+                                        LineHeight="{Binding EditedTextLineHeight}"
+                                        CommitCommand="{Binding CommitTextEditCommand}"
+                                        FallbackForeground="{DynamicResource SelectionOutlineBrush}"
+                                        AutomationProperties.Name="{loc:T 'Text'}" />
             <!-- The ring context menu. It fills the viewport while it is open, so the canvas does not get pointer input then. -->
             <controls:RingMenuControl x:Name="RingMenu"
                                       DataContext="{Binding Ring}"

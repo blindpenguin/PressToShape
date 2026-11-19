@@ -180,6 +180,7 @@ internal sealed partial class EditorState : ObservableObject
         History.Reset(document);
         ResetPen();
         ClearNodeSelection();
+        TextEdit = null;
         RaiseHistoryChanged();
     }
 

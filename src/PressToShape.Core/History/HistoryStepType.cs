@@ -203,4 +203,16 @@ public enum HistoryStepType
 
     /// <summary>A guide was deleted.</summary>
     DeleteGuide,
+
+    /// <summary>A text was created with its content.</summary>
+    CreateText,
+
+    /// <summary>The content of a text was edited.</summary>
+    EditText,
+
+    /// <summary>The font, size, style, alignment or spacing of texts was changed.</summary>
+    FormatText,
+
+    /// <summary>Texts were converted to paths.</summary>
+    ConvertTextToPath,
 }

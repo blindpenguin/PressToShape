@@ -17,7 +17,7 @@ public class SvgExportGroupTests
     {
         var document = Document.Create("Layer 1");
         document = document.AddShapes(document.Layers[0].Id, shapes);
-        var svg = XDocument.Parse(new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(SvgExport.ToUtf8(document)));
+        var svg = XDocument.Parse(new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(SvgExport.ToUtf8(document, new FakeTextMeasurer())));
         return svg.Root!.Elements(Svg + "g").Single();
     }
 

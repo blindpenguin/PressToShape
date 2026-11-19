@@ -82,7 +82,9 @@ public class OverflowMenuViewModelTests
 
         public SwitchableCommand ReverseDirection { get; } = new(true);
 
-        public PathMenuCommands Paths => new(Union, Difference, Intersection, Exclusion, Combine, BreakApart, ConvertToPath, ReverseDirection);
+        public SwitchableCommand ConvertTextToPath { get; } = new(true);
+
+        public PathMenuCommands Paths => new(Union, Difference, Intersection, Exclusion, Combine, BreakApart, ConvertToPath, ReverseDirection, ConvertTextToPath);
     }
 
     private static OverflowMenuViewModel Create(Commands commands, ILocalizer? localizer = null) =>
@@ -121,13 +123,13 @@ public class OverflowMenuViewModelTests
     }
 
     [Fact]
-    public void ThePathSubmenu_HasTheEightPathCommandsInOrderAndRunsThem()
+    public void ThePathSubmenu_HasTheNinePathCommandsInOrderAndRunsThem()
     {
         var commands = new Commands();
         var path = Find(Create(commands), "Path");
 
         Assert.Equal(
-            ["Convert Object to Path", "-", "Combine", "Break Apart", "-", "Union", "Difference", "Intersection", "Exclusion", "-", "Reverse Direction"],
+            ["Convert Object to Path", "Convert Text to Path", "-", "Combine", "Break Apart", "-", "Union", "Difference", "Intersection", "Exclusion", "-", "Reverse Direction"],
             path.Children.Select(c => c.IsSeparator ? "-" : c.PlainHeader));
         foreach (var item in path.Children.Where(c => !c.IsSeparator))
         {
@@ -135,8 +137,8 @@ public class OverflowMenuViewModelTests
         }
 
         Assert.Equal(
-            [1, 1, 1, 1, 1, 1, 1, 1],
-            new[] { commands.ConvertToPath, commands.Combine, commands.BreakApart, commands.Union, commands.Difference, commands.Intersection, commands.Exclusion, commands.ReverseDirection }.Select(c => c.Executions));
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            new[] { commands.ConvertToPath, commands.ConvertTextToPath, commands.Combine, commands.BreakApart, commands.Union, commands.Difference, commands.Intersection, commands.Exclusion, commands.ReverseDirection }.Select(c => c.Executions));
         Assert.True(path.IsEnabled);
     }
 

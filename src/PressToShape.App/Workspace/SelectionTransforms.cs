@@ -10,11 +10,21 @@ namespace PressToShape.App.Workspace;
 /// shapes in the same order, never change their input, and return the input list itself when the input makes no sense
 /// (a number that is not finite, a handle that does not apply) or the result would not be finite.
 /// Resizing does not change strokes. A flip past the opposite edge keeps the rotation of a shape as it is.
+/// A point text is always scaled uniformly and its font size and letter spacing scale with it (a text has no box of its own, see
+/// <see cref="TextShape"/>); an area text only changes its box.
 /// </summary>
 internal static class SelectionTransforms
 {
     /// <summary>The step of snapped rotation, in degrees.</summary>
     public const double SnapDegrees = 15;
+
+    /// <summary>Whether a point text is among the shapes. Its size is its font, so a selection with one scales uniformly.</summary>
+    public static bool HasPointText(IReadOnlyList<Shape> shapes)
+    {
+        ArgumentNullException.ThrowIfNull(shapes);
+
+        return shapes.Any(shape => shape is TextShape { IsArea: false });
+    }
 
     /// <summary>
     /// Resizes by dragging a handle to the pointer. A single shape scales in its turned frame, several shapes scale in the upright
@@ -84,7 +94,7 @@ internal static class SelectionTransforms
             sy = (qy - ay) / span;
         }
 
-        if (keepProportions || (!frame.IsSingle && startShapes.Any(s => s.Rotation != 0)))
+        if (keepProportions || (!frame.IsSingle && startShapes.Any(s => s.Rotation != 0)) || HasPointText(startShapes))
         {
             if (dx != 0 && dy != 0)
             {
@@ -226,7 +236,7 @@ internal static class SelectionTransforms
 
         var newWidth = Math.Max(0, width ?? frame.Width);
         var newHeight = Math.Max(0, height ?? frame.Height);
-        var uniform = keepProportions || (!frame.IsSingle && shapes.Any(s => s.Rotation != 0));
+        var uniform = keepProportions || (!frame.IsSingle && shapes.Any(s => s.Rotation != 0)) || HasPointText(shapes);
         if (uniform && frame.Width > 0 && frame.Height > 0)
         {
             if (width is not null)
@@ -246,13 +256,14 @@ internal static class SelectionTransforms
             var (cx, cy) = Turn(anchorX + newWidth / 2, anchorY + newHeight / 2, frame.Rotation);
             var centerX = frame.CenterX + cx;
             var centerY = frame.CenterY + cy;
-            return Result(shapes, shapes.Select(shape => shape with
+            var factor = frame.Width > 0 ? newWidth / frame.Width : 1;
+            return Result(shapes, shapes.Select(shape => WithTextScale(shape with
             {
                 X = centerX - newWidth / 2,
                 Y = centerY - newHeight / 2,
                 Width = newWidth,
                 Height = newHeight,
-            }).ToList());
+            }, factor)).ToList());
         }
 
         var sx = frame.Width > 0 ? newWidth / frame.Width : 1;
@@ -342,9 +353,25 @@ internal static class SelectionTransforms
             var (cx, cy) = Turn(ax + (lx - ax) * sx, ay + (ly - ay) * sy, frame.Rotation);
             var width = shape.Width * Math.Abs(sx);
             var height = shape.Height * Math.Abs(sy);
-            return shape with { X = frame.CenterX + cx - width / 2, Y = frame.CenterY + cy - height / 2, Width = width, Height = height };
+            return WithTextScale(shape with { X = frame.CenterX + cx - width / 2, Y = frame.CenterY + cy - height / 2, Width = width, Height = height }, Math.Abs(sx));
         }).ToList();
         return Result(shapes, scaled);
+    }
+
+    // A point text grows and shrinks with its box, so its font size and letter spacing follow the factor of the box. They stay inside the
+    // limits of the text. Every other shape, an area text too, is returned as it is.
+    private static Shape WithTextScale(Shape shape, double factor)
+    {
+        if (shape is not TextShape { IsArea: false } text || factor == 1 || !double.IsFinite(factor))
+        {
+            return shape;
+        }
+
+        return text with
+        {
+            FontSize = Math.Clamp(text.FontSize * factor, TextShape.MinFontSize, TextShape.MaxFontSize),
+            LetterSpacing = Math.Clamp(text.LetterSpacing * factor, TextShape.MinLetterSpacing, TextShape.MaxLetterSpacing),
+        };
     }
 
     // The new shapes if all their numbers are finite, otherwise the old ones. Shape setters reject non-finite numbers,

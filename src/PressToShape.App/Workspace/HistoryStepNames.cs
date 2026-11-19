@@ -80,6 +80,10 @@ internal static class HistoryStepNames
         HistoryStepType.BreakApart => N("Break apart"),
         HistoryStepType.ConvertToPath => N("Convert to path"),
         HistoryStepType.ReverseDirection => N("Reverse direction"),
+        HistoryStepType.CreateText => N("Create text"),
+        HistoryStepType.EditText => N("Edit text"),
+        HistoryStepType.FormatText => N("Format text"),
+        HistoryStepType.ConvertTextToPath => N("Convert text to path"),
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown history step type."),
     };
 }

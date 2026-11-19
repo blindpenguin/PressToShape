@@ -16,7 +16,7 @@ public class SvgExportRoundedTests
     {
         var document = Document.Create("Layer 1");
         document = document.AddShape(document.Layers[0].Id, shape);
-        var svg = XDocument.Parse(new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(SvgExport.ToUtf8(document)));
+        var svg = XDocument.Parse(new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(SvgExport.ToUtf8(document, new FakeTextMeasurer())));
         return svg.Root!.Elements(Svg + "g").Single().Elements().Single();
     }
 

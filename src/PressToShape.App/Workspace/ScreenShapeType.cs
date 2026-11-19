@@ -8,4 +8,7 @@ internal enum ScreenShapeType
 
     /// <summary>A path of lines and curves. The shape's <see cref="ScreenShape.Path"/> holds its outline.</summary>
     Path,
+
+    /// <summary>A text. The shape's <see cref="ScreenShape.Text"/> holds its lines.</summary>
+    Text,
 }

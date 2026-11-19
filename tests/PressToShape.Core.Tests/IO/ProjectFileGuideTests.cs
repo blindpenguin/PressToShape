@@ -128,7 +128,7 @@ public sealed class ProjectFileGuideTests
         var plain = Document.Create("L");
         var withGuides = plain.AddGuide(new Guide { Orientation = GuideOrientation.Horizontal, Position = 5 });
 
-        Assert.Equal(SvgExport.ToUtf8(plain), SvgExport.ToUtf8(withGuides));
+        Assert.Equal(SvgExport.ToUtf8(plain, new FakeTextMeasurer()), SvgExport.ToUtf8(withGuides, new FakeTextMeasurer()));
     }
 
     [Fact]

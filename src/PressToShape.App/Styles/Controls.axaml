@@ -242,11 +242,35 @@
     </Style>
 
     <!--
+        The editor of a text on the canvas (Controls/TextEditorControl): the box has no border, background or padding of its own, in every
+        state, so only the text and its caret show. A thin outline of the selection color frames it.
+    -->
+    <Style Selector="TextBox.textEditor">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="CaretBrush" Value="{DynamicResource SelectionOutlineBrush}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource SelectedItemBrush}" />
+    </Style>
+    <Style Selector="TextBox.textEditor /template/ Border#PART_BorderElement, TextBox.textEditor:pointerover /template/ Border#PART_BorderElement, TextBox.textEditor:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="Border.textEditorFrame">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SelectionOutlineBrush}" />
+    </Style>
+
+    <!--
         Touch: the tablet layout has the class "touch" on its root. Every control of these types below it is at least 48 dp high. Rules like this
         come last in the file, so they win over the sizes set above. The desktop has no such class and is not affected.
     -->
-    <Style Selector=".touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider">
+    <Style Selector=".touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch ComboBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider">
         <Setter Property="MinHeight" Value="{DynamicResource TouchTargetSize}" />
+    </Style>
+    <Style Selector=".touch TextBox.textEditor">
+        <Setter Property="MinHeight" Value="0" />
     </Style>
 
     <!--

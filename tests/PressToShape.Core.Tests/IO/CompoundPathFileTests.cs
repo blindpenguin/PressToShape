@@ -149,7 +149,7 @@ public class CompoundPathFileTests
     [Fact]
     public void ToUtf8_CompoundPath_WritesOneMRunPerSubPathInOnePathElement()
     {
-        var bytes = SvgExport.ToUtf8(Build(Compound()));
+        var bytes = SvgExport.ToUtf8(Build(Compound()), new FakeTextMeasurer());
         var svg = XDocument.Parse(new UTF8Encoding(false, throwOnInvalidBytes: true).GetString(bytes));
 
         var element = svg.Root!.Descendants(Svg + "path").Single();

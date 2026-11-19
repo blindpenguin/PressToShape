@@ -11,6 +11,7 @@ using PressToShape.Core.Documents;
 using PressToShape.Core.History;
 using PressToShape.Core.IO;
 using PressToShape.Core.Shapes;
+using PressToShape.Core.Tests;
 using Xunit;
 
 namespace PressToShape.App.Tests;
@@ -43,7 +44,7 @@ public sealed class DocumentFileServiceTests : IDisposable
             State = new EditorState(Document.Create("Layer 1"));
             Session = new DocumentSession(State);
             Recent = new RecentFiles(new MemorySettingsStore());
-            Service = new DocumentFileService(State, Session, Recent, Files, Dialogs, Messages, Localizer, () => FitCount++);
+            Service = new DocumentFileService(State, Session, Recent, Files, Dialogs, Messages, Localizer, new FakeTextMeasurer(), () => FitCount++);
         }
 
         public Localizer Localizer { get; }
@@ -281,6 +282,21 @@ public sealed class DocumentFileServiceTests : IDisposable
     }
 
     [Fact]
+    public async Task Export_DocumentWithAText_WritesItsLinesFromTheMeasurer()
+    {
+        var s = new Setup();
+        s.State.Edit(HistoryStepType.DrawRectangle, d => d.AddShape(s.State.ActiveLayerId, new TextShape { Text = "Hi\nthere", FontSize = 10 }));
+        s.Dialogs.ExportAnswers.Enqueue("/out/text");
+
+        await s.Service.ExportSvgAsync();
+
+        XNamespace ns = "http://www.w3.org/2000/svg";
+        var svg = XDocument.Parse(Encoding.UTF8.GetString(s.Fake.Files["/out/text.svg"]));
+        var lines = svg.Descendants(ns + "text").Single().Elements(ns + "tspan").Select(tspan => tspan.Value);
+        Assert.Equal(["Hi", "there"], lines);
+    }
+
+    [Fact]
     public async Task Export_OfASavedDocument_SuggestsItsNameAndKeepsItClean()
     {
         var s = new Setup();
@@ -338,8 +354,8 @@ public sealed class DocumentFileServiceTests : IDisposable
     {
         var s = new Setup();
 
-        Assert.Throws<ArgumentNullException>(() => new DocumentFileService(null!, s.Session, s.Recent, s.Files, s.Dialogs, s.Messages, s.Localizer, () => { }));
-        Assert.Throws<ArgumentNullException>(() => new DocumentFileService(s.State, s.Session, s.Recent, s.Files, s.Dialogs, s.Messages, s.Localizer, null!));
+        Assert.Throws<ArgumentNullException>(() => new DocumentFileService(null!, s.Session, s.Recent, s.Files, s.Dialogs, s.Messages, s.Localizer, new FakeTextMeasurer(), () => { }));
+        Assert.Throws<ArgumentNullException>(() => new DocumentFileService(s.State, s.Session, s.Recent, s.Files, s.Dialogs, s.Messages, s.Localizer, new FakeTextMeasurer(), null!));
     }
 
     [Fact]

@@ -8,7 +8,7 @@ namespace PressToShape.App.Tests;
 public class PropertiesSectionsTests
 {
     private const PropertiesSection Selection =
-        PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Align
+        PropertiesSection.Transform | PropertiesSection.Corners | PropertiesSection.Appearance | PropertiesSection.Text | PropertiesSection.Align
         | PropertiesSection.PathOperations | PropertiesSection.QuickActions;
 
     [Fact]
@@ -24,12 +24,18 @@ public class PropertiesSectionsTests
     }
 
     [Fact]
-    public void For_ShapeOrTextTool_ShowsAppearanceOnly()
+    public void For_ShapeTools_ShowAppearanceOnly()
     {
-        foreach (var tool in new[] { Tool.Rectangle, Tool.Ellipse, Tool.Text })
+        foreach (var tool in new[] { Tool.Rectangle, Tool.Ellipse })
         {
             Assert.Equal(PropertiesSection.Appearance, PropertiesSections.For(tool));
         }
+    }
+
+    [Fact]
+    public void For_TextTool_ShowsAppearanceAndText()
+    {
+        Assert.Equal(PropertiesSection.Appearance | PropertiesSection.Text, PropertiesSections.For(Tool.Text));
     }
 
     [Fact]

@@ -462,12 +462,17 @@ public partial class CanvasAreaView : UserControl
     // The cursor image that fits the screen scale of the window. Before the view is in a window the scale counts as 100%.
     private Cursor CursorFor(CanvasCursorType type) => CanvasCursors.For(type, TopLevel.GetTopLevel(this)?.RenderScaling ?? 1.0);
 
-    // View-only concern: the pointer shape follows the view model's cursor type.
+    // View-only concerns: the pointer shape follows the view model's cursor type, and the keyboard focus goes back to the canvas when the
+    // editing of a text ends (the editor had it), so that the tool shortcuts and the Delete key reach the canvas again.
     private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(CanvasAreaViewModel.CursorType) && _observed is { } viewModel)
         {
             Viewport.Cursor = CursorFor(viewModel.CursorType);
+        }
+        else if (e.PropertyName == nameof(CanvasAreaViewModel.IsEditingText) && _observed is { IsEditingText: false } && TextEditor.Box.IsKeyboardFocusWithin)
+        {
+            Viewport.Focus();
         }
     }
 }

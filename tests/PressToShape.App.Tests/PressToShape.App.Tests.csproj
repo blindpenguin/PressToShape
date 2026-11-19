@@ -7,9 +7,14 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Headless"/>
+        <PackageReference Include="SkiaSharp.NativeAssets.Linux"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk"/>
         <PackageReference Include="xunit"/>
         <PackageReference Include="xunit.runner.visualstudio"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="..\PressToShape.Core.Tests\FakeTextMeasurer.cs" Link="FakeTextMeasurer.cs"/>
     </ItemGroup>
 
     <ItemGroup>

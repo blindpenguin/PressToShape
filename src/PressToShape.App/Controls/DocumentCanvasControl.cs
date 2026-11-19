@@ -14,7 +14,7 @@ namespace PressToShape.App.Controls;
 /// Draws the shapes of a document. It only draws: <see cref="CanvasScene"/> decides what is drawn and where.
 /// Shape colors are document data, so this control uses no theme brushes. It does not handle pointer input.
 /// </summary>
-internal sealed class DocumentCanvasControl : Control
+internal sealed partial class DocumentCanvasControl : Control
 {
     public static readonly StyledProperty<Document?> DocumentProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, Document?>(nameof(Document));
@@ -50,6 +50,10 @@ internal sealed class DocumentCanvasControl : Control
     /// <summary>A shape that is not drawn because the draft takes its place (a path that is being continued). <c>null</c> hides nothing.</summary>
     public static readonly StyledProperty<System.Guid?> HiddenShapeIdProperty =
         AvaloniaProperty.Register<DocumentCanvasControl, System.Guid?>(nameof(HiddenShapeId));
+
+    /// <summary>Lays out the texts of the document. Without one, texts are not drawn.</summary>
+    public static readonly StyledProperty<PressToShape.Core.Shapes.ITextMeasurer?> TextMeasurerProperty =
+        AvaloniaProperty.Register<DocumentCanvasControl, PressToShape.Core.Shapes.ITextMeasurer?>(nameof(TextMeasurer));
 
     /// <summary>The brush of the selection outlines, handle outlines and the selection box. It comes from the theme.</summary>
     public static readonly StyledProperty<IBrush?> SelectionBrushProperty =
@@ -151,6 +155,7 @@ internal sealed class DocumentCanvasControl : Control
             PenOverlayProperty,
             NodeOverlayProperty,
             HiddenShapeIdProperty,
+            TextMeasurerProperty,
             SelectionBrushProperty,
             SelectionHandleFillBrushProperty,
             HandleSizeProperty,
@@ -222,6 +227,12 @@ internal sealed class DocumentCanvasControl : Control
     {
         get => GetValue(NodeOverlayProperty);
         set => SetValue(NodeOverlayProperty, value);
+    }
+
+    public PressToShape.Core.Shapes.ITextMeasurer? TextMeasurer
+    {
+        get => GetValue(TextMeasurerProperty);
+        set => SetValue(TextMeasurerProperty, value);
     }
 
     public System.Guid? HiddenShapeId
@@ -348,7 +359,7 @@ internal sealed class DocumentCanvasControl : Control
         DrawGrid(context);
 
         var dim = double.IsFinite(DimOpacity) ? System.Math.Clamp(DimOpacity, 0, 1) : 1;
-        foreach (var shape in CanvasScene.Build(document, ZoomPercent, OriginX, OriginY, EnteredGroupId, HiddenShapeId))
+        foreach (var shape in CanvasScene.Build(document, ZoomPercent, OriginX, OriginY, EnteredGroupId, HiddenShapeId, TextMeasurer))
         {
             if (shape.IsDimmed)
             {
@@ -721,6 +732,12 @@ internal sealed class DocumentCanvasControl : Control
 
     private static void DrawShape(DrawingContext context, ScreenShape shape)
     {
+        if (shape.Type == ScreenShapeType.Text)
+        {
+            DrawText(context, shape);
+            return;
+        }
+
         if (shape.Type == ScreenShapeType.Path)
         {
             DrawPath(context, shape);

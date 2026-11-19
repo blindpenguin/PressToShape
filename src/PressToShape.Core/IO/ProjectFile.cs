@@ -28,6 +28,7 @@ public static partial class ProjectFile
     private const string EllipseType = "ellipse";
     private const string GroupType = "group";
     private const string PathType = "path";
+    private const string TextType = "text";
     private const string HorizontalGuide = "horizontal";
     private const string VerticalGuide = "vertical";
 
@@ -280,6 +281,8 @@ public static partial class ProjectFile
                 return new EllipseShape { Id = id, X = dto.X.Value, Y = dto.Y.Value, Width = dto.Width.Value, Height = dto.Height.Value, Appearance = appearance, Rotation = dto.Rotation ?? 0, Name = name, IsVisible = visible, IsLocked = locked };
             case PathType:
                 return BuildPath(dto, id, appearance, name, visible, locked, out failure);
+            case TextType:
+                return BuildText(dto, id, appearance, name, visible, locked, out failure);
             default:
                 failure = ProjectFileResult.Failure(ProjectFileError.UnknownShapeType, "Unknown shape type: " + dto.Type);
                 return null;
@@ -317,6 +320,7 @@ public static partial class ProjectFile
             RectangleShape => RectangleType,
             EllipseShape => EllipseType,
             PathShape => PathType,
+            TextShape => TextType,
             _ => throw new NotSupportedException($"Shape type {shape.GetType().Name} cannot be saved."),
         };
         dto.X = shape.X;
@@ -337,6 +341,11 @@ public static partial class ProjectFile
         if (shape is PathShape path)
         {
             AddPathData(dto, path);
+        }
+
+        if (shape is TextShape text)
+        {
+            AddTextData(dto, text);
         }
 
         return dto;

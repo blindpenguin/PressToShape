@@ -40,15 +40,16 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <param name="time">The clock for the double-tap of a finger. Defaults to the system clock, tests pass their own.</param>
     /// <param name="ring">The ring context menu of the canvas. The shell passes it (it needs the localizer). Without one the canvas has no ring menu.</param>
     /// <param name="localizer">Gives the number format of the labels. Without one the numbers are formatted without a language.</param>
-    public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null, ILocalizer? localizer = null)
+    public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null, ILocalizer? localizer = null, ITextMeasurer? textMeasurer = null)
     {
         Ring = ring;
+        TextMeasurer = textMeasurer;
         _localizer = localizer;
         _time = time ?? TimeProvider.System;
         _clockStart = _time.GetTimestamp();
         _state = state ?? throw new ArgumentNullException(nameof(state));
         _editor = editor ?? new SelectionEditor(_state);
-        _interaction = new CanvasInteraction(_state);
+        _interaction = new CanvasInteraction(_state, textMeasurer);
         _state.PropertyChanged += OnStateChanged;
         _state.Snapping.Changed += OnSnappingChanged;
     }
@@ -66,6 +67,9 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CursorType))]
     public partial bool IsAltHeld { get; set; }
+
+    /// <summary>Lays out the texts the canvas draws, or <c>null</c> when the canvas was made without one (texts are then not drawn).</summary>
+    public ITextMeasurer? TextMeasurer { get; }
 
     /// <summary>The ring context menu, or <c>null</c> when the canvas was made without one.</summary>
     public RingMenuViewModel? Ring { get; }
@@ -91,8 +95,11 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     public ScreenNodeOverlay? NodeOverlay =>
         NodeOverlayBuilder.Build(_state.Document, _state.SelectedShapeIds, _state.SelectedNodes, _state.ActiveTool, ZoomPercent, OriginX, OriginY);
 
-    /// <summary>The path that the Pen is continuing. The canvas leaves it out, because the draft shows it. <c>null</c> when none is.</summary>
-    public Guid? HiddenShapeId => _state.PenContinuedId;
+    /// <summary>
+    /// The shape that the canvas leaves out because something else shows it: the path that the Pen is continuing (the draft shows it), or the
+    /// text that is being edited (the editor shows it). <c>null</c> when none is.
+    /// </summary>
+    public Guid? HiddenShapeId => _state.PenContinuedId ?? (_state.TextEdit is { IsNew: false } edit ? edit.TextId : null);
 
     /// <summary>
     /// The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle,
@@ -733,6 +740,8 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         OnPropertyChanged(nameof(NodeOverlay));
         OnPropertyChanged(nameof(SnapGuidesOnScreen));
         NotifyGuidesChanged();
+        OnPropertyChanged(nameof(EditedTextShape));
+        OnPropertyChanged(nameof(EditedTextLineHeight));
     }
 
     private void OnStateChanged(object? sender, PropertyChangedEventArgs e)
@@ -778,6 +787,10 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
                 break;
             case nameof(EditorState.PenContinuedId):
                 OnPropertyChanged(nameof(HiddenShapeId));
+                break;
+            case nameof(EditorState.TextEdit):
+                OnPropertyChanged(nameof(HiddenShapeId));
+                NotifyEditedTextChanged();
                 break;
             case nameof(EditorState.SnapGuides):
                 OnPropertyChanged(nameof(SnapGuidesOnScreen));
