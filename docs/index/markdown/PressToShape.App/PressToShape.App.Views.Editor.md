@@ -6,7 +6,7 @@ Project: PressToShape.App
 
 `public partial class CanvasAreaView : UserControl`
 
-Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:13-473`
+Source: `src/PressToShape.App/Views/Editor/CanvasAreaView.axaml.cs:13-478`
 
 _(no documentation)_
 
@@ -15,6 +15,7 @@ _(no documentation)_
 - `internal RulerControl HorizontalRuler` _(generated)_ - _(no documentation)_
 - `internal RulerControl VerticalRuler` _(generated)_ - _(no documentation)_
 - `internal Panel Viewport` _(generated)_ - _(no documentation)_
+- `internal TextEditorControl TextEditor` _(generated)_ - _(no documentation)_
 - `internal RingMenuControl RingMenu` _(generated)_ - _(no documentation)_
 - `internal ScrollBar VerticalBar` _(generated)_ - _(no documentation)_
 - `internal ScrollBar HorizontalBar` _(generated)_ - _(no documentation)_

@@ -65,7 +65,7 @@ _(no documentation)_
 
 `internal sealed class NodeDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:162-192`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:207-237`
 
 _(no documentation)_
 
@@ -137,7 +137,7 @@ The outcome of reading a project file: either a document or an error.
 
 `internal sealed class ShapeDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:63-147`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:63-192`
 
 _(no documentation)_
 
@@ -163,12 +163,21 @@ _(no documentation)_
 - `public bool? Closed { get; set; }` - _(no documentation)_
 - `public string? FillRule { get; set; }` - _(no documentation)_
 - `public List<ShapeDto?>? Children { get; set; }` - _(no documentation)_
+- `public string? Text { get; set; }` - _(no documentation)_
+- `public bool? Area { get; set; }` - _(no documentation)_
+- `public string? Font { get; set; }` - _(no documentation)_
+- `public double? FontSize { get; set; }` - _(no documentation)_
+- `public bool? Bold { get; set; }` - _(no documentation)_
+- `public bool? Italic { get; set; }` - _(no documentation)_
+- `public string? Align { get; set; }` - _(no documentation)_
+- `public double? LineSpacing { get; set; }` - _(no documentation)_
+- `public double? LetterSpacing { get; set; }` - _(no documentation)_
 
 ## SubPathDto (class)
 
 `internal sealed class SubPathDto`
 
-Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:150-159`
+Source: `src/PressToShape.Core/IO/ProjectFileDtos.cs:195-204`
 
 _(no documentation)_
 
@@ -179,12 +188,12 @@ _(no documentation)_
 
 ## SvgExport (class)
 
-`public static class SvgExport`
+`public partial static class SvgExport`
 
-Source: `src/PressToShape.Core/IO/SvgExport.cs:18-284`
+Source: `src/PressToShape.Core/IO/SvgExport.Text.cs:6-63`
 
 Exports a document as SVG 1.1. The artboard becomes the viewport, every visible layer one group (marked as an Inkscape layer), every shape a rect, ellipse or path and every group a g around its children. Hidden shapes and the shapes below hidden groups are left out. There is no background and the output holds no scripts, links or external references.
 
 **Members**
 
-- `public byte[] ToUtf8(Document document)` - Writes the document as UTF-8 SVG without a byte order mark.
+- `public byte[] ToUtf8(Document document, ITextMeasurer measurer)` - Writes the document as UTF-8 SVG without a byte order mark. The measurer gives the lines of each text, so the line breaks of an area text are the ones of the editor and not left to the viewer.

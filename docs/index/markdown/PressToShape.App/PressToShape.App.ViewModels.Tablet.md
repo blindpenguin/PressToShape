@@ -27,7 +27,7 @@ Shows message dialogs inside the layout, for a platform without windows. The lay
 
 `internal sealed class OverflowMenuViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/OverflowMenuViewModel.cs:17-81`
+Source: `src/PressToShape.App/ViewModels/Tablet/OverflowMenuViewModel.cs:17-82`
 
 The "..." menu of the tablet toolbar: the file actions, the edit actions, group, arrange, the path operations, lock and hide, the preferences and the language. It uses the same texts as the desktop menus (so the translations are shared) and the same commands, shown without Alt keys and shortcut texts through PressToShape.App.ViewModels.Desktop.MenuItemViewModel.PlainHeader. There is no Quit (an Android app is left with the Back button) and no list of recent files (their references do not survive a restart). An item without a command, or whose command cannot run, is disabled.
 

@@ -453,3 +453,53 @@ _(no documentation)_
 - `public void Depth_NestedGroups_CountsLevels()` - _(no documentation)_
 - `public void Walks_64Levels_Work()` - _(no documentation)_
 - `public void Walks_65Levels_Throw()` - _(no documentation)_
+
+## TextOperationsTests (class)
+
+`public class TextOperationsTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/TextOperationsTests.cs:10-257`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Create_OnALayer_AddsTheTextAboveTheOthers()` - _(no documentation)_
+- `public void Create_UnknownContainer_Throws()` - _(no documentation)_
+- `public void SetText_NewContent_ReplacesItAndKeepsTheRest()` - _(no documentation)_
+- `public void SetText_SameContent_ReturnsTheSameDocument()` - _(no documentation)_
+- `public void SetText_UnknownId_Throws()` - _(no documentation)_
+- `public void SetText_NotAText_Throws()` - _(no documentation)_
+- `public void SetFormat_OnlyTheSetValues_AreChanged()` - _(no documentation)_
+- `public void SetFormat_SeveralTexts_ChangesAllOfThem()` - _(no documentation)_
+- `public void SetFormat_TextInsideASelectedGroup_IsChanged()` - _(no documentation)_
+- `public void SetFormat_OtherShapesAndUnknownIds_AreIgnored()` - _(no documentation)_
+- `public void SetFormat_LockedOrHiddenText_IsNotChanged()` - _(no documentation)_
+- `public void SetFormat_NothingDiffers_ReturnsTheSameDocument()` - _(no documentation)_
+- `public void SetFormat_InvalidValue_Throws()` - _(no documentation)_
+- `public void ApplyLayout_PointText_TakesTheMeasuredSize()` - _(no documentation)_
+- `public void ApplyLayout_AreaText_KeepsItsBox()` - _(no documentation)_
+- `public void ApplyLayout_SameSize_ReturnsTheSameDocument()` - _(no documentation)_
+- `public void ApplyLayout_RotatedText_KeepsTheTurnedTopLeftCorner(double rotation)` - _(no documentation)_
+- `public void ApplyLayout_UnknownId_Throws()` - _(no documentation)_
+- `public void TextFormatChange_ApplyTo_WithNothingSet_EqualsTheText()` - _(no documentation)_
+
+## TextOutlineTests (class)
+
+`public class TextOutlineTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/TextOutlineTests.cs:10-173`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ConvertToOutlines_Text_BecomesOneEvenOddCompoundPathWithTheSameLook()` - _(no documentation)_
+- `public void ConvertToOutlines_TextInTheMiddle_KeepsItsPlaceInTheStack()` - _(no documentation)_
+- `public void ConvertToOutlines_RotatedText_LooksTheSameOnTheScreen()` - _(no documentation)_
+- `public void ConvertToOutlines_EmptyOrBlankText_IsSkipped()` - _(no documentation)_
+- `public void ConvertToOutlines_TooManyContours_IsSkipped()` - _(no documentation)_
+- `public void ConvertToOutlines_LockedOrHiddenText_IsSkipped()` - _(no documentation)_
+- `public void ConvertToOutlines_TextInASelectedGroup_IsConverted()` - _(no documentation)_
+- `public void ConvertToOutlines_SeveralTexts_ConvertsAllInOneDocumentChange()` - _(no documentation)_
+- `public void ConvertToOutlines_NothingSelected_ReturnsTheSameDocument()` - _(no documentation)_

@@ -12,31 +12,37 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 
 **Members**
 
+- `public bool IsEditingText { get; }` - Whether a text is being edited on the canvas.
 - `public bool ShowGrid { get; }` - Whether the grid is drawn.
+- `public IRelayCommand CommitTextEditCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.CommitTextEdit`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.CommitTextEdit.
 - `public double GridSpacing { get; }` - The distance between grid lines in document units.
 - `public bool IsWatchingLongPress { get; }` - Whether a press may still become a long press, so the view keeps calling PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.Tick.
 - `public bool SmartGuides { get; }` - Whether the smart guides (labels, equal spacing, equal size, path points) are on.
+- `public string EditedText { get; set; }` - The content of the text that is being edited, empty when none is. The editor sets it while the user types. The document does not change until the editing ends (see PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.CommitTextEditCommand), and a point text gets the measured size of its content meanwhile.
 - `public bool ShowRulers { get; }` - Whether the rulers are shown.
 - `public bool ShowGuides { get; }` - Whether the ruler guides are drawn, can be moved and are snapped to.
 - `public IReadOnlyList<ScreenSnapGuide> SnapGuidesOnScreen { get; }` - The guide lines of the current drag in screen pixels. Empty without a snap to an object.
 - `public IReadOnlyList<ScreenRulerGuide> ScreenGuides { get; }` - The ruler guides in screen pixels. Empty while the guides are hidden.
 - `public void Tick()` - Time passed. When a finger or a pen has stayed down long enough without moving, the action the press started is undone and the ring menu opens at the press. The release that follows is no tap.
 - `public IReadOnlyList<ScreenSmartMarker> ScreenMarkers { get; }` - The markers and labels of the smart guides for the current drag, in screen pixels.
-- `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null, ILocalizer? localizer = null)` - _(no documentation)_
+- `public ScreenShape? EditedTextShape { get; }` - The text that is being edited, in screen space with its font and its draft content, or null when none is.
+- `public CanvasAreaViewModel(EditorState state, SelectionEditor? editor = null, TimeProvider? time = null, RingMenuViewModel? ring = null, ILocalizer? localizer = null, ITextMeasurer? textMeasurer = null)` - _(no documentation)_
+- `public double EditedTextLineHeight { get; }` - The height of a line of the edited text in screen pixels, with its line spacing. NaN when nothing is edited or there is no measurer, which leaves the line height to the editor.
 - `public double ViewportWidth { get; set; }` - _(no documentation)_
 - `public void BeginGuideDrag(GuideOrientation orientation)` - The user pressed a ruler and starts a guide: a horizontal ruler makes a horizontal guide, a vertical ruler a vertical one. The guide follows the pointer until PressToShape.App.ViewModels.Editor.CanvasAreaViewModel.GuidePointerReleased. Positions of the next two calls are in screen pixels relative to the canvas area.
 - `public double ViewportHeight { get; set; }` - _(no documentation)_
 - `public void GuidePointerMoved(double screenX, double screenY)` - The pointer moved during a drag from a ruler. Does nothing without one.
 - `public bool IsAltHeld { get; set; }` - _(no documentation)_
+- `public ITextMeasurer? TextMeasurer { get; }` - Lays out the texts the canvas draws, or null when the canvas was made without one (texts are then not drawn).
+- `public void GuidePointerReleased(double screenX, double screenY, bool canceled = false)` - The button went up after a drag from a ruler. The guide stays when the pointer is over the canvas, otherwise (on a ruler or outside) it is not made. With canceled (Escape, a lost pointer) nothing is made.
 - `public RingMenuViewModel? Ring { get; }` - The ring context menu, or null when the canvas was made without one.
 - `public Document Document { get; }` - The document the canvas draws.
-- `public void GuidePointerReleased(double screenX, double screenY, bool canceled = false)` - The button went up after a drag from a ruler. The guide stays when the pointer is over the canvas, otherwise (on a ruler or outside) it is not made. With canceled (Escape, a lost pointer) nothing is made.
 - `public ScreenShape? Draft { get; }` - The shape that is being drawn, in screen space, or null.
 - `public SelectionOverlay Overlay { get; }` - Everything the canvas draws for the selection: outlines, frame, handles and the box being dragged.
 - `public Guid? EnteredGroupId { get; }` - The group that was entered, or null. The canvas dims everything outside it.
 - `public ScreenPenOverlay? PenOverlay { get; }` - The nodes and handles of the path that the Pen is drawing, in screen pixels. null when the Pen is not drawing.
 - `public ScreenNodeOverlay? NodeOverlay { get; }` - The nodes and handles of the selected shapes for Direct Select and the Node tool, in screen pixels. null for other tools or when there is nothing to show.
-- `public Guid? HiddenShapeId { get; }` - The path that the Pen is continuing. The canvas leaves it out, because the draft shows it. null when none is.
+- `public Guid? HiddenShapeId { get; }` - The shape that the canvas leaves out because something else shows it: the path that the Pen is continuing (the draft shows it), or the text that is being edited (the editor shows it). null when none is.
 - `public CanvasCursorType CursorType { get; }` - The pointer shape: a closed hand while the view is being dragged, a resize or rotate cursor over or while dragging a handle, otherwise the eyedropper while a pick is active, otherwise the shape of the active tool. The Zoom tool shows the zoom-out magnifier while Alt is held.
 - `public double HorizontalScrollMinimum { get; }` - Smallest value of the horizontal scroll bar: minus the furthest the view offset may go.
 - `public double HorizontalScrollMaximum { get; }` - Largest value of the horizontal scroll bar: the furthest the view offset may go.
@@ -80,6 +86,7 @@ Geometry of the canvas area: where the artboard is drawn and where the ruler zer
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.RingMenuViewModel`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
+- Depends on (constructor) `PressToShape.Core.Shapes.ITextMeasurer`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelDoubleTapTests.Fixture`
 - Injected into `PressToShape.App.Tests.CanvasAreaViewModelNodeTests.Fixture`
@@ -173,6 +180,7 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public IRelayCommand BringToFrontCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringToFront`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.BringToFront.
 - `public IAsyncRelayCommand CombinePathsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.CombinePaths`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.CombinePaths.
 - `public IRelayCommand ConvertShapesToPathsCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ConvertShapesToPaths`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ConvertShapesToPaths.
+- `public IRelayCommand ConvertTextToPathCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.ConvertTextToPath`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.ConvertTextToPath.
 - `public IRelayCommand CopyCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Copy.
 - `public IRelayCommand CutCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Cut.
 - `public IRelayCommand DeleteCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Delete.
@@ -204,6 +212,8 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public IRelayCommand UnlockAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll.
 - `protected EditorShellViewModel(ILocalizer localizer, FileServices services, bool showRulersByDefault = true)` - _(no documentation)_
 - `public EditorState State { get; }` - _(no documentation)_
+- `internal ITextMeasurer TextMeasurer { get; }` - Measures texts. The canvas and the SVG export use it, so they all lay a text out the same way.
+- `internal ITextOutliner TextOutliner { get; }` - Gives the glyph contours of texts for "Convert Text to Path".
 - `public ToolboxViewModel Toolbox { get; }` - _(no documentation)_
 - `public SelectionEditor Editor { get; }` - The selection edits (copy, paste, nudge, property changes). One instance, shared by the canvas, the inspector and the menus.
 - `public ObjectEditor Objects { get; }` - The edits of the structure: group, arrange, lock, hide, rename. One instance, shared by the menus and the object list.
@@ -259,6 +269,21 @@ What the File menu items do. OpenRecent creates the command for one entry of the
 
 - Injected into `PressToShape.App.ViewModels.Desktop.MenuBarViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.OverflowMenuViewModel`
+
+## FontFamilyItem (record)
+
+`internal sealed record FontFamilyItem : IEquatable<FontFamilyItem>`
+
+Source: `src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.Text.cs:20-20`
+
+A font family in the list of the Properties tab.
+
+**Members**
+
+- `public FontFamilyItem(string Name, bool IsInstalled, string Display)` - A font family in the list of the Properties tab.
+- `public string Display { get; init; }` - The text of the list entry.
+- `public bool IsInstalled { get; init; }` - Whether the font is on this system. A font of the document that is not is listed too, so it stays visible.
+- `public string Name { get; init; }` - The family name as it is saved in the document.
 
 ## GeneralSettingsPageViewModel (class)
 
@@ -324,13 +349,13 @@ State of the History tab: the start state and one row per step, oldest first. Th
 
 `internal partial sealed class InspectorViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:10-55`
+Source: `src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:12-59`
 
 State of the inspector: the selected tab and the view models of its tabs.
 
 **Members**
 
-- `public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null, LayerEditor? layers = null, PathMenuCommands? paths = null)` - _(no documentation)_
+- `public InspectorViewModel(EditorState state, ILocalizer localizer, SelectionEditor? editor = null, ObjectEditor? objects = null, LayerEditor? layers = null, PathMenuCommands? paths = null, ITextMeasurer? textMeasurer = null, IFontCatalog? fonts = null)` - _(no documentation)_
 - `public PropertiesViewModel Properties { get; }` - _(no documentation)_
 - `public LayersViewModel Layers { get; }` - _(no documentation)_
 - `public PlaceholderPanelViewModel Assets { get; }` - _(no documentation)_
@@ -342,11 +367,13 @@ State of the inspector: the selected tab and the view models of its tabs.
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Services.IFontCatalog`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.PathMenuCommands`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.LayerEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
+- Depends on (constructor) `PressToShape.Core.Shapes.ITextMeasurer`
 - Inherits `PressToShape.App.ViewModels.ViewModelBase`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletPanelViewModel`
 
@@ -576,13 +603,13 @@ The swatches saved with the document, shown in the Appearance section. Adding an
 
 `internal sealed record PathMenuCommands : IEquatable<PathMenuCommands>`
 
-Source: `src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:10-28`
+Source: `src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:10-29`
 
-What the items of the Path menu do. A command is disabled while it cannot run. ConvertToPath and ReverseDirection are optional: a caller without them gets disabled items.
+What the items of the Path menu do. A command is disabled while it cannot run. ConvertToPath, ReverseDirection and ConvertTextToPath are optional: a caller without them gets disabled items.
 
 **Members**
 
-- `public PathMenuCommands(ICommand Union, ICommand Difference, ICommand Intersection, ICommand Exclusion, ICommand Combine, ICommand BreakApart, ICommand? ConvertToPath = null, ICommand? ReverseDirection = null)` - What the items of the Path menu do. A command is disabled while it cannot run. ConvertToPath and ReverseDirection are optional: a caller without them gets disabled items.
+- `public PathMenuCommands(ICommand Union, ICommand Difference, ICommand Intersection, ICommand Exclusion, ICommand Combine, ICommand BreakApart, ICommand? ConvertToPath = null, ICommand? ReverseDirection = null, ICommand? ConvertTextToPath = null)` - What the items of the Path menu do. A command is disabled while it cannot run. ConvertToPath, ReverseDirection and ConvertTextToPath are optional: a caller without them gets disabled items.
 - `public ICommand Union { get; init; }` - _(no documentation)_
 - `public ICommand Difference { get; init; }` - _(no documentation)_
 - `public ICommand Intersection { get; init; }` - _(no documentation)_
@@ -591,6 +618,7 @@ What the items of the Path menu do. A command is disabled while it cannot run. C
 - `public ICommand BreakApart { get; init; }` - _(no documentation)_
 - `public ICommand? ConvertToPath { get; init; }` - _(no documentation)_
 - `public ICommand? ReverseDirection { get; init; }` - _(no documentation)_
+- `public ICommand? ConvertTextToPath { get; init; }` - _(no documentation)_
 - `public PathMenuCommands Disabled { get; }` - Six commands that can never run, for a view that has no real ones (a test, or a caller that does not offer the path operations).
 
 **Relationships**
@@ -638,6 +666,7 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public IRelayCommand MakeSegmentStraightCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeSegmentStraight`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.MakeSegmentStraight.
 - `public IRelayCommand OpenPathCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.OpenPath`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.OpenPath.
 - `public IRelayCommand ResetTransformCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.ResetTransform`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.ResetTransform.
+- `public IRelayCommand<TextAlignType> SetTextAlignmentCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.SetTextAlignment(PressToShape.Core.Shapes.TextAlignType)`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand`1 instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.SetTextAlignment.
 - `public IRelayCommand UngroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.Ungroup`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.Ungroup.
 - `public IRelayCommand UseEvenOddFillCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseEvenOddFill`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseEvenOddFill.
 - `public IRelayCommand UseNonZeroFillCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseNonZeroFill`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.PropertiesViewModel.UseNonZeroFill.
@@ -661,17 +690,30 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public bool HasRectangleSelected { get; }` - Whether exactly one rectangle (and nothing else) is selected.
 - `public bool IsNodeCorner { get; }` - Whether every selected node is a corner.
 - `public bool ShowCorners { get; }` - Whether the Corners section is shown: the tool has it and one rectangle is selected.
-- `public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null, PathMenuCommands? paths = null)` - _(no documentation)_
 - `public bool IsNodeSmooth { get; }` - Whether every selected node is smooth.
+- `public NumberFieldViewModel FontSize { get; }` - The font size. Empty when the selected texts differ.
+- `public PropertiesViewModel(EditorState state, SelectionEditor editor, ILocalizer localizer, ObjectEditor? objects = null, PathMenuCommands? paths = null, ITextMeasurer? textMeasurer = null, IFontCatalog? fonts = null)` - _(no documentation)_
 - `public bool IsNodeSymmetric { get; }` - Whether every selected node is symmetric.
+- `public NumberFieldViewModel LineSpacing { get; }` - The line spacing as a multiplier of the line height of the font.
 - `public bool LinkCorners { get; set; }` - Whether a change of one radius changes all four. Shared with the radius handles (a drag by touch) through the editor state, so the toggle here is the toggle there.
+- `public NumberFieldViewModel LetterSpacing { get; }` - The extra space after each character.
+- `public bool IsTextExpanded { get; set; }` - _(no documentation)_
+- `public ObservableCollection<FontFamilyItem> FontFamilies { get; }` - The fonts to choose from. A font of the selected texts that is not installed is added to the end of the list. Made when it is first asked for, because asking the system for its fonts needs the running application. It is always the same collection, changed in place: the box that shows it fails if the list is swapped while the user chooses an entry.
+- `public bool HasTextSelected { get; }` - Whether at least one text is selected.
+- `public bool ShowText { get; }` - Whether the Text section is shown: the Text tool, or a tool with the section while a text is selected.
 - `public bool CanChangeSegment { get; }` - Whether exactly two neighboring nodes of one path are selected.
+- `public FontFamilyItem? SelectedFont { get; set; }` - The chosen font, or null when the selected texts differ. Choosing one applies it.
+- `public bool IsBold { get; set; }` - Whether the text is bold (all of them, for several). Setting it applies it.
+- `public bool IsItalic { get; set; }` - Whether the text is italic (all of them, for several). Setting it applies it.
 - `public NumberFieldViewModel X { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Y { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Width { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Height { get; }` - _(no documentation)_
+- `public bool IsAlignedLeft { get; }` - _(no documentation)_
 - `public NumberFieldViewModel Rotation { get; }` - The rotation in degrees. Disabled for several shapes.
+- `public bool IsAlignedCenter { get; }` - _(no documentation)_
 - `public NumberFieldViewModel StrokeWidth { get; }` - _(no documentation)_
+- `public bool IsAlignedRight { get; }` - _(no documentation)_
 - `public NumberFieldViewModel OpacityPercent { get; }` - The opacity from 0 to 100.
 - `public ColorFieldViewModel Fill { get; }` - _(no documentation)_
 - `public ColorFieldViewModel Stroke { get; }` - _(no documentation)_
@@ -702,14 +744,17 @@ The Properties tab: the position, size, rotation and appearance of the selected 
 - `public void BeginOpacityDrag()` - The user started to move the opacity slider. The changes until PressToShape.App.ViewModels.Editor.PropertiesViewModel.EndOpacityDrag are one step.
 - `public void PreviewOpacity(double percent)` - Shows the slider's opacity on the canvas. Ignored unless a drag began.
 - `public void EndOpacityDrag()` - The slider was let go. Records what was shown as one step, if the opacity changed.
+- `protected void OnLanguageRefreshed()` - _(no documentation)_
 
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
+- Depends on (constructor) `PressToShape.App.Services.IFontCatalog`
 - Depends on (constructor) `PressToShape.App.ViewModels.Editor.PathMenuCommands`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.ObjectEditor`
 - Depends on (constructor) `PressToShape.App.Workspace.SelectionEditor`
+- Depends on (constructor) `PressToShape.Core.Shapes.ITextMeasurer`
 - Inherits `PressToShape.App.ViewModels.LocalizedViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletColorSwatchViewModel`
 

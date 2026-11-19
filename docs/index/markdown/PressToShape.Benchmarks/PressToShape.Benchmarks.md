@@ -29,7 +29,7 @@ _(no documentation)_
 
 `public class ShapeOperationBenchmarks`
 
-Source: `tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:19-135`
+Source: `tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:20-136`
 
 How long the shape operations take on a large drawing: a grid of rectangles and ellipses on one layer, all of them selected. Every benchmark leaves the state as it found it (changes are undone and everything is selected again), so runs are comparable. Benchmarks whose description says "reselect" include the cost of selecting all again. The numbers should grow roughly in proportion to the shape count. A jump by far more than 10 times from 1,000 to 10,000 shapes means a step became quadratic.
 

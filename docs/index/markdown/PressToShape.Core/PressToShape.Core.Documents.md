@@ -317,3 +317,21 @@ Where a shape was found: the layer, the enclosing groups from the outermost to t
 
 - Depends on (constructor) `PressToShape.Core.Shapes.Shape`
 - Injected into `PressToShape.Core.Documents.PathShapeOperations.Operand`
+
+## TextOperations (class)
+
+`public partial static class TextOperations`
+
+Source: `src/PressToShape.Core/Documents/TextOperations.Outlines.cs:8-75`
+
+The operations on texts in a document: create, change the content, change the formatting and take over a measured size. The result is a new document, the input is never changed. A result that equals the input is the same instance, so the caller can tell that nothing changed.
+
+**Members**
+
+- `public IReadOnlyList<Guid> ConvertibleTextIds(Document document, IEnumerable<Guid> ids, ITextOutliner outliner)` - The ids of the texts that PressToShape.Core.Documents.TextOperations.ConvertToOutlines would change: the texts among the selected shapes and among the shapes inside selected groups (at any depth), each once, that are shown and not locked and that the outliner gives at least one and at most PressToShape.Core.Shapes.PathShape.MaxSubPaths contours for. Ids that are not shapes of the document are ignored.
+- `public Document Create(Document document, Guid containerId, TextShape text)` - Returns a document with the text added above the existing shapes of a layer or of a group.
+- `public Document ConvertToOutlines(Document document, IEnumerable<Guid> ids, ITextOutliner outliner)` - Replaces the texts found by PressToShape.Core.Documents.TextOperations.ConvertibleTextIds with one compound path each (even-odd, so the counters of letters are holes). The path keeps id, name, flags, appearance, rotation and place in the stack, and it looks like the text. Returns the same document if there is nothing to convert.
+- `public Document SetText(Document document, Guid id, string content)` - Replaces the content of a text. Locks and visibility are not checked here, the tool decides what a lock means. Returns the same document if the content is already this.
+- `public Document SetFormat(Document document, IEnumerable<Guid> ids, TextFormatChange change)` - Applies a format change to the texts among the selected shapes and among the shapes inside selected groups (at any depth), each once, that are shown and not locked (the layer and the groups around them count). Other shapes and ids that are not shapes are ignored. Returns the same document if no text changes.
+- `public Document ApplyLayout(Document document, Guid id, TextLayoutResult layout)` - Takes over the size of a measured layout for a point text, which has no box of its own. The top left corner of the turned text stays where it is on the screen, so a rotated text does not drift while it grows. An area text keeps its box, the same document is returned, and so it is if the size is already this.
+- `public TextShape Fit(TextShape text, TextLayoutResult layout)` - The text with the size of a measured layout, if it is a point text (it has no box of its own). The top left corner of the turned text stays where it is on the screen, so a rotated text does not drift while it grows. An area text keeps its box and is returned as it is, and so is a point text that already has this size.

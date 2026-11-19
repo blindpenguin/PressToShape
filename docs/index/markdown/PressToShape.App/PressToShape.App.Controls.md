@@ -17,9 +17,9 @@ A titled section whose whole header row toggles the content. Used by the inspect
 
 ## DocumentCanvasControl (class)
 
-`internal sealed class DocumentCanvasControl : Control`
+`internal partial sealed class DocumentCanvasControl : Control`
 
-Source: `src/PressToShape.App/Controls/DocumentCanvasControl.cs:17-844`
+Source: `src/PressToShape.App/Controls/DocumentCanvasControl.Text.cs:10-88`
 
 Draws the shapes of a document. It only draws: PressToShape.App.Workspace.CanvasScene decides what is drawn and where. Shape colors are document data, so this control uses no theme brushes. It does not handle pointer input.
 
@@ -34,6 +34,7 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `public StyledProperty<ScreenPenOverlay?> PenOverlayProperty` - The nodes and handles of the path that the Pen is drawing, in screen space. They are drawn over the shapes.
 - `public StyledProperty<ScreenNodeOverlay?> NodeOverlayProperty` - The nodes and handles of the selected shapes for Direct Select and the Node tool, in screen space. They are drawn over the shapes.
 - `public StyledProperty<Guid?> HiddenShapeIdProperty` - A shape that is not drawn because the draft takes its place (a path that is being continued). null hides nothing.
+- `public StyledProperty<ITextMeasurer?> TextMeasurerProperty` - Lays out the texts of the document. Without one, texts are not drawn.
 - `public StyledProperty<IBrush?> SelectionBrushProperty` - The brush of the selection outlines, handle outlines and the selection box. It comes from the theme.
 - `public StyledProperty<IBrush?> SelectionHandleFillBrushProperty` - The fill of the handles. It comes from the theme.
 - `public StyledProperty<double> HandleSizeProperty` - The side of a selection handle in screen pixels. It comes from the theme, so a layout for touch can draw larger handles.
@@ -61,6 +62,7 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `public SelectionOverlay? Overlay { get; set; }` - _(no documentation)_
 - `public ScreenPenOverlay? PenOverlay { get; set; }` - _(no documentation)_
 - `public ScreenNodeOverlay? NodeOverlay { get; set; }` - _(no documentation)_
+- `public ITextMeasurer? TextMeasurer { get; set; }` - _(no documentation)_
 - `public Guid? HiddenShapeId { get; set; }` - _(no documentation)_
 - `public IBrush? SelectionBrush { get; set; }` - _(no documentation)_
 - `public IBrush? SelectionHandleFillBrush { get; set; }` - _(no documentation)_
@@ -154,6 +156,34 @@ A horizontal or vertical ruler. It asks PressToShape.App.Workspace.RulerTicks fo
 - `public double ZoomPercent { get; set; }` - _(no documentation)_
 - `public double OriginPx { get; set; }` - _(no documentation)_
 - `public void Render(DrawingContext context)` - _(no documentation)_
+
+## TextEditorControl (class)
+
+`internal sealed class TextEditorControl : Canvas`
+
+Source: `src/PressToShape.App/Controls/TextEditorControl.cs:21-256`
+
+The editor of a text on the canvas: a borderless Avalonia.Controls.TextBox at the place of the text, with its font and its rotation, so the user types where the text is. It brings the caret, the selection, the clipboard, the input method and the on-screen keyboard. The control only shows what the view model gives it and reports the content and the end of the editing: it decides nothing about the document.
+
+**Members**
+
+- `public StyledProperty<ScreenShape?> ShapeProperty` - The text that is edited, in screen space with its font. null when nothing is edited: the control is then empty.
+- `public StyledProperty<string> EditedTextProperty` - The content of the text. The user's typing is written back to it.
+- `public StyledProperty<double> LineHeightProperty` - The height of a line in screen pixels. NaN leaves it to the font.
+- `public StyledProperty<ICommand?> CommitCommandProperty` - Ends the editing. Run on Escape and when the editor loses the focus to another control.
+- `public StyledProperty<IBrush?> FallbackForegroundProperty` - The brush of the text when the text has no fill. It comes from the theme.
+- `public TextEditorControl()` - _(no documentation)_
+- `public ScreenShape? Shape { get; set; }` - _(no documentation)_
+- `public string EditedText { get; set; }` - _(no documentation)_
+- `public double LineHeight { get; set; }` - _(no documentation)_
+- `public ICommand? CommitCommand { get; set; }` - _(no documentation)_
+- `public IBrush? FallbackForeground { get; set; }` - _(no documentation)_
+- `internal TextBox Box { get; }` - The box that is typed in. For tests.
+- `protected void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)` - _(no documentation)_
+
+**Relationships**
+
+- Injected into `PressToShape.App.Tests.TextEditorControlTests.Setup`
 
 ## ToolGroupButton (class)
 

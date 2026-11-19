@@ -50,8 +50,9 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 **Members**
 
 - `public RingMenuMode SelectForContextMenu(double x, double y, double grabSize = 10)` - Prepares the selection for the ring menu at this document position, with the same hit rules as a click. A selected object, or a handle of the selection, keeps the selection as it is. Another object that can be selected (a group counts as one object, and inside an entered group a member counts) becomes the only selected one. Empty canvas, and objects that are hidden or locked, clear the selection. Returns which slots the ring shows. The selection changes, but no history step is recorded.
-- `public void DoubleClicked(double x, double y, InputPointerType inputType = Mouse)` - A double-click at this document position. With the Node tool on a node it changes the type of the node (see PressToShape.App.Workspace.CanvasInteraction.NodeDoubleClicked). With the Select tool on a group it enters the group and selects what is under the pointer; on a shape of an entered group that is a group itself it enters that group. On empty space it leaves the entered group by one level. Ends a drag that is in progress without a result.
+- `public bool IsEditingText { get; }` - Whether a text is being edited on the canvas.
 - `public bool IsRadiusDragging { get; }` - Whether a radius handle is being dragged.
+- `public void DoubleClicked(double x, double y, InputPointerType inputType = Mouse)` - A double-click at this document position. With the Node tool on a node it changes the type of the node (see PressToShape.App.Workspace.CanvasInteraction.NodeDoubleClicked). With the Select tool on a group it enters the group and selects what is under the pointer; on a shape of an entered group that is a group itself it enters that group. On a text (one that is not inside a group that is not entered) it starts editing the text. On empty space it leaves the entered group by one level. Ends a drag that is in progress without a result.
 - `internal NodeEditor Nodes { get; }` - The editor of the selected nodes (type, segments, delete, nudge, position). Shared with the keys of the canvas.
 - `public bool IsNodeDragging { get; }` - Whether a node, handle or bend drag is in progress.
 - `public GuideOrientation? GuideDragOrientation { get; }` - The orientation of the guide that is being moved or made, or null without such a drag.
@@ -60,14 +61,15 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 - `public bool FinishPen()` - Finishes the path of the Pen as an open path (the Enter key). A path with fewer than two nodes is dropped. Returns whether there was a path to finish.
 - `public Guide? GuideAt(double x, double y, InputPointerType inputType = Mouse)` - The guide that a press at this document position would take: the nearest one within 4 screen pixels (12 for a finger), or null. Also null when guides are hidden.
 - `internal bool IsSnapSuspended { get; }` - Whether the last pointer event suspended snapping (the Ctrl key was held).
-- `public CanvasInteraction(EditorState state)` - _(no documentation)_
 - `public bool DiscardPen()` - Drops the unfinished path of the Pen (the Escape key). Returns whether there was one.
+- `public CanvasInteraction(EditorState state, ITextMeasurer? textMeasurer = null)` - _(no documentation)_
 - `public void BeginGuideFromRuler(GuideOrientation orientation)` - Starts the making of a guide from a ruler: a new guide follows the pointer. Guides are shown from now on, because a new guide would be invisible otherwise. Moves arrive through PressToShape.App.Workspace.CanvasInteraction.PointerMoved, the end through PressToShape.App.Workspace.CanvasInteraction.EndGuideDrag.
 - `public bool IsDragging { get; }` - Whether a drag is in progress.
+- `public void EndGuideDrag(double x, double y, bool overCanvas)` - Ends a guide drag at this document position. overCanvas tells whether the pointer is inside the canvas: a moved guide that is dropped outside is deleted and a new one is not made. Does nothing without a guide drag.
 - `public HandleType? DraggedHandle { get; }` - The handle that is being dragged, or null if no resize or rotate drag is in progress.
 - `public double TouchGrabSize { get; set; }` - The size of the area that grabs a selection handle for a finger, in screen pixels. A press by mouse or pen uses PressToShape.App.Workspace.SelectionGeometry.GrabSize.
-- `public void EndGuideDrag(double x, double y, bool overCanvas)` - Ends a guide drag at this document position. overCanvas tells whether the pointer is inside the canvas: a moved guide that is dropped outside is deleted and a new one is not made. Does nothing without a guide drag.
 - `public void PointerPressed(double x, double y, bool shift = false, InputPointerType inputType = Mouse, bool suspendSnap = false)` - The primary button went down at this document position. shift adds to or removes from the selection. suspendSnap (the Ctrl key) turns snapping off for this event. inputType is the device: a finger grabs a handle from a larger area than a mouse or a pen.
+- `public void CommitTextEdit()` - Ends the editing of the text, if one is edited, and puts the result into the document as one step: a new text is created (and selected), the content of an existing one is replaced, an emptied text is deleted, an unchanged one stays as it is. A text that stays empty leaves nothing behind. Does nothing when no text is edited.
 - `public void DeleteSelectedGuide()` - Deletes the selected ruler guide as one step. Does nothing when no guide is selected.
 - `public bool IsOverNodeTarget(double x, double y)` - Whether the position is over something the node tools can grab: a node, a shown handle or (Node tool) a segment of a selected shape. Always false during a drag and for the other tools. Used for the cursor.
 - `public void PointerMoved(double x, double y, bool shift = false, bool alt = false, bool suspendSnap = false)` - The pointer moved to this document position. Does nothing without a drag.
@@ -80,6 +82,7 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Depends on (constructor) `PressToShape.Core.Shapes.ITextMeasurer`
 - Injected into `PressToShape.App.Tests.CanvasInteractionContextMenuTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGroupTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionGuideSnapTests.Scene`
@@ -88,6 +91,7 @@ What the mouse does on the canvas: draw rectangles and ellipses, select, move an
 - Injected into `PressToShape.App.Tests.CanvasInteractionSmartSpacingTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionSnapMoveTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionSnapResizeTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionTextTests.Scene`
 
 ## CanvasKey (enum)
 
@@ -124,14 +128,14 @@ The one mapping between screen pixels and document units. Drawing and picking bo
 
 `internal static class CanvasScene`
 
-Source: `src/PressToShape.App/Workspace/CanvasScene.cs:12-130`
+Source: `src/PressToShape.App/Workspace/CanvasScene.cs:13-144`
 
 Turns a document into the shapes to draw on the canvas, so the drawing control needs no geometry rules.
 
 **Members**
 
-- `public IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY, Guid? enteredGroupId = null, Guid? hiddenShapeId = null)` - Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones. Groups are flattened: only the shapes in them are drawn, in order. Hidden layers, hidden shapes and the shapes of hidden groups are left out. Locked shapes are drawn like any other.
-- `public ScreenShape BuildShape(Shape shape, double zoomPercent, double originX, double originY)` - Converts one shape, for example a shape that is still being drawn and is not in a document.
+- `public IReadOnlyList<ScreenShape> Build(Document document, double zoomPercent, double originX, double originY, Guid? enteredGroupId = null, Guid? hiddenShapeId = null, ITextMeasurer? measurer = null)` - Builds the shapes in drawing order: layers bottom first, shapes bottom first, so later shapes cover earlier ones. Groups are flattened: only the shapes in them are drawn, in order. Hidden layers, hidden shapes and the shapes of hidden groups are left out. Locked shapes are drawn like any other.
+- `public ScreenShape BuildShape(Shape shape, double zoomPercent, double originX, double originY, ITextMeasurer? measurer = null)` - Converts one shape, for example a shape that is still being drawn and is not in a document.
 
 ## ColorPickTarget (enum)
 
@@ -178,13 +182,13 @@ The distance labels of the smart guides: from the dragged box to the nearest box
 
 `internal sealed class DocumentFileService`
 
-Source: `src/PressToShape.App/Workspace/DocumentFileService.cs:18-249`
+Source: `src/PressToShape.App/Workspace/DocumentFileService.cs:19-253`
 
 The file actions of the File menu: New, Open, Open Recent, Save, Save As, Export as SVG, and the question what to do with unsaved changes. It works through interfaces for files, dialogs and messages, so it is tested without a UI. Parsing and serializing run off the calling (UI) context, and the file store does its reading and writing without blocking it. State changes happen on the calling context.
 
 **Members**
 
-- `public DocumentFileService(EditorState state, DocumentSession session, RecentFiles recent, IFileStore files, IFileDialogs dialogs, IMessageDialogs messages, ILocalizer localizer, Action fitToWindow)` - _(no documentation)_
+- `public DocumentFileService(EditorState state, DocumentSession session, RecentFiles recent, IFileStore files, IFileDialogs dialogs, IMessageDialogs messages, ILocalizer localizer, ITextMeasurer measurer, Action fitToWindow)` - _(no documentation)_
 - `public Task<bool> ConfirmDiscardAsync()` - Makes sure unsaved changes may be dropped: returns true without a question if there are none. Otherwise it asks. Save returns true only if the save worked, Don't save returns true, Cancel returns false.
 - `public Task NewAsync()` - Replaces the document by an empty one with a single layer, after the unsaved-changes question.
 - `public Task OpenAsync()` - Asks for a project file and opens it, after the unsaved-changes question.
@@ -202,6 +206,7 @@ The file actions of the File menu: New, Open, Open Recent, Save, Save As, Export
 - Depends on (constructor) `PressToShape.App.Workspace.DocumentSession`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
 - Depends on (constructor) `PressToShape.App.Workspace.RecentFiles`
+- Depends on (constructor) `PressToShape.Core.Shapes.ITextMeasurer`
 
 ## DocumentSession (class)
 
@@ -267,12 +272,15 @@ State shared by all regions of the editor shell: the document, its undo history,
 - `public PenOverlay? PenOverlay { get; set; }` - _(no documentation)_
 - `public SnapPreferences Snapping { get; }` - The grid and snap settings. They are user settings: changing one is no edit of the document and no step of the history.
 - `public Guid? PenContinuedId { get; set; }` - _(no documentation)_
+- `public TextDefaults TextDefaults { get; set; }` - _(no documentation)_
 - `public ImmutableArray<SnapGuide> SnapGuides { get; set; }` - _(no documentation)_
 - `public ImmutableArray<SmartMarker> SmartMarkers { get; set; }` - _(no documentation)_
 - `public Guid? EnteredGroupId { get; private set; }` - _(no documentation)_
 - `public ImmutableHashSet<NodeRef> SelectedNodes { get; private set; }` - _(no documentation)_
+- `public TextEditSession? TextEdit { get; set; }` - _(no documentation)_
 - `public ImmutableArray<Guid> ActiveGuideIds { get; set; }` - _(no documentation)_
 - `public bool HasSelectedNodes { get; }` - Whether at least one node is selected.
+- `public void RememberTextFormat(TextFormatChange change)` - Remembers the values of a format change for the next text. Call it when the user changes the formatting.
 - `public Guid? SelectedGuideId { get; private set; }` - _(no documentation)_
 - `public void SetNodeSelection(IEnumerable<NodeRef> nodes)` - Replaces the selected nodes. Repeated nodes count once.
 - `public bool EnterGroup(Guid groupId)` - Enters the group. Of the selection only the direct children of the group stay selected. Does nothing if the id is not a group that can be selected.
@@ -349,6 +357,7 @@ State shared by all regions of the editor shell: the document, its undo history,
 - Injected into `PressToShape.App.Tests.CanvasInteractionSmartSpacingTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionSnapMoveTests.Scene`
 - Injected into `PressToShape.App.Tests.CanvasInteractionSnapResizeTests.Scene`
+- Injected into `PressToShape.App.Tests.CanvasInteractionTextTests.Scene`
 - Injected into `PressToShape.App.Tests.LayerEditorTests.Fixture`
 - Injected into `PressToShape.App.Tests.LayersViewModelLayerTests.Fixture`
 - Injected into `PressToShape.App.Tests.LayersViewModelTests.Fixture`
@@ -455,7 +464,7 @@ The handles around a selection. The eight resize handles sit on the frame, Press
 
 `internal static class HistoryStepNames`
 
-Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-85`
+Source: `src/PressToShape.App/Workspace/HistoryStepNames.cs:8-89`
 
 The message ids (English texts) for the rows of the history list. Translate them with ILocalizer.T when shown.
 
@@ -780,21 +789,23 @@ What a PressToShape.App.Workspace.PathCommand does.
 
 `internal sealed class PathEditor`
 
-Source: `src/PressToShape.App/Workspace/PathEditor.cs:19-238`
+Source: `src/PressToShape.App/Workspace/PathEditor.cs:19-275`
 
 The path operations on the selection: the boolean operations, Combine and Break Apart. Each success is one history step and the new shapes become the selection. A result that is empty or an operation that fails changes nothing and tells the user why. A command that cannot run has its Can... property false.
 
 **Members**
 
-- `public PathEditor(EditorState state, IMessageDialogs messages, ILocalizer localizer, Func<Guid>? idSource = null, int backgroundNodeLimit = 70000, Func<Func<PathOperationResult>, Task<PathOperationResult>>? background = null)` - _(no documentation)_
+- `public PathEditor(EditorState state, IMessageDialogs messages, ILocalizer localizer, Func<Guid>? idSource = null, int backgroundNodeLimit = 70000, Func<Func<PathOperationResult>, Task<PathOperationResult>>? background = null, ITextOutliner? textOutliner = null)` - _(no documentation)_
 - `public EventHandler? BusyChanged` - Raised when PressToShape.App.Workspace.PathEditor.IsBusy changes.
 - `public bool IsBusy { get; private set; }` - Whether a boolean operation is running off the UI thread. While it is, the path commands cannot run, and neither can undo, redo and the other edits that wait for a drag to end (the editor state counts it as a drag in progress).
 - `public bool CanBoolean { get; }` - Whether at least two rectangles, ellipses or closed paths that are shown and not locked are selected, and nothing else. False while busy or while a drag is going on.
 - `public bool CanCombine { get; }` - Whether at least two rectangles, ellipses or paths (open ones too) that are shown and not locked are selected, and nothing else.
 - `public bool CanBreakApart { get; }` - Whether a path with several sub-paths that is shown and not locked is selected.
-- `public bool CanConvert { get; }` - Whether a rectangle or an ellipse is selected, also inside a selected group, that is shown and not locked. False while busy or while a drag is going on.
+- `public bool CanConvert { get; }` - Whether a rectangle, an ellipse or a text is selected, also inside a selected group, that is shown and not locked. False while busy or while a drag is going on.
+- `public bool CanConvertText { get; }` - Whether a text is selected, also inside a selected group, that is shown, not locked and not empty. False while busy or while a drag is going on, and without an outliner. Whether the font gives outlines is only found out when the text is converted, because asking for the outlines of every selected text each time the selection changes would be slow.
+- `public void ConvertTextToPath()` - Converts the selected texts to paths, as one step. The selection stays.
 - `public bool CanReverse { get; }` - Whether a path is selected, also inside a selected group, that is shown and not locked. False while busy or while a drag is going on.
-- `public void ConvertToPath()` - Converts the selected rectangles and ellipses to paths, as one step. The selection stays.
+- `public void ConvertToPath()` - Converts the selected rectangles, ellipses and texts to paths, as one step. The selection stays.
 - `public void ReverseDirection()` - Reverses the direction of the selected paths, as one step. The selection stays.
 - `public Task BooleanAsync(PathOperationType type)` - Combines the selected shapes with the operation into one path, as one step.
 - `public Task CombineAsync()` - Joins the selected shapes into one compound path, as one step.
@@ -805,6 +816,7 @@ The path operations on the selection: the boolean operations, Combine and Break 
 - Depends on (constructor) `PressToShape.App.Localization.ILocalizer`
 - Depends on (constructor) `PressToShape.App.Services.IMessageDialogs`
 - Depends on (constructor) `PressToShape.App.Workspace.EditorState`
+- Depends on (constructor) `PressToShape.Core.Shapes.ITextOutliner`
 - Injected into `PressToShape.App.ViewModels.Editor.StatusBarViewModel`
 
 ## PathOutline (class)
@@ -921,7 +933,7 @@ What a press with the Pen did to the unfinished path.
 
 `internal enum PropertiesSection`
 
-Source: `src/PressToShape.App/Workspace/PropertiesSection.cs:6-24`
+Source: `src/PressToShape.App/Workspace/PropertiesSection.cs:6-27`
 
 The sections of the Properties tab. Combined as flags to say which ones a tool shows.
 
@@ -936,12 +948,13 @@ The sections of the Properties tab. Combined as flags to say which ones a tool s
 - `public Node` - The nodes of the selected paths: position of a node and, for the Node tool, the type and segment buttons.
 - `public Corners` - The corner radii of the one selected rectangle. Shown by the tools that show the radius handles.
 - `public PathOperations` - The boolean operations and Combine as icon buttons. Shown by the tools that select several objects, and only while two or more are selected.
+- `public Text` - The font, size, style, alignment and spacing of texts. Shown by the Text tool, and by the selection tools while a text is selected.
 
 ## PropertiesSections (class)
 
 `internal static class PropertiesSections`
 
-Source: `src/PressToShape.App/Workspace/PropertiesSections.cs:6-26`
+Source: `src/PressToShape.App/Workspace/PropertiesSections.cs:6-27`
 
 Which sections of the Properties tab are relevant for a tool.
 
@@ -1321,14 +1334,14 @@ A ruler guide in screen pixels, ready to draw across the canvas.
 
 `internal readonly record ScreenShape : IEquatable<ScreenShape>`
 
-Source: `src/PressToShape.App/Workspace/ScreenShape.cs:22-35`
+Source: `src/PressToShape.App/Workspace/ScreenShape.cs:23-37`
 
 A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
 
 **Members**
 
-- `public ScreenShape(ScreenShapeType Type, double X, double Y, double Width, double Height, Color? Fill, Color? Stroke, double StrokeWidth, double Opacity, double RotationDegrees = 0, bool IsDimmed = false, ScreenPath? Path = null, CornerRadii? Corners = null)` - A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
-- `public ScreenShapeType Type { get; init; }` - Rectangle, ellipse or path.
+- `public ScreenShape(ScreenShapeType Type, double X, double Y, double Width, double Height, Color? Fill, Color? Stroke, double StrokeWidth, double Opacity, double RotationDegrees = 0, bool IsDimmed = false, ScreenPath? Path = null, CornerRadii? Corners = null, ScreenText? Text = null)` - A shape ready to draw: position, size and stroke width are already in screen pixels. PressToShape.App.Workspace.ScreenShape.Stroke is null when nothing should be stroked, which includes a stroke width of zero.
+- `public ScreenShapeType Type { get; init; }` - Rectangle, ellipse, path or text.
 - `public double X { get; init; }` - Left edge in screen pixels.
 - `public double Y { get; init; }` - Top edge in screen pixels.
 - `public double Width { get; init; }` - Width in screen pixels.
@@ -1341,16 +1354,18 @@ A shape ready to draw: position, size and stroke width are already in screen pix
 - `public bool IsDimmed { get; init; }` - Whether the shape is drawn faded because a group is entered and the shape is not inside it.
 - `public ScreenPath? Path { get; init; }` - The outline of a path, relative to the top left corner of the box. null for every type except PressToShape.App.Workspace.ScreenShapeType.Path.
 - `public CornerRadii? Corners { get; init; }` - The corner radii of a rectangle in screen pixels (the radii that are really used, see PressToShape.Core.Shapes.RectangleShape.EffectiveRadii). null for square corners and for every other type.
+- `public ScreenText? Text { get; init; }` - The laid-out lines and the font of a text. null for every type except PressToShape.App.Workspace.ScreenShapeType.Text.
 
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Workspace.ScreenPath`
+- Depends on (constructor) `PressToShape.App.Workspace.ScreenText`
 
 ## ScreenShapeType (enum)
 
 `internal enum ScreenShapeType`
 
-Source: `src/PressToShape.App/Workspace/ScreenShapeType.cs:4-11`
+Source: `src/PressToShape.App/Workspace/ScreenShapeType.cs:4-14`
 
 The geometry a PressToShape.App.Workspace.ScreenShape is drawn with.
 
@@ -1359,6 +1374,7 @@ The geometry a PressToShape.App.Workspace.ScreenShape is drawn with.
 - `public Rectangle` - _(no documentation)_
 - `public Ellipse` - _(no documentation)_
 - `public Path` - A path of lines and curves. The shape's PressToShape.App.Workspace.ScreenShape.Path holds its outline.
+- `public Text` - A text. The shape's PressToShape.App.Workspace.ScreenShape.Text holds its lines.
 
 ## ScreenSmartMarker (record)
 
@@ -1407,6 +1423,45 @@ One sub-path of a PressToShape.App.Workspace.ScreenPath, with its nodes already 
 - `public ScreenSubPath(ImmutableArray<ScreenPathNode> Nodes, bool IsClosed)` - One sub-path of a PressToShape.App.Workspace.ScreenPath, with its nodes already in screen pixels.
 - `public bool IsClosed { get; init; }` - Whether the last node connects back to the first one.
 - `public ImmutableArray<ScreenPathNode> Nodes { get; init; }` - The nodes in drawing order, at least two.
+
+## ScreenText (record)
+
+`internal sealed record ScreenText : IEquatable<ScreenText>`
+
+Source: `src/PressToShape.App/Workspace/ScreenText.cs:21-29`
+
+A text ready to draw: its lines and the font, with sizes already in screen pixels.
+
+**Members**
+
+- `public ScreenText(IReadOnlyList<ScreenTextLine> Lines, string FontFamily, double FontSize, bool IsBold, bool IsItalic, double LetterSpacing, TextAlignType Alignment = Left, bool IsArea = false)` - A text ready to draw: its lines and the font, with sizes already in screen pixels.
+- `public IReadOnlyList<ScreenTextLine> Lines { get; init; }` - The lines from top to bottom. Empty for an empty text.
+- `public string FontFamily { get; init; }` - The font family name of the document, see TextFonts.
+- `public double FontSize { get; init; }` - The font size in screen pixels.
+- `public bool IsBold { get; init; }` - Whether the font is bold.
+- `public bool IsItalic { get; init; }` - Whether the font is italic.
+- `public double LetterSpacing { get; init; }` - The letter spacing in screen pixels.
+- `public TextAlignType Alignment { get; init; }` - How the lines are aligned. The line positions follow it already, the editor needs it too.
+- `public bool IsArea { get; init; }` - Whether the text wraps at the width of its box.
+
+**Relationships**
+
+- Injected into `PressToShape.App.Workspace.ScreenShape`
+
+## ScreenTextLine (record)
+
+`internal readonly record ScreenTextLine : IEquatable<ScreenTextLine>`
+
+Source: `src/PressToShape.App/Workspace/ScreenText.cs:10-10`
+
+One line of a text ready to draw. Positions are in screen pixels from the top left corner of the text's box.
+
+**Members**
+
+- `public ScreenTextLine(string Text, double X, double Baseline)` - One line of a text ready to draw. Positions are in screen pixels from the top left corner of the text's box.
+- `public double Baseline { get; init; }` - The baseline of the line, from the top edge of the box.
+- `public string Text { get; init; }` - The characters of the line.
+- `public double X { get; init; }` - Where the line starts, from the left edge of the box. It follows the alignment.
 
 ## SelectionBounds (class)
 
@@ -1567,13 +1622,14 @@ The translated selection text: "Nothing selected", "1 selected" or "N selected".
 
 `internal static class SelectionTransforms`
 
-Source: `src/PressToShape.App/Workspace/SelectionTransforms.cs:14-371`
+Source: `src/PressToShape.App/Workspace/SelectionTransforms.cs:16-398`
 
-The math of resizing, rotating and moving the selection and of the Properties fields. Pure functions: they return new shapes in the same order, never change their input, and return the input list itself when the input makes no sense (a number that is not finite, a handle that does not apply) or the result would not be finite. Resizing does not change strokes. A flip past the opposite edge keeps the rotation of a shape as it is.
+The math of resizing, rotating and moving the selection and of the Properties fields. Pure functions: they return new shapes in the same order, never change their input, and return the input list itself when the input makes no sense (a number that is not finite, a handle that does not apply) or the result would not be finite. Resizing does not change strokes. A flip past the opposite edge keeps the rotation of a shape as it is. A point text is always scaled uniformly and its font size and letter spacing scale with it (a text has no box of its own, see PressToShape.Core.Shapes.TextShape); an area text only changes its box.
 
 **Members**
 
 - `public double SnapDegrees` - The step of snapped rotation, in degrees.
+- `public bool HasPointText(IReadOnlyList<Shape> shapes)` - Whether a point text is among the shapes. Its size is its font, so a selection with one scales uniformly.
 - `public IReadOnlyList<Shape> Resize(IReadOnlyList<Shape> startShapes, SelectionFrame frame, HandleType handle, double pointerX, double pointerY, bool keepProportions, bool fromCenter)` - Resizes by dragging a handle to the pointer. A single shape scales in its turned frame, several shapes scale in the upright frame, each shape through the same scale. If a rotated shape is among several, the scale is uniform.
 - `public IReadOnlyList<Shape> Rotate(IReadOnlyList<Shape> startShapes, SelectionFrame frame, double startX, double startY, double pointerX, double pointerY, bool snap)` - Rotates by dragging the rotate handle. A single shape gets the angle of the pointer around its center; with snap the resulting angle is a multiple of 15 degrees. Several shapes turn around the frame center by the angle the pointer moved (snapped in steps of 15 degrees), and each shape's own rotation changes by the same angle.
 - `public IReadOnlyList<Shape> Move(IReadOnlyList<Shape> startShapes, double dx, double dy)` - Moves every shape by the distance.
@@ -1975,6 +2031,65 @@ Which equal spacing snaps apply on an axis: the gap before the box (left, above)
 - `public SpacingSides None { get; }` - None: the axis is skipped.
 - `public SpacingSides AfterOnly { get; }` - Only the gap after the box: for a resize that drags the right or the bottom edge.
 - `public SpacingSides BeforeOnly { get; }` - Only the gap before the box: for a resize that drags the left or the top edge.
+
+## TextDefaults (record)
+
+`internal sealed record TextDefaults : IEquatable<TextDefaults>`
+
+Source: `src/PressToShape.App/Workspace/TextDefaults.cs:15-57`
+
+The formatting of the next text that is created: what the user chose last. Editor state, not part of the document.
+
+**Members**
+
+- `public TextDefaults(string FontFamily, double FontSize, bool IsBold, bool IsItalic, TextAlignType Alignment, double LineSpacing, double LetterSpacing)` - The formatting of the next text that is created: what the user chose last. Editor state, not part of the document.
+- `public string FontFamily { get; init; }` - The font family name.
+- `public double FontSize { get; init; }` - The font size.
+- `public bool IsBold { get; init; }` - Whether the font is bold.
+- `public bool IsItalic { get; init; }` - Whether the font is italic.
+- `public TextAlignType Alignment { get; init; }` - The alignment of the lines.
+- `public double LineSpacing { get; init; }` - The line spacing multiplier.
+- `public double LetterSpacing { get; init; }` - The letter spacing.
+- `public TextDefaults Initial { get; }` - The formatting before the user chose anything: the defaults of PressToShape.Core.Shapes.TextShape.
+- `public TextDefaults With(TextFormatChange change)` - These defaults with the values of the change that are set. Invalid values are not checked here, the text checks them.
+- `public TextShape NewText(double x, double y, double width, double height, bool isArea, string content, Appearance appearance)` - A new text at the position with these formatting values, the given content and appearance.
+
+## TextEditOutcome (enum)
+
+`internal enum TextEditOutcome`
+
+Source: `src/PressToShape.App/Workspace/TextEditSession.cs:7-20`
+
+What leaving the editing of a text does to the document.
+
+**Members**
+
+- `public None` - Nothing: an existing text is as it was, or a new text stayed empty.
+- `public Create` - A new text with content is added. The text was not in the document while it was edited.
+- `public Update` - The content of an existing text changed.
+- `public Delete` - An existing text became empty, so it is removed.
+
+## TextEditSession (class)
+
+`internal sealed class TextEditSession`
+
+Source: `src/PressToShape.App/Workspace/TextEditSession.cs:26-76`
+
+The editing of one text. It keeps the text that is edited with its draft content, and decides at the end what happens to the document, so the whole editing is one history step. The document is not touched while typing.
+
+**Members**
+
+- `public TextEditSession(TextShape text, bool isNew)` - Starts editing.
+- `public TextShape Text { get; private set; }` - The text with its draft content.
+- `public bool IsNew { get; }` - Whether the text was created by this session and is not in the document yet.
+- `public Guid TextId { get; }` - The id of the text.
+- `public void SetContent(string content)` - Replaces the draft content.
+- `public void SetBox(double x, double y, double width, double height)` - Replaces the draft with a text of another size or box, for example after it was measured. The content is kept.
+- `public TextEditOutcome Outcome { get; }` - What ending the editing now does to the document.
+
+**Relationships**
+
+- Depends on (constructor) `PressToShape.Core.Shapes.TextShape`
 
 ## TickType (enum)
 

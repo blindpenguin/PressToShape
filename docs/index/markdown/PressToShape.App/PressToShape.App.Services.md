@@ -25,6 +25,22 @@ The platform's file pickers, opened over the main window. A picker that is not a
 - Depends on (constructor) `PressToShape.App.Services.StorageFileRegistry`
 - Implements `PressToShape.App.Services.IFileDialogs`
 
+## AvaloniaFontCatalog (class)
+
+`internal sealed class AvaloniaFontCatalog : IFontCatalog`
+
+Source: `src/PressToShape.App/Services/AvaloniaFontCatalog.cs:13-28`
+
+The font families of the system, with the bundled default font in front. Only the names are read: making a typeface of every font to see whether it works loads all font files at startup, and a broken one crashes the native font code.
+
+**Members**
+
+- `public IReadOnlyList<string> Families { get; }` - _(no documentation)_
+
+**Relationships**
+
+- Implements `PressToShape.App.Services.IFontCatalog`
+
 ## AvaloniaMessageDialogs (class)
 
 `internal sealed class AvaloniaMessageDialogs : IMessageDialogs`
@@ -60,6 +76,52 @@ Shows the settings as a modal window over the main window.
 **Relationships**
 
 - Implements `PressToShape.App.Services.ISettingsDialogs`
+
+## AvaloniaTextLayouts (class)
+
+`internal static class AvaloniaTextLayouts`
+
+Source: `src/PressToShape.App/Services/AvaloniaTextLayouts.cs:12-60`
+
+Builds the Avalonia layout of a text. The measurer reads the lines from it, the outliner reads the glyphs, so both see the same layout as the canvas.
+
+**Members**
+
+- `public TextLayout Build(TextShape text)` - _(no documentation)_
+
+## AvaloniaTextMeasurer (class)
+
+`internal sealed class AvaloniaTextMeasurer : ITextMeasurer`
+
+Source: `src/PressToShape.App/Services/AvaloniaTextMeasurer.cs:12-50`
+
+Lays out a text with Avalonia's text engine (see PressToShape.App.Services.AvaloniaTextLayouts). Point text is not wrapped, area text wraps at the width of its box. A font family that is not installed gets the fallback font of the platform. If the engine cannot lay the text out, the result is empty and the document is not touched.
+
+**Members**
+
+- `public TextLayoutResult Layout(TextShape text)` - _(no documentation)_
+
+**Relationships**
+
+- Implements `PressToShape.Core.Shapes.ITextMeasurer`
+
+## AvaloniaTextOutliner (class)
+
+`internal sealed class AvaloniaTextOutliner : ITextOutliner`
+
+Source: `src/PressToShape.App/Services/AvaloniaTextOutliner.cs:20-135`
+
+Gives the glyph contours of a text. Avalonia has no public way to read the contours of a geometry, so this takes the glyphs that Avalonia shaped for the canvas (their ids and positions, see PressToShape.App.Services.AvaloniaTextLayouts) and reads the outline of each glyph from the font file with SkiaSharp. The outlines are exactly where the canvas draws the glyphs.
+
+A font collection file (TTC) is read as its first font, so glyphs of the other fonts of the collection come out wrong. Contours that overlap are not merged, the compound path is filled even-odd.
+
+**Members**
+
+- `public IReadOnlyList<DocumentSubPath>? Outline(TextShape text)` - _(no documentation)_
+
+**Relationships**
+
+- Implements `PressToShape.Core.Shapes.ITextOutliner`
 
 ## DelegateAppShutdown (class)
 
@@ -98,33 +160,51 @@ Closes the application when it runs with a classic desktop lifetime. Does nothin
 
 `internal sealed record FileServices : IEquatable<FileServices>`
 
-Source: `src/PressToShape.App/Services/FileServices.cs:8-14`
+Source: `src/PressToShape.App/Services/FileServices.cs:12-21`
 
 What the file actions need from the outside: settings, files, file pickers and message dialogs.
 
 **Members**
 
-- `public FileServices(ISettingsStore Settings, IFileStore Files, IFileDialogs Dialogs, IMessageDialogs Messages, bool RemembersRecentFiles = true, ISettingsDialogs? SettingsDialogs = null)` - What the file actions need from the outside: settings, files, file pickers and message dialogs.
+- `public FileServices(ISettingsStore Settings, IFileStore Files, IFileDialogs Dialogs, IMessageDialogs Messages, bool RemembersRecentFiles = true, ISettingsDialogs? SettingsDialogs = null, ITextMeasurer? TextMeasurer = null, ITextOutliner? TextOutliner = null, IFontCatalog? FontCatalog = null)` - What the file actions need from the outside: settings, files, file pickers and message dialogs.
 - `public ISettingsStore Settings { get; init; }` - _(no documentation)_
 - `public IFileStore Files { get; init; }` - _(no documentation)_
 - `public IFileDialogs Dialogs { get; init; }` - _(no documentation)_
 - `public IMessageDialogs Messages { get; init; }` - _(no documentation)_
 - `public bool RemembersRecentFiles { get; init; }` - Whether the recently used files are kept in the settings. Off where a file reference does not survive a restart (Android).
 - `public ISettingsDialogs? SettingsDialogs { get; init; }` - Shows the settings window. null where there is none: "Preferences…" is then disabled.
+- `public ITextMeasurer? TextMeasurer { get; init; }` - Measures texts. null uses Avalonia's text engine, tests pass a fake.
+- `public ITextOutliner? TextOutliner { get; init; }` - Gives the glyph contours of texts. null uses Avalonia's fonts, tests pass a fake.
+- `public IFontCatalog? FontCatalog { get; init; }` - The font families to choose from. null uses the fonts of the system, tests pass a fake.
 
 **Relationships**
 
 - Depends on (constructor) `PressToShape.App.Services.IFileDialogs`
 - Depends on (constructor) `PressToShape.App.Services.IFileStore`
+- Depends on (constructor) `PressToShape.App.Services.IFontCatalog`
 - Depends on (constructor) `PressToShape.App.Services.IMessageDialogs`
 - Depends on (constructor) `PressToShape.App.Services.ISettingsDialogs`
 - Depends on (constructor) `PressToShape.App.Settings.ISettingsStore`
+- Depends on (constructor) `PressToShape.Core.Shapes.ITextMeasurer`
+- Depends on (constructor) `PressToShape.Core.Shapes.ITextOutliner`
 - Injected into `PressToShape.App.Tests.EditorShellViewModelRingTests.BareShell`
 - Injected into `PressToShape.App.Tests.EditorShellViewModelTests.BareShell`
 - Injected into `PressToShape.App.Tests.OpenSettingsCommandTests.BareShell`
 - Injected into `PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
 - Injected into `PressToShape.App.ViewModels.Tablet.TabletShellViewModel`
+
+## GlyphOutlines (class)
+
+`internal static class GlyphOutlines`
+
+Source: `src/PressToShape.App/Services/GlyphOutlines.cs:9-126`
+
+Reads the contours of a Skia path (the outline of a glyph) into sub-paths of the document.
+
+**Members**
+
+- `public IReadOnlyList<DocumentSubPath> FromPath(SKPath path, double offsetX, double offsetY)` - The contours of the path, moved by the offset. Every contour is closed: it ends at its start, or a closing line joins it. Quadratic curves become cubic ones, conic curves are cut into quadratic ones. A contour with fewer than two points is left out.
 
 ## IAppShutdown (interface)
 
@@ -204,6 +284,27 @@ Reads and writes whole files. Lets the file actions be tested without a real fil
 - Injected into `PressToShape.App.Services.FileServices`
 - Injected into `PressToShape.App.Tests.DocumentFileServiceTests.Setup`
 - Injected into `PressToShape.App.Workspace.DocumentFileService`
+
+## IFontCatalog (interface)
+
+`internal interface IFontCatalog`
+
+Source: `src/PressToShape.App/Services/IFontCatalog.cs:6-10`
+
+The font families the user can choose for a text. A small interface of ours, so the Properties view model needs no fonts in tests.
+
+**Members**
+
+- `public IReadOnlyList<string> Families { get; }` - The names of the font families, the default font first, then the installed fonts in alphabetical order. No name twice.
+
+**Relationships**
+
+- Implemented by `PressToShape.App.Services.AvaloniaFontCatalog`
+- Implemented by `PressToShape.App.Tests.PropertiesTextTests.FakeFontCatalog`
+- Implemented by `PressToShape.App.Tests.PropertiesViewTextTests.Fonts`
+- Injected into `PressToShape.App.Services.FileServices`
+- Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
 
 ## IMessageDialogs (interface)
 
@@ -377,6 +478,21 @@ Reads and writes the files that the user picked (see PressToShape.App.Services.S
 
 - Depends on (constructor) `PressToShape.App.Services.StorageFileRegistry`
 - Implements `PressToShape.App.Services.IFileStore`
+
+## TextFonts (class)
+
+`internal static class TextFonts`
+
+Source: `src/PressToShape.App/Services/TextFonts.cs:9-58`
+
+Turns the font settings of a text into the typeface Avalonia draws with.
+
+**Members**
+
+- `public Typeface TypefaceFor(string name, bool bold, bool italic)` - The typeface for the font settings. A font that is on the system but that Avalonia cannot use (for example a Type 1 font such as "Courier 10 Pitch") would throw when text is laid out or drawn, so the default font is used for it instead. The name in the document is not changed.
+- `public bool IsUsable(string name, bool bold, bool italic)` - Whether Avalonia can make a glyph typeface for the font in this style. The answer is remembered.
+- `public FontFamily FamilyFor(string name)` - _(no documentation)_
+- `internal FontFamily FamilyFor(string name, bool bundledAvailable)` - The family for the name, given whether the bundled font is registered.
 
 ## UnsavedChoice (enum)
 

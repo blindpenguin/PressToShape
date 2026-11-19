@@ -54,6 +54,33 @@ _(no documentation)_
 - `public void BuildSaveOptions_SetsTitleOverwritePromptAndTheFileType()` - _(no documentation)_
 - `public void Constructor_NullOwnerOrLocalizer_Throws()` - _(no documentation)_
 
+## AvaloniaTextMeasurerTests (class)
+
+`public class AvaloniaTextMeasurerTests`
+
+Source: `tests/PressToShape.App.Tests/AvaloniaTextMeasurerTests.cs:9-169`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Layout_EmptyText_HasNoLines()` - _(no documentation)_
+- `public void Layout_PointText_OneLineWithPositiveSize()` - _(no documentation)_
+- `public void Layout_Newline_GivesTwoLinesWithGrowingBaselines()` - _(no documentation)_
+- `public void Layout_PointText_DoesNotWrap()` - _(no documentation)_
+- `public void Layout_AreaTextNarrowBox_WrapsAtWordBoundaries()` - _(no documentation)_
+- `public void Layout_Bold_IsNotNarrowerThanRegular()` - _(no documentation)_
+- `public void Layout_LetterSpacing_MakesTheTextWider()` - _(no documentation)_
+- `public void Layout_LineSpacing_ScalesTheLineHeight()` - _(no documentation)_
+- `public void Layout_BiggerFont_IsBiggerInBothDirections()` - _(no documentation)_
+- `public void Layout_AreaTextAlignment_ShiftsAShortLineIntoTheBox(TextAlignType alignment)` - _(no documentation)_
+- `public void Layout_PointTextCenter_ShiftsTheShorterLineByHalfTheDifference()` - _(no documentation)_
+- `public void Layout_FontNotInstalled_DoesNotThrowAndStillMeasures()` - _(no documentation)_
+- `public void FamilyFor_DefaultFontNameWithTheBundledFont_IsTheBundledFont(string name)` - _(no documentation)_
+- `public void FamilyFor_DefaultFontNameWithoutTheBundledFont_KeepsTheName()` - _(no documentation)_
+- `public void FamilyFor_OtherName_KeepsTheName()` - _(no documentation)_
+- `public void FamilyFor_InTheTestApplication_DoesNotThrow()` - _(no documentation)_
+
 ## BackRequestGuardTests (class)
 
 `public class BackRequestGuardTests`
@@ -384,6 +411,29 @@ _(no documentation)_
 - `public void Keys_DoNothingWithoutASelectionOrDuringADrag()` - _(no documentation)_
 - `public void DeleteSelection_OfSeveralShapes_RemovesAllOfThem()` - _(no documentation)_
 - `public void SharedEditor_IsUsedForKeys()` - _(no documentation)_
+
+## CanvasAreaViewModelTextTests (class)
+
+`public class CanvasAreaViewModelTextTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelTextTests.cs:12-198`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Initially_NoTextIsEdited()` - _(no documentation)_
+- `public void ClickWithTheTextTool_StartsEditingAndNotifies()` - _(no documentation)_
+- `public void EditedText_Set_ChangesTheDraftAndMeasuresAPointText()` - _(no documentation)_
+- `public void EditedText_SetToTheSameValue_DoesNotNotify()` - _(no documentation)_
+- `public void EditedText_Set_DoesNotChangeTheDocumentUntilCommit()` - _(no documentation)_
+- `public void EditedText_Set_WithoutEditing_DoesNothing()` - _(no documentation)_
+- `public void EditedText_AreaText_KeepsItsBox()` - _(no documentation)_
+- `public void CommitTextEditCommand_EndsTheEditingAndPutsTheTextIntoTheDocument()` - _(no documentation)_
+- `public void EditedTextLineHeight_IsTheLineHeightOfTheFontAtTheZoom()` - _(no documentation)_
+- `public void ZoomChange_UpdatesTheScreenShapeOfTheEditedText()` - _(no documentation)_
+- `public void EditingAnExistingText_ShowsItsContentAndHidesItOnTheCanvas()` - _(no documentation)_
+- `public void WithoutAMeasurer_TheLineHeightIsLeftToTheEditor()` - _(no documentation)_
 
 ## CanvasAreaViewModelTouchTests (class)
 
@@ -1082,6 +1132,51 @@ _(no documentation)_
 - `public void Draw_WithShiftAndAlt_MakesASquareAroundTheCenter()` - _(no documentation)_
 - `public void Draw_ModifiersCanChangeDuringTheDrag_AndTheReleaseDecides()` - _(no documentation)_
 
+## CanvasInteractionTextTests (class)
+
+`public class CanvasInteractionTextTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasInteractionTextTests.cs:12-495`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Click_OnEmptyCanvas_StartsEditingANewPointTextAndLeavesTheDocumentAlone()` - _(no documentation)_
+- `public void Drag_OnEmptyCanvas_StartsEditingANewAreaTextWithTheDraggedBox()` - _(no documentation)_
+- `public void Drag_FromTheBottomRightToTheTopLeft_UsesTheSameBox()` - _(no documentation)_
+- `public void Drag_BelowTheClickThreshold_IsAPointText()` - _(no documentation)_
+- `public void Drag_WhileDragging_ShowsTheBoxAsTheSelectionBox()` - _(no documentation)_
+- `public void Drag_WithSnapToGrid_SnapsTheCorners()` - _(no documentation)_
+- `public void Click_WithSnapToGrid_SnapsThePosition()` - _(no documentation)_
+- `public void NewText_UsesTheRememberedFormatAndTheCurrentFillWithoutAStroke()` - _(no documentation)_
+- `public void Commit_NewTextWithContent_CreatesItSelectsItAndMeasuresItsBox()` - _(no documentation)_
+- `public void Commit_NewTextThatStaysEmpty_LeavesNothingBehind()` - _(no documentation)_
+- `public void Commit_NewText_IsOneUndoStepThatRemovesTheWholeText()` - _(no documentation)_
+- `public void Commit_AreaText_KeepsTheDraggedBox()` - _(no documentation)_
+- `public void Press_OnAText_EditsItAndSelectsIt()` - _(no documentation)_
+- `public void Commit_ExistingTextWithOtherContent_ReplacesItAsOneStepAndKeepsTheFormat()` - _(no documentation)_
+- `public void Commit_ExistingTextUnchanged_MakesNoStep()` - _(no documentation)_
+- `public void Commit_ExistingTextErased_RemovesIt()` - _(no documentation)_
+- `public void Press_OnALockedText_DoesNothing()` - _(no documentation)_
+- `public void Press_OnAHiddenText_StartsANewTextInstead()` - _(no documentation)_
+- `public void Press_OnAShape_StartsANewTextOnTopOfIt()` - _(no documentation)_
+- `public void Press_InALockedLayer_CreatesNothing()` - _(no documentation)_
+- `public void Press_WhileEditing_CommitsTheTextAndStartsAnother()` - _(no documentation)_
+- `public void Press_WithTheSelectToolWhileEditing_CommitsTheText()` - _(no documentation)_
+- `public void ChoosingAnotherTool_WhileEditing_CommitsTheText()` - _(no documentation)_
+- `public void Undo_WhileEditingAnExistingText_EndsTheEditingWhenTheTextIsGone()` - _(no documentation)_
+- `public void ReplaceDocument_WhileEditing_DropsTheEditing()` - _(no documentation)_
+- `public void CommitTextEdit_WithoutEditing_DoesNothing()` - _(no documentation)_
+- `public void CanvasArea_HiddenShapeId_IsTheTextThatIsEdited()` - _(no documentation)_
+- `public void CanvasArea_HiddenShapeId_IsNullForANewText()` - _(no documentation)_
+- `public void DoubleClick_WithTheSelectToolOnAText_StartsEditingIt()` - _(no documentation)_
+- `public void DoubleClick_WithTheSelectToolOnAText_ThenTyping_ReplacesTheContent()` - _(no documentation)_
+- `public void DoubleClick_WithTheSelectToolOnARectangle_DoesNotStartEditing()` - _(no documentation)_
+- `public void DoubleClick_WithTheSelectToolOnALockedText_DoesNotStartEditing()` - _(no documentation)_
+- `public void DoubleClick_OnATextInsideAGroup_EntersTheGroupFirstAndEditsOnTheNextDoubleClick()` - _(no documentation)_
+- `public void DoubleClick_OnAnotherTextWhileEditing_CommitsTheFirstAndEditsTheSecond()` - _(no documentation)_
+
 ## CanvasMappingTests (class)
 
 `public class CanvasMappingTests`
@@ -1181,6 +1276,30 @@ _(no documentation)_
 - `public void BuildShape_NullShape_Throws()` - _(no documentation)_
 - `public void BuildShape_PassesTheRotationThrough_AndUprightShapesHaveNone()` - _(no documentation)_
 - `public void Build_PassesTheRotationOfEveryShape_AndKeepsTheBoxUnturned()` - _(no documentation)_
+
+## CanvasSceneTextTests (class)
+
+`public class CanvasSceneTextTests`
+
+Source: `tests/PressToShape.App.Tests/CanvasSceneTextTests.cs:11-186`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Build_Text_IsATextShapeWithItsBoxAndLines()` - _(no documentation)_
+- `public void Build_Zoom_ScalesTheBoxTheLinesAndTheFont()` - _(no documentation)_
+- `public void Build_Zoom_KeepsTheLineBreaksOfTheDocument()` - _(no documentation)_
+- `public void Build_LineX_FollowsTheAlignmentAndTheZoom()` - _(no documentation)_
+- `public void Build_RotatedText_PassesTheRotationThrough()` - _(no documentation)_
+- `public void Build_AppearanceOfTheText_IsUsedLikeForOtherShapes()` - _(no documentation)_
+- `public void Build_HiddenText_IsLeftOut()` - _(no documentation)_
+- `public void Build_TextThatIsBeingEdited_IsLeftOutWhenItIsTheHiddenShape()` - _(no documentation)_
+- `public void Build_TextOutsideTheEnteredGroup_IsDimmed()` - _(no documentation)_
+- `public void Build_TextInsideAGroup_IsFlattenedAndDrawn()` - _(no documentation)_
+- `public void Build_EmptyText_HasNoLines()` - _(no documentation)_
+- `public void Build_WithoutAMeasurer_TextHasNoLines()` - _(no documentation)_
+- `public void BuildShape_OtherShapes_HaveNoText()` - _(no documentation)_
 
 ## ColorFieldViewModelTests (class)
 
@@ -1523,11 +1642,28 @@ _(no documentation)_
 - `public void Properties_Default_AreEmpty()` - _(no documentation)_
 - `public void ThemeBrushes_ExistForBothVariants()` - _(no documentation)_
 
+## DocumentCanvasControlTextTests (class)
+
+`public class DocumentCanvasControlTextTests`
+
+Source: `tests/PressToShape.App.Tests/DocumentCanvasControlTextTests.cs:13-93`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Render_FilledText_DoesNotThrow()` - _(no documentation)_
+- `public void Render_StrokedTextWithoutFill_DoesNotThrow()` - _(no documentation)_
+- `public void Render_FillAndStrokeRotatedWithOpacityAtZoom_DoesNotThrow()` - _(no documentation)_
+- `public void Render_AreaTextWithTheDefaultFont_DoesNotThrow()` - _(no documentation)_
+- `public void Render_EmptyTextAndTextWithEmptyLines_DoesNotThrow()` - _(no documentation)_
+- `public void Render_NoNeedForAMeasurerToBeSet_DoesNotThrow()` - _(no documentation)_
+
 ## DocumentFileServiceTests (class)
 
 `public sealed class DocumentFileServiceTests : IDisposable`
 
-Source: `tests/PressToShape.App.Tests/DocumentFileServiceTests.cs:18-803`
+Source: `tests/PressToShape.App.Tests/DocumentFileServiceTests.cs:19-819`
 
 _(no documentation)_
 
@@ -1547,6 +1683,7 @@ _(no documentation)_
 - `public Task Save_DialogThrows_ShowsAnErrorAndStops()` - _(no documentation)_
 - `public Task Save_ErrorTexts_AreTranslated()` - _(no documentation)_
 - `public Task Export_WritesAValidSvgAndLeavesSessionAndRecentAlone()` - _(no documentation)_
+- `public Task Export_DocumentWithAText_WritesItsLinesFromTheMeasurer()` - _(no documentation)_
 - `public Task Export_OfASavedDocument_SuggestsItsNameAndKeepsItClean()` - _(no documentation)_
 - `public Task Export_Cancelled_WritesNothing()` - _(no documentation)_
 - `public Task Export_WriteFailure_ShowsAnErrorWithTheFileName()` - _(no documentation)_
@@ -1978,7 +2115,7 @@ A catalog source for tests: one dictionary per language code. Counts the loads.
 
 `internal sealed class FakeFileDialogs : IFileDialogs`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:52-88`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:53-89`
 
 Returns queued answers instead of showing pickers, and records what it was asked.
 
@@ -2004,7 +2141,7 @@ Returns queued answers instead of showing pickers, and records what it was asked
 
 `internal sealed class FakeFileStore : IFileStore`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:13-49`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:14-50`
 
 An in-memory file system. Can be told to fail on write or read.
 
@@ -2038,7 +2175,7 @@ Creates real PressToShape.App.Localization.Localizer instances with fake German 
 
 `internal sealed class FakeMessageDialogs : IMessageDialogs`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:91-110`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:92-111`
 
 Answers the unsaved-changes question with a fixed or queued choice, and records questions and errors.
 
@@ -2084,7 +2221,7 @@ A picked file kept in memory. Like the Android one, opening it for writing empti
 
 `internal sealed class FakeSettingsDialogs : ISettingsDialogs`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:147-188`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:150-191`
 
 A settings window that stays open until the test closes it.
 
@@ -2118,6 +2255,30 @@ _(no documentation)_
 - `public void MissingOrInvalidLanguage_ReturnsNull(string code)` - _(no documentation)_
 - `public void CorruptStream_Throws_ButTheSourceNeverDoes()` - _(no documentation)_
 - `public void LocalizerWithTheEmbeddedSource_TranslatesGerman()` - _(no documentation)_
+
+## GlyphOutlinesTests (class)
+
+`public class GlyphOutlinesTests`
+
+Source: `tests/PressToShape.App.Tests/GlyphOutlinesTests.cs:12-202`
+
+_(no documentation)_
+
+**Members**
+
+- `public void FromPath_Square_IsOneClosedContourOfFourCornerNodes()` - _(no documentation)_
+- `public void FromPath_Offset_MovesEveryPoint()` - _(no documentation)_
+- `public void FromPath_LastPointEqualsFirst_IsOneNodeAndKeepsTheArrivingHandle()` - _(no documentation)_
+- `public void FromPath_Quad_BecomesACubicWithHandlesAtTwoThirds()` - _(no documentation)_
+- `public void FromPath_Conic_IsCutIntoTwoCurves()` - _(no documentation)_
+- `public void FromPath_TwoContours_GiveTwoSubPathsInOrder()` - _(no documentation)_
+- `public void FromPath_ContourWithOnePoint_IsLeftOut()` - _(no documentation)_
+- `public void FromPath_EmptyPath_GivesNothing()` - _(no documentation)_
+- `public void FromPath_InterGlyph_HasTheContoursOfItsShape(string letter, int expected)` - _(no documentation)_
+- `public void Outline_BlankText_IsNull()` - _(no documentation)_
+- `public void Outline_Text_GivesClosedContoursInsideTheMeasuredBoxAtTheTextPosition()` - _(no documentation)_
+- `public void Outline_SecondLine_SitsBelowTheFirst()` - _(no documentation)_
+- `public void Outline_Null_Throws()` - _(no documentation)_
 
 ## GridLinesTests (class)
 
@@ -2578,7 +2739,7 @@ A clock that only moves when a test says so. One timestamp tick is one milliseco
 
 `internal sealed class MemorySettingsStore : ISettingsStore`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:113-127`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:114-128`
 
 Settings kept in memory.
 
@@ -2634,7 +2795,7 @@ _(no documentation)_
 
 `public class MenuBarViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-724`
+Source: `tests/PressToShape.App.Tests/MenuBarViewModelTests.cs:13-753`
 
 _(no documentation)_
 
@@ -2643,6 +2804,8 @@ _(no documentation)_
 - `public void TopLevelMenus_AreInMockupOrder()` - _(no documentation)_
 - `public void OnlyTheImplementedItems_AreEnabledLeafItems()` - _(no documentation)_
 - `public void PathMenu_BooleanCombineAndBreakApartItems_FollowTheirCommands()` - _(no documentation)_
+- `public void TextMenu_ConvertTextToPath_FollowsItsCommandAndRunsIt()` - _(no documentation)_
+- `public void TextMenu_FontAndCharacterPanel_ShowThePropertiesTab(string header)` - _(no documentation)_
 - `public void PathMenu_ConvertAndReverse_FollowTheirCommands_AndConvertShowsItsShortcut()` - _(no documentation)_
 - `public void PathMenu_StrokeToPathAndSimplify_StayDisabledPlaceholders()` - _(no documentation)_
 - `public void LayerMenu_HasTheLayerCommandsInOrder()` - _(no documentation)_
@@ -2971,7 +3134,7 @@ _(no documentation)_
 
 `public class OverflowMenuViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-299`
+Source: `tests/PressToShape.App.Tests/OverflowMenuViewModelTests.cs:11-301`
 
 _(no documentation)_
 
@@ -2979,7 +3142,7 @@ _(no documentation)_
 
 - `public void Items_AreTheFileActions_TheEditActions_TheObjectAndPathActions_AndTheLanguage_InOrder()` - _(no documentation)_
 - `public void TheArrangeSubmenu_HasTheFourArrangeCommands()` - _(no documentation)_
-- `public void ThePathSubmenu_HasTheEightPathCommandsInOrderAndRunsThem()` - _(no documentation)_
+- `public void ThePathSubmenu_HasTheNinePathCommandsInOrderAndRunsThem()` - _(no documentation)_
 - `public void ThePathSubmenu_ConvertAndReverseItems_FollowTheirCommands_AndAreDisabledWithoutCommands()` - _(no documentation)_
 - `public void ThePathSubmenu_ItemsFollowTheirCommands()` - _(no documentation)_
 - `public void Items_HaveNoQuitAndNoRecentFiles()` - _(no documentation)_
@@ -3041,7 +3204,7 @@ _(no documentation)_
 
 `public class PathEditingFeaturesTests`
 
-Source: `tests/PressToShape.App.Tests/PathEditingFeaturesTests.cs:14-278`
+Source: `tests/PressToShape.App.Tests/PathEditingFeaturesTests.cs:15-279`
 
 _(no documentation)_
 
@@ -3129,6 +3292,29 @@ _(no documentation)_
 - `public Task BreakApartAsync_CompoundPath_IsOneStepAndSelectsThePieces()` - _(no documentation)_
 - `public Task BreakApartAsync_TwoCompoundPathsAndAPlainOne_SplitsOnlyTheCompoundOnes()` - _(no documentation)_
 - `public void Constructor_NullArguments_Throw()` - _(no documentation)_
+
+## PathEditorTextTests (class)
+
+`public class PathEditorTextTests`
+
+Source: `tests/PressToShape.App.Tests/PathEditorTextTests.cs:11-216`
+
+_(no documentation)_
+
+**Members**
+
+- `public void CanConvertText_TextSelected_IsTrue_NothingRectangleOrEmptyTextIsFalse()` - _(no documentation)_
+- `public void CanConvertText_LockedHiddenOrWithoutAnOutliner_IsFalse()` - _(no documentation)_
+- `public void CanConvertText_TextInASelectedGroup_IsTrue()` - _(no documentation)_
+- `public void CanConvert_TextSelected_IsTrue()` - _(no documentation)_
+- `public void ConvertTextToPath_ReplacesTheTextByAPathAsOneStep_AndKeepsTheSelection()` - _(no documentation)_
+- `public void ConvertTextToPath_Undo_BringsTheTextBack()` - _(no documentation)_
+- `public void ConvertTextToPath_NothingToConvert_DoesNothing()` - _(no documentation)_
+- `public void ConvertToPath_TextAndRectangle_ConvertsBothAsOneConvertToPathStep()` - _(no documentation)_
+- `public void ConvertToPath_OnlyAText_IsAConvertTextToPathStep()` - _(no documentation)_
+- `public void BooleanAndCombine_TextAmongTheSelection_AreDisabled()` - _(no documentation)_
+- `public void BooleanAndCombine_TextInsideASelectedGroup_AreDisabled()` - _(no documentation)_
+- `public void Shell_TheTextCommand_IsDisabledWithoutATextAndConvertsTheSelectedText()` - _(no documentation)_
 
 ## PathOutlineTests (class)
 
@@ -3289,7 +3475,7 @@ _(no documentation)_
 
 `public class PropertiesSectionsTests`
 
-Source: `tests/PressToShape.App.Tests/PropertiesSectionsTests.cs:8-89`
+Source: `tests/PressToShape.App.Tests/PropertiesSectionsTests.cs:8-95`
 
 _(no documentation)_
 
@@ -3297,7 +3483,8 @@ _(no documentation)_
 
 - `public void For_SelectTool_ShowsTransformAppearanceAlignPathOperationsAndQuickActions()` - _(no documentation)_
 - `public void For_DirectSelect_ShowsTheSelectionSectionsAndAlsoPathAndNode()` - _(no documentation)_
-- `public void For_ShapeOrTextTool_ShowsAppearanceOnly()` - _(no documentation)_
+- `public void For_ShapeTools_ShowAppearanceOnly()` - _(no documentation)_
+- `public void For_TextTool_ShowsAppearanceAndText()` - _(no documentation)_
 - `public void For_Pen_ShowsAppearanceAndPath()` - _(no documentation)_
 - `public void For_NodeTool_ShowsAppearancePathAndNode()` - _(no documentation)_
 - `public void For_ToolWithoutProperties_ShowsNothing()` - _(no documentation)_
@@ -3305,6 +3492,42 @@ _(no documentation)_
 - `public void For_EveryTool_ShowsTheCornersSectionOnlyForSelectAndDirectSelect()` - _(no documentation)_
 - `public void For_EveryTool_ShowsThePathOperationsSectionOnlyForSelectAndDirectSelect()` - _(no documentation)_
 - `public void For_UndefinedTool_Throws()` - _(no documentation)_
+
+## PropertiesTextTests (class)
+
+`public class PropertiesTextTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesTextTests.cs:14-406`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ShowText_SelectToolWithoutATextSelected_IsHidden()` - _(no documentation)_
+- `public void ShowText_SelectToolWithATextSelected_IsShown()` - _(no documentation)_
+- `public void ShowText_SelectToolWithARectangleSelected_IsHidden()` - _(no documentation)_
+- `public void ShowText_TextToolWithNothingSelected_IsShown()` - _(no documentation)_
+- `public void ShowText_FollowsTheTool()` - _(no documentation)_
+- `public void Values_SingleText_ShowItsFormat()` - _(no documentation)_
+- `public void Values_TextsThatDiffer_AreMixed()` - _(no documentation)_
+- `public void Values_TextsThatAgree_AreNotMixed()` - _(no documentation)_
+- `public void FontSize_Typed_ChangesTheTextAsOneStepAndMeasuresAPointText()` - _(no documentation)_
+- `public void FontSize_AreaText_KeepsItsBox()` - _(no documentation)_
+- `public void FontSize_InvalidInput_ChangesNothingAndComesBack(string typed)` - _(no documentation)_
+- `public void LineSpacingAndLetterSpacing_Typed_ChangeTheText()` - _(no documentation)_
+- `public void LineSpacing_OutOfRange_IsRefused()` - _(no documentation)_
+- `public void BoldAndItalic_Set_ChangeTheTextAndKeepTheOtherFlag()` - _(no documentation)_
+- `public void Alignment_Command_ChangesTheTextAndTheToggles()` - _(no documentation)_
+- `public void SelectedFont_Chosen_ChangesTheFontOfEverySelectedText()` - _(no documentation)_
+- `public void SelectedFont_SetToNull_DoesNothing()` - _(no documentation)_
+- `public void FontFamilies_FontNotInstalled_IsListedAndMarked()` - _(no documentation)_
+- `public void FontFamilies_InstalledFont_HasNoExtraEntry()` - _(no documentation)_
+- `public void TextTool_NothingSelected_ControlsShowAndSetTheDefaultsForTheNextText()` - _(no documentation)_
+- `public void Change_LockedText_IsNotChanged()` - _(no documentation)_
+- `public void Change_SameValue_MakesNoStep()` - _(no documentation)_
+- `public void Change_UndoRestoresTheFormatAndTheControls()` - _(no documentation)_
+- `public void FontsWithoutACatalog_GiveAnEmptyListButStillShowAMissingFont()` - _(no documentation)_
+- `public void FontFamilies_IsTheSameCollectionAfterChanges_SoTheBoxCanFollowIt()` - _(no documentation)_
 
 ## PropertiesViewColorTests (class)
 
@@ -3564,6 +3787,28 @@ _(no documentation)_
 - `public void ThePathSection_ClickingAChoice_ChangesThePathAndMovesTheMark()` - _(no documentation)_
 - `public void ThePathSection_InTheTouchLayout_HasButtonsOfAtLeast48()` - _(no documentation)_
 
+## PropertiesViewTextTests (class)
+
+`public class PropertiesViewTextTests`
+
+Source: `tests/PressToShape.App.Tests/PropertiesViewTextTests.cs:20-210`
+
+_(no documentation)_
+
+**Members**
+
+- `public void TextSection_TextSelected_ShowsTheControls()` - _(no documentation)_
+- `public void TextSection_NothingSelectedWithTheSelectTool_IsHidden()` - _(no documentation)_
+- `public void TextSection_TextToolWithNothingSelected_IsShownWithTheDefaults()` - _(no documentation)_
+- `public void FontSizeField_ShowsTheSizeAndCommitsAChange()` - _(no documentation)_
+- `public void FontList_ShowsTheFontsAndTheOneOfTheText()` - _(no documentation)_
+- `public void BoldToggle_Clicked_MakesTheTextBold()` - _(no documentation)_
+- `public void AlignmentButton_Clicked_AlignsTheTextAndChecksOnlyThatButton()` - _(no documentation)_
+- `public void TextSection_OnTheTabletLayout_UsesTouchSizes()` - _(no documentation)_
+- `public void FontList_ChoosingAFontInTheBox_ChangesTheTextAndKeepsTheSelection()` - _(no documentation)_
+- `public void FontList_ChoosingFontsOneAfterTheOther_DoesNotThrow()` - _(no documentation)_
+- `public void FontList_LeavingAFontThatIsNotInstalled_ChangesTheTextAndDoesNotLoop()` - _(no documentation)_
+
 ## RadiusHandlesTests (class)
 
 `public class RadiusHandlesTests`
@@ -3810,7 +4055,7 @@ _(no documentation)_
 
 `public class SelectionAndPropertiesIntegrationTests`
 
-Source: `tests/PressToShape.App.Tests/SelectionAndPropertiesIntegrationTests.cs:20-332`
+Source: `tests/PressToShape.App.Tests/SelectionAndPropertiesIntegrationTests.cs:21-333`
 
 Selection, handles, properties, clipboard and history working together through the shell, the way a user drives them.
 
@@ -4105,6 +4350,31 @@ _(no documentation)_
 - `public void ResetRotation_ClearsEveryShapesRotationAroundItsOwnCenter()` - _(no documentation)_
 - `public void RandomOperations_KeepEveryNumberFiniteAndSizesNotNegative()` - _(no documentation)_
 - `public void NullArguments_Throw()` - _(no documentation)_
+
+## SelectionTransformsTextTests (class)
+
+`public class SelectionTransformsTextTests`
+
+Source: `tests/PressToShape.App.Tests/SelectionTransformsTextTests.cs:9-201`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Resize_PointTextBottomRightCorner_ScalesTheFontAndTheBoxUniformly()` - _(no documentation)_
+- `public void Resize_PointTextEdgeHandle_ScalesFromThatAxis()` - _(no documentation)_
+- `public void Resize_PointTextMuchSmaller_StopsAtTheSmallestFontSize()` - _(no documentation)_
+- `public void Resize_PointTextMuchBigger_StopsAtTheLargestFontSize()` - _(no documentation)_
+- `public void Resize_AreaText_ChangesOnlyTheBox()` - _(no documentation)_
+- `public void Resize_PointTextAndRectangle_ScaleUniformlyAndOnlyTheTextChangesItsFont()` - _(no documentation)_
+- `public void Resize_AreaTextAndRectangle_AreNotForcedToScaleUniformly()` - _(no documentation)_
+- `public void Resize_RotatedPointText_ScalesTheFontLikeAnUprightOne()` - _(no documentation)_
+- `public void SetSize_SinglePointTextWidth_ScalesTheFontAndTheHeightFollows()` - _(no documentation)_
+- `public void SetSize_PointTextHeight_ScalesTheFontAndTheWidthFollows()` - _(no documentation)_
+- `public void SetSize_AreaText_KeepsItsFont()` - _(no documentation)_
+- `public void HasPointText_OnlyForPointTexts()` - _(no documentation)_
+- `public void Resize_RectangleOnly_IsStillFree()` - _(no documentation)_
+- `public void Drag_ResizeHandleOfAPointText_ScalesItAndTheBoxFollowsTheMeasuredSize()` - _(no documentation)_
 
 ## SelectionValuesTests (class)
 
@@ -4798,7 +5068,7 @@ _(no documentation)_
 
 `internal static class TestFileServices`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:130-144`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:131-147`
 
 Creates the file services of the shell from fakes.
 
@@ -4847,6 +5117,66 @@ The smallest shell: only what the base class gives every layout, with fake files
 - Depends on (constructor) `PressToShape.App.Tests.FakeFileStore`
 - Depends on (constructor) `PressToShape.App.Tests.FakeMessageDialogs`
 - Inherits `PressToShape.App.ViewModels.Editor.EditorShellViewModel`
+
+## TextDefaultsTests (class)
+
+`public class TextDefaultsTests`
+
+Source: `tests/PressToShape.App.Tests/TextDefaultsTests.cs:7-70`
+
+_(no documentation)_
+
+**Members**
+
+- `public void EditorState_NewState_HasTheInitialTextFormat()` - _(no documentation)_
+- `public void RememberTextFormat_SetValues_AreKeptAndTheOthersStay()` - _(no documentation)_
+- `public void RememberTextFormat_ChangesNotifyTheProperty()` - _(no documentation)_
+- `public void RememberTextFormat_NewDocument_KeepsTheFormat()` - _(no documentation)_
+- `public void NewText_UsesTheFormatAndTheGivenValues()` - _(no documentation)_
+
+## TextEditSessionTests (class)
+
+`public class TextEditSessionTests`
+
+Source: `tests/PressToShape.App.Tests/TextEditSessionTests.cs:7-101`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Outcome_NewTextWithContent_IsCreate()` - _(no documentation)_
+- `public void Outcome_NewTextThatStaysEmpty_IsNone()` - _(no documentation)_
+- `public void Outcome_NewTextTypedAndThenErased_IsNone()` - _(no documentation)_
+- `public void Outcome_ExistingTextUnchanged_IsNone()` - _(no documentation)_
+- `public void Outcome_ExistingTextChangedAndChangedBack_IsNone()` - _(no documentation)_
+- `public void Outcome_ExistingTextWithOtherContent_IsUpdate()` - _(no documentation)_
+- `public void Outcome_ExistingTextErased_IsDelete()` - _(no documentation)_
+- `public void Outcome_WhiteSpaceOnly_CountsAsContent()` - _(no documentation)_
+- `public void SetBox_KeepsTheContentAndTheId()` - _(no documentation)_
+
+## TextEditorControlTests (class)
+
+`public class TextEditorControlTests`
+
+Source: `tests/PressToShape.App.Tests/TextEditorControlTests.cs:17-236`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Shape_Null_ShowsNothing()` - _(no documentation)_
+- `public void Shape_Set_ShowsTheBoxAtTheTextWithItsFontAndContent()` - _(no documentation)_
+- `public void Shape_AreaText_WrapsAtTheBoxWidthAndIsAtLeastAsHighAsTheBox()` - _(no documentation)_
+- `public void Shape_AtZoomAndRotation_ScalesTheFontAndTurnsTheBox()` - _(no documentation)_
+- `public void Typing_WritesTheContentBackToEditedText()` - _(no documentation)_
+- `public void EditedText_ChangedFromOutside_UpdatesTheBoxWithoutEchoing()` - _(no documentation)_
+- `public void Shape_StartsEditing_TheBoxGetsTheFocusWithTheCaretAtTheEnd()` - _(no documentation)_
+- `public void Escape_RunsTheCommitCommandAndStopsTheKey()` - _(no documentation)_
+- `public void OtherKeys_AreNotMarkedAsHandled_SoTheTextInputStillComes(Key key)` - _(no documentation)_
+- `public void LosingTheFocusToAnotherControl_RunsTheCommitCommand()` - _(no documentation)_
+- `public void LosingTheFocusWhileNotEditing_DoesNotRunTheCommitCommand()` - _(no documentation)_
+- `public void LineHeight_IsGivenToTheBox()` - _(no documentation)_
+- `public void Shape_SetBackToNull_HidesTheBoxAgain()` - _(no documentation)_
 
 ## ThemeResourceTests (class)
 

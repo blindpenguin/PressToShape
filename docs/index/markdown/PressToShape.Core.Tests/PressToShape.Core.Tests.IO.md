@@ -202,6 +202,26 @@ _(no documentation)_
 - `public void Read_RotationOfTheWrongType_IsRejectedLikeOtherBadValues(string value)` - _(no documentation)_
 - `public void Read_RotationThatOverflowsADouble_IsRejected()` - _(no documentation)_
 
+## ProjectFileTextTests (class)
+
+`public class ProjectFileTextTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/ProjectFileTextTests.cs:10-162`
+
+_(no documentation)_
+
+**Members**
+
+- `public void WriteThenRead_EveryField_IsKept()` - _(no documentation)_
+- `public void WriteThenRead_Alignment_IsKept(TextAlignType alignment)` - _(no documentation)_
+- `public void Write_DefaultText_LeavesOutTheOptionalEntries()` - _(no documentation)_
+- `public void Read_TextWithoutOptionalEntries_UsesTheDefaults()` - _(no documentation)_
+- `public void Read_UnknownAlignment_FailsWithInvalidValue()` - _(no documentation)_
+- `public void Read_ValueOutOfRange_FailsWithInvalidValue(string extra)` - _(no documentation)_
+- `public void Read_TextMissingItsBox_FailsAsNotAProjectFile()` - _(no documentation)_
+- `public void WriteThenRead_DocumentWithoutText_StillLoads()` - _(no documentation)_
+- `public void WriteThenRead_TextInAGroup_IsKept()` - _(no documentation)_
+
 ## ProjectFileValidationTests (class)
 
 `public class ProjectFileValidationTests`
@@ -336,3 +356,28 @@ _(no documentation)_
 - `public void ToUtf8_UnrotatedShapes_HaveNoTransform()` - _(no documentation)_
 - `public void ToUtf8_RotationNumbers_UseADotUnderAGermanCulture()` - _(no documentation)_
 - `public void ToUtf8_RotatedShapeWithOpacityAndStroke_KeepsAllAttributes()` - _(no documentation)_
+
+## SvgExportTextTests (class)
+
+`public class SvgExportTextTests`
+
+Source: `tests/PressToShape.Core.Tests/IO/SvgExportTextTests.cs:12-168`
+
+_(no documentation)_
+
+**Members**
+
+- `public void ToUtf8_PointText_WritesTextWithOneTspanAtTheBaseline()` - _(no documentation)_
+- `public void ToUtf8_TwoLines_WritesATspanForEachWithItsBaseline()` - _(no documentation)_
+- `public void ToUtf8_BoldItalicSpacing_WritesTheFontAttributes()` - _(no documentation)_
+- `public void ToUtf8_PointTextAlignment_WritesTheAnchorAndTheAnchorPosition(TextAlignType alignment, string? anchor, string x)` - _(no documentation)_
+- `public void ToUtf8_AreaTextCenter_AnchorsAtTheMiddleOfTheBox()` - _(no documentation)_
+- `public void ToUtf8_AreaText_WritesTheWrappedLines()` - _(no documentation)_
+- `public void ToUtf8_SpecialCharacters_AreEscapedAndParseBack()` - _(no documentation)_
+- `public void ToUtf8_ControlCharacters_AreReplaced()` - _(no documentation)_
+- `public void ToUtf8_RotatedText_WritesTheTransformAroundTheBoxCenter()` - _(no documentation)_
+- `public void ToUtf8_StrokeAndNoFill_WritesThemOnTheTextElement()` - _(no documentation)_
+- `public void ToUtf8_HiddenText_IsNotExported()` - _(no documentation)_
+- `public void ToUtf8_EmptyText_WritesNoTspan()` - _(no documentation)_
+- `public void ToUtf8_TextInAGroup_IsExportedInsideTheGroup()` - _(no documentation)_
+- `public void ToUtf8_NullMeasurer_Throws()` - _(no documentation)_

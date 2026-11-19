@@ -12,7 +12,7 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 
 ### src/PressToShape.App/Styles/Controls.axaml
 
-- 2 resources, 44 styles
+- 2 resources, 48 styles
 - style `^:pointerover /template/ Border#PART_LayoutRoot` at line 37, 1 setters
 - style `^:pointerover` at line 40, 1 setters
 - style `^:selected` at line 43, 1 setters
@@ -48,15 +48,19 @@ Only XAML files of this solution are read. Keys that the framework or a theme de
 - style `TextBlock.error` at line 221, 3 setters
 - style `TextBlock.unit` at line 228, 3 setters
 - style `TextBox.field` at line 233, 8 setters
-- style `.touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider` at line 248, 1 setters
-- style `Path.ringWedge` at line 256, 3 setters
-- style `Path.ringWedge.hovered` at line 261, 1 setters
-- style `Path.ringWedge.focused` at line 264, 3 setters
-- style `Path.ringWedge.unavailable.hovered` at line 269, 1 setters
-- style `materialIcons|MaterialIcon.ringIcon` at line 272, 3 setters
-- style `materialIcons|MaterialIcon.ringIcon.unavailable` at line 277, 1 setters
-- style `Ellipse.ringCenter` at line 280, 3 setters
-- style `TextBlock.ringCenterText` at line 285, 4 setters
+- style `TextBox.textEditor` at line 248, 6 setters
+- style `TextBox.textEditor /template/ Border#PART_BorderElement, TextBox.textEditor:pointerover /template/ Border#PART_BorderElement, TextBox.textEditor:focus /template/ Border#PART_BorderElement` at line 256, 2 setters
+- style `Border.textEditorFrame` at line 260, 2 setters
+- style `.touch Button, .touch ToggleButton, .touch DropDownButton, .touch CheckBox, .touch TextBox, .touch ComboBox, .touch MenuItem, .touch ListBoxItem, .touch TabItem, .touch Slider` at line 269, 1 setters
+- style `.touch TextBox.textEditor` at line 272, 1 setters
+- style `Path.ringWedge` at line 280, 3 setters
+- style `Path.ringWedge.hovered` at line 285, 1 setters
+- style `Path.ringWedge.focused` at line 288, 3 setters
+- style `Path.ringWedge.unavailable.hovered` at line 293, 1 setters
+- style `materialIcons|MaterialIcon.ringIcon` at line 296, 3 setters
+- style `materialIcons|MaterialIcon.ringIcon.unavailable` at line 301, 1 setters
+- style `Ellipse.ringCenter` at line 304, 3 setters
+- style `TextBlock.ringCenterText` at line 309, 4 setters
 
 ### src/PressToShape.App/Styles/Theme.axaml
 

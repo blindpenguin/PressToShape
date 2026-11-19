@@ -162,6 +162,64 @@ A group of shapes that is selected, moved and styled as one. Children keep their
 - Injected into `PressToShape.Core.Documents.ShapeLocation`
 - Injected into `PressToShape.Core.Tests.Documents.LayerOperationsTests.Fixture`
 
+## ITextMeasurer (interface)
+
+`public interface ITextMeasurer`
+
+Source: `src/PressToShape.Core/Shapes/ITextMeasurer.cs:21-25`
+
+Measures and wraps a text. The model has no text engine, so the app implements this with its own and tests use a fake. Point text is not wrapped. Area text wraps at the width of its box.
+
+**Members**
+
+- `public TextLayoutResult Layout(TextShape text)` - Lays out the text with its content, font settings, alignment and (for area text) box width.
+
+**Relationships**
+
+- Implemented by `PressToShape.App.Services.AvaloniaTextMeasurer`
+- Implemented by `PressToShape.Core.Tests.FakeTextMeasurer`
+- Injected into `PressToShape.App.Services.FileServices`
+- Injected into `PressToShape.App.ViewModels.Editor.CanvasAreaViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.InspectorViewModel`
+- Injected into `PressToShape.App.ViewModels.Editor.PropertiesViewModel`
+- Injected into `PressToShape.App.Workspace.CanvasInteraction`
+- Injected into `PressToShape.App.Workspace.DocumentFileService`
+
+## ITextOutliner (interface)
+
+`public interface ITextOutliner`
+
+Source: `src/PressToShape.Core/Shapes/ITextOutliner.cs:6-13`
+
+Turns a text into the closed contours of its glyphs. The app implements this with its font engine, tests use a fake.
+
+**Members**
+
+- `public IReadOnlyList<DocumentSubPath>? Outline(TextShape text)` - The closed glyph contours of the text in document coordinates (the position of the text's box is included, the rotation is not). Returns null when the text has no outlines: it is empty or blank, or the font cannot give them.
+
+**Relationships**
+
+- Implemented by `PressToShape.App.Services.AvaloniaTextOutliner`
+- Implemented by `PressToShape.Core.Tests.Documents.TextOutlineTests.CountingOutliner`
+- Implemented by `PressToShape.Core.Tests.FakeTextOutliner`
+- Injected into `PressToShape.App.Services.FileServices`
+- Injected into `PressToShape.App.Workspace.PathEditor`
+
+## LaidOutLine (record)
+
+`public readonly record LaidOutLine : IEquatable<LaidOutLine>`
+
+Source: `src/PressToShape.Core/Shapes/ITextMeasurer.cs:9-9`
+
+One laid-out line of a text.
+
+**Members**
+
+- `public LaidOutLine(string Text, double X, double Baseline)` - One laid-out line of a text.
+- `public double Baseline { get; init; }` - Baseline of the line, relative to the top edge of the text's box, in document units.
+- `public string Text { get; init; }` - The characters of the line, without the line break.
+- `public double X { get; init; }` - Start of the line, relative to the left edge of the text's box, in document units. It follows the alignment.
+
 ## NodeHandleSide (enum)
 
 `public enum NodeHandleSide`
@@ -438,6 +496,7 @@ A drawable shape with a position, a size and an appearance. Immutable: change it
 - Inherited by `PressToShape.Core.Shapes.GroupShape`
 - Inherited by `PressToShape.Core.Shapes.PathShape`
 - Inherited by `PressToShape.Core.Shapes.RectangleShape`
+- Inherited by `PressToShape.Core.Shapes.TextShape`
 - Injected into `PressToShape.App.Workspace.SelectionQueries.Node`
 - Injected into `PressToShape.Core.Documents.ShapeLocation`
 - Injected into `PressToShape.Core.Documents.ShapeTree.Found`
@@ -469,3 +528,88 @@ One run of connected nodes of a PressToShape.Core.Shapes.PathShape, open or clos
 - `public ImmutableArray<PathNode> Nodes { get; }` - The nodes in drawing order, at least two.
 - `public bool IsClosed { get; }` - Whether the last node connects back to the first one.
 - `public int SegmentCount { get; }` - The number of segments: the nodes minus 1 when open, the nodes when closed.
+
+## TextAlignType (enum)
+
+`public enum TextAlignType`
+
+Source: `src/PressToShape.Core/Shapes/TextAlignType.cs:4-14`
+
+How the lines of a text are aligned. For point text the lines align to each other, for area text to the box.
+
+**Members**
+
+- `public Left` - Lines start at the left edge. The default.
+- `public Center` - Lines are centered.
+- `public Right` - Lines end at the right edge.
+
+## TextFormatChange (record)
+
+`public sealed record TextFormatChange : IEquatable<TextFormatChange>`
+
+Source: `src/PressToShape.Core/Shapes/TextFormatChange.cs:13-38`
+
+A change of the formatting of texts. Each value that is set replaces the one of the text, a value that is null leaves it as it is.
+
+**Members**
+
+- `public TextFormatChange(string? FontFamily = null, double? FontSize = null, bool? IsBold = null, bool? IsItalic = null, TextAlignType? Alignment = null, double? LineSpacing = null, double? LetterSpacing = null)` - A change of the formatting of texts. Each value that is set replaces the one of the text, a value that is null leaves it as it is.
+- `public string? FontFamily { get; init; }` - The font family name, or null.
+- `public double? FontSize { get; init; }` - The font size, or null.
+- `public bool? IsBold { get; init; }` - Bold on or off, or null.
+- `public bool? IsItalic { get; init; }` - Italic on or off, or null.
+- `public TextAlignType? Alignment { get; init; }` - The alignment, or null.
+- `public double? LineSpacing { get; init; }` - The line spacing multiplier, or null.
+- `public double? LetterSpacing { get; init; }` - The letter spacing, or null.
+- `public TextShape ApplyTo(TextShape text)` - The text with the values of this change. The same instance if nothing differs. Invalid values throw like on the text itself.
+
+## TextLayoutResult (record)
+
+`public sealed record TextLayoutResult : IEquatable<TextLayoutResult>`
+
+Source: `src/PressToShape.Core/Shapes/ITextMeasurer.cs:15-15`
+
+The result of laying out a text.
+
+**Members**
+
+- `public TextLayoutResult(IReadOnlyList<LaidOutLine> Lines, double Width, double Height)` - The result of laying out a text.
+- `public double Height { get; init; }` - Height of all lines together in document units.
+- `public IReadOnlyList<LaidOutLine> Lines { get; init; }` - The lines from top to bottom. Empty for an empty text.
+- `public double Width { get; init; }` - Width of the widest line in document units.
+
+## TextShape (record)
+
+`public sealed record TextShape : Shape, IEquatable<TextShape>`
+
+Source: `src/PressToShape.Core/Shapes/TextShape.cs:10-116`
+
+A text with one font setting for the whole object. Point text (PressToShape.Core.Shapes.TextShape.IsArea false) grows with its content and its box is the measured extent, which the app writes after each measure. Area text wraps at the width of its box. The model does not measure or wrap, see ITextMeasurer.
+
+**Members**
+
+- `public int MaxTextLength` - The longest text the model accepts, in characters.
+- `public int MaxFontFamilyLength` - The longest font family name the model accepts, in characters.
+- `public double MinFontSize` - The smallest font size.
+- `public double MaxFontSize` - The largest font size.
+- `public double MinLineSpacing` - The smallest line spacing multiplier.
+- `public double MaxLineSpacing` - The largest line spacing multiplier.
+- `public double MinLetterSpacing` - The smallest letter spacing.
+- `public double MaxLetterSpacing` - The largest letter spacing.
+- `public string DefaultFontFamily` - The font family of a new text.
+- `public double DefaultFontSize` - The font size of a new text.
+- `public string Text { get; init; }` - The content. Not null, may be empty, may hold \n as a line break. At most PressToShape.Core.Shapes.TextShape.MaxTextLength characters.
+- `public bool IsArea { get; init; }` - Whether this is area text (wraps at the box width) and not point text.
+- `public string FontFamily { get; init; }` - The font family name as the user chose it, kept even when the font is not installed. Not empty.
+- `public double FontSize { get; init; }` - Font size in document units, from PressToShape.Core.Shapes.TextShape.MinFontSize to PressToShape.Core.Shapes.TextShape.MaxFontSize.
+- `public bool IsBold { get; init; }` - Whether the font is bold.
+- `public bool IsItalic { get; init; }` - Whether the font is italic.
+- `public TextAlignType Alignment { get; init; }` - The alignment of the lines.
+- `public double LineSpacing { get; init; }` - Line spacing as a multiplier of the font's line height, from PressToShape.Core.Shapes.TextShape.MinLineSpacing to PressToShape.Core.Shapes.TextShape.MaxLineSpacing. 1 is the font's own.
+- `public double LetterSpacing { get; init; }` - Extra space after each character in document units, from PressToShape.Core.Shapes.TextShape.MinLetterSpacing to PressToShape.Core.Shapes.TextShape.MaxLetterSpacing. 0 is the font's own.
+- `protected bool ContainsLocal(double x, double y)` - Whether the point lies inside the shape's geometry before any rotation is applied.
+
+**Relationships**
+
+- Inherits `PressToShape.Core.Shapes.Shape`
+- Injected into `PressToShape.App.Workspace.TextEditSession`

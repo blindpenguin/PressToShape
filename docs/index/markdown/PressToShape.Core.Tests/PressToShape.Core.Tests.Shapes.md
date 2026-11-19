@@ -553,3 +553,29 @@ _(no documentation)_
 - `public void RotatedBounds_Rotated45_IsTheDiagonalBox()` - _(no documentation)_
 - `public void RotatedBounds_ContainTheTurnedCorners()` - _(no documentation)_
 - `public void Document_HitTest_FindsARotatedShapeWhereItIs()` - _(no documentation)_
+
+## TextShapeTests (class)
+
+`public class TextShapeTests`
+
+Source: `tests/PressToShape.Core.Tests/Shapes/TextShapeTests.cs:7-146`
+
+_(no documentation)_
+
+**Members**
+
+- `public void New_Default_HasDocumentedDefaults()` - _(no documentation)_
+- `public void FontSize_InsideRange_IsAccepted(double size)` - _(no documentation)_
+- `public void FontSize_OutsideRange_Throws(double size)` - _(no documentation)_
+- `public void LineSpacing_AtLimit_IsAccepted(double spacing)` - _(no documentation)_
+- `public void LineSpacing_OutsideRange_Throws(double spacing)` - _(no documentation)_
+- `public void LetterSpacing_AtLimit_IsAccepted(double spacing)` - _(no documentation)_
+- `public void LetterSpacing_OutsideRange_Throws(double spacing)` - _(no documentation)_
+- `public void Text_Null_Throws()` - _(no documentation)_
+- `public void Text_AtMaxLength_IsAcceptedAndOneMoreThrows()` - _(no documentation)_
+- `public void FontFamily_EmptyOrBlank_Throws(string name)` - _(no documentation)_
+- `public void FontFamily_TooLong_Throws()` - _(no documentation)_
+- `public void With_ChangedText_KeepsIdAndOtherValues()` - _(no documentation)_
+- `public void With_InvalidValue_Throws()` - _(no documentation)_
+- `public void Contains_Point_IsInsideTheBox(double x, double y, bool expected)` - _(no documentation)_
+- `public void Contains_RotatedQuarterTurn_FollowsTheTurnedBox()` - _(no documentation)_

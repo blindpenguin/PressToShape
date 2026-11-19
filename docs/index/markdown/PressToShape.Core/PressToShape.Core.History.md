@@ -35,7 +35,7 @@ The undo and redo history of a document, kept as snapshots. Documents are immuta
 
 `public enum HistoryStepType`
 
-Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-206`
+Source: `src/PressToShape.Core/History/HistoryStepType.cs:4-218`
 
 What a step of the history did. The app turns each value into a translated name.
 
@@ -108,3 +108,7 @@ What a step of the history did. The app turns each value into a translated name.
 - `public CreateGuide` - A guide was dragged out of a ruler.
 - `public MoveGuide` - A guide was moved.
 - `public DeleteGuide` - A guide was deleted.
+- `public CreateText` - A text was created with its content.
+- `public EditText` - The content of a text was edited.
+- `public FormatText` - The font, size, style, alignment or spacing of texts was changed.
+- `public ConvertTextToPath` - Texts were converted to paths.

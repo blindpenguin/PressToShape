@@ -1,6 +1,6 @@
 # Feature gap: what a vector drawing app is expected to have, and where PressToShape is
 
-Status: **first draft** (2026-11-15), updated 2026-11-18 for ruler guides and smart guides, and for the grid, snapping to the grid and to objects and the Show Rulers switch, and 2026-11-17 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, rounded corners on rectangles, layer management, compound paths with the boolean operations, and Convert Object to Path and Reverse Direction. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
+Status: **first draft** (2026-11-15), updated 2026-11-18 for text (point and area text, formatting, SVG export, Convert to Outlines), for ruler guides and smart guides, and for the grid, snapping to the grid and to objects and the Show Rulers switch, and 2026-11-17 for groups, arrange, lock and hide, the object list, the ring context menu, the path model with the Pen tool, the Node and Direct Select tools, rounded corners on rectangles, layer management, compound paths with the boolean operations, and Convert Object to Path and Reverse Direction. Based on the code and the steering docs, not on a user survey. It is a planning aid, not a commitment. Scope decisions are in `.spec-workflow/steering/product.md`.
 
 Columns:
 - **Done**: works in the app now.
@@ -27,7 +27,7 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 | Line and polyline | Done (an open path of the Pen) | Unplanned |
 | Rounded corners on rectangles | Done: four radii per rectangle, set in the Properties panel or by radius handles, saved, exported to SVG | Unplanned |
 | Arc, pie and polygon (n sides) | Missing | Unplanned |
-| Text | UI only | After MVP |
+| Text | Done: point text (click) and area text (drag a box), typed on the canvas, see section 7 | After MVP |
 | Eraser, knife / scissors | Missing | Unplanned |
 
 ## 2. Selection and editing
@@ -112,11 +112,11 @@ The structural base is in place: **`PathShape`** (line and cubic bezier segments
 
 | Feature | State | Stage |
 |---|---|---|
-| Point and area text | UI only | After MVP |
-| Font, size, weight, alignment, spacing | UI only (menu items) | After MVP |
+| Point and area text | Done: the Text tool (T) creates point text with a click and area text with a drag, snapped like shapes; typed on the canvas (double-click with the Select tool edits it); saved in the project file and exported as SVG `<text>` (the tablet was not checked yet) | After MVP |
+| Font, size, weight, alignment, spacing | Done: one format for the whole text (font, size, bold, italic, left/center/right, line and letter spacing) in the Text section of the Properties tab; the next text uses the last values. No formatting of single characters | After MVP |
 | Text on a path | Missing | Unplanned |
-| Convert text to path | UI only | After MVP |
-| Font fallback and missing-font handling | Missing | Unplanned |
+| Convert text to path | Done: "Convert Text to Path" (Text menu) and "Convert Object to Path" make one compound path per text with the counters as holes; boolean operations wait until the text is converted | After MVP |
+| Font fallback and missing-font handling | Done: a font that is not installed keeps its name in the file, is drawn with the platform fallback and is marked "(not installed)" in the font list | Unplanned |
 
 ## 8. History and files
 
