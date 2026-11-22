@@ -130,7 +130,8 @@ jobs:
             echo
             echo "## Changes"
             echo
-            git log --no-merges --pretty='- %s (%h)' "$range"
+            # Commits that only regenerate the code index (docs/index) are left out. They follow almost every change and add nothing to the notes.
+            git log --no-merges --pretty='- %s (%h)' "$range" -- . ':(exclude)docs/index'
           } > notes.md
           gh release create "$tag" dist/* \
             --target "$sha" \
