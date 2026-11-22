@@ -16,8 +16,8 @@ The ring context menu. It fills the canvas area (so a press beside the ring is c
 `T:PressToShape.App.Views.Desktop.DesktopShellView` at src/PressToShape.App/Views/Desktop/DesktopShellView.axaml.cs:8. XAML: `src/PressToShape.App/Views/Desktop/DesktopShellView.axaml`, 21 bindings.
 _(no documentation)_
 
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:1); 5 commands, 10 test classes
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DesktopShellKeyBindingTests.cs:29); 5 commands, 10 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/DesktopShellView.axaml:1); 5 commands, 11 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DesktopShellKeyBindingTests.cs:29); 5 commands, 11 test classes
 
 ### MenuBarView
 
@@ -32,9 +32,14 @@ _(no documentation)_
 `T:PressToShape.App.Views.Desktop.SettingsWindow` at src/PressToShape.App/Views/Desktop/SettingsWindow.axaml.cs:7. XAML: `src/PressToShape.App/Views/Desktop/SettingsWindow.axaml`, 0 bindings.
 _(no documentation)_
 
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (src/PressToShape.App/Services/AvaloniaSettingsDialogs.cs:29); 5 commands, 5 test classes
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/SettingsWindow.axaml:1); 5 commands, 5 test classes
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:118); 5 commands, 5 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (src/PressToShape.App/Services/AvaloniaSettingsDialogs.cs:29); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: x:DataType (src/PressToShape.App/Views/Desktop/SettingsWindow.axaml:1); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:81); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:82); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:97); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:98); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:99); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:118); 5 commands, 6 test classes
 
 ### StatusBarView
 
@@ -103,14 +108,14 @@ _(no documentation)_
 
 ### LayersView
 
-`T:PressToShape.App.Views.Editor.LayersView` at src/PressToShape.App/Views/Editor/LayersView.axaml.cs:16. XAML: `src/PressToShape.App/Views/Editor/LayersView.axaml`, 35 bindings.
+`T:PressToShape.App.Views.Editor.LayersView` at src/PressToShape.App/Views/Editor/LayersView.axaml.cs:16. XAML: `src/PressToShape.App/Views/Editor/LayersView.axaml`, 36 bindings.
 The Layers tab. The view only turns pointer input into calls of the view model: a press selects, a double-tap renames, and a drag (after a long press for a finger) drops an object above another one of the same group or onto a layer, or a layer above another layer.
 
-- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/LayersView.axaml:1); 6 commands, 7 test classes
-- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/LayersViewLayerTests.cs:35); 6 commands, 7 test classes
-- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/LayersViewTests.cs:42); 6 commands, 7 test classes
-- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:244); 6 commands, 7 test classes
-- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.LayersViewModel maps to PressToShape.App.Views.Editor.LayersView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:29 (src/PressToShape.App/Views/Editor/InspectorView.axaml:29); 6 commands, 7 test classes
+- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/LayersView.axaml:1); 6 commands, 8 test classes
+- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/LayersViewLayerTests.cs:35); 6 commands, 8 test classes
+- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/LayersViewTests.cs:42); 6 commands, 8 test classes
+- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/TouchSizesTests.cs:244); 6 commands, 8 test classes
+- view model `LayersViewModel` (`T:PressToShape.App.ViewModels.Editor.LayersViewModel`), inferred: ViewLocator (registered in Application.DataTemplates at src/PressToShape.App/PressToShapeApp.axaml:10) picks views by name: 'ViewModel' is replaced by 'View' in the full type name, so PressToShape.App.ViewModels.Editor.LayersViewModel maps to PressToShape.App.Views.Editor.LayersView. Evidence: ContentControl Content binding at src/PressToShape.App/Views/Editor/InspectorView.axaml:29 (src/PressToShape.App/Views/Editor/InspectorView.axaml:29); 6 commands, 8 test classes
 
 ### PlaceholderPanelView
 
@@ -142,10 +147,10 @@ The Properties tab. The code-behind only forwards: the number fields (shared wit
 `T:PressToShape.App.Views.Editor.SettingsView` at src/PressToShape.App/Views/Editor/SettingsView.axaml.cs:6. XAML: `src/PressToShape.App/Views/Editor/SettingsView.axaml`, 8 bindings.
 The settings with the category list at the side. Used in the desktop window.
 
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/SettingsView.axaml:1); 5 commands, 5 test classes
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:55); 5 commands, 5 test classes
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:69); 5 commands, 5 test classes
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:94); 5 commands, 5 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: x:DataType (src/PressToShape.App/Views/Editor/SettingsView.axaml:1); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:55); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:69); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:94); 5 commands, 6 test classes
 
 ### SnappingSettingsPageView
 
@@ -175,24 +180,31 @@ _(no documentation)_
 `T:PressToShape.App.Views.MainWindow` at src/PressToShape.App/Views/MainWindow.axaml.cs:6. XAML: `src/PressToShape.App/Views/MainWindow.axaml`, 1 bindings.
 _(no documentation)_
 
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:41); 5 commands, 10 test classes
-- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1); 5 commands, 10 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (src/PressToShape.App/AppLayout.cs:41); 5 commands, 11 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1); 5 commands, 11 test classes
+- view model `DesktopShellViewModel` (`T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/MainWindowCloseTests.cs:28); 5 commands, 11 test classes
 
 ### MessageDialogView
 
 `T:PressToShape.App.Views.MessageDialogView` at src/PressToShape.App/Views/MessageDialogView.axaml.cs:6. XAML: `src/PressToShape.App/Views/MessageDialogView.axaml`, 6 bindings.
 The message and the buttons of a message dialog. Shown in a window on the desktop and over the layout on a platform without windows.
 
-- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: x:DataType (src/PressToShape.App/Views/MessageDialogView.axaml:1); 0 commands, 6 test classes
-- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:54 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:54); 0 commands, 6 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: x:DataType (src/PressToShape.App/Views/MessageDialogView.axaml:1); 0 commands, 7 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:54 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:54); 0 commands, 7 test classes
 
 ### MessageDialogWindow
 
 `T:PressToShape.App.Views.MessageDialogWindow` at src/PressToShape.App/Views/MessageDialogWindow.axaml.cs:7. XAML: `src/PressToShape.App/Views/MessageDialogWindow.axaml`, 1 bindings.
 _(no documentation)_
 
-- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext assignment (src/PressToShape.App/Services/AvaloniaMessageDialogs.cs:43); 0 commands, 6 test classes
-- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: x:DataType (src/PressToShape.App/Views/MessageDialogWindow.axaml:1); 0 commands, 6 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext assignment (src/PressToShape.App/Services/AvaloniaMessageDialogs.cs:43); 0 commands, 7 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: x:DataType (src/PressToShape.App/Views/MessageDialogWindow.axaml:1); 0 commands, 7 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:35); 0 commands, 7 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:36); 0 commands, 7 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:51); 0 commands, 7 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:52); 0 commands, 7 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:53); 0 commands, 7 test classes
+- view model `MessageDialogViewModel` (`T:PressToShape.App.ViewModels.MessageDialogViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:66); 0 commands, 7 test classes
 
 ### TabletColorSwatchView
 
@@ -216,11 +228,11 @@ The tabbed panel of the tablet layout, with an icon for each tab. All state is i
 `T:PressToShape.App.Views.Tablet.TabletSettingsView` at src/PressToShape.App/Views/Tablet/TabletSettingsView.axaml.cs:6. XAML: `src/PressToShape.App/Views/Tablet/TabletSettingsView.axaml`, 13 bindings.
 The settings for the tablet layout: the category list, then the page of a category.
 
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: x:DataType (src/PressToShape.App/Views/Tablet/TabletSettingsView.axaml:1); 5 commands, 5 test classes
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:38 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:38); 5 commands, 5 test classes
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:135); 5 commands, 5 test classes
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:157); 5 commands, 5 test classes
-- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:174); 5 commands, 5 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: x:DataType (src/PressToShape.App/Views/Tablet/TabletSettingsView.axaml:1); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext binding at src/PressToShape.App/Views/Tablet/TabletShellView.axaml:38 (src/PressToShape.App/Views/Tablet/TabletShellView.axaml:38); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:135); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:157); 5 commands, 6 test classes
+- view model `SettingsViewModel` (`T:PressToShape.App.ViewModels.Editor.SettingsViewModel`), verified: DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:174); 5 commands, 6 test classes
 
 ### TabletShellView
 
@@ -298,7 +310,7 @@ The compact toolbar of the tablet layout. All behavior is in PressToShape.App.Vi
 Types that derive from a base class of a linked view model but that no view links to. A view may still create them in code.
 
 - `BareShell` (`T:PressToShape.App.Tests.EditorShellViewModelRingTests.BareShell`) at tests/PressToShape.App.Tests/EditorShellViewModelRingTests.cs:18
-- `BareShell` (`T:PressToShape.App.Tests.EditorShellViewModelTests.BareShell`) at tests/PressToShape.App.Tests/EditorShellViewModelTests.cs:17
+- `BareShell` (`T:PressToShape.App.Tests.EditorShellViewModelTests.BareShell`) at tests/PressToShape.App.Tests/EditorShellViewModelTests.cs:18
 - `BareShell` (`T:PressToShape.App.Tests.OpenSettingsCommandTests.BareShell`) at tests/PressToShape.App.Tests/OpenSettingsCommandTests.cs:13
 - `BareShell` (`T:PressToShape.App.Tests.RingMenuControlTests.BareShell`) at tests/PressToShape.App.Tests/RingMenuControlTests.cs:28
 - `TestShell` (`T:PressToShape.App.Tests.TestShell`) at tests/PressToShape.App.Tests/TestShell.cs:10

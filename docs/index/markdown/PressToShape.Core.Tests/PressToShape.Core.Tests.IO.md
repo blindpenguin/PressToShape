@@ -226,7 +226,7 @@ _(no documentation)_
 
 `public class ProjectFileValidationTests`
 
-Source: `tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs:8-331`
+Source: `tests/PressToShape.Core.Tests/IO/ProjectFileValidationTests.cs:8-364`
 
 _(no documentation)_
 
@@ -243,6 +243,10 @@ _(no documentation)_
 - `public void Read_BadIds_ReturnsInvalidValue(string from, string to)` - _(no documentation)_
 - `public void Read_DuplicateLayerIds_ReturnsInvalidValue()` - _(no documentation)_
 - `public void Read_DuplicateShapeIdsAcrossLayers_ReturnsInvalidValue()` - _(no documentation)_
+- `public void Read_ShapeWithTheIdOfItsLayer_ReturnsInvalidValue()` - _(no documentation)_
+- `public void Read_ShapeWithTheIdOfALaterLayer_ReturnsInvalidValue()` - _(no documentation)_
+- `public void Read_ShapeInAGroupWithTheIdOfALayer_ReturnsInvalidValue()` - _(no documentation)_
+- `public void Read_AllIdsDifferent_StillSucceeds()` - _(no documentation)_
 - `public void Read_ShapeType_OnlyKnownTypesAreAccepted(string type)` - _(no documentation)_
 - `public void Read_BadShapeEntries_ReturnsNotProjectFile(string from, string to)` - _(no documentation)_
 - `public void Read_ValuesTheModelRejects_ReturnsInvalidValue(string from, string to)` - _(no documentation)_

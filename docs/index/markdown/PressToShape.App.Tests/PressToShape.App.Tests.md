@@ -120,7 +120,7 @@ _(no documentation)_
 
 `public class CanvasAreaViewModelDoubleTapTests`
 
-Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelDoubleTapTests.cs:12-160`
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelDoubleTapTests.cs:12-182`
 
 _(no documentation)_
 
@@ -135,6 +135,9 @@ _(no documentation)_
 - `public void TapThenADragOfTheSameShape_StillDragsAndIsNoDoubleTap()` - _(no documentation)_
 - `public void DoubleTap_WithAnotherTool_DoesNothing()` - _(no documentation)_
 - `public void TwoFingerGesture_BetweenTaps_BreaksTheDoubleTap()` - _(no documentation)_
+- `public void DoubleClick_WithAnotherToolByTouch_PressesAsATouch()` - _(no documentation)_
+- `public void DoubleClick_WithAnotherToolByPen_PressesAsAPen()` - _(no documentation)_
+- `public void DoubleClick_WithAnotherToolByMouse_PressesAsAMouse()` - _(no documentation)_
 
 ## CanvasAreaViewModelGridTests (class)
 
@@ -185,7 +188,7 @@ _(no documentation)_
 
 `public class CanvasAreaViewModelLongPressTests`
 
-Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelLongPressTests.cs:12-226`
+Source: `tests/PressToShape.App.Tests/CanvasAreaViewModelLongPressTests.cs:12-251`
 
 _(no documentation)_
 
@@ -204,6 +207,8 @@ _(no documentation)_
 - `public void Tick_PenMovedPastTheSlop_DoesNotOpen()` - _(no documentation)_
 - `public void Tick_NothingWatched_DoesNothing()` - _(no documentation)_
 - `public void Tick_OnEmptyCanvas_OpensTheEmptyCanvasRing()` - _(no documentation)_
+- `public void Cancel_PenPressThenCaptureLost_StopsTheWatchAndTheRingStaysClosed()` - _(no documentation)_
+- `public void Tick_PenPressWithoutCancel_StillOpensTheRing()` - _(no documentation)_
 
 ## CanvasAreaViewModelNodeTests (class)
 
@@ -1527,6 +1532,22 @@ _(no documentation)_
 - `public void CutDuplicateDeleteAndSelectCommands_DoTheirWork()` - _(no documentation)_
 - `public void TheEditMenuItems_UseTheShellCommands()` - _(no documentation)_
 
+## DialogWindowCloseTests (class)
+
+`public class DialogWindowCloseTests`
+
+Source: `tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:13-106`
+
+_(no documentation)_
+
+**Members**
+
+- `public void MessageDialog_ThePreviousViewModelRequestsClose_DoesNotCloseTheWindow()` - _(no documentation)_
+- `public void MessageDialog_TheCurrentViewModelRequestsClose_ClosesTheWindowOnce()` - _(no documentation)_
+- `public void MessageDialog_AfterTheWindowClosed_AnotherRequestIsIgnored()` - _(no documentation)_
+- `public void Settings_ThePreviousViewModelRequestsClose_DoesNotCloseTheWindow()` - _(no documentation)_
+- `public void Settings_TheCurrentViewModelRequestsClose_ClosesTheWindowOnce()` - _(no documentation)_
+
 ## DistanceLabelsTests (class)
 
 `public sealed class DistanceLabelsTests`
@@ -1646,18 +1667,45 @@ _(no documentation)_
 
 `public class DocumentCanvasControlTextTests`
 
-Source: `tests/PressToShape.App.Tests/DocumentCanvasControlTextTests.cs:13-93`
+Source: `tests/PressToShape.App.Tests/DocumentCanvasControlTextTests.cs:13-99`
 
 _(no documentation)_
 
 **Members**
 
 - `public void Render_FilledText_DoesNotThrow()` - _(no documentation)_
+- `public void Render_StrokedTextWithACharacterOfAnotherScript_DoesNotThrow()` - _(no documentation)_
 - `public void Render_StrokedTextWithoutFill_DoesNotThrow()` - _(no documentation)_
 - `public void Render_FillAndStrokeRotatedWithOpacityAtZoom_DoesNotThrow()` - _(no documentation)_
 - `public void Render_AreaTextWithTheDefaultFont_DoesNotThrow()` - _(no documentation)_
 - `public void Render_EmptyTextAndTextWithEmptyLines_DoesNotThrow()` - _(no documentation)_
 - `public void Render_NoNeedForAMeasurerToBeSet_DoesNotThrow()` - _(no documentation)_
+
+## DocumentFileServiceReleaseTests (class)
+
+`public sealed class DocumentFileServiceReleaseTests`
+
+Source: `tests/PressToShape.App.Tests/DocumentFileServiceReleaseTests.cs:15-236`
+
+_(no documentation)_
+
+**Members**
+
+- `public Task Open_FirstFile_ReleasesNothing()` - _(no documentation)_
+- `public Task Open_AnotherFile_ReleasesThePreviousOne()` - _(no documentation)_
+- `public Task Open_TheCurrentFileAgain_ReleasesNothing()` - _(no documentation)_
+- `public Task Open_FileThatCannotBeRead_ReleasesThePickedOneAndKeepsTheCurrent()` - _(no documentation)_
+- `public Task Open_NotAProjectFile_ReleasesThePickedOne()` - _(no documentation)_
+- `public Task Open_TheCurrentFileThatCannotBeRead_DoesNotReleaseIt()` - _(no documentation)_
+- `public Task SaveAs_AnotherFile_ReleasesThePreviousOne()` - _(no documentation)_
+- `public Task SaveAs_TheCurrentFile_ReleasesNothingAndSaveStillWorks()` - _(no documentation)_
+- `public Task SaveAs_WriteFails_ReleasesThePickedFileAndKeepsTheCurrent()` - _(no documentation)_
+- `public Task Save_CurrentFileWriteFails_DoesNotReleaseIt()` - _(no documentation)_
+- `public Task New_AfterOpeningAFile_ReleasesIt()` - _(no documentation)_
+- `public Task New_WithoutAFile_ReleasesNothing()` - _(no documentation)_
+- `public Task ExportSvg_ReleasesTheChosenFileAndKeepsTheCurrent()` - _(no documentation)_
+- `public Task ExportSvg_WriteFails_StillReleasesTheChosenFile()` - _(no documentation)_
+- `public Task ExportSvg_Cancelled_ReleasesNothing()` - _(no documentation)_
 
 ## DocumentFileServiceTests (class)
 
@@ -1787,7 +1835,7 @@ _(no documentation)_
 
 `public class EditorShellViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/EditorShellViewModelTests.cs:14-157`
+Source: `tests/PressToShape.App.Tests/EditorShellViewModelTests.cs:15-215`
 
 _(no documentation)_
 
@@ -1801,6 +1849,11 @@ _(no documentation)_
 - `public void UndoAndRedo_FollowTheHistory()` - _(no documentation)_
 - `public Task ConfirmClose_WithoutChanges_AllowsClosingWithoutAQuestion()` - _(no documentation)_
 - `public Task ConfirmClose_WithChanges_AsksAndFollowsTheAnswer()` - _(no documentation)_
+- `public Task TryConfirmClose_WithoutChanges_AllowsClosingWithoutAMessage()` - _(no documentation)_
+- `public Task TryConfirmClose_QuestionAnswered_FollowsTheAnswerWithoutAMessage()` - _(no documentation)_
+- `public Task TryConfirmClose_TheQuestionFails_KeepsTheWindowOpenAndShowsOneError()` - _(no documentation)_
+- `public Task TryConfirmClose_TheErrorCannotBeShown_StillDoesNotThrow()` - _(no documentation)_
+- `public Task TryConfirmClose_Cancelled_IsNotSwallowed()` - _(no documentation)_
 - `public void FitToWindow_UsesTheCanvasViewport()` - _(no documentation)_
 
 ## EditorStateActiveLayerTests (class)
@@ -2115,7 +2168,7 @@ A catalog source for tests: one dictionary per language code. Counts the loads.
 
 `internal sealed class FakeFileDialogs : IFileDialogs`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:53-89`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:58-94`
 
 Returns queued answers instead of showing pickers, and records what it was asked.
 
@@ -2141,7 +2194,7 @@ Returns queued answers instead of showing pickers, and records what it was asked
 
 `internal sealed class FakeFileStore : IFileStore`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:14-50`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:14-55`
 
 An in-memory file system. Can be told to fail on write or read.
 
@@ -2151,6 +2204,8 @@ An in-memory file system. Can be told to fail on write or read.
 - `public Exception? WriteFailure { get; set; }` - _(no documentation)_
 - `public Exception? ReadFailure { get; set; }` - _(no documentation)_
 - `public int WriteCount { get; private set; }` - _(no documentation)_
+- `public List<string> Released { get; }` - The paths that the service said it will not use again.
+- `public void Release(string path)` - _(no documentation)_
 - `public Task<byte[]> ReadAllBytesAsync(string path, long maxBytes, CancellationToken cancellationToken = default(CancellationToken))` - _(no documentation)_
 - `public Task WriteAllBytesAtomicAsync(string path, byte[] bytes, CancellationToken cancellationToken = default(CancellationToken))` - _(no documentation)_
 
@@ -2175,7 +2230,7 @@ Creates real PressToShape.App.Localization.Localizer instances with fake German 
 
 `internal sealed class FakeMessageDialogs : IMessageDialogs`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:92-111`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:97-122`
 
 Answers the unsaved-changes question with a fixed or queued choice, and records questions and errors.
 
@@ -2184,6 +2239,8 @@ Answers the unsaved-changes question with a fixed or queued choice, and records 
 - `public UnsavedChoice Answer { get; set; }` - _(no documentation)_
 - `public List<string> Questions { get; }` - _(no documentation)_
 - `public List<string> Errors { get; }` - _(no documentation)_
+- `public Exception? AskFailure { get; set; }` - Thrown by the unsaved-changes question, to test the flows that ask it.
+- `public Exception? ErrorFailure { get; set; }` - Thrown by the error message, to test a dialog that cannot be shown.
 - `public Task<UnsavedChoice> AskUnsavedChangesAsync(string documentName)` - _(no documentation)_
 - `public Task ShowErrorAsync(string message)` - _(no documentation)_
 
@@ -2221,7 +2278,7 @@ A picked file kept in memory. Like the Android one, opening it for writing empti
 
 `internal sealed class FakeSettingsDialogs : ISettingsDialogs`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:150-191`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:161-202`
 
 A settings window that stays open until the test closes it.
 
@@ -2279,6 +2336,22 @@ _(no documentation)_
 - `public void Outline_Text_GivesClosedContoursInsideTheMeasuredBoxAtTheTextPosition()` - _(no documentation)_
 - `public void Outline_SecondLine_SitsBelowTheFirst()` - _(no documentation)_
 - `public void Outline_Null_Throws()` - _(no documentation)_
+
+## GlyphRunAdvanceTests (class)
+
+`public class GlyphRunAdvanceTests`
+
+Source: `tests/PressToShape.App.Tests/GlyphRunAdvanceTests.cs:13-63`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Of_GlyphsWithAdvances_IsTheirSum()` - _(no documentation)_
+- `public void Of_AdvancesWithLetterSpacing_IncludesTheSpacing()` - _(no documentation)_
+- `public void Of_GlyphOffsets_DoNotChangeTheAdvance()` - _(no documentation)_
+- `public void Of_RunWithoutGlyphs_IsZero()` - _(no documentation)_
+- `public void Of_ZeroAdvanceGlyphs_IsZero()` - _(no documentation)_
 
 ## GridLinesTests (class)
 
@@ -2624,6 +2697,23 @@ _(no documentation)_
 - `public void ActiveLayer_IsMarked_AndFollowsTheState()` - _(no documentation)_
 - `public void AddLayerCommand_Executed_AddsAnActiveLayerRow()` - _(no documentation)_
 
+## LayersViewModelTextTests (class)
+
+`public class LayersViewModelTextTests`
+
+Source: `tests/PressToShape.App.Tests/LayersViewModelTextTests.cs:12-86`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Rows_TextWithoutAName_HasTheTextTypeAndIsCalledText()` - _(no documentation)_
+- `public void Rows_NonTextShapes_AreNotMistakenForText()` - _(no documentation)_
+- `public void Rows_TextWithAName_ShowsTheName()` - _(no documentation)_
+- `public void Rows_TextName_IsTranslatedAndFollowsALanguageChange()` - _(no documentation)_
+- `public void Rows_TextInsideAGroup_HasTheTextType()` - _(no documentation)_
+- `public void Rows_OtherShapes_KeepTheirTypesAndNames()` - _(no documentation)_
+
 ## LayersViewTests (class)
 
 `public class LayersViewTests`
@@ -2716,6 +2806,19 @@ _(no documentation)_
 - `public void Press_AfterAFiredPress_ResetsTheFiredFlag()` - _(no documentation)_
 - `public void IsWatching_IsTrueOnlyWhileWaiting()` - _(no documentation)_
 
+## MainWindowCloseTests (class)
+
+`public class MainWindowCloseTests`
+
+Source: `tests/PressToShape.App.Tests/MainWindowCloseTests.cs:13-70`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Close_TheUnsavedQuestionFails_KeepsTheWindowOpenAndShowsAnError()` - _(no documentation)_
+- `public void Close_TheUserDiscards_ClosesTheWindow()` - _(no documentation)_
+
 ## ManualTimeProvider (class)
 
 `internal sealed class ManualTimeProvider : TimeProvider`
@@ -2739,7 +2842,7 @@ A clock that only moves when a test says so. One timestamp tick is one milliseco
 
 `internal sealed class MemorySettingsStore : ISettingsStore`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:114-128`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:125-139`
 
 Settings kept in memory.
 
@@ -4800,7 +4903,7 @@ _(no documentation)_
 
 `public class StorageFileRegistryTests`
 
-Source: `tests/PressToShape.App.Tests/StorageFileRegistryTests.cs:6-88`
+Source: `tests/PressToShape.App.Tests/StorageFileRegistryTests.cs:6-125`
 
 _(no documentation)_
 
@@ -4813,12 +4916,15 @@ _(no documentation)_
 - `public void Register_NameWithSeparatorsOrEmpty_StillEndsWithASingleName(string name, string expectedEnd)` - _(no documentation)_
 - `public void IsReference_RecognizesOnlyTheRegistryPrefix(string path, bool expected)` - _(no documentation)_
 - `public void IsReference_ForARegisteredFile_IsTrue()` - _(no documentation)_
+- `public void Unregister_RegisteredReference_IsNoLongerFound()` - _(no documentation)_
+- `public void Unregister_OneReference_KeepsTheOthers()` - _(no documentation)_
+- `public void Unregister_UnknownOrNullReference_DoesNothing()` - _(no documentation)_
 
 ## StorageFileStoreTests (class)
 
 `public class StorageFileStoreTests`
 
-Source: `tests/PressToShape.App.Tests/StorageFileStoreTests.cs:11-163`
+Source: `tests/PressToShape.App.Tests/StorageFileStoreTests.cs:11-184`
 
 _(no documentation)_
 
@@ -4841,6 +4947,8 @@ _(no documentation)_
 - `public Task Write_UnknownReference_ThrowsFileNotFoundException()` - _(no documentation)_
 - `public Task Write_NullBytes_Throws()` - _(no documentation)_
 - `public void Constructor_NullRegistry_Throws()` - _(no documentation)_
+- `public Task Release_PickedFile_MakesTheReferenceUnknown()` - _(no documentation)_
+- `public Task Release_UnknownPath_DoesNothing()` - _(no documentation)_
 
 ## SwitchableCommand (class)
 
@@ -4913,7 +5021,7 @@ _(no documentation)_
 
 `public class TabletShellViewModelTests`
 
-Source: `tests/PressToShape.App.Tests/TabletShellViewModelTests.cs:13-450`
+Source: `tests/PressToShape.App.Tests/TabletShellViewModelTests.cs:13-489`
 
 _(no documentation)_
 
@@ -4936,6 +5044,9 @@ _(no documentation)_
 - `public Task Leave_WithTheOverlayDialog_BackWhileTheQuestionIsOpen_CancelsIt()` - _(no documentation)_
 - `public Task Leave_ARequestAfterACancel_AsksAgain()` - _(no documentation)_
 - `public Task Back_WhileADialogIsOpen_ClosesOnlyTheDialog()` - _(no documentation)_
+- `public Task TryBack_WhileThePanelIsOpen_ClosesThePanelWithoutAMessage()` - _(no documentation)_
+- `public Task TryBack_WithoutChanges_LeavesTheApp()` - _(no documentation)_
+- `public Task TryBack_TheUnsavedQuestionFails_StaysAndShowsOneError()` - _(no documentation)_
 - `public Task Back_WhileAToolFlyoutIsOpen_ClosesOnlyTheFlyout()` - _(no documentation)_
 - `public Task Back_WhileThePanelIsOpen_ClosesOnlyThePanel_EvenWithUnsavedChanges()` - _(no documentation)_
 - `public Task Back_WithNothingOpen_LeavesLikeBefore()` - _(no documentation)_
@@ -5068,7 +5179,7 @@ _(no documentation)_
 
 `internal static class TestFileServices`
 
-Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:131-147`
+Source: `tests/PressToShape.App.Tests/FileServiceFakes.cs:142-158`
 
 Creates the file services of the shell from fakes.
 

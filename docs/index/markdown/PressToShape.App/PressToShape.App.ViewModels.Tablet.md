@@ -150,7 +150,7 @@ The panel of the tablet layout, which floats over the canvas and shows one of th
 
 `internal sealed class TabletShellViewModel : EditorShellViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:14-118`
+Source: `src/PressToShape.App/ViewModels/Tablet/TabletShellViewModel.cs:14-124`
 
 Root of the tablet layout. Adds the compact toolbar with its overflow menu, the tool column, the floating panel and the in-layout message dialog to what every shell has (see PressToShape.App.ViewModels.Editor.EditorShellViewModel). The Back button goes through PressToShape.App.ViewModels.Tablet.TabletShellViewModel.RequestBackAsync.
 
@@ -165,6 +165,7 @@ Root of the tablet layout. Adds the compact toolbar with its overflow menu, the 
 - `public MessageDialogHost Dialogs { get; }` - The message dialog that is shown over the layout, or nothing.
 - `public SettingsDialogHost SettingsHost { get; }` - The settings that are shown over the layout, or nothing. The same host is given to PressToShape.App.Services.OverlaySettingsDialogs.
 - `public Task<bool> RequestBackAsync()` - The Back button was pressed (after the view closed a toolbar menu, if one was open). It closes the topmost thing that is open and stops there: a message dialog (as Cancel), then the settings (a page goes back to the list, the list cancels), then a tool group flyout, then the panel. Only when none of them is open does it do what PressToShape.App.ViewModels.Tablet.TabletShellViewModel.RequestLeaveAsync does.
+- `public Task<bool> TryRequestBackAsync()` - Like PressToShape.App.ViewModels.Tablet.TabletShellViewModel.RequestBackAsync, but a failure does not escape: it is reported to the user and the app stays. The view calls this from an async void handler, where an exception would end the app.
 - `public Task<bool> RequestLeaveAsync()` - Leaving was asked for. While a message dialog is open, Back closes it like Cancel and the app stays. Otherwise: without unsaved changes the app is left at once, with them the user is asked to save, discard or cancel, and the app is left only after a successful save or after discarding.
 
 **Relationships**

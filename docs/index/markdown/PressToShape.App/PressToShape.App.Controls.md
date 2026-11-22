@@ -84,6 +84,18 @@ Draws the shapes of a document. It only draws: PressToShape.App.Workspace.Canvas
 - `public IBrush? GuideBrush { get; set; }` - _(no documentation)_
 - `public void Render(DrawingContext context)` - _(no documentation)_
 
+## GlyphRunAdvance (class)
+
+`internal static class GlyphRunAdvance`
+
+Source: `src/PressToShape.App/Controls/GlyphRunAdvance.cs:6-19`
+
+How far a glyph run moves the pen. It is the sum of the glyph advances, not the width of the ink (Avalonia.Media.GlyphRun.Bounds).
+
+**Members**
+
+- `public double Of(GlyphRun glyphRun)` - The advance of all glyphs of the run, with the letter spacing that shaping put into them. 0 for a run without glyphs.
+
 ## NumberFieldBehavior (class)
 
 `internal static class NumberFieldBehavior`

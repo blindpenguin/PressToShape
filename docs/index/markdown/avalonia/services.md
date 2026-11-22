@@ -37,14 +37,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.DocumentSession`. Which file the open document belongs to and whether it has unsaved changes. Documents are immutable, so "unsaved" means: the editor's document is no longer the instance that was last saved or opened. A change that is changed back still counts as unsaved.
 
 - used by: `DocumentFileService`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:41)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:42)
 
 ### EditMenuCommands (class)
 
 `T:PressToShape.App.ViewModels.Editor.EditMenuCommands`. What the clipboard, delete and selection items of the Edit menu do. Undo and Redo are passed on their own.
 
 - used by: `MenuBarViewModel`, `OverflowMenuViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:69)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:70)
 
 ### EditorShellViewModel (class)
 
@@ -58,14 +58,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.EditorState`. State shared by all regions of the editor shell: the document, its undo history, active tool, zoom and selection summary. View models observe it through PropertyChanged, so every route that changes a value stays in sync. This class is the only place that changes the document: edits go through PressToShape.App.Workspace.EditorState.Edit, a drag through PressToShape.App.Workspace.EditorState.Preview and PressToShape.App.Workspace.EditorState.Commit, and a new or opened document through PressToShape.App.Workspace.EditorState.ReplaceDocument.
 
 - used by: `CanvasAreaViewModel`, `CanvasInteraction`, `DocumentFileService`, `DocumentSession`, `HistoryViewModel`, `InspectorViewModel`, `LayerEditor`, `LayersViewModel`, `MenuBarViewModel`, `NodeEditor`, `ObjectEditor`, `PaletteViewModel`, `PathEditor`, `PropertiesViewModel`, `SelectionEditor`, `StatusBarViewModel`, `TabletToolColumnViewModel`, `ToolGroupViewModel`, `ToolbarViewModel`, `ToolboxViewModel`, `ZoomViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:40), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:45)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:41), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:45)
 
 ### FileMenuCommands (class)
 
 `T:PressToShape.App.ViewModels.Editor.FileMenuCommands`. What the File menu items do. OpenRecent creates the command for one entry of the recent list.
 
 - used by: `MenuBarViewModel`, `OverflowMenuViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:62)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:63)
 
 ### FileServices (class)
 
@@ -124,7 +124,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Services.IFontCatalog`. The font families the user can choose for a text. A small interface of ours, so the Properties view model needs no fonts in tests.
 
 - used by: `FileServices`, `InspectorViewModel`, `PropertiesViewModel`
-- implemented by `AvaloniaFontCatalog`, created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:61)
+- implemented by `AvaloniaFontCatalog`, created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:62)
 
 ### ILocalizer (interface)
 
@@ -162,21 +162,21 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.Core.Shapes.ITextMeasurer`. Measures and wraps a text. The model has no text engine, so the app implements this with its own and tests use a fake. Point text is not wrapped. Area text wraps at the width of its box.
 
 - used by: `CanvasAreaViewModel`, `CanvasInteraction`, `DocumentFileService`, `FileServices`, `InspectorViewModel`, `PropertiesViewModel`
-- implemented by `AvaloniaTextMeasurer`, created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:37)
+- implemented by `AvaloniaTextMeasurer`, created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:38)
 
 ### ITextOutliner (interface)
 
 `T:PressToShape.Core.Shapes.ITextOutliner`. Turns a text into the closed contours of its glyphs. The app implements this with its font engine, tests use a fake.
 
 - used by: `FileServices`, `PathEditor`
-- implemented by `AvaloniaTextOutliner`, created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:38)
+- implemented by `AvaloniaTextOutliner`, created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:39)
 
 ### InspectorViewModel (class)
 
 `T:PressToShape.App.ViewModels.Editor.InspectorViewModel`. State of the inspector: the selected tab and the view models of its tabs.
 
 - used by: `TabletPanelViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:61)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:62)
 
 ### Layer (class)
 
@@ -190,14 +190,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.LayerEditor`. Edits of the layers: add, delete, rename, reorder, duplicate, merge, and moving the selected objects to another layer. Each change of the document is one history step. A command that would change nothing records no step, and its Can... property is false. The commands without a layer id work on the active layer.
 
 - used by: `InspectorViewModel`, `LayerMenuCommands`, `LayersViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:48), `LayersViewModel.LayersViewModel` (src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:40)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:49), `LayersViewModel.LayersViewModel` (src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:40)
 
 ### LayerMenuCommands (class)
 
 `T:PressToShape.App.ViewModels.Editor.LayerMenuCommands`. What the items of the Layer menu do. Each command runs a PressToShape.App.Workspace.LayerEditor command and is disabled while that would change nothing. Call PressToShape.App.ViewModels.Editor.LayerMenuCommands.NotifyCanExecuteChanged when the document, the active layer or the selection changed.
 
 - used by: `MenuBarViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:91)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:92)
 
 ### LayersViewModel (class)
 
@@ -225,14 +225,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.ObjectEditor`. Edits of the structure of the drawing: group and ungroup, arrange, lock and hide single objects, and names. Each change of the document is one history step. A command that would change nothing records no step, and its Can... property is false.
 
 - used by: `InspectorViewModel`, `LayersViewModel`, `PropertiesViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:46), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:28), `PropertiesViewModel.PropertiesViewModel` (src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:55)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:47), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:28), `PropertiesViewModel.PropertiesViewModel` (src/PressToShape.App/ViewModels/Editor/PropertiesViewModel.cs:55)
 
 ### ObjectMenuCommands (class)
 
 `T:PressToShape.App.ViewModels.Editor.ObjectMenuCommands`. What the Group, Arrange, Lock and Hide items of the Object menu do. A command is disabled while it would change nothing.
 
 - used by: `MenuBarViewModel`, `OverflowMenuViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:79)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:80)
 
 ### Outline (class)
 
@@ -253,14 +253,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.PathEditor`. The path operations on the selection: the boolean operations, Combine and Break Apart. Each success is one history step and the new shapes become the selection. A result that is empty or an operation that fails changes nothing and tells the user why. A command that cannot run has its Can... property false.
 
 - used by: `StatusBarViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:47)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:48)
 
 ### PathMenuCommands (class)
 
 `T:PressToShape.App.ViewModels.Editor.PathMenuCommands`. What the items of the Path menu do. A command is disabled while it cannot run. ConvertToPath, ReverseDirection and ConvertTextToPath are optional: a caller without them gets disabled items.
 
 - used by: `InspectorViewModel`, `MenuBarViewModel`, `OverflowMenuViewModel`, `PropertiesViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:51), `PathMenuCommands.CreateDisabled` (src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:27)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:52), `PathMenuCommands.CreateDisabled` (src/PressToShape.App/ViewModels/Editor/PathMenuCommands.cs:27)
 
 ### PathShape (class)
 
@@ -281,14 +281,14 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.RecentFiles`. The list of recently used files, most recent first, kept in the settings file. It holds each path once and at most PressToShape.App.Workspace.RecentFiles.MaxCount paths. The stored value is untrusted: anything that is not a list of paths is ignored. A list that does not persist stays empty: the paths of a platform whose file references do not survive a restart are of no use later.
 
 - used by: `DocumentFileService`, `MenuBarViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:42)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:43)
 
 ### RingMenuViewModel (class)
 
 `T:PressToShape.App.ViewModels.Editor.RingMenuViewModel`. The state of the ring menu: whether it is open, where, which level of slots it shows, and which slot the pointer or the keyboard is on. The content comes from PressToShape.App.ViewModels.Editor.RingMenuViewModel.Content, so this class knows no commands. It lives as long as the canvas area.
 
 - used by: `CanvasAreaViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:49)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:50)
 
 ### RingSlotDefinition (class)
 
@@ -330,7 +330,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.SelectionEditor`. Edits that work on the selected shapes and do not need the mouse: select all, deselect, copy, cut, paste, duplicate (and, in the same class, nudging and property edits). Every change of the document is one history step.
 
 - used by: `CanvasAreaViewModel`, `InspectorViewModel`, `PropertiesViewModel`
-- created at `CanvasAreaViewModel.CanvasAreaViewModel` (src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:51), `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:45), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:27), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:47)
+- created at `CanvasAreaViewModel.CanvasAreaViewModel` (src/PressToShape.App/ViewModels/Editor/CanvasAreaViewModel.cs:51), `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:46), `InspectorViewModel.InspectorViewModel` (src/PressToShape.App/ViewModels/Editor/InspectorViewModel.cs:27), `ShapeOperationBenchmarks.Setup` (tests/PressToShape.Benchmarks/ShapeOperationBenchmarks.cs:47)
 
 ### SettingsDialogHost (class)
 
@@ -365,7 +365,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.Workspace.SnapPreferences`. The grid, snapping and ruler switches and the grid spacing, kept in the settings file. They are user settings, not part of the document. The stored values are untrusted: a missing, damaged or invalid value gives the default for that value. A setter that gets an invalid spacing keeps the old one. Every real change is saved at once and raises PressToShape.App.Workspace.SnapPreferences.Changed.
 
 - used by: `EditorState`, `SettingsViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:40), `SnapPreferences.InMemory` (src/PressToShape.App/Workspace/SnapPreferences.cs:67)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:41), `SnapPreferences.InMemory` (src/PressToShape.App/Workspace/SnapPreferences.cs:67)
 
 ### StorageFileRegistry (class)
 
@@ -414,7 +414,7 @@ Types that other types take as constructor parameters, and where they are provid
 `T:PressToShape.App.ViewModels.Editor.ToolboxViewModel`. State of the tool column: tool list, active tool, shortcut lookup, and the (not yet usable) color swatch commands.
 
 - used by: `TabletToolColumnViewModel`, `ToolGroupViewModel`
-- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:44)
+- created at `EditorShellViewModel.EditorShellViewModel` (src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.cs:45)
 
 ### ViewModelBase (class)
 

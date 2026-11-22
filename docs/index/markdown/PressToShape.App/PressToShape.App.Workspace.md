@@ -182,7 +182,7 @@ The distance labels of the smart guides: from the dragged box to the nearest box
 
 `internal sealed class DocumentFileService`
 
-Source: `src/PressToShape.App/Workspace/DocumentFileService.cs:19-253`
+Source: `src/PressToShape.App/Workspace/DocumentFileService.cs:19-281`
 
 The file actions of the File menu: New, Open, Open Recent, Save, Save As, Export as SVG, and the question what to do with unsaved changes. It works through interfaces for files, dialogs and messages, so it is tested without a UI. Parsing and serializing run off the calling (UI) context, and the file store does its reading and writing without blocking it. State changes happen on the calling context.
 

@@ -228,6 +228,7 @@ Lets view models close the application without referencing Avalonia types.
 - Implemented by `PressToShape.App.Tests.EditorShellViewModelRingTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.EditorStateSnapTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.LayersViewTests.NoShutdown`
+- Implemented by `PressToShape.App.Tests.MainWindowCloseTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.MenuBarSmartTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.MenuBarSnapTests.NoShutdown`
 - Implemented by `PressToShape.App.Tests.MenuBarViewModelTests.FakeShutdown`
@@ -267,7 +268,7 @@ The file pickers. Each returns a local file path, or null if the user cancelled.
 
 `internal interface IFileStore`
 
-Source: `src/PressToShape.App/Services/IFileStore.cs:7-20`
+Source: `src/PressToShape.App/Services/IFileStore.cs:7-28`
 
 Reads and writes whole files. Lets the file actions be tested without a real file system, and lets a platform without file paths supply its own storage.
 
@@ -275,6 +276,7 @@ Reads and writes whole files. Lets the file actions be tested without a real fil
 
 - `public Task<byte[]> ReadAllBytesAsync(string path, long maxBytes, CancellationToken cancellationToken = default(CancellationToken))` - Reads a whole file.
 - `public Task WriteAllBytesAtomicAsync(string path, byte[] bytes, CancellationToken cancellationToken = default(CancellationToken))` - Writes a whole file so that an existing file is only replaced once the new content is complete. If writing fails, the existing file stays as it was and no partial file stays behind.
+- `public void Release(string path)` - Tells the store that a path will not be used again, so it can free what it holds for it (the file of a system picker). Does nothing for a path that the store does not hold. The default does nothing, because a normal file path holds nothing.
 
 **Relationships**
 
@@ -444,7 +446,7 @@ A file from the platform's file picker, as an PressToShape.App.Services.IPickedF
 
 `internal sealed class StorageFileRegistry`
 
-Source: `src/PressToShape.App/Services/StorageFileRegistry.cs:12-43`
+Source: `src/PressToShape.App/Services/StorageFileRegistry.cs:12-52`
 
 Remembers the files that the platform's file picker returned, and hands out a text reference for each. The rest of the app works with file paths as text, but the Android picker gives no path, only a handle. A reference looks like storage:<id>/<file name>, so code that shows "the name after the last slash" shows the real file name. References only live as long as the app runs.
 
@@ -452,6 +454,7 @@ Remembers the files that the platform's file picker returned, and hands out a te
 
 - `public string Register(IStorageFile file)` - Remembers a file from the platform's file picker and returns its reference.
 - `public string Register(IPickedFile file)` - Remembers a picked file and returns its reference.
+- `public void Unregister(string reference)` - Forgets the file of a reference, so its platform handle can be released. A reference that is unknown, or no reference, does nothing.
 - `public bool IsReference(string path)` - Whether a path is a reference of this registry. Such a name is the user's choice in the system picker and is never changed by the app.
 - `public bool TryGet(string reference, out IPickedFile? file)` - Finds the file of a reference that PressToShape.App.Services.StorageFileRegistry.Register gave out.
 
@@ -464,7 +467,7 @@ Remembers the files that the platform's file picker returned, and hands out a te
 
 `internal sealed class StorageFileStore : IFileStore`
 
-Source: `src/PressToShape.App/Services/StorageFileStore.cs:14-131`
+Source: `src/PressToShape.App/Services/StorageFileStore.cs:14-133`
 
 Reads and writes the files that the user picked (see PressToShape.App.Services.StorageFileRegistry). A picked file cannot be replaced through a temporary file, because the app has no access to its folder, and opening it for writing empties it at once. So a write first reads the old content, and if the write fails the old content is written back. If the app is killed in the middle of a write, the file can stay cut short. Errors of the platform are passed on as System.IO.IOException, so callers handle them like any other file error.
 
@@ -473,6 +476,7 @@ Reads and writes the files that the user picked (see PressToShape.App.Services.S
 - `public StorageFileStore(StorageFileRegistry registry)` - _(no documentation)_
 - `public Task<byte[]> ReadAllBytesAsync(string path, long maxBytes, CancellationToken cancellationToken = default(CancellationToken))` - _(no documentation)_
 - `public Task WriteAllBytesAtomicAsync(string path, byte[] bytes, CancellationToken cancellationToken = default(CancellationToken))` - _(no documentation)_
+- `public void Release(string path)` - _(no documentation)_
 
 **Relationships**
 

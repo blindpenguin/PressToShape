@@ -6,6 +6,11 @@ Class: `PressToShape.App.Views.Desktop.SettingsWindow`.
 ## View model links
 
 - `T:PressToShape.App.ViewModels.Editor.SettingsViewModel` (verified): DataContext assignment (src/PressToShape.App/Services/AvaloniaSettingsDialogs.cs:29)
+- `T:PressToShape.App.ViewModels.Editor.SettingsViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:81)
+- `T:PressToShape.App.ViewModels.Editor.SettingsViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:82)
+- `T:PressToShape.App.ViewModels.Editor.SettingsViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:97)
+- `T:PressToShape.App.ViewModels.Editor.SettingsViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:98)
+- `T:PressToShape.App.ViewModels.Editor.SettingsViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/DialogWindowCloseTests.cs:99)
 - `T:PressToShape.App.ViewModels.Editor.SettingsViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/SettingsViewHeadlessTests.cs:118)
 - `T:PressToShape.App.ViewModels.Editor.SettingsViewModel` (verified): x:DataType (src/PressToShape.App/Views/Desktop/SettingsWindow.axaml:1)
 

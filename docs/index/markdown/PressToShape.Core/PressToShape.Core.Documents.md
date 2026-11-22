@@ -92,7 +92,7 @@ A drawing: an artboard and a stack of layers. Immutable: every edit method retur
 
 `internal static class DocumentValidation`
 
-Source: `src/PressToShape.Core/Documents/DocumentValidation.cs:9-104`
+Source: `src/PressToShape.Core/Documents/DocumentValidation.cs:9-117`
 
 The rules a document's layers must follow. A broken value never becomes a document.
 

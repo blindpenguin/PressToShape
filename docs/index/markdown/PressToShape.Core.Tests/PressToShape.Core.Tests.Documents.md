@@ -125,6 +125,33 @@ _(no documentation)_
 - `public void HitTest_EllipseBoundingBoxCorner_Misses()` - _(no documentation)_
 - `public void HitTest_StrokeWidth_IsIgnored()` - _(no documentation)_
 
+## DocumentIdUniquenessTests (class)
+
+`public class DocumentIdUniquenessTests`
+
+Source: `tests/PressToShape.Core.Tests/Documents/DocumentIdUniquenessTests.cs:10-160`
+
+_(no documentation)_
+
+**Members**
+
+- `public void Layers_LayerAndItsOwnShapeShareAnId_Throws()` - _(no documentation)_
+- `public void Layers_ShapeOfAnEarlierLayerHasTheIdOfALaterLayer_Throws()` - _(no documentation)_
+- `public void Layers_ShapeOfALaterLayerHasTheIdOfAnEarlierLayer_Throws()` - _(no documentation)_
+- `public void Layers_ShapeInANestedGroupHasTheIdOfALayer_Throws()` - _(no documentation)_
+- `public void Layers_GroupHasTheIdOfALayer_Throws()` - _(no documentation)_
+- `public void Layers_TwoLayersShareAnId_ThrowsWithTheLayerMessage()` - _(no documentation)_
+- `public void Layers_TwoShapesShareAnId_ThrowsWithTheShapeMessage()` - _(no documentation)_
+- `public void Layers_AllIdsDifferent_AreAccepted()` - _(no documentation)_
+- `public void Guides_GuideHasTheIdOfAShape_IsStillAccepted()` - _(no documentation)_
+- `public void AddShape_IdOfALayer_Throws()` - _(no documentation)_
+- `public void AddLayer_IdOfAShape_Throws()` - _(no documentation)_
+- `public void AddLayer_ShapeWithTheIdOfAnExistingLayer_Throws()` - _(no documentation)_
+- `public void InsertLayer_IdOfAShape_Throws()` - _(no documentation)_
+- `public void DuplicateLayer_NewLayerIdIsTheIdOfAShape_Throws()` - _(no documentation)_
+- `public void DuplicateLayer_NewShapeIdIsTheIdOfALayer_Throws()` - _(no documentation)_
+- `public void MoveShapesToLayer_AllIdsDifferent_StillWorks()` - _(no documentation)_
+
 ## DocumentLayerTests (class)
 
 `public class DocumentLayerTests`

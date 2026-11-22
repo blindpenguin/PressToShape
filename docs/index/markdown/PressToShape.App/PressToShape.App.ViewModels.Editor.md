@@ -169,7 +169,7 @@ What the clipboard, delete and selection items of the Edit menu do. Undo and Red
 
 `internal abstract partial class EditorShellViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.Settings.cs:8-45`
+Source: `src/PressToShape.App/ViewModels/Editor/EditorShellViewModel.Guard.cs:7-48`
 
 What every layout shell needs. Creates the shared PressToShape.App.Workspace.EditorState and the view model of every region that the layouts share (tool column, canvas, inspector), and owns the file, edit, undo and redo commands, so the regions of a layout always agree. The desktop and the tablet layout derive from it and add their own regions.
 
@@ -210,6 +210,8 @@ What every layout shell needs. Creates the shared PressToShape.App.Workspace.Edi
 - `public IRelayCommand UngroupCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.Ungroup`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.Ungroup.
 - `public IAsyncRelayCommand UnionShapesCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnionShapes`)_ - Gets an CommunityToolkit.Mvvm.Input.IAsyncRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnionShapes.
 - `public IRelayCommand UnlockAllCommand { get; }` _(generated from `M:PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll`)_ - Gets an CommunityToolkit.Mvvm.Input.IRelayCommand instance wrapping PressToShape.App.ViewModels.Editor.EditorShellViewModel.UnlockAll.
+- `public Task<bool> TryConfirmCloseAsync()` - Like PressToShape.App.ViewModels.Editor.EditorShellViewModel.ConfirmCloseAsync, but a failure does not escape: it is reported to the user and closing is not allowed. The view calls this from an async void handler, where an exception would end the app.
+- `protected Task<bool> GuardAsync(Func<Task<bool>> flow)` - Runs a flow that may close or leave the app. If it fails, the user gets an error message and the answer is "stay".
 - `protected EditorShellViewModel(ILocalizer localizer, FileServices services, bool showRulersByDefault = true)` - _(no documentation)_
 - `public EditorState State { get; }` - _(no documentation)_
 - `internal ITextMeasurer TextMeasurer { get; }` - Measures texts. The canvas and the SVG export use it, so they all lay a text out the same way.
@@ -407,7 +409,7 @@ What the items of the Layer menu do. Each command runs a PressToShape.App.Worksp
 
 `internal partial sealed class LayersViewModel : LocalizedViewModel`
 
-Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:22-478`
+Source: `src/PressToShape.App/ViewModels/Editor/LayersViewModel.cs:22-480`
 
 State of the Layers tab: the layers of the document as header rows, and below each layer its shapes and groups as a tree, topmost first. PressToShape.App.ViewModels.Editor.LayersViewModel.Rows is the flat list that the view shows: the rows whose groups and layer are expanded. The list follows the document. When only names, flags or the selection changed, the existing rows are updated, so the list is not rebuilt under the user's click, and which groups are open survives undo and redo as far as the groups still exist.
 
@@ -512,7 +514,7 @@ What the Group, Arrange, Lock and Hide items of the Object menu do. A command is
 
 `internal enum ObjectRowType`
 
-Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowType.cs:4-20`
+Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowType.cs:4-23`
 
 What a row of the object list stands for. It decides the icon and the default name.
 
@@ -523,12 +525,13 @@ What a row of the object list stands for. It decides the icon and the default na
 - `public Ellipse` - An ellipse.
 - `public Group` - A group, which has rows of its own below it.
 - `public Path` - A path.
+- `public Text` - A text.
 
 ## ObjectRowViewModel (class)
 
 `internal partial sealed class ObjectRowViewModel : ViewModelBase`
 
-Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowViewModel.cs:11-140`
+Source: `src/PressToShape.App/ViewModels/Editor/ObjectRowViewModel.cs:11-143`
 
 One row of the object list: a layer header, a shape or a group. The values are display values that PressToShape.App.ViewModels.Editor.LayersViewModel copies from the document. The commands ask the list to change the document, they never change these values themselves.
 
@@ -550,6 +553,7 @@ One row of the object list: a layer header, a shape or a group. The values are d
 - `public bool IsRectangle { get; }` - Whether the row is a rectangle.
 - `public bool IsEllipse { get; }` - Whether the row is an ellipse.
 - `public bool IsPath { get; }` - Whether the row is a path.
+- `public bool IsText { get; }` - Whether the row is a text.
 - `public bool HasChildren { get; }` - Whether the row has an expander: layers and groups.
 - `public bool CanRename { get; }` - Whether the row can be renamed in the list. Every row can: layers, groups and shapes.
 - `public string Name { get; private set; }` - _(no documentation)_

@@ -6,6 +6,7 @@ Class: `PressToShape.App.Views.MainWindow`.
 ## View model links
 
 - `T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel` (verified): DataContext assignment (src/PressToShape.App/AppLayout.cs:41)
+- `T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel` (verified): DataContext assignment (tests/PressToShape.App.Tests/MainWindowCloseTests.cs:28)
 - `T:PressToShape.App.ViewModels.Desktop.DesktopShellViewModel` (verified): x:DataType (src/PressToShape.App/Views/MainWindow.axaml:1)
 
 ## Bindings

@@ -32,7 +32,7 @@ The message and the buttons of a message dialog. Shown in a window on the deskto
 
 `public partial class MessageDialogWindow : Window`
 
-Source: `src/PressToShape.App/Views/MessageDialogWindow.axaml.cs:7-24`
+Source: `src/PressToShape.App/Views/MessageDialogWindow.axaml.cs:7-45`
 
 _(no documentation)_
 
@@ -41,3 +41,4 @@ _(no documentation)_
 - `public MessageDialogWindow()` - _(no documentation)_
 - `protected void OnDataContextChanged(EventArgs e)` - _(no documentation)_
 - `public void InitializeComponent(bool loadXaml = true)` _(generated)_ - Wires up the controls and optionally loads XAML markup and attaches dev tools (if Avalonia.Diagnostics package is referenced).
+- `protected void OnClosed(EventArgs e)` - _(no documentation)_
