@@ -160,4 +160,25 @@ public class StorageFileStoreTests
     {
         Assert.Throws<ArgumentNullException>(() => new StorageFileStore(null!));
     }
+
+    [Fact]
+    public async Task Release_PickedFile_MakesTheReferenceUnknown()
+    {
+        var reference = Pick(new FakePickedFile("a.p2s", [1]));
+
+        _store.Release(reference);
+
+        await Assert.ThrowsAsync<FileNotFoundException>(() => _store.ReadAllBytesAsync(reference, 100));
+    }
+
+    [Fact]
+    public async Task Release_UnknownPath_DoesNothing()
+    {
+        var reference = Pick(new FakePickedFile("a.p2s", [1]));
+
+        _store.Release("/home/user/other.p2s");
+        _store.Release(null!);
+
+        Assert.Equal(new byte[] { 1 }, await _store.ReadAllBytesAsync(reference, 100));
+    }
 }

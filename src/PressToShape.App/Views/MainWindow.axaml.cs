@@ -23,7 +23,7 @@ public partial class MainWindow : Window
         }
 
         e.Cancel = true;
-        if (await shell.ConfirmCloseAsync())
+        if (await shell.TryConfirmCloseAsync())
         {
             _closeConfirmed = true;
             Close();

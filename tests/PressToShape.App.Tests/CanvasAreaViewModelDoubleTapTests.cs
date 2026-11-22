@@ -157,4 +157,26 @@ public class CanvasAreaViewModelDoubleTapTests
 
         Assert.Null(f.State.EnteredGroupId);
     }
+
+    // A finger reaches a guide from farther away than a mouse or a pen: 8 pixels is in reach of a finger only.
+    private static bool DoubleClickReachesTheGuide(InputPointerType inputType)
+    {
+        var f = Create();
+        f.State.ActiveTool = Tool.Rectangle;
+        var guide = new Guide { Orientation = GuideOrientation.Vertical, Position = 300 };
+        f.State.Edit(HistoryStepType.CreateGuide, d => d.AddGuide(guide));
+
+        f.Canvas.DoubleClick(f.ScreenX(300) + 8, f.ScreenY(500), inputType: inputType);
+
+        return f.Canvas.CursorType == CanvasCursorType.ResizeWestEast;
+    }
+
+    [Fact]
+    public void DoubleClick_WithAnotherToolByTouch_PressesAsATouch() => Assert.True(DoubleClickReachesTheGuide(InputPointerType.Touch));
+
+    [Fact]
+    public void DoubleClick_WithAnotherToolByPen_PressesAsAPen() => Assert.False(DoubleClickReachesTheGuide(InputPointerType.Pen));
+
+    [Fact]
+    public void DoubleClick_WithAnotherToolByMouse_PressesAsAMouse() => Assert.False(DoubleClickReachesTheGuide(InputPointerType.Mouse));
 }

@@ -223,4 +223,29 @@ public class CanvasAreaViewModelLongPressTests
         Assert.True(f.Ring.IsOpen);
         Assert.False(f.State.HasSelection);
     }
+
+    [Fact]
+    public void Cancel_PenPressThenCaptureLost_StopsTheWatchAndTheRingStaysClosed()
+    {
+        var f = new Fixture();
+        f.Canvas.PointerPressed(f.ScreenX(150), f.ScreenY(150), inputType: InputPointerType.Pen);
+        Assert.True(f.Canvas.IsWatchingLongPress);
+
+        f.Canvas.Cancel();
+        f.Hold(2000);
+
+        Assert.False(f.Canvas.IsWatchingLongPress);
+        Assert.False(f.Ring.IsOpen);
+    }
+
+    [Fact]
+    public void Tick_PenPressWithoutCancel_StillOpensTheRing()
+    {
+        var f = new Fixture();
+        f.Canvas.PointerPressed(f.ScreenX(150), f.ScreenY(150), inputType: InputPointerType.Pen);
+
+        f.Hold(2000);
+
+        Assert.True(f.Ring.IsOpen);
+    }
 }

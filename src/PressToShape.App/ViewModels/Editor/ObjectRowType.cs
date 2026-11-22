@@ -17,4 +17,7 @@ internal enum ObjectRowType
 
     /// <summary>A path.</summary>
     Path,
+
+    /// <summary>A text.</summary>
+    Text,
 }

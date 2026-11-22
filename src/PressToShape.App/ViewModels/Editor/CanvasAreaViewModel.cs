@@ -319,7 +319,7 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
         }
         else
         {
-            PointerPressed(screenX, screenY, alt, shift, suspendSnap: suspendSnap);
+            PointerPressed(screenX, screenY, alt, shift, inputType, suspendSnap);
         }
     }
 
@@ -593,6 +593,8 @@ internal sealed partial class CanvasAreaViewModel : ViewModelBase
     /// <summary>Ends a drag without a result, for example when the pointer capture is lost.</summary>
     public void Cancel()
     {
+        // A press that ends without a release (lost capture) must not open the ring menu later.
+        _longPress.Cancel();
         if (_panning)
         {
             EndPan();

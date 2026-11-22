@@ -11,14 +11,35 @@ public partial class MessageDialogWindow : Window
         InitializeComponent();
     }
 
+    private MessageDialogViewModel? _viewModel;
+
     protected override void OnDataContextChanged(EventArgs e)
     {
         base.OnDataContextChanged(e);
 
+        Unsubscribe();
         if (DataContext is MessageDialogViewModel viewModel)
         {
             // The view model decides the result, the window only closes itself with it.
-            viewModel.CloseRequested += (_, result) => Close(result);
+            _viewModel = viewModel;
+            viewModel.CloseRequested += OnCloseRequested;
+        }
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        Unsubscribe();
+        base.OnClosed(e);
+    }
+
+    private void OnCloseRequested(object? sender, int result) => Close(result);
+
+    private void Unsubscribe()
+    {
+        if (_viewModel is not null)
+        {
+            _viewModel.CloseRequested -= OnCloseRequested;
+            _viewModel = null;
         }
     }
 }

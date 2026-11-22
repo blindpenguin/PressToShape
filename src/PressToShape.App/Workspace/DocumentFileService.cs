@@ -81,9 +81,11 @@ internal sealed class DocumentFileService
             return;
         }
 
+        var previous = _session.Path;
         var document = Document.Create(_localizer.T("Layer 1"));
         _state.ReplaceDocument(document);
         _session.Reset(null, document);
+        ReleaseUnlessCurrent(previous);
         _fitToWindow();
     }
 
@@ -145,10 +147,23 @@ internal sealed class DocumentFileService
         {
             await _messages.ShowErrorAsync(Format(_localizer.T("Could not export “{0}”. {1}"), FileName(path), WriteReason()));
         }
+        finally
+        {
+            // An export file never becomes the document's file, and the next export asks again.
+            ReleaseUnlessCurrent(path);
+        }
+    }
+
+    // Opening replaces the document's file, so the previous file is released. If opening fails, the picked file is released instead.
+    private async Task OpenFileAsync(string path)
+    {
+        var previous = _session.Path;
+        var opened = await TryOpenFileAsync(path);
+        ReleaseUnlessCurrent(opened ? previous : path);
     }
 
     // Nothing changes unless the whole file was read and is valid.
-    private async Task OpenFileAsync(string path)
+    private async Task<bool> TryOpenFileAsync(string path)
     {
         ProjectFileResult result;
         try
@@ -160,29 +175,30 @@ internal sealed class DocumentFileService
         {
             _recent.Remove(path);
             await ShowOpenErrorAsync(path, _localizer.T("The file was not found."));
-            return;
+            return false;
         }
         catch (InvalidDataException)
         {
             await ShowOpenErrorAsync(path, _localizer.T("The file is too large."));
-            return;
+            return false;
         }
         catch (Exception ex) when (IsFileFailure(ex))
         {
             await ShowOpenErrorAsync(path, _localizer.T("The file could not be read."));
-            return;
+            return false;
         }
 
         if (result.Document is not { } document)
         {
             await ShowOpenErrorAsync(path, OpenReason(result.Error));
-            return;
+            return false;
         }
 
         _state.ReplaceDocument(document);
         _session.Reset(path, document);
         _recent.Add(path);
         _fitToWindow();
+        return true;
     }
 
     private Task ShowOpenErrorAsync(string path, string reason) =>
@@ -201,6 +217,7 @@ internal sealed class DocumentFileService
     {
         // The instance that is written is the one that counts as saved: later edits keep the document dirty.
         var document = _state.Document;
+        var previous = _session.Path;
         try
         {
             var bytes = await Task.Run(() => ProjectFile.Write(document));
@@ -209,12 +226,23 @@ internal sealed class DocumentFileService
         catch (Exception ex) when (IsFileFailure(ex))
         {
             await _messages.ShowErrorAsync(Format(_localizer.T("Could not save “{0}”. {1}"), FileName(path), WriteReason()));
+            ReleaseUnlessCurrent(path);
             return false;
         }
 
         _session.MarkSaved(path, document);
         _recent.Add(path);
+        ReleaseUnlessCurrent(previous);
         return true;
+    }
+
+    // A file that is not the document's file any more is not used again, so the store can free what it holds for it.
+    private void ReleaseUnlessCurrent(string? path)
+    {
+        if (path is not null && !string.Equals(path, _session.Path, StringComparison.Ordinal))
+        {
+            _files.Release(path);
+        }
     }
 
     // A picker is platform code. If it fails, the user gets a message instead of a crash, and the action stops.

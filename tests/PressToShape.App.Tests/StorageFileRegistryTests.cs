@@ -85,4 +85,41 @@ public class StorageFileRegistryTests
 
         Assert.True(StorageFileRegistry.IsReference(registry.Register(new FakePickedFile("a.p2s"))));
     }
+
+    [Fact]
+    public void Unregister_RegisteredReference_IsNoLongerFound()
+    {
+        var registry = new StorageFileRegistry();
+        var reference = registry.Register(new FakePickedFile("a.p2s"));
+
+        registry.Unregister(reference);
+
+        Assert.False(registry.TryGet(reference, out var found));
+        Assert.Null(found);
+    }
+
+    [Fact]
+    public void Unregister_OneReference_KeepsTheOthers()
+    {
+        var registry = new StorageFileRegistry();
+        var first = registry.Register(new FakePickedFile("a.p2s"));
+        var second = registry.Register(new FakePickedFile("b.p2s"));
+
+        registry.Unregister(first);
+
+        Assert.True(registry.TryGet(second, out _));
+    }
+
+    [Fact]
+    public void Unregister_UnknownOrNullReference_DoesNothing()
+    {
+        var registry = new StorageFileRegistry();
+        var reference = registry.Register(new FakePickedFile("a.p2s"));
+
+        registry.Unregister("storage:unknown/x.p2s");
+        registry.Unregister(null!);
+        registry.Unregister("/home/user/a.p2s");
+
+        Assert.True(registry.TryGet(reference, out _));
+    }
 }

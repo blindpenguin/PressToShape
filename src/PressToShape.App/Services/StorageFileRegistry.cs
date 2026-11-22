@@ -28,6 +28,15 @@ internal sealed class StorageFileRegistry
         return reference;
     }
 
+    /// <summary>Forgets the file of a reference, so its platform handle can be released. A reference that is unknown, or no reference, does nothing.</summary>
+    public void Unregister(string reference)
+    {
+        if (reference is not null)
+        {
+            _files.TryRemove(reference, out _);
+        }
+    }
+
     /// <summary>Whether a path is a reference of this registry. Such a name is the user's choice in the system picker and is never changed by the app.</summary>
     public static bool IsReference(string path) => path is not null && path.StartsWith(Prefix, StringComparison.Ordinal);
 

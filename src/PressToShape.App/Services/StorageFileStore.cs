@@ -65,6 +65,8 @@ internal sealed class StorageFileStore : IFileStore
         }
     }
 
+    public void Release(string path) => _registry.Unregister(path);
+
     private IPickedFile Resolve(string path)
     {
         if (!_registry.TryGet(path, out var file) || file is null)

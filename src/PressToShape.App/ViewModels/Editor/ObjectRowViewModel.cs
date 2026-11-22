@@ -48,6 +48,9 @@ internal sealed partial class ObjectRowViewModel : ViewModelBase
     /// <summary>Whether the row is a path.</summary>
     public bool IsPath => Type == ObjectRowType.Path;
 
+    /// <summary>Whether the row is a text.</summary>
+    public bool IsText => Type == ObjectRowType.Text;
+
     /// <summary>Whether the row has an expander: layers and groups.</summary>
     public bool HasChildren => IsLayer || IsGroup;
 

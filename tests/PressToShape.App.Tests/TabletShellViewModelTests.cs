@@ -301,6 +301,45 @@ public class TabletShellViewModelTests
     }
 
     [Fact]
+    public async Task TryBack_WhileThePanelIsOpen_ClosesThePanelWithoutAMessage()
+    {
+        var f = new Fixture();
+        f.Shell.Panel.Toggle(InspectorTab.History);
+
+        var left = await f.Shell.TryRequestBackAsync();
+
+        Assert.False(left);
+        Assert.False(f.Shell.Panel.IsOpen);
+        Assert.Empty(f.Messages.Errors);
+    }
+
+    [Fact]
+    public async Task TryBack_WithoutChanges_LeavesTheApp()
+    {
+        var f = new Fixture();
+
+        var left = await f.Shell.TryRequestBackAsync();
+
+        Assert.True(left);
+        Assert.Equal(1, f.Shutdown.Calls);
+        Assert.Empty(f.Messages.Errors);
+    }
+
+    [Fact]
+    public async Task TryBack_TheUnsavedQuestionFails_StaysAndShowsOneError()
+    {
+        var f = new Fixture();
+        f.Edit();
+        f.Messages.AskFailure = new InvalidOperationException("broken");
+
+        var left = await f.Shell.TryRequestBackAsync();
+
+        Assert.False(left);
+        Assert.Equal(0, f.Shutdown.Calls);
+        Assert.Equal(["The operation could not be done."], f.Messages.Errors);
+    }
+
+    [Fact]
     public async Task Back_WhileAToolFlyoutIsOpen_ClosesOnlyTheFlyout()
     {
         var f = new Fixture();

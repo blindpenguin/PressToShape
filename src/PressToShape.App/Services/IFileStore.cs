@@ -17,4 +17,12 @@ internal interface IFileStore
     /// </summary>
     /// <exception cref="System.IO.IOException">The file cannot be written.</exception>
     Task WriteAllBytesAtomicAsync(string path, byte[] bytes, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Tells the store that a path will not be used again, so it can free what it holds for it (the file of a system picker). Does nothing for
+    /// a path that the store does not hold. The default does nothing, because a normal file path holds nothing.
+    /// </summary>
+    void Release(string path)
+    {
+    }
 }

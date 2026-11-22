@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -140,6 +141,63 @@ public class EditorShellViewModelTests
 
         f.Messages.Answer = UnsavedChoice.DontSave;
         Assert.True(await f.Shell.ConfirmCloseAsync());
+    }
+
+    [Fact]
+    public async Task TryConfirmClose_WithoutChanges_AllowsClosingWithoutAMessage()
+    {
+        var f = new Fixture();
+
+        Assert.True(await f.Shell.TryConfirmCloseAsync());
+        Assert.Empty(f.Messages.Errors);
+    }
+
+    [Fact]
+    public async Task TryConfirmClose_QuestionAnswered_FollowsTheAnswerWithoutAMessage()
+    {
+        var f = new Fixture();
+        f.Edit();
+        f.Messages.Answer = UnsavedChoice.Cancel;
+        Assert.False(await f.Shell.TryConfirmCloseAsync());
+
+        f.Messages.Answer = UnsavedChoice.DontSave;
+        Assert.True(await f.Shell.TryConfirmCloseAsync());
+        Assert.Empty(f.Messages.Errors);
+    }
+
+    [Fact]
+    public async Task TryConfirmClose_TheQuestionFails_KeepsTheWindowOpenAndShowsOneError()
+    {
+        var f = new Fixture();
+        f.Edit();
+        f.Messages.AskFailure = new InvalidOperationException("broken");
+
+        var mayClose = await f.Shell.TryConfirmCloseAsync();
+
+        Assert.False(mayClose);
+        Assert.Equal(["The operation could not be done."], f.Messages.Errors);
+    }
+
+    [Fact]
+    public async Task TryConfirmClose_TheErrorCannotBeShown_StillDoesNotThrow()
+    {
+        var f = new Fixture();
+        f.Edit();
+        f.Messages.AskFailure = new InvalidOperationException("broken");
+        f.Messages.ErrorFailure = new InvalidOperationException("no window");
+
+        Assert.False(await f.Shell.TryConfirmCloseAsync());
+    }
+
+    [Fact]
+    public async Task TryConfirmClose_Cancelled_IsNotSwallowed()
+    {
+        var f = new Fixture();
+        f.Edit();
+        f.Messages.AskFailure = new OperationCanceledException();
+
+        await Assert.ThrowsAsync<OperationCanceledException>(() => f.Shell.TryConfirmCloseAsync());
+        Assert.Empty(f.Messages.Errors);
     }
 
     [Fact]

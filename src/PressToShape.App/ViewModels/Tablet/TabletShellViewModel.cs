@@ -88,6 +88,12 @@ internal sealed class TabletShellViewModel : EditorShellViewModel
     }
 
     /// <summary>
+    /// Like <see cref="RequestBackAsync"/>, but a failure does not escape: it is reported to the user and the app stays. The view calls this from
+    /// an <c>async void</c> handler, where an exception would end the app.
+    /// </summary>
+    public Task<bool> TryRequestBackAsync() => GuardAsync(RequestBackAsync);
+
+    /// <summary>
     /// Leaving was asked for. While a message dialog is open, Back closes it like Cancel and the app stays. Otherwise: without unsaved
     /// changes the app is left at once, with them the user is asked to save, discard or cancel, and the app is left only after a
     /// successful save or after discarding.

@@ -112,7 +112,7 @@ public partial class TabletShellView : UserControl
                 return;
             }
 
-            await shell.RequestBackAsync();
+            await shell.TryRequestBackAsync();
         }
     }
 

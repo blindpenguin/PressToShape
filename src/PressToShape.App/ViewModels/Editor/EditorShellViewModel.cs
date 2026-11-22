@@ -34,6 +34,7 @@ internal abstract partial class EditorShellViewModel : ViewModelBase
         ArgumentNullException.ThrowIfNull(services);
 
         _settingsDialogs = services.SettingsDialogs;
+        _messages = services.Messages;
         TextMeasurer = services.TextMeasurer ?? new AvaloniaTextMeasurer();
         TextOutliner = services.TextOutliner ?? new AvaloniaTextOutliner();
         _showRulersByDefault = showRulersByDefault;

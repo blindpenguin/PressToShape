@@ -21,6 +21,11 @@ internal sealed class FakeFileStore : IFileStore
 
     public int WriteCount { get; private set; }
 
+    /// <summary>The paths that the service said it will not use again.</summary>
+    public List<string> Released { get; } = [];
+
+    public void Release(string path) => Released.Add(path);
+
     public Task<byte[]> ReadAllBytesAsync(string path, long maxBytes, CancellationToken cancellationToken = default)
     {
         if (ReadFailure is not null)
@@ -97,16 +102,22 @@ internal sealed class FakeMessageDialogs : IMessageDialogs
 
     public List<string> Errors { get; } = [];
 
+    /// <summary>Thrown by the unsaved-changes question, to test the flows that ask it.</summary>
+    public Exception? AskFailure { get; set; }
+
+    /// <summary>Thrown by the error message, to test a dialog that cannot be shown.</summary>
+    public Exception? ErrorFailure { get; set; }
+
     public Task<UnsavedChoice> AskUnsavedChangesAsync(string documentName)
     {
         Questions.Add(documentName);
-        return Task.FromResult(Answer);
+        return AskFailure is null ? Task.FromResult(Answer) : Task.FromException<UnsavedChoice>(AskFailure);
     }
 
     public Task ShowErrorAsync(string message)
     {
         Errors.Add(message);
-        return Task.CompletedTask;
+        return ErrorFailure is null ? Task.CompletedTask : Task.FromException(ErrorFailure);
     }
 }
 
