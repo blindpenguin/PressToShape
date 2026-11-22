@@ -8,6 +8,7 @@ namespace PressToShape.CodeIndex.Output;
 internal sealed class InMemoryFileSink : IIndexFileSink, IIndexFileSource
 {
     private readonly SortedDictionary<string, byte[]> _files = new(System.StringComparer.Ordinal);
+    private readonly PathCollisionGuard _guard = new();
 
     public IReadOnlyDictionary<string, byte[]> Files => _files;
 
@@ -18,6 +19,8 @@ internal sealed class InMemoryFileSink : IIndexFileSink, IIndexFileSource
     public void Write(string relativePath, byte[] content)
     {
         System.ArgumentNullException.ThrowIfNull(content);
-        _files[IndexPath.Normalize(relativePath)] = content;
+        var normalized = IndexPath.Normalize(relativePath);
+        _guard.Register(normalized);
+        _files[normalized] = content;
     }
 }

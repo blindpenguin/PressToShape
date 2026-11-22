@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using PressToShape.CodeIndex.Chain;
+using PressToShape.CodeIndex.Loading;
 using PressToShape.CodeIndex.Model;
 using PressToShape.CodeIndex.Output;
 using PressToShape.CodeIndex.Query;
@@ -71,9 +72,11 @@ internal sealed class CliApp
             return Usage($"Unexpected argument: {options.Argument}");
         }
 
+        var scrubRoot = _startDirectory;
         try
         {
             var (solutionPath, repoRoot) = ResolvePaths(options);
+            scrubRoot = repoRoot;
             var folder = _services.CreateIndexFolder(Path.Combine(repoRoot, IndexFolder.Replace('/', Path.DirectorySeparatorChar)));
             return options.Command switch
             {
@@ -85,6 +88,12 @@ internal sealed class CliApp
         catch (IndexToolException ex)
         {
             _err.Write(ex.Message + "\n");
+            return Failure;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Security.SecurityException)
+        {
+            // A file the user can fix (permissions, a locked or missing folder). Other exceptions are bugs and keep their stack trace.
+            _err.Write($"A file problem stopped the command: {PathScrubber.Scrub(ex.Message, scrubRoot)}\n");
             return Failure;
         }
     }
@@ -111,7 +120,13 @@ internal sealed class CliApp
             return Failure;
         }
 
-        IndexGenerator.Write(result.Data, folder);
+        // The whole index is collected in memory first. If two source files map to one index file, this throws before any file of the existing index is touched.
+        var fresh = BuildInMemoryIndex(result.Data);
+        foreach (var (path, bytes) in fresh.Files)
+        {
+            folder.Write(path, bytes);
+        }
+
         var removed = folder.RemoveStale();
 
         var projects = result.Data.Projects;
@@ -130,6 +145,13 @@ internal sealed class CliApp
         return Success;
     }
 
+    private static InMemoryFileSink BuildInMemoryIndex(IndexData data)
+    {
+        var fresh = new InMemoryFileSink();
+        IndexGenerator.Write(data, fresh);
+        return fresh;
+    }
+
     private async Task<int> CheckAsync(string solutionPath, string repoRoot, IIndexFolder folder, CancellationToken ct)
     {
         var result = await Analyse(solutionPath, repoRoot, ct);
@@ -139,8 +161,7 @@ internal sealed class CliApp
             return Failure;
         }
 
-        var fresh = new InMemoryFileSink();
-        IndexGenerator.Write(result.Data, fresh);
+        var fresh = BuildInMemoryIndex(result.Data);
 
         var differences = new List<string>();
         foreach (var (path, bytes) in fresh.Files)

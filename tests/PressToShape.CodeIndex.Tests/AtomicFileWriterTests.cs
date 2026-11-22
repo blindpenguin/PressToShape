@@ -36,10 +36,10 @@ public sealed class AtomicFileWriterTests : IDisposable
     [Fact]
     public void Write_ExistingFile_IsReplacedAndNoTemporaryFileRemains()
     {
-        var writer = new AtomicFileWriter(_root);
-        writer.Write("a.json", Bytes("old"));
+        // The file of an earlier run: a writer writes each path once, so the replacement comes from the writer of the next run.
+        new AtomicFileWriter(_root).Write("a.json", Bytes("old"));
 
-        writer.Write("a.json", Bytes("new"));
+        new AtomicFileWriter(_root).Write("a.json", Bytes("new"));
 
         Assert.Equal("new", File.ReadAllText(Path.Combine(_root, "a.json")));
         Assert.Empty(Directory.GetFiles(_root, "*.tmp", SearchOption.AllDirectories));
@@ -117,5 +117,45 @@ public sealed class AtomicFileWriterTests : IDisposable
 
         Assert.Equal(["a/x.json", "b.json"], sink.Files.Keys);
         Assert.Throws<ArgumentException>(() => sink.Write("../x", Bytes("x")));
+    }
+
+    [Fact]
+    public void Write_FileWithTheOldFixedTemporaryNameExists_IsNeitherChangedNorRemoved()
+    {
+        Directory.CreateDirectory(_root);
+        var foreign = Path.Combine(_root, "a.json.tmp");
+        File.WriteAllText(foreign, "temporary file of another run");
+        var writer = new AtomicFileWriter(_root);
+
+        writer.Write("a.json", Bytes("new"));
+
+        Assert.Equal("temporary file of another run", File.ReadAllText(foreign));
+        Assert.Equal("new", File.ReadAllText(Path.Combine(_root, "a.json")));
+    }
+
+    [Fact]
+    public void RemoveStale_LeftoverUniqueTemporaryFile_IsRemovedAndReported()
+    {
+        Directory.CreateDirectory(_root);
+        var leftover = "a.json." + Guid.NewGuid().ToString("N") + ".tmp";
+        File.WriteAllText(Path.Combine(_root, leftover), "half");
+        var writer = new AtomicFileWriter(_root);
+        writer.Write("a.json", Bytes("new"));
+
+        var removed = writer.RemoveStale();
+
+        Assert.Equal([leftover], removed);
+        Assert.Equal(["a.json"], Directory.GetFiles(_root).Select(Path.GetFileName));
+    }
+
+    [Fact]
+    public void Write_TwoWritesToDifferentFiles_UseDifferentTemporaryNames()
+    {
+        var writer = new AtomicFileWriter(_root);
+        writer.Write("a.json", Bytes("a"));
+        writer.Write("b.json", Bytes("b"));
+
+        Assert.Empty(Directory.GetFiles(_root, "*.tmp", SearchOption.AllDirectories));
+        Assert.Equal(["a.json", "b.json"], Directory.GetFiles(_root).Select(Path.GetFileName).Order(StringComparer.Ordinal));
     }
 }

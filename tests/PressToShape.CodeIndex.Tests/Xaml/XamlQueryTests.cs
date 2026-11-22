@@ -204,10 +204,10 @@ public class XamlQueryTests
     [Fact]
     public void Show_OldXamlFileSchema_SaysHowToRegenerate()
     {
-        var sink = XamlSampleData.Index();
-        var path = sink.Files.Keys.First(k => k.StartsWith("xaml/App/Views", StringComparison.Ordinal));
-        var text = Encoding.UTF8.GetString(sink.Files[path]).Replace($"\"SchemaVersion\":{IndexSchema.Version}", "\"SchemaVersion\":1", StringComparison.Ordinal);
-        sink.Write(path, Encoding.UTF8.GetBytes(text));
+        var index = XamlSampleData.Index();
+        var path = index.Files.Keys.First(k => k.StartsWith("xaml/App/Views", StringComparison.Ordinal));
+        var text = Encoding.UTF8.GetString(index.Files[path]).Replace($"\"SchemaVersion\":{IndexSchema.Version}", "\"SchemaVersion\":1", StringComparison.Ordinal);
+        var sink = index.WithReplaced(path, Encoding.UTF8.GetBytes(text));
 
         var ex = Assert.Throws<IndexToolException>(() => Service(sink).Show("TitleText"));
 
@@ -218,8 +218,8 @@ public class XamlQueryTests
     [Fact]
     public void Show_DamagedXamlFile_IsReportedNotCrashed()
     {
-        var sink = XamlSampleData.Index();
-        sink.Write(sink.Files.Keys.First(k => k.StartsWith("xaml/App/Views", StringComparison.Ordinal)), Encoding.UTF8.GetBytes("{ nope"));
+        var index = XamlSampleData.Index();
+        var sink = index.WithReplaced(index.Files.Keys.First(k => k.StartsWith("xaml/App/Views", StringComparison.Ordinal)), Encoding.UTF8.GetBytes("{ nope"));
 
         Assert.Throws<IndexToolException>(() => Service(sink).Show("TitleText"));
     }

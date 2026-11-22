@@ -12,6 +12,7 @@ internal sealed class AtomicFileWriter : IIndexFileSink
 
     private readonly string _root;
     private readonly HashSet<string> _written = new(StringComparer.Ordinal);
+    private readonly PathCollisionGuard _guard = new();
 
     public AtomicFileWriter(string rootDirectory)
     {
@@ -24,10 +25,12 @@ internal sealed class AtomicFileWriter : IIndexFileSink
         ArgumentNullException.ThrowIfNull(content);
 
         var normalized = IndexPath.Normalize(relativePath);
+        _guard.Register(normalized);
         var target = Path.Combine(_root, normalized.Replace('/', Path.DirectorySeparatorChar));
         Directory.CreateDirectory(Path.GetDirectoryName(target)!);
 
-        var temporary = target + TemporarySuffix;
+        // A name of its own for each write, so two runs at the same time never share a temporary file. It is not added to _written, so a leftover is removed as stale.
+        var temporary = $"{target}.{Guid.NewGuid():N}{TemporarySuffix}";
         try
         {
             File.WriteAllBytes(temporary, content);

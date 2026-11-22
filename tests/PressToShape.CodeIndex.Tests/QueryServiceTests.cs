@@ -256,9 +256,9 @@ public class QueryServiceTests
     [Fact]
     public void Reader_OtherSchemaVersion_SaysHowToRegenerate()
     {
-        var sink = BuildIndex();
-        var manifest = Encoding.UTF8.GetString(sink.Files["manifest.json"]).Replace($"\"SchemaVersion\": {IndexSchema.Version}", "\"SchemaVersion\": 99", StringComparison.Ordinal);
-        sink.Write("manifest.json", Encoding.UTF8.GetBytes(manifest));
+        var index = BuildIndex();
+        var manifest = Encoding.UTF8.GetString(index.Files["manifest.json"]).Replace($"\"SchemaVersion\": {IndexSchema.Version}", "\"SchemaVersion\": 99", StringComparison.Ordinal);
+        var sink = index.WithReplaced("manifest.json", Encoding.UTF8.GetBytes(manifest));
 
         var ex = Assert.Throws<IndexToolException>(() => Service(sink).Search("x"));
 
@@ -269,8 +269,7 @@ public class QueryServiceTests
     [Fact]
     public void Reader_DamagedNamesTable_IsReportedNotCrashed()
     {
-        var sink = BuildIndex();
-        sink.Write("names.tsv", Encoding.UTF8.GetBytes("only\ttwo\n"));
+        var sink = BuildIndex().WithReplaced("names.tsv", Encoding.UTF8.GetBytes("only\ttwo\n"));
 
         var ex = Assert.Throws<IndexToolException>(() => Service(sink).Search("x"));
 
@@ -280,8 +279,7 @@ public class QueryServiceTests
     [Fact]
     public void Reader_InvalidJson_IsReportedNotCrashed()
     {
-        var sink = BuildIndex();
-        sink.Write("manifest.json", Encoding.UTF8.GetBytes("{ not json"));
+        var sink = BuildIndex().WithReplaced("manifest.json", Encoding.UTF8.GetBytes("{ not json"));
 
         Assert.Throws<IndexToolException>(() => Service(sink).Search("x"));
     }

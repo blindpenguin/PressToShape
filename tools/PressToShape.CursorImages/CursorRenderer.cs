@@ -1,3 +1,4 @@
+using System;
 using SkiaSharp;
 
 namespace PressToShape.CursorImages;
@@ -19,21 +20,34 @@ internal static class CursorRenderer
     private static readonly SKColor Line = SKColors.White;
 
     /// <summary>Renders the icon into a transparent <paramref name="size"/> x <paramref name="size"/> bitmap.</summary>
-    public static SKBitmap Render(SKPath icon, int size)
+    public static SKBitmap Render(SKPath icon, int size) => Render(icon, size, null);
+
+    // The hook is called right after the bitmap exists, so a test can make the drawing fail and check that the bitmap is freed.
+    internal static SKBitmap Render(SKPath icon, int size, Action<SKBitmap>? onCreated)
     {
         var bitmap = new SKBitmap(new SKImageInfo(size, size, SKColorType.Rgba8888, SKAlphaType.Premul));
-        using var canvas = new SKCanvas(bitmap);
-        canvas.Clear(SKColors.Transparent);
+        try
+        {
+            onCreated?.Invoke(bitmap);
+            using var canvas = new SKCanvas(bitmap);
+            canvas.Clear(SKColors.Transparent);
 
-        var scale = size / ImageUnits;
-        canvas.Scale(scale);
-        canvas.Translate(MarginUnits, MarginUnits);
+            var scale = size / ImageUnits;
+            canvas.Scale(scale);
+            canvas.Translate(MarginUnits, MarginUnits);
 
-        using var outlinePaint = CreateStroke(Outline, OutlineWidth);
-        using var linePaint = CreateStroke(Line, LineWidth);
-        canvas.DrawPath(icon, outlinePaint);
-        canvas.DrawPath(icon, linePaint);
-        return bitmap;
+            using var outlinePaint = CreateStroke(Outline, OutlineWidth);
+            using var linePaint = CreateStroke(Line, LineWidth);
+            canvas.DrawPath(icon, outlinePaint);
+            canvas.DrawPath(icon, linePaint);
+            return bitmap;
+        }
+        catch
+        {
+            // The caller never gets the bitmap, so nobody else can free its native memory.
+            bitmap.Dispose();
+            throw;
+        }
     }
 
     private static SKPaint CreateStroke(SKColor color, float width) => new()

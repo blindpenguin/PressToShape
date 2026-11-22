@@ -29,7 +29,7 @@ _(no documentation)_
 
 `public class CursorRendererTests`
 
-Source: `tests/PressToShape.CursorImages.Tests/CursorRendererTests.cs:9-150`
+Source: `tests/PressToShape.CursorImages.Tests/CursorRendererTests.cs:9-178`
 
 _(no documentation)_
 
@@ -45,6 +45,25 @@ _(no documentation)_
 - `public void Entries_HaveTheNamesOfTheApp()` - _(no documentation)_
 - `public void Entries_UseUniqueNamesAndExistingIcons()` - _(no documentation)_
 - `public void Sizes_AreTheTwoImageSizes()` - _(no documentation)_
+- `public void Render_DrawingFails_DisposesTheBitmapAndThrowsTheOriginalException()` - _(no documentation)_
+- `public void Render_Works_ReturnsABitmapThatTheCallerOwns()` - _(no documentation)_
+
+## ImageFilesTests (class)
+
+`public sealed class ImageFilesTests : IDisposable`
+
+Source: `tests/PressToShape.CursorImages.Tests/ImageFilesTests.cs:7-72`
+
+_(no documentation)_
+
+**Members**
+
+- `public ImageFilesTests()` - _(no documentation)_
+- `public void Dispose()` - _(no documentation)_
+- `public void WriteAtomic_MoveFailsAndTheCleanupFailsToo_ThrowsTheMoveException()` - _(no documentation)_
+- `public void WriteAtomic_MoveFailsAndTheCleanupHasNoAccess_ThrowsTheMoveException()` - _(no documentation)_
+- `public void WriteAtomic_MoveFails_RemovesTheTemporaryFileAndThrows()` - _(no documentation)_
+- `public void WriteAtomic_Works_WritesTheContentAndLeavesNoTemporaryFile()` - _(no documentation)_
 
 ## RepoPaths (class)
 

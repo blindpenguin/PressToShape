@@ -147,4 +147,32 @@ public class CursorRendererTests
     {
         Assert.Equal([32, 64], CursorSet.Sizes);
     }
+
+    [Fact]
+    public void Render_DrawingFails_DisposesTheBitmapAndThrowsTheOriginalException()
+    {
+        using var path = Icon("crosshair");
+        SKBitmap? created = null;
+
+        var ex = Assert.Throws<InvalidOperationException>(() => CursorRenderer.Render(path, 32, bitmap =>
+        {
+            created = bitmap;
+            throw new InvalidOperationException("boom");
+        }));
+
+        Assert.Equal("boom", ex.Message);
+        Assert.NotNull(created);
+        Assert.Equal(IntPtr.Zero, created.Handle);
+    }
+
+    [Fact]
+    public void Render_Works_ReturnsABitmapThatTheCallerOwns()
+    {
+        using var path = Icon("crosshair");
+
+        using var bitmap = CursorRenderer.Render(path, 32);
+
+        Assert.NotEqual(IntPtr.Zero, bitmap.Handle);
+        Assert.Equal(32, bitmap.Width);
+    }
 }

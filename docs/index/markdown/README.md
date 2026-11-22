@@ -85,10 +85,10 @@ Project file: `tests/PressToShape.Benchmarks/PressToShape.Benchmarks.csproj`. 47
 
 ## PressToShape.CodeIndex.Tests
 
-Project file: `tests/PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.csproj`. 887 symbols, 1689 relationships.
+Project file: `tests/PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.csproj`. 917 symbols, 1799 relationships.
 
 - [<global namespace>](PressToShape.CodeIndex.Tests/_global_namespace_.md) (1 types)
-- [PressToShape.CodeIndex.Tests](PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.md) (54 types)
+- [PressToShape.CodeIndex.Tests](PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.md) (56 types)
 
 ## PressToShape.Core
 
@@ -117,10 +117,10 @@ Project file: `tests/PressToShape.Core.Tests/PressToShape.Core.Tests.csproj`. 12
 
 ## PressToShape.CursorImages.Tests
 
-Project file: `tests/PressToShape.CursorImages.Tests/PressToShape.CursorImages.Tests.csproj`. 58 symbols, 76 relationships.
+Project file: `tests/PressToShape.CursorImages.Tests/PressToShape.CursorImages.Tests.csproj`. 69 symbols, 87 relationships.
 
 - [<global namespace>](PressToShape.CursorImages.Tests/_global_namespace_.md) (1 types)
-- [PressToShape.CursorImages.Tests](PressToShape.CursorImages.Tests/PressToShape.CursorImages.Tests.md) (4 types)
+- [PressToShape.CursorImages.Tests](PressToShape.CursorImages.Tests/PressToShape.CursorImages.Tests.md) (5 types)
 
 ## PressToShape.Desktop
 

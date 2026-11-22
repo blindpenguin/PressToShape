@@ -22,7 +22,10 @@ internal static class ImageFiles
     /// Writes the data to a temporary file next to the target and moves it over the target, so a failure never leaves a half-written
     /// image behind. The temporary file is removed on failure.
     /// </summary>
-    public static void WriteAtomic(string target, byte[] data)
+    public static void WriteAtomic(string target, byte[] data) => WriteAtomic(target, data, File.Delete);
+
+    // The delete action is a parameter so a test can make the cleanup fail.
+    internal static void WriteAtomic(string target, byte[] data, Action<string> delete)
     {
         var temporary = $"{target}.{Guid.NewGuid():N}.tmp";
         try
@@ -32,8 +35,25 @@ internal static class ImageFiles
         }
         catch
         {
-            File.Delete(temporary);
+            TryDelete(temporary, delete);
             throw;
+        }
+    }
+
+    // A failed cleanup must not replace the exception that matters: the one of the write.
+    private static void TryDelete(string path, Action<string> delete)
+    {
+        try
+        {
+            delete(path);
+        }
+        catch (IOException)
+        {
+            // The original exception is the one that matters.
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // Same as above.
         }
     }
 
@@ -69,12 +89,20 @@ internal static class ImageFiles
         }
 
         var bitmap = new SKBitmap(new SKImageInfo(size, size, SKColorType.Rgba8888, SKAlphaType.Premul));
-        if (codec.GetPixels(bitmap.Info, bitmap.GetPixels()) != SKCodecResult.Success)
+        try
+        {
+            if (codec.GetPixels(bitmap.Info, bitmap.GetPixels()) != SKCodecResult.Success)
+            {
+                bitmap.Dispose();
+                return null;
+            }
+
+            return bitmap;
+        }
+        catch
         {
             bitmap.Dispose();
-            return null;
+            throw;
         }
-
-        return bitmap;
     }
 }

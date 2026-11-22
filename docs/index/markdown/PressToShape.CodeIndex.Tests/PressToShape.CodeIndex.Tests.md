@@ -27,7 +27,7 @@ _(no documentation)_
 
 `public sealed class AtomicFileWriterTests : IDisposable`
 
-Source: `tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs:11-121`
+Source: `tests/PressToShape.CodeIndex.Tests/AtomicFileWriterTests.cs:11-161`
 
 The only tests that touch the file system, each in its own unique temporary folder that is deleted afterwards.
 
@@ -42,6 +42,9 @@ The only tests that touch the file system, each in its own unique temporary fold
 - `public void RemoveStale_NeverTouchesFilesOutsideTheRoot()` - _(no documentation)_
 - `public void RemoveStale_RootDoesNotExist_ReturnsNothing()` - _(no documentation)_
 - `public void InMemoryFileSink_Write_KeepsFilesSortedAndRejectsBadPaths()` - _(no documentation)_
+- `public void Write_FileWithTheOldFixedTemporaryNameExists_IsNeitherChangedNorRemoved()` - _(no documentation)_
+- `public void RemoveStale_LeftoverUniqueTemporaryFile_IsRemovedAndReported()` - _(no documentation)_
+- `public void Write_TwoWritesToDifferentFiles_UseDifferentTemporaryNames()` - _(no documentation)_
 
 ## AvaloniaModelTests (class)
 
@@ -203,7 +206,7 @@ _(no documentation)_
 
 `public class CliAppTests`
 
-Source: `tests/PressToShape.CodeIndex.Tests/CliAppTests.cs:18-391`
+Source: `tests/PressToShape.CodeIndex.Tests/CliAppTests.cs:18-526`
 
 _(no documentation)_
 
@@ -229,6 +232,15 @@ _(no documentation)_
 - `public Task Json_ShowRefsAndAmbiguous_AreValidJson()` - _(no documentation)_
 - `public Task Query_WithoutIndex_SaysHowToCreateItAndFails()` - _(no documentation)_
 - `public Task Query_DoesNotCompileTheSolution()` - _(no documentation)_
+- `public Task Generate_TwoIndexFilesCollide_FailsAndLeavesTheExistingIndexAlone()` - _(no documentation)_
+- `public Task Check_TwoIndexFilesCollide_FailsWithTheSameMessage()` - _(no documentation)_
+- `public Task Generate_NoCollision_WritesTheSameFilesAsBefore()` - _(no documentation)_
+- `public Task Query_FolderCannotBeRead_PrintsAFriendlyMessage(string command, string argument)` - _(no documentation)_
+- `public Task Check_FolderCannotBeRead_PrintsAFriendlyMessage()` - _(no documentation)_
+- `public Task Generate_FolderCannotBeWritten_PrintsAFriendlyMessage()` - _(no documentation)_
+- `public Task Query_SecurityProblem_PrintsAFriendlyMessage()` - _(no documentation)_
+- `public Task Query_UnexpectedException_StillEscapes()` - _(no documentation)_
+- `public Task Query_Cancelled_StillEscapes()` - _(no documentation)_
 
 ## CliChainTests (class)
 
@@ -515,6 +527,18 @@ _(no documentation)_
 - `public void RepoRoot_Find_ReturnsFirstFolderWithSolution()` - _(no documentation)_
 - `public void RepoRoot_Find_NoSolution_Throws()` - _(no documentation)_
 
+## IndexSinkTestExtensions (class)
+
+`internal static class IndexSinkTestExtensions`
+
+Source: `tests/PressToShape.CodeIndex.Tests/IndexSinkTestExtensions.cs:5-18`
+
+_(no documentation)_
+
+**Members**
+
+- `public InMemoryFileSink WithReplaced(this InMemoryFileSink source, string path, byte[] content)` - A copy of the index in which one file has other content, to test damaged or old index files. A sink does not allow a second write of a path.
+
 ## IndexViewTests (class)
 
 `public class IndexViewTests`
@@ -682,6 +706,25 @@ _(no documentation)_
 - `public void Build_ContainerRegistration_RecordsServiceToImplementation()` - _(no documentation)_
 - `public void Build_AllEdges_AreVerifiedAndSorted()` - _(no documentation)_
 
+## PathCollisionGuardTests (class)
+
+`public sealed class PathCollisionGuardTests : IDisposable`
+
+Source: `tests/PressToShape.CodeIndex.Tests/PathCollisionGuardTests.cs:11-104`
+
+Two source files must never produce the same index file, also not on a file system that ignores the case of names.
+
+**Members**
+
+- `public void Dispose()` - _(no documentation)_
+- `public void Register_DifferentPaths_Pass()` - _(no documentation)_
+- `public void Register_TheSamePathTwice_ThrowsAndNamesThePath()` - _(no documentation)_
+- `public void Register_PathThatDiffersOnlyInCase_ThrowsAndNamesBothPaths()` - _(no documentation)_
+- `public void InMemoryFileSink_SecondWriteOfAPath_ThrowsAndKeepsTheFirstContent()` - _(no documentation)_
+- `public void InMemoryFileSink_PathThatDiffersOnlyInCase_Throws()` - _(no documentation)_
+- `public void AtomicFileWriter_SecondWriteOfAPath_ThrowsAndKeepsTheFirstFile()` - _(no documentation)_
+- `public void AtomicFileWriter_PathThatDiffersOnlyInCase_ThrowsBeforeTouchingTheDisk()` - _(no documentation)_
+
 ## PathScrubberTests (class)
 
 `public class PathScrubberTests`
@@ -713,7 +756,7 @@ _(no documentation)_
 
 `public class QueryServiceTests`
 
-Source: `tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs:16-297`
+Source: `tests/PressToShape.CodeIndex.Tests/QueryServiceTests.cs:16-295`
 
 _(no documentation)_
 

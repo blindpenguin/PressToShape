@@ -35,18 +35,29 @@ public class CliAppTests
 
         public int RemoveStaleCalls { get; private set; }
 
+        /// <summary>Thrown by <see cref="Read"/> and <see cref="ListFiles"/>, to test a folder that cannot be read.</summary>
+        public Exception? ReadFailure { get; set; }
+
+        /// <summary>Thrown by <see cref="Write"/>, to test a folder that cannot be written.</summary>
+        public Exception? WriteFailure { get; set; }
+
         private readonly HashSet<string> _written = [];
 
         public void Write(string relativePath, byte[] content)
         {
+            if (WriteFailure is not null)
+            {
+                throw WriteFailure;
+            }
+
             Files[relativePath] = content;
             Writes.Add(relativePath);
             _written.Add(relativePath);
         }
 
-        public byte[]? Read(string relativePath) => Files.GetValueOrDefault(relativePath);
+        public byte[]? Read(string relativePath) => ReadFailure is null ? Files.GetValueOrDefault(relativePath) : throw ReadFailure;
 
-        public IReadOnlyList<string> ListFiles() => Files.Keys.ToList();
+        public IReadOnlyList<string> ListFiles() => ReadFailure is null ? Files.Keys.ToList() : throw ReadFailure;
 
         public IReadOnlyList<string> RemoveStale()
         {
@@ -387,5 +398,129 @@ public class CliAppTests
         await harness.Run("refs", "IService");
 
         Assert.Empty(harness.SourceRequests);
+    }
+
+    // Two namespaces that differ only in case give the index files symbols/Core/Foo.json and symbols/Core/foo.json: one file on Windows and macOS.
+    private const string CollidingSource = """
+        namespace Foo { public class A { } }
+        namespace foo { public class B { } }
+        """;
+
+    [Fact]
+    public async Task Generate_TwoIndexFilesCollide_FailsAndLeavesTheExistingIndexAlone()
+    {
+        var harness = new Harness { Code = CollidingSource };
+        harness.Folder.Files["symbols/Core/Old.json"] = Encoding.UTF8.GetBytes("old");
+
+        var code = await harness.Run("generate");
+
+        Assert.Equal(CliApp.Failure, code);
+        Assert.Contains("Two source files produce the same index file", harness.Err.ToString(), StringComparison.Ordinal);
+        Assert.Contains("symbols/Core/", harness.Err.ToString(), StringComparison.Ordinal);
+        Assert.Empty(harness.Folder.Writes);
+        Assert.Equal(0, harness.Folder.RemoveStaleCalls);
+        Assert.Equal(["symbols/Core/Old.json"], harness.Folder.Files.Keys);
+    }
+
+    [Fact]
+    public async Task Check_TwoIndexFilesCollide_FailsWithTheSameMessage()
+    {
+        var harness = new Harness { Code = CollidingSource };
+
+        var code = await harness.Run("check");
+
+        Assert.Equal(CliApp.Failure, code);
+        Assert.Contains("Two source files produce the same index file", harness.Err.ToString(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task Generate_NoCollision_WritesTheSameFilesAsBefore()
+    {
+        var harness = new Harness();
+
+        var code = await harness.Run("generate");
+
+        Assert.Equal(CliApp.Success, code);
+        Assert.Equal(harness.Folder.Files.Keys, harness.Folder.Writes.Order(StringComparer.Ordinal));
+        Assert.Contains("manifest.json", harness.Folder.Files.Keys);
+        Assert.Equal(1, harness.Folder.RemoveStaleCalls);
+    }
+
+    private static string DeniedMessage => $"Access to the path '{TestCompilation.RepoRoot}/docs/index/names.tsv' is denied.";
+
+    private static void AssertFriendlyFileError(Harness harness, int code)
+    {
+        var error = harness.Err.ToString();
+        Assert.Equal(CliApp.Failure, code);
+        Assert.StartsWith("A file problem stopped the command: ", error, StringComparison.Ordinal);
+        Assert.Single(error.Split('\n', StringSplitOptions.RemoveEmptyEntries));
+        Assert.DoesNotContain(" at ", error, StringComparison.Ordinal);
+        Assert.DoesNotContain(TestCompilation.RepoRoot, error, StringComparison.Ordinal);
+        Assert.Contains("<repo>", error, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("find", "Consumer")]
+    [InlineData("show", "IService")]
+    [InlineData("refs", "IService")]
+    public async Task Query_FolderCannotBeRead_PrintsAFriendlyMessage(string command, string argument)
+    {
+        var harness = await Generated();
+        harness.Folder.ReadFailure = new UnauthorizedAccessException(DeniedMessage);
+
+        var code = await harness.Run(command, argument);
+
+        AssertFriendlyFileError(harness, code);
+    }
+
+    [Fact]
+    public async Task Check_FolderCannotBeRead_PrintsAFriendlyMessage()
+    {
+        var harness = await Generated();
+        harness.Folder.ReadFailure = new IOException(DeniedMessage);
+
+        var code = await harness.Run("check");
+
+        AssertFriendlyFileError(harness, code);
+    }
+
+    [Fact]
+    public async Task Generate_FolderCannotBeWritten_PrintsAFriendlyMessage()
+    {
+        var harness = new Harness();
+        harness.Folder.WriteFailure = new IOException(DeniedMessage);
+
+        var code = await harness.Run("generate");
+
+        AssertFriendlyFileError(harness, code);
+    }
+
+    [Fact]
+    public async Task Query_SecurityProblem_PrintsAFriendlyMessage()
+    {
+        var harness = await Generated();
+        harness.Folder.ReadFailure = new System.Security.SecurityException(DeniedMessage);
+
+        var code = await harness.Run("find", "Consumer");
+
+        AssertFriendlyFileError(harness, code);
+    }
+
+    [Fact]
+    public async Task Query_UnexpectedException_StillEscapes()
+    {
+        var harness = await Generated();
+        harness.Folder.ReadFailure = new InvalidOperationException("a bug");
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => harness.Run("find", "Consumer"));
+    }
+
+    [Fact]
+    public async Task Query_Cancelled_StillEscapes()
+    {
+        var harness = await Generated();
+        harness.Folder.ReadFailure = new OperationCanceledException();
+
+        await Assert.ThrowsAsync<OperationCanceledException>(() => harness.Run("find", "Consumer"));
     }
 }

@@ -33,8 +33,8 @@
     {
       "Name": "PressToShape.CodeIndex.Tests",
       "Path": "tests/PressToShape.CodeIndex.Tests/PressToShape.CodeIndex.Tests.csproj",
-      "SymbolCount": 887,
-      "RelationshipCount": 1689,
+      "SymbolCount": 917,
+      "RelationshipCount": 1799,
       "XamlFileCount": 0
     },
     {
@@ -54,8 +54,8 @@
     {
       "Name": "PressToShape.CursorImages.Tests",
       "Path": "tests/PressToShape.CursorImages.Tests/PressToShape.CursorImages.Tests.csproj",
-      "SymbolCount": 58,
-      "RelationshipCount": 76,
+      "SymbolCount": 69,
+      "RelationshipCount": 87,
       "XamlFileCount": 0
     },
     {
@@ -66,7 +66,7 @@
       "XamlFileCount": 0
     }
   ],
-  "SymbolCount": 11060,
-  "RelationshipCount": 68849,
+  "SymbolCount": 11101,
+  "RelationshipCount": 68970,
   "Warnings": []
 }
