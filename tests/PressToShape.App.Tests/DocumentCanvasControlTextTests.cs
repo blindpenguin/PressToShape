@@ -42,6 +42,12 @@ public class DocumentCanvasControlTextTests
     public void Render_FilledText_DoesNotThrow() => HeadlessUi.Run(() => Render(Text()));
 
     [Fact]
+    public void Render_StrokedTextWithACharacterOfAnotherScript_DoesNotThrow() => HeadlessUi.Run(() =>
+    {
+        Render(Text("ab \U0001F600 \u4e2d\u6587 cd") with { Appearance = new Appearance { Fill = Color.FromRgb(9, 9, 9), Stroke = Color.FromRgb(1, 2, 3), StrokeWidth = 2, Opacity = 1 }, LetterSpacing = 2 });
+    });
+
+    [Fact]
     public void Render_StrokedTextWithoutFill_DoesNotThrow() => HeadlessUi.Run(() =>
     {
         Render(Text() with { Appearance = new Appearance { Fill = null, Stroke = Color.FromRgb(1, 2, 3), StrokeWidth = 2, Opacity = 1 } });

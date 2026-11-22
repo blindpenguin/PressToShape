@@ -35,7 +35,13 @@ internal static class DocumentValidation
                 throw new ArgumentException($"Layer id {layer.Id} is used more than once.", nameof(Document.Layers));
             }
 
-            ValidateShapes(layer.Shapes, shapeIds, 0);
+            // Layers and shapes share one id space, so a layer must not have the id of a shape of an earlier layer either.
+            if (shapeIds.Contains(layer.Id))
+            {
+                throw new ArgumentException(MixedMessage(layer.Id), nameof(Document.Layers));
+            }
+
+            ValidateShapes(layer.Shapes, shapeIds, layerIds, 0);
         }
 
         return layers;
@@ -67,7 +73,9 @@ internal static class DocumentValidation
         return guides;
     }
 
-    private static void ValidateShapes(ImmutableArray<Shape> shapes, HashSet<Guid> shapeIds, int depth)
+    private static string MixedMessage(Guid id) => $"Id {id} is used by a layer and by a shape.";
+
+    private static void ValidateShapes(ImmutableArray<Shape> shapes, HashSet<Guid> shapeIds, HashSet<Guid> layerIds, int depth)
     {
         foreach (var shape in shapes)
         {
@@ -79,6 +87,11 @@ internal static class DocumentValidation
             if (!shapeIds.Add(shape.Id))
             {
                 throw new ArgumentException($"Shape id {shape.Id} is used more than once.", nameof(Document.Layers));
+            }
+
+            if (layerIds.Contains(shape.Id))
+            {
+                throw new ArgumentException(MixedMessage(shape.Id), nameof(Document.Layers));
             }
 
             if (shape is not GroupShape group)
@@ -98,7 +111,7 @@ internal static class DocumentValidation
                 throw new ArgumentException($"The box of group {group.Id} does not follow from its children.", nameof(Document.Layers));
             }
 
-            ValidateShapes(group.Children, shapeIds, depth + 1);
+            ValidateShapes(group.Children, shapeIds, layerIds, depth + 1);
         }
     }
 }

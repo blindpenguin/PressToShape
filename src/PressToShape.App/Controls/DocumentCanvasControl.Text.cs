@@ -66,7 +66,7 @@ internal sealed partial class DocumentCanvasControl
     }
 
     // The geometry of a glyph run has its baseline in the coordinates of the line, so it is moved by the top left corner of the line and by
-    // the width of the runs before it.
+    // the advance of the runs before it (their glyph advances, not the width of their ink).
     private static void DrawGlyphOutlines(DrawingContext context, TextLine line, Point top, IPen pen)
     {
         var x = top.X;
@@ -82,7 +82,7 @@ internal sealed partial class DocumentCanvasControl
                 context.DrawGeometry(null, pen, glyphRun.BuildGeometry());
             }
 
-            x += glyphRun.Bounds.Width;
+            x += GlyphRunAdvance.Of(glyphRun);
         }
     }
 }

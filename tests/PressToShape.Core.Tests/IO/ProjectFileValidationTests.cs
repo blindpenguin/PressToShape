@@ -158,6 +158,39 @@ public class ProjectFileValidationTests
         AssertFails(ReadText(Mutate("]}]}", "]}" + secondLayer + "]}")), ProjectFileError.InvalidValue);
     }
 
+    [Fact]
+    public void Read_ShapeWithTheIdOfItsLayer_ReturnsInvalidValue()
+    {
+        AssertFails(ReadText(Mutate("\"id\":\"" + ShapeId + "\"", "\"id\":\"" + LayerId + "\"")), ProjectFileError.InvalidValue);
+    }
+
+    [Fact]
+    public void Read_ShapeWithTheIdOfALaterLayer_ReturnsInvalidValue()
+    {
+        const string secondLayer = ",{\"id\":\"" + ShapeId + "\",\"name\":\"Two\",\"visible\":true,\"locked\":false,\"shapes\":[]}";
+
+        AssertFails(ReadText(Mutate("]}]}", "]}" + secondLayer + "]}")), ProjectFileError.InvalidValue);
+    }
+
+    [Fact]
+    public void Read_ShapeInAGroupWithTheIdOfALayer_ReturnsInvalidValue()
+    {
+        const string group = "{\"type\":\"group\",\"id\":\"bbbbbbbb-0000-0000-0000-000000000009\",\"children\":[" +
+            "{\"type\":\"rectangle\",\"id\":\"" + LayerId + "\",\"x\":0,\"y\":0,\"width\":1,\"height\":1,\"fill\":null,\"stroke\":null,\"strokeWidth\":0,\"opacity\":1}]}";
+
+        AssertFails(ReadText(Mutate("\"shapes\":[", "\"shapes\":[" + group + ",")), ProjectFileError.InvalidValue);
+    }
+
+    [Fact]
+    public void Read_AllIdsDifferent_StillSucceeds()
+    {
+        const string secondLayer = ",{\"id\":\"aaaaaaaa-0000-0000-0000-000000000002\",\"name\":\"Two\",\"visible\":true,\"locked\":false,\"shapes\":[]}";
+
+        var result = ReadText(Mutate("]}]}", "]}" + secondLayer + "]}"));
+
+        Assert.True(result.Succeeded, result.Detail);
+    }
+
     [Theory]
     [InlineData("rectangle")]
     [InlineData("Rectangle")]
