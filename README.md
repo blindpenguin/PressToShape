@@ -2,6 +2,8 @@
 
 A vector drawing program for hobbyists, in the spirit of Inkscape and Illustrator. Built with C#, .NET 10 and Avalonia UI 12. Targets Linux, Windows and Android (touch and stylus).
 
+This is an experimental project to find out how far AI agents can be pushed in building a real application. It is worked on only occasionally, so expect gaps and uneven progress.
+
 The project is in development. See the [feature gap](docs/feature-gap.md) for what works today and what is still missing.
 
 ## Screenshots
